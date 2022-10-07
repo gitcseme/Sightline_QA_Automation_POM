@@ -112,7 +112,7 @@ public class Export_Regression {
 	    String exportName = "Export" + Utility.dynamicNameAppender();
 	    String subBates = page.getRandomNumber(2);
 	    
-	    tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+	    tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();		
@@ -143,7 +143,7 @@ public class Export_Regression {
 		page.fillingExportLocationPage(exportName);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();	
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);	
 		base.waitForElement(page.getFileDir("VOL0001"));
@@ -175,9 +175,6 @@ public class Export_Regression {
 		page.addDATFieldAtThirdRow(Input.docBasic,Input.docName,Input.documentID);
 		page.fillingNativeSection();	
 		page.selectGenerateOption(true);
-		page.fillingAdvancedInTiffSection();
-		base.waitForElement(page.getTIFFTab());
-		page.getTIFFTab().waitAndClick(5);
 		page.fillingSlipSheet(true, tagName);
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
@@ -188,7 +185,7 @@ public class Export_Regression {
 		page.fillingExportLocationPage(exportName);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();	
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
 		String actualCopedText1 = page.getCopiedTextFromClipBoard();
 		String parentTab1 = page.openNewTab(actualCopedText1);	
 		base.waitForElement(page.getFileDir("VOL0001"));
@@ -212,9 +209,11 @@ public class Export_Regression {
 
 		// delete tags and folders
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
 		tagsAndFolderPage.DeleteTagWithClassification(tagName, Input.securityGroup);
 		loginPage.logout();
 	}
+	
 	
 	/**
 	 * @author  sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-47978
@@ -233,6 +232,7 @@ public class Export_Regression {
 	    String subBates = page.getRandomNumber(2);
 	    productionname = "p" + Utility.dynamicNameAppender();
 	    String beginningBates = page.getRandomNumber(2);
+	    String prodBatesRange = "B1-10";
 	    
 	    tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
 		int purehit = sessionSearch.basicContentSearch(Input.testData1);
@@ -243,10 +243,10 @@ public class Export_Regression {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
+        page.addDATFieldAtSecondRow(Input.bates, "ProductionBatesRange", prodBatesRange);
 		page.tiffBrandingSelection(tagName);
 		page.tiffPrivilegeDocumentSelection(tagName);
 		page.slipSheetToggleEnable();
-		page.selectFieldinMetadataTab("BatesNumber"); 
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -256,25 +256,28 @@ public class Export_Regression {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+        page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.selectDefaultExport();
 		page.addANewExportwithProduction(exportName, productionname);
-		page.navigateToNextSection();
-		page.navigateToNextSection();
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		page.afterCompletingNavigatingToNextPage();	
+		page.afterCompletingNavigatingToNextPage();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.afterCompletingNavigatingToNextPage();
+		base.waitForElement(page.getOkButton());
+		page.getOkButton().waitAndClick(3);
+		page.fillingExportLocationPage(exportName);
+		page.afterCompletingNavigatingToNextPage();
+		page.afterCompletingNavigatingToNextPage();
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
 		String batesRange = prefixID + beginningBates + suffixID ;
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);	
 		page.goToImageFiles();
 		page.verifyTiffFile(purehit, prefixID, suffixID, subBates, batesRange);
-
+		
 		// delete tags and folders
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagName, Input.securityGroup);
