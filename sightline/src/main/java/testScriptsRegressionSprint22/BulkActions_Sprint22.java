@@ -37,8 +37,8 @@ public class BulkActions_Sprint22 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-//		in = new Input();
-//		in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -103,7 +103,7 @@ public class BulkActions_Sprint22 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Successfully login as DA'" + Input.da1userName + "'");
 		assignment = new AssignmentsPage(driver);
-
+		baseClass.waitTime(2); //to avoid page loading issue for DA user login
 		// impersonating to Rmu
 		baseClass.impersonateDAtoRMU();
 
