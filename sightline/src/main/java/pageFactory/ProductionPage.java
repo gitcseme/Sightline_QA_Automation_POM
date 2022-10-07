@@ -22386,8 +22386,6 @@ public class ProductionPage {
 			} else if (verifyingNativeFiles(prefixID + "0" + "(" + Doc + ")" + suffixID, subBates, DocType)
 					.isElementAvailable(2)) {
 				base.passedStep("Files are generated successfully");
-			} else {
-				base.failedStep("Files are not generated");
 			}
 		}
 		
