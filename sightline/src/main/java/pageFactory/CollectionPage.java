@@ -246,6 +246,20 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getCollectionStatsDiv(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index + "]//div");
+	}
+
+	public Element getCollectionProgressBar(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
+				+ "]//div[@class='progressbar-grey progressbar-round']");
+	}
+
+	public Element getCollectionPauseStats(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
+				+ "]//div[@class='col-md-5 progressbar-grey-text']");
+	}
+
 	public Element getStartALinkCollection(String nameSrc) {
 		return driver.FindElementByXPath(
 				"//div[@id='divSourceLocations']//div[@class='popout text-wrap']//..//div[@data-content='(" + nameSrc

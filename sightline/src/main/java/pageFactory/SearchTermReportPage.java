@@ -5,12 +5,14 @@ import java.awt.AWTException;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.io.FilenameUtils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -127,6 +129,7 @@ public class SearchTermReportPage {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='My Saved Search']//..//ul//a[text()='"
 				+ nodeName + "']//i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public ElementCollection gettableHeaders() {
 		return driver.FindElementsByXPath("(//table[@id='searchtermTable']//thead/tr/th)");
 	}
@@ -177,7 +180,7 @@ public class SearchTermReportPage {
 	public Element getTotalSelectedCount() {
 		return driver.FindElementByXPath("//div//label[@id='lblTotal']");
 	}
-	
+
 	// added by jayanthi 16/12/21
 	public Element mySavedSearchCheckbox() {
 		return driver.FindElementByXPath(
@@ -203,11 +206,11 @@ public class SearchTermReportPage {
 	public Element getUniqueFamilyHits() {
 		return driver.FindElementByXPath("(//table[@id='searchtermTable']//thead/tr/th[text()='UNIQUE FAMILY HITS'])");
 	}
-	
+
 	public Element getActionBulkRelease() {
 		return driver.FindElementByXPath("//a[text()='Bulk Release']");
 	}
-	
+
 	public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG) {
 		return driver.FindElementByXPath("//form[@id='Edit User Group']//div[text()='" + SG + "']/../div[1]/label/i");
 	}
@@ -215,31 +218,53 @@ public class SearchTermReportPage {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
+
 	public Element getBulkRelease_ButtonRelease() {
 		return driver.FindElementById("btnRelease");
 	}
+
 	public Element getFinalizeButton() {
 		return driver.FindElementById("btnfinalizeAssignment");
 	}
-	
+
 	public ElementCollection getSummaryTableHeader() {
 		return driver.FindElementsByXPath("//table[@id='tblSummary']//table//td[@colspan]/label/font");
-		}
+	}
 
-	//Added By Jeevitha
+	// Added By Jeevitha
+	public Element getsearchOrTab_CB(String name) {
+		return driver.FindElementByXPath("//a[text()='" + name + "']");
+	}
+
+	public Element selectColumnInSTRPage(String columnName) {
+		return driver.FindElementByXPath("//font[normalize-space()='" + columnName + "']");
+	}
+
+	public Element getUniqueHit_CB() {
+		return driver.FindElementById("lblUniquePureHits");
+	}
+
+	public Element getExportIcon() {
+		return driver.FindElementById("exportExcel");
+	}
+
 	public Element getHitsCount() {
-        return driver.FindElementByXPath("//label[@id='lblHitsCount']/font/b");
-    }
+		return driver.FindElementByXPath("//label[@id='lblHitsCount']/font/b");
+	}
+
 	public Element getActionExportData() {
 		return driver.FindElementByXPath("//a[text()=' Export Data']");
 	}
+
 	public Element getTotalSelectedCount_fontSize() {
 		return driver.FindElementByXPath("//div//label[@id='lblTotal' and @style[contains(.,'font-size: 16px')]]");
 	}
-	//Added by Iyappan
+
+	// Added by Iyappan
 	public Element getViewinDocListBtn() {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[text()='View in DocList']");
 	}
+
 	public SearchTermReportPage(Driver driver) {
 		this.driver = driver;
 		bc = new BaseClass(driver);
@@ -314,8 +339,9 @@ public class SearchTermReportPage {
 	/**
 	 * @author Raghuram A Date: 9/25/21 Modified date:N/A Modified by: N/A A
 	 *         Description :
+	 * @return
 	 */
-	public void ValidateSearchTermreportSaveandImpact(String Searchname, Boolean verifySave)
+	public String ValidateSearchTermreportSaveandImpact(String Searchname, Boolean verifySave)
 			throws InterruptedException {
 
 		String reportName = "Report" + Utility.dynamicNameAppender();
@@ -332,6 +358,7 @@ public class SearchTermReportPage {
 			driver.waitForPageToBeReady();
 			reportPage.verifyCustomReportPresent(reportName);
 		}
+		return reportName;
 	}
 
 	/**
@@ -476,7 +503,7 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
-		bc.waitTime(3);		
+		bc.waitTime(3);
 		bc.waitForElement(getSTReport());
 		if (getSTReport().isDisplayed()) {
 			bc.stepInfo("Report generated sucessfull");
@@ -626,7 +653,6 @@ public class SearchTermReportPage {
 
 	}
 
-
 	/**
 	 * @Author Jeevitha
 	 */
@@ -652,21 +678,21 @@ public class SearchTermReportPage {
 
 	}
 
-	/** @author Jayanthi.ganesan
+	/**
+	 * @author Jayanthi.ganesan
 	 * @param eleValue
 	 * @param searchName
 	 * @return
 	 */
-	
-	public String getHitsValueFromRow(String eleValue,String searchName) {
-		int i = bc.getIndex(gettableHeaders(),eleValue);
+
+	public String getHitsValueFromRow(String eleValue, String searchName) {
+		int i = bc.getIndex(gettableHeaders(), eleValue);
 		System.out.println(i);
 		String pureHits = getRowValue(searchName, i).getText();
 		return pureHits;
-	
+
 	}
-	
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -683,11 +709,11 @@ public class SearchTermReportPage {
 		bc.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(20);
 		bc.VerifySuccessMessageB("Records saved successfully");
-		bc.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
+		bc.stepInfo("performing bulk release for " + SG + " docs count is " + TotalDocs);
 		return TotalDocs;
-}
+	}
 
-    /**
+	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void STR_ToExportData() {
@@ -698,10 +724,13 @@ public class SearchTermReportPage {
 		getActionExportData().waitAndClick(10);
 		bc.stepInfo("Navigating from Search term report page to Export page.");
 	}
+
 	public Element getSGSaveSearchNodeCheckBox(String nodeName) {
-		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='Shared with Default Security Group']//..//ul//a[text()='"
-				+ nodeName + "']//i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath(
+				"//a[@class='jstree-anchor' and text()='Shared with Default Security Group']//..//ul//a[text()='"
+						+ nodeName + "']//i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param searchName
@@ -721,7 +750,7 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
-		bc.waitTime(3);		
+		bc.waitTime(3);
 		bc.waitForElement(getSTReport());
 		if (getSTReport().isDisplayed()) {
 			bc.stepInfo("Report generated sucessfully");
@@ -729,13 +758,15 @@ public class SearchTermReportPage {
 			bc.failedStep("Report not generated sucessfully");
 		}
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @description This method is used to verify the documents count in doclist page
+	 * @description This method is used to verify the documents count in doclist
+	 *              page
 	 */
 	public String verifyingDocListCount() {
 		driver.waitForPageToBeReady();
-		driver.scrollingToBottomofAPage();		
+		driver.scrollingToBottomofAPage();
 		bc.waitForElement(dl.getTableFooterDocListCount());
 		bc.waitTime(5);
 		String DocListCount = dl.getTableFooterDocListCount().getText();
@@ -746,10 +777,11 @@ public class SearchTermReportPage {
 		driver.waitForPageToBeReady();
 		return DocumentCount;
 	}
-	
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @description This method is used to view in doclist from searcterm report page
+	 * @description This method is used to view in doclist from searcterm report
+	 *              page
 	 */
 	public void ViewInDocList() {
 		driver.scrollPageToTop();
@@ -760,6 +792,101 @@ public class SearchTermReportPage {
 		getViewinDocListBtn().ScrollTo();
 		getViewinDocListBtn().waitAndClick(30);
 		bc.stepInfo("Navigating from Search term report page to view in doc list page.");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : export STR Report and verify downloaded format
+	 * @param clickApplyBtn
+	 * @param downloadAndVerifyExport
+	 * @throws InterruptedException
+	 */
+	public void exportReportAndVerifyFormat(boolean clickApplyBtn, boolean downloadAndVerifyExport)
+			throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+
+		if (clickApplyBtn) {
+			bc.waitForElement(getApplyBtn());
+			getApplyBtn().waitAndClick(10);
+			bc.waitForElement(getSTReport());
+		}
+		int initialCount = bc.initialBgCount();
+		bc.waitForElement(getExportIcon());
+		getExportIcon().waitAndClick(10);
+		bc.VerifySuccessMessage(
+				"Your report has been pushed into the background, and you will get a notification (in the upper right-hand corner \"bullhorn\" icon when your report is completed and ready for viewing.");
+		bc.checkNotificationCount(initialCount, 1);
+		int afterCount = bc.initialBgCount();
+
+		if (downloadAndVerifyExport && initialCount < afterCount) {
+			bc.notificationSelection("", false);
+			bc.waitUntilFileDownload();
+
+			File ab = new File(Input.fileDownloadLocation);
+			String testPath = ab.toString() + "\\";
+
+			ReportsPage report = new ReportsPage(driver);
+			File a = report.getLatestFilefromDir(testPath);
+			System.out.println(a.getName());
+			bc.stepInfo(a.getName());
+
+			String fileName = a.getName();
+
+			String fileFormat = FilenameUtils.getExtension(fileName);
+			String expectedFormat = "xlsx";
+
+			String passMsg = "Downloaded File : " + fileName + "    And Format IS  : " + fileFormat;
+			String failMsg = "Downloaded File Format is Not As Expected";
+			bc.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
+
+		}
+
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : Select any column from STR page
+	 * @param columnName
+	 */
+	public void selectColumnFromSTRPage(String columnName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(selectColumnInSTRPage(columnName));
+		selectColumnInSTRPage(columnName).waitAndClick(10);
+
+		if (bc.getYesBtn().isElementAvailable(8)) {
+			bc.getYesBtn().waitAndClick(10);
+		}
+		bc.stepInfo("Selected  Column : " + columnName);
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @param searchName
+	 */
+	public void GenerateReportWithAnySearchOrTab(String[] searchOrTabName) {
+		bc.waitForElement(getSearchTermReport());
+		getSearchTermReport().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(mySavedSearchCheckbox());
+		for (int i = 0; i < searchOrTabName.length; i++) {
+			driver.scrollingToElementofAPage(getsearchOrTab_CB(searchOrTabName[i]));
+			bc.waitTillElemetToBeClickable(getsearchOrTab_CB(searchOrTabName[i]));
+			getsearchOrTab_CB(searchOrTabName[i]).waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		bc.waitTillElemetToBeClickable(getApplyBtn());
+		getApplyBtn().Click();
+		driver.waitForPageToBeReady();
+		bc.waitTime(3);
+		bc.waitForElement(getSTReport());
+		if (getSTReport().isDisplayed()) {
+			bc.stepInfo("Report generated sucessfull");
+		} else {
+			bc.failedStep("Report not generated sucessfull");
+		}
 	}
 
 }
