@@ -105,6 +105,9 @@ public class CodingForm {
 	public Element getCF_PreviewButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Preview')]");
 	}
+	public Element getCFHelpmsgTitleInCodingForm() {
+        return driver.FindElementByXPath("//td[@id='td_TAG_664']//span");
+    }
 
 	public Element getCF_Preview_Ok() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
