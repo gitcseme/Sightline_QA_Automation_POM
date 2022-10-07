@@ -1609,7 +1609,7 @@ public class IngestionCreationClass02 {
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.UniCodeFilesFolder);
 		
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
+		int actcount = sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
 		// Saved the My SavedSearch
 		sessionSearch.saveSearch(BasicSearchName);
 		sessionSearch.unReleaseDocsFromSecuritygroup(Input.securityGroup);
@@ -1618,6 +1618,7 @@ public class IngestionCreationClass02 {
 		ingestion.navigateToUnPublishPage();
 		ingestion.unpublish(BasicSearchName);
 		
+		
 		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1625,11 +1626,11 @@ public class IngestionCreationClass02 {
 			}
 		}), Input.wait30);
 		int docCount = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
-		if(docCount==0) {
-			baseClass.passedStep("Document count is 0");
+		if(docCount<=actcount) {
+			baseClass.passedStep("Unpublished ingestion count is less than total document count");
 		}
 		else {
-			baseClass.failedStep("Document count is not 0");
+			baseClass.failedStep("Unpublished ingestion count is equal to total document count");
 		}
 		loginPage.logout();
 			
