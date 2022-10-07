@@ -83,6 +83,7 @@ public class BatchRedactionRegression_22 {
 		sg.AddSecurityGroup(securityGrp);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		base.waitTime(2);	
 		sg.selectSecurityGroup(securityGrp);
 		driver.waitForPageToBeReady();
 		sg.assignRedactionTagtoSG(ReadctionTag);
@@ -91,6 +92,7 @@ public class BatchRedactionRegression_22 {
 		// assign access to users
 		user.navigateToUsersPAge();
 		user.assignAccessToSecurityGroups(securityGrp, Input.rmu1userName);
+		base.waitTime(2);
 		user.assignAccessToSecurityGroups(securityGrp, Input.rmu2userName);
 
 		// bulk release doc's to SG
@@ -115,6 +117,7 @@ public class BatchRedactionRegression_22 {
 
 		// perform Batch redaction
 		batch.VerifyBatchRedaction_ElementsDisplay(otherSGR1, true);
+		driver.waitForPageToBeReady();
 		batch.viewAnalysisAndBatchReport(ReadctionTag, Input.yesButton);
 		batch.verifyBatchHistoryStatus(otherSGR1);
 
@@ -125,6 +128,7 @@ public class BatchRedactionRegression_22 {
 
 		// perform Batch redaction
 		batch.VerifyBatchRedaction_ElementsDisplay(defSGR1, true);
+		driver.waitForPageToBeReady();
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
 		batch.verifyBatchHistoryStatus(defSGR1);
 
@@ -142,6 +146,7 @@ public class BatchRedactionRegression_22 {
 
 		// perform Batch redaction
 		batch.VerifyBatchRedaction_ElementsDisplay(otherSGR2, true);
+		driver.waitForPageToBeReady();
 		batch.viewAnalysisAndBatchReport(ReadctionTag, Input.yesButton);
 		batch.verifyBatchHistoryStatus(otherSGR2);
 
