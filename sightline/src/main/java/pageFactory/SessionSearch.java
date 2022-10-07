@@ -10416,6 +10416,10 @@ public class SessionSearch {
 
 			base.waitForElement(getSearchButton());
 			getSearchButton().waitAndClick(10);
+			
+			if (getTallyContinue().isElementAvailable(2)) {
+				getTallyContinue().waitAndClick(10);
+			}
 
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
