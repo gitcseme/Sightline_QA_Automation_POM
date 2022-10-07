@@ -1,7 +1,10 @@
 package testScriptsRegressionSprint21;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -55,8 +58,7 @@ public class Export_Regression21 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
-	
+
 	/**
 	 * @author Brundha TESTCASE No:RPMXCON-63077 Date:9/14/2022
 	 * @Description:Verify that new production export should be generated with
@@ -122,15 +124,18 @@ public class Export_Regression21 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		System.out.println(actualCopedText);
-		base.stepInfo("Export Path"+actualCopedText);
+		base.stepInfo("Export Path" + actualCopedText);
 		String parentTab = page.openNewTab(actualCopedText);
-		
+
 		page.goToImageFiles();
 		for (int i = 2; i < 6; i++) {
 			if (page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
 				base.passedStep("Tiff files are generated successfully");
+			} else if (page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates)
+					.isElementAvailable(2)) {
+				base.passedStep("Tiff files are generated successfully");
 			} else {
-				base.failedStep("Tiff files are not generated");
+				base.failedStep("Tiff file is not generated");
 			}
 		}
 		driver.waitForPageToBeReady();
@@ -138,7 +143,7 @@ public class Export_Regression21 {
 		page.getFileDir("Natives/").waitAndClick(10);
 		page.getFileDir("0001/").waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.verifyingGeneratedExporttedfile(2, prefixID, suffixID, subBates,".doc");
+		page.verifyingGeneratedExporttedfile(5, prefixID, suffixID, subBates, ".doc");
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
 
@@ -169,21 +174,24 @@ public class Export_Regression21 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedTexts = page.getCopiedTextFromClipBoard();
 		System.out.println(actualCopedTexts);
-		base.stepInfo("Export Path"+actualCopedTexts);
+		base.stepInfo("Export Path" + actualCopedTexts);
 		String parentTabs = page.openNewTab(actualCopedTexts);
 		page.goToPDFImageFiles();
 		for (int i = 2; i < 6; i++) {
 			if (page.getFirstPDFImageFile(prefixID1 + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(2)) {
 				base.passedStep("Pdf files are generated successfully");
+			} else if (page.getFirstPDFImageFile(prefixID1 + "0" + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(2)) {
+					
+				base.passedStep("pdf files are generated successfully");
 			} else {
-				base.failedStep("Pdf files are not generated");
+				base.failedStep("Tiff file is not generated");
 			}
 		}
 		page.navigatingBack(2);
 		page.getFileDir("Natives/").waitAndClick(10);
 		page.getFileDir("0001/").waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.verifyingGeneratedExporttedfile(2, prefixID1, suffixID1, subBates1,".doc");
+		page.verifyingGeneratedExporttedfile(5, prefixID1, suffixID1, subBates1, ".doc");
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTabs);
 		loginPage.logout();
@@ -217,7 +225,12 @@ public class Export_Regression21 {
 		sessionSearch.ViewInDocList();
 
 		DocListPage doclist = new DocListPage(driver);
-		doclist = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+		doclist.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
+		int DocFileExtension = base.getIndex(doclist.getHeaderText(), Input.docFileExt);
+		List<String> FileExtense = base.availableListofElements(doclist.GetColumnData(DocFileExtension));
+		String FirstFile = FileExtense.get(0).toString().trim();
+		System.out.println(FirstFile);
 		doclist.documentSelection(3);
 		doclist.bulkTagExisting(tagname);
 
@@ -246,17 +259,16 @@ public class Export_Regression21 {
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		System.out.println(actualCopedText);
-		base.stepInfo("Export Path"+actualCopedText);
+		base.stepInfo("Export Path" + actualCopedText);
 		page.getFileDir("VOL0001").waitAndClick(10);
 		page.getFileDir("Natives/").waitAndClick(10);
 		page.getFileDir("0001/").waitAndClick(10);
 		driver.waitForPageToBeReady();
-		page.verifyingGeneratedExporttedfile(2, prefixID, suffixID, subBates,".xlsx");
+		page.verifyingGeneratedExporttedfile(2, prefixID, suffixID, subBates, FirstFile);
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
 	}
 
-	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
