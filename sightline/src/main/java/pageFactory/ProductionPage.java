@@ -22246,7 +22246,7 @@ public class ProductionPage {
 			new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
 			driver.waitForPageToBeReady();
 			getEnterBranding(brandingLoc)
-					.SendKeys(brandingLoc + " Multiple Line Branding " + " " + Utility.randomCharacterAppender(50));
+					.SendKeys(brandingLoc + " Multiple Line Branding Text Verifying" + " " + Utility.randomCharacterAppender(50));
 			base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
 			String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
 			base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
