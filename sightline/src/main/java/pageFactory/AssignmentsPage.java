@@ -1595,6 +1595,9 @@ public class AssignmentsPage {
 		return driver.FindElementsByXPath(
 				"//input[@name='assKeywordsList' and @checked='checked']/parent::*/following-sibling::div");
 	}
+	public Element getAssignmentAction_FolderAll() {
+		return driver.FindElementByXPath("//a[text()='Folder All Documents']");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -11286,5 +11289,31 @@ public class AssignmentsPage {
 		}
 		return listOfKeywords;
 	}
+	
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @description this method will Perform Tag all / Folder All option in manage
+	 *              assignment page
+	 */
+
+	public void Bulk_TagAll_FolderAll(boolean tagAll) {
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentActionDropdown());
+		getAssignmentActionDropdown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("clicked Action dropdown");
+		if (tagAll) {
+			getAssignmentAction_TagAll().ScrollTo();
+			getAssignmentAction_TagAll().Click();
+			bc.stepInfo("clicked Tag All docs option ");
+		} else {
+			getAssignmentAction_FolderAll().ScrollTo();
+			getAssignmentAction_FolderAll().Click();
+			bc.stepInfo("clicked Folder All docs option ");
+		}
+
+	}
+	
 
 }
