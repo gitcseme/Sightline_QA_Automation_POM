@@ -2277,11 +2277,9 @@ public class AssignmentsPage {
 				return getAssgGrptionDropdown().Visible();
 			}
 		}), Input.wait60);
-		Thread.sleep(2000);
 		getAssgGrptionDropdown().waitAndClick(10);
 
-		Thread.sleep(2000);
-
+		bc.waitForElement(getAssgnGrp_Create());
 		getAssgnGrp_Create().waitAndClick(20);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2289,25 +2287,13 @@ public class AssignmentsPage {
 			}
 		}), Input.wait60);
 		getAssignmentName().SendKeys(assgngrpName);
-		try {
-			getAssignmentCodingFormDropDown().isDisplayed();
-			Assert.fail();
-		} catch (org.openqa.selenium.NoSuchElementException e) {
-
-			System.out.println("'getAssignmentCodingFormDropDown' is not displayed");
-		}
+		
+		bc.waitForElement(getAssgngrp_CascadeSetting());
 		getAssgngrp_CascadeSetting().waitAndClick(10);
-
-		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
-		Thread.sleep(2000);
-
+		bc.waitForElement(getAssgnGrp_Create_DrawPoolCount());
 		getAssgnGrp_Create_DrawPoolCount().SendKeys("100");
-		Thread.sleep(2000);
-
-		// getAssgnGrp_Create_Keepfamilycount().WaitUntilPresent();
-		System.out.println(getAssgnGrp_Create_Keepfamilycount().GetAttribute("value"));
-		Assert.assertEquals("100", getAssgnGrp_Create_Keepfamilycount().GetAttribute("value"));
-		getAssignmentSaveButton().waitAndClick(5);
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(10);
 
 	}
 

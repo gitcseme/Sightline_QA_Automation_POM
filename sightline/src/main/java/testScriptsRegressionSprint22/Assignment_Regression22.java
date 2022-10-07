@@ -134,6 +134,7 @@ public class Assignment_Regression22 {
 		baseClass.stepInfo("create assignment and group wrt to project");
 		for (int i = 0; i < project.length; i++) {
 			baseClass.selectproject(project[i]);
+			assignment.navigateToAssignmentsPage();
 			assignment.createAssgnGroup(assignGroup[i]);
 			assignment.selectAssignmentGroup(assignGroup[i]);
 			assignment.createAssignment(assignName[i], Input.codeFormName);
