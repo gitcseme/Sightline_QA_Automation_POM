@@ -4007,7 +4007,6 @@ public class SavedSearch {
 
 		getDocListIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
-
 		if (getDocListPopup().isElementAvailable(2)) {
 			getbtnDocListContinue().waitAndClick(5);
 		}
@@ -6221,6 +6220,7 @@ public class SavedSearch {
 	 * @author Raghuram.A Date: 11/25/21 Modified date:N/A Modified by: N/A
 	 */
 	public void navigateToSSPage() {
+		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		base.waitForElement(NavigateToSearch());
 		NavigateToSearch().waitAndClick(10);

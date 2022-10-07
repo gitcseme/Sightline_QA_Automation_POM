@@ -1571,7 +1571,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getCodingFormOrderPopUpHeader() {
-		return driver.FindElementByXPath("//span[text()='Coding Form Order']");
+		return driver.FindElementByXPath("//h3[text()='Coding Form Order']");
 	}
 
 	public Element getCodingFormOrderHamburgerIcons(int listIteam) {

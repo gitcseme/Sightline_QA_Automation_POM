@@ -523,6 +523,9 @@ public class Assignment_Regression22 {
 	@Test(description = "RPMXCON-53700", enabled = true, groups = { "regression" })
 	public void VerifyRedistributefunctionality_CompletedDocs()
 			throws InterruptedException, ParseException, IOException {
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("To verify the functionality of the ReDistribute Document for Completed Document.");
 		baseClass.stepInfo("Test case Id: RPMXCON-53700");
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
@@ -536,7 +539,8 @@ public class Assignment_Regression22 {
 
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		assignment.addReviewerAndDistributeDocs();
-		baseClass.waitTime(2);
+		//added wait time since success message pop ups get overlapped so added some hard waits to avoid failure
+		baseClass.waitTime(5);
 		assignment.completeDocs(Input.rev1userName);
 		baseClass.waitTime(4);
 		assignment.VerifyWarnignMSGinManageRevTab_RedistributeDocs(Input.rev1userName, null);
