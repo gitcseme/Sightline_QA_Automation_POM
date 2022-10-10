@@ -540,7 +540,7 @@ public class Assignment_Regression22 {
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		assignment.addReviewerAndDistributeDocs();
 		//added wait time since success message pop ups get overlapped so added some hard waits to avoid failure
-		baseClass.waitTime(5);
+		baseClass.waitTime(8);
 		assignment.completeDocs(Input.rev1userName);
 		baseClass.waitTime(4);
 		assignment.VerifyWarnignMSGinManageRevTab_RedistributeDocs(Input.rev1userName, null);
