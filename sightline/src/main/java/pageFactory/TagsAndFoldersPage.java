@@ -284,6 +284,11 @@ public class TagsAndFoldersPage {
 	}
 
 	// added by sowndariya
+	
+	public Element getCreatedTag(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'"+tag+"')]");
+	}
+
 	public Element gettxtTagClassification() {
 		return driver.FindElementByXPath("//*[contains (text(),'Tag Classification: ')]");
 	}
