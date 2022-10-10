@@ -4823,8 +4823,8 @@ public class SessionSearch {
 		} else {
 			System.out.println("View is not found");
 		}
-		base.waitForElement(getDocViewAction());
-		getDocViewAction().waitAndClick(5);
+		base.waitForElement(getDocViewActionDL());
+		getDocViewActionDL().waitAndClick(5);
 
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");
