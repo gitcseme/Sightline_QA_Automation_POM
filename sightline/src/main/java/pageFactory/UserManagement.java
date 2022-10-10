@@ -273,8 +273,8 @@ public class UserManagement {
 	}
 
 	public Element manageUser() {
-		return driver.FindElementByXPath("//*[@id=\"LeftMenu\"]/li[3]/ul/li[6]/a");
-	}
+        return driver.FindElementByXPath("//a[normalize-space()='Users']");
+    }
 
 	public Element userTextInput() {
 		return driver.FindElementByXPath("//*[@id=\"txtsearchUser\"]");
