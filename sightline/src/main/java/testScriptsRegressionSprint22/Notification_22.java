@@ -345,8 +345,10 @@ public class Notification_22 {
 
 //		verify notification in Doclist Page
 		base.checkNotificationCount(initialBg, 1);
+		driver.waitForPageToBeReady();
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
+		driver.waitForPageToBeReady();
 		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 		tf.navigateToTagsAndFolderPage();
 		base.waitTillElemetToBeClickable(tf.getTag_ToggleDocCount());
