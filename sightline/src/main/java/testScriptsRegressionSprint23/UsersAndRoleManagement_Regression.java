@@ -243,6 +243,70 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Arunkumar date: 07/10/2022 TestCase Id:RPMXCON-52432
+	 * Description :To verify when Reviewer try to impersonates
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-52432",enabled = true, groups = { "regression" })
+	public void verifyReviewerImpersonate() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52432");
+		baseClass.stepInfo("Verify when Reviewer try to impersonate");
+		userManage = new UserManagement(driver);
+		//login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+		// verify landing page of reviewer
+		baseClass.verifyUrlLanding(Input.url + "ReviewerDashboard/Index", "Respective Landing Page displayed",
+				"Not displayed");
+		baseClass.stepInfo("Verify impersonating as reviewer");
+		userManage.verifyRevImpersonation();
+		baseClass.passedStep("Impersonation not allowed for reviewer user");
+		loginPage.logout();	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 07/10/2022 TestCase Id:RPMXCON-52472
+	 * Description :To verify user rights from Edit Profile > Functionality for Project Admin
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52472",dataProvider = "sapa",enabled = true, groups = { "regression" })
+	public void verifyUserFunctionalityForPA(String userName, String password,String role) throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52472");
+		baseClass.stepInfo("verify user rights from Edit Profile > Functionality for Project Admin");
+		userManage = new UserManagement(driver);
+		//login as SA and verify functionality tab
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as "+role);
+		baseClass.stepInfo("Apply filter for PA role");
+		userManage.navigateToUsersPAge();
+		userManage.verifyFunctionalityTab(Input.pa1userName,Input.ProjectAdministrator);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 07/10/2022 TestCase Id:RPMXCON-52471
+	 * Description :To verify user rights from Edit Profile > Functionality for Sys Admin role
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52471",enabled = true, groups = { "regression" })
+	public void verifyUserFunctionalityForSA() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52471");
+		baseClass.stepInfo("verify user rights from Edit Profile > Functionality for Sys Admin role");
+		userManage = new UserManagement(driver);
+		//login as reviewer
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.verifyUrlLanding(Input.url + "User/UserListView", "landed on User list page",
+				"not on user list page");
+		baseClass.stepInfo("Apply filter for SA role and verify");
+		userManage.verifyFunctionalityTab(Input.sa1userName,Input.SystemAdministrator);
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
