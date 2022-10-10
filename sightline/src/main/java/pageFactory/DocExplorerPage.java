@@ -468,9 +468,8 @@ public class DocExplorerPage {
 	}
 
 	public Element getDocExplorerTab() {
-		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Doc Explorer']");
-	}
-
+        return driver.FindElementByXPath("//nav[@id='LeftMenu']/ul/li/a[@title='Doc Explorer']");
+    }
 	// Added by Gopinath - 21/03/2022
 	public ElementCollection getDocExplorerFolders() {
 		return driver.FindElementsByXPath(
