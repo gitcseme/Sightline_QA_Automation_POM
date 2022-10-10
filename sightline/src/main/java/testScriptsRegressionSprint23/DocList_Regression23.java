@@ -188,7 +188,134 @@ public class DocList_Regression23 {
 		loginPage.logout();
 	}
 
-	
+	/**
+	 * @author Vijaya.Rani ModifyDate:07/10/2022 RPMXCON-53892
+	 * @throws Exception
+	 * @Description To verify, As an Reviewer user login, I will be able to perform
+	 *              all actions from Doc List page, when I will go from Saved search
+	 *              to Doc List.
+	 */
+	@Test(description = "RPMXCON-53892", enabled = true, groups = { "regression" })
+	public void verifyAsReviewerPerformAllActinsFromDocLsitPage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53892");
+		baseClass.stepInfo(
+				"To verify, As an Reviewer user login, I will be able to perform all actions from Doc List page, when I will go from Saved search to Doc List.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocViewPage docview=new DocViewPage(driver);
+		String tagName = "tag" + UtilityLog.dynamicNameAppender();
+		String folderName = "folder" + UtilityLog.dynamicNameAppender();
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagName, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(folderName, Input.securityGroup);
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		// Save searched content
+		sessionSearch.saveSearch(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+
+		// select multiple Documents and bulktag
+		docList.documentSelection(3);
+		sessionSearch.bulkTagExisting(tagName);
+		baseClass.stepInfo("DocListpage Action Bulktag is created");
+		// select multiple Documents and bulkfolder
+		driver.waitForPageToBeReady();
+		docList.documentSelection(3);
+		docList.bulkFolderExisting(folderName);
+		baseClass.stepInfo("DocListpage Action Bulkfolder is created");
+		// filter action
+		driver.waitForPageToBeReady();
+		docList.EmailAllDomainsNameIncludeVerificationInDoc();
+		baseClass.stepInfo("DocListpage Action filters is performed");
+		// select multiple Documents and bulkfolder
+		driver.waitForPageToBeReady();
+		docList.documentSelection(5);
+		docList.docListToDocView();
+		softAssert.assertTrue(docview.getDocView_DefaultViewTab().Displayed());
+		baseClass.passedStep("Navigate to DocViewPage Successfully");
+		softAssert.assertAll();
+		baseClass.stepInfo("DocListpage Action viewInDocview ");
+		baseClass.passedStep("User will be able to perform all Doc List actions Successfully");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:07/10/2022 RPMXCON-54283
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify the waveform from audio player for the audio files less
+	 *              than 1 hour from preview document of doc list.
+	 */
+
+	@Test(description = "RPMXCON-54283", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyWaveFormAudioPlayerInperviewDocumentInDocList(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54283");
+		baseClass.stepInfo(
+				"Verify the waveform from audio player for the audio files less than 1 hour from preview document of doc list");
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		DocListPage docList = new DocListPage(driver);
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.oneHourAudio);
+		sessionSearch.ViewInDocList();
+
+		baseClass.waitForElement(docList.getDocListPerviewBtn());
+		docList.getDocListPerviewBtn().waitAndClick(5);
+
+		// verifying more than one hour audio docs
+		String overAllAudioTime = docViewPage.getDocview_Audio_EndTime().getText();
+		String[] splitData = overAllAudioTime.split(":");
+		String data = splitData[0].toString();
+		System.out.println(data);
+		if (Integer.parseInt(data) >= 01) {
+			baseClass.stepInfo("Audio docs have more than:" + overAllAudioTime + " hour to check zoom function");
+		} else {
+			baseClass.failedMessage("Lesser than one hour");
+		}
+
+		// checking zoom in function working for more than one hour audio docs
+		driver.waitForPageToBeReady();
+		docViewPage.getAudioDocZoom().waitAndClick(5);
+		boolean zoomBar = docViewPage.getAudioZoomBar().Displayed();
+		softAssertion.assertTrue(zoomBar);
+		baseClass.passedStep("Zoom functionality working for more than one hour of document");
+
+		// verifying waveform after zoom
+		boolean waveforms = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(waveforms);
+		baseClass.passedStep("Waveform is displayed for same document after zoom in");
+
+		// validating audio is still playing after zoom
+		boolean audioPlays = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
+		softAssertion.assertTrue(audioPlays);
+		baseClass.stepInfo("Audio button docs are in play mode after zoom in");
+
+		// logout
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
