@@ -251,16 +251,11 @@ public class Notification_23 {
 
 		String idValue = batchPrint.getBatchId(1).getText();
 		System.out.println("Id : " + idValue);
-		sessionSearch.getTxtDownloadFile(idValue).isElementAvailable(200);
-		driver.Navigate().refresh();
-
-		driver.waitForPageToBeReady();
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
-		System.out.println("status is : " + status);
 
-		String passMsg = "Batch Print status of Id : " + idValue + "is : " + status;
-		String failedMsg = "Batch print status is not displayed as expected";
-		base.textCompareEquals(status, "COMPLETED", passMsg, failedMsg);
+		String passMsg="Batch Print status of Id : "+idValue +"is : "+status;
+		String failedMsg="Batch print status is not displayed as expected";
+		base.textCompareEquals(status, "INPROGRESS", passMsg, failedMsg);
 		loginPage.logout();
 	}
 
