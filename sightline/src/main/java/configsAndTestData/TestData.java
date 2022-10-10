@@ -824,7 +824,10 @@ public class TestData {
     public String NR_Detection;
 	public String PII;
 	public String PRIV;
-	
+	public String collectionProgressH;
+	public String collectionStatusH;
+	public String collectionErrColorCodeOrange;
+	    
     //Added by Aathith ,Client Page details
   	public String FilterByType;
   	public String Name;

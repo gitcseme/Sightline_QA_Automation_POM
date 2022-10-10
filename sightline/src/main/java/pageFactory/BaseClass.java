@@ -4579,4 +4579,20 @@ public class BaseClass {
 		element.Clear();
 
 	}
+	
+	/**
+	 * @Author 
+	 * @param element
+	 * @param attribute
+	 * @return
+	 */
+	public String getCSSValue(Element element,String attribute) {
+        String statsColor = null;
+        try {
+            statsColor = element.GetCssValue(attribute);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statsColor;
+    }
 }

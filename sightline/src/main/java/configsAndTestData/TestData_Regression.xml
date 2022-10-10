@@ -367,7 +367,10 @@
 	<cancelCollectionNotification>Cancel collection initiated successfully.</cancelCollectionNotification>
 	<progressBarHeader>Collection Progress</progressBarHeader>
 	<splCharEmailFolder>ZAutomation$@</splCharEmailFolder>
-
+   <collectionProgressH>Collection Progress</collectionProgressH>
+   <collectionStatusH>Collection Status</collectionStatusH>
+   <collectionErrColorCodeOrange>#F88C00</collectionErrColorCodeOrange>
+   
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
 	<orderCriteria>DocID</orderCriteria>

@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -488,7 +488,10 @@ public class Input {
 	public static String cancelCollectionNotification;
 	public static String progressBarHeader;
 	public static String splCharEmailFolder;
-
+	public static String collectionProgressH;
+    public static String collectionStatusH;
+    public static String collectionErrColorCodeOrange;
+    
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
 	public static String crammerdocumentID;
@@ -1455,7 +1458,10 @@ public class Input {
 		cancelCollectionNotification = testData.getCancelCollectionNotification();
 		progressBarHeader = testData.getProgressBarHeader();
 		splCharEmailFolder = testData.getSplCharEmailFolder();
-
+		collectionProgressH = testData.getCollectionProgressH();
+        collectionStatusH = testData.getCollectionStatusH();
+        collectionErrColorCodeOrange = testData.getCollectionErrColorCodeOrange();
+        
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
