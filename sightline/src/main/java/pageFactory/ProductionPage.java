@@ -22379,13 +22379,15 @@ public class ProductionPage {
 		 * @param subBates
 		 * @Description:verifying Generated text file in export
 		 */
-			public void verifyingGeneratedExporttedfile(int Doc,String prefixID,String suffixID,String subBates,String DocType) {
-				if (verifyingNativeFiles(prefixID + "(" + Doc + ")" + suffixID, subBates,DocType ).isElementAvailable(2)) {
-					base.passedStep("Files are generated successfully");
-				} else {
-					base.failedStep("Files are not generated");
-				}
+		public void verifyingGeneratedExporttedfile(int Doc, String prefixID, String suffixID, String subBates,
+				String DocType) {
+			if (verifyingNativeFiles(prefixID + "(" + Doc + ")" + suffixID, subBates, DocType).isElementAvailable(2)) {
+				base.passedStep("Files are generated successfully");
+			} else if (verifyingNativeFiles(prefixID + "0" + "(" + Doc + ")" + suffixID, subBates, DocType)
+					.isElementAvailable(2)) {
+				base.passedStep("Files are generated successfully");
 			}
+		}
 		
 			/**
 			 * @author Brundha.T

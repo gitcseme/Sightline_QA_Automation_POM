@@ -273,8 +273,11 @@ public class UserManagement {
 	}
 
 	public Element manageUser() {
+
 		return driver.FindElementByXPath("//nav[@id='LeftMenu']//li//a[@name='Users']");
 	}
+
+  
 
 	public Element userTextInput() {
 		return driver.FindElementByXPath("//*[@id=\"txtsearchUser\"]");
@@ -939,9 +942,13 @@ public class UserManagement {
 		return driver.FindElementByXPath("//label[contains(text(),' Count of unique')]");
 	}
 
-	
-	
-	
+	//added by arun
+	public Element getRole(String role) {
+		return driver.FindElementByXPath("//select[@id='ddlAvailableRoles']//option[text()='"+role+"']");
+	}
+	public Element getCheckboxStatus(String function) {
+		return driver.FindElementByXPath("//input[@id='UserRights_Can"+function+"']");
+	}
 	
 	public UserManagement(Driver driver) {
 
@@ -4217,6 +4224,80 @@ public class UserManagement {
 		String actual=getSameEmailErrorMsg().getText();
 		softAssertion.assertEquals(actual, expected);
 		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify reviewer impersonation
+	 */
+	public void verifyRevImpersonation() {
+		String[] roles = {"Project Administrator","Review Manager","System Administrator",
+				"Domain Administrator"};
+		bc.waitForElement(bc.getSignoutMenu());
+		bc.getSignoutMenu().waitAndClick(10);
+		bc.waitForElement(bc.getChangeRole());
+		bc.getChangeRole().waitAndClick(10);
+		bc.waitForElement(bc.getSelectRole());
+		for(int i=0;i<roles.length;i++) {
+			if(!getRole(roles[i]).isElementAvailable(5)) {
+				bc.passedStep("Reviewer user not allowed to impersonate as: "+roles[i]);
+			}
+			else {
+				bc.failedStep("Reviewer allowed to impersonate as: "+roles[i]);
+			}
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the functionality access tab for user
+	 */
+	public void verifyFunctionalityTab(String user,String role) throws Exception {
+		
+		String[] userFunction = {"Manage","Ingestions","Productions","Searching",
+				"ConceptExplorer","CommunicationsExplorer","Proview","Datasets",
+				"AllReports","DownloadNative","Redactions","Highlighting","ReviewerRemarks","AnalyticsPanels"};
+		passingUserName(user);
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		applyFilter();
+		editLoginUser();
+		bc.waitForElement(getFunctionalityTab());
+		getFunctionalityTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		for(int i=0;i<userFunction.length;i++) {
+			// for checked function
+			String status = getCheckboxStatus(userFunction[i]).GetAttribute("checked");
+			System.out.println(status);
+			if(userFunction[i].equalsIgnoreCase("Ingestions")&& status==null) {
+				bc.passedStep("ingestion option unchecked by default"+userFunction[i]);
+			}
+			else if(status.equalsIgnoreCase("true")) {
+				bc.passedStep("checked by default: "+userFunction[i]);
+			}
+			else {
+				bc.failedStep("not checked by default"+userFunction[i]);
+			}
+		}
+		if(role.contains("System Administrator")) {
+			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage Domain Projects").GetAttribute("style");
+			bc.stepInfo("Manage domain project status for SA "+checkBoxStatus);
+			if(checkBoxStatus.contains("transparent")) {
+				bc.passedStep("Manage Domain project checked and editable");
+			}
+			else {
+				bc.failedStep("Manage Domain project not editable");
+			}
+		}
+		else if(role.contains("Project Administrator")) {
+			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage Domain Projects").GetAttribute("style");
+			bc.stepInfo("Manage domain project status for PA "+checkBoxStatus);
+			if(checkBoxStatus.contains("grey")) {
+				bc.passedStep("Manage Domain project unchecked and not editable");
+			}
+			else {
+				bc.failedStep("Manage Domain project editable");
+			}
+		}
 	}
 
 }
