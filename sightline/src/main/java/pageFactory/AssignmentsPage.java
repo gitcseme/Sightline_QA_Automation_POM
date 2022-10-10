@@ -10966,6 +10966,7 @@ public class AssignmentsPage {
 	public void ViewAllDocsinDocListBtnINActionDD() {
 
 		bc.waitForElement(getAssignmentActionDropdown());
+		getAssignmentActionDropdown().ScrollTo();
 		getAssignmentActionDropdown().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("clicked Action dropdown");
