@@ -117,7 +117,7 @@ public class AssignmentsPage {
 
 	// change this name to pop or smtg
 	public Element getAssignment_Actionlikepopup() {
-		return driver.FindElementByXPath("//span[@class='ui-dialog-title']/div");
+		return driver.FindElementByXPath("//h3[@class='ui-dialog-title']/div");
 	}
 
 	public Element getAssignment_ManageReviewersTab() {
