@@ -370,7 +370,9 @@ public class TestData {
 	public String cancelCollectionNotification;
 	public String progressBarHeader;
 	public String splCharEmailFolder;
-
+	public String retreivingDSCountH;
+	public String dateKeywordHeaderC;
+	
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
