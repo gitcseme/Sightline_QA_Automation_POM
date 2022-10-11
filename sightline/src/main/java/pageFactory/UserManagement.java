@@ -949,6 +949,28 @@ public class UserManagement {
 	public Element getCheckboxStatus(String function) {
 		return driver.FindElementByXPath("//input[@id='UserRights_Can"+function+"']");
 	}
+	public Element addUserPopup() {
+		return driver.FindElementByXPath("//div[@id='popupdiv']");
+	}
+	public Element getProjectTextBox() {
+		return driver.FindElementById("txtBxAdminCreateUserProj");
+	}
+	public Element getOptionSelectSG() {
+		return driver.FindElementByXPath("//select[@name='SecurityGroupIDs']");
+	}
+	public  Element getRecoveryEmail() {
+		return driver.FindElementByXPath("//input[@id='txtBxRecoveryEmailID']");
+	}
+	public Element getLastNameEditPopup() {
+		return driver.FindElementByXPath("//span[@role='textbox']//input[@id='txtBxUserLastName']");
+	}
+	public Element getUserEditBtn() {
+		return driver.FindElementByXPath("//table[@id='dtUserList']//a[text()='Edit']");
+	}
+	public Element getSGDropDown() {
+		return driver.FindElementByXPath("//select[@id='SysAdminSecGroup']");
+	}
+	
 	
 	public UserManagement(Driver driver) {
 
@@ -4299,5 +4321,136 @@ public class UserManagement {
 			}
 		}
 	}
+	
+	/**
+	 * @author: Arun Created Date: 10/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the add new user popup details
+	 */
+	public void verifyAddNewUserPopup(String role) {
+		navigateToUsersPAge();
+		bc.waitForElement(getAddUserBtn());
+		getAddUserBtn().waitAndClick(10);
+		//checking user popup availability
+		if(addUserPopup().isElementAvailable(15)) {
+			bc.passedStep("Add new user popup displayed");
+		}
+		else {
+			bc.failedStep("Add new user popup not displayed");
+		}
+		bc.waitForElement(bc.getSelectRole());
+		bc.getSelectRole().selectFromDropdown().selectByVisibleText(role);
+		//checking project display status
+		if(getProjectTextBox().isElementAvailable(10) && getOptionSelectSG().isElementAvailable(10)) {
+			bc.passedStep("Project and security group status available in add user popup");
+			
+			String projectStatus = getProjectTextBox().GetAttribute("readonly");
+			String impersonatedProject = getProjectTextBox().GetAttribute("value");
+			
+			bc.stepInfo("project displayed status:"+projectStatus);
+			bc.stepInfo("Project:"+impersonatedProject);
+			//for rmu impersonation
+			if(projectStatus.equalsIgnoreCase("true") && impersonatedProject.equalsIgnoreCase(Input.projectName)) {
+				bc.passedStep("Impersonated Project displayed in read only mode");
+			}
+			//for PA impersonation
+			else if(projectStatus.equalsIgnoreCase("true") && impersonatedProject.isEmpty()) {
+				bc.passedStep("Project displayed in read only mode");
+			}
+			else {
+				bc.failedStep("project not displayed in read only mode");
+			}
+			
+		}
+		else {
+			bc.failedStep("project and security group option not available in add user popup");
+		}
+		
+		getDomainUserCancelButton().waitAndClick(10);
+	}
+	
+	
+	/**
+	 * @author: Arun Created Date: 10/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will verify the status of recovery email address in 
+	 * add user popup
+	 */
+	public void verifyRecoveryEmailFieldStatus(String email,String project,String userType) throws Exception {
+		
+		if(userType.equalsIgnoreCase("Existing")) {
+			filterByName(email);
+			bc.waitForElement(getUserEditBtn());
+			getUserEditBtn().waitAndClick(10);
+			bc.waitForElement(getCancel());
+		}
+		else {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().waitAndClick(10);
+			bc.waitForElement(getDomainUserCancelButton());
+		}
+		//check recovery field
+		if(getRecoveryEmail().isDisplayed()) {
+			bc.failedStep("Recovery email address field displayed for user");
+		}
+		else {
+			bc.passedStep("Recovery email address field not displayed in the user edit popup");
+		}
+		if(userType.equalsIgnoreCase("Existing")) {
+			getCancel().waitAndClick(10);
+		}
+		else {
+			getDomainUserCancelButton().waitAndClick(10);
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 11/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will edit a single field in edit user popup
+	 */
+	public void editExistingUserDetail(String email,String project,Element elem,String editData) throws Exception {
+		navigateToUsersPAge();
+		filterByName(email);
+		bc.waitForElement(getUserEditBtn());
+		getUserEditBtn().waitAndClick(10);
+		bc.waitForElement(elem);
+		elem.SendKeys(editData);
+		bc.waitForElement(getSubmit());
+		getSubmit().waitAndClick(10);
+		bc.VerifySuccessMessage("User profile was successfully modified");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 11/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will add new user as different users
+	 */
+	public void addNewUserAsDifferentUsers(String loginUser,String firstName, String lastName,String role,
+			String email,String domain,String project) {
+		
+		if(loginUser.equalsIgnoreCase("SA")) {
+			createNewUser(firstName,lastName, role, email, domain, project);
+		}
+		else if(loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().waitAndClick(10);
+			bc.waitForElement(getFirstName());
+			getFirstName().SendKeys(firstName);
+			bc.waitForElement(getLastName());
+			getLastName().SendKeys(lastName);
+			bc.waitForElement(getSelectRole());
+			getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			bc.waitForElement(getEmail());
+			getEmail().SendKeys(email);
 
+			if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+				bc.waitForElement(getSGDropDown());
+				getSGDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+			}
+			bc.waitForElement(getSave());
+			getSave().waitAndClick(10);
+			bc.VerifySuccessMessage("User profile was successfully created");
+		}
+	}
+			
 }
