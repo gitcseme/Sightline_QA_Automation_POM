@@ -440,6 +440,165 @@ public class DocList_Regression23 {
 		
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/10/2022 RPMXCON-53881
+	 * @throws Exception
+	 * @Description To verify, As an RM user login, When I will apply some filter on
+	 *              Doc List and then select some documents after filtration, I will
+	 *              be able to go to Doc View page.
+	 */
+	@Test(description = "RPMXCON-53881", enabled = true, groups = { "regression" })
+	public void verifyAsRMUSomeFilterInDocListGotoDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53881");
+		baseClass.stepInfo(
+				"To verify, As an RM user login, When I will apply some filter on Doc List and then select some documents after filtration, I will be able to go to Doc View page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		// filter action
+		driver.waitForPageToBeReady();
+		docList.EmailAllDomainsNameIncludeVerificationInDoc();
+		baseClass.stepInfo("DocListpage Action filters is performed");
+
+		// select multiple Documents
+		driver.waitForPageToBeReady();
+		docList.documentSelection(5);
+		docList.docListToDocView();
+		softAssert.assertTrue(docview.getDocView_DefaultViewTab().Displayed());
+		baseClass.passedStep("Navigate to DocViewPage Successfully");
+		softAssert.assertAll();
+		baseClass.stepInfo("DocListpage Action viewInDocview ");
+		baseClass.passedStep("User will land in Doc View page with selected documents Successfully");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/10/2022 RPMXCON-53880
+	 * @throws Exception
+	 * @Description To verify, As an Project admin user login, When I will apply
+	 *              some filter on Doc List and then select some documents after
+	 *              filtration, I will be able to go to Doc View page.
+	 */
+	@Test(description = "RPMXCON-53880", enabled = true, groups = { "regression" })
+	public void verifyAsPASomeFilterInDocListGotoDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53880");
+		baseClass.stepInfo(
+				"To verify, As an Project admin user login, When I will apply some filter on Doc List and then select some documents after filtration, I will be able to go to Doc View page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		// filter action
+		driver.waitForPageToBeReady();
+		docList.EmailAllDomainsNameIncludeVerificationInDoc();
+		baseClass.stepInfo("DocListpage Action filters is performed");
+
+		// select multiple Documents
+		driver.waitForPageToBeReady();
+		docList.documentSelection(5);
+		docList.docListToDocView();
+		softAssert.assertTrue(docview.getDocView_DefaultViewTab().Displayed());
+		baseClass.passedStep("Navigate to DocViewPage Successfully");
+		softAssert.assertAll();
+		baseClass.stepInfo("DocListpage Action viewInDocview ");
+		baseClass.passedStep("User will land in Doc View page with selected documents Successfully");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/10/2022 RPMXCON-53839
+	 * @throws Exception
+	 * @Description To verify, As an Reviewer user login, I can be able to go to Doc
+	 *              List page from saved search page after selecting any saved query
+	 *              from Shared with me & apply action Document List from View
+	 *              Group.
+	 */
+	@Test(description = "RPMXCON-53839", enabled = true, groups = { "regression" })
+	public void verifyAsReviewerSavedSearchGoToDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53839");
+		baseClass.stepInfo(
+				"To verify, As an Reviewer user login, I can be able to go to Doc List page from saved search page after selecting any saved query from Shared with me & apply action Document List from View Group.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
+		
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.saveSearch(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+		//verify doclist page
+		if(docList.getDocList_info().isDisplayed()) {
+			baseClass.passedStep("User will land in Document List page from saved search page Successsfully");
+		}
+		else {
+			baseClass.failedStep("User will not land in Document List page from saved search page");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/10/2022 RPMXCON-53840
+	 * @throws Exception
+	 * @Description To verify, As an PAU user login, able to go to Doc List page from saved search page from <Shared With ProjectAdministrator>/<Shared with Security Group Name> & apply action Document List from View Group.
+	 */
+	@Test(description = "RPMXCON-53840", enabled = true, groups = { "regression" })
+	public void verifyAsPASavedSearchGoToDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53840");
+		baseClass.stepInfo(
+				"To verify, As an PAU user login, able to go to Doc List page from saved search page from <Shared With ProjectAdministrator>/<Shared with Security Group Name> & apply action Document List from View Group.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+		
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.saveSearchSharedWithPA(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.saveSearchSharedWithPAToDocList(searchName1);
+		//verify doclist page
+		if(docList.getDocList_info().isDisplayed()) {
+			baseClass.passedStep("User will land in Document List page from saved search page Successsfully");
+		}
+		else {
+			baseClass.failedStep("User will not land in Document List page from saved search page");
+		}
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

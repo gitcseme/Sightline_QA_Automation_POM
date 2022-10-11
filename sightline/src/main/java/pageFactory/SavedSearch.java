@@ -1016,6 +1016,10 @@ public class SavedSearch {
 	public Element getExpansionArrow(String groupName) {
 		return driver.FindElementByXPath("//a[text()='" + groupName + "']/parent::li/i");
 	}
+	
+	public Element getSavesSreachSharedWithPA() {
+		return driver.FindElementByXPath("//div[@id='jsTreeSavedSearch']/ul/li[2]/a");
+	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -8295,6 +8299,59 @@ public class SavedSearch {
 				base.failedStep("'" + savedSearchGroupName + "' Saved Search Group is Not Present.");
 			}
 		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @description:saveSearch Shared With PA To DocList
+	 * 
+	 */
+	public void saveSearchSharedWithPAToDocList(final String searchName) {
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavesSreachSharedWithPA().Visible();
+			}
+		}), Input.wait30);
+		getSavesSreachSharedWithPA().waitAndClick(5);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_SearchName().Visible();
+			}
+		}), Input.wait60);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getSavedSearch_SearchName().SendKeys(searchName);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getSavedSearch_ApplyFilterButton().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectWithName(searchName).Visible();
+			}
+		}), Input.wait30);
+		getSelectWithName(searchName).waitAndClick(10);
+		driver.scrollPageToTop();
+		getToDocList().waitAndClick(10);
+		try {
+			if (base.getYesBtn().isElementAvailable(5)) {
+				base.getYesBtn().waitAndClick(20);
+			}
+		} catch (Exception e) {
+			System.out.println("Pop up message does not appear");
+			Log.info("Pop up message does not appear");
+		}
+		base.stepInfo("Saved search is opened in doc list");
 	}
 
 }
