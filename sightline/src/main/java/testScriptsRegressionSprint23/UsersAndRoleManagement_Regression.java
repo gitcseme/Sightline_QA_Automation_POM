@@ -472,6 +472,8 @@ public class UsersAndRoleManagement_Regression {
         System.out.println(billFalse);
         softAssertion.assertEquals(billFalse, "False");
         baseClass.passedStep("Cross checked from user list page PA role user is non-billable ");
+        userManage.filterByName(emailIdPa);
+		userManage.deleteUser();
         //verify rmu role
         userManage.passingUserName(emailIdrmu);
         userManage.applyFilter();
@@ -480,6 +482,8 @@ public class UsersAndRoleManagement_Regression {
 		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
         System.out.println(billTrueRmu);
         softAssertion.assertEquals(billTrueRmu, "True");
+        userManage.filterByName(emailIdrmu);
+		userManage.deleteUser();
         baseClass.passedStep("Cross checked from user list page Review Manager role user is billable ");
         //verify rev role
         userManage.passingUserName(emailIdRev);
@@ -489,6 +493,8 @@ public class UsersAndRoleManagement_Regression {
 		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
         System.out.println(billFalseRev);
         softAssertion.assertEquals(billFalseRev, "True");
+        userManage.filterByName(emailIdRev);
+		userManage.deleteUser();
         baseClass.passedStep("Cross checked from user list page Reviewer role user is billable ");
 		softAssertion.assertAll();
 		// logout
@@ -549,6 +555,8 @@ public class UsersAndRoleManagement_Regression {
 		String billFalse=userManage.getUserListUsingIndex(indexBillable).getText();
         System.out.println(billFalse);
         softAssertion.assertEquals(billFalse, "True");
+        userManage.filterByName(emailIdPa);
+		userManage.deleteUser();
         baseClass.passedStep("Cross checked from user list page PA role user is billable ");
         //verify rmu role
         userManage.passingUserName(emailIdrmu);
@@ -558,6 +566,8 @@ public class UsersAndRoleManagement_Regression {
 		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
         System.out.println(billTrueRmu);
         softAssertion.assertEquals(billTrueRmu, "True");
+        userManage.filterByName(emailIdrmu);
+		userManage.deleteUser();
         baseClass.passedStep("Cross checked from user list page Review Manager role user is billable ");
         //verify rev role
         userManage.passingUserName(emailIdRev);
@@ -567,6 +577,8 @@ public class UsersAndRoleManagement_Regression {
 		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
         System.out.println(billFalseRev);
         softAssertion.assertEquals(billFalseRev, "True");
+        userManage.filterByName(emailIdRev);
+		userManage.deleteUser();
         baseClass.passedStep("Cross checked from user list page Reviewer role user is billable ");
 		softAssertion.assertAll();
 		// logout
