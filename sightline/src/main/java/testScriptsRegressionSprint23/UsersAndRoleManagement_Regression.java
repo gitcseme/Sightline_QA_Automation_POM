@@ -81,6 +81,13 @@ public class UsersAndRoleManagement_Regression {
 		return new Object[][] { { Input.sa1userName, Input.sa1password, "sa" },
 				{ Input.pa1userName, Input.pa1password, "pa" } };
 	}
+	
+	@DataProvider(name = "users")
+	public Object[][] Users() {
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.pa1userName, Input.pa1password, "PA" },
+				{Input.rmu1userName, Input.rmu1password, "RMU" }};
+	}
 
 	/**
 	 * Author : Baskar date: NA Modified date:03/10/2022 Modified by: Baskar
@@ -307,6 +314,113 @@ public class UsersAndRoleManagement_Regression {
 		userManage.verifyFunctionalityTab(Input.sa1userName,Input.SystemAdministrator);
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 10/10/2022 TestCase Id:RPMXCON-52380
+	 * Description :verify after impersonation user can create new user with the impersonated and below roles
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52380",enabled = true, groups = { "regression" })
+	public void verifyUserCreationAfterImpersonation() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52380");
+		baseClass.stepInfo("verify after impersonation user can create new user with the impersonated and below roles");
+		userManage = new UserManagement(driver);
+		//login as SA and impersonate as PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.stepInfo("Impersonate as project admin");
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Verify user creation popup");
+		userManage.verifyAddNewUserPopup("Reviewer");
+		loginPage.logout();
+		//login as SA and impersonate as RMU
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.stepInfo("Impersonate as Review manager");
+		baseClass.impersonateSAtoRMU();
+		baseClass.stepInfo("Verify user creation popup");
+		userManage.verifyAddNewUserPopup("Reviewer");
+		loginPage.logout();
+		//login as PA and impersonate as RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("Impersonate as Review manager");
+		baseClass.impersonatePAtoRMU();
+		baseClass.stepInfo("Verify user creation popup");
+		userManage.verifyAddNewUserPopup("Reviewer");
+		loginPage.logout();	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/10/2022 TestCase Id:RPMXCON-52745
+	 * Description :Validate 'Recovery email address' in the Manage User UI while Adding a new User
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52745",dataProvider = "users",enabled = true, groups = { "regression" })
+	public void verifyRecoveryEmailUIForNewUser(String userName, String password,String role) throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52745");
+		baseClass.stepInfo("Validate 'Recovery email address' in the Manage User UI while Adding a new User");
+		userManage = new UserManagement(driver);
+		String email = "QA"+Utility.dynamicNameAppender()+"@consilio.com";
+		
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as "+role);
+		userManage.navigateToUsersPAge();
+		baseClass.stepInfo("check recovery email status while adding new user");
+		userManage.verifyRecoveryEmailFieldStatus(email, Input.projectName, "new");
+		userManage.addNewUserAsDifferentUsers(role, "QA", "User", Input.ReviewManager, 
+				email, null, Input.projectName);
+		baseClass.passedStep(role + "user not prompted any error message for Recovery E-mail address");
+		loginPage.logout();
+		//deleting added new user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.filterByName(email);
+		userManage.deleteUser();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/10/2022 TestCase Id:RPMXCON-52746
+	 * Description :Validate 'Recovery email address' in the Manage User UI while Editing existing User
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52746",enabled = true, groups = { "regression" })
+	public void verifyRecoveryEmailUIForExistingUser() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52746");
+		baseClass.stepInfo("Validate 'Recovery email address' in the Manage User UI while Editing existing User");
+		userManage = new UserManagement(driver);
+		String email = "AQA"+Utility.dynamicNameAppender()+"@consilio.com";
+		String[] userName = {Input.sa1userName, Input.pa1userName,Input.rmu1userName};
+		String[] password = {Input.sa1password, Input.pa1password,Input.rmu1password};
+		String[] edit = {"modifiedSA","modifiedPA","modifiedRMU"};
+			
+		//creating new user for editing 
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.createNewUser("Qa","Pa", Input.ReviewManager, email, 
+				null, Input.projectName);
+		loginPage.logout();
+		//Login as user and verify recovery email status for existing user
+		for(int i=0;i<userName.length;i++) {
+			loginPage.loginToSightLine(userName[i], password[i]);
+			baseClass.stepInfo("Logged in as"+userName[i]);
+			userManage.navigateToUsersPAge();
+			baseClass.stepInfo("check recovery email status while editing existing user");
+			userManage.verifyRecoveryEmailFieldStatus(email, Input.projectName, "Existing");
+			userManage.editExistingUserDetail(email, Input.projectName, userManage.getLastNameEditPopup(),
+					edit[i]);
+			baseClass.passedStep( "PA user not prompted any error message for Recovery E-mail address");
+			loginPage.logout();
+		}		
+		//deleting user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.filterByName(email);
+		userManage.deleteUser();
+		loginPage.logout();
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
