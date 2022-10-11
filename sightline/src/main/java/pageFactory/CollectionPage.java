@@ -246,6 +246,39 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getCollectionInfoPopUpStatus() {
+		return driver.FindElementByXPath("//div[@role='dialog' and contains(@style,'display')]");
+	}
+
+	public Element getDestinationPathLocation() {
+		return driver.FindElementByXPath("//label[text()='Destination Path:']//..//..//div[@class='col-md-9']");
+	}
+
+	public Element getCollectionIdFromInfoPopup() {
+		return driver.FindElementByXPath("//p[text()='CollectionId:']//..//..//div[@class='col-sm-9']");
+	}
+
+	public Element getSourceLocationFromInfoPopup() {
+		return driver.FindElementByXPath("//p[text()='Source Location']//..//..//div[@class='col-sm-9']//p");
+	}
+
+	public Element getCollectionNameFromInfoPopup() {
+		return driver.FindElementByXPath("//p[text()='Collection Name:']//..//..//div[@class='col-sm-9']");
+	}
+
+	public Element getDestinationLocationInfoPopup() {
+		return driver.FindElementByXPath("//p[text()='Destination Path:']//..//..//div[@id='divDestinationPath']//p");
+	}
+
+	public Element getInitiateStatInfoPopup() {
+		return driver.FindElementByXPath("//p[text()='Initiate Processing:']//..//..//div[@class='col-sm-7']//p");
+	}
+
+	public ElementCollection getCollectionDataSetDetailsHeader() {
+		return driver.FindElementsByXPath(
+				"//div[@aria-describedby=\"divCollectionDetails\"]//div[@id='divCollectionDetails']//div[@id='divCollectionDatasetTitle']//..//div[@class='dataTables_scrollHead']//table[@class='table dataTable no-footer']//tr//th");
+	}
+
 	public Element getCollectionStatsDiv(String collectionName, int index) {
 		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index + "]//div");
 	}
@@ -2676,6 +2709,50 @@ public class CollectionPage {
 			String expectedDatasetsErrorMsg = "Please enter dataset name.";
 			base.textCompareEquals(actualDatasetsErrorMsg, expectedDatasetsErrorMsg,
 					"Datasets Error Msg is : " + actualDatasetsErrorMsg, " as expected");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 */
+	public void verifyDataSetContentsCustomize(ElementCollection elementHeader, String[] headerList, String firstName,
+			String lastName, String selectedApp, String collectionEmailId, String dataSetNameGenerated,
+			String selectedFolder, String retrivalCount, String DateOrKeyword, String additional2, Boolean additional3,
+			int additional4) {
+
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		for (int i = 0; i <= headerList.length - 1; i++) {
+			int index = base.getIndex(elementHeader, headerList[i]);
+			colllectionDataHeadersIndex.put(headerList[i], index);
+		}
+
+		base.printHashMapDetails(colllectionDataHeadersIndex);
+
+		for (int j = 0; j <= colllectionDataHeadersIndex.size() - 1; j++) {
+			String expValue = " - ";
+
+			if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader1)) {
+				expValue = firstName + " " + lastName;
+			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader2)) {
+				expValue = selectedApp;
+			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader3)) {
+				expValue = collectionEmailId;
+			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader4)) {
+				expValue = dataSetNameGenerated;
+			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+				expValue = selectedFolder;
+			} else if (headerList[j].equalsIgnoreCase(Input.dateKeywordHeaderC)) {
+				expValue = DateOrKeyword;
+			} else if (headerList[j].equalsIgnoreCase(Input.retreivingDSCountH)) {
+				expValue = retrivalCount;
+			}
+
+			// DataSet details comparision
+			base.stepInfo(headerList[j]);
+			base.textCompareEquals(expValue,
+					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
+					"Displayed as expected", "Not Displayed as expected");
 		}
 	}
 

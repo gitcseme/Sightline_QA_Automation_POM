@@ -370,7 +370,9 @@
    <collectionProgressH>Collection Progress</collectionProgressH>
    <collectionStatusH>Collection Status</collectionStatusH>
    <collectionErrColorCodeOrange>#F88C00</collectionErrColorCodeOrange>
-   
+   <retreivingDSCountH>Retrieved Count</retreivingDSCountH>
+   <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
+
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
 	<orderCriteria>DocID</orderCriteria>

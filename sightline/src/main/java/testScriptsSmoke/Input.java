@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = false;
+	public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -491,6 +491,8 @@ public class Input {
 	public static String collectionProgressH;
     public static String collectionStatusH;
     public static String collectionErrColorCodeOrange;
+    public static String retreivingDSCountH;
+    public static String dateKeywordHeaderC;
     
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1461,7 +1463,9 @@ public class Input {
 		collectionProgressH = testData.getCollectionProgressH();
         collectionStatusH = testData.getCollectionStatusH();
         collectionErrColorCodeOrange = testData.getCollectionErrColorCodeOrange();
-        
+        retreivingDSCountH = testData.getRetreivingDSCountH();
+        dateKeywordHeaderC = testData.getDateKeywordHeaderC();	
+
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
