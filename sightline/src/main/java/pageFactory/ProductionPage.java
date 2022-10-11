@@ -10,11 +10,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22653,4 +22655,29 @@ public class ProductionPage {
 							base.failedStep("File not exist");
 						}
 						}
+					/**			
+					 * @author Brundha.T
+					 * @param TextFile
+					 * @param TextInFirstDoc
+					 * @throws IOException
+					 * Description:vrifying text file in downloaded document
+					 */
+					public void verifyingTextFile(File TextFile,String TextInFirstDoc) throws IOException{
+						String Values;
+						String TextInFile = "";
+						try (BufferedReader brReader = new BufferedReader(
+								new InputStreamReader(new FileInputStream(TextFile), "UTF16"))) {
+							while ((Values = brReader.readLine()) != null) {
+								TextInFile += Values;
+							}
+							System.out.println(TextInFile);
+							if (TextInFile.equals(TextInFirstDoc)) {
+								System.out.println("Text is generated as expected");
+								base.passedStep("Text File is Generated with exact text");
+							} else {
+								System.out.println("Text is not generated as expected");
+								base.failedStep("Text file is not generated with exact text");
+							}
+					}
+					}
 }
