@@ -177,6 +177,118 @@ public class AdvanceSearchRegression_23 {
 		// logOut
 		loginPage.logout();
 	}
+	@DataProvider(name = "invaildProximitySearchQueriesRightQuotesOnly")
+	public Object[][] invaildProximitySearchQueriesRightQuotesOnly() {
+		return new Object[][] { { "Precision", "ProximitySearch Truthful”~5", "AND" },
+				{ "Precision", "ProximitySearch Truthful\"~5", "AND" },
+				{ " “Truthful Balance”", "ProximitySearch Truthful ” ~5", "OR" },
+				{ "\"Truthful Balance\"", "ProximitySearch Truthful \" ~5", "OR" } };
+	}
+
+	@DataProvider(name = "invaildProximitySearchQueriesLeftQuotesOnly")
+	public Object[][][] invaildProximitySearchQueriesLeftQuotesOnly() {
+		return new Object[][][] {
+				{ new String[] { "Precision", "“ProximitySearch Truthful~5 " }, new String[] { "AND" } },
+				{ new String[] { "Precision", "“ProximitySearch Truthful~5" }, new String[] { "AND" } },
+				{ new String[] { "“Truthful Balance”", "Precision", "“ProximitySearch Truthful~5" },
+						new String[] { "AND" } },
+				{ new String[] { "Precision", "\"ProximitySearch Truthful~5" }, new String[] { "AND" } },
+				{ new String[] { "\"Truthful Balance\"", "Precision", "\"ProximitySearch Truthful~5" },
+						new String[] { "AND" } }, };
+	}
+
+	
+
+	/**
+	 * @author
+	 * @Date: 13/8/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that belly band message appears when user configured
+	 *              Proximity with Left double quotes only and combined with other
+	 *              criteria in Advanced Search Query Screen. RPMXCON-57300
+	 */
+//   @Test(description = "RPMXCON-57300", enabled = true, dataProvider = "invaildProximitySearchQueriesLeftQuotesOnly", groups = {
+//			"regression" }, priority = 6)
+	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingLeftDoubleQuoteOnly(String[] searches,
+			String[] operator) throws InterruptedException {
+
+		List<String> searchQueries = Arrays.asList(searches);
+		String operatorCombine = operator[0];
+
+		// login as Users
+		baseClass.stepInfo("**Step-1 Login as User**");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57300 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that belly band message appears when user configured Proximity with Left double quotes only and combined with other criteria in Advanced Search Query Screen.");
+
+		// navigate to advanced search Page
+		sessionSearch.navigateToAdvancedSearchPage();
+		baseClass.stepInfo("Navigating to Advanced Search page");
+
+		// configuring and searching
+		baseClass.stepInfo("**Step-2 & 3 Configure query like @TestData and Click on \"Search\" button *");
+		baseClass.stepInfo("Input String : ");
+		baseClass.printListString(searchQueries);
+		sessionSearch.advancedMultipleContentSearchWithOperator(searchQueries, operatorCombine);
+		sessionSearch.getQuerySearchButton().waitAndClick(5);
+		baseClass.stepInfo("Configuring and performing search");
+
+		// verifying the warning message
+		baseClass.stepInfo(
+				"**Step-4 & 5 Observe that application displays warning message and Verify that pop up title*");
+		sessionSearch.verifyProximitySearch();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author
+	 * @Date: 13/8/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that belly band message appears when user configured
+	 *              Proximity with Right double quotes only and combined with other
+	 *              criteria in Advanced Search Query Screen. RPMXCON-57301
+	 */
+	//@Test(description = "RPMXCON-57301", enabled = true, dataProvider = "invaildProximitySearchQueriesRightQuotesOnly", groups = {
+	//		"regression" })
+	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingRightDoubleQuoteOnly(String searchString1,
+			String searchString2, String operator) throws InterruptedException {
+
+		List<String> searchQueries = new ArrayList<String>(Arrays.asList(searchString1, searchString2));
+
+		// login as Users
+		baseClass.stepInfo("**Step-1 Login as User**");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57301 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that belly band message appears when user configured Proximity with Right double quotes only and combined with other criteria in Advanced Search Query Screen.");
+
+		// navigate to advanced search Page
+		sessionSearch.navigateToAdvancedSearchPage();
+		baseClass.stepInfo("Navigating to Advanced Search page");
+
+		// configuring and searching
+		baseClass.stepInfo("**Step-2 & 3 Configure query like @TestData and Click on \"Search\" button *");
+		baseClass.stepInfo("Input String : " + searchString1 + " || " + operator + " || " + searchString2);
+		sessionSearch.advancedMultipleContentSearchWithOperator(searchQueries, operator);
+		sessionSearch.getQuerySearchButton().waitAndClick(5);
+		baseClass.stepInfo("Configuring and performing search");
+
+		// verifying the warning message
+		baseClass.stepInfo(
+				"**Step-4 & 5 Observe that application displays warning message and Verify that pop up title*");
+		sessionSearch.verifyProximitySearch();
+
+		// logout
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

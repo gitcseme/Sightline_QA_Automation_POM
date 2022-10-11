@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint21;
+package testScriptsRegressionSprint23;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
