@@ -316,7 +316,130 @@ public class DocList_Regression23 {
 		// logout
 		loginPage.logout();
 	}
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-53785
+	 * @Description To verify, As a Reviewer user login, I am able to remove all
+	 *              documents from Folder in Doc list page
+	 */
+	@Test(description = "RPMXCON-53785", enabled = true, groups = { "regression" })
+	public void verifyingTheUnFolderCountInDocListPage() throws Exception {
 
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String foldername = "Folder" + UtilityLog.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53785 DocList Component");
+		baseClass.stepInfo(
+				"To verify, As a Reviewer user login, I am able to remove all documents from Folder in Doc list page");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		tf.CreateFolder(foldername, Input.securityGroup);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionSearch.ViewInDocList();
+		baseClass.ValidateElement_Presence(docList.getBackToSourceBtn(), "DocList Page");
+		docList.documentSelection(3);
+
+		baseClass.stepInfo("Unfoldering the Document");
+		sessionSearch.bulkUnFolder(foldername);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// verifying document removed from folder
+		tf = new TagsAndFoldersPage(driver);
+		tf.navigateToTagsAndFolderPage();
+		tf.verifyFolderDocCount(foldername, 0);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-53659
+	 * @Description To Verify, As a Reviewer user login, In Doc List page maximum
+	 *              500 Documents will show per page
+	 */
+	@Test(description = "RPMXCON-53659", enabled = true, groups = { "regression" })
+	public void verifyingTheDocumentCountInDocListPage() throws Exception {
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53659 DocList Component");
+		baseClass.stepInfo(
+				"To Verify, As a Reviewer user login, In Doc List page maximum 500 Documents will show per page");
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Selecting page length in doclist page");
+		docList.getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(Input.pageLength);
+		driver.scrollingToBottomofAPage();
+		driver.scrollingToElementofAPage(docList.getTableFooterDocListCount());
+		driver.waitForPageToBeReady();
+		String DocListCount = docList.getTableFooterDocListCount().getText();
+		System.out.println(DocListCount);
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[3];
+		System.out.println("doclist page document count is" + Document);
+		baseClass.textCompareEquals(Input.pageLength, Document, Input.pageLength + "is displayedas expected",
+				Input.pageLength + "is not displayed as expected");
+		loginPage.logout();
+	}
+
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-54276
+	 * @Description To verify that if the filters include both "Include" and
+	 *              "Exclude", then the results should include the docs that match
+	 *              the "Include" criteria but does not match the "Exclude"
+	 *              criteria.
+	 */
+	@Test(description = "RPMXCON-54276", enabled = true, groups = { "regression" })
+	public void verifyingIncludedFilterInDocListPage() throws Exception {
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54276 DocList Component");
+		baseClass.stepInfo(
+				"To verify that if the filters include both 'Include' and 'Exclude', then the results should include the docs that match the 'Include' criteria but does not match the 'Exclude' criteria.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("selecting the column");
+		docList.SelectColumnDisplay(docList.getSelectAvailMetadata(Input.MetaDataEAName));
+		
+		baseClass.stepInfo("applying include filter");
+		docList.applyCustodianNameFilter(Input.metaDataCN);
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("applying Exclude filter and verifying");
+		docList.EmailAuthorNameInExcludeVerificationInDoc();
+		
+		baseClass.stepInfo("verifying include filter");
+		docList.verifyAppliedIncludeCustodianNameFilterIsAdded(Input.metaDataCN);
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
