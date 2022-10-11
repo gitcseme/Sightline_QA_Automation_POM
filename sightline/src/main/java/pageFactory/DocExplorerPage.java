@@ -3354,4 +3354,55 @@ public class DocExplorerPage {
 					+ e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author : sowndariya 
+	 * @Description: Method for selecting some documents and action bulk tag them..
+	 * @param tagName           : tagName is a string value that name of tag need to
+	 *                          select.
+	 * @param numberOfDocuments : numberOfDocuments is integer value that number of
+	 *                          documents need to select.
+	 * @return docids : Selected documents ID's for bulk tag.
+	 */
+	public ArrayList<String> selectDocumentsAndActionBulkTag(int numberOfDocuments, String tagName) {
+		ArrayList<String> docids = new ArrayList<String>();
+		
+			driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			for (int i = 0; i < 5; i++) {
+				try {
+					bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
+					bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
+					break;
+				} catch (Exception e) {
+					bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
+					bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
+				}
+			}
+		
+			for (int row = 0; row < numberOfDocuments; row++) {
+				bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
+				bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
+				getDocumentsCheckBoxbyRowNum(row + 1).Click();
+				docids.add(getDocumentsIdbyRowNum(row + 1).GetAttribute("data-content").trim());
+			}
+			for (int i = 0; i < 7; i++) {
+				try {
+					bc.waitForElement(getDocExp_actionButton());
+					bc.waitTillElemetToBeClickable(getDocExp_actionButton());
+					getDocExp_actionButton().Click();
+					break;
+				} catch (Exception e) {
+//					Thread.sleep(Input.wait30 / 10);
+				}
+			}
+			bc.waitTillElemetToBeClickable(getBulkTagButton());
+			getBulkTagButton().Click();
+			driver.scrollingToBottomofAPage();
+			return docids;
+		
+		
+	}
 }
+

@@ -902,10 +902,11 @@ public class ProductionPage {
 	public Element getSecondOptInText() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']");
 	}
+
 	public Element getFirstOptInText() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']/following-sibling::i");
 	}
-	
+
 	public Element getSlipMetadatTabSelection() {
 		return driver.FindElementByXPath("//span[text()='Metadata']//parent::a");
 	}
@@ -913,10 +914,12 @@ public class ProductionPage {
 	public Element getMetadataCheckBoxSelection(String fieldValue) {
 		return driver.FindElementByXPath("//strong[text()='" + fieldValue + "']//parent::label//following-sibling::i");
 	}
+
 	public Element getExportProdToogle() {
-		return driver.FindElementByXPath("//input[@name='ProductionBasicInfoModel.IsExportProduction']/following-sibling::i");
+		return driver.FindElementByXPath(
+				"//input[@name='ProductionBasicInfoModel.IsExportProduction']/following-sibling::i");
 	}
-	
+
 	public Element getSelectProdinExport() {
 		return driver.FindElementByXPath("//select[@name='ExportProductionId']");
 	}
@@ -924,7 +927,7 @@ public class ProductionPage {
 	public Element NewLineSeperatorDD() {
 		return driver.FindElementByXPath("//select[@id='lstNewLineSeparator']");
 	}
-	
+
 	public Element getBrandingDefTextFontStyle(String location) {
 		return driver.FindElementByXPath("//b[text()='" + location
 				+ "']//parent::div//parent::fieldset//preceding-sibling::div[contains(text(),'Branding text font:')]"
@@ -3514,27 +3517,34 @@ public class ProductionPage {
 	}
 
 	public Element getNativeFileType(String fileType) {
-		return driver.FindElementByXPath(
-				"//div[@id='divImageTIFFPHImage_1']//option[contains(text(),'" + fileType + "')]");
+		return driver
+				.FindElementByXPath("//div[@id='divImageTIFFPHImage_1']//option[contains(text(),'" + fileType + "')]");
 	}
+
 	public Element getOperatorInPrivGuard(String Operator) {
-		return driver.FindElementByXPath("//div[@id='c-1']//ul//li//a[text()='"+Operator+"']");
+		return driver.FindElementByXPath("//div[@id='c-1']//ul//li//a[text()='" + Operator + "']");
 	}
+
 	public Element getAddRulePrivTag() {
 		return driver.FindElementByXPath("//div[@id='c-2']//button[@id='tagsHelper']");
 	}
+
 	public Element getInsertQueryBtnInPrivGuard() {
 		return driver.FindElementByXPath("//div[@id='c-2']//a[@id='insertQueryBtn']");
 	}
+
 	public Element getProdPaginationPreviousBtn() {
 		return driver.FindElementByXPath("//li[@id='ProductionListGridViewTable_previous']//a");
 	}
+
 	public Element getAbbreviatedText() {
 		return driver.FindElementByXPath("//input[contains(@name,'AbbrivatedText')]");
 	}
+
 	public Element getANSIDropDown() {
 		return driver.FindElementByXPath("//select[@id='lstANSIType']");
 	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -7140,12 +7150,12 @@ public class ProductionPage {
 			}), Input.wait30);
 			getbtnPopupPreviewMarkComplete().waitAndClick(10);
 		}
-			driver.waitForPageToBeReady();
-			base.CloseSuccessMsgpopup();
-			base.waitTillElemetToBeClickable(getbtnProductionGuardNext());
-			getbtnProductionGuardNext().waitAndClick(10);
-			base.stepInfo("Priv Guard Page section is filled");
-		
+		driver.waitForPageToBeReady();
+		base.CloseSuccessMsgpopup();
+		base.waitTillElemetToBeClickable(getbtnProductionGuardNext());
+		getbtnProductionGuardNext().waitAndClick(10);
+		base.stepInfo("Priv Guard Page section is filled");
+
 	}
 
 	/**
@@ -19715,6 +19725,8 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified by sowndariya on 10/11/2022
+	 * 
 	 * @author Vijaya.Rani Modified By - 15/03/2022 Modified Date - NA
 	 * @param firstFile
 	 * @param lastFile
@@ -19739,7 +19751,11 @@ public class ProductionPage {
 			instance.setDatapath(tessDataFolder.getPath());
 
 			String result = instance.doOCR(imageFile);
-			System.out.println(result);
+			result = result.trim();
+			verificationText = verificationText.trim();
+			base.stepInfo(result);
+			base.stepInfo(verificationText);
+
 			if (result.contains(verificationText)) {
 				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".tiff"
 						+ " file as expected");
@@ -22247,8 +22263,8 @@ public class ProductionPage {
 			base.waitForElement(getEnterBranding(brandingLoc));
 			new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
 			driver.waitForPageToBeReady();
-			getEnterBranding(brandingLoc)
-					.SendKeys(brandingLoc + " Multiple Line Branding Text Verifying" + " " + Utility.randomCharacterAppender(50));
+			getEnterBranding(brandingLoc).SendKeys(
+					brandingLoc + " Multiple Line Branding Text Verifying" + " " + Utility.randomCharacterAppender(50));
 			base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
 			String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
 			base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
@@ -22279,44 +22295,45 @@ public class ProductionPage {
 	 * @param tagname
 	 * @Description fillingAndverifySixBrandingSingleLine
 	 */
-	public void fillingAndverifySixBrandingSingleLine(String tagname) throws Exception{
-		String[] branding = {"Top - Left", "Top - Center", "Top - Right", "Bottom - Left", "Bottom - Center", "Bottom - Right"};
+	public void fillingAndverifySixBrandingSingleLine(String tagname) throws Exception {
+		String[] branding = { "Top - Left", "Top - Center", "Top - Right", "Bottom - Left", "Bottom - Center",
+				"Bottom - Right" };
 		SoftAssert asserts = new SoftAssert();
-		for(String brandingLoc : branding) {
-		if(brandingLoc.equals("Top - Left")) {
-			base.waitForElement(getLeftHeaderBranding());
-			getLeftHeaderBranding().ScrollTo();
-			getLeftHeaderBranding().Click();
-		} else if(brandingLoc.equals("Top - Center")) {
-			base.waitForElement(getTIFF_CenterHeaderBranding());
-			getTIFF_CenterHeaderBranding().Click();
-		}else if(brandingLoc.equals("Top - Right")) {
-			base.waitForElement(getRightHeaderBranding());
-			getRightHeaderBranding().Click();
-		}else if(brandingLoc.equals("Bottom - Left")) {
-			base.waitForElement(getLeftFooterBranding());
-			getLeftFooterBranding().ScrollTo();
-			getLeftFooterBranding().Click();
-		}else if(brandingLoc.equals("Bottom - Center")) {
-			base.waitForElement(getTIFF_CenterFooterBranding());
-			getTIFF_CenterFooterBranding().Click();
-		}else if(brandingLoc.equals("Bottom - Right")) {
-			base.waitForElement(getRightFooterBranding());
-			getRightFooterBranding().Click();
+		for (String brandingLoc : branding) {
+			if (brandingLoc.equals("Top - Left")) {
+				base.waitForElement(getLeftHeaderBranding());
+				getLeftHeaderBranding().ScrollTo();
+				getLeftHeaderBranding().Click();
+			} else if (brandingLoc.equals("Top - Center")) {
+				base.waitForElement(getTIFF_CenterHeaderBranding());
+				getTIFF_CenterHeaderBranding().Click();
+			} else if (brandingLoc.equals("Top - Right")) {
+				base.waitForElement(getRightHeaderBranding());
+				getRightHeaderBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Left")) {
+				base.waitForElement(getLeftFooterBranding());
+				getLeftFooterBranding().ScrollTo();
+				getLeftFooterBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Center")) {
+				base.waitForElement(getTIFF_CenterFooterBranding());
+				getTIFF_CenterFooterBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Right")) {
+				base.waitForElement(getRightFooterBranding());
+				getRightFooterBranding().Click();
+			}
+
+			base.waitForElement(getEnterBranding(brandingLoc));
+			new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
+			driver.waitForPageToBeReady();
+			getEnterBranding(brandingLoc).SendKeys(brandingLoc + " Branding");
+			base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
+			String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
+			base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
+			String textSize = getBrandingDefTextFontSize(brandingLoc).Value();
+			asserts.assertEquals(textStyle, "Arial");
+			asserts.assertEquals(textSize, "10");
+			asserts.assertAll();
 		}
-		
-		base.waitForElement(getEnterBranding(brandingLoc));
-		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
-		driver.waitForPageToBeReady();
-		getEnterBranding(brandingLoc).SendKeys(brandingLoc + " Branding");	
-		base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
-		String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
-		base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
-		String textSize =  getBrandingDefTextFontSize(brandingLoc).Value();
-		asserts.assertEquals(textStyle, "Arial");
-		asserts.assertEquals(textSize, "10");
-		asserts.assertAll();
-	}		
 		base.stepInfo("Successfully Verified default Font Style after Enter Branding");
 		base.stepInfo("Successfully Verified default Font Size after Enter Branding");
 		getTIFF_EnableforPrivilegedDocs().ScrollTo();
@@ -22333,11 +22350,16 @@ public class ProductionPage {
 		driver.scrollingToBottomofAPage();
 		base.stepInfo("PDF section is filled");
 	}
-/*
+
+	/*
 	 * @Author Jeevitha
+	 * 
 	 * @Description :generate Production By selecting folder
+	 * 
 	 * @param folderName
+	 * 
 	 * @return
+	 * 
 	 * @throws Exception
 	 */
 	public String preRequisiteGenerateProduction(String folderName) throws Exception {
@@ -22360,324 +22382,345 @@ public class ProductionPage {
 		return productionname;
 
 	}
+
 	/**
 	 * @author Brundha.T
-	 * @param ntimes
-	 * Description:navigating nth times back
+	 * @param ntimes Description:navigating nth times back
 	 */
-		public void navigatingBack(int ntimes) {
-			for(int i=0;i<ntimes;i++) {
-				driver.waitForPageToBeReady();
-				driver.Navigate().back();
-			}
-			
+	public void navigatingBack(int ntimes) {
+		for (int i = 0; i < ntimes; i++) {
+			driver.waitForPageToBeReady();
+			driver.Navigate().back();
 		}
-	
-		/**
-		 * @author Brundha.T
-		 * @param Doc
-		 * @param prefixID
-		 * @param suffixID
-		 * @param subBates
-		 * @Description:verifying Generated text file in export
-		 */
-		public void verifyingGeneratedExporttedfile(int Doc, String prefixID, String suffixID, String subBates,
-				String DocType) {
-			if (verifyingNativeFiles(prefixID + "(" + Doc + ")" + suffixID, subBates, DocType).isElementAvailable(2)) {
-				base.passedStep("Files are generated successfully");
-			} else if (verifyingNativeFiles(prefixID + "0" + "(" + Doc + ")" + suffixID, subBates, DocType)
-					.isElementAvailable(2)) {
-				base.passedStep("Files are generated successfully");
-			}
+
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Doc
+	 * @param prefixID
+	 * @param suffixID
+	 * @param subBates
+	 * @Description:verifying Generated text file in export
+	 */
+	public void verifyingGeneratedExporttedfile(int Doc, String prefixID, String suffixID, String subBates,
+			String DocType) {
+		if (verifyingNativeFiles(prefixID + "(" + Doc + ")" + suffixID, subBates, DocType).isElementAvailable(2)) {
+			base.passedStep("Files are generated successfully");
+		} else if (verifyingNativeFiles(prefixID + "0" + "(" + Doc + ")" + suffixID, subBates, DocType)
+				.isElementAvailable(2)) {
+			base.passedStep("Files are generated successfully");
 		}
-		
-			/**
-			 * @author Brundha.T
-			 * @param tagname
-			 * @param Value
-			 * @param Operator
-			 * Description:Adding rules and operators in privguard section
-			 */
-			public void addingRulesWithOperatorsInPrivGuardSection(String tagname,boolean Value,String Operator) {
-				driver.waitForPageToBeReady();
-				getTagsBtn().waitAndClick(5);
-				base.waitForElement(getTagsHeader());
-				base.waitForElement(selectPrivGuardTag(tagname));
-				selectPrivGuardTag(tagname).waitAndClick(10);
-				base.waitForElement(getInsertQueryBtn());
-				getInsertQueryBtn().waitAndClick(10);
-				if(Value) {
-					getOperator().waitAndClick(5);
-					getOperatorInPrivGuard(Operator).waitAndClick(5);
-				}
-			}
-			
-			/**
-			 * @author sowndarya.velraj
-			 * Description:verify Multi line branding
-			 */
-			public String verifyMultiLineBrandingText(String path, String filename, String branding, int pageNumber)
-					throws IOException {
-				File file = new File(path + filename);
-				PDDocument document = PDDocument.load(file);
-				String regionName = "region";
-				PDFTextStripperByArea stripper = null;
-				PDPage page = document.getPage(pageNumber);
-				if(branding.equalsIgnoreCase("Top - Center")) {
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param tagname
+	 * @param Value
+	 * @param Operator Description:Adding rules and operators in privguard section
+	 */
+	public void addingRulesWithOperatorsInPrivGuardSection(String tagname, boolean Value, String Operator) {
+		driver.waitForPageToBeReady();
+		getTagsBtn().waitAndClick(5);
+		base.waitForElement(getTagsHeader());
+		base.waitForElement(selectPrivGuardTag(tagname));
+		selectPrivGuardTag(tagname).waitAndClick(10);
+		base.waitForElement(getInsertQueryBtn());
+		getInsertQueryBtn().waitAndClick(10);
+		if (Value) {
+			getOperator().waitAndClick(5);
+			getOperatorInPrivGuard(Operator).waitAndClick(5);
+		}
+	}
+
+	/**
+	 * @author sowndarya.velraj Description:verify Multi line branding
+	 */
+	public String verifyMultiLineBrandingText(String path, String filename, String branding, int pageNumber)
+			throws IOException {
+		File file = new File(path + filename);
+		PDDocument document = PDDocument.load(file);
+		String regionName = "region";
+		PDFTextStripperByArea stripper = null;
+		PDPage page = document.getPage(pageNumber);
+		if (branding.equalsIgnoreCase("Top - Center")) {
 //				Top Center
-				Rectangle2D region = new Rectangle2D.Double(200, -100, 200, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				} else if(branding.equalsIgnoreCase("Top - Left")) {
+			Rectangle2D region = new Rectangle2D.Double(200, -100, 200, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		} else if (branding.equalsIgnoreCase("Top - Left")) {
 //				Top Left
-				Rectangle2D region = new Rectangle2D.Double(0, -100, 201, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				} else if(branding.equalsIgnoreCase("Top - Right")) {
+			Rectangle2D region = new Rectangle2D.Double(0, -100, 201, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		} else if (branding.equalsIgnoreCase("Top - Right")) {
 //				Top Right
-				Rectangle2D region = new Rectangle2D.Double(405, -100, 200, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				} else if(branding.equalsIgnoreCase("Bottom - Center")) {
+			Rectangle2D region = new Rectangle2D.Double(405, -100, 200, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		} else if (branding.equalsIgnoreCase("Bottom - Center")) {
 //				Bottom Centre
-				Rectangle2D region = new Rectangle2D.Double(200, 500, 200, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				} else if(branding.equalsIgnoreCase("Bottom - Left")) {
+			Rectangle2D region = new Rectangle2D.Double(200, 500, 200, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		} else if (branding.equalsIgnoreCase("Bottom - Left")) {
 //				Bottom Left
-				Rectangle2D region = new Rectangle2D.Double(0, 500, 200, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				} else if(branding.equalsIgnoreCase("Bottom - Right")) {
+			Rectangle2D region = new Rectangle2D.Double(0, 500, 200, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		} else if (branding.equalsIgnoreCase("Bottom - Right")) {
 //				Bottom Right
-				Rectangle2D region = new Rectangle2D.Double(405, 500, 200, 500);
-				stripper = new PDFTextStripperByArea();
-				stripper.addRegion(regionName, region);
-				}
-				stripper.extractRegions(page);
-				String text = stripper.getTextForRegion(regionName);
-				return text;
-			}
-			
-			/**
-			 * @author sowndarya.velraj
-			 * Description:verify NewLine Delimiters Options
-			 */
-			public void verifyNewLineDimiOptions() {
-				driver.scrollPageToTop();
-		   		base.waitForElement(NewLineSeperatorDD());
-		   		NewLineSeperatorDD().waitAndClick(3);
-		       	base.stepInfo("New Line Seperator Drop Down Clicked ");
-		        List<WebElement> options = NewLineSeperatorDD().selectFromDropdown().getOptions();
-		        for(int i =1 ; i < options.size(); i++) {
-		        	if(options.get(i).isDisplayed()) {
-		        		base.hitDownKey(1);
-		        		base.passedStep(options.get(i).getText() + "Displaying as Expected");
-		        	} else {
-		        		base.failedStep("All Options Not Displaying as Expected");
-		        	}
-		        }
-			}
-			
-			/**
-			 * @author sowndarya.velraj
-			 * Description:selectFieldinMetadataTab 
-			 */
-			public void selectFieldinMetadataTab(String fieldValue) {
-				driver.waitForPageToBeReady();
-				base.clickButton(getSlipMetadatTabSelection());
-				base.clickButton(getMetadataCheckBoxSelection(fieldValue));
-				base.clickButton(getAddSelected());
-			}
-			
+			Rectangle2D region = new Rectangle2D.Double(405, 500, 200, 500);
+			stripper = new PDFTextStripperByArea();
+			stripper.addRegion(regionName, region);
+		}
+		stripper.extractRegions(page);
+		String text = stripper.getTextForRegion(regionName);
+		return text;
+	}
 
-			/**
-			 * @author sowndarya.velraj
-			 * Description: addANewExportwithProduction 
-			 */
-			public void addANewExportwithProduction(String exportname, String prodName) throws InterruptedException {
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getAddNewExport().Visible() && getAddNewExport().Enabled();
-					}
-				}), Input.wait30);
-				getAddNewExport().Click();
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getProductionName().Visible() && getProductionName().Enabled();
-					}
-				}), Input.wait30);
-				getProductionName().SendKeys(exportname);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getProductionDesc().Enabled() && getProductionDesc().Visible();
-					}
-				}), Input.wait30);
-				getProductionDesc().SendKeys(exportname);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getExportProdToogle().Visible() && getExportProdToogle().Enabled();
-					}
-				}), Input.wait30);
-				getExportProdToogle().Click();
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getSelectProdinExport().Visible() && getSelectProdinExport().Enabled();
-					}
-				}), Input.wait30);
-				getSelectProdinExport().selectFromDropdown().selectByVisibleText(prodName);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getBasicInfoMarkComplete().Visible() && getBasicInfoMarkComplete().Enabled();
-					}
-				}), Input.wait30);
-				getBasicInfoMarkComplete().Click();
-				base.stepInfo("New Export is added");
+	/**
+	 * @author sowndarya.velraj Description:verify NewLine Delimiters Options
+	 */
+	public void verifyNewLineDimiOptions() {
+		driver.scrollPageToTop();
+		base.waitForElement(NewLineSeperatorDD());
+		NewLineSeperatorDD().waitAndClick(3);
+		base.stepInfo("New Line Seperator Drop Down Clicked ");
+		List<WebElement> options = NewLineSeperatorDD().selectFromDropdown().getOptions();
+		for (int i = 1; i < options.size(); i++) {
+			if (options.get(i).isDisplayed()) {
+				base.hitDownKey(1);
+				base.passedStep(options.get(i).getText() + "Displaying as Expected");
+			} else {
+				base.failedStep("All Options Not Displaying as Expected");
 			}
-/**
-			 * @author Brundha.T
-			 * Description:verifying pagination in gridview 
-			 */
-			public void verifyingGridView() {
-			List<String> DefaultProductionPage = base.availableListofElements(getGridViewWebTable(1));
-			driver.scrollingToBottomofAPage();
-			getProdPaginationNext().waitAndClick(5);
-			base.waitTime(1);
-			List<String> NextProductioPage = base.availableListofElements(getGridViewWebTable(1));
-			base.listCompareNotEquals(DefaultProductionPage, NextProductioPage, "Production grid view navigated to next page successfully", "Production grid view not navigated");
-			getProdPaginationPreviousBtn().waitAndClick(5);
-			base.waitTime(1);
-			List<String> PreviousProductionPage = base.availableListofElements(getGridViewWebTable(1));
-			base.listCompareEquals(PreviousProductionPage, DefaultProductionPage, "Production grid view navigated to previous page successfully", "not moved to previous page");
-			
-}
-			/**
-			 * @author Brundha.T
-			 * @param Tag
-			 * @param fontColor
-			 * @param Value
-			 * @param TagName
-			 * @param placeHolderValue
-			 * Description: filling burn redaction
-			 */
-			public void fillingBurnRedaction(String Tag, String fontColor, boolean Value, String TagName,
-					String placeHolderValue) {
-				driver.waitForPageToBeReady();
-				getClkRadioBtn_selectRedactionTags().waitAndClick(10);
-				driver.scrollingToBottomofAPage();
-				base.waitTillElemetToBeClickable(BurnRedactionCheckBox(Tag));
-				BurnRedactionCheckBox(Tag).waitAndClick(10);
-				getSelectDropDown().selectFromDropdown().selectByVisibleText(fontColor);
-				if (Value) {
-					getClkLink_selectingRedactionTags().waitAndClick(5);
-					getClkBtn_selectingRedactionTags().waitAndClick(5);
-					base.waitTillElemetToBeClickable(getPriveldged_TagTree(TagName));
-					getPriveldged_TagTree(TagName).waitAndClick(5);
-					getClk_selectBtn().waitAndClick(5);
-					base.waitForElement(gettextRedactionPlaceHolder());
-					gettextRedactionPlaceHolder().Click();
-					gettextRedactionPlaceHolder().SendKeys(Input.tag);
-					getAbbreviatedText().Click();
-					getAbbreviatedText().SendKeys(placeHolderValue);
-				}
-			}
-			/**
-			 * 
-			 * @param BatesNumber
-			 * @param pageNumber
-			 * @param BrandingText
-			 * @param Text
-			 * @throws IOException
-			 * @Description: verfying branding text applied in generated production
-			 */
-			public void pdfVerificationInDownloadedFile(String BatesNumber, int pageNumber,String BrandingText,String Text) throws IOException {
-				String home = System.getProperty("user.home");
-				base.stepInfo("verfying the generated pdf file");
-				File fileName=new File(home + "/Downloads/VOL0001/PDF/0001/"+BatesNumber+".pdf");
-				PDDocument doc = PDDocument.load(fileName);                   
-				PDFTextStripper stripper = new PDFTextStripper();
-				
-				for(int i=1;i<=pageNumber;i++) {
-				stripper.setStartPage(i);
-				String Result = stripper.getText(doc);
-				System.out.println(Result);
-				if(Result.contains(BrandingText)&&Result.contains(Text)) {
-					System.out.println("Branding Text is displayed");
-					base.passedStep(Text+"is Displayed as expected");
-				}else {
-					System.out.println("Branding Text is not  displayed");
-					base.failedStep(BrandingText+"is not Displayed as expected");
-				}
-				}
-				doc.close();
+		}
+	}
 
+	/**
+	 * @author sowndarya.velraj Description:selectFieldinMetadataTab
+	 */
+	public void selectFieldinMetadataTab(String fieldValue) {
+		driver.waitForPageToBeReady();
+		base.clickButton(getSlipMetadatTabSelection());
+		base.clickButton(getMetadataCheckBoxSelection(fieldValue));
+		base.clickButton(getAddSelected());
+	}
+
+	/**
+	 * @author sowndarya.velraj Description: addANewExportwithProduction
+	 */
+	public void addANewExportwithProduction(String exportname, String prodName) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewExport().Visible() && getAddNewExport().Enabled();
 			}
-			/**
-			 * @author Brundha.T
-			 * @param metaData
-			 * @param BrandingText
-			 * @Description: filling branding section with metadata
-			 */
-			public void fillingBrandingInTiffSection(String metaData,String BrandingText) {
-				getTIFF_CenterHeaderBranding().waitAndClick(5);
-				getCenterHeaderInsertMetadataField().waitAndClick(5);
-				base.waitForElement(getTIFF_selectedMetadataField());
-				getTIFF_selectedMetadataField().waitAndClick(5);
-				getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaData);
-				base.waitForElement(getPopUpOkButtonInserMetaData());
-				getPopUpOkButtonInserMetaData().waitAndClick(5);
-				getLeftHeaderBranding().waitAndClick(10);
-				getEnterBranding("Top - Left").SendKeys(BrandingText);
+		}), Input.wait30);
+		getAddNewExport().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible() && getProductionName().Enabled();
 			}
-			/**
-			 * @author Brundha.T
-			 * Description: method to delete downloaded zip file
-			 */
-					public void deleteProducedZipFile() {
-						String name = getProduction().getText().trim();
-						String home = System.getProperty("user.home");
-						File file = new File(home + "/Downloads/" + name + ".zip");
-						File file1 = new File(Input.fileDownloadLocation + name + ".zip");
-				   
-						if(file.exists()) {                   
-							file.delete();
-							System.out.println(file);
-						} else if (file1.exists()) {
-							file1.delete();
-							System.out.println(file);
-						} else {
-							base.failedStep("File not exist");
-						}
-						}
-					/**			
-					 * @author Brundha.T
-					 * @param TextFile
-					 * @param TextInFirstDoc
-					 * @throws IOException
-					 * Description:vrifying text file in downloaded document
-					 */
-					public void verifyingTextFile(File TextFile,String TextInFirstDoc) throws IOException{
-						String Values;
-						String TextInFile = "";
-						try (BufferedReader brReader = new BufferedReader(
-								new InputStreamReader(new FileInputStream(TextFile), "UTF16"))) {
-							while ((Values = brReader.readLine()) != null) {
-								TextInFile += Values;
-							}
-							System.out.println(TextInFile);
-							if (TextInFile.equals(TextInFirstDoc)) {
-								System.out.println("Text is generated as expected");
-								base.passedStep("Text File is Generated with exact text");
-							} else {
-								System.out.println("Text is not generated as expected");
-								base.failedStep("Text file is not generated with exact text");
-							}
-					}
-					}
+		}), Input.wait30);
+		getProductionName().SendKeys(exportname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Enabled() && getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(exportname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getExportProdToogle().Visible() && getExportProdToogle().Enabled();
+			}
+		}), Input.wait30);
+		getExportProdToogle().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProdinExport().Visible() && getSelectProdinExport().Enabled();
+			}
+		}), Input.wait30);
+		getSelectProdinExport().selectFromDropdown().selectByVisibleText(prodName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible() && getBasicInfoMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().Click();
+		base.stepInfo("New Export is added");
+	}
+
+	/**
+	 * @author Brundha.T Description:verifying pagination in gridview
+	 */
+	public void verifyingGridView() {
+		List<String> DefaultProductionPage = base.availableListofElements(getGridViewWebTable(1));
+		driver.scrollingToBottomofAPage();
+		getProdPaginationNext().waitAndClick(5);
+		base.waitTime(1);
+		List<String> NextProductioPage = base.availableListofElements(getGridViewWebTable(1));
+		base.listCompareNotEquals(DefaultProductionPage, NextProductioPage,
+				"Production grid view navigated to next page successfully", "Production grid view not navigated");
+		getProdPaginationPreviousBtn().waitAndClick(5);
+		base.waitTime(1);
+		List<String> PreviousProductionPage = base.availableListofElements(getGridViewWebTable(1));
+		base.listCompareEquals(PreviousProductionPage, DefaultProductionPage,
+				"Production grid view navigated to previous page successfully", "not moved to previous page");
+
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Tag
+	 * @param fontColor
+	 * @param Value
+	 * @param TagName
+	 * @param placeHolderValue Description: filling burn redaction
+	 */
+	public void fillingBurnRedaction(String Tag, String fontColor, boolean Value, String TagName,
+			String placeHolderValue) {
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitTillElemetToBeClickable(BurnRedactionCheckBox(Tag));
+		BurnRedactionCheckBox(Tag).waitAndClick(10);
+		getSelectDropDown().selectFromDropdown().selectByVisibleText(fontColor);
+		if (Value) {
+			getClkLink_selectingRedactionTags().waitAndClick(5);
+			getClkBtn_selectingRedactionTags().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getPriveldged_TagTree(TagName));
+			getPriveldged_TagTree(TagName).waitAndClick(5);
+			getClk_selectBtn().waitAndClick(5);
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().Click();
+			gettextRedactionPlaceHolder().SendKeys(Input.tag);
+			getAbbreviatedText().Click();
+			getAbbreviatedText().SendKeys(placeHolderValue);
+		}
+	}
+
+	/**
+	 * 
+	 * @param BatesNumber
+	 * @param pageNumber
+	 * @param BrandingText
+	 * @param Text
+	 * @throws IOException
+	 * @Description: verfying branding text applied in generated production
+	 */
+	public void pdfVerificationInDownloadedFile(String BatesNumber, int pageNumber, String BrandingText, String Text)
+			throws IOException {
+		String home = System.getProperty("user.home");
+		base.stepInfo("verfying the generated pdf file");
+		File fileName = new File(home + "/Downloads/VOL0001/PDF/0001/" + BatesNumber + ".pdf");
+		PDDocument doc = PDDocument.load(fileName);
+		PDFTextStripper stripper = new PDFTextStripper();
+
+		for (int i = 1; i <= pageNumber; i++) {
+			stripper.setStartPage(i);
+			String Result = stripper.getText(doc);
+			System.out.println(Result);
+			if (Result.contains(BrandingText) && Result.contains(Text)) {
+				System.out.println("Branding Text is displayed");
+				base.passedStep(Text + "is Displayed as expected");
+			} else {
+				System.out.println("Branding Text is not  displayed");
+				base.failedStep(BrandingText + "is not Displayed as expected");
+			}
+		}
+		doc.close();
+
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param metaData
+	 * @param BrandingText
+	 * @Description: filling branding section with metadata
+	 */
+	public void fillingBrandingInTiffSection(String metaData, String BrandingText) {
+		getTIFF_CenterHeaderBranding().waitAndClick(5);
+		getCenterHeaderInsertMetadataField().waitAndClick(5);
+		base.waitForElement(getTIFF_selectedMetadataField());
+		getTIFF_selectedMetadataField().waitAndClick(5);
+		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaData);
+		base.waitForElement(getPopUpOkButtonInserMetaData());
+		getPopUpOkButtonInserMetaData().waitAndClick(5);
+		getLeftHeaderBranding().waitAndClick(10);
+		getEnterBranding("Top - Left").SendKeys(BrandingText);
+	}
+
+	/**
+	 * @author Brundha.T Description: method to delete downloaded zip file
+	 */
+	public void deleteProducedZipFile() {
+		String name = getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		File file = new File(home + "/Downloads/" + name + ".zip");
+		File file1 = new File(Input.fileDownloadLocation + name + ".zip");
+
+		if (file.exists()) {
+			file.delete();
+			System.out.println(file);
+		} else if (file1.exists()) {
+			file1.delete();
+			System.out.println(file);
+		} else {
+			base.failedStep("File not exist");
+		}
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param TextFile
+	 * @param TextInFirstDoc
+	 * @throws IOException Description:vrifying text file in downloaded document
+	 */
+	public void verifyingTextFile(File TextFile, String TextInFirstDoc) throws IOException {
+		String Values;
+		String TextInFile = "";
+		try (BufferedReader brReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(TextFile), "UTF16"))) {
+			while ((Values = brReader.readLine()) != null) {
+				TextInFile += Values;
+			}
+			System.out.println(TextInFile);
+			if (TextInFile.equals(TextInFirstDoc)) {
+				System.out.println("Text is generated as expected");
+				base.passedStep("Text File is Generated with exact text");
+			} else {
+				System.out.println("Text is not generated as expected");
+				base.failedStep("Text file is not generated with exact text");
+			}
+		}
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description: filling slipsheet with a meta data in advanced tiff section
+	 */
+	public void fillingSlipSheetWithMetadataInTiffSection(String metadata) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTiffAdvancedLink());
+		getTiffAdvancedLink().waitAndClick(10);
+
+		base.waitForElement(getTiffAdvancedSlipSheetToggle());
+		getTiffAdvancedSlipSheetToggle().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getAddWorkProductSlipSheet(metadata));
+		getAddWorkProductSlipSheet(metadata).waitAndClick(10);
+
+		base.waitForElement(getAddSelected());
+		getAddSelected().waitAndClick(10);
+
+	}
 }
