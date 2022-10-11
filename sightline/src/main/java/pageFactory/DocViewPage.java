@@ -7,7 +7,13 @@ import java.awt.Graphics;
 import java.awt.Robot;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -3610,7 +3616,10 @@ public class DocViewPage {
 	public Element Hot_DocCheckBox() {
 		return driver.FindElementByXPath("//input[@id='8_checkbox']/..");
 	}
-	
+	public Element DownloadOption() {
+		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']//a[contains(@onclick,'Txt')]");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -28715,6 +28724,33 @@ public class DocViewPage {
 		int pagesCnt = Integer.parseInt(pageCnt[1].trim());
 		System.out.println(pagesCnt);
 		return pagesCnt;
+	}
+	/**
+	 * @author Brundha.T
+	 * @return
+	 * @throws IOException
+	 * @Description: method to extract text from docview page
+	 */
+	public String gettingExactTextInDocument() throws IOException {
+		base.waitTime(3);
+		base.waitTillElemetToBeClickable(getDocView_IconDownload());
+		getDocView_IconDownload().Click();
+		base.waitTillElemetToBeClickable(DownloadOption());
+		DownloadOption().Click();
+		base.waitUntilFileDownload();
+		String fileName = base.GetFileName();
+		
+		String Content;
+		String totaltext = "";
+		try (BufferedReader brReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(fileName), "UTF16"))) {
+			while ((Content = brReader.readLine()) != null) {
+				totaltext += Content;
+			}
+			
+		}
+		System.out.println(totaltext);
+		return totaltext;
 	}
 }
 
