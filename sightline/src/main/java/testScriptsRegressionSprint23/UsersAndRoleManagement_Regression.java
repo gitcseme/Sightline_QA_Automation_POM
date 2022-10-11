@@ -421,6 +421,170 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date:10/10/2022 Modified by: Baskar
+	 * Description :Validate DomainAdmin assigning billable/internal users at Project level
+	 */
+
+	@Test(description = "RPMXCON-53223", alwaysRun = true, groups = { "regression" })
+	public void validateDaUserAssgnBillable() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53223");
+		baseClass.stepInfo("Validate DomainAdmin assigning billable/internal users at Project level");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String projectTwoName="Regression_AllDataset_Consilio2";
+		String paFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String paLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdPa = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String rmuFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String rmuLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdrmu = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String revFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String revLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdRev = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+
+		// Login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		
+		// creating user
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		userManage.createNewUserFromDa(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.domainName, Input.projectName);
+		userManage.createNewUserFromDa(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.domainName, Input.projectName);
+		userManage.createNewUserFromDa(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.domainName, Input.projectName);
+
+		// assiging user as billable/non billable
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.ProjectAdministrator,false,paFirstName+" "+paLastName);
+		baseClass.stepInfo("Assigning pa user as non-billable");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.ReviewManager,true,rmuFirstName+" "+rmuLastName);
+		baseClass.stepInfo("Assigning rmu user as billable");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.Reviewer,true,revFirstName+" "+revLastName);
+		baseClass.stepInfo("Assigning rev user as billable");
+
+		// validating userlist page billable / non-billable
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		//verify pa role
+		userManage.passingUserName(emailIdPa);
+		userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillable=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billFalse=userManage.getUserListUsingIndex(indexBillable).getText();
+        System.out.println(billFalse);
+        softAssertion.assertEquals(billFalse, "False");
+        baseClass.passedStep("Cross checked from user list page PA role user is non-billable ");
+        userManage.filterByName(emailIdPa);
+		userManage.deleteUser();
+        //verify rmu role
+        userManage.passingUserName(emailIdrmu);
+        userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillableRmu=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
+        System.out.println(billTrueRmu);
+        softAssertion.assertEquals(billTrueRmu, "True");
+        userManage.filterByName(emailIdrmu);
+		userManage.deleteUser();
+        baseClass.passedStep("Cross checked from user list page Review Manager role user is billable ");
+        //verify rev role
+        userManage.passingUserName(emailIdRev);
+        userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillableRev=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
+        System.out.println(billFalseRev);
+        softAssertion.assertEquals(billFalseRev, "True");
+        userManage.filterByName(emailIdRev);
+		userManage.deleteUser();
+        baseClass.passedStep("Cross checked from user list page Reviewer role user is billable ");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+
+	
+	/**
+	 * Author : Baskar date: NA Modified date:10/10/2022 Modified by: Baskar
+	 * Description :Validate SystemAdmin assigning billable and internal users as
+	 *              PAU/RMU/Reviewer for specific project
+	 */
+
+	@Test(description = "RPMXCON-53221", alwaysRun = true, groups = { "regression" })
+	public void validateSaUserAssgnBillable() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53221");
+		baseClass.stepInfo("Validate SystemAdmin assigning billable and "
+				+ "internal users as PAU/RMU/Reviewer for specific project");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String projectTwoName="Regression_AllDataset_Consilio2";
+		String paFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String paLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdPa = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String rmuFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String rmuLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdrmu = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String revFirstName = Input.randomText + Utility.dynamicNameAppender();
+		String revLastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailIdRev = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+
+		// Login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		
+		// creating user
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		userManage.createNewUser(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.domainName, Input.projectName);
+		userManage.createNewUser(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.domainName, Input.projectName);
+		userManage.createNewUser(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.domainName, Input.projectName);
+
+		// assiging user as billable/non billable
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.ProjectAdministrator,true,paFirstName+" "+paLastName);
+		baseClass.stepInfo("Assigning pa user as billable");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.ReviewManager,true,rmuFirstName+" "+rmuLastName);
+		baseClass.stepInfo("Assigning rmu user as billable");
+		userManage.assignProjectBasedOnPara(projectTwoName,Input.Reviewer,true,revFirstName+" "+revLastName);
+		baseClass.stepInfo("Assigning rev user as billable");
+
+		// validating userlist page billable / non-billable
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		//verify pa role
+		userManage.passingUserName(emailIdPa);
+		userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillable=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billFalse=userManage.getUserListUsingIndex(indexBillable).getText();
+        System.out.println(billFalse);
+        softAssertion.assertEquals(billFalse, "True");
+        userManage.filterByName(emailIdPa);
+		userManage.deleteUser();
+        baseClass.passedStep("Cross checked from user list page PA role user is billable ");
+        //verify rmu role
+        userManage.passingUserName(emailIdrmu);
+        userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillableRmu=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
+        System.out.println(billTrueRmu);
+        softAssertion.assertEquals(billTrueRmu, "True");
+        userManage.filterByName(emailIdrmu);
+		userManage.deleteUser();
+        baseClass.passedStep("Cross checked from user list page Review Manager role user is billable ");
+        //verify rev role
+        userManage.passingUserName(emailIdRev);
+        userManage.applyFilter();
+		baseClass.waitTime(2);
+		int indexBillableRev=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
+		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
+        System.out.println(billFalseRev);
+        softAssertion.assertEquals(billFalseRev, "True");
+        userManage.filterByName(emailIdRev);
+		userManage.deleteUser();
+        baseClass.passedStep("Cross checked from user list page Reviewer role user is billable ");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

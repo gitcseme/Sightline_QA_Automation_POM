@@ -970,6 +970,20 @@ public class UserManagement {
 	public Element getSGDropDown() {
 		return driver.FindElementByXPath("//select[@id='SysAdminSecGroup']");
 	}
+	public Element getProjectBillableCheckBox() {
+		return driver.FindElementByXPath("//*[@id='tabProject']//input[@id='IsBillableCheckbox']/../i");
+	}
+	public ElementCollection getUserListHeaderIndex() {
+		return driver.FindElementsByXPath("//*[@id=\"dtUserList_wrapper\"]//div[@class='dataTables_scrollHead']//table//th");
+	}
+	public Element getUserListUsingIndex(int index) {
+		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr/td["+index+"]");
+	}
+
+	public Element getSecurityDropDownDomain() {
+		return driver.FindElementByXPath("//select[@id='ddlDomainAdminSecGroup']");
+	}
+
 	
 	
 	public UserManagement(Driver driver) {
@@ -4452,5 +4466,97 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully created");
 		}
 	}
+	
+	/**
+	 * @author Baskar
+	 * @param projectName
+	 * @param role
+	 * @param unAssigedUserName
+	 * @Desctiption Assign user to that project
+	 */
+	public void assignProjectBasedOnPara(String projectName, String role, boolean flag, String unAssigedUserName) {
+
+		openAssignUser();
+		goToProjectTabInAssignUser();
+		selectProjectInAssignUser(projectName);
+		selectRoleInAssignUser(role);
+        
+		if (!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+			selectSecuriyGroup(Input.securityGroup);
+		}
+
+		bc.waitForElement(getUnAssignedDomainUser());
+		bc.waitTime(5);
+		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
+		if (flag) {
+			bc.waitForElement(getProjectBillableCheckBox());
+			getProjectBillableCheckBox().waitAndClick(5);
+		}
+		bc.waitForElement(getDomainUserRightArrow());
+		getDomainUserRightArrow().waitAndClick(10);
+		driver.Manage().window().fullscreen();
+		getsavedomainuser().waitAndClick(10);
+
+		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
+		driver.Navigate().refresh();
+		driver.Manage().window().maximize();
+	}
+
+	
+	/**
+	 * @author Baskar
+	 * @Description : Method for creating new user from Da role
+	 */
+	public void createNewUserFromDa(String firstName, String lastName, String role, String emailId, String domain,
+			String project) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddUserBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddUserBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFirstName().Visible();
+			}
+		}), Input.wait30);
+		getFirstName().SendKeys(firstName);
+		getLastName().SendKeys(lastName);
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+
+		if (role.equalsIgnoreCase("Domain Administrator")) {
+			getSelectDomain().isElementAvailable(10);
+			getSelectDomain().selectFromDropdown().selectByIndex(1);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEmail().Exists();
+			}
+		}), Input.wait30);
+		getEmail().SendKeys(emailId);
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
+				|| role.equalsIgnoreCase("Reviewer")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProject().Visible();
+				}
+			}), Input.wait30);
+			getSelectProject().Click();
+			getSelectProject(project).Click();
+		}
+
+		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			getSecurityDropDownDomain().isElementAvailable(10);
+			getSecurityDropDownDomain().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+		}
+		getSave().waitAndClick(10);
+		bc.VerifySuccessMessage("User profile was successfully created");
+
+	}
+
 			
 }
