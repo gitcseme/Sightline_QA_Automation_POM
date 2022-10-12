@@ -3545,6 +3545,9 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//select[@id='lstANSIType']");
 	}
 
+	public Element getBlankPageRemovalMsg() {
+		return driver.FindElementByXPath("//a[contains(@data-content,'Blnk Page')]/../following-sibling::td");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -22722,5 +22725,37 @@ public class ProductionPage {
 		base.waitForElement(getAddSelected());
 		getAddSelected().waitAndClick(10);
 
+	}
+	/**
+	 * @author Brundha
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws TesseractException
+	 * @Description verifying text on the tiff image file on downloaded zip file
+	 */
+	public void verificationOfTiffFile(int firstFile, int lastFile, String prefixID, String suffixID)
+			throws TesseractException {
+
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+
+		for (int i = firstFile; i < lastFile; i++) {
+
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			ITesseract instance = new Tesseract1();
+			File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+			instance.setDatapath(tessDataFolder.getPath());
+			String result = instance.doOCR(imageFile);
+			System.out.println(result);
+			if (result != null) {
+				base.passedStep("Tiff file is with Text as expected");
+
+			} else {
+				base.failedStep(" verification failed");
+			}
+		}
 	}
 }
