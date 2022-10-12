@@ -862,4 +862,20 @@ public class DomainDashboard {
 				"Wrong Project Selection");
 
 	}
+	/**
+	 * @author Brundha.T
+	 * @param Role
+	 * Description: validating the dropdown in changerole
+	 */
+	
+	public void validatingChangeRoleOptionInRMUAndReviewer(String Role) {
+		base.stepInfo("validating change role Dropdown in"+Role+"");
+		base.waitTime(1);
+		base.waitTillElemetToBeClickable(base.getSelectRole());
+		base.getSelectRole().selectFromDropdown().selectByVisibleText(Role);
+		base.waitForElement(base.getAvlDomain());
+		base.ValidateElement_Presence(base.getAvlDomain(),"Domain Dropdown");
+		base.ValidateElement_Presence(base.getAvlProject(),"Project Dropdown");
+		base.ValidateElement_Presence(base.getSelectSecurityGroup(), "Security Group dropdown");
+	}
 }

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -291,7 +292,138 @@ public class Production_Regression23 {
 		base.passedStep("verified EmailThreadSequenceID displays correct value in Production");
 
 	}
+	/**
+	 * @author Brundha RPMXCON-48059
+	 * @Description To verify that if Blank Page Removal toggle is ON then it should
+	 *              produced the TIFF without blank pages
+	 */
+	@Test(description = "RPMXCON-48059", enabled = true, groups = { "regression" })
 
+	public void verifyBlankPageRemovalONInGeneratedProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.selectproject(Input.projectName01);
+		base.stepInfo("RPMXCON-48059 -Production component");
+		base.stepInfo(
+				"To verify that if Blank Page Removal toggle is ON then it should produced the TIFF without blank pages");
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("SourceDocID", "49ID00001312");
+		sessionSearch.bulkRelease(Input.securityGroup);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		driver.scrollPageToTop();
+		page.getBlankPageRemovalToggle().waitAndClick(5);
+		base.waitForElement(page.getContinueBtn());
+		page.getContinueBtn().waitAndClick(5);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.validatingGetTextElement(page.getBlankPageRemovalMsg(), "Success");
+		page.extractFile();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+		File dir = new File(home + "/Downloads/VOL0001/Images/0001/");
+		File[] dir_contents = dir.listFiles();
+		System.out.println(dir_contents.length);
+		int Image = dir_contents.length;
+		int ImageFiles = firstFile + Image;
+		File TiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.isfileisExists(TiffFile);
+		page.verificationOfTiffFile(firstFile, ImageFiles, prefixID, suffixID);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha RPMXCON-48060
+	 * @Description To verify that if Blank Page Removal toggle is OFF then it
+	 *              should produced the TIFF/PDF with blank pages
+	 */
+	@Test(description = "RPMXCON-48060", enabled = true, groups = { "regression" })
+
+	public void verifyBlankPageRemovalOffInGeneratedProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.selectproject(Input.projectName01);
+		base.stepInfo("RPMXCON-48060 -Production component");
+		base.stepInfo(
+				"To verify that if Blank Page Removal toggle is OFF then it should produced the TIFF/PDF with blank pages");
+
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("SourceDocID", "49ID00001312");
+		sessionSearch.bulkRelease(Input.securityGroup);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		DocViewPage docView=new DocViewPage(driver);
+		int TotalPages=docView.docViewDocPageCount();
+		System.out.println(TotalPages);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(true);
+		page.banlkPageRemovalToggleOffCheck();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.validatingGetTextElement(page.getBlankPageRemovalMsg(), "Success");
+		page.extractFile();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+		PDDocument doc = PDDocument.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf"));
+		int count = doc.getNumberOfPages();
+		System.out.println(count);
+		base.digitCompareEquals(TotalPages, count,"Blank Page is not removed as expected","Blank Page is Removed");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
