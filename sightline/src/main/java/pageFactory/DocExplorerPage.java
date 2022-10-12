@@ -3442,6 +3442,7 @@ public class DocExplorerPage {
 			e.printStackTrace();
 			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
 		}
+		}
 
 	
 	/**
