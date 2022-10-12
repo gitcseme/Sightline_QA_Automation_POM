@@ -5828,6 +5828,9 @@ public class IngestionPage_Indium {
 		for (int i = 0; i < 70; i++) {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
+			if(!getStatus(1).isElementAvailable(5)) {
+				base.waitTime(2);
+			}
 			String status = getStatus(1).getText().trim();
 
 			if (status.contains("Cataloged")) {
@@ -5909,6 +5912,9 @@ public class IngestionPage_Indium {
 		for (int i = 0; i < 40; i++) {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
+			if(!getStatus(1).isElementAvailable(5)) {
+				base.waitTime(2);
+			}
 			String status = getStatus(1).getText().trim();
 
 			if (status.contains("Copied")) {
@@ -10140,6 +10146,9 @@ public class IngestionPage_Indium {
 			driver.waitForPageToBeReady();
 			for (int i = 0; i < 50; i++) {
 				base.waitTime(2);
+				if(!getStatus(1).isElementAvailable(5)) {
+					base.waitTime(2);
+				}
 				String status = getStatus(1).getText().trim();
 				if (status.contains("Indexed")) {
 					base.passedStep("Indexing completed");
