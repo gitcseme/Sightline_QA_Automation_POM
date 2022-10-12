@@ -27394,8 +27394,8 @@ public class DocViewPage {
 
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getResponsiveCheked());
-		getResponsiveCheked().Click();
+		base.waitTillElemetToBeClickable(getResponsiveCheked());
+		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
