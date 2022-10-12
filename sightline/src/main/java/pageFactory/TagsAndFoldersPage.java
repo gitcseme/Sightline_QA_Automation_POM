@@ -285,8 +285,65 @@ public class TagsAndFoldersPage {
 
 	// added by sowndariya
 	
+	public Element getPropFolderExactDuplic() {
+		return driver.FindElementByXPath("//input[@id='chkFolderExactDuplicates']//following-sibling::i");
+	}
+	
+	public Element getErrorMsgPopup() {
+		return driver.FindElementByXPath("//div[@id='tagErrorMsg']");
+	}
+	
+	public Element getBulkTagConfirmationButton() {
+		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
+	}
+	
+	public Element getContinueCount() {
+		return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']");
+	}
+
+	public Element getContinueButton() {
+		return driver.FindElementByXPath(".//*[@id='divBulkAction']//button[contains(.,'Continue')]");
+	}
+
+	public Element getEnterTagName() {
+		return driver.FindElementById("txtTagName");
+	}
+	
+	public Element getTagErrorMsg() {
+		return driver.FindElementByXPath("//div[text()='Please enter tag name']");
+	}
+
+	public Element getHelpButton() {
+		return driver.FindElementByXPath("//h1[text()='Tags and Folders']//following-sibling::a");
+	}
+
+	public Element getHelpText() {
+		return driver.FindElementByXPath("//div[@class='popover-content contains-table']");
+	}
+	public Element getPropTagFamilyMember() {
+		return driver.FindElementByXPath("//input[@id='chkTagFamilyMember']//following-sibling::i");
+	}
+	public Element getPropTagExactDuplic() {
+		return driver.FindElementByXPath("//input[@id='chkTagExactDuplicates']//following-sibling::i");
+	}
+	public Element getProbTagEmailThred() {
+		return driver.FindElementByXPath("//input[@id='chkTagEmailThreads']//following-sibling::i");
+	}
+	public Element getProbTagEmailDupli() {
+		return driver.FindElementByXPath("//input[@id='chkTagEmailDuplicates']//following-sibling::i");
+	}
+	public ElementCollection getAllProbTags() {
+		return driver.FindElementsByXPath("//div[@id='modalTagAdd']//label[@class='checkbox']");
+	}
+	
+	public Element getAllTags() {
+		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'All Tags')]");
+	}
+	public Element getNewTag() {
+		return driver.FindElementByXPath("//ul[@id='Tab1']//a[contains(text(),'New Tag')]");
+	}
 	public Element getCreatedTag(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'"+tag+"')]");
+		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'" + tag +"')]");
 	}
 
 	public Element gettxtTagClassification() {
@@ -3157,5 +3214,29 @@ public void verifyingAllTagsGroup(String TagGroup) {
 	
 }
 
+
+/**
+ * @author Sowndarya.velraj
+ * @description: Create a new tag from popup window
+ */
+public void createNewTagFromActionPopup(String tagname, String classificationname) {
+
+	driver.waitForPageToBeReady();
+	base.waitForElement(getNewTag());
+	getNewTag().waitAndClick(10);
+	
+	base.waitForElement(getAllTags());
+	getAllTags().waitAndClick(10);
+	
+	base.waitForElement(getEnterTagName());
+	getEnterTagName().SendKeys(tagname);
+
+	base.waitForElement(getTagClassification());
+	getTagClassification().selectFromDropdown().selectByVisibleText(Input.technicalIssue);
+
+	base.waitForElement(getContinueButton());
+	getContinueButton().waitAndClick(10);
+
+}
 
 }
