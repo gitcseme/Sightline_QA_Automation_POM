@@ -3378,17 +3378,12 @@ public class IngestionPage_Indium {
 		base.passedStep("Clicked on Next button");
 
 		base.stepInfo("Pop up messgae for Ingestion without text file");
-		if (getApproveMessageOKButton().isElementAvailable(5)) {
+		if (getApproveMessageOKButton().isElementAvailable(15)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
-		base.waitTime(2);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMappingSourceField(2).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getMappingSourceField(2));
 
 		if (dataset.contains("Collection1K_Tally")) {
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
@@ -5384,12 +5379,12 @@ public class IngestionPage_Indium {
 		ingestionDetailActionDropdown().waitAndClick(10);
 		base.waitForElement(getActionApprove());
 		getDropdownOptionStatus(getActionApprove());
-		getActionApprove().waitAndClick(5);
+		getActionApprove().waitAndClick(10);
 		base.waitForElement(getApproveMessageOKButton());
-		getApproveMessageOKButton().waitAndClick(5);
+		getApproveMessageOKButton().waitAndClick(15);
 		base.VerifySuccessMessage("Approve started successfully");
 		base.waitForElement(getCloseButton());
-		getCloseButton().waitAndClick(5);
+		getCloseButton().waitAndClick(10);
 		
 
 		for (int i = 0; i < 40; i++) {
