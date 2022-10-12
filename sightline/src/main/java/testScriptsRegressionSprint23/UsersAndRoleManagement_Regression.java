@@ -795,6 +795,104 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:12/10/2022 Modified by: Baskar
+	 * Description :Verify that after impersonation as Project Admin user can see
+	 * "Is Locked" on edit user pop up
+	 */
+
+	@Test(description = "RPMXCON-52718", alwaysRun = true, groups = { "regression" })
+	public void validateIsLockedPresentSaImpPa() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52718");
+		baseClass.stepInfo(
+				"Verify that after impersonation as Project Admin user can see \"Is Locked\" on edit user pop up");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		sessionSearch = new SessionSearch(driver);
+		security = new SecurityGroupsPage(driver);
+
+		// Login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// impersonate sa to pa
+		baseClass.impersonateSAtoPA();
+
+		// validate islocked checkbox is available
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.pa1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		boolean ischecked = userManage.getIsLOckedCheckBox().isElementAvailable(2);
+		softAssertion.assertTrue(ischecked);
+		baseClass.passedStep(
+				"Is locked checkbox displayed on edit user popup " + "window when user impersonate from sa to pa role");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:12/10/2022 Modified by: Baskar
+	 * Description :Verify that when "Is Locked" is unchecked from edit user pop up
+	 * user should login successfully
+	 */
+
+	@Test(description = "RPMXCON-52717", alwaysRun = true, groups = { "regression" })
+	public void validateAfterUncheckIsLockedUserCanLogin() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52717");
+		baseClass.stepInfo("Verify that when \"Is Locked\" is "
+				+ "unchecked from edit user pop up user should login successfully");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		sessionSearch = new SessionSearch(driver);
+		security = new SecurityGroupsPage(driver);
+
+		// Login as pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// as per pre-Prerequisites
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.getIsLOckedCheckBox().waitAndClick(5);
+		baseClass.waitForElement(userManage.getSubmit());
+		userManage.getSubmit().waitAndClick(10);
+		baseClass.stepInfo("locking the user in edit user popup window");
+
+		// logout
+		loginPage.logout();
+
+		// Login as rmu to verify user login
+		loginPage.loginToSightLineVerifyLockedUser(Input.rmu1userName, Input.rmu1password);
+		boolean loginLocked = userManage.getLoginLocked().isElementAvailable(2);
+		softAssertion.assertTrue(loginLocked);
+		baseClass.passedStep("user cannot able to login to application when account locked");
+
+		// Login as pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.getIsLOckedCheckBox().waitAndClick(5);
+		baseClass.waitForElement(userManage.getSubmit());
+		userManage.getSubmit().waitAndClick(10);
+		baseClass.stepInfo("unlocking the user in edit user popup window");
+
+		// logout
+		loginPage.logout();
+
+		// Login as rmu again
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.passedStep("User can able to login to application after un-locking from edit user popup window");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

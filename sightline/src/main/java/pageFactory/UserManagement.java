@@ -1005,6 +1005,13 @@ public class UserManagement {
 	public Element getSecurityDropDownDomain() {
 		return driver.FindElementByXPath("//select[@id='ddlDomainAdminSecGroup']");
 	}
+	
+	public Element getIsLOckedCheckBox() {
+		return driver.FindElementByXPath("//*[@id='Ischklocked']/../i");
+	}
+	public Element getLoginLocked() {
+		return driver.FindElementByXPath("//li[text()='20001000020 : Your account has been locked. To unlock your account, please reset your password.']");
+	}
 
 	public UserManagement(Driver driver) {
 
