@@ -105,6 +105,10 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getNoOfDocInProject() {
+		return driver.FindElementByXPath("//span[@class='switchTip']//following-sibling::span//label");
+	}
+
 	public Element contentAndMetaDataResult() {
 		return driver.FindElementByXPath("//td[text()='Content and Metadata']/parent::tr//span[@class='badge']");
 	}
@@ -13639,17 +13643,16 @@ public class SessionSearch {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param TagName
-	 * @param docCount[doc count to be verified ]
-	 * This method will verify the total document selected in bulk tag pop up
+	 * @param docCount[doc count to be verified ] This method will verify the total
+	 *                     document selected in bulk tag pop up
 	 * @throws InterruptedException
 	 */
 
-	public void bulkTag_FluctuationVerify(String TagName, String docCount)
-			throws InterruptedException {
+	public void bulkTag_FluctuationVerify(String TagName, String docCount) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -13657,22 +13660,22 @@ public class SessionSearch {
 		}), Input.wait60);
 
 		String actualCount_continue = getContinueCount().getText();
-		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate", "Count is not same as expected.");
-		
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate",
+				"Count is not same as expected.");
+
 		base.stepInfo("Now clicking new Tag tab");
 		base.waitForElement(getBulkNewTab());
 		getBulkNewTab().waitAndClick(10);
-		
-		String passMsg=" Count didn't fluctuate and count didn't "
-				+ "even change after selecting the New Tag.";
+
+		String passMsg = " Count didn't fluctuate and count didn't " + "even change after selecting the New Tag.";
 		String actualCount_AfterNewTabClick = getContinueCount().getText();
-		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick,
-				passMsg, "Count is not same as expected.");
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick, passMsg,
+				"Count is not same as expected.");
 		base.waitForElement(getEnterTagName());
 		getEnterTagName().SendKeys(TagName);
 		base.waitForElement(getTagsAllRoot());
 		getTagsAllRoot().Click();
-		
+
 		getContinueButton().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -13682,20 +13685,22 @@ public class SessionSearch {
 		}), Input.wait60);
 		if (docCount != null) {
 			String actualCount_final = getFinalCount().getText();
-			base.textCompareEquals(actualCount_final, docCount, "The Count matching with count in "
-					+ "Like Document Popup.", "The Count not match with count in Like Document Popup.");
+			base.textCompareEquals(actualCount_final, docCount,
+					"The Count matching with count in " + "Like Document Popup.",
+					"The Count not match with count in Like Document Popup.");
 		}
 
 	}
-/**
- * this method verifies the Total docs selected count displayed
- *  in bulk folder pop up.
- * @param folderName
- * @param docCount
- * @throws InterruptedException
- */
-	public void bulkFolder_FluctuationVerify(String folderName, String docCount)
-			throws InterruptedException {
+
+	/**
+	 * this method verifies the Total docs selected count displayed in bulk folder
+	 * pop up.
+	 * 
+	 * @param folderName
+	 * @param docCount
+	 * @throws InterruptedException
+	 */
+	public void bulkFolder_FluctuationVerify(String folderName, String docCount) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -13703,18 +13708,18 @@ public class SessionSearch {
 		}), Input.wait60);
 
 		String actualCount_continue = getContinueCount().getText();
-		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate", "Count is not same as expected.");
-		
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate",
+				"Count is not same as expected.");
+
 		base.stepInfo("Now clicking new Folder tab");
 		base.waitForElement(getBulkNewTab());
 		getBulkNewTab().waitAndClick(10);
-		
-		String passMsg=" Count didn't fluctuate and count didn't "
-				+ "even change after selecting the New Folder.";
+
+		String passMsg = " Count didn't fluctuate and count didn't " + "even change after selecting the New Folder.";
 		String actualCount_AfterNewTabClick = getContinueCount().getText();
-		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick,
-				passMsg, "Count is not same as expected.");
-		
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick, passMsg,
+				"Count is not same as expected.");
+
 		base.waitForElement(getEnterFolderName());
 		getEnterFolderName().SendKeys(folderName);
 
@@ -13729,10 +13734,22 @@ public class SessionSearch {
 		}), Input.wait60);
 		if (docCount != null) {
 			String actualCount_final = getFinalCount().getText();
-			base.textCompareEquals(actualCount_final, docCount, "The Count matching with count in "
-					+ "Like Document Popup.", "The Count not match with count in Like Document Popup.");
+			base.textCompareEquals(actualCount_final, docCount,
+					"The Count matching with count in " + "Like Document Popup.",
+					"The Count not match with count in Like Document Popup.");
 		}
 
+	}
+
+	public int verifyNoOfDocsInProject() {
+		base.waitForElement(getNoOfDocInProject());
+		String fullText = getNoOfDocInProject().getText();
+		String[] SplitText = fullText.split(":");
+
+		int docCount = Integer.parseInt(SplitText[1].trim().replace(",", ""));
+		System.out.println(docCount);
+		base.stepInfo("Total No Of Doc's In Project is : " + docCount);
+		return docCount;
 	}
 
 }

@@ -26,6 +26,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -584,6 +585,215 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description :Verify user should not be created under different security
+	 *              group with different role [RPMXCON-52665]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52665", enabled = true, groups = { "regression" })
+	public void verifyUserNotAbleToAddDiffSgAndDiffRole() throws Exception {
+		String securityGrp = "securityGroup" + Utility.dynamicNameAppender();
+
+		userManage = new UserManagement(driver);
+		security = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52665  Users and Role Management");
+		baseClass.stepInfo("Verify user should not be created under different security group with different role");
+
+		// login as Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		String currentUser = loginPage.getCurrentUserName();
+		String[] userName = currentUser.split(" ");
+
+		// Create Security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGrp);
+
+		// logout
+		loginPage.logout();
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+
+		// Add Existing User With Different Security Group
+		baseClass.verifyUrlLanding(Input.url + "User/UserListView", "landed on User list page",
+				"not on user list page");
+		userManage.validateErrorMsgForNewUser(userName[0], userName[1], Input.ReviewManager, Input.pa1userName, "",
+				Input.projectName, securityGrp, false);
+
+		// verify Error Message
+		String expectedErrorMsg = "20001000023 : The specified user cannot be added, since an identical user already exists in the project, but in a different role.";
+		baseClass.VerifyErrorMessage(expectedErrorMsg);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description :Impersonation from SA to RMU/Review and then switch to a
+	 *              different project [RPMXCON-53270]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53270", enabled = true, groups = { "regression" })
+	public void verifyImperFromSAToDifferentProject() throws Exception {
+		String securityGrp1 = "securityGroup" + Utility.dynamicNameAppender();
+		String securityGrp2 = "securityGroup" + Utility.dynamicNameAppender();
+
+		userManage = new UserManagement(driver);
+		security = new SecurityGroupsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		DocListPage doclist = new DocListPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53270  Users and Role Management");
+		baseClass.stepInfo("Impersonation from SA to RMU/Review and then switch to a different project");
+
+		// login as Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// PRE-REQUISITE
+		// Create Security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGrp1);
+		security.AddSecurityGroup(securityGrp2);
+
+		// Release Docs To SG
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		doclist.Selectpagelength("500");
+		doclist.sortColumn(true, Input.documentKey, true);
+		doclist.selectAllDocumentsInCurrentPageOnly();
+		doclist.docListToBulkRelease(securityGrp2);
+
+		doclist.sortColumn(true, Input.documentKey, false);
+		doclist.selectAllDocumentsInCurrentPageOnly();
+		doclist.bulkRelease(securityGrp2);
+
+		// logout
+		loginPage.logout();
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+
+		// impersonate From SA to REV & verify Current User
+		baseClass.rolesToImp("SA", "RMU");
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser = baseClass.getLoginedUserRole().getText();
+		System.out.println(currentUser);
+		baseClass.textCompareEquals(currentUser, Input.ReviewManager, "Current Role is RMU",
+				"Current role is not as expected");
+
+		// verify DOC count in Project1 For RMU
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.verifyNoOfDocsInProject();
+
+		// select project2
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Selected Project2");
+
+		// verify Doc count in Project2 & purehit count for RMU
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.navigateToSessionSearchPageURL();
+		int projectDocCountP2 = sessionSearch.verifyNoOfDocsInProject();
+		int purehitP2 = sessionSearch.basicContentSearch(Input.searchStringStar);
+		baseClass.digitCompareEquals(projectDocCountP2, purehitP2, "Expected DocCount is Available",
+				"Expected DocCount is NOt Available");
+
+		// impersonate From RMU to SA
+		baseClass.rolesToImp("RMU", "SA");
+
+		// impersonate From SA to REV
+		baseClass.rolesToImp("SA", "REV");
+
+		// verify Current user role
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser2 = baseClass.getLoginedUserRole().getText();
+		System.out.println(currentUser2);
+		baseClass.textCompareEquals(currentUser2, Input.Reviewer, "Current Role is RMU",
+				"Current role is not as expected");
+
+		// verify DOC count in Project1 For REV
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.verifyNoOfDocsInProject();
+
+		// select project2
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Selected Project2");
+
+		// verify Doc count in Project2 & purehit count For REV
+		sessionSearch.navigateToSessionSearchPageURL();
+		int projectDocCountRevP2 = sessionSearch.verifyNoOfDocsInProject();
+		int purehitRevP2 = sessionSearch.basicContentSearch(Input.searchStringStar);
+		baseClass.digitCompareEquals(projectDocCountRevP2, purehitRevP2, "Expected DocCount is Available",
+				"Expected DocCount is NOt Available");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description : To verify when SysAdmin clicks to Delete user from user list
+	 *              and cancels user deletion by clicking ‘Cancel’ button.
+	 *              [RPMXCON-52401]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52401", enabled = true, groups = { "regression" })
+	public void verifyWhenUserClickDeleteUser() throws Exception {
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+
+		userManage = new UserManagement(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52401  Users and Role Management");
+		baseClass.stepInfo(
+				"To verify when SysAdmin clicks to Delete user from user list and cancels user deletion by clicking ‘Cancel’ button.");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+
+		//Create USER
+		baseClass.verifyUrlLanding(Input.url + "User/UserListView", "landed on User list page",
+				"not on user list page");
+		baseClass.stepInfo("Create new user for domain administration");
+		userManage.createNewUser(firstName, lastName, role, emailId, " ", Input.projectName);
+
+		//Click Delete Button And click Cancel In POpup
+		driver.Navigate().refresh();
+		userManage.passingUserName(emailId);
+		userManage.applyFilter();
+		userManage.verifyDeleteUserPopup(false, Input.projectName);
+
+		// verify Element Present in Page
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Presence(userManage.getSelectUserToDelete(Input.projectName),
+				"Created User is Present");
+
+		//Click Delete Button And click OK In POpup
+		userManage.verifyDeleteUserPopup(true, Input.projectName);
+		userManage.applyFilter();
+		
+		// verify Element Absence in Page
+		baseClass.ValidateElement_Absence(userManage.getSelectUserToDelete(Input.projectName),
+				"Created User is Not Available");
+
+		// logout
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
