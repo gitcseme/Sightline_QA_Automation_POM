@@ -10313,6 +10313,7 @@ public class IngestionPage_Indium {
 						base.waitForElement(docList.getNextButtonStatus());
 						String buttonstatus =docList.getNextButtonStatus().GetAttribute("Class");
 						if(docList.getDataInDoclist(i,j).isDisplayed() && !data.isEmpty()) {
+							base.stepInfo(values[i] +"field value displayed :"+ data);
 							base.passedStep("values displayed in selected column");
 							driver.Navigate().refresh();
 							break ColumnSearch;
