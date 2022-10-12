@@ -1413,6 +1413,14 @@ public class DocListPage {
 		return driver.FindElementByXPath("//div/div[4]/label/i");
 	}
 
+	public Element getDocListNoRestultData() {
+		return driver.FindElementByXPath("//ul[@id='select2-EmailRecipientNames-results']/li");
+	}
+	
+	public Element getClearAllBtn() {
+		return driver.FindElementById("btnClearAllBits");
+
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6332,5 +6340,28 @@ public class DocListPage {
 		base.VerifySuccessMessage("Records saved successfully");
 	}
 
+	/**
+	 * @author Vijaya.Rani
+	 * @Description:methoad excludeDoclist
+	 *
+	 * @param data(Domain        name )
+	 */
+	public void excludeDoclist(String data) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getExcludeRadioBtn().Visible();
+			}
+		}), Input.wait30);
+		getExcludeRadioBtn().Click();
+		getSearchTextArea().SendKeys(data);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+		
+	}
 	
 }
