@@ -617,6 +617,7 @@ public class DocList_Regression23 {
 		DocListPage docList = new DocListPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		String domain1 = ",/_";
+		String domain2="Amol.Gawande/,@symp";
 
 		// Login As user
 		loginPage.loginToSightLine(username, password);
@@ -642,9 +643,9 @@ public class DocList_Regression23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docList.getEmailRecNameFilter());
 		docList.getEmailRecNameFilter().waitAndClick(5);
-		docList.excludeDoclist(domain1);
+		docList.excludeDoclist(domain2);
 		softAssertion.assertTrue(docList.getDocListNoRestultData().isDisplayed());
-		baseClass.passedStep("Documents containing only the selected email IDs only filtered");
+		baseClass.passedStep("Documents containing the selected email IDs should not be filtered");
 		softAssertion.assertAll();
 
 		loginPage.logout();
