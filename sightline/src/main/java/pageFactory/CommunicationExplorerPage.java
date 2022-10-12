@@ -377,6 +377,12 @@ public class CommunicationExplorerPage {
 	public Element getFolders() {
 		return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
 	}
+	public Element getReportPanelText() {
+        return driver.FindElementByXPath("//*[@id='textpannel']/span");
+    }
+	public Element getApplyBtn() {
+        return driver.FindElementById("btnAppyFilter");
+    }
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -1302,5 +1308,43 @@ public class CommunicationExplorerPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * @author 
+	 * @param options
+	 * @param include
+	 * @param data
+	 * @Description filter the document type filters with indexing
+	 */
+	public void getfilterDocumentBy(String options, boolean include, String data) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFilterDocumentsBy_options(options));
+			getFilterDocumentsBy_options(options).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if (include == true) {
+				base.waitForElement(getIncludeRadioBtn());
+				getIncludeRadioBtn().Click();
+			} else {
+				base.waitForElement(getExcludeRadioBtn());
+				getExcludeRadioBtn().Click();
+			}
+			driver.waitForPageToBeReady();
+			searchCriteriaTextBox().SendKeys(data);
+			searchCriteriaTextBox().SendKeysNoClear("" + Keys.ENTER);
+			base.waitForElement(getAddToFilter());
+			getAddToFilter().waitAndClick(10);
+			base.stepInfo(options + " Filters Applied.");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getApplyBtn().Visible();
+				}
+			}), Input.wait60);
+			getApplyBtn().waitAndClick(5);
+			base.stepInfo("Apply filter button is clicked successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

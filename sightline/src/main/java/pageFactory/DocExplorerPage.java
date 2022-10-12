@@ -3354,4 +3354,92 @@ public class DocExplorerPage {
 					+ e.getMessage());
 		}
 	}
+	/**
+	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude filter for folder..
+	 * @param folderName : folderName is a string value that name of folder need to
+	 *                   select.
+	 */
+	public void performIncludeFolderFilter(String folderName) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getDocExp_FolderFilter());
+			bc.waitTillElemetToBeClickable(getDocExp_FolderFilter());
+			getDocExp_FolderFilter().Click();
+			bc.waitForElement(getIncludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getIncludeRadioBtn());
+			getIncludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(folderName);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAddToFilter());
+			bc.waitTillElemetToBeClickable(getAddToFilter());
+			getAddToFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method to verify documents after applying Include functionality
+	 *               by Docfiletype.
+	 * 
+	 */
+	public void verifyIncludeFunctionlityForDocFileType(String DocId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getPresentDocCount());
+			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			driver.waitForPageToBeReady();
+			if (bc.text(DocId).isDisplayed()) {
+				bc.passedStep("Include filter functionality by folder is working as expected");
+			} else {
+				bc.failedStep("Include filter functionality by folder is not working as expected.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
+							+ e.getMessage());
+		}
+	}
+	/**
+	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude another filter for folder..
+	 * @param folderName : folderName is a string value that name of folder need to
+	 *                   select.
+	 */
+	public void performUpdateIncludeFolderFilter(String folderName) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getActiveFilter());
+			bc.waitTillElemetToBeClickable(getActiveFilter());
+			getActiveFilter().Click();
+			bc.waitForElement(getIncludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getIncludeRadioBtn());
+			getIncludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(folderName);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUpdateFilter());
+			bc.waitTillElemetToBeClickable(getUpdateFilter());
+			getUpdateFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
+		}
+	}
 }
