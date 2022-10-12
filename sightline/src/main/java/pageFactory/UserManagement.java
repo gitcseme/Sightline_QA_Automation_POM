@@ -277,8 +277,6 @@ public class UserManagement {
 		return driver.FindElementByXPath("//nav[@id='LeftMenu']//li//a[@name='Users']");
 	}
 
-  
-
 	public Element userTextInput() {
 		return driver.FindElementByXPath("//*[@id=\"txtsearchUser\"]");
 	}
@@ -801,6 +799,11 @@ public class UserManagement {
 	}
 
 	// jeevitha
+	public Element getSelectUserToDelete(String projectName) {
+		return driver.FindElementByXPath(
+				"//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Delete')]");
+	}
+
 	public Element NavigateToDataSets() {
 		return driver.FindElementByXPath("//a[@name='DataSets']//i");
 	}
@@ -905,27 +908,34 @@ public class UserManagement {
 	public Element getNotYetLoggedInUserBtn() {
 		return driver.FindElementById("PendingUser");
 	}
+
 	public Element getBulkUserPopUp() {
 		return driver.FindElementByXPath("//h3//div[normalize-space()='Modify Multiple User Profiles At Once']");
 	}
+
 	public Element getProjectPageLastNumber() {
-		return driver
-				.FindElementByXPath("(//div[@id='ProjectDataTable_paginate']//li[@class='paginate_button ']//a)[last()]");
+		return driver.FindElementByXPath(
+				"(//div[@id='ProjectDataTable_paginate']//li[@class='paginate_button ']//a)[last()]");
 	}
+
 	public ElementCollection getProjectName(int count) {
 		return driver.FindElementsByXPath(
 				"//table[@id='ProjectDataTable']//tbody/tr/td[5][text()='Active']/../td[" + count + "]");
 	}
+
 	public Element getPaSecurityGroupDisabled() {
 		return driver.FindElementByXPath("//select[@id='ddlBulkUserSecurityGroup'][@disabled]");
 	}
+
 	public Element getSameEmailErrorMsg() {
-		return driver.FindElementByXPath("//p[text()='20001000014 : The given user is already a system administrator and cannot be assigned another role.']");
+		return driver.FindElementByXPath(
+				"//p[text()='20001000014 : The given user is already a system administrator and cannot be assigned another role.']");
 	}
+
 	public Element getRmuDashBoardPage() {
 		return driver.FindElementByXPath("//h1[text()[normalize-space()='Review Manager Dashboard for']]");
 	}
-	
+
 	public Element getEnableRole() {
 		return driver.FindElementByXPath("//input[@id='rbEnable']");
 	}
@@ -933,59 +943,69 @@ public class UserManagement {
 	public Element getDisableRole() {
 		return driver.FindElementByXPath("//input[@id='rbDisable']");
 	}
-	
+
 	public Element getReleasedCount() {
 		return driver.FindElementByXPath("//label[text()='RELEASED:']/../span");
 	}
-	
+
 	public Element getReleasedCountRev() {
 		return driver.FindElementByXPath("//label[contains(text(),' Count of unique')]");
 	}
 
-	//added by arun
+	// added by arun
 	public Element getRole(String role) {
-		return driver.FindElementByXPath("//select[@id='ddlAvailableRoles']//option[text()='"+role+"']");
+		return driver.FindElementByXPath("//select[@id='ddlAvailableRoles']//option[text()='" + role + "']");
 	}
+
 	public Element getCheckboxStatus(String function) {
-		return driver.FindElementByXPath("//input[@id='UserRights_Can"+function+"']");
+		return driver.FindElementByXPath("//input[@id='UserRights_Can" + function + "']");
 	}
+
 	public Element addUserPopup() {
 		return driver.FindElementByXPath("//div[@id='popupdiv']");
 	}
+
 	public Element getProjectTextBox() {
 		return driver.FindElementById("txtBxAdminCreateUserProj");
 	}
+
 	public Element getOptionSelectSG() {
 		return driver.FindElementByXPath("//select[@name='SecurityGroupIDs']");
 	}
-	public  Element getRecoveryEmail() {
+
+	public Element getRecoveryEmail() {
 		return driver.FindElementByXPath("//input[@id='txtBxRecoveryEmailID']");
 	}
+
 	public Element getLastNameEditPopup() {
 		return driver.FindElementByXPath("//span[@role='textbox']//input[@id='txtBxUserLastName']");
 	}
+
 	public Element getUserEditBtn() {
 		return driver.FindElementByXPath("//table[@id='dtUserList']//a[text()='Edit']");
 	}
+
 	public Element getSGDropDown() {
 		return driver.FindElementByXPath("//select[@id='SysAdminSecGroup']");
 	}
+
 	public Element getProjectBillableCheckBox() {
 		return driver.FindElementByXPath("//*[@id='tabProject']//input[@id='IsBillableCheckbox']/../i");
 	}
+
 	public ElementCollection getUserListHeaderIndex() {
-		return driver.FindElementsByXPath("//*[@id=\"dtUserList_wrapper\"]//div[@class='dataTables_scrollHead']//table//th");
+		return driver
+				.FindElementsByXPath("//*[@id=\"dtUserList_wrapper\"]//div[@class='dataTables_scrollHead']//table//th");
 	}
+
 	public Element getUserListUsingIndex(int index) {
-		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr/td["+index+"]");
+		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr/td[" + index + "]");
 	}
 
 	public Element getSecurityDropDownDomain() {
 		return driver.FindElementByXPath("//select[@id='ddlDomainAdminSecGroup']");
 	}
 
-	
-	
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -4206,13 +4226,14 @@ public class UserManagement {
 		boolean status = bc.getSelectRole(role).isElementAvailable(10);
 		return status;
 	}
-	
+
 	/**
 	 * @author Baskar
-	 * @Description : Method for creating new user with same email to verify error message
+	 * @Description : Method for creating new user with same email to verify error
+	 *              message
 	 */
-	public void validateErrorMsgForNewUser(String firstName, String lastName, String role, String emailId, String domain,
-			String project) {
+	public void validateErrorMsgForNewUser(String firstName, String lastName, String role, String emailId,
+			String domain, String project, String SecurityGroup, boolean verifySameEmailError) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4252,47 +4273,48 @@ public class UserManagement {
 
 		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
 			getSecurityDropDown().isElementAvailable(10);
-			getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+			getSecurityDropDown().selectFromDropdown().selectByVisibleText(SecurityGroup);
 
 		}
 		getSave().waitAndClick(10);
-		String expected="20001000014 : The given user is already a system administrator and cannot be assigned another role.";
-		String actual=getSameEmailErrorMsg().getText();
-		softAssertion.assertEquals(actual, expected);
-		softAssertion.assertAll();
+
+		if (verifySameEmailError) {
+			String expected = "20001000014 : The given user is already a system administrator and cannot be assigned another role.";
+			String actual = getSameEmailErrorMsg().getText();
+			softAssertion.assertEquals(actual, expected);
+			softAssertion.assertAll();
+		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 07/10/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify reviewer impersonation
 	 */
 	public void verifyRevImpersonation() {
-		String[] roles = {"Project Administrator","Review Manager","System Administrator",
-				"Domain Administrator"};
+		String[] roles = { "Project Administrator", "Review Manager", "System Administrator", "Domain Administrator" };
 		bc.waitForElement(bc.getSignoutMenu());
 		bc.getSignoutMenu().waitAndClick(10);
 		bc.waitForElement(bc.getChangeRole());
 		bc.getChangeRole().waitAndClick(10);
 		bc.waitForElement(bc.getSelectRole());
-		for(int i=0;i<roles.length;i++) {
-			if(!getRole(roles[i]).isElementAvailable(5)) {
-				bc.passedStep("Reviewer user not allowed to impersonate as: "+roles[i]);
-			}
-			else {
-				bc.failedStep("Reviewer allowed to impersonate as: "+roles[i]);
+		for (int i = 0; i < roles.length; i++) {
+			if (!getRole(roles[i]).isElementAvailable(5)) {
+				bc.passedStep("Reviewer user not allowed to impersonate as: " + roles[i]);
+			} else {
+				bc.failedStep("Reviewer allowed to impersonate as: " + roles[i]);
 			}
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 07/10/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify the functionality access tab for user
 	 */
-	public void verifyFunctionalityTab(String user,String role) throws Exception {
-		
-		String[] userFunction = {"Manage","Ingestions","Productions","Searching",
-				"ConceptExplorer","CommunicationsExplorer","Proview","Datasets",
-				"AllReports","DownloadNative","Redactions","Highlighting","ReviewerRemarks","AnalyticsPanels"};
+	public void verifyFunctionalityTab(String user, String role) throws Exception {
+
+		String[] userFunction = { "Manage", "Ingestions", "Productions", "Searching", "ConceptExplorer",
+				"CommunicationsExplorer", "Proview", "Datasets", "AllReports", "DownloadNative", "Redactions",
+				"Highlighting", "ReviewerRemarks", "AnalyticsPanels" };
 		passingUserName(user);
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		applyFilter();
@@ -4300,42 +4322,37 @@ public class UserManagement {
 		bc.waitForElement(getFunctionalityTab());
 		getFunctionalityTab().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		for(int i=0;i<userFunction.length;i++) {
+		for (int i = 0; i < userFunction.length; i++) {
 			// for checked function
 			String status = getCheckboxStatus(userFunction[i]).GetAttribute("checked");
 			System.out.println(status);
-			if(userFunction[i].equalsIgnoreCase("Ingestions")&& status==null) {
-				bc.passedStep("ingestion option unchecked by default"+userFunction[i]);
-			}
-			else if(status.equalsIgnoreCase("true")) {
-				bc.passedStep("checked by default: "+userFunction[i]);
-			}
-			else {
-				bc.failedStep("not checked by default"+userFunction[i]);
+			if (userFunction[i].equalsIgnoreCase("Ingestions") && status == null) {
+				bc.passedStep("ingestion option unchecked by default" + userFunction[i]);
+			} else if (status.equalsIgnoreCase("true")) {
+				bc.passedStep("checked by default: " + userFunction[i]);
+			} else {
+				bc.failedStep("not checked by default" + userFunction[i]);
 			}
 		}
-		if(role.contains("System Administrator")) {
+		if (role.contains("System Administrator")) {
 			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage Domain Projects").GetAttribute("style");
-			bc.stepInfo("Manage domain project status for SA "+checkBoxStatus);
-			if(checkBoxStatus.contains("transparent")) {
+			bc.stepInfo("Manage domain project status for SA " + checkBoxStatus);
+			if (checkBoxStatus.contains("transparent")) {
 				bc.passedStep("Manage Domain project checked and editable");
-			}
-			else {
+			} else {
 				bc.failedStep("Manage Domain project not editable");
 			}
-		}
-		else if(role.contains("Project Administrator")) {
+		} else if (role.contains("Project Administrator")) {
 			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage Domain Projects").GetAttribute("style");
-			bc.stepInfo("Manage domain project status for PA "+checkBoxStatus);
-			if(checkBoxStatus.contains("grey")) {
+			bc.stepInfo("Manage domain project status for PA " + checkBoxStatus);
+			if (checkBoxStatus.contains("grey")) {
 				bc.passedStep("Manage Domain project unchecked and not editable");
-			}
-			else {
+			} else {
 				bc.failedStep("Manage Domain project editable");
 			}
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 10/10/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify the add new user popup details
@@ -4344,85 +4361,78 @@ public class UserManagement {
 		navigateToUsersPAge();
 		bc.waitForElement(getAddUserBtn());
 		getAddUserBtn().waitAndClick(10);
-		//checking user popup availability
-		if(addUserPopup().isElementAvailable(15)) {
+		// checking user popup availability
+		if (addUserPopup().isElementAvailable(15)) {
 			bc.passedStep("Add new user popup displayed");
-		}
-		else {
+		} else {
 			bc.failedStep("Add new user popup not displayed");
 		}
 		bc.waitForElement(bc.getSelectRole());
 		bc.getSelectRole().selectFromDropdown().selectByVisibleText(role);
-		//checking project display status
-		if(getProjectTextBox().isElementAvailable(10) && getOptionSelectSG().isElementAvailable(10)) {
+		// checking project display status
+		if (getProjectTextBox().isElementAvailable(10) && getOptionSelectSG().isElementAvailable(10)) {
 			bc.passedStep("Project and security group status available in add user popup");
-			
+
 			String projectStatus = getProjectTextBox().GetAttribute("readonly");
 			String impersonatedProject = getProjectTextBox().GetAttribute("value");
-			
-			bc.stepInfo("project displayed status:"+projectStatus);
-			bc.stepInfo("Project:"+impersonatedProject);
-			//for rmu impersonation
-			if(projectStatus.equalsIgnoreCase("true") && impersonatedProject.equalsIgnoreCase(Input.projectName)) {
+
+			bc.stepInfo("project displayed status:" + projectStatus);
+			bc.stepInfo("Project:" + impersonatedProject);
+			// for rmu impersonation
+			if (projectStatus.equalsIgnoreCase("true") && impersonatedProject.equalsIgnoreCase(Input.projectName)) {
 				bc.passedStep("Impersonated Project displayed in read only mode");
 			}
-			//for PA impersonation
-			else if(projectStatus.equalsIgnoreCase("true") && impersonatedProject.isEmpty()) {
+			// for PA impersonation
+			else if (projectStatus.equalsIgnoreCase("true") && impersonatedProject.isEmpty()) {
 				bc.passedStep("Project displayed in read only mode");
-			}
-			else {
+			} else {
 				bc.failedStep("project not displayed in read only mode");
 			}
-			
-		}
-		else {
+
+		} else {
 			bc.failedStep("project and security group option not available in add user popup");
 		}
-		
+
 		getDomainUserCancelButton().waitAndClick(10);
 	}
-	
-	
+
 	/**
 	 * @author: Arun Created Date: 10/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
-	 * @description: this method will verify the status of recovery email address in 
-	 * add user popup
+	 * @throws Exception
+	 * @description: this method will verify the status of recovery email address in
+	 *               add user popup
 	 */
-	public void verifyRecoveryEmailFieldStatus(String email,String project,String userType) throws Exception {
-		
-		if(userType.equalsIgnoreCase("Existing")) {
+	public void verifyRecoveryEmailFieldStatus(String email, String project, String userType) throws Exception {
+
+		if (userType.equalsIgnoreCase("Existing")) {
 			filterByName(email);
 			bc.waitForElement(getUserEditBtn());
 			getUserEditBtn().waitAndClick(10);
 			bc.waitForElement(getCancel());
-		}
-		else {
+		} else {
 			bc.waitForElement(getAddUserBtn());
 			getAddUserBtn().waitAndClick(10);
 			bc.waitForElement(getDomainUserCancelButton());
 		}
-		//check recovery field
-		if(getRecoveryEmail().isDisplayed()) {
+		// check recovery field
+		if (getRecoveryEmail().isDisplayed()) {
 			bc.failedStep("Recovery email address field displayed for user");
-		}
-		else {
+		} else {
 			bc.passedStep("Recovery email address field not displayed in the user edit popup");
 		}
-		if(userType.equalsIgnoreCase("Existing")) {
+		if (userType.equalsIgnoreCase("Existing")) {
 			getCancel().waitAndClick(10);
-		}
-		else {
+		} else {
 			getDomainUserCancelButton().waitAndClick(10);
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 11/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
+	 * @throws Exception
 	 * @description: this method will edit a single field in edit user popup
 	 */
-	public void editExistingUserDetail(String email,String project,Element elem,String editData) throws Exception {
+	public void editExistingUserDetail(String email, String project, Element elem, String editData) throws Exception {
 		navigateToUsersPAge();
 		filterByName(email);
 		bc.waitForElement(getUserEditBtn());
@@ -4433,19 +4443,18 @@ public class UserManagement {
 		getSubmit().waitAndClick(10);
 		bc.VerifySuccessMessage("User profile was successfully modified");
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 11/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
+	 * @throws Exception
 	 * @description: this method will add new user as different users
 	 */
-	public void addNewUserAsDifferentUsers(String loginUser,String firstName, String lastName,String role,
-			String email,String domain,String project) {
-		
-		if(loginUser.equalsIgnoreCase("SA")) {
-			createNewUser(firstName,lastName, role, email, domain, project);
-		}
-		else if(loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
+	public void addNewUserAsDifferentUsers(String loginUser, String firstName, String lastName, String role,
+			String email, String domain, String project) {
+
+		if (loginUser.equalsIgnoreCase("SA")) {
+			createNewUser(firstName, lastName, role, email, domain, project);
+		} else if (loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
 			bc.waitForElement(getAddUserBtn());
 			getAddUserBtn().waitAndClick(10);
 			bc.waitForElement(getFirstName());
@@ -4466,7 +4475,7 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully created");
 		}
 	}
-	
+
 	/**
 	 * @author Baskar
 	 * @param projectName
@@ -4480,7 +4489,7 @@ public class UserManagement {
 		goToProjectTabInAssignUser();
 		selectProjectInAssignUser(projectName);
 		selectRoleInAssignUser(role);
-        
+
 		if (!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
 			selectSecuriyGroup(Input.securityGroup);
 		}
@@ -4503,7 +4512,6 @@ public class UserManagement {
 		driver.Manage().window().maximize();
 	}
 
-	
 	/**
 	 * @author Baskar
 	 * @Description : Method for creating new user from Da role
@@ -4558,5 +4566,32 @@ public class UserManagement {
 
 	}
 
-			
+	/**
+	 * @Author Jeevitha
+	 * @Description : veriy Delete user Popup And Click cancel or ok Button
+	 * @param delete
+	 * @param projectName
+	 */
+	public void verifyDeleteUserPopup(boolean delete, String projectName) {
+		bc.waitForElement(getSelectUserToDelete(projectName));
+		getSelectUserToDelete(projectName).waitAndClick(10);
+		if (getBellyBandMsg().isElementAvailable(10)) {
+			bc.stepInfo("Delete User Popup is Displayed");
+			if (getConfirmTab().isElementAvailable(3) && getConfirmDelete().isElementAvailable(3)) {
+				bc.stepInfo("Cancel & Ok Button is Displayed");
+				if (delete) {
+					getConfirmDelete().waitAndClick(5);
+					bc.VerifySuccessMessage("User has been deactivated");
+				} else {
+					getConfirmTab().waitAndClick(10);
+					bc.stepInfo("CLicked Cancel Button");
+				}
+			} else {
+				bc.failedStep("Cancel & Ok Button is Not Displayed");
+			}
+		} else {
+			bc.failedStep("Delete User Popup is Not Displayed");
+		}
+	}
+
 }

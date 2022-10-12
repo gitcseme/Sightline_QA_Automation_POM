@@ -400,6 +400,11 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+
+	public Element getPopupRanByDetail() {
+		return driver.FindElementByXPath("//p[text()='Collection Ran By:']//parent::div//following-sibling::div//p");
+	}
+
 	public Element getNameBasedOnCollectionName(String collectionName, String value) {
 		return driver.FindElementByXPath(
 				"//div[text()='" + collectionName + "']//..//parent::tr//td[text()='" + value + "']");
