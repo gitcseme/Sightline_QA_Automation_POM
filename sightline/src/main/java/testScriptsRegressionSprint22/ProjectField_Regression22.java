@@ -161,6 +161,7 @@ public class ProjectField_Regression22 {
 		} else {
 			baseClass.failedStep("" + ExpectedString + " is Displayed as expecetd");
 		}
+		baseClass.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
 
 	}

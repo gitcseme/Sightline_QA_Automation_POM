@@ -3171,6 +3171,7 @@ public class TagsAndFoldersPage {
 		getAddTag().waitAndClick(10);
 		base.waitTillElemetToBeClickable(getTagPropagatePopup());
 		getTagPropagatePopup().waitAndClick(2);
+		driver.waitForPageToBeReady();
 		String PropagateCompareString = "Please specify the relevant options for tag/folder propagation. For example, select the 'Family Members' option, "
 				+ "if you would like the same tag/folder to be propagated/applied to all the other family members of this document, when a document "
 				+ "is being tagged/foldered. Similarly, you can propagate this tag to Exact Duplicates, Email Threads (all other documents with the same ThreadID) "

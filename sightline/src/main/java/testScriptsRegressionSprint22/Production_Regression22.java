@@ -448,7 +448,7 @@ public class Production_Regression22 {
 		String home = System.getProperty("user.home");
 		page.deleteFiles();
 		page.extractFile();
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		
 		base.stepInfo("verifying the docfile extension in downloaded nativefile");
 		int Count = Integer.valueOf(beginningBates) + Integer.valueOf(Input.pageCount);
