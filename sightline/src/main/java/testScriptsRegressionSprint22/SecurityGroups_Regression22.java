@@ -258,7 +258,8 @@ public class SecurityGroups_Regression22 {
 		baseClass.ValidateElement_Presence(SG.SG_deleteButton(), "Delete Button");
 		baseClass.ValidateElement_Presence(SG.getSG_AnnSaveButton(), "Save Button");
 		baseClass.ValidateElement_Presence(SG.getSG_CancelBtn(), "Cancel Button");
-		
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
 		if(SG.getRadioBn().Selected()) {
 			baseClass.passedStep("Project level Email is selected as default");
 		}else {
