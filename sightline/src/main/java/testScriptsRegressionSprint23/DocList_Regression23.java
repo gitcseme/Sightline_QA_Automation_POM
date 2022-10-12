@@ -616,6 +616,7 @@ public class DocList_Regression23 {
 		sessionSearch = new SessionSearch(driver);
 		DocListPage docList = new DocListPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
+		String domain1 = "(#NOS OCRM All OCRM Staff);Jeff Smith";
 		String domain2="Amol.Gawande/,@symp";
 
 		// Login As user
@@ -629,8 +630,15 @@ public class DocList_Regression23 {
 		// EmailRecipientnames Include
 		baseClass.stepInfo("EmailRecipientnames Include");
 		driver.waitForPageToBeReady();
-		docList.EmailRecipientsNameVerificationInDocexplorer();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailRecNameFilter());
+		docList.getEmailRecNameFilter().waitAndClick(5);
+		docList.include(domain1);
+		driver.waitForPageToBeReady();
+		if(baseClass.text(domain1).isDisplayed()) {
 		baseClass.passedStep("Documents containing only the selected email IDs only filtered");
+		}else {
+			baseClass.failedStep("Documents containing selected email IDs not filtered");
+		}
 
 		docList.getClearAllBtn().waitAndClick(5);
 		baseClass.stepInfo("ClearAll Button Is clicked");
