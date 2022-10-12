@@ -19,9 +19,13 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
+import pageFactory.DocViewRedactions;
+import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -34,6 +38,8 @@ public class AdvanceSearchRegression_23 {
 	BaseClass baseClass;
 	Input in;
 	SoftAssert assertion;
+	SecurityGroupsPage securityGroupsPage;
+	DocViewRedactions docViewRedact;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -289,6 +295,64 @@ public class AdvanceSearchRegression_23 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 11/10/2022 TestCase Id:RPMXCON-49772
+	 * Description :Advanced Search- Verify that when documents are released 
+	 * all email concatenated field values should be displayed 
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-49772",enabled = true, groups = { "regression" })
+	public void verifyConcatenatedValuesInDoclist() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49772");
+		baseClass.stepInfo("verify email concatenated field values should be displayed");
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		
+		String[] values = {"EmailAuthorNameAndAddress","EmailBCCNamesAndAddresses",
+				"EmailCCNamesAndAddresses","EmailToNamesAndAddresses"};
+		String[] userName= {Input.rmu1userName,Input.rev1userName};
+		String[] password= {Input.rmu1password,Input.rev1password};
+		String securityGroup ="securityGroup"+Utility.dynamicNameAppender();
+		
+		//pre-requisite - Docs related to ingestion released to security group
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage.createSecurityGroups(securityGroup);
+		docViewRedact.assignAccesstoSGs(securityGroup, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(securityGroup, Input.rev1userName);
+		baseClass.stepInfo("Release docs to security group");
+		ingestionPage.navigateToDataSetsPage();
+		DataSets dataset = new DataSets(driver);
+		String ingestionName = dataset.isDataSetisAvailable(Input.EmailConcatenatedDataFolder);
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.bulkRelease(securityGroup);
+		loginPage.logout();
+		// Login as RMU/Rev and verify
+		for(int i=0;i<userName.length;i++) {
+		loginPage.loginToSightLine(userName[i], password[i]);
+		baseClass.stepInfo("Logged in as :"+userName[i]);
+		baseClass.selectsecuritygroup(securityGroup);
+		baseClass.stepInfo("Search for all docs and action as view in doclist");
+		int count = sessionSearch.advancedContentSearch(Input.searchStringStar);
+		baseClass.stepInfo("total docs in EmailConcatenatedDataFolder: "+count);
+		sessionSearch.ViewInDocList();
+		baseClass.stepInfo("Add the columns and verify email concatenated field values displayed");
+		ingestionPage.verifyValuesDisplayedInSelectedColumnsDoclist(count,values);
+		baseClass.passedStep("Email concatenated field values displayed");
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		}
+		//Delete security group
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		if (!(securityGroup.equalsIgnoreCase(Input.securityGroup))) {
+		securityGroupsPage.deleteSecurityGroups(securityGroup);
+		}
+		loginPage.logout();
+	}
+	
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

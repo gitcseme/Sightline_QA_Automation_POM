@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint23;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -21,6 +22,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.DocViewPage;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -37,6 +39,7 @@ public class Assignment_Regression_Sprint23 {
 	BaseClass baseClass;
 	Input in;
 	SoftAssert softAssert;
+	KeywordPage keyPage;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -431,6 +434,52 @@ public class Assignment_Regression_Sprint23 {
 		codingForm.DeleteMultipleCodingform(listOfCodingForm);
 
 		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/10/2022 TestCase Id:RPMXCON-54755 
+	 * Description :De-associate keywords - Assignment should not display the de-associated keyword 
+	 * @throws InterruptedException
+	 * @throws AWTException 
+	 */
+	@Test(description = "RPMXCON-54755", enabled = true, groups = { "regression" })
+	public void verifyDeassociatedKeywordInAssignment() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54755");
+		baseClass.stepInfo("verify reviewers name display in distribute document section");
+		String assignmentName = "assign" + Utility.dynamicNameAppender();
+		String[] associatedKeyword ={"Akey1","Akey2"};
+		String[] deassociatedKeyword ={"Dkey1","DKey2"};
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		//Create a keyword and assignment
+		KeywordPage keyPage = new KeywordPage(driver);
+		for(int i=0;i<associatedKeyword.length;i++) {
+			keyPage.addKeyword(associatedKeyword[i], "Red");
+		}
+		for(int j=0;j<deassociatedKeyword.length;j++) {
+			keyPage.addKeyword(deassociatedKeyword[j], "Blue");
+		}
+		assignment.createAssignment(assignmentName, Input.codingFormName);
+		loginPage.logout();
+		baseClass.stepInfo("Login as PA and de-associate few keywords");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		//deleting few keywords
+		for(int i=0;i<deassociatedKeyword.length;i++) {
+			keyPage.deleteKeywordByName(deassociatedKeyword[i]);
+		}
+		loginPage.logout();
+		//login as RMU and verify existing assignment
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Select existing assignment ");
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.stepInfo("verify associated keyword availability");
+		assignment.verifyKeywordsAvailabilityInAssignment(associatedKeyword);
+		baseClass.stepInfo("verify de-associated keyword availability");
+		assignment.verifyDeAssociatedKeywordsAvailabilityInAssignment(deassociatedKeyword);
 		loginPage.logout();
 	}
 
