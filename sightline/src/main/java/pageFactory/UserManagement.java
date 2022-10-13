@@ -799,6 +799,14 @@ public class UserManagement {
 	}
 
 	// jeevitha
+	public Element getAddUserPopup() {
+		return driver.FindElementByXPath("//div[@class='ui-widget-overlay ui-front']");
+	}
+
+	public Element getComponentCheckboxDisabled(String componentName) {
+		return driver.FindElementByXPath("//label[normalize-space()='" + componentName + "']//input[@disabled]");
+	}
+
 	public Element getSelectUserToDelete(String projectName) {
 		return driver.FindElementByXPath(
 				"//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Delete')]");
@@ -989,10 +997,11 @@ public class UserManagement {
 		return driver.FindElementByXPath("//select[@id='SysAdminSecGroup']");
 	}
 
+	//@Modified By Jeevitha
 	public Element getProjectBillableCheckBox() {
-		return driver.FindElementByXPath("//*[@id='tabProject']//input[@id='IsBillableCheckbox']/../i");
+		return driver.FindElementByXPath("//input[@id='IsBillableCheckbox']/../i");
 	}
-
+	
 	public ElementCollection getUserListHeaderIndex() {
 		return driver
 				.FindElementsByXPath("//*[@id=\"dtUserList_wrapper\"]//div[@class='dataTables_scrollHead']//table//th");
@@ -1005,12 +1014,14 @@ public class UserManagement {
 	public Element getSecurityDropDownDomain() {
 		return driver.FindElementByXPath("//select[@id='ddlDomainAdminSecGroup']");
 	}
-	
+
 	public Element getIsLOckedCheckBox() {
 		return driver.FindElementByXPath("//*[@id='Ischklocked']/../i");
 	}
+
 	public Element getLoginLocked() {
-		return driver.FindElementByXPath("//li[text()='20001000020 : Your account has been locked. To unlock your account, please reset your password.']");
+		return driver.FindElementByXPath(
+				"//li[text()='20001000020 : Your account has been locked. To unlock your account, please reset your password.']");
 	}
 
 	public UserManagement(Driver driver) {
@@ -1654,18 +1665,20 @@ public class UserManagement {
 	}
 
 	/**
-	 * @author Gopinath
+	 * @author Gopinath  @Modiified By Jeevitha
 	 * @Description : Method for creating new user.
 	 */
 	public void createNewUser(String firstName, String lastName, String role, String emailId, String domain,
 			String project) {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAddUserBtn().Visible();
-			}
-		}), Input.wait30);
-		getAddUserBtn().Click();
+		driver.waitForPageToBeReady();
+		if (getAddUserPopup().isElementAvailable(3)) {
+			bc.stepInfo("Add user Popup Is displayed");
+		} else {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().Click();
+		}
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFirstName().Visible();
@@ -2823,7 +2836,7 @@ public class UserManagement {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar
+	 * @author Aathith.Senthilkumar  @Modified By : Jeevitha
 	 * @param firstName
 	 * @param lastName
 	 * @param role
@@ -2836,12 +2849,14 @@ public class UserManagement {
 	public void addNewUserWithoutVerifySuccesMsg(String firstName, String lastName, String role, String emailId,
 			String domain, String project) {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAddUserBtn().Visible();
-			}
-		}), Input.wait30);
-		getAddUserBtn().Click();
+		driver.waitForPageToBeReady();
+		if (getAddUserPopup().isElementAvailable(3)) {
+			bc.stepInfo("Add user Popup is Displayed");
+		} else {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().Click();
+		}
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFirstName().Visible();
@@ -4597,6 +4612,44 @@ public class UserManagement {
 			}
 		} else {
 			bc.failedStep("Delete User Popup is Not Displayed");
+		}
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Dsecription : verify checkbox status of attributes present in Functionality
+	 *              Tab of Edit USer Popup
+	 */
+	public void verifyCheckBoxStatus(String[] checkedCb, String[] disabledCB, String[] uncheckedCB,
+			boolean verifyCheckedCB, boolean verifyDisabledCB, boolean verifyUnselectedCB) {
+
+		if (verifyCheckedCB) {
+			for (int i = 0; i < checkedCb.length; i++) {
+				if (getComponentCheckBoxStatus(checkedCb[i]).isElementAvailable(3)) {
+					bc.passedStep(checkedCb[i] + " Checkbox is Checked");
+				} else {
+					bc.failedStep(checkedCb[i] + " Checkbox Status is not as Expected");
+				}
+			}
+		}
+
+		if (verifyDisabledCB) {
+			for (int j = 0; j < disabledCB.length; j++) {
+				if (getComponentCheckboxDisabled(disabledCB[j]).isElementAvailable(3)) {
+					bc.passedStep(disabledCB[j] + " Checkbox is Disabled");
+				} else {
+					bc.failedStep(disabledCB[j] + " Checkbox Status is not as Expected");
+				}
+			}
+		}
+		if (verifyUnselectedCB) {
+			for (int k = 0; k < uncheckedCB.length; k++) {
+				if (getComponentCheckBoxStatus(uncheckedCB[k]).isElementAvailable(3)) {
+					bc.failedStep(uncheckedCB[k] + " Checkbox Status is not as Expected");
+				} else {
+					bc.passedStep(uncheckedCB[k] + " Checkbox is Unchecked");
+				}
+			}
 		}
 	}
 

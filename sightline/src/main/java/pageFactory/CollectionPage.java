@@ -246,6 +246,20 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getPopUpStatusShowDetailsLink(String columnName, String status) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + columnName
+				+ "')]//..//span[text()[normalize-space()='" + status + "']]//a[text()='Show Details']");
+	}
+
+	public Element getPopUpStatus(String emailID, String status, int index) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + emailID + "']//..//..//td[" + index + "]//p[text()='" + status + "']");
+	}
+
+	public ElementCollection getErrHeaderTable() {
+		return driver.FindElementsByXPath("//table[@id='dtFinalError']//th");
+	}
+
 	public Element getCollectionInfoPopUpStatus() {
 		return driver.FindElementByXPath("//div[@role='dialog' and contains(@style,'display')]");
 	}
@@ -2758,6 +2772,59 @@ public class CollectionPage {
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");
+		}
+	}
+
+	public void verifyCollectionPausedStatus(String collectionName,
+			HashMap<String, Integer> colllectionDataHeadersIndex, String additional, Boolean additional1) {
+
+		// Verify Collection progress bar presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(getCollectionProgressBar(collectionName,
+						colllectionDataHeadersIndex.get(Input.collectionProgressH))),
+				"Collection is Paused", "Collection is not yet paused", "Pass");
+		base.stepInfo(
+				getCollectionPauseStats(collectionName, colllectionDataHeadersIndex.get(Input.collectionProgressH))
+						.getText());
+
+		// Error Color code verification
+		String statsColor = base.getCSSValue(
+				getCollectionStatsDiv(collectionName, colllectionDataHeadersIndex.get(Input.collectionStatusH)),
+				"color");
+		String bgColorHexa = base.rgbTohexaConvertorCustomized(statsColor, 4);
+		base.textCompareEquals(Input.collectionErrColorCodeOrange, bgColorHexa,
+				"When collection gets paused due to some errors then it's displayed in Orange/Yellow colour coded on \"Manage Collections\" screen.\r\n"
+						+ "",
+				"Error color code failed");
+	}
+
+	public void collectionAction(String collectionName, String actionType, Boolean confirmation,
+			String confirmationAction, Boolean bellyBandText, String expectedTxt) {
+		if (getCollectionAction(collectionName).isElementAvailable(5)) {
+			getCollectionAction(collectionName).waitAndClick(5);
+			getCollectionActionList(collectionName, actionType).waitAndClick(10);
+			base.stepInfo("Clicked : " + actionType);
+
+			if (bellyBandText) {
+				String actualTxt = getPopupMsg().getText();
+				String passMsg = "Displayed Popup Msg : " + actualTxt;
+				String failMsg = "Belly band msg is not as expected";
+				base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
+			}
+
+			if (confirmation) {
+				getConfirmationBtnAction(confirmationAction).waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
+
+			if (actionType.equalsIgnoreCase("Start Collection")) {
+				base.VerifySuccessMessage("Collection extraction process started successfully.");
+			}
+			if (actionType.equalsIgnoreCase("Ignore Errors and Continue")
+					&& confirmationAction.equalsIgnoreCase("Yes")) {
+				base.VerifySuccessMessage(
+						"The application has initiated the action to ignore the errors and continue the collection from where it was paused.");
+			}
 		}
 	}
 

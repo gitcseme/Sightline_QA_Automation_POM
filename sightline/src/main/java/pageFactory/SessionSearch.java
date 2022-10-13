@@ -105,6 +105,18 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getShowDocumentCountToggle() {
+		return driver.FindElementByXPath("//i[@id='showUnAssignDocCounts']");
+	}
+	
+	public Element getAssignmentToUnAssign(String assignName) {
+		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[contains(text(),'" + assignName + "')]");
+	}
+	
+	public Element getToolTipTextInAssignUnassignPopUp() {
+		return driver.FindElementByXPath("//div[@role='tooltip']/div[@class='popover-content']");
+	}
+
 	public Element getNoOfDocInProject() {
 		return driver.FindElementByXPath("//span[@class='switchTip']//following-sibling::span//label");
 	}
@@ -13471,9 +13483,12 @@ public class SessionSearch {
 
 		getUnassign_ExistingAssignButton().Click();
 		for (int i = 0; i < listOfAssignments.size(); i++) {
-			getExistingAssignmentToUnAssign(listOfAssignments.get(i)).ScrollTo();
-			getExistingAssignmentToUnAssign(listOfAssignments.get(i)).Click();
+			base.waitForElement(getAssignmentToUnAssign(listOfAssignments.get(i)));
+			getAssignmentToUnAssign(listOfAssignments.get(i)).Click();
 		}
+		base.waitForElement(getContinueBulkAssign());
+		getContinueBulkAssign().isElementAvailable(15);
+		base.waitTillElemetToBeClickable(getContinueBulkAssign());
 		getContinueBulkAssign().waitAndClick(5);
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -13489,6 +13504,7 @@ public class SessionSearch {
 		}
 	}
 
+	
 	/**
 	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check search result count for configured query
@@ -13741,6 +13757,11 @@ public class SessionSearch {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : return total no od documents i Project
+	 * @return
+	 */
 	public int verifyNoOfDocsInProject() {
 		base.waitForElement(getNoOfDocInProject());
 		String fullText = getNoOfDocInProject().getText();
@@ -13750,6 +13771,92 @@ public class SessionSearch {
 		System.out.println(docCount);
 		base.stepInfo("Total No Of Doc's In Project is : " + docCount);
 		return docCount;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param assignmentName
+	 * @param selectAction
+	 * @return
+	 */
+	public String verifyToolTipTextInAssignUnassignPopUp(String assignmentName, String selectAction) {
+		Element assignmentElement = null;
+		base.waitForElement(getbulkassgnpopup());
+		if (selectAction.equalsIgnoreCase("Assign")) {
+			base.waitForElement(getBulkAssignAssignDocumentsButton());
+			getBulkAssignAssignDocumentsButton().waitAndClick(5);
+			assignmentElement = getSelectAssignmentExisting(assignmentName);
+		} else if (selectAction.equalsIgnoreCase("Unassign")) {
+			base.waitForElement(getBulkUntagbutton());
+			getBulkUntagbutton().waitAndClick(5);
+			assignmentElement = getExistingAssignmentToUnAssign(assignmentName);
+		}
+
+		Actions action = new Actions(driver.getWebDriver());
+		base.waitForElement(assignmentElement);
+		base.waitTillElemetToBeClickable(assignmentElement);
+		action.moveToElement(assignmentElement.getWebElement()).clickAndHold().build().perform();
+		String assignmentNameInToolTip = getToolTipTextInAssignUnassignPopUp().getText();
+		base.textCompareEquals(assignmentName, assignmentNameInToolTip,
+				"Expected AssignmentName : '" + assignmentName + "' match with the  AssignmentName In Tool Tip : '"
+						+ assignmentNameInToolTip + "'",
+				"Expected AssignmentName : '" + assignmentName
+						+ "' Doesn't match with the  AssignmentName In Tool Tip : '" + assignmentNameInToolTip + "'");
+		return assignmentNameInToolTip;
+	}
+	
+public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignments) {
+		driver.waitForPageToBeReady();
+		if (getPureHitAddButton().isElementAvailable(1)) {
+			getPureHitAddButton().Click();
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+
+		getBulkActionButton().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkAssignAction().Visible();
+			}
+		}), Input.wait30);
+		getBulkAssignAction().Click();
+		UtilityLog.info("performing bulk assign");
+		driver.waitForPageToBeReady();
+		for(String assignment : listOfAssignments) {
+		base.waitForElement(getSelectAssignmentExisting(assignment));
+		driver.waitForPageToBeReady();
+		getSelectAssignmentExisting(assignment).Click();
+		}
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getContinueButton());
+		getContinueButton().waitAndClick(20);
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		getFinalizeButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		for(String assignment : listOfAssignments) {
+		UtilityLog.info("Bulk assign is done, assignment is : " + assignment);
+		Reporter.log("Bulk assign is done, assignment is : " + assignment, true);
+		}
 	}
 
 }

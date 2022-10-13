@@ -4440,10 +4440,10 @@ public class BaseClass {
 	 */
 	public void validatingGetTextElement(Element ele, String CompareString) {
 		String ActualString = ele.getText();
-		stepInfo("The actual string is"+ActualString);
-		System.out.println("The actual string is"+ActualString);
-		System.out.println("The CompareString is"+CompareString);
-		stepInfo("The CompareString is"+CompareString);
+		stepInfo("The actual string is" + ActualString);
+		System.out.println("The actual string is" + ActualString);
+		System.out.println("The CompareString is" + CompareString);
+		stepInfo("The CompareString is" + CompareString);
 		driver.waitForPageToBeReady();
 		compareTextViaContains(ActualString, CompareString, "" + ActualString + " is displayed",
 				"" + ActualString + " not displayed");
@@ -4550,7 +4550,7 @@ public class BaseClass {
 		}
 
 	}
-	
+
 	/**
 	 * @author Raghuram.A
 	 * @param element
@@ -4572,27 +4572,63 @@ public class BaseClass {
 
 		return valueToReturn;
 	}
-	
+
 	public void clearATextBoxValue(Element element) {
 		element.waitAndClick(10);
 		waitForElement(element);
 		element.Clear();
 
 	}
-	
+
 	/**
-	 * @Author 
+	 * @Author
 	 * @param element
 	 * @param attribute
 	 * @return
 	 */
-	public String getCSSValue(Element element,String attribute) {
-        String statsColor = null;
-        try {
-            statsColor = element.GetCssValue(attribute);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return statsColor;
-    }
+	public String getCSSValue(Element element, String attribute) {
+		String statsColor = null;
+		try {
+			statsColor = element.GetCssValue(attribute);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return statsColor;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param roleToImp
+	 * @param domain
+	 * @param project
+	 * @param securityGroup
+	 */
+	public void performImpersonation(String roleToImp, String domain, String project, String securityGroup) {
+		waitForElement(getSignoutMenu());
+		getSignoutMenu().waitAndClick(5);
+		waitForElement(getChangeRole());
+		getChangeRole().waitAndClick(10);
+		waitForElement(getSelectRole());
+		getSelectRole().selectFromDropdown().selectByVisibleText(roleToImp);
+		waitTime(3);
+		waitForElement(getAvlDomain());
+		getAvlDomain().selectFromDropdown().selectByVisibleText(domain);
+		if (!roleToImp.equals(Input.DomainAdministrator)) {
+			waitForElement(getAvlProject());
+			getAvlProject().selectFromDropdown().selectByVisibleText(project);
+			if (!roleToImp.equals(Input.ProjectAdministrator)) {
+				waitForElement(getSelectSecurityGroup());
+				getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+			}
+		}
+		waitForElement(getSaveChangeRole());
+		getSaveChangeRole().waitAndClick(10);
+		stepInfo("Impersonated to " + roleToImp);
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			getGlobalMessagePopUpClose().waitAndClick(5);
+		}
+
+		driver.waitForPageToBeReady();
+	}
 }
