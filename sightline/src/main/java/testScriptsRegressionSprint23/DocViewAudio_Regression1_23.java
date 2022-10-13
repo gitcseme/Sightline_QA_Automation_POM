@@ -58,8 +58,8 @@ public class DocViewAudio_Regression1_23 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+    	in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -665,13 +665,6 @@ public class DocViewAudio_Regression1_23 {
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
-
-		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
-		driver.waitForPageToBeReady();
-		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
-		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
 		loginPage.logout();
