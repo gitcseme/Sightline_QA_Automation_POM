@@ -361,13 +361,15 @@ public class Notification_23 {
 			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Folder");
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
+			int initialBg1 = base.initialBgCount();
 			docList.documentSelection(2);
 			driver.scrollPageToTop();
+			
 			sessionSearch.bulkUnFolder(foldername);
 
 			// verify unfolder Notification
-			base.checkNotificationCount(initialBg, 1);
-			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.checkNotificationCount(initialBg1, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg1, 1);
 			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Unfolder");
 			loginPage.logout();
 		}
@@ -394,8 +396,8 @@ public class Notification_23 {
 		loginPage.logout();
 
 		// Login As user
-		String[] username = { Input.pa1userName, Input.rmu1userName, Input.rev1userName };
-		String[] password = { Input.pa1password, Input.rmu1password, Input.rev1password };
+		String[] username = { Input.rev1userName, Input.rmu1userName, Input.pa1userName };
+		String[] password = { Input.rev1password, Input.rmu1password, Input.pa1password };
 
 		for (int i = 0; i < username.length; i++) {
 			loginPage.loginToSightLine(username[i], password[i]);
@@ -409,13 +411,15 @@ public class Notification_23 {
 			base.checkNotificationCount(initialBg, 1);
 			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Folder");
+			
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
+			int initialBg1 = base.initialBgCount();
 			sessionSearch.bulkUnFolder(foldername);
 
 			// verify unfolder Notification
-			base.checkNotificationCount(initialBg, 1);
-			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.checkNotificationCount(initialBg1, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg1, 1);
 			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Unfolder");
 
 			loginPage.logout();

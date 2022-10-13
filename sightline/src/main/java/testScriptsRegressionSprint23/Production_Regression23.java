@@ -129,7 +129,7 @@ public class Production_Regression23 {
 		String home = System.getProperty("user.home");
 		int FirstFile = Integer.valueOf(beginningBates);
 		int LastFile = FirstFile + PureHit;
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		File TiffFile = new File(
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
 		if (TiffFile.exists()) {
@@ -417,7 +417,7 @@ public class Production_Regression23 {
 		base.validatingGetTextElement(page.getBlankPageRemovalMsg(), "Success");
 		page.extractFile();
 		String home = System.getProperty("user.home");
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		PDDocument doc = PDDocument.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf"));
 		int count = doc.getNumberOfPages();
 		System.out.println(count);
