@@ -1012,6 +1012,9 @@ public class UserManagement {
 	public Element getLoginLocked() {
 		return driver.FindElementByXPath("//li[text()='20001000020 : Your account has been locked. To unlock your account, please reset your password.']");
 	}
+	public Element getAttorneyProfileExistUser() {
+		return driver.FindElementByXPath("//div[@id='divAttorneyProfileEdit']");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -4600,5 +4603,121 @@ public class UserManagement {
 			bc.failedStep("Delete User Popup is Not Displayed");
 		}
 	}
+	
+	/**
+	 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will verify the status of billable/non billable in edit user popup
+	 */
+	public void verifyBillableUserCheckBoxStatus(String email,String userType) throws Exception {
+		
+		if(userType.equalsIgnoreCase("Existing")) {
+			filterByName(email);
+			bc.waitForElement(getUserEditBtn());
+			getUserEditBtn().waitAndClick(10);
+			bc.waitForElement(getCancel());
+		}
+		else {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().waitAndClick(10);
+			bc.waitForElement(getDomainUserCancelButton());
+		}
+		//check billable/non-billable field
+		if(getBilliableUserCheckBox().isElementAvailable(10)) {
+			bc.passedStep("billable/non-billable user checkbox displayed for"+email);
+		}
+		else {
+			bc.failedStep("billable/non-billable user checkbox not displayed in the user edit popup"+email);
+		}
+		if(userType.equalsIgnoreCase("Existing")) {
+			getCancel().waitAndClick(10);
+		}
+		else {
+			getDomainUserCancelButton().waitAndClick(10);
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will verify the error msg when adding existing user to same project/same role
+	 */
+		public void verifyErrorMsgForCreatingExistedUser(String firstName, String lastName,String role,
+				String email,String domain,String project) {
+				
+				bc.waitForElement(getAddUserBtn());
+				getAddUserBtn().waitAndClick(10);
+				bc.waitForElement(getFirstName());
+				getFirstName().SendKeys(firstName);
+				bc.waitForElement(getLastName());
+				getLastName().SendKeys(lastName);
+				bc.waitForElement(getSelectRole());
+				getSelectRole().selectFromDropdown().selectByVisibleText(role);
+				bc.waitForElement(getEmail());
+				getEmail().SendKeys(email);
+
+				if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+					bc.waitForElement(getSGDropDown());
+					getSGDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+				}
+				bc.waitForElement(getSave());
+				getSave().waitAndClick(10);
+				if (role.equalsIgnoreCase("Review Manager")) {
+					bc.VerifyErrorMessage("20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
+				}
+				else {
+					bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+				}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
+		 * @throws Exception 
+		 * @description: this method will verify the status of attorney profile while adding new user/edit existing
+		 */
+			public void verifyAttorneyProfileForNewOrExistingUser(String firstName,String lastName,String email,
+					String role,String userType) {
+				//for adding new user or selecting existing user
+				if(userType.equalsIgnoreCase("New")) {
+					bc.waitForElement(getAddUserBtn());
+					getAddUserBtn().waitAndClick(10);
+					bc.waitForElement(getFirstName());
+					getFirstName().SendKeys(firstName);
+					bc.waitForElement(getLastName());
+					getLastName().SendKeys(lastName);
+					bc.waitForElement(getSelectRole());
+					getSelectRole().selectFromDropdown().selectByVisibleText(role);
+				} 
+				else if(userType.equalsIgnoreCase("existing")){
+					filterByName(email);
+					bc.waitForElement(getUserEditBtn());
+					getUserEditBtn().waitAndClick(10);
+					bc.waitTime(2);
+				}
+				//verifying attorney profile for all role
+				if(!(role.equalsIgnoreCase(Input.ReviewManager))) {
+					if(!(getAttorneyprofilecheckbox().isDisplayed()) && !(getAttorneyProfileExistUser().isDisplayed()) ) {
+						bc.passedStep("Attorney profile not displayed for: "+role);
+						}
+						else {
+							bc.failedStep("Attorney profile displayed for:"+role);
+						}
+				}
+				else if(role.equalsIgnoreCase(Input.ReviewManager)) {
+					if((getAttorneyprofilecheckbox().isDisplayed()) || (getAttorneyProfileExistUser().isDisplayed())) {
+						bc.passedStep("Attorney profile displayed for :"+role);
+						}
+						else {
+							bc.failedStep("Attorney profile not displayed for:"+role);
+						}
+				}
+				//for closing the popup
+				if(userType.equalsIgnoreCase("Existing")) {
+					getCancel().waitAndClick(10);
+				}
+				else {
+					getDomainUserCancelButton().waitAndClick(10);
+				}
+			}
 
 }

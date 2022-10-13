@@ -89,6 +89,15 @@ public class UsersAndRoleManagement_Regression {
 				{ Input.pa1userName, Input.pa1password, "PA" },
 				{Input.rmu1userName, Input.rmu1password, "RMU" }};
 	}
+	
+	@DataProvider(name = "sadaparmu")
+	public Object[][] SaDaPaRmu() {
+		return new Object[][] {
+				{ Input.sa1userName, Input.sa1password, Input.SystemAdministrator },
+				{ Input.da1userName, Input.da1password, Input.DomainAdministrator},
+				{ Input.pa1userName, Input.pa1password, Input.ProjectAdministrator },
+				{ Input.rmu1userName, Input.rmu1password, Input.ReviewManager}};
+	}
 
 	/**
 	 * Author : Baskar date: NA Modified date:03/10/2022 Modified by: Baskar
@@ -892,6 +901,116 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/10/2022 TestCase Id:RPMXCON-52425
+	 * Description :To verify when assigns user to different project with same role of existing project
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52425",enabled = true, groups = { "regression" })
+	public void verifyAssigningSameRoleUser() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52425");
+		baseClass.stepInfo("verify when assigns user to different project with same role of existing project");
+		userManage = new UserManagement(driver);
+		String email ="AQA"+Utility.dynamicNameAppender()+"@consilio.com";
+		String firstName = "QA";
+		String lastName = "RMU"+ Utility.dynamicNameAppender();;
+		String userName = firstName+" "+lastName;
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.stepInfo("Add  RMU user to  project  and security group");
+		userManage.createNewUser(firstName,lastName, Input.ReviewManager, email, 
+					null, Input.projectName);
+		baseClass.stepInfo("Assign same RMU user to different project and security group");
+		userManage.AssignUserToProject(Input.additionalDataProject, Input.ReviewManager, userName);
+		baseClass.passedStep("User able to assign same RMU user role to different project");
+		loginPage.logout();
+		//deleting user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.filterByName(email);
+		userManage.deleteUser();
+		loginPage.logout();
+	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/10/2022 TestCase Id:RPMXCON-53211
+	 * Description :Verify that error message should be displayed when adding existing non-billable
+	 *  user as non-billable user under the same project with same/different role
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-53211",enabled = true, groups = { "regression" })
+	public void verifyAddingExistingUserUnderSameProject() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53211");
+		baseClass.stepInfo("verify error message when adding existing user under the same project");
+		userManage = new UserManagement(driver);
+		String[] userName = {Input.da1userName, Input.pa1userName,Input.rmu1userName};
+		String[] password = {Input.da1password, Input.pa1password,Input.rmu1password};
+		String[] role = {Input.DomainAdministrator,Input.ProjectAdministrator,Input.ReviewManager};
+		
+		for(int i=0;i<role.length;i++) {
+			loginPage.loginToSightLine(userName[i], password[i]);
+			baseClass.stepInfo("Logged in as "+role[i]);
+			userManage.navigateToUsersPAge();
+			baseClass.stepInfo("Add existing user under the same project");
+			userManage.verifyErrorMsgForCreatingExistedUser("QA", "user", role[i], 
+					userName[i], null, Input.projectName);
+			baseClass.passedStep("Error message displayed when adding existing user as user:"+role[i]);
+			loginPage.logout();
+		}
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/10/2022 TestCase Id:RPMXCON-53252
+	 * Description :Verify that attorney profile should be displayed only for an RMU user role 
+	 * when adding/editing the user with RMU role
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-53252",dataProvider="sadaparmu",enabled = true, groups = { "regression" })
+	public void verifyAttorneyProfileOption(String userName,String password,String role) throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53252");
+		baseClass.stepInfo("Verify that attorney profile should be displayed only for an RMU user");
+		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as:"+role);
+		userManage.navigateToUsersPAge();
+		//verifying the attorney profile for new and existing user
+		baseClass.stepInfo("Verify attorney profile for new user role"+role);
+		userManage.verifyAttorneyProfileForNewOrExistingUser("QA","user",null,role,"new");
+		baseClass.stepInfo("Verify attorney profile for existing user role"+role);
+		userManage.verifyAttorneyProfileForNewOrExistingUser(null,null,userName,role,"Existing");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/10/2022 TestCase Id:RPMXCON-53200
+	 * Description :Verify that on Edit user pop up an option to indicate whether the user is
+	 *  Consilio Internal or Client user (billable/not-billable) should be provided
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-53200",enabled = true, groups = { "regression" })
+	public void verifyBillableOptionOnEditUserPopup() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53200");
+		baseClass.stepInfo("Validate billable/not-billable option in edit user popup");
+		userManage = new UserManagement(driver);
+		String[] user = {Input.pa1userName,Input.rmu1userName,Input.rev1userName,Input.da1userName};
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.stepInfo("edit the user and check for option");
+		for(int i=0;i<user.length;i++) {
+			userManage.navigateToUsersPAge();
+			userManage.verifyBillableUserCheckBoxStatus(user[i], "existing");
+		}
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
