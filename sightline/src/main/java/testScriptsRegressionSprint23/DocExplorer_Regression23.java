@@ -196,6 +196,7 @@ public class DocExplorer_Regression23 {
 		CEPage.ValidateConceptExplorerreport();
 		communiExplore.getfilterDocumentBy("Tags", true, Tagname);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 
 		// verify Include filter is work
 		baseClass.waitForElement(communiExplore.getReportPanelText());

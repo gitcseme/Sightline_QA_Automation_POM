@@ -730,6 +730,13 @@ public class DocViewAudio_Regression1_23 {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } };
 	}
+	@DataProvider(name = "AllTheUsers")
+    public Object[][] AllTheUsers() {
+        Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+                { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+                { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+        return users;
+    }
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

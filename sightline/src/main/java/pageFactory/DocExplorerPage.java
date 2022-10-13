@@ -3373,9 +3373,11 @@ public class DocExplorerPage {
 			bc.waitTillElemetToBeClickable(getIncludeRadioBtn());
 			getIncludeRadioBtn().Click();
 			getSearchTextArea().SendKeys(folderName);
+			bc.waitTime(10);
 			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getAddToFilter());
+			bc.waitTime(10);
 			bc.waitTillElemetToBeClickable(getAddToFilter());
 			getAddToFilter().Click();
 			bc.waitForElement(getApplyFilter());
@@ -3430,6 +3432,7 @@ public class DocExplorerPage {
 			bc.waitTillElemetToBeClickable(getIncludeRadioBtn());
 			getIncludeRadioBtn().Click();
 			getSearchTextArea().SendKeys(folderName);
+			bc.waitTime(10);
 			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUpdateFilter());

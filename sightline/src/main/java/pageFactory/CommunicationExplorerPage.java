@@ -1331,7 +1331,9 @@ public class CommunicationExplorerPage {
 			}
 			driver.waitForPageToBeReady();
 			searchCriteriaTextBox().SendKeys(data);
+			base.waitTime(10);
 			searchCriteriaTextBox().SendKeysNoClear("" + Keys.ENTER);
+			base.waitTime(10);
 			base.waitForElement(getAddToFilter());
 			getAddToFilter().waitAndClick(10);
 			base.stepInfo(options + " Filters Applied.");
