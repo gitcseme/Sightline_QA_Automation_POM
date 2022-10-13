@@ -677,6 +677,60 @@ public class DocViewAudio_Regression1_23 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/10/2022 RPMXCON-51779
+	 * @throws Exception
+	 * @Description Verify when audio document present in two different save
+	 *              searches with common term and assigned to existing assignment,
+	 *              then it should not display repetitive search term on persistent
+	 *              hits panel.
+	 */
+	@Test(description = "RPMXCON-51779", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsDifferentSearchsNotDisplayPersistentHitInDocView() throws Exception {
+
+		DocViewPage docview = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
+		List<String> searchTerm = new ArrayList<String>();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51779 Docview/Audio");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel from saved search");
+		// Audio search
+		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docview.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docview.getMiniDocListDocIdText());
+
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.addPureHit();
+		// Added another Audio search and add
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.bulkAssignWithOutPureHit();
+
+		// Select Assignment goto docview
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(Asssignment);
+
+		// Check Display persistant hit - notrepetative
+		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
+		driver.waitForPageToBeReady();
+		docview.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+
+		// logout
+		loginPage.logout();
+	}
 
 	@DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {

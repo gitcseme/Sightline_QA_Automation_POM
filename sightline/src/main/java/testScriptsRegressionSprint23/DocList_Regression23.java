@@ -599,6 +599,108 @@ public class DocList_Regression23 {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/10/2022 RPMXCON-54521
+	 * @throws Exception
+	 * @Description Validate onpage filter for EmailRecipientNames with any special
+	 *              charatcers (,/"/-/_ /) on DocList page.
+	 */
+	@Test(description = "RPMXCON-54521", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterForEmailRecipientNameWithAnySpecialCharaters(String username, String password, String role)
+			throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54521");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailRecipientNames with any special charatcers (,/\"/-/_ /) on DocList page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		String domain1 = "(#NOS OCRM All OCRM Staff);Jeff Smith";
+		String domain2="Amol.Gawande/,@symp";
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		// EmailRecipientnames Include
+		baseClass.stepInfo("EmailRecipientnames Include");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailRecNameFilter());
+		docList.getEmailRecNameFilter().waitAndClick(5);
+		docList.include(domain1);
+		driver.waitForPageToBeReady();
+		if(baseClass.text(domain1).isDisplayed()) {
+		baseClass.passedStep("Documents containing only the selected email IDs only filtered");
+		}else {
+			baseClass.failedStep("Documents containing selected email IDs not filtered");
+		}
+
+		docList.getClearAllBtn().waitAndClick(5);
+		baseClass.stepInfo("ClearAll Button Is clicked");
+		// EmailRecipientnames Exclude
+		baseClass.stepInfo("EmailRecipientnames Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailRecNameFilter());
+		docList.getEmailRecNameFilter().waitAndClick(5);
+		docList.excludeDoclist(domain2);
+		softAssertion.assertTrue(docList.getDocListNoRestultData().isDisplayed());
+		baseClass.passedStep("Documents containing the selected email IDs should not be filtered");
+		softAssertion.assertAll();
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/10/2022 RPMXCON-54383
+	 * @throws Exception
+	 * @Description Validate doc List limitation from Saved Search - View less than
+	 *              or equal to 500K documents.
+	 */
+	@Test(description = "RPMXCON-54383", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyDoclistLimitationSavedSearchLessThanDocuments(String username, String password, String role)
+			throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54383");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailRecipientNames with any special charatcers (,/\"/-/_ /) on DocList pageValidate doc List limitation from Saved Search - View less than or equal to 500K documents.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		int pureHit = 0;
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		pureHit = Integer.parseInt(sessionSearch.getPureHitsCount2ndSearch().getText());
+		sessionSearch.saveSearch(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+
+		/// Go to doclist verify doc count
+		driver.waitForPageToBeReady();
+		String DocListCount = docList.getTableFooterDocListCount().getText();
+		System.out.println(DocListCount);
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[3];
+		System.out.println("doclist page document count is" + Document);
+		baseClass.textCompareEquals(Document, Document, pureHit + "is displayed as expected",
+				pureHit + "is not displayed as expected");
+		baseClass.passedStep(
+				"User not be prompted with any message and navigate successfully to DocList screen with selected number of documents.");
+
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -613,7 +715,13 @@ public class DocList_Regression23 {
 			loginPage.quitBrowser();
 		}
 	}
-
+	@DataProvider(name = "Users_PARMU")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA" } };
+		return users;
+	}
+	
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
