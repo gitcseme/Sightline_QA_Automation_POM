@@ -150,7 +150,31 @@ public class ABMReportPage {
 	public Element getBullHornIconNotification(int i) {
 		return driver.FindElementByXPath("(//a[contains(text(),'Your Background Report with Notification ')])["+i+"]");
 	}
-	 
+	public ElementCollection gettableHeaders() {
+		return driver.FindElementsByXPath("//table[@id='dtAdvanceBatchMangeReport']/thead/tr/th");
+	}
+	public Element getActionButton() {
+		return driver.FindElementByXPath("//button[@id='tallyactionbtn']//span[@class='fa fa-chevron-down']");
+	}
+	public Element getCheckBox_table(String assignName,int i) {
+		return driver.FindElementByXPath("//table[@id='dtAdvanceBatchMangeReport']/tbody/tr/td[text()='"+assignName+"']/parent::tr/td["+i+"]/table//td/input");
+	}
+	public Element getDocCount_table(String assignName,int i) {
+		return driver.FindElementByXPath("//table[@id='dtAdvanceBatchMangeReport']/tbody/tr/td[text()='"+assignName+"']/parent::tr/td["+i+"]/table//td/label");
+	}
+	public Element getDocSlectCheckBox() {
+		return driver.FindElementByXPath("//td[@class=' tableCell']/input");
+	}
+	public Element getActionBulkTag() {
+		return driver.FindElementByXPath("//a[text()='Bulk Tag']");
+	}
+	public Element getActionBulkAssign() {
+		return driver.FindElementByXPath("//a[text()='Bulk Assign']");
+	}
+
+	public Element getActionBulkFolder() {
+		return driver.FindElementByXPath("//a[text()='Bulk Folder']");
+	}
 	public ABMReportPage(Driver driver) {
 
 		this.driver = driver;
@@ -414,7 +438,7 @@ public class ABMReportPage {
 		getABM_ReviewerExpandbutton().Click();
 		bc.waitForElement(getABM_SelectAssignment());
 		getABM_SelectAssignment().Click();
-		getABM_SelectAssgn(assgnname).ScrollTo();
+		bc.waitTime(2);
 		getABM_SelectAssgn(assgnname).Click();
 		driver.scrollPageToTop();
 		getApplyBtn().waitAndClick(10);
@@ -543,5 +567,74 @@ public class ABMReportPage {
 		} else {
 			bc.failedMessage("No new notification added in bull horn icon");
 		}
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param IndexElement
+	 * @return
+	 */
+	public int getIndex(String IndexElement) {
+		int i;
+		i = bc.getIndex(gettableHeaders(), IndexElement);
+		return i;
+	}
+	/**
+	 * Select docs from Any column[In set,To do,Completed] as per our wish 
+	 * if we select Assignment ABM report. 
+	 * @param assignName
+	 * @param columnName
+	 * @param clickCheckBox
+	 * @return
+	 */
+	
+	public String selectDocsinTable(String assignName,String columnName,boolean clickCheckBox) {
+		driver.waitForPageToBeReady();
+		bc.waitForElementCollection(gettableHeaders());
+		int i=getIndex(columnName);
+		if(clickCheckBox) {
+			getCheckBox_table(assignName,i).ScrollTo();
+			getCheckBox_table(assignName,i).Click();
+		}
+		System.out.println(getDocCount_table(assignName,i).getText());
+		return getDocCount_table(assignName,i).getText();
+		
+	}
+	
+	
+	/**
+	 * doc selection if we select ABM report at document level
+	 */
+	public void docSelection() {
+		bc.waitForElement(getDocSlectCheckBox());
+		getDocSlectCheckBox().Click();
+		
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param folder[if we want to do bulk folder it should 
+	 *  be true else bulk tag will be done]
+	 * 
+	 */
+	public  void BulkTag_Folder(boolean folder)  {
+
+		bc.waitForElement(getActionButton());
+		getActionButton().waitAndClick(20);
+		if(folder) {
+		bc.waitForElement(getActionBulkFolder());
+		getActionBulkFolder().Click();
+		}else {
+		bc.waitForElement(getActionBulkTag());
+		getActionBulkTag().Click();
+		}
+	}
+	/**
+	 * @author Jayanthi.ganesan 
+	 * 
+	 */
+	public  void bulkAssign()  {
+		bc.waitForElement(getActionButton());
+		getActionButton().waitAndClick(20);
+		bc.waitForElement(getActionBulkAssign());
+		getActionBulkAssign().Click();
 	}
 }
