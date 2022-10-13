@@ -503,7 +503,8 @@ public class Input {
 	public static String progresBarColor;
 	public static String BatchFileduplicateHeader;
 	public static String SearchBatchFile;
-
+	public static String AutomationBackUpDomain;
+	
 	// Added By Jeevitha [Collection]
 	public static String TenantID;
 	public static String ApplicationID;
@@ -913,6 +914,9 @@ public class Input {
 	public static String NR_Detection;
 	public static String PII;
 	public static String PRIV;
+	public static String reteriveDSErr;
+ 	public static String completedWithErr;
+
 
 	// Added by Aathith ,Client Page details
 	public static String FilterByType;
@@ -1465,6 +1469,8 @@ public class Input {
         collectionErrColorCodeOrange = testData.getCollectionErrColorCodeOrange();
         retreivingDSCountH = testData.getRetreivingDSCountH();
         dateKeywordHeaderC = testData.getDateKeywordHeaderC();	
+      reteriveDSErr = testData.getReteriveDSErr();
+            completedWithErr  = testData.getCompletedWithErr();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1475,7 +1481,8 @@ public class Input {
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
 		metaDataCNcount = testData.getMetaDataCNcount();
 		SearchBatchFile = testData.getSearchBatchFile();
-
+		AutomationBackUpDomain = testData.getAutomationBackUpDomain();
+		
 		// Added By Jeevitha [Collection]
 		TenantID = testData.getTenantID();
 		ApplicationID = testData.getApplicationID();
