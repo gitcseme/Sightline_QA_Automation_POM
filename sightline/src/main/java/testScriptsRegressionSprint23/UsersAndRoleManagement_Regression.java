@@ -132,7 +132,7 @@ public class UsersAndRoleManagement_Regression {
 	 */
 
 	@Test(description = "RPMXCON-52676", alwaysRun = true, groups = { "regression" })
-	public void validateBulkUserRadioOptions() throws Exception {
+	public void verifySecurityGroupChanges() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52676");
 		baseClass.stepInfo("Verify when user changes the security group from the header drop down");
 		userManage = new UserManagement(driver);
@@ -235,13 +235,17 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.waitForElement(baseClass.getChangeRole());
 		baseClass.getChangeRole().waitAndClick(10);
 		baseClass.waitForElement(baseClass.getSelectRole());
+		baseClass.waitTime(4);
 		baseClass.getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
 		baseClass.waitForElement(baseClass.getAvlDomain());
+		baseClass.waitTime(4);
 		baseClass.getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 		baseClass.waitForElement(baseClass.getAvlProject());
+		baseClass.waitTime(4);
 		baseClass.getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 		
 		// validation in change role sg
+		baseClass.waitTime(4);
 		boolean flag = baseClass.dropDownValueCheck(baseClass.getSelectSecurityGroup(), securityGroup);
 		softAssertion.assertTrue(flag);
 		baseClass.passedStep("Changed Sg in header top value are displayed in change role popup window");
@@ -548,6 +552,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// validating userlist page billable / non-billable
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		driver.waitForPageToBeReady();
 		//verify pa role
 		userManage.passingUserName(emailIdPa);
 		userManage.applyFilter();

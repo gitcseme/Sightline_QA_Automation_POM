@@ -3963,7 +3963,6 @@ public class UserManagement {
 		getAssignUserButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Assign user popup is opened");
-		bc.waitForElement(getSelectDomainname());
 	}
 
 	/**
