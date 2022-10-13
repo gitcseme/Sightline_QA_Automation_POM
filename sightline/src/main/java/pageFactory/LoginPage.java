@@ -632,4 +632,60 @@ public class LoginPage {
 			System.out.println("Selected language : English");
 		}
 	}
+	
+	/**
+	 * @Author Baskar
+	 * @Description : verify locked user msg when login
+	 */
+	public void loginToSightLineVerifyLockedUser(String strUserName, String strPasword) {
+		driver.waitForPageToBeReady();
+		// Fill user name
+		getEuserName().waitAndClick(10); // to adjust with app!
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEuserName().Visible();
+			}
+		}), Input.wait30);
+		getEuserName().SendKeys(strUserName);
+
+		// Fill password
+		getEpassword().SendKeys(strPasword);
+
+		// Click Login button
+		getEloginButton().Click();
+		// check if user session is active
+		if (getActiveSessionYesButton().isElementAvailable(3)) {
+			try {
+				base.waitForElement(getActiveSessionYesButton());
+				getActiveSessionYesButton().Click();
+				// driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+				base.waitForElement(getEuserName());
+				base.waitTillElemetToBeClickable(getEuserName());
+				getEuserName().Clear();
+				getEpassword().Clear();
+				getEuserName().SendKeys(strUserName);
+				// Fill password
+				getEuserName().Click();
+				getEpassword().SendKeys(strPasword);
+				// Click Login button
+				getEloginButton().Click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+
+			}
+		}
+
+		// Make sure sign out menu is visible post login
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		UtilityLog.info("user locked success!");
+		Reporter.log("user locked success!", true);
+
+	}
 }
