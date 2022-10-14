@@ -5439,6 +5439,7 @@ public class SessionSearch {
 
 	}
 
+
 	/**
 	 * @author Jayanthi
 	 * @param remarks
@@ -5472,6 +5473,7 @@ public class SessionSearch {
 		return pureHit;
 
 	}
+
 
 	/**
 	 * @author Gopinath modified date-NA
@@ -13868,6 +13870,7 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 		UtilityLog.info("Bulk assign is done, assignment is : " + assignment);
 		Reporter.log("Bulk assign is done, assignment is : " + assignment, true);
 		}
+}
 
 	
 	/**

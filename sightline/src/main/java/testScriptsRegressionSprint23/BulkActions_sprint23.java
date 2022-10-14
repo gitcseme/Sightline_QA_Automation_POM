@@ -83,7 +83,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionSearch.verifyPureHitsCount();
-		sessionSearch.saveSearch(SaveSaerchName);
+		sessionSearch.saveSearch(SaveSearchName);
 		sessionSearch.bulkAssign();
 
 		// create Assignment and disturbute docs
@@ -94,7 +94,7 @@ public class BulkActions_sprint23 {
 		// generate report in ABM
 		baseClass.stepInfo("**Advance batch management report generation at assignment level**");
 		ABMReportPage AbmReportPage = new ABMReportPage(driver);
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, false, false);
 
 		// select doc from report table
 		String count = AbmReportPage.selectDocsinTable(assignmentName1, "IN SET", true);
@@ -106,7 +106,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.getActionPopupCloseBtn().Click();
 
 		baseClass.stepInfo("**Advance batch management report generation at assignment level**");
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, false, false);
 
 		// select doc from report table
 		count = AbmReportPage.selectDocsinTable(assignmentName1, "IN SET", true);
