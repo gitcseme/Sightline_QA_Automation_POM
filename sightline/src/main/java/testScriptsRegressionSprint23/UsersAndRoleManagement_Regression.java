@@ -1260,6 +1260,232 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:14/10/2022 Modified by: Baskar
+	 * Description :To verify that application should not allow to create existing
+	 * user under the same project who is able to login to application and not
+	 * confirmed the account.
+	 */
+
+	@DataProvider(name = "saparmu")
+	public Object[][] saparmu() {
+		return new Object[][] {
+				{ Input.sa1userName, Input.sa1password, Input.ProjectAdministrator, Input.pa1userName, "pa" },
+				{ Input.sa1userName, Input.sa1password, Input.ReviewManager, Input.rmu1userName, "rmu" } };
+	}
+
+	@Test(description = "RPMXCON-52393", dataProvider = "saparmu", alwaysRun = true, groups = { "regression" })
+	public void verifyLoginUserShouldNotCreateNewUser(String userName, String password, String role, String email,
+			String name) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52393");
+		baseClass.stepInfo("To verify that application should not allow to create existing user "
+				+ "under the same project who is able to login to application and not confirmed the account.");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String FirstName = Input.randomText + Utility.dynamicNameAppender();
+		String LastName = Input.randomText + Utility.dynamicNameAppender();
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+
+		// Login as sa
+		loginPage.loginToSightLine(userName, password);
+
+		// creating user with existing after set password
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.stepInfo("Create user under existing emailid");
+		if (name == "pa") {
+			userManage.createNewUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
+			boolean errorMsgExt = userManage.getLoginUserShouldNotCreate().isElementAvailable(2);
+			String errorText = userManage.getLoginUserShouldNotCreate().getText();
+            baseClass.stepInfo("Error message displayed as :"+errorText+"");
+			softAssertion.assertTrue(errorMsgExt);
+		}
+		if (name == "rmu") {
+			userManage.createNewUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
+			boolean errorMsgExt = userManage.getLoginUserShouldNotCreateRmu().isElementAvailable(2);
+			String errorText = userManage.getLoginUserShouldNotCreateRmu().getText();
+            baseClass.stepInfo("Error message displayed as :"+errorText+"");
+			softAssertion.assertTrue(errorMsgExt);
+		}
+		baseClass.passedStep("Error message displayed when user create existing emailid");
+		userManage.createNewUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.stepInfo("Create user under existing emailid,without reset password from unnique encrypted link");
+		if (name == "pa") {
+			userManage.createNewUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
+			boolean errorMsgExt = userManage.getLoginUserShouldNotCreate().isElementAvailable(2);
+			String errorText = userManage.getLoginUserShouldNotCreate().getText();
+            baseClass.stepInfo("Error message displayed as :"+errorText+"");
+			softAssertion.assertTrue(errorMsgExt);
+		}
+		if (name == "rmu") {
+			userManage.createNewUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
+			boolean errorMsgExt = userManage.getLoginUserShouldNotCreateRmu().isElementAvailable(2);
+			String errorText = userManage.getLoginUserShouldNotCreateRmu().getText();
+            baseClass.stepInfo("Error message displayed as :"+errorText+"");
+			softAssertion.assertTrue(errorMsgExt);
+		}
+		baseClass.passedStep(
+				"Error message displayed when user create existing emailid without resetting the password from emailid");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+		
+	}
+
+	/**
+	 * @Author : Baskar
+	 * @Description :To verify when Sys Admin impersonate Reviewer role
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52428", enabled = true, groups = { "regression" })
+	public void verifySaImpRevValidateProjectHeader() throws Exception {
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-52428  Users and Role Management");
+		baseClass.stepInfo("To verify when Sys Admin impersonate Reviewer role");
+
+		// login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUserSa = baseClass.getLoginedUserRole().getText();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		System.out.println(currentUserSa);
+		baseClass.textCompareEquals(currentUserSa, Input.SystemAdministrator, "Current Role is Sa",
+				"Current role is not as expected");
+
+		// impersonate From SA to REV & verify Current User
+		baseClass.impersonateSAtoReviewer();
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser = baseClass.getLoginedUserRole().getText();
+		System.out.println(currentUser);
+		baseClass.textCompareEquals(currentUser, Input.Reviewer, "Current Role is Reviewer",
+				"Current role is not as expected");
+
+		// validating project as per impersonation
+		String project = baseClass.getProjectNames().getText().trim();
+		System.out.println(project);
+		softAssertion.assertEquals(project, Input.projectName);
+		softAssertion.assertAll();
+		baseClass.passedStep("Current project value selected in project header as per impersonation done");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar
+	 * @Description :To verify when Project Admin impersonate RMU role
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52429", enabled = true, groups = { "regression" })
+	public void verifyPaImpRmuValidateForCurrentSession() throws Exception {
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-52429  Users and Role Management");
+		baseClass.stepInfo("To verify when Project Admin impersonate RMU role");
+
+		// login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUserSa = baseClass.getLoginedUserRole().getText();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		System.out.println(currentUserSa);
+		baseClass.textCompareEquals(currentUserSa, Input.ProjectAdministrator, "Current Role is PA",
+				"Current role is not as expected");
+
+		// impersonate From PA to RMU & verify Current User
+		baseClass.impersonatePAtoRMU();
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser = baseClass.getLoginedUserRole().getText();
+		System.out.println(currentUser);
+		baseClass.textCompareEquals(currentUser, Input.ReviewManager, "Current Role is Review Manager",
+				"Current role is not as expected");
+
+		// logout
+		loginPage.logout();
+
+		// Re-login to validate
+		// login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Relogin again to validate the impersonation done for current session");
+
+		// validating role for current session
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String reloginRole = baseClass.getLoginedUserRole().getText();
+		softAssertion.assertEquals(reloginRole, Input.ProjectAdministrator);
+		softAssertion.assertAll();
+		baseClass.passedStep("Role happened for the current session only when impersonation done");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar
+	 * @Description :To verify when Project Admin impersonate Reviewer role
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52430", enabled = true, groups = { "regression" })
+	public void verifyPaImpRevValidateForCurrentSession() throws Exception {
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		baseClass.stepInfo("Test case Id: RPMXCON-52430  Users and Role Management");
+		baseClass.stepInfo("To verify when Project Admin impersonate Reviewer role");
+
+		// login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUserSa = baseClass.getLoginedUserRole().getText();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		System.out.println(currentUserSa);
+		baseClass.textCompareEquals(currentUserSa, Input.ProjectAdministrator, "Current Role is PA",
+				"Current role is not as expected");
+
+		// impersonate From PA to Rev & verify Current User
+		baseClass.impersonatePAtoReviewer();
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser = baseClass.getLoginedUserRole().getText();
+		System.out.println(currentUser);
+		baseClass.textCompareEquals(currentUser, Input.Reviewer, "Current Role is Reviewer",
+				"Current role is not as expected");
+
+		// logout
+		loginPage.logout();
+
+		// Re-login to validate
+		// login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Relogin again to validate the impersonation done for current session");
+
+		// validating role for current session
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String reloginRole = baseClass.getLoginedUserRole().getText();
+		softAssertion.assertEquals(reloginRole, Input.ProjectAdministrator);
+		softAssertion.assertAll();
+		baseClass.passedStep("Role happened for the current session only when impersonation done");
+
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
