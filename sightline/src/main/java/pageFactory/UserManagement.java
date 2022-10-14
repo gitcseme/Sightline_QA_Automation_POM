@@ -1724,7 +1724,7 @@ public class UserManagement {
 
 		}
 		getSave().waitAndClick(10);
-		bc.VerifySuccessMessage("User profile was successfully created");
+//		bc.VerifySuccessMessage("User profile was successfully created");
 
 	}
 
