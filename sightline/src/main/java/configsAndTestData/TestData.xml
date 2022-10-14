@@ -589,7 +589,10 @@
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
 	<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
-
+    <FirstNameError>You must specify the first name</FirstNameError>
+	<LastNameError>You must specify the last name</LastNameError>
+	<RoleError>You must specify a specify a role</RoleError>
+	<EmailAddressError>Email Address is required</EmailAddressError>
 	<!-- Added by Gopinath Created date - 03/12/2021 -->
 	<thankyouText>thank you</thankyouText>
 

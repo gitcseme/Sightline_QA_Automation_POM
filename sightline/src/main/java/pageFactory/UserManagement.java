@@ -3,6 +3,7 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -1032,6 +1033,36 @@ public class UserManagement {
 	public Element getLoginUserShouldNotCreateRmu() {
 		return driver.FindElementByXPath("//p[text()='20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.']");
 	} 
+	public Element getFilterByType() {
+		return driver.FindElementById("ddlEntityType");
+	}
+	public Element getApplyFilter() {
+		return driver.FindElementById("btnSearch");
+	}
+	public ElementCollection getTableHeaderInDomainClient() {
+		return driver.FindElementsByXPath("//table[@id='EntityDataTable']//th");
+	}
+	public Element getFilterByName() {
+		return driver.FindElementByXPath("//input[@id='EntityLabel']");
+	}
+	public Element getPrjtField() {
+		return driver.FindElementById("txtUserProj");
+	}
+	public ElementCollection getColumnValueinDomainClient(int i) {
+		return driver.FindElementsByXPath("//table[@id='EntityDataTable']//tbody//td["+i+"]");
+	}
+	public Element getFirstNameError() {
+		return driver.FindElementById("txtBxUserName-error");
+	}
+	public Element getLastNameError() {
+		return driver.FindElementById("txtBxUserLastName-error");
+	}
+	public Element getRoleError() {
+		return driver.FindElementById("ddlDomainAdminCreateUserRoles-error");
+	}
+	public Element getEmailAddressError() {
+		return driver.FindElementById("txtBxUserEmailID-error");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -4776,5 +4807,56 @@ public class UserManagement {
 			}
 		}
 	}
+	/**
+	 * @author Brundha.T
+	 * @param Dropdown
+	 * @param value
+	 * Description:Applying filter
+	 */
+public void applyingFilterInClient(String Dropdown,boolean value) {
+	this.driver.getWebDriver().get(Input.url+ "Entity/Entity");
+	driver.waitForPageToBeReady();
+	getFilterByType().selectFromDropdown().selectByVisibleText(Dropdown);
+	if(value) {
+		getFilterByName().waitAndClick(10);
+	}
+	bc.waitForElement(getApplyFilter());
+	getApplyFilter().Click();
+	bc.waitTime(2);
+}
+
+/**
+ * @author Brundha.T
+ * @return
+ * Description: validating bulkuser control
+ */
+public ArrayList<String> ValidatingBulkUserAccessControl() {
+	this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+	ArrayList<String> Values=new ArrayList<>();
+	driver.waitForPageToBeReady();
+	bc.waitForElement(getBulkUserAccessTab());
+	getBulkUserAccessTab().waitAndClick(5);
+	bc.waitForElement(getSelectRollId());
+	List<WebElement> ListOfEle = getSelectRollId().selectFromDropdown().getOptions();
+	System.out.println(ListOfEle.size());
+	for (int j =1; j < ListOfEle.size(); j++) {
+	    String DropdownTxt=ListOfEle.get(j).getText();
+	    System.out.println(DropdownTxt);
+	    Values.add(DropdownTxt);
+}
+	driver.waitForPageToBeReady();
+	return Values;
+	}
+
+/**
+ * @author Brundha.T
+ * Description: verifying readonly in project and security group
+ */
+public void verifyingReadonlyInProjectAndSecurityGrp() {
+	String BulkUserPrjt=getSelectingProject().GetAttribute("disabled");
+	bc.textCompareEquals(BulkUserPrjt,"true","Bulk user project is disabled as expected","Bulk user project  not disabled");
+	String BulkUserSecurityGroup=getBulkUserSecurityGroup().GetAttribute("disabled");
+	bc.textCompareEquals(BulkUserSecurityGroup,"true","Security Group is disabled as expected","Security Group not disabled");
+}
 
 }
