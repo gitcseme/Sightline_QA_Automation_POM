@@ -565,7 +565,7 @@ public class DocView_Regression4 {
 
 		assignmentsPage.completeDocs(Input.rev1userName);
 
-		assignmentsPage.selectAssignmentToViewinDocviewThreadMap(assname);
+		assignmentsPage.selectAssignmentfromRMUDashborad(assname);
 
 		driver.waitForPageToBeReady();
 
@@ -1149,15 +1149,13 @@ public class DocView_Regression4 {
 			docViewRedact.verifyHighlightedTextsAreDisplayed();
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
 			UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 			baseClass.stepInfo(
 					"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 			driver.waitForPageToBeReady();
 			sessionSearch.switchToWorkproduct();
-			sessionSearch.getSavedSearchBtn1().Click();
-			sessionSearch.selectSavedsearchesInTree("My Saved Search");
-			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+			sessionSearch.selectAssignmentInWPS(assignmentName);
 			sessionSearch.serarchWP();
 			sessionSearch.ViewInDocList();
 			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
@@ -1175,7 +1173,7 @@ public class DocView_Regression4 {
 			sessionSearch.getSavedSearchBtn1().Click();
 			sessionSearch.selectSavedsearchesInTree("My Saved Search");
 			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+			//sessionSearch.getMetaDataInserQuery().waitAndClick(5);
 			sessionSearch.serarchWP();
 			sessionSearch.ViewInDocList();
 			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
@@ -1849,7 +1847,7 @@ public class DocView_Regression4 {
 		// select docs from MiniDoclist
 		docViewRedact.selectMiniDocListAndViewInDocView(3);
 		baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
-
+		
 		// Mini doc list having all page redaction
 		docViewRedact.selectRedactionIconAndRedactWholePage();
 

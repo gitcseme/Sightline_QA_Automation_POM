@@ -3902,8 +3902,8 @@ public class SessionSearch {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait90);
-		getPureHitsCount().waitAndClick(20);
+		}), Input.wait30);
+		getPureHitsCount().waitAndClick(10);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		base.stepInfo("Search is done and PureHit is : " + pureHit);
 		UtilityLog.info("Search is done and PureHit is : " + pureHit);
@@ -4850,8 +4850,8 @@ public class SessionSearch {
 		} else {
 			System.out.println("View is not found");
 		}
-		base.waitForElement(getDocViewAction());
-		getDocViewAction().waitAndClick(5);
+		base.waitForElement(getDocViewActionDL());
+		getDocViewActionDL().waitAndClick(5);
 
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");

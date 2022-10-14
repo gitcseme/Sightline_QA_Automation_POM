@@ -5,19 +5,38 @@
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 
-<test name="Production_Page_Regression">
+<test name="Production_Batch">
 <classes>
 <class name="testScriptsSmoke.Input"></class>  
-<class name="sightline.productions.Production_Page_Regression"></class>
-<class name="sightline.productions.Production_Regression1"></class>
-<class name="sightline.productions.Production_Regression2"></class>    
-<class name="sightline.productions.Production_Test_Regression_01"></class>     
-<class name="sightline.productions.Production_Test_Regression_02"></class>      
-<class name="sightline.productions.Production_Test_Regression_03"></class>      
-<class name="sightline.productions.ProductionDBVerification"></class>    
-<class name="sightline.productions.ProductionNew_Regression"></class>    
-<class name="sightline.productions.ProductionPage_Regression"></class>			
 <class name="sightline.productions.Export_Regression"></class>
+<class name="sightline.productions.Export_Regression1"></class>
+<class name="sightline.productions.Export_Regression17"></class>
+<class name="sightline.productions.Export_Regression18"></class>
+<class name="sightline.productions.Export_Regression19"></class>
+<class name="sightline.productions.Export_Regression19_1"></class>
+<class name="sightline.productions.Export_Regression20"></class>
+<class name="sightline.productions.ProductionDBVerification"></class>
+<class name="sightline.productions.ProductionNew_Regression"></class>
+<class name="sightline.productions.ProductionPage_Regression"></class>
+<class name="sightline.productions.ProductionRegression_17"></class>
+<class name="sightline.productions.ProductionRegression_Sprint19"></class>
+<class name="sightline.productions.ProductionRegression_Sprint20"></class>
+<class name="sightline.productions.Production_Page_Regression"></class>
+<class name="sightline.productions.Production_Regression"></class>
+<class name="sightline.productions.Production_Regression1"></class>
+<class name="sightline.productions.Production_Regression18"></class>
+<class name="sightline.productions.Production_Regression18_1"></class>
+<class name="sightline.productions.Production_Regression19"></class>
+<class name="sightline.productions.Production_Regression19_01"></class>
+<class name="sightline.productions.Production_Regression2"></class>
+<class name="sightline.productions.Production_Regression20"></class>
+<class name="sightline.productions.Production_Regression20_01"></class>
+<class name="sightline.productions.Production_Regression_Sprint18"></class>
+<class name="sightline.productions.Production_Sprint16_Regression1"></class>
+<class name="sightline.productions.Production_Sprint16_Regression2"></class>
+<class name="sightline.productions.Production_Test_Regression_01"></class>
+<class name="sightline.productions.Production_Test_Regression_02"></class>
+<class name="sightline.productions.Production_Test_Regression_03"></class>
 </classes>
 </test>
 </suite>
