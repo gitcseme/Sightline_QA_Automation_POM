@@ -266,8 +266,8 @@ public class TallyPage {
 	}
 
 	public Element getTally_SelectSearches(String searchName) {
-		return driver.FindElementByXPath(
-				"//a[contains(@class,'jstree-anchor') and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//a[contains(@class,'jstree-anchor') and text()='" + searchName
+				+ "']//i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	public Element getTally_SearchSaveSelections() {
@@ -299,10 +299,11 @@ public class TallyPage {
 	public Element getTallyViewinDocViewBtn() {
 		return driver.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idViewInDocview']");
 	}
+
 	public Element getTallyViewinDocListBtn() {
 		return driver.FindElementById("idViewDoclist");
 	}
-	
+
 	public Element getSubTallyBulkReleaseAction() {
 		return driver.FindElementByXPath(
 				"//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
@@ -404,16 +405,20 @@ public class TallyPage {
 	public ElementCollection getSubtallyTableheader() {
 		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th");
 	}
+
 	public Element getSubTallyViewBtn() {
 		return driver.FindElementByXPath(
 				"//button[@id='subtallyactionbtn']/following-sibling::ul[@class='dropdown-menu action-dd']//li//a[text()='View']");
 	}
 
 	public Element getSubTallyViewinDocViewBtn() {
-		return driver.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idSubTallyViewInDocview']");
+		return driver
+				.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idSubTallyViewInDocview']");
 	}
+
 	public Element clearingActiveFiltersInTallyBy() {
-		return driver.FindElementByXPath("//strong[text()='ACTIVE FILTERS:']/parent::div//i[@class='fa fa-times-circle']");
+		return driver
+				.FindElementByXPath("//strong[text()='ACTIVE FILTERS:']/parent::div//i[@class='fa fa-times-circle']");
 	}
 
 	public Element metaDataFilterForTallyBy(String metaData) {
@@ -446,6 +451,7 @@ public class TallyPage {
 	public Element ActiveFiltersTallyBy(String FilteData) {
 		return driver.FindElementByXPath("//li[contains(text(),'" + FilteData + "')]");
 	}
+
 	public Element metaDataFilterForSubTallyBy(String metaData) {
 		return driver.FindElementByXPath("(//ul[@id='optionFilters'])[last()]/li[text()='" + metaData + "']");
 	}
@@ -468,80 +474,101 @@ public class TallyPage {
 		return driver.FindElementByXPath("//div[@id='activeFilters']/li[contains(text(),'" + FilteData + "')]");
 	}
 
-
 	public ElementCollection ListOfMetaDataInSubTallyResults() {
 		return driver.FindElementsByXPath("//div[@id='subTallyChart']//td[@class='text-left rowlead formatDate']");
 	}
+
 	public Element getFolderTreeExpandButton(String expandValue) {
-		return driver.FindElementByXPath("//div[@id='_foldersTree']//li[@aria-expanded='"+expandValue+"']/i");
+		return driver.FindElementByXPath("//div[@id='_foldersTree']//li[@aria-expanded='" + expandValue + "']/i");
 	}
 
 	public Element getTallyByFolder(String folderName) {
-		return driver.FindElementByXPath("//div[@id='_foldersTree']//a[@data-content='"+folderName+"']");
+		return driver.FindElementByXPath("//div[@id='_foldersTree']//a[@data-content='" + folderName + "']");
 	}
+
 	public Element getFolderRadioButton() {
 		return driver.FindElementByXPath("//input[@id='folders']/following-sibling::i");
 	}
+
 	public Element getAssgnRadioButton() {
 		return driver.FindElementByXPath("//input[@id='assignments']/following-sibling::i");
 	}
+
 	public Element getTallyByAssignment(String assgnName) {
-		return driver.FindElementByXPath("//div[@id='_assignmentsTree']//a[@data-content='"+assgnName+"']");
+		return driver.FindElementByXPath("//div[@id='_assignmentsTree']//a[@data-content='" + assgnName + "']");
 	}
+
 	public Element getSubTallyByName(String tagName) {
 		return driver.FindElementByXPath("//a[@data-content = '" + tagName + "']");
 	}
+
 	public Element getSubTallyByFolderName(String folderName) {
 		return driver.FindElementByXPath("//div[@id='_subfoldersTree']//a[@data-content = '" + folderName + "']");
 	}
+
 	public Element getSubTallyByTagName(String tagName) {
 		return driver.FindElementByXPath("//div[@id='_subtagsTree']//a[@data-content = '" + tagName + "']");
 	}
+
 	public Element getSubTallyByAssgnName(String assgnName) {
 		return driver.FindElementByXPath("//div[@id='_subassignmentsTree']//a[@data-content = '" + assgnName + "']");
 	}
+
 	public Element getTallyFolderBoard() {
 		return driver.FindElementById("_foldersTree");
 	}
+
 	public Element getFolderBoard() {
 		return driver.FindElementById("_subfoldersTree");
 	}
+
 	public Element getSubFoldersCheckBox() {
 		return driver.FindElementByXPath("//strong[text()='Folders']//..//..//input[@name='sub-metadata']//..//i");
 	}
+
 	public Element getAssgnmentBoard() {
 		return driver.FindElementById("_subassignmentsTree");
 	}
 
 	public Element getSubAssgnCheckBox() {
 		return driver.FindElementByXPath("//strong[text()=' Assignments']//..//..//input[@name='sub-metadata']//..//i");
-	}  
-	public Element getsubTallyFolderExpandButton(String expandValue) {
-		return driver.FindElementByXPath("//div[@id='_subfoldersTree']//li[@aria-expanded='"+expandValue+"']/i");
-	}
-	public Element getsubTallyAssgnExpandButton(String expandValue) {
-		return driver.FindElementByXPath("//div[@id='_subassignmentsTree']//li[@aria-expanded='"+expandValue+"']/i");
-	}
-	public Element getsubTallyTagExpandButton(String expandValue) {
-		return driver.FindElementByXPath("//div[@id='_subtagsTree']//li[@aria-expanded='"+expandValue+"']/i");
 	}
 
-	//Added by Gopinath - 21/03/2022
+	public Element getsubTallyFolderExpandButton(String expandValue) {
+		return driver.FindElementByXPath("//div[@id='_subfoldersTree']//li[@aria-expanded='" + expandValue + "']/i");
+	}
+
+	public Element getsubTallyAssgnExpandButton(String expandValue) {
+		return driver
+				.FindElementByXPath("//div[@id='_subassignmentsTree']//li[@aria-expanded='" + expandValue + "']/i");
+	}
+
+	public Element getsubTallyTagExpandButton(String expandValue) {
+		return driver.FindElementByXPath("//div[@id='_subtagsTree']//li[@aria-expanded='" + expandValue + "']/i");
+	}
+
+	// Added by Gopinath - 21/03/2022
 	public Element getTallyPageHeader() {
 		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'Tally')]");
 	}
+
 	public Element getSubTally_ExportData() {
 		return driver.FindElementById("SubTallyToExportDataId");
 	}
+
 	public ElementCollection getSelectedColumnDocs_Subtally() {
-		return driver.FindElementsByXPath("//table[@class='table table-striped dataGrid']/tbody/tr/td[@class='active']");
+		return driver
+				.FindElementsByXPath("//table[@class='table table-striped dataGrid']/tbody/tr/td[@class='active']");
 	}
+
 	public Element getHeaderSubtally(int i) {
-		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th["+i+"]");
+		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th[" + i + "]");
 	}
+
 	public ElementCollection getSelectSourcedOptionsList() {
 		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
 	}
+
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1339,15 +1366,15 @@ public class TallyPage {
 	 * @param subtallyBy
 	 * @throws InterruptedException
 	 */
-	public void selectMetaData_SubTally(String subtallyBy,int j) throws InterruptedException {
+	public void selectMetaData_SubTally(String subtallyBy, int j) throws InterruptedException {
 		base.waitForElement(getSubTallyField());
 		base.waitTillElemetToBeClickable(getSubTallyField());
 		getSubTallyField().waitAndClick(5);
 		base.waitTime(10);
-		if(j==1) {
-		base.waitTillElemetToBeClickable(getTally_subMetadata());
-		getTally_subMetadata().ScrollTo();
-		getTally_subMetadata().waitAndClick(20);
+		if (j == 1) {
+			base.waitTillElemetToBeClickable(getTally_subMetadata());
+			getTally_subMetadata().ScrollTo();
+			getTally_subMetadata().waitAndClick(20);
 		}
 //		Actions action = new Actions(driver.getWebDriver());
 //		action.moveToElement(getTally_subMetadata().getWebElement()).click().perform();		
@@ -1372,8 +1399,8 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void Tally_ViewInDocView() {
-		//base.waitForElement(getTallyViewBtn());
-	//	getTallyViewBtn().ScrollTo();
+		// base.waitForElement(getTallyViewBtn());
+		// getTallyViewBtn().ScrollTo();
 		getTallyViewinDocViewBtn().ScrollTo();
 		getTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
@@ -1642,25 +1669,30 @@ public class TallyPage {
 		}
 		return sum;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void SubTally_ViewInDocView() {
-		//base.waitForElement(getSubTallyViewBtn());
+		// base.waitForElement(getSubTallyViewBtn());
 		driver.scrollingToBottomofAPage();
 		base.waitTime(1);
-		//getSubTallyViewBtn().ScrollTo();
-		//getSubTallyViewBtn().ScrollTo();
+		// getSubTallyViewBtn().ScrollTo();
+		// getSubTallyViewBtn().ScrollTo();
 		getSubTallyViewinDocViewBtn().ScrollTo();
 		getSubTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
 	}
-	public void sourceSelectionUsers(String role, String[] sourceArray,int i) {
-		if(role=="PA") {
-	selectSources_PA(i,sourceArray[i]);}
-		if(role=="RMU") {
-	selectSources_RMU(i,sourceArray[i]);}
-}
+
+	public void sourceSelectionUsers(String role, String[] sourceArray, int i) {
+		if (role == "PA") {
+			selectSources_PA(i, sourceArray[i]);
+		}
+		if (role == "RMU") {
+			selectSources_RMU(i, sourceArray[i]);
+		}
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
@@ -1671,7 +1703,7 @@ public class TallyPage {
 		getTallyChartRectbar().Displayed();
 		List<WebElement> elementList = null;
 		List<String> elementNames = new ArrayList<>();
-		
+
 		if (getTallyChartRectbar().Displayed()) {
 			base.passedStep("Tally chart  displayed successfully");
 			elementList = getTallyChartMetaData().FindWebElements();
@@ -1681,14 +1713,15 @@ public class TallyPage {
 			}
 		} else {
 			base.failedStep("Tally chart  not displayed");
-		}	
+		}
 		System.out.println(elementNames);
 		Collections.sort(elementNames);
 		base.stepInfo("MetaData displayed in horizontal barchart is : ");
 		base.stepInfo(elementNames.toString());
 		return elementNames.toString();
-	
+
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
@@ -1712,402 +1745,411 @@ public class TallyPage {
 				}
 			}
 			base.stepInfo("Total Count of Unique docs reflected in sub tally Table" + sum.toString());
-		
+
 		} else {
 			base.failedStep("sub tally report not displayed.");
 		}
 		return sum;
 	}
 
-/**
- * @author Jayanthi.ganesan
- * @param ListOfMetaData
- * @param metaDataTally
- * @param FilterType
- * @return
- */
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param ListOfMetaData
+	 * @param metaDataTally
+	 * @param FilterType
+	 * @return
+	 */
 
-public String applyFilterToTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
+	public String applyFilterToTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
 
-	driver.waitForPageToBeReady();
-	String ApplyFilterMetaData = null;
-	base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
-	base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
-	metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
-	if (FilterType.equalsIgnoreCase("Include")) {
-		IncludeRadioButtonForTallyBy().waitAndClick(10);
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		ExcludeRadioButtonForTallyBy().waitAndClick(10);
-	}
-	for (int i = 0; i < ListOfMetaData.size(); i++) {
-		if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
-			ApplyFilterMetaData = ListOfMetaData.get(i);
-			break;
-		} else {
-			continue;
-		}
-	}
-	System.out.println(ApplyFilterMetaData + " filter tally by");
-	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
-	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
-	ApplyFilterTallyBy().waitAndClick(10);
-	base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
-	if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
-		base.passedStep("Selected Metadata is reflected in Active Filter under Tally by option .");
-		getTally_btnTallyApply().Click();
 		driver.waitForPageToBeReady();
-	} else {
-		base.failedStep("selected metadata is not reflected in active filters under tally  by option.");
-
-	}
-	return ApplyFilterMetaData;
-}
-
-/**
- * @author Jayanthi.ganesan
- * @param FilterType
- * @param ApplyFilterMetaData
- */
-
-public void verifyTallyChartAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
-
-	List<String> ListOfMetaAfterApplyingFilter = verifyTallyChart();
-
-	if (FilterType.equalsIgnoreCase("Include")) {
-		if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
-			base.passedStep(
-					"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the chart");
-		} else {
-			base.failedStep(
-					"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the chart");
+		String ApplyFilterMetaData = null;
+		base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
+		base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
+		metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
+		if (FilterType.equalsIgnoreCase("Include")) {
+			IncludeRadioButtonForTallyBy().waitAndClick(10);
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			ExcludeRadioButtonForTallyBy().waitAndClick(10);
 		}
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData) || ListOfMetaAfterApplyingFilter.isEmpty()) {
-			base.passedStep(
-					"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the chart");
-		} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
-			base.failedStep(
-					"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the chart");
-		}
-	}
-}
-
-/**
- * @author Jayanthi.ganesan
- * @param ListOfMetaData
- * @param metaDataTally
- * @param FilterType
- * @return
- */
-public String applyFilterToSubTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
-
-	driver.waitForPageToBeReady();
-	String ApplyFilterMetaData = null;
-	base.waitForElement(metaDataFilterForSubTallyBy(metaDataTally));
-	base.waitTillElemetToBeClickable(metaDataFilterForSubTallyBy(metaDataTally));
-	metaDataFilterForSubTallyBy(metaDataTally).waitAndClick(10);
-
-	if (FilterType.equalsIgnoreCase("Include")) {
-		IncludeRadioButtonForSubTallyBy().waitAndClick(10);
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		ExcludeRadioButtonForSubTallyBy().waitAndClick(10);
-	}
-	for (int i = 0; i < ListOfMetaData.size(); i++) {
-		if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
-			ApplyFilterMetaData = ListOfMetaData.get(i);
-			break;
-		} else {
-			continue;
-		}
-	}
-	System.out.println("Subtaly filter " + ApplyFilterMetaData);
-	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
-	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
-	ApplyFilterSubTallyBy().waitAndClick(10);
-	base.waitForElement(ActiveFiltersSubTallyBy(ApplyFilterMetaData));
-	if (ActiveFiltersSubTallyBy(ApplyFilterMetaData).isElementAvailable(3)) {
-		base.passedStep(
-				"Selected metadata is reflected in active filter" + ApplyFilterMetaData + "under sub tally by.");
-		base.waitForElement(getTally_btnSubTallyApply());
-		getTally_btnSubTallyApply().Click();
-		driver.waitForPageToBeReady();
-	} else {
-		base.failedStep("Selected metadata not reflected in Active filter under sub tally by");
-	}
-	return ApplyFilterMetaData;
-}
-/**
- * @author Jayanthi.ganesan
- */
-public void verifySubTallyResultTableAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
-
-	List<String> ListOfMetaAfterApplyingFilter = base.availableListofElements(ListOfMetaDataInSubTallyResults());
-
-	if (FilterType.equalsIgnoreCase("Include")) {
-		if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
-			base.passedStep(
-					"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the Sub-Tally By Table");
-		} else {
-			base.failedStep(
-					"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the Sub-Tally By Table");
-		}
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData) || ListOfMetaAfterApplyingFilter.isEmpty()) {
-			base.passedStep(
-					"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the Sub-Tally By Table");
-		} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
-			base.failedStep(
-					"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the Sub-Tally By Table");
-		}
-	}
-}
-/**
- * @author Jayanthi.ganesan
- * @param folderName[Names of Folder to be selected]
- * This method will select Folder as source
- */
-public void SelectMultipleSource_Folder(String[] folderName) {
-	base.stepInfo("**Selecting source as Folders**");
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-	base.waitForElement(getTally_Folders());
-	getTally_Folders().Click();
-	for(int i=0;i<folderName.length;i++) {
-	driver.scrollingToElementofAPage(getTally_FoldersCheckBox(folderName[i]));
-	getTally_FoldersCheckBox(folderName[i]).ScrollTo();
-	base.waitTime(2);
-	getTally_FoldersCheckBox(folderName[i]).waitAndClick(5);
-	base.waitTime(2);
-	}
-	driver.scrollingToElementofAPage(getTally_foldersSaveSelections());
-	getTally_foldersSaveSelections().ScrollTo();
-	base.waitForElement(getTally_foldersSaveSelections());
-	getTally_foldersSaveSelections().Click();
-}
-/**
- * @author Jayanthi.ganesan
- * @param saveSearch[Names of SaveSearch to be selected]
- * This method will select SaveSearch as source
- */
-public void SelectMultipleSource_SavedSearch(String[] saveSearch) {
-	base.stepInfo("**selecting source as search**");
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-	base.waitForElement(getTally_Searches());
-	getTally_Searches().Click();
-	for(int i=0;i<saveSearch.length;i++) {
-	base.waitTime(2);
-	getTally_SelectSearches(saveSearch[i]).ScrollTo();
-	System.out.println(saveSearch[i]);
-	base.waitForElement(getTally_SelectSearches(saveSearch[i]));
-	getTally_SelectSearches(saveSearch[i]).waitAndClick(10);
-	base.waitTime(2);
-	}
-	driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
-	getTally_SearchSaveSelections().ScrollTo();
-	base.waitForElement(getTally_SearchSaveSelections());
-	base.waitTime(2);
-	getTally_SearchSaveSelections().Click();
-	base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
-}
-/**
- * @author Jayanthi.ganesan
- * @param securityGroup[Names of security groups to be selected]
- * This method will select security group as source
- */
-public void SelectMultipleSource_SecurityGroup(String[] securityGroup) {
-	base.stepInfo("**Selecting source as security group **");
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-	base.waitForElement(getTally_SecurityGroup());
-	getTally_SecurityGroup().Click();
-	for(int i=0;i<securityGroup.length;i++) {
-		if(getTally_SecurityGroupCheckBox(securityGroup[i]).isElementAvailable(1)) {
-	driver.scrollingToElementofAPage(getTally_SecurityGroupCheckBox(securityGroup[i]));
-	base.waitTime(2);
-	getTally_SecurityGroupCheckBox(securityGroup[i]).waitAndClick(5);
-		}
-	}
-	base.waitTime(2);
-	driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
-	base.waitForElement(getTally_SGSaveSelections());
-	getTally_SGSaveSelections().ScrollTo();
-	getTally_SGSaveSelections().Click();
-}
-	
-/**
- * @author Jayanthi.ganesan
- * @param i
- * @param name[names of the source to be selected ex-'N' number of search names]
- * This method will select source as Search/Folder/Security Group/PRoject based on 'i' value passed.
- */
-public void selectmultipleSources(int i, String[] name) {
-	if (i == 0)
-		SelectMultipleSource_SavedSearch(name);
-	if (i == 1)
-		SelectMultipleSource_Folder(name);
-	if (i == 2)
-		SelectMultipleSource_SecurityGroup(name);
-	if (i == 3)
-		selectSource_Project(name[0]);
-
-}
-
-/**
- * @author Jayanthi.ganesan
- * @param folderName
- * This method will select the given  Folder name  as Tally By option
- */
-public void selectTallyByFolderName(String folderName) {
-	try {
-		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
-		base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
-		getTally_SelectaTallyFieldtoruntallyon().Click();
-		base.waitForElement(getFolderRadioButton());
-		base.waitTillElemetToBeClickable(getFolderRadioButton());
-		getFolderRadioButton().Click();
-		if(getFolderTreeExpandButton("false").isElementAvailable(2)){
-		base.waitTillElemetToBeClickable(getFolderTreeExpandButton("false"));
-		getFolderTreeExpandButton("false").Click();
-		}
-		getTallyFolderBoard().ScrollTo();
-		getTallyByFolder(folderName).ScrollTo();
-		base.waitTillElemetToBeClickable(getTallyByFolder(folderName));
-		getTallyByFolder(folderName).Click();
-		base.waitTime(2);
-		base.waitForElement(getTally_btnTallyApply());
-		driver.scrollPageToTop();
-		getTally_btnTallyApply().ScrollTo();
-		getTally_btnTallyApply().Click();
-	} catch (Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
-	}
-
-}
-/**
- * @author Jayanthi.ganesan
- * @param assgnName
- * This method will select the given  Assignment name  as Tally By option
- */
-public void selectTallyByAssgnName(String assgnName) {
-	try {
-		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
-		base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
-		getTally_SelectaTallyFieldtoruntallyon().Click();
-		base.waitForElement(getAssgnRadioButton());
-		base.waitTillElemetToBeClickable(getAssgnRadioButton());
-		getAssgnRadioButton().Click();
-		
-		base.waitForElement(getTallyByAssignment(assgnName));
-		getTallyByAssignment(assgnName).ScrollTo();
-		getTallyByAssignment(assgnName).Click();
-		base.waitTime(2);
-		base.waitForElement(getTally_btnTallyApply());
-		driver.scrollPageToTop();
-		getTally_btnTallyApply().ScrollTo();
-		getTally_btnTallyApply().Click();
-	} catch (Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
-	}
-
-}
-/**
- * @author : Jayanthi 
- *  Method for selecting Tag as subtally field from tally.
- * @param tagName : (tagName is a string value that name of tag)
- */
-public void applyingSubTallyTagField(String tagName) {
-	try {
-		base.waitForElement(getSubTallyField());
-		base.waitTillElemetToBeClickable(getSubTallyField());
-		getSubTallyField().Click();
-		base.waitTillElemetToBeClickable(getSubTagsCheckBox());
-		getSubTagsCheckBox().Click();
-		if(getsubTallyTagExpandButton("false").isElementAvailable(2) ) {
-			base.waitForElement(getsubTallyTagExpandButton("false"));
-			getsubTallyTagExpandButton("false").Click();
+		for (int i = 0; i < ListOfMetaData.size(); i++) {
+			if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
+				ApplyFilterMetaData = ListOfMetaData.get(i);
+				break;
+			} else {
+				continue;
 			}
-		getTagsBoard().ScrollTo();
-		base.waitForElement(getSubTallyByTagName(tagName));
-		base.waitTillElemetToBeClickable(getSubTallyByTagName(tagName));
-		getSubTallyByTagName(tagName).Click();
-		driver.scrollPageToTop();
-		base.waitForElement(getSubTallyApplyButton());
-		base.waitTillElemetToBeClickable(getSubTallyApplyButton());
-		getSubTallyApplyButton().Click();
+		}
+		System.out.println(ApplyFilterMetaData + " filter tally by");
+		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+		ApplyFilterTallyBy().waitAndClick(10);
+		base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
+		if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
+			base.passedStep("Selected Metadata is reflected in Active Filter under Tally by option .");
+			getTally_btnTallyApply().Click();
+			driver.waitForPageToBeReady();
+		} else {
+			base.failedStep("selected metadata is not reflected in active filters under tally  by option.");
 
-	} catch (Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occcured while applying sub tally field" + e.getMessage());
+		}
+		return ApplyFilterMetaData;
 	}
 
-}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param FilterType
+	 * @param ApplyFilterMetaData
+	 */
 
-/**
- * @author Jayanthi.ganesan
- * This method will select the Sub-Tally by option as Tags/Folders/Metadata/Assignments
- * @param tallyType[It should be tags/folder/assignment/metadata]
- * @param tallyName[Name of the tag/folder/assignment/metadata to be selected]
- * @throws InterruptedException
- */
-public void selectTallyBy(String tallyType,String tallyName) {
-switch(tallyType){    
+	public void verifyTallyChartAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
 
-case "tag":
-	selectTallyByTagName(tallyName);
-break;    
-case "folder": 
-selectTallyByFolderName(tallyName); 
-break;    
-case "assignment": 
-	selectTallyByAssgnName(tallyName);
-break;    
-case "metadata": 
-selectTallyByMetaDataField(tallyName);  
-break;    
-}
-}
-/**
- * @author Jayanthi.ganesan
- * This method will select the Tally by option as Tags/Folders/Metadata/Assignments
- * @param tallyType[It should be tags/folder/assignment/metadata]
- * @param tallyName[Name of the tag/folder/assignment/metadata to be selected]
- * @throws InterruptedException
- */
-public void selectSubTallyBy(String tallyType,String tallyName) throws InterruptedException {
-switch(tallyType){     
-case "tag":
-	applyingSubTallyTagField(tallyName);
-break;    
-case "folder": 
-	applyingSubTallyByFolderName(tallyName); 
-break;    
-case "assignment": 
-	applyingSubTallyByAssgnName(tallyName);
-break;    
-case "metadata": 
-selectMetaData_SubTally(tallyName,1);  
-break;    
-}
-}
+		List<String> ListOfMetaAfterApplyingFilter = verifyTallyChart();
 
-/**
- * @author Jayanthi.ganesan
- * @param folderName
- * This method will select the given  folder name  as Sub Tally By option
- */
-public void applyingSubTallyByFolderName(String folderName) {
+		if (FilterType.equalsIgnoreCase("Include")) {
+			if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
+				base.passedStep(
+						"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the chart");
+			} else {
+				base.failedStep(
+						"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the chart");
+			}
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)
+					|| ListOfMetaAfterApplyingFilter.isEmpty()) {
+				base.passedStep(
+						"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the chart");
+			} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
+				base.failedStep(
+						"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the chart");
+			}
+		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param ListOfMetaData
+	 * @param metaDataTally
+	 * @param FilterType
+	 * @return
+	 */
+	public String applyFilterToSubTallyBy(List<String> ListOfMetaData, String metaDataTally, String FilterType) {
+
+		driver.waitForPageToBeReady();
+		String ApplyFilterMetaData = null;
+		base.waitForElement(metaDataFilterForSubTallyBy(metaDataTally));
+		base.waitTillElemetToBeClickable(metaDataFilterForSubTallyBy(metaDataTally));
+		metaDataFilterForSubTallyBy(metaDataTally).waitAndClick(10);
+
+		if (FilterType.equalsIgnoreCase("Include")) {
+			IncludeRadioButtonForSubTallyBy().waitAndClick(10);
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			ExcludeRadioButtonForSubTallyBy().waitAndClick(10);
+		}
+		for (int i = 0; i < ListOfMetaData.size(); i++) {
+			if (ListOfMetaData.get(i) != null && ListOfMetaData.get(i) != "") {
+				ApplyFilterMetaData = ListOfMetaData.get(i);
+				break;
+			} else {
+				continue;
+			}
+		}
+		System.out.println("Subtaly filter " + ApplyFilterMetaData);
+		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+		ApplyFilterSubTallyBy().waitAndClick(10);
+		base.waitForElement(ActiveFiltersSubTallyBy(ApplyFilterMetaData));
+		if (ActiveFiltersSubTallyBy(ApplyFilterMetaData).isElementAvailable(3)) {
+			base.passedStep(
+					"Selected metadata is reflected in active filter" + ApplyFilterMetaData + "under sub tally by.");
+			base.waitForElement(getTally_btnSubTallyApply());
+			getTally_btnSubTallyApply().Click();
+			driver.waitForPageToBeReady();
+		} else {
+			base.failedStep("Selected metadata not reflected in Active filter under sub tally by");
+		}
+		return ApplyFilterMetaData;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void verifySubTallyResultTableAfterApplyingFilter(String FilterType, String ApplyFilterMetaData) {
+
+		List<String> ListOfMetaAfterApplyingFilter = base.availableListofElements(ListOfMetaDataInSubTallyResults());
+
+		if (FilterType.equalsIgnoreCase("Include")) {
+			if (ApplyFilterMetaData.equals(ListOfMetaAfterApplyingFilter.get(0))) {
+				base.passedStep(
+						"Include Filter applied worked and the value of metadata applied in the filter matches with the Result appeared on the Sub-Tally By Table");
+			} else {
+				base.failedStep(
+						"Include Filter applied is not worked and the value of metadata applied in the filter is not matches with the Result appeared on the Sub-Tally By Table");
+			}
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			if (!ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)
+					|| ListOfMetaAfterApplyingFilter.isEmpty()) {
+				base.passedStep(
+						"Exclude Filter applied worked and the value of metadata applied in the filter Exculed from the Sub-Tally By Table");
+			} else if (ListOfMetaAfterApplyingFilter.contains(ApplyFilterMetaData)) {
+				base.failedStep(
+						"Exclude Filter applied is not worked and the value of metadata applied in the filter is not Exculed from the Sub-Tally By Table");
+			}
+		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param folderName[Names of Folder to be selected] This method will select
+	 *                         Folder as source
+	 */
+	public void SelectMultipleSource_Folder(String[] folderName) {
+		base.stepInfo("**Selecting source as Folders**");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Folders());
+		getTally_Folders().Click();
+		for (int i = 0; i < folderName.length; i++) {
+			driver.scrollingToElementofAPage(getTally_FoldersCheckBox(folderName[i]));
+			getTally_FoldersCheckBox(folderName[i]).ScrollTo();
+			base.waitTime(2);
+			getTally_FoldersCheckBox(folderName[i]).waitAndClick(5);
+			base.waitTime(2);
+		}
+		driver.scrollingToElementofAPage(getTally_foldersSaveSelections());
+		getTally_foldersSaveSelections().ScrollTo();
+		base.waitForElement(getTally_foldersSaveSelections());
+		getTally_foldersSaveSelections().Click();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param saveSearch[Names of SaveSearch to be selected] This method will select
+	 *                         SaveSearch as source
+	 */
+	public void SelectMultipleSource_SavedSearch(String[] saveSearch) {
+		base.stepInfo("**selecting source as search**");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Searches());
+		getTally_Searches().Click();
+		for (int i = 0; i < saveSearch.length; i++) {
+			base.waitTime(2);
+			getTally_SelectSearches(saveSearch[i]).ScrollTo();
+			System.out.println(saveSearch[i]);
+			base.waitForElement(getTally_SelectSearches(saveSearch[i]));
+			getTally_SelectSearches(saveSearch[i]).waitAndClick(10);
+			base.waitTime(2);
+		}
+		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+		getTally_SearchSaveSelections().ScrollTo();
+		base.waitForElement(getTally_SearchSaveSelections());
+		base.waitTime(2);
+		getTally_SearchSaveSelections().Click();
+		base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param securityGroup[Names of security groups to be selected] This method
+	 *                            will select security group as source
+	 */
+	public void SelectMultipleSource_SecurityGroup(String[] securityGroup) {
+		base.stepInfo("**Selecting source as security group **");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_SecurityGroup());
+		getTally_SecurityGroup().Click();
+		for (int i = 0; i < securityGroup.length; i++) {
+			if (getTally_SecurityGroupCheckBox(securityGroup[i]).isElementAvailable(1)) {
+				driver.scrollingToElementofAPage(getTally_SecurityGroupCheckBox(securityGroup[i]));
+				base.waitTime(2);
+				getTally_SecurityGroupCheckBox(securityGroup[i]).waitAndClick(5);
+			}
+		}
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+		base.waitForElement(getTally_SGSaveSelections());
+		getTally_SGSaveSelections().ScrollTo();
+		getTally_SGSaveSelections().Click();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param i
+	 * @param name[names of the source to be selected ex-'N' number of search names]
+	 *                   This method will select source as Search/Folder/Security
+	 *                   Group/PRoject based on 'i' value passed.
+	 */
+	public void selectmultipleSources(int i, String[] name) {
+		if (i == 0)
+			SelectMultipleSource_SavedSearch(name);
+		if (i == 1)
+			SelectMultipleSource_Folder(name);
+		if (i == 2)
+			SelectMultipleSource_SecurityGroup(name);
+		if (i == 3)
+			selectSource_Project(name[0]);
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param folderName This method will select the given Folder name as Tally By
+	 *                   option
+	 */
+	public void selectTallyByFolderName(String folderName) {
+		try {
+			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
+			getTally_SelectaTallyFieldtoruntallyon().Click();
+			base.waitForElement(getFolderRadioButton());
+			base.waitTillElemetToBeClickable(getFolderRadioButton());
+			getFolderRadioButton().Click();
+			if (getFolderTreeExpandButton("false").isElementAvailable(2)) {
+				base.waitTillElemetToBeClickable(getFolderTreeExpandButton("false"));
+				getFolderTreeExpandButton("false").Click();
+			}
+			getTallyFolderBoard().ScrollTo();
+			getTallyByFolder(folderName).ScrollTo();
+			base.waitTillElemetToBeClickable(getTallyByFolder(folderName));
+			getTallyByFolder(folderName).Click();
+			base.waitTime(2);
+			base.waitForElement(getTally_btnTallyApply());
+			driver.scrollPageToTop();
+			getTally_btnTallyApply().ScrollTo();
+			getTally_btnTallyApply().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param assgnName This method will select the given Assignment name as Tally
+	 *                  By option
+	 */
+	public void selectTallyByAssgnName(String assgnName) {
+		try {
+			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
+			getTally_SelectaTallyFieldtoruntallyon().Click();
+			base.waitForElement(getAssgnRadioButton());
+			base.waitTillElemetToBeClickable(getAssgnRadioButton());
+			getAssgnRadioButton().Click();
+
+			base.waitForElement(getTallyByAssignment(assgnName));
+			getTallyByAssignment(assgnName).ScrollTo();
+			getTallyByAssignment(assgnName).Click();
+			base.waitTime(2);
+			base.waitForElement(getTally_btnTallyApply());
+			driver.scrollPageToTop();
+			getTally_btnTallyApply().ScrollTo();
+			getTally_btnTallyApply().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Jayanthi Method for selecting Tag as subtally field from tally.
+	 * @param tagName : (tagName is a string value that name of tag)
+	 */
+	public void applyingSubTallyTagField(String tagName) {
+		try {
+			base.waitForElement(getSubTallyField());
+			base.waitTillElemetToBeClickable(getSubTallyField());
+			getSubTallyField().Click();
+			base.waitTillElemetToBeClickable(getSubTagsCheckBox());
+			getSubTagsCheckBox().Click();
+			if (getsubTallyTagExpandButton("false").isElementAvailable(2)) {
+				base.waitForElement(getsubTallyTagExpandButton("false"));
+				getsubTallyTagExpandButton("false").Click();
+			}
+			getTagsBoard().ScrollTo();
+			base.waitForElement(getSubTallyByTagName(tagName));
+			base.waitTillElemetToBeClickable(getSubTallyByTagName(tagName));
+			getSubTallyByTagName(tagName).Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getSubTallyApplyButton());
+			base.waitTillElemetToBeClickable(getSubTallyApplyButton());
+			getSubTallyApplyButton().Click();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while applying sub tally field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan This method will select the Sub-Tally by option as
+	 *         Tags/Folders/Metadata/Assignments
+	 * @param tallyType[It   should be tags/folder/assignment/metadata]
+	 * @param tallyName[Name of the tag/folder/assignment/metadata to be selected]
+	 * @throws InterruptedException
+	 */
+	public void selectTallyBy(String tallyType, String tallyName) {
+		switch (tallyType) {
+
+		case "tag":
+			selectTallyByTagName(tallyName);
+			break;
+		case "folder":
+			selectTallyByFolderName(tallyName);
+			break;
+		case "assignment":
+			selectTallyByAssgnName(tallyName);
+			break;
+		case "metadata":
+			selectTallyByMetaDataField(tallyName);
+			break;
+		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan This method will select the Tally by option as
+	 *         Tags/Folders/Metadata/Assignments
+	 * @param tallyType[It   should be tags/folder/assignment/metadata]
+	 * @param tallyName[Name of the tag/folder/assignment/metadata to be selected]
+	 * @throws InterruptedException
+	 */
+	public void selectSubTallyBy(String tallyType, String tallyName) throws InterruptedException {
+		switch (tallyType) {
+		case "tag":
+			applyingSubTallyTagField(tallyName);
+			break;
+		case "folder":
+			applyingSubTallyByFolderName(tallyName);
+			break;
+		case "assignment":
+			applyingSubTallyByAssgnName(tallyName);
+			break;
+		case "metadata":
+			selectMetaData_SubTally(tallyName, 1);
+			break;
+		}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param folderName This method will select the given folder name as Sub Tally
+	 *                   By option
+	 */
+	public void applyingSubTallyByFolderName(String folderName) {
 
 		base.waitForElement(getSubTallyField());
 		base.waitTillElemetToBeClickable(getSubTallyField());
 		getSubTallyField().Click();
 		base.waitTillElemetToBeClickable(getSubFoldersCheckBox());
 		getSubFoldersCheckBox().Click();
-		if(getsubTallyFolderExpandButton("false").isElementAvailable(2)) {
-		base.waitForElement(getsubTallyFolderExpandButton("false"));
-		getsubTallyFolderExpandButton("false").Click();
+		if (getsubTallyFolderExpandButton("false").isElementAvailable(2)) {
+			base.waitForElement(getsubTallyFolderExpandButton("false"));
+			getsubTallyFolderExpandButton("false").Click();
 		}
 		getFolderBoard().ScrollTo();
 		base.waitForElement(getSubTallyByFolderName(folderName));
@@ -2116,215 +2158,282 @@ public void applyingSubTallyByFolderName(String folderName) {
 		driver.scrollPageToTop();
 		base.waitForElement(getSubTallyApplyButton());
 		getSubTallyApplyButton().Click();
-}
-
-/**
- * @author Jayanthi.ganesan
- * @param assgnName
- * This method will select the given  assignment name  as SubTally By option
- */
-public void applyingSubTallyByAssgnName(String assgnName) {
-
-	base.waitForElement(getSubTallyField());
-	base.waitTillElemetToBeClickable(getSubTallyField());
-	getSubTallyField().Click();
-	base.waitTillElemetToBeClickable(getSubAssgnCheckBox());
-	getSubAssgnCheckBox().Click();
-	if(getsubTallyAssgnExpandButton("false").isElementAvailable(2) ) {
-	base.waitForElement(getsubTallyAssgnExpandButton("false"));
-	getsubTallyAssgnExpandButton("false").Click();
 	}
-	getAssgnmentBoard().ScrollTo();
-	base.waitForElement(getSubTallyByAssgnName(assgnName));
-	getSubTallyByAssgnName(assgnName).Click();
-	driver.scrollPageToTop();
-	base.waitForElement(getSubTallyApplyButton());
-	getSubTallyApplyButton().Click();
-}
-/**
- * This method will apply filter in sub tally report.
- * @author Jayanthi.ganesan
- * @param ApplyFilterMetaData(Metadata value which  needs to be selected--Ex-Andrew)
- * @param metaDataTally(Metadata type which needs to be selected --Ex-CustodainName)
- * @param FilterType(Filter type-Include or Exclude)
- * @return
- */
-public String applyFilterToSubTallyBy(String ApplyFilterMetaData, String metaDataTally, String FilterType) {
 
-	driver.waitForPageToBeReady();
-	
-	base.waitForElement(metaDataFilterForSubTallyBy(metaDataTally));
-	base.waitTillElemetToBeClickable(metaDataFilterForSubTallyBy(metaDataTally));
-	metaDataFilterForSubTallyBy(metaDataTally).waitAndClick(10);
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param assgnName This method will select the given assignment name as
+	 *                  SubTally By option
+	 */
+	public void applyingSubTallyByAssgnName(String assgnName) {
 
-	if (FilterType.equalsIgnoreCase("Include")) {
-		IncludeRadioButtonForSubTallyBy().waitAndClick(10);
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		ExcludeRadioButtonForSubTallyBy().waitAndClick(10);
+		base.waitForElement(getSubTallyField());
+		base.waitTillElemetToBeClickable(getSubTallyField());
+		getSubTallyField().Click();
+		base.waitTillElemetToBeClickable(getSubAssgnCheckBox());
+		getSubAssgnCheckBox().Click();
+		if (getsubTallyAssgnExpandButton("false").isElementAvailable(2)) {
+			base.waitForElement(getsubTallyAssgnExpandButton("false"));
+			getsubTallyAssgnExpandButton("false").Click();
+		}
+		getAssgnmentBoard().ScrollTo();
+		base.waitForElement(getSubTallyByAssgnName(assgnName));
+		getSubTallyByAssgnName(assgnName).Click();
+		driver.scrollPageToTop();
+		base.waitForElement(getSubTallyApplyButton());
+		getSubTallyApplyButton().Click();
 	}
-	
-	System.out.println("Subtaly filter " + ApplyFilterMetaData);
-	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
-	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
-	ApplyFilterSubTallyBy().waitAndClick(10);
-	base.waitForElement(ActiveFiltersSubTallyBy(ApplyFilterMetaData));
-	if (ActiveFiltersSubTallyBy(ApplyFilterMetaData).isElementAvailable(3)) {
-		base.passedStep(
-				"Selected metadata is reflected in active filter" + ApplyFilterMetaData + "under sub tally by.");
-		base.waitForElement(getTally_btnSubTallyApply());
-		getTally_btnSubTallyApply().Click();
+
+	/**
+	 * This method will apply filter in sub tally report.
+	 * 
+	 * @author Jayanthi.ganesan
+	 * @param ApplyFilterMetaData(Metadata value which needs to be
+	 *                                     selected--Ex-Andrew)
+	 * @param metaDataTally(Metadata       type which needs to be selected
+	 *                                     --Ex-CustodainName)
+	 * @param FilterType(Filter            type-Include or Exclude)
+	 * @return
+	 */
+	public String applyFilterToSubTallyBy(String ApplyFilterMetaData, String metaDataTally, String FilterType) {
+
 		driver.waitForPageToBeReady();
-	} else {
-		base.failedStep("Selected metadata not reflected in Active filter under sub tally by");
-	}
-	return ApplyFilterMetaData;
-}
-/**
- * @author Jayanthi.Ganesan
- * This method will navigate from tally page[sub tally report] to export page 
- */
-public void subTallyToExport() {
-	base.waitForElement(getSubTally_ExportData());
-	getSubTally_ExportData().Click();
-	driver.waitForPageToBeReady();
-}
 
-/**
- * @author Jayanthi.Ganesan
- * This method will navigate from tally page[ tally report] to doc list page 
- */
-public void tallyToDocList() {
-	base.waitForElement(getTallyViewinDocListBtn());
-	getTallyViewinDocListBtn().Click();
-	driver.waitForPageToBeReady();
-}
+		base.waitForElement(metaDataFilterForSubTallyBy(metaDataTally));
+		base.waitTillElemetToBeClickable(metaDataFilterForSubTallyBy(metaDataTally));
+		metaDataFilterForSubTallyBy(metaDataTally).waitAndClick(10);
 
-
-/**
- * @author Jayanthi.ganesan
- */
-public void SelectSource_MultipleSavedSearch(String saveSearch[]) {
-	base.stepInfo("**selecting source as search--" + saveSearch + "**");
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-	base.waitForElement(getTally_Searches());
-	getTally_Searches().Click();
-	for(int i=0;i<saveSearch.length;i++) {
-	driver.scrollingToElementofAPage(getTally_SelectSearches(saveSearch[i]));
-	getTally_SelectSearches(saveSearch[i]).ScrollTo();
-	base.waitTime(2);
-	getTally_SelectSearches(saveSearch[i]).waitAndClick(5);
-	}
-	driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
-	base.waitForElement(getTally_SearchSaveSelections());
-	base.waitTime(2);
-	getTally_SearchSaveSelections().Click();
-	driver.waitForPageToBeReady();
-	verifySourceSelected();
-	base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
-}
-
-/**
- * @author Jayanthi.ganesan
- * This method will select the column in sub tally table based on the value 'k' we are passing.
- * @return selected docs count in sub tally table
- */
-public int getSelectedColumnDocCountSubTally(int k) {
-	Integer sum = 0;
-	if (getSubtallyTable().isElementAvailable(10)) {
-		getHeaderSubtally(k).ScrollTo();
-		getHeaderSubtally(k).waitAndClick(10);
-		List<WebElement> elementList = null;
-		List<Integer> docCount = new ArrayList<>();
-		elementList = getSelectedColumnDocs_Subtally().FindWebElements();
-		for (WebElement webElementNames : elementList) {
-			String elementName = webElementNames.getText();
-			docCount.add(Integer.parseInt(elementName));
+		if (FilterType.equalsIgnoreCase("Include")) {
+			IncludeRadioButtonForSubTallyBy().waitAndClick(10);
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			ExcludeRadioButtonForSubTallyBy().waitAndClick(10);
 		}
-		System.out.println(docCount);
-		if (docCount == null || docCount.size() < 1) {
-			System.out.println("List size is zero");
+
+		System.out.println("Subtaly filter " + ApplyFilterMetaData);
+		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+		ApplyFilterSubTallyBy().waitAndClick(10);
+		base.waitForElement(ActiveFiltersSubTallyBy(ApplyFilterMetaData));
+		if (ActiveFiltersSubTallyBy(ApplyFilterMetaData).isElementAvailable(3)) {
+			base.passedStep(
+					"Selected metadata is reflected in active filter" + ApplyFilterMetaData + "under sub tally by.");
+			base.waitForElement(getTally_btnSubTallyApply());
+			getTally_btnSubTallyApply().Click();
+			driver.waitForPageToBeReady();
 		} else {
-			for (int i : docCount) {
-				sum = sum + i;
-			}
+			base.failedStep("Selected metadata not reflected in Active filter under sub tally by");
 		}
-		base.stepInfo("Total Count of  docs selected in sub tally Table" + sum.toString());
-	
-	} else {
-		base.failedStep("sub tally report not displayed.");
+		return ApplyFilterMetaData;
 	}
-	return sum;
-}
-/**
- * @author Jayanthi.Ganesan
- * this method will click on sub tally action button
- */
-public void subTallyActionsWithOutTallyAllSelection() {
-	base.waitForElement(getTally_SubTallyActionButton());	
-	getTally_SubTallyActionButton().waitAndClick(25);
 
-}
-
-
-/**
- * @author Jayanthi.Ganesan
- * @param metaDataTally
- * @param FilterType
- * @param ApplyFilterMetaData
- */
-
-public void applyFilterToTallyBy( String metaDataTally, String FilterType,String ApplyFilterMetaData) {
-
-	driver.waitForPageToBeReady();
-	base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
-	base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
-	metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
-	if (FilterType.equalsIgnoreCase("Include")) {
-		IncludeRadioButtonForTallyBy().waitAndClick(10);
-	} else if (FilterType.equalsIgnoreCase("Exclude")) {
-		ExcludeRadioButtonForTallyBy().waitAndClick(10);
+	/**
+	 * @author Jayanthi.Ganesan This method will navigate from tally page[sub tally
+	 *         report] to export page
+	 */
+	public void subTallyToExport() {
+		base.waitForElement(getSubTally_ExportData());
+		getSubTally_ExportData().Click();
+		driver.waitForPageToBeReady();
 	}
-	System.out.println(ApplyFilterMetaData + " filter tally by");
-	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
-	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
-	ApplyFilterTallyBy().waitAndClick(10);
-	base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
-	if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
-		base.passedStep("Selected Metadata "+FilterType+" : "+ metaDataTally+" : "+ApplyFilterMetaData+" reflected in Active Filter under Tally by option .");
-	} else {
-		base.failedStep("selected metadata "+FilterType+" : "+ metaDataTally+" : "+ApplyFilterMetaData+"is not reflected in active filters under tally  by option.");
+
+	/**
+	 * @author Jayanthi.Ganesan This method will navigate from tally page[ tally
+	 *         report] to doc list page
+	 */
+	public void tallyToDocList() {
+		base.waitForElement(getTallyViewinDocListBtn());
+		getTallyViewinDocListBtn().Click();
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SelectSource_MultipleSavedSearch(String saveSearch[]) {
+		base.stepInfo("**selecting source as search--" + saveSearch + "**");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Searches());
+		getTally_Searches().Click();
+		for (int i = 0; i < saveSearch.length; i++) {
+			driver.scrollingToElementofAPage(getTally_SelectSearches(saveSearch[i]));
+			getTally_SelectSearches(saveSearch[i]).ScrollTo();
+			base.waitTime(2);
+			getTally_SelectSearches(saveSearch[i]).waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+		base.waitForElement(getTally_SearchSaveSelections());
+		base.waitTime(2);
+		getTally_SearchSaveSelections().Click();
+		driver.waitForPageToBeReady();
+		verifySourceSelected();
+		base.stepInfo("Selected " + saveSearch + " as source to generate tally report");
+	}
+
+	/**
+	 * @author Jayanthi.ganesan This method will select the column in sub tally
+	 *         table based on the value 'k' we are passing.
+	 * @return selected docs count in sub tally table
+	 */
+	public int getSelectedColumnDocCountSubTally(int k) {
+		Integer sum = 0;
+		if (getSubtallyTable().isElementAvailable(10)) {
+			getHeaderSubtally(k).ScrollTo();
+			getHeaderSubtally(k).waitAndClick(10);
+			List<WebElement> elementList = null;
+			List<Integer> docCount = new ArrayList<>();
+			elementList = getSelectedColumnDocs_Subtally().FindWebElements();
+			for (WebElement webElementNames : elementList) {
+				String elementName = webElementNames.getText();
+				docCount.add(Integer.parseInt(elementName));
+			}
+			System.out.println(docCount);
+			if (docCount == null || docCount.size() < 1) {
+				System.out.println("List size is zero");
+			} else {
+				for (int i : docCount) {
+					sum = sum + i;
+				}
+			}
+			base.stepInfo("Total Count of  docs selected in sub tally Table" + sum.toString());
+
+		} else {
+			base.failedStep("sub tally report not displayed.");
+		}
+		return sum;
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan this method will click on sub tally action button
+	 */
+	public void subTallyActionsWithOutTallyAllSelection() {
+		base.waitForElement(getTally_SubTallyActionButton());
+		getTally_SubTallyActionButton().waitAndClick(25);
 
 	}
-	
-}
 
-/**
- * @author Jayanthi
- * @param selectSourceList
- */
-public void verifySourceList(String userNAme) {
-	driver.waitForPageToBeReady();
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-	if (userNAme.equals(Input.rmu1userName)) {
-		String[] selectSourceList = { "Security Groups", "Searches", "Assignments", "Folders" };
-		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
-		base.printListString(listDatas);
-		base.compareArraywithDataList(selectSourceList, listDatas, true,
-				"Expected sources displayed in select source popup For RMU USer",
-				"Expected sources not displayed in select source popup For RMU USer");
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param metaDataTally
+	 * @param FilterType
+	 * @param ApplyFilterMetaData
+	 */
+
+	public void applyFilterToTallyBy(String metaDataTally, String FilterType, String ApplyFilterMetaData) {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
+		base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
+		metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
+		if (FilterType.equalsIgnoreCase("Include")) {
+			IncludeRadioButtonForTallyBy().waitAndClick(10);
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			ExcludeRadioButtonForTallyBy().waitAndClick(10);
+		}
+		System.out.println(ApplyFilterMetaData + " filter tally by");
+		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+		ApplyFilterTallyBy().waitAndClick(10);
+		base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
+		if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
+			base.passedStep("Selected Metadata " + FilterType + " : " + metaDataTally + " : " + ApplyFilterMetaData
+					+ " reflected in Active Filter under Tally by option .");
+		} else {
+			base.failedStep("selected metadata " + FilterType + " : " + metaDataTally + " : " + ApplyFilterMetaData
+					+ "is not reflected in active filters under tally  by option.");
+
+		}
+
 	}
-	if (userNAme.equals(Input.pa1userName)) {
-		String[] selectSourceList = { "Security Groups", "Searches", "Projects", "Folders" };
-		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
-		base.printListString(listDatas);
-		base.compareArraywithDataList(selectSourceList, listDatas, true,
-				"Expected sources displayed in select source popup For PA USer",
-				"Expected sources not displayed in select source popup For PA USer");
+
+	/**
+	 * @author Jayanthi
+	 * @param selectSourceList
+	 */
+	public void verifySourceList(String userNAme) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		if (userNAme.equals(Input.rmu1userName)) {
+			String[] selectSourceList = { "Security Groups", "Searches", "Assignments", "Folders" };
+			List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+			base.printListString(listDatas);
+			base.compareArraywithDataList(selectSourceList, listDatas, true,
+					"Expected sources displayed in select source popup For RMU USer",
+					"Expected sources not displayed in select source popup For RMU USer");
+		}
+		if (userNAme.equals(Input.pa1userName)) {
+			String[] selectSourceList = { "Security Groups", "Searches", "Projects", "Folders" };
+			List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+			base.printListString(listDatas);
+			base.compareArraywithDataList(selectSourceList, listDatas, true,
+					"Expected sources displayed in select source popup For PA USer",
+					"Expected sources not displayed in select source popup For PA USer");
+		}
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
 	}
-	base.waitForElement(getTally_SelectSource());
-	getTally_SelectSource().Click();
-}
+
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA
+	 * @Description: Method for selecting subtally field from tally..
+	 * @param folderName : (folderName is a string value that name of tag)
+	 */
+	public void applyingSubTallyFolderField(String folderName) {
+		try {
+			driver.scrollPageToTop();
+			base.waitForElement(getSubTallyField());
+			base.waitTillElemetToBeClickable(getSubTallyField());
+			getSubTallyField().Click();
+			base.waitTillElemetToBeClickable(getSubFoldersCheckBox());
+			getSubFoldersCheckBox().Click();
+			base.waitForElement(getFolderBoard());
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getFolderBoard().getWebElement()).perform();
+			base.waitForElement(getSubTallyByFolderName(folderName));
+			base.waitTillElemetToBeClickable(getSubTallyByFolderName(folderName));
+			getSubTallyByFolderName(folderName).Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getSubTallyApplyButton());
+			base.waitTillElemetToBeClickable(getSubTallyApplyButton());
+			getSubTallyApplyButton().Click();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while applying sub tally field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA
+	 * @Description: Method for verifying documents count by folderName subtally..
+	 * @param folderName : (folderName is a string value that name of tag)
+	 */
+	public void verifyDocumentsCountByFolderNameSubTally(String folderName) {
+		try {
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getDocumentsCount());
+			int count = Integer.parseInt(getDocumentsCount().getWebElement().getText().trim());
+			String folder = getDocumentsCount().getWebElement().getAttribute("data-y").trim();
+			if (count > 0) {
+				base.passedStep("Tag : " + folder + " with document count : " + count);
+			} else {
+				base.failedStep("Failed to get count of documents");
+			}
+
+			if (folder.equalsIgnoreCase(folderName)) {
+				base.passedStep("Tag : " + folder + " with document count : " + count + " displayed successfully");
+			} else {
+				base.failedStep(folderName + " with count is not displayed");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying documents count by folderName subtally" + e.getMessage());
+		}
+
+	}
 
 }

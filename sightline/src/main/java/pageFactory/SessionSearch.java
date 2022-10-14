@@ -1437,7 +1437,7 @@ public class SessionSearch {
 	}
 
 	public Element getContinueCountAssign() {
-		return driver.FindElementByXPath("//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 
 	public Element getSavedAppear() {
@@ -2062,6 +2062,16 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//table[@id='dt_basic']//td[contains(text(),'" + id + "')]//..//a[contains(text(),'Download File')]");
 	}
+	//added by jayanthi
+	public Element getContinueCount_ExistingAssign() {
+		return driver.FindElementByXPath("//div[@id='existingassignment']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+	}
+	public Element getActionPopupCloseBtn() {
+		return driver
+				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+
+	}
+
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -13773,6 +13783,7 @@ public class SessionSearch {
 		return docCount;
 	}
 
+
 	/**
 	 * @Author Jeevitha
 	 * @param assignmentName
@@ -13857,6 +13868,49 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 		UtilityLog.info("Bulk assign is done, assignment is : " + assignment);
 		Reporter.log("Bulk assign is done, assignment is : " + assignment, true);
 		}
+
+	
+	/**
+	 * @author Jayanthi.ganesan Modified date-18/10/21
+	 * @description To finalize the assignment after bulk assigning the documents to
+	 *              assignment
+	 */
+	public void verifyDocsFluctuation_BulkAssign(String docCount ) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount_ExistingAssign().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		String actualCount_continue = getContinueCount_ExistingAssign().getText();
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate", "Count is not same as expected.");
+		
+		base.stepInfo("Now clicking new assignment tab");
+	
+		getBulkAssign_NewAssignment().waitAndClick(20);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCountAssign().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		String passMsg=" Count didn't fluctuate and count didn't "
+				+ "even change after selecting the New assign.";
+		String actualCount_AfterNewTabClick = getContinueCountAssign().getText();
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick,
+				passMsg, "Count is not same as expected.");
+		
+
+		getContinueBulkAssign().waitAndClick(30);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgn_TotalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getAssgn_TotalCount());
+		String actualCount_final = getAssgn_TotalCount().getText();
+		base.textCompareEquals(actualCount_final, docCount, "The Count matching with count in "
+				+ "Like Document Popup.", "The Count not match with count in Like Document Popup.");
+
 	}
 
 }
