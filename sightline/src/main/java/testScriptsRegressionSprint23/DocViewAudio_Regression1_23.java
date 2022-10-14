@@ -251,7 +251,7 @@ public class DocViewAudio_Regression1_23 {
 		baseClass.stepInfo("Login as user RMU   " + sgName1);
 		baseClass.selectsecuritygroup(sgName1);
 		driver.waitForPageToBeReady();
-		this.driver.getWebDriver().get(Input.url + "Annotations/Annotations");
+		annotation.navigateToAnnotationLayerPage();
 		driver.waitForPageToBeReady();
 		annotation.addAnnotationLayer(annoName, annoName);
 		redactTag.navigateToRedactionsPageURL();
@@ -719,7 +719,9 @@ public class DocViewAudio_Regression1_23 {
 		// Check Display persistant hit - notrepetative
 		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docview.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
+		docview.getAudioPersistantHitEyeIcon().Click();
+		docview.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
 		loginPage.logout();
