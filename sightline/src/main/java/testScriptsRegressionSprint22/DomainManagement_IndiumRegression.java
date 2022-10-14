@@ -349,7 +349,7 @@ public class DomainManagement_IndiumRegression {
 
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		baseClass.stepInfo("Create new user for domain administration, validating error message");
-		userManage.validateErrorMsgForNewUser(firstName, lastName, role, emailId, " ", Input.projectName);
+		userManage.validateErrorMsgForNewUser(firstName, lastName, role, emailId, " ", Input.projectName,Input.securityGroup,true);
 		baseClass.passedStep("Error validation message displayed when creating a new domain user with sa emailid");
 		loginPage.logout();
 
