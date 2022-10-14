@@ -137,6 +137,8 @@ public class DocViewAnalytics_Regression1_23 {
 		docView.getViewDocumentNearDupe().waitAndClick(10);
 		baseClass.stepInfo("Select action as View Document in docview page");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docView.getCopyPasteIcon());
 		if (docView.getCopyPasteIcon().Enabled()) {
 			baseClass.passedStep("'Copy' menu is retained in selected document");
 			
