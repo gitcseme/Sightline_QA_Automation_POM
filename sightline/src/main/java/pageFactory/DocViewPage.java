@@ -2064,7 +2064,7 @@ public class DocViewPage {
 	}
 
 	public Element getHitPanel() {
-		return driver.FindElementByXPath("(//span[contains(@id,'HitCount')])//parent::strong//following-sibling::p");
+		return driver.FindElementByXPath("(//*[contains(@id,'divPersistentSearch')])//div");
 	}
 
 	public Element getHitPanelCount() {
@@ -2110,7 +2110,7 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getHitPanelCollection() {
-		return driver.FindElementsByXPath("//p[contains(@id,'PHitCount')]");
+		return driver.FindElementsByXPath("//*[contains(@id,'divPersistentSearch')]");
 	}
 
 	// added by iyappan

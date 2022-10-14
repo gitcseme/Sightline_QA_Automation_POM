@@ -115,7 +115,7 @@ public class MiniDocListPage {
 	}
 
 	public Element getConfigureMiniDocTab() {
-		return driver.FindElementByXPath("//span[text()='Configure Mini DocList']");
+		return driver.FindElementByXPath("//h3[text()='Configure Mini DocList']");
 	}
 
 	public Element getManualSortRadioButton() {

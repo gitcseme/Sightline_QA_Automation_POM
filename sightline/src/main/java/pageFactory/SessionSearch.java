@@ -3875,8 +3875,8 @@ public class SessionSearch {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait90);
-		getPureHitsCount().waitAndClick(20);
+		}), Input.wait30);
+		getPureHitsCount().waitAndClick(10);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		base.stepInfo("Search is done and PureHit is : " + pureHit);
 		UtilityLog.info("Search is done and PureHit is : " + pureHit);
