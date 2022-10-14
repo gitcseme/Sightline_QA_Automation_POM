@@ -687,6 +687,10 @@ public class Input {
 	public static String DatSourceClassification;
 	public static String MetaDataFileType;
 	public static String NativeFileType;
+	public static String FirstNameError;
+	public static String LastNameError;
+	public static String RoleError;
+	public static String EmailAddressError;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1706,6 +1710,10 @@ public class Input {
 		DatSourceClassification = testData.getDatSourceClassification();
 		MetaDataFileType = testData.getMetaDataFileType();
 		NativeFileType = testData.getNativeFileType();
+		FirstNameError=testData.getFirstNameError();
+		LastNameError=testData.getLastNameError();
+		RoleError=testData.getRoleError();
+		EmailAddressError=testData.getEmailAddressError();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

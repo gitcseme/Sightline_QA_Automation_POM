@@ -613,7 +613,10 @@ public class TestData {
 	public String DatSourceClassification;
 	public String MetaDataFileType;
 	public String NativeFileType;
-
+	public String FirstNameError;
+	public String LastNameError;
+	public String RoleError;
+	public String EmailAddressError;
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
 
