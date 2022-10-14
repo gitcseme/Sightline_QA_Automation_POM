@@ -98,7 +98,7 @@ public class TagsAndFolders_23 {
 	 * @author Sowndarya Testcase No:RPMXCON-53192
 	 * @Description:To verify that if Tag contains Zero document and select action 'View in Doc List', message should be displayed 'Your query returned no data'
 	 **/
-	@Test(description = "53192", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53192", enabled = true, groups = { "regression" })
 	public void verifyMessagePopupWithZeroDocTag() throws Exception {
 		
 		tagname = "Tag" + Utility.dynamicNameAppender();
