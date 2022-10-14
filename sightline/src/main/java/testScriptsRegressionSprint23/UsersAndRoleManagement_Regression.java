@@ -1059,10 +1059,10 @@ public class UsersAndRoleManagement_Regression {
 	 * @Author : Jeevitha
 	 * @Description : Verify that error message should be displayed when adding
 	 *              existing billable user as billable user under the same project
-	 *              with same/different role [RPMXCON-52401]
+	 *              with same/different role [RPMXCON-53210]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52401", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53210", enabled = true, groups = { "regression" })
 	public void verifyErrorMsgForAddingSameBillableUser() throws Exception {
 		String firstName = Input.randomText + Utility.dynamicNameAppender();
 		String lastName = Input.randomText + Utility.dynamicNameAppender();
@@ -1071,7 +1071,7 @@ public class UsersAndRoleManagement_Regression {
 		String expectedErrorMsg = "20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.";
 		userManage = new UserManagement(driver);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-52401  Users and Role Management");
+		baseClass.stepInfo("Test case Id: RPMXCON-53210  Users and Role Management");
 		baseClass.stepInfo(
 				"Verify that error message should be displayed when adding existing billable user as billable user under the same project with same/different role");
 
