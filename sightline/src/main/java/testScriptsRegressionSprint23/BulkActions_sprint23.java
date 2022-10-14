@@ -70,7 +70,7 @@ public class BulkActions_sprint23 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
 
-		String SaveSaerchName = "ABM_SavedSearch" + Utility.dynamicNameAppender();
+		String SaveSearchName = "ABM_SavedSearch" + Utility.dynamicNameAppender();
 		String folderTagNAme = "ABM" + Utility.dynamicNameAppender();
 		String folderTagNAme1 = "ABM" + Utility.dynamicNameAppender();
 		String assignmentName1 = "ABM" + Utility.dynamicNameAppender();
@@ -118,7 +118,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.getActionPopupCloseBtn().Click();
 		
 		baseClass.stepInfo("**Advance batch management report generation at assignment level**");
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, false, false);
 
 		// select doc from report table
 		count = AbmReportPage.selectDocsinTable(assignmentName1, "IN SET", true);
@@ -129,7 +129,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.getActionPopupCloseBtn().Click();
 
 		baseClass.stepInfo("**Advance batch management report generation at document level**");
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, true, false);
 		AbmReportPage.docSelection();
 
 		baseClass.stepInfo("**click action button-bulk folder- "
@@ -139,7 +139,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.getActionPopupCloseBtn().Click();
 
 		baseClass.stepInfo("**Advance batch management report generation at document level**");
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, true, false);
 		AbmReportPage.docSelection();
 
 		baseClass.stepInfo("**click action button-bulk tag- "
@@ -148,7 +148,7 @@ public class BulkActions_sprint23 {
 		sessionSearch.bulkTag_FluctuationVerify(folderTagNAme1, "1");
 		sessionSearch.getActionPopupCloseBtn().Click();
 
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, false);
+		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSearchName, assignmentName1, true, false);
 		AbmReportPage.docSelection();
 
 		baseClass.stepInfo("**click action button-bulk assign- "
