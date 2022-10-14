@@ -1130,7 +1130,8 @@ public class UsersAndRoleManagement_Regression {
 		// navigate to userpage
 		userManage.navigateToUsersPAge();
 
-		// filter Reviewer
+		// filter Review Manager
+		baseClass.stepInfo("Filter Role for Review Manager");
 		userManage.filterTheRole(Input.ReviewManager);
 		userManage.navigateToFunctionTab(Input.rmu1userName, userRole, Input.projectName, true);
 
