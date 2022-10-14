@@ -22,8 +22,10 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -213,7 +215,71 @@ public class DocExplorer_Regression23 {
 
 	}
 
-	
+	/**
+	 * @author Vijaya.Rani ModifyDate:13/10/2022 RPMXCON-54953
+	 * @throws Exception
+	 * @Description Verify that filter functionality works properly when Folder name
+	 *              contains word between on SubTally screen.
+	 */
+	@Test(description = "RPMXCON-54953", enabled = true, groups = { "regression" })
+	public void verifyfilterFunctionalityOnSubTallyScreen() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54953");
+		baseClass.stepInfo(
+				"Verify that filter functionality works properly when Folder name contains word between on SubTally screen");
+		Utility utility = new Utility(driver);
+		String random = Input.betweenTagName + Utility.dynamicNameAppender();
+		final String random1 = random;
+		TagsAndFoldersPage tagAndFol = new TagsAndFoldersPage(driver);
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Create a new Folder contains word between");
+		tagAndFol.CreateFolder(random1, Input.securityGroup);
+
+		baseClass.stepInfo("Verify created folder is added to folder structure");
+		driver.Navigate().refresh();
+		tagAndFol.verifyFolderNameIsAddedToStructure(random1);
+
+		baseClass.stepInfo("Select documets from doc explorer table and bulk folder selected documents");
+		docexp.selectDocumentsAndBulkFolder(10, random1);
+
+		SecurityGroupsPage securityGroup = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Navigate to security group");
+		securityGroup.navigateToSecurityGropusPageURL();
+
+		baseClass.stepInfo("Add Folder to security group");
+		securityGroup.addFolderToSecurityGroup(Input.securityGroup, random1);
+
+		TallyPage tally = new TallyPage(driver);
+
+		baseClass.stepInfo("Navigate to tally page");
+		tally.navigateTo_Tallypage();
+
+		baseClass.stepInfo("Select project as souce for tally");
+		tally.selectSourceByProject();
+
+		baseClass.stepInfo("Select Tally by Meta Data Field");
+		tally.selectTallyByMetaDataField(Input.metaDataName);
+
+		baseClass.stepInfo("Select documents and click on action drop down");
+		tally.tallyActions();
+
+		baseClass.stepInfo("Selecting sub tally from drop down");
+		tally.selectSubTallyFromActionDropDown();
+
+		baseClass.stepInfo("Applying subtally from sub tally field");
+		tally.applyingSubTallyFolderField(random1);
+
+		baseClass.stepInfo("Verify documents count by folder name subtally");
+		tally.verifyDocumentsCountByFolderNameSubTally(random1);
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

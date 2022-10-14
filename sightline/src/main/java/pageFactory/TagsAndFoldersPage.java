@@ -284,19 +284,19 @@ public class TagsAndFoldersPage {
 	}
 
 	// added by sowndariya
-	
+
 	public Element getPropFolderExactDuplic() {
 		return driver.FindElementByXPath("//input[@id='chkFolderExactDuplicates']//following-sibling::i");
 	}
-	
+
 	public Element getErrorMsgPopup() {
 		return driver.FindElementByXPath("//div[@id='tagErrorMsg']");
 	}
-	
+
 	public Element getBulkTagConfirmationButton() {
 		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
 	}
-	
+
 	public Element getContinueCount() {
 		return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']");
 	}
@@ -308,7 +308,7 @@ public class TagsAndFoldersPage {
 	public Element getEnterTagName() {
 		return driver.FindElementById("txtTagName");
 	}
-	
+
 	public Element getTagErrorMsg() {
 		return driver.FindElementByXPath("//div[text()='Please enter tag name']");
 	}
@@ -320,30 +320,37 @@ public class TagsAndFoldersPage {
 	public Element getHelpText() {
 		return driver.FindElementByXPath("//div[@class='popover-content contains-table']");
 	}
+
 	public Element getPropTagFamilyMember() {
 		return driver.FindElementByXPath("//input[@id='chkTagFamilyMember']//following-sibling::i");
 	}
+
 	public Element getPropTagExactDuplic() {
 		return driver.FindElementByXPath("//input[@id='chkTagExactDuplicates']//following-sibling::i");
 	}
+
 	public Element getProbTagEmailThred() {
 		return driver.FindElementByXPath("//input[@id='chkTagEmailThreads']//following-sibling::i");
 	}
+
 	public Element getProbTagEmailDupli() {
 		return driver.FindElementByXPath("//input[@id='chkTagEmailDuplicates']//following-sibling::i");
 	}
+
 	public ElementCollection getAllProbTags() {
 		return driver.FindElementsByXPath("//div[@id='modalTagAdd']//label[@class='checkbox']");
 	}
-	
+
 	public Element getAllTags() {
 		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'All Tags')]");
 	}
+
 	public Element getNewTag() {
 		return driver.FindElementByXPath("//ul[@id='Tab1']//a[contains(text(),'New Tag')]");
 	}
+
 	public Element getCreatedTag(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'" + tag +"')]");
+		return driver.FindElementByXPath("//div[@id='tagsJSTree']//a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element gettxtTagClassification() {
@@ -527,7 +534,8 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditFolderWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
+		return driver
+				.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 	public Element getEditTagPopup() {
@@ -543,7 +551,8 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditTagWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/../following-sibling::p/label");
+		return driver
+				.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 //Added by Krishna
@@ -571,14 +580,16 @@ public class TagsAndFoldersPage {
 	public Element getFolderExpandIcon() {
 		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/i");
 	}
+
 	// Added by arun
 	public Element getReleaseCancelButton() {
 		return driver.FindElementById("btnReleaseCancel");
 	}
-	
+
 	public Element getBulkRelease_ButtonUnRelease() {
-        return driver.FindElementById("btnUnrelease");
-    }
+		return driver.FindElementById("btnUnrelease");
+	}
+
 	public Element getTagPropagatePopup() {
 		return driver.FindElementByXPath("//*[contains(text(),'Propagate Tag To: ')]/..//a");
 	}
@@ -586,6 +597,7 @@ public class TagsAndFoldersPage {
 	public Element getTextInTag() {
 		return driver.FindElementByXPath("//*[contains(text(),'Propagate Tag To: ')]/..//p");
 	}
+
 	public TagsAndFoldersPage(Driver driver) {
 
 		this.driver = driver;
@@ -3027,14 +3039,15 @@ public class TagsAndFoldersPage {
 			base.failedStep("Documents Count is not Displayed");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 20/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the warning message when tag/folder release without selecting SG               
+	 * @description: this method will verify the warning message when tag/folder
+	 *               release without selecting SG
 	 */
-	public void verifyWarningMessageForTagOrFolderReleaseWithoutSG(String type,String name) {
-		
-		if(type.equalsIgnoreCase("folder")) {
+	public void verifyWarningMessageForTagOrFolderReleaseWithoutSG(String type, String name) {
+
+		if (type.equalsIgnoreCase("folder")) {
 			base.waitForElement(getFoldersTab());
 			getFoldersTab().waitAndClick(5);
 			driver.scrollingToBottomofAPage();
@@ -3052,31 +3065,30 @@ public class TagsAndFoldersPage {
 			base.CloseSuccessMsgpopup();
 			base.waitForElement(getReleaseCancelButton());
 			getReleaseCancelButton().waitAndClick(10);
+		} else if (type.equalsIgnoreCase("tag")) {
+			base.waitForElement(getTagsTab());
+			getTagsTab().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			getTagName(name).ScrollTo();
+			base.waitForElement(getTagName(name));
+			getTagName(name).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitForElement(getTagActionDropDownArrow());
+			getTagActionDropDownArrow().waitAndClick(10);
+			base.waitForElement(getBulkReleaseAction());
+			getBulkReleaseAction().waitAndClick(10);
+			getBulkRelease_ButtonRelease().waitAndClick(10);
+			base.VerifyWarningMessage("Please select Security Group");
+			base.CloseSuccessMsgpopup();
+			base.waitForElement(getReleaseCancelButton());
+			getReleaseCancelButton().waitAndClick(10);
 		}
-		else if(type.equalsIgnoreCase("tag")) {
-				base.waitForElement(getTagsTab());
-				getTagsTab().waitAndClick(5);
-				driver.scrollingToBottomofAPage();
-				getTagName(name).ScrollTo();
-				base.waitForElement(getTagName(name));
-				getTagName(name).waitAndClick(10);
-				driver.waitForPageToBeReady();
-				driver.scrollPageToTop();
-				base.waitForElement(getTagActionDropDownArrow());
-				getTagActionDropDownArrow().waitAndClick(10);
-				base.waitForElement(getBulkReleaseAction());
-				getBulkReleaseAction().waitAndClick(10);
-				getBulkRelease_ButtonRelease().waitAndClick(10);
-				base.VerifyWarningMessage("Please select Security Group");
-				base.CloseSuccessMsgpopup();
-				base.waitForElement(getReleaseCancelButton());
-				getReleaseCancelButton().waitAndClick(10);
-			}
-		}
-	
+	}
+
 	/**
 	 * @author: Arun Created Date: 20/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will perform bulk release folder action to SG               
+	 * @description: this method will perform bulk release folder action to SG
 	 */
 	public void bulkReleaseFolderToSecurityGroup(String securityGroupName) {
 
@@ -3094,7 +3106,7 @@ public class TagsAndFoldersPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 	}
-	
+
 	/**
 	 * @author Krishna
 	 * @Description - Tag is Unreleased to securitygroup - Folder
@@ -3132,7 +3144,7 @@ public class TagsAndFoldersPage {
 		base.VerifySuccessMessage("Records saved successfully");
 		base.CloseSuccessMsgpopup();
 	}
-	
+
 	/**
 	 * @author Krishna
 	 * @Description - Folder is unreleased to securitygroup - Folder
@@ -3153,6 +3165,7 @@ public class TagsAndFoldersPage {
 		base.CloseSuccessMsgpopup();
 
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param securityGroup
@@ -3183,13 +3196,14 @@ public class TagsAndFoldersPage {
 				"" + PropagatePopupText + " not displayed as expected");
 
 	}
-/**
- * @author Brundha.T
- * @param securityGroup
- * @param tagGroupName
- * @Description:creating new tag group
- */
-	public void CreatingNewTagGroup(String securityGroup,String tagGroupName) {
+
+	/**
+	 * @author Brundha.T
+	 * @param securityGroup
+	 * @param tagGroupName
+	 * @Description:creating new tag group
+	 */
+	public void CreatingNewTagGroup(String securityGroup, String tagGroupName) {
 		base.waitTillElemetToBeClickable(getSecurityGroupTag());
 		getSecurityGroupTag().selectFromDropdown().selectByVisibleText(securityGroup);
 		base.waitForElement(getAddTagTable());
@@ -3202,42 +3216,67 @@ public class TagsAndFoldersPage {
 		getNewTagGroupSaveBtn().waitAndClick(3);
 
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @description: verifying all tag group
 	 */
-public void verifyingAllTagsGroup(String TagGroup) {
-	String ActualText=getAllTagRoot().GetAttribute("data-content");
-	System.out.println(ActualText);
-	String ExpectedText="All Tags";
-	base.textCompareEquals(ActualText, ExpectedText, "All Tags group is displayed as expected","All tag group is not displayed");
-	base.ValidateElement_Presence(getTagName(TagGroup),TagGroup);
-	
-}
+	public void verifyingAllTagsGroup(String TagGroup) {
+		String ActualText = getAllTagRoot().GetAttribute("data-content");
+		System.out.println(ActualText);
+		String ExpectedText = "All Tags";
+		base.textCompareEquals(ActualText, ExpectedText, "All Tags group is displayed as expected",
+				"All tag group is not displayed");
+		base.ValidateElement_Presence(getTagName(TagGroup), TagGroup);
 
+	}
 
-/**
- * @author Sowndarya.velraj
- * @description: Create a new tag from popup window
- */
-public void createNewTagFromActionPopup(String tagname, String classificationname) {
+	/**
+	 * @author Sowndarya.velraj
+	 * @description: Create a new tag from popup window
+	 */
+	public void createNewTagFromActionPopup(String tagname, String classificationname) {
 
-	driver.waitForPageToBeReady();
-	base.waitForElement(getNewTag());
-	getNewTag().waitAndClick(10);
-	
-	base.waitForElement(getAllTags());
-	getAllTags().waitAndClick(10);
-	
-	base.waitForElement(getEnterTagName());
-	getEnterTagName().SendKeys(tagname);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNewTag());
+		getNewTag().waitAndClick(10);
 
-	base.waitForElement(getTagClassification());
-	getTagClassification().selectFromDropdown().selectByVisibleText(Input.technicalIssue);
+		base.waitForElement(getAllTags());
+		getAllTags().waitAndClick(10);
 
-	base.waitForElement(getContinueButton());
-	getContinueButton().waitAndClick(10);
+		base.waitForElement(getEnterTagName());
+		getEnterTagName().SendKeys(tagname);
 
-}
+		base.waitForElement(getTagClassification());
+		getTagClassification().selectFromDropdown().selectByVisibleText(Input.technicalIssue);
+
+		base.waitForElement(getContinueButton());
+		getContinueButton().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA
+	 * @Description: Method for verifying folder is added..
+	 * @param tagName -- (tagName is a string value that name of tag).
+	 */
+	public void verifyFolderNameIsAddedToStructure(String folderName) {
+		try {
+			try {
+				driver.waitForPageToBeReady();
+				getFoldersTab().waitAndClick(5);
+				getFolderName(folderName).isElementAvailable(10);
+				if (getFolderName(folderName).getWebElement().isDisplayed()) {
+					base.passedStep("Folder : " + folderName + " is displayed in Folders structure successfully");
+				}
+			} catch (NoSuchElementException e) {
+				base.failedStep("Folder : " + folderName + " is not displayed in Folders structure");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying Folder is added" + e.getMessage());
+
+		}
+	}
 
 }
