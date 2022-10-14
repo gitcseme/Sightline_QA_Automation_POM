@@ -372,7 +372,9 @@
    <collectionErrColorCodeOrange>#F88C00</collectionErrColorCodeOrange>
    <retreivingDSCountH>Retrieved Count</retreivingDSCountH>
    <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
-
+   <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
+   <completedWithErr>Completed with errors</completedWithErr>
+   
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
 	<orderCriteria>DocID</orderCriteria>
@@ -397,6 +399,7 @@
 	<progresBarColor>#3276B1</progresBarColor>
 	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
+	    <AutomationBackUpDomain>Automation_Regression_BackUp</AutomationBackUpDomain>
 	
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>

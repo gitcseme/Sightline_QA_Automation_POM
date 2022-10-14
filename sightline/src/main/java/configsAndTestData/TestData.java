@@ -372,7 +372,9 @@ public class TestData {
 	public String splCharEmailFolder;
 	public String retreivingDSCountH;
 	public String dateKeywordHeaderC;
-	
+	public String reteriveDSErr;
+	public String completedWithErr;
+
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
@@ -381,6 +383,7 @@ public class TestData {
 	public String progresBarColor;
 	public String BatchFileduplicateHeader;
 	public String SearchBatchFile;
+	public String AutomationBackUpDomain;
 	
 	//Added By Jeevitha [Collection] 
     public String TenantID;

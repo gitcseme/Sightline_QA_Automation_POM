@@ -535,10 +535,10 @@ public class O365Regression_23 {
 		// Failed status check
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
 
-		//get Actual Total Retrieval count
+		// get Actual Total Retrieval count
 		int index = base.getIndex(collection.getDataSetDetailsHeader(), Input.totalRetrievedCount);
-		String totalRetriveCount=collection.getDataSetDetails(collectionName, index).getText();
-		
+		String totalRetriveCount = collection.getDataSetDetails(collectionName, index).getText();
+
 		// Launch collection details
 		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Collection Id", false, "");
 		driver.waitForPageToBeReady();
@@ -594,8 +594,154 @@ public class O365Regression_23 {
 		// verify DataSet Contents
 		base.stepInfo("Verify other contents is displayed in the collection info popup as expected");
 		collection.verifyDataSetContentsCustomize(collection.getCollectionDataSetDetailsHeader(), headerList, firstName,
-				lastName, selectedApp, collectionEmailId, Input.collectionDataEmailId, selectedFolder, totalRetriveCount, "-", "",
-				false, 0);
+				lastName, selectedApp, collectionEmailId, Input.collectionDataEmailId, selectedFolder,
+				totalRetriveCount, "-", "", false, 0);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Ignore errors and continue' action when Collection is
+	 *              in 'Retrieved datasets with errors ' status . RPMXCON-61596
+	 */
+	@Test(description = "RPMXCON-61596", enabled = true, groups = { "regression" })
+	public void verifyIgnoreErrorsActionInRetrievedDSErr() throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		HashMap<String, String> colllectionData2 = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String selectedFolder2 = "Inbox";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Collection Progress", "Error Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String collection2ndEmailId = Input.collection2ndEmailId;
+		String secondFirstName = Input.collsecondFirstName;
+		String secondlastName = Input.collsecondlastName;
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
+		String[] statusListToVerifyAfterIG = { Input.virusScanStatus, Input.copyDSstatus };
+		String[] statusList = { Input.reteriveDSErr };
+		String[] statusListAfterIG = { Input.completedWithErr };
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		base.stepInfo("Test case Id: RPMXCON-61596 - O365");
+		base.stepInfo(
+				"Verify 'Ignore errors and continue' action when Collection is in 'Retrieved datasets with errors ' status ");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, "", "Button", 3, false, "");
+
+		// Navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String collectionName = base.returnKey(colllectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName,
+				expectedCollectionStatus, true, false, "");
+
+		// Edit Verifications
+		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionID, "Edit").waitAndClick(5);
+		base.waitForElement(collection.getCollectioName());
+		collection.verifyCurrentTab("Collection Information");
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionID, "Collection id is retained ",
+				"Collection id not retained");
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// Add DataSets - 2nd
+		collectionName = collectionName + "Re";
+		colllectionData2 = collection.dataSetsCreationBasedOntheGridAvailabilityT(collectionName, colllectionData2,
+				false);
+		collectionName = base.returnKey(colllectionData2, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// DataSet creation
+		collection.fillinDS(collectionName, secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
+				colllectionData2, selectedFolder2, headerList, "Button", 3, false, "Save", false, "");
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+		driver.waitForPageToBeReady();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+
+		// Verify Collection progress bar presence
+		collection.verifyCollectionPausedStatus(collectionName, colllectionDataHeadersIndex, "", false);
+
+		// Ignore Errors and Continue - No
+		base.stepInfo("Click on No");
+		collection.collectionAction(collectionName, "Ignore Errors and Continue", true, "No", true,
+				"The application will continue the workflow from where it is paused, with all those collection datasets that are completely successful as well as those datasets that are completed with errors, after ignoring those files that have errors.");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+		collection.verifyCollectionPausedStatus(collectionName, colllectionDataHeadersIndex, "", false);
+
+		// Ignore Errors and Continue - Yes
+		base.stepInfo("Click on Yes\r\n" + "Collection should get \"completed with error\"");
+		collection.collectionAction(collectionName, "Ignore Errors and Continue", true, "Yes", false, "");
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerifyAfterIG,
+				10, true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 15);
+		driver.waitForPageToBeReady();
+
+		// View Error Report
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Error Status", false, "");
+		base.stepInfo("Clicked on View Error report");
+		driver.waitForPageToBeReady();
+
+		// Show Details
+		collection.getPopUpStatusShowDetailsLink("Final Status", "Collection completed with errors.").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		int indexErrHeader = base.getIndex(collection.getErrHeaderTable(), "Status");
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(
+						collection.getPopUpStatus(collectionEmailId, "Failure", indexErrHeader)),
+				"It shows the failed collection when user click on \"Show details\" link text",
+				"It doesn't shows the failed collection", "Pass");
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(
+						collection.getPopUpStatus(collection2ndEmailId, "Success", indexErrHeader)),
+				"It shows the succeed collection when user click on \"Show details\" link text",
+				"It doesn't shows the passed collection", "Pass");
 
 		// Logout
 		login.logout();

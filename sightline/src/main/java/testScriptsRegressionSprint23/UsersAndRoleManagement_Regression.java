@@ -899,6 +899,248 @@ public class UsersAndRoleManagement_Regression {
 
 	}
 
+	/**
+	 * @Author : Jeevitha
+	 * @Description :Impersonation from DAU to RMU/Review and then switch to a
+	 *              different project [RPMXCON-53271]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53271", enabled = true, groups = { "regression" })
+	public void verifyImperFromDAToDifferentProject() throws Exception {
+		String securityGrp1 = "securityGroup" + Utility.dynamicNameAppender();
+		String securityGrp2 = "securityGroup" + Utility.dynamicNameAppender();
+
+		userManage = new UserManagement(driver);
+		security = new SecurityGroupsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		DocListPage doclist = new DocListPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53271  Users and Role Management");
+		baseClass.stepInfo("Impersonation from DAU to RMU/Review and then switch to a different project");
+
+		// login as Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// PRE-REQUISITE
+		// Create Security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGrp1);
+		security.AddSecurityGroup(securityGrp2);
+
+		// Release Docs To SG
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		doclist.Selectpagelength("500");
+		doclist.sortColumn(true, Input.documentKey, true);
+		doclist.selectAllDocumentsInCurrentPageOnly();
+		doclist.docListToBulkRelease(securityGrp2);
+
+		doclist.sortColumn(true, Input.documentKey, false);
+		doclist.selectAllDocumentsInCurrentPageOnly();
+		doclist.bulkRelease(securityGrp1);
+
+		// logout
+		loginPage.logout();
+
+		// login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in as DA");
+
+		// impersonate From DA to RMU & verify Current User
+		baseClass.performImpersonation(Input.ReviewManager, Input.AutomationBackUpDomain, Input.largeVolDataProject,
+				Input.securityGroup);
+
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser = baseClass.getLoginedUserRole().getText();
+		baseClass.textCompareEquals(currentUser, Input.ReviewManager, "Current Role is RMU",
+				"Current role is not as expected");
+
+		// verify DOC count in Project1 For RMU
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.verifyNoOfDocsInProject();
+
+		// select project2
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Selected Project2");
+
+		// verify Doc count in Project2 & purehit count for RMU
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.navigateToSessionSearchPageURL();
+		int projectDocCountP2 = sessionSearch.verifyNoOfDocsInProject();
+		int purehitP2 = sessionSearch.basicContentSearch(Input.searchStringStar);
+		baseClass.digitCompareEquals(projectDocCountP2, purehitP2, "Expected DocCount is Available",
+				"Expected DocCount is NOt Available");
+
+		// impersonate From RMU to DA
+		baseClass.performImpersonation(Input.DomainAdministrator, Input.AutomationBackUpDomain, "", "");
+
+		// impersonate From DA to REV
+		baseClass.performImpersonation(Input.Reviewer, Input.AutomationBackUpDomain, Input.largeVolDataProject,
+				Input.securityGroup);
+
+		// verify Current user role
+		driver.waitForPageToBeReady();
+		loginPage.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getLoginedUserRole());
+		String currentUser2 = baseClass.getLoginedUserRole().getText();
+		baseClass.textCompareEquals(currentUser2, Input.Reviewer, "Current Role is RMU",
+				"Current role is not as expected");
+
+		// verify DOC count in Project1 For REV
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.stepInfo("No of Doc's in Project1");
+		sessionSearch.verifyNoOfDocsInProject();
+
+		// select project2
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Selected Project2");
+
+		// verify Doc count in Project2 & purehit count For REV
+		sessionSearch.navigateToSessionSearchPageURL();
+		int projectDocCountRevP2 = sessionSearch.verifyNoOfDocsInProject();
+		int purehitRevP2 = sessionSearch.basicContentSearch(Input.searchStringStar);
+		baseClass.digitCompareEquals(projectDocCountRevP2, purehitRevP2, "Expected DocCount is Available",
+				"Expected DocCount is NOt Available");
+
+		// logout
+		loginPage.logout();
+
+		// login as Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Delete SG
+		security.deleteSecurityGroups(securityGrp1);
+		security.deleteSecurityGroups(securityGrp2);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description : To verify user rights from Edit Profile > Functionality for
+	 *              Reviewer [RPMXCON-52474]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52474", dataProvider = "sapa", enabled = true, groups = { "regression" })
+	public void verifyFunctionalityForReviewer(String username, String password, String userRole) throws Exception {
+		String[] checkedCb = { "Searching", "Download Native", "Highlighting", "Redactions", "Reviewer Remarks",
+				"Analytics Panels" };
+		String[] disabledCB = { "Manage", "Manage Domain Projects", "Ingestions", "Productions", "Datasets",
+				"All Reports" };
+		String[] uncheckedCB = { "Concept Explorer", "Communications Explorer" };
+		userManage = new UserManagement(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52474  Users and Role Management");
+		baseClass.stepInfo("To verify user rights from Edit Profile > Functionality for Reviewer");
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as :" + userRole);
+
+		// navigate to userpage
+		userManage.navigateToUsersPAge();
+
+		// filter Reviewer
+		userManage.filterTheRole(Input.Reviewer);
+		userManage.navigateToFunctionTab(Input.rev1userName, userRole, Input.projectName, true);
+
+		// verify checkbox of functionality popup
+		userManage.verifyCheckBoxStatus(checkedCb, disabledCB, uncheckedCB, true, true, true);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description : Verify that error message should be displayed when adding
+	 *              existing billable user as billable user under the same project
+	 *              with same/different role [RPMXCON-53210]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53210", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgForAddingSameBillableUser() throws Exception {
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String expectedErrorMsg = "20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.";
+		userManage = new UserManagement(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53210  Users and Role Management");
+		baseClass.stepInfo(
+				"Verify that error message should be displayed when adding existing billable user as billable user under the same project with same/different role");
+
+		// login As User
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in as DA");
+		baseClass.selectdomain(Input.domainName);
+
+		// Create USER
+		userManage.navigateToUsersPAge();
+		userManage.openAddNewUserPopUp();
+		userManage.getProjectBillableCheckBox().waitAndClick(10);
+		userManage.createNewUser(firstName, lastName, role, emailId, " ", Input.projectName);
+		baseClass.passedStep("Created Billable User");
+
+		// Add Same User with billable & same project
+		driver.Navigate().refresh();
+		userManage.openAddNewUserPopUp();
+		userManage.getProjectBillableCheckBox().waitAndClick(10);
+		userManage.addNewUserWithoutVerifySuccesMsg(firstName, lastName, role, emailId, " ", Input.projectName);
+		baseClass.VerifyErrorMessage(expectedErrorMsg);
+
+		// Delete Created User
+		driver.Navigate().refresh();
+		userManage.passingUserName(emailId);
+		userManage.applyFilter();
+		userManage.verifyDeleteUserPopup(true, Input.projectName);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description : To verify user rights from Edit Profile > Functionality for
+	 *              RMU [RPMXCON-52473]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52473", dataProvider = "sapa", enabled = true, groups = { "regression" })
+	public void verifyFunctionalityForRMU(String username, String password, String userRole) throws Exception {
+		String[] checkedCb = { "Searching", "Download Native", "Highlighting", "Redactions", "Reviewer Remarks",
+				"Analytics Panels", "Manage", "Productions", "All Reports", "Concept Explorer",
+				"Communications Explorer", "Categorize" };
+		String[] disabledCB = { "Manage Domain Projects", "Ingestions" };
+		String[] uncheckedCB = { "Datasets" };
+
+		userManage = new UserManagement(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52473  Users and Role Management");
+		baseClass.stepInfo("To verify user rights from Edit Profile > Functionality for RMU");
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as :" + userRole);
+
+		// navigate to userpage
+		userManage.navigateToUsersPAge();
+
+		// filter Review Manager
+		baseClass.stepInfo("Filter Role for Review Manager");
+		userManage.filterTheRole(Input.ReviewManager);
+		userManage.navigateToFunctionTab(Input.rmu1userName, userRole, Input.projectName, true);
+
+		// verify checkbox of functionality popup
+		userManage.verifyCheckBoxStatus(checkedCb, disabledCB, uncheckedCB, true, true, true);
+
+		// logout
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

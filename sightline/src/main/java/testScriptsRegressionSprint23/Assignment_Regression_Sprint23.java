@@ -6,7 +6,9 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -436,12 +438,14 @@ public class Assignment_Regression_Sprint23 {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 11/10/2022 TestCase Id:RPMXCON-54755 
-	 * Description :De-associate keywords - Assignment should not display the de-associated keyword 
+	 * Author :Arunkumar date: 11/10/2022 TestCase Id:RPMXCON-54755 Description
+	 * :De-associate keywords - Assignment should not display the de-associated
+	 * keyword
+	 * 
 	 * @throws InterruptedException
-	 * @throws AWTException 
+	 * @throws AWTException
 	 */
 	@Test(description = "RPMXCON-54755", enabled = true, groups = { "regression" })
 	public void verifyDeassociatedKeywordInAssignment() throws InterruptedException, AWTException {
@@ -449,29 +453,29 @@ public class Assignment_Regression_Sprint23 {
 		baseClass.stepInfo("Test case Id: RPMXCON-54755");
 		baseClass.stepInfo("verify reviewers name display in distribute document section");
 		String assignmentName = "assign" + Utility.dynamicNameAppender();
-		String[] associatedKeyword ={"Akey1","Akey2"};
-		String[] deassociatedKeyword ={"Dkey1","DKey2"};
-		
+		String[] associatedKeyword = { "Akey1", "Akey2" };
+		String[] deassociatedKeyword = { "Dkey1", "DKey2" };
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
-		//Create a keyword and assignment
+		// Create a keyword and assignment
 		KeywordPage keyPage = new KeywordPage(driver);
-		for(int i=0;i<associatedKeyword.length;i++) {
+		for (int i = 0; i < associatedKeyword.length; i++) {
 			keyPage.addKeyword(associatedKeyword[i], "Red");
 		}
-		for(int j=0;j<deassociatedKeyword.length;j++) {
+		for (int j = 0; j < deassociatedKeyword.length; j++) {
 			keyPage.addKeyword(deassociatedKeyword[j], "Blue");
 		}
 		assignment.createAssignment(assignmentName, Input.codingFormName);
 		loginPage.logout();
 		baseClass.stepInfo("Login as PA and de-associate few keywords");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		//deleting few keywords
-		for(int i=0;i<deassociatedKeyword.length;i++) {
+		// deleting few keywords
+		for (int i = 0; i < deassociatedKeyword.length; i++) {
 			keyPage.deleteKeywordByName(deassociatedKeyword[i]);
 		}
 		loginPage.logout();
-		//login as RMU and verify existing assignment
+		// login as RMU and verify existing assignment
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Select existing assignment ");
@@ -480,6 +484,173 @@ public class Assignment_Regression_Sprint23 {
 		assignment.verifyKeywordsAvailabilityInAssignment(associatedKeyword);
 		baseClass.stepInfo("verify de-associated keyword availability");
 		assignment.verifyDeAssociatedKeywordsAvailabilityInAssignment(deassociatedKeyword);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 12/10/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description Verify that the full Assignment name appears in a mouse over
+	 *              tool tip, and the same is true of Assignment Groups.
+	 *              RPMXCON-54341
+	 */
+
+	@Test(description = "RPMXCON-54341", enabled = true, groups = { "regression" })
+	public void verifyFullAssignmnetNameAppearsInMouseOverToolTipAndSameForAssignmentGroups()
+			throws InterruptedException {
+
+		String assignmentGroup = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo(
+				"Verify that the full Assignment name appears in a mouse over tool tip, and the same is true of Assignment Groups.");
+		baseClass.stepInfo("Test case Id: RPMXCON-54341");
+
+		// creating assignment group
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGroup, "Yes");
+		baseClass.passedStep("assignment Group : '" + assignmentGroup + "' Created");
+
+		// creating assignment under newly created Assignment group
+		baseClass.stepInfo("creating assignment under newly created Assignment group");
+		assignment.selectAssignmentGroup(assignmentGroup);
+		assignment.createAssignmentFromAssgnGroup(assignmentName, Input.codeFormName);
+
+		// performing BulkAssign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// verify that when select action as Assign documents and mouse over to the
+		// assignment group Full Assignment group name appears in a mouse over tool tip
+		sessionSearch.verifyToolTipTextInAssignUnassignPopUp(assignmentGroup, "Assign");
+		baseClass.passedStep(
+				" verified that when select action as Assign documents and mouse over to the assignment group Full Assignment group name appears in a mouse over tool tip.");
+		// verify that when select action as Unassign documents and mouse over to the
+		// assignment group Full Assignment group name appears in a mouse over tool tip
+		sessionSearch.verifyToolTipTextInAssignUnassignPopUp(assignmentGroup, "Unassign");
+		baseClass.passedStep(
+				"verified that when select action as Unassign documents and mouse over to the assignment group Full Assignment group name appears in a mouse over tool tip.");
+		// verify that when select action as Assign documents and mouse over to the
+		// assignment Full Assignment name appears in a mouse over tool tip
+		sessionSearch.verifyToolTipTextInAssignUnassignPopUp(assignmentName, "Assign");
+		baseClass.passedStep(
+				"verified that when select action as Assign documents and mouse over to the assignment Full Assignment name appears in a mouse over tool tip.");
+		// verify that when select action as Unassign documents and mouse over to the
+		// assignment Full Assignment name appears in a mouse over tool tip
+		sessionSearch.verifyToolTipTextInAssignUnassignPopUp(assignmentName, "Unassign");
+		baseClass.passedStep(
+				"verified that when select action as Unassign documents and mouse over to the assignment Full Assignment name appears in a mouse over tool tip.");
+
+		// delete assignments and assignment Groups
+		assignment.navigateToAssignmentsPage();
+		assignment.deleteAssignmentFromSingleAssgnGrp(assignmentGroup, assignmentName);
+		assignment.DeleteAssgnGroup(assignmentGroup);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that after a Unassign from Existing Assignments is
+	 *              complete, the system actually removes those selected DocIDs from
+	 *              all selected Assignment(s).RPMXCON-67512
+	 */
+
+	@Test(description = "RPMXCON-54332", enabled = true, groups = { "regression" })
+	public void verifyAfterUnassignExistingAssignmentsSystemRemovesSelectedDocIDsFromAllSelectedAssignments()
+			throws InterruptedException {
+
+		String assignmentGroup01 = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentGroup02 = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentName01 = "assignment" + Utility.dynamicNameAppender();
+		String assignmentName02 = "assignment" + Utility.dynamicNameAppender();
+		List<String> listOfAssignments = new ArrayList<String>(Arrays.asList(assignmentName01, assignmentName02));
+		Map<String, Integer> pairOfAssignmentsAndExpectedTotalDocCountInAssign01 = new HashMap<String, Integer>();
+		Map<String, Integer> pairOfAssignmentsAndExpectedTotalDocCountInAssign02 = new HashMap<String, Integer>();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-67512");
+		baseClass.stepInfo(
+				"Verify that after a Unassign from Existing Assignments is complete, the system actually removes those selected DocIDs from all selected Assignment(s).");
+
+		// creating assignment Group
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGroup01, "Yes");
+		baseClass.passedStep("assignment Group : '" + assignmentGroup01 + "' Created.");
+
+		// creating assignment under newly created Assignment group
+		baseClass.stepInfo("creating assignment under newly created Assignment group");
+		assignment.selectAssignmentGroup(assignmentGroup01);
+		assignment.createAssignmentFromAssgnGroup(assignmentName01, Input.codeFormName);
+
+		// creating assignment Group
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGroup02, "Yes");
+		baseClass.passedStep("assignment Group : '" + assignmentGroup01 + "' Created.");
+
+		// creating assignment under newly created Assignment group
+		baseClass.stepInfo("creating assignment under newly created Assignment group");
+		assignment.selectAssignmentGroup(assignmentGroup02);
+		assignment.createAssignmentFromAssgnGroup(assignmentName02, Input.codeFormName);
+
+		// perform bulk Assign
+		int pureHitCount = sessionSearch.basicContentSearch(Input.searchString1);
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign01.put(assignmentName01, pureHitCount);
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign02.put(assignmentName02, pureHitCount);
+		sessionSearch.bulkAssignForMultipleExistingAssignments(listOfAssignments);
+
+		// verifying whether the documents are assigned to assignments by checking the
+		// TotalDoc column in assignment page
+		assignment.selectAssignmentGroup(assignmentGroup01);
+		assignment.validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+				pairOfAssignmentsAndExpectedTotalDocCountInAssign01);
+		assignment.selectAssignmentGroup(assignmentGroup02);
+		assignment.validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+				pairOfAssignmentsAndExpectedTotalDocCountInAssign02);
+
+		// verifying Continue button should not be active until at least one Assignment
+		// is selected from the Assignments/Group tree.
+		sessionSearch.bulkAssign();
+		sessionSearch.getBulkUntagbutton().waitAndClick(10);
+		softAssert.assertEquals(sessionSearch.getContinueButton().Enabled(), false);
+		baseClass.passedStep(
+				"verified that Continue button should not be active until at least one Assignment is selected from the Assignments/Group tree.");
+
+		// click Show Document Count Toggle
+		sessionSearch.getShowDocumentCountToggle().waitAndClick(5);
+		baseClass.stepInfo("Show Document Counts toggle is ON.");
+		// perform Bulk Unassign
+		sessionSearch.UnAssignMultipleExistingAssignments(listOfAssignments);
+
+		// verifying whether the documents are Unassigned From the assignments by
+		// checking the TotalDoc column in assignment page
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign01.replace(assignmentName01, 0);
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign02.replace(assignmentName02, 0);
+		assignment.selectAssignmentGroup(assignmentGroup01);
+		assignment.validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+				pairOfAssignmentsAndExpectedTotalDocCountInAssign01);
+		assignment.selectAssignmentGroup(assignmentGroup02);
+		assignment.validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+				pairOfAssignmentsAndExpectedTotalDocCountInAssign02);
+		baseClass.passedStep(
+				"Verified that After performing Bulk Unassign system remove those selected documents from all selected assignments");
+
+		// delete assignments and assignment Groups
+		assignment.deleteAssignmentFromSingleAssgnGrp(assignmentGroup01, assignmentName01);
+		assignment.DeleteAssgnGroup(assignmentGroup01);
+		assignment.deleteAssignmentFromSingleAssgnGrp(assignmentGroup02, assignmentName02);
+		assignment.DeleteAssgnGroup(assignmentGroup02);
+
+		// logout
 		loginPage.logout();
 	}
 
