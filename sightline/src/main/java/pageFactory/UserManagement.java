@@ -1026,7 +1026,12 @@ public class UserManagement {
 	public Element getAttorneyProfileExistUser() {
 		return driver.FindElementByXPath("//div[@id='divAttorneyProfileEdit']");
 	}
-
+	public Element getLoginUserShouldNotCreate() {
+		return driver.FindElementByXPath("//p[text()='20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.']");
+	}  
+	public Element getLoginUserShouldNotCreateRmu() {
+		return driver.FindElementByXPath("//p[text()='20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.']");
+	} 
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1719,7 +1724,7 @@ public class UserManagement {
 
 		}
 		getSave().waitAndClick(10);
-		bc.VerifySuccessMessage("User profile was successfully created");
+//		bc.VerifySuccessMessage("User profile was successfully created");
 
 	}
 
@@ -2879,7 +2884,7 @@ public class UserManagement {
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
-		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
 		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
 				|| role.equalsIgnoreCase("Reviewer")) {
 			driver.WaitUntil((new Callable<Boolean>() {
