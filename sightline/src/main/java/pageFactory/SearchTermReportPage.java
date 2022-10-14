@@ -232,6 +232,19 @@ public class SearchTermReportPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getSearchExpand() {
+		return driver.FindElementByXPath("//div[@id='divDASearches']//a[@data-toggle='collapse']");
+	}
+
+	public Element getPopupNoBtn() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+
+	public Element getPopupMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+
 	public Element getsearchOrTab_CB(String name) {
 		return driver.FindElementByXPath("//a[text()='" + name + "']");
 	}
@@ -819,27 +832,29 @@ public class SearchTermReportPage {
 		bc.checkNotificationCount(initialCount, 1);
 		int afterCount = bc.initialBgCount();
 
-		if (downloadAndVerifyExport && initialCount < afterCount) {
-			bc.notificationSelection("", false);
-			bc.waitUntilFileDownload();
+		if (initialCount < afterCount) {
+			bc.passedStep("Recieved Notoiication");
+			if (downloadAndVerifyExport) {
+				bc.notificationSelection("", false);
+				bc.waitUntilFileDownload();
 
-			File ab = new File(Input.fileDownloadLocation);
-			String testPath = ab.toString() + "\\";
+				File ab = new File(Input.fileDownloadLocation);
+				String testPath = ab.toString() + "\\";
 
-			ReportsPage report = new ReportsPage(driver);
-			File a = report.getLatestFilefromDir(testPath);
-			System.out.println(a.getName());
-			bc.stepInfo(a.getName());
+				ReportsPage report = new ReportsPage(driver);
+				File a = report.getLatestFilefromDir(testPath);
+				System.out.println(a.getName());
+				bc.stepInfo(a.getName());
 
-			String fileName = a.getName();
+				String fileName = a.getName();
 
-			String fileFormat = FilenameUtils.getExtension(fileName);
-			String expectedFormat = "xlsx";
+				String fileFormat = FilenameUtils.getExtension(fileName);
+				String expectedFormat = "xlsx";
 
-			String passMsg = "Downloaded File : " + fileName + "    And Format IS  : " + fileFormat;
-			String failMsg = "Downloaded File Format is Not As Expected";
-			bc.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
-
+				String passMsg = "Downloaded File : " + fileName + "    And Format IS  : " + fileFormat;
+				String failMsg = "Downloaded File Format is Not As Expected";
+				bc.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
+			}
 		}
 
 	}
@@ -886,6 +901,81 @@ public class SearchTermReportPage {
 			bc.stepInfo("Report generated sucessfull");
 		} else {
 			bc.failedStep("Report not generated sucessfull");
+		}
+	}
+
+	/*
+	 * @Author Jeevitha
+	 * @Description : overwrite Custom Search term report
+	 */
+	public void CustomStrOverwriteOrUpdate(String customSearchReportName, boolean runReport, String updateReportName,
+			boolean Overwrite, boolean yesBtn) {
+		String pageHeader = bc.getPageTitle().getText();
+		if (pageHeader.contains(customSearchReportName)) {
+			bc.passedStep(customSearchReportName + " : Custom Report Opened");
+
+			if (runReport) {
+				bc.waitForElement(getApplyBtn());
+				getApplyBtn().waitAndClick(10);
+				bc.waitForElement(getSTReport());
+			}
+
+			if (Overwrite) {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getSTR_SaveBtn());
+				getSTR_SaveBtn().waitAndClick(5);
+
+				bc.waitForElement(getSTR_SaveInputField());
+				getSTR_SaveInputField().SendKeys(updateReportName);
+
+				bc.waitTillElemetToBeClickable(getSTR_SaveReportBtn());
+				getSTR_SaveReportBtn().Click();
+
+				if (getPopupMsg().isElementAvailable(5)) {
+					bc.stepInfo("Save Custom Report Popup Displayed");
+
+					String actualMsg = getPopupMsg().getText();
+					String expectedMsg = "A custom report with the same name already exists. Do you want to overwrite the existing report?";
+					bc.textCompareEquals(actualMsg, expectedMsg, expectedMsg, "Popup msg is not as expected");
+
+					if (yesBtn) {
+						getFinalizeOkButton().waitAndClick(10);
+						bc.stepInfo("Clicked Yes Buttom");
+						bc.VerifySuccessMessage("Report updated successfully");
+						bc.passedStep("Custom Report Overwritten Successfully");
+					} else {
+						getPopupNoBtn().waitAndClick(10);
+						bc.stepInfo("Clicked No Buttom");
+						bc.ValidateElement_Absence(bc.getSuccessMsgHeader(), "Success Message is Not Displayed");
+						bc.passedStep("Custom Report is not Overwritten");
+					}
+
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : verifies expand and collapsed status
+	 * @param Click
+	 * @param shudExpand
+	 */
+	public void verifySearchExpand(boolean Click, boolean shudExpand) {
+		bc.waitForElement(getsearchOrTab_CB(Input.mySavedSearch));
+		if (Click) {
+			getSearchExpand().waitAndClick(10);
+		}
+
+		driver.waitForPageToBeReady();
+		boolean status=getsearchOrTab_CB(Input.mySavedSearch).isDisplayed();
+		if (status && shudExpand) {
+			bc.passedStep("Search Tree Structure is Expanded");
+		} else if (!status && !shudExpand) {
+			bc.passedStep("Search Tree Structure is Collapsed");
+		} else {
+			bc.failedStep("Tree Structure status is not As expected");
 		}
 	}
 
