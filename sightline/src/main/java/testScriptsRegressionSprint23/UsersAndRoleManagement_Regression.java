@@ -1121,7 +1121,7 @@ public class UsersAndRoleManagement_Regression {
 		userManage = new UserManagement(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52473  Users and Role Management");
-		baseClass.stepInfo("To verify user rights from Edit Profile > Functionality for Reviewer");
+		baseClass.stepInfo("To verify user rights from Edit Profile > Functionality for RMU");
 
 		// login as User
 		loginPage.loginToSightLine(username, password);
