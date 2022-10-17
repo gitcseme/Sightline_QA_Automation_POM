@@ -119,7 +119,7 @@ public class TagsAndFolders_Regression {
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
-		dataset.selectDataSetWithName("1B1D_Media_ID_10_COMBINED_MD5Hash_20221012071544693");
+		dataset.selectDataSetWithName("Media_ID_10_COMBINED_MD5Hash");
 
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
@@ -159,7 +159,7 @@ public class TagsAndFolders_Regression {
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
-		dataset.selectDataSetWithName("1B1D_Media_ID_10_COMBINED_MD5Hash_20221012071544693");
+		dataset.selectDataSetWithName("Media_ID_10_COMBINED_MD5Hash");
 
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
