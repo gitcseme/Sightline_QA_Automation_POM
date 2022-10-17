@@ -1,4 +1,4 @@
-package signtline.codingForms;
+package sightline.codingForms;
 
 import java.awt.AWTException;
 import java.io.IOException;

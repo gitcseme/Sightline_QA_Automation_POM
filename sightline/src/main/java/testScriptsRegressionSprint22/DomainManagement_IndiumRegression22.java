@@ -36,7 +36,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DomainManagement_IndiumRegression {
+public class DomainManagement_IndiumRegression22 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
