@@ -1213,6 +1213,7 @@ public class UsersAndRoleManagement_Regression {
 		userManage.addNewUserWithoutVerifySuccesMsg(firstName, lastName, role, emailId, " ", Input.projectName);
 		baseClass.VerifyErrorMessage(expectedErrorMsg);
 
+		
 		// Delete Created User
 		driver.Navigate().refresh();
 		userManage.passingUserName(emailId);
