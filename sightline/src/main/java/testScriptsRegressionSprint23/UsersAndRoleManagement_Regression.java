@@ -459,6 +459,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// Login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.selectdomain(Input.domainName);
 		
 		// creating user
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
