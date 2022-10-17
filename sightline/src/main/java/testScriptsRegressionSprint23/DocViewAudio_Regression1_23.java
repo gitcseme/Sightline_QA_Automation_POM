@@ -657,7 +657,6 @@ public class DocViewAudio_Regression1_23 {
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 
 		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();

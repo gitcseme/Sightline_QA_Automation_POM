@@ -92,8 +92,8 @@ public class DocView_Regression1_23 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String fieldText = "stamp" + Utility.dynamicNameAppender();
-		String docid = "ID00000152";
-		String docid1 = Input.DocIdCopyPaste1;
+		String docid = "T2541D";
+        String docid1= "T2507D";
 		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -110,6 +110,11 @@ public class DocView_Regression1_23 {
 		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
 		docexp.getDocExp_SelectAllDocs().Click();
 		driver.waitForPageToBeReady();
+		if (doclist.getYesAllPageDocs().isDisplayed()) {
+            doclist.getYesAllPageDocs().waitAndClick(5);
+            doclist.getPopUpOkBtn().waitAndClick(5);           
+        }
+        baseClass.waitTime(5);
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
