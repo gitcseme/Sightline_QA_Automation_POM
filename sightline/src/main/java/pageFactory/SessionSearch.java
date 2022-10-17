@@ -9124,6 +9124,7 @@ public class SessionSearch {
 			getAdvanceSearch_DraftQuerySave_Button().waitAndClick(10);
 			System.out.println("Advance Save");
 		} else if (GetAdvSaveBtn_New().isDisplayed()) {
+			base.waitForElement(GetAdvSaveBtn_New());
 			GetAdvSaveBtn_New().waitAndClick(10);
 			System.out.println("Advance Save1");
 		}
