@@ -228,6 +228,21 @@ public class ProjectPage {
 	 public Element getIncrementalAnalyticsCheckbox() {
 		 return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']//following-sibling::i");
 	 }
+	 
+	 //added by sowndarya
+		
+		public Element getEnableAnalyticsToogle() {
+			return driver.FindElementByXPath("//input[@id='chkIsEnabledAnalytics']/../i");
+		}
+		public Element getComponentLabel() {
+			return driver.FindElementByXPath("//div[@class='col-md-12 analyticsBox']//label//strong[text()='Components']");
+		}
+		public Element getProcessEngineTypeICE() {
+			return driver.FindElementByXPath("//section[@id='divProcessingEngineConfig' and @style='display: block;']//input[@id='rdbICE']");
+		}
+		public Element getProcessEngineTypeNUIX() {
+			return driver.FindElementByXPath("//section[@id='divProcessingEngineConfig' and @style='display: block;']//input[@id='rdbNUIX']");
+		}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
