@@ -73,11 +73,12 @@ public class DocExplorer_Regression24 {
 				"Verify that “EmailReceipients” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] cjkChar = {"a","e","c","o","g","i","s","u","z","y","r","p"};
+		String[] cjkChar = {"让","我","打","电","话","给","你","延","长","石","油","集","团"};
 		
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		baseClass.selectproject(Input.projectName01);
 		
 		//verify EmailRecipient names in CJK Chars
 		docexp.verifyEmailRecipientValuesInDocExp(cjkChar);
@@ -98,12 +99,13 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo(
 				"Verify that “EmailSubject/Filename” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
-		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] cjkChar = {"a","e","c","o","g","i","u","z","y","r","p","?"};
+		DocExplorerPage docexp = new DocExplorerPage(driver); 
+		String[] cjkChar = {"让","我","打","电","话","给","你","延","长","石","油","集","团"};
 		
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		baseClass.selectproject(Input.projectName01);
 		
 		//verify EmailRecipient names in CJK Chars
 		docexp.verifyEmailSubjectFilenameValuesInDocExp(cjkChar);
