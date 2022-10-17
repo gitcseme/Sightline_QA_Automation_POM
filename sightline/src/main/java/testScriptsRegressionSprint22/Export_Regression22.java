@@ -26,7 +26,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Export_Regression {
+public class Export_Regression22 {
 
 	Driver driver;
 	LoginPage loginPage;
