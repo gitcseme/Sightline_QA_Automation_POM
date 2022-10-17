@@ -579,7 +579,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.bulkAssign();
@@ -594,7 +594,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// logout
 		loginPage.logout();
@@ -661,7 +661,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
@@ -721,7 +721,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
 		docview.getAudioPersistantHitEyeIcon().Click();
-		docview.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docview.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// logout
 		loginPage.logout();
