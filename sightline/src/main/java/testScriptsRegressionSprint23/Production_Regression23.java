@@ -345,6 +345,7 @@ public class Production_Regression23 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.validatingGetTextElement(page.getBlankPageRemovalMsg(), "Success");
+		page.deleteFiles();
 		page.extractFile();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();

@@ -22743,7 +22743,7 @@ public class ProductionPage {
 		String home = System.getProperty("user.home");
 
 		for (int i = firstFile; i < lastFile; i++) {
-
+			driver.waitForPageToBeReady();
 			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
 			ITesseract instance = new Tesseract1();
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata");
