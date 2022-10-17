@@ -431,7 +431,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getNewTagGroupPopup() {
-		return driver.FindElementByXPath("//span[text()='Add Tag Group']");
+		return driver.FindElementByXPath("//h3[text()='Add Tag Group']");
 	}
 
 	public Element getEditTagGroupPopup() {
