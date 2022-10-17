@@ -686,8 +686,8 @@ public class UsersAndRoleManagement_Regression {
 
 		doclist.sortColumn(true, Input.documentKey, false);
 		doclist.selectAllDocumentsInCurrentPageOnly();
-		doclist.bulkRelease(securityGrp2);
-
+		doclist.docListToBulkRelease(securityGrp1);
+		
 		// logout
 		loginPage.logout();
 
@@ -1056,8 +1056,8 @@ public class UsersAndRoleManagement_Regression {
 
 		doclist.sortColumn(true, Input.documentKey, false);
 		doclist.selectAllDocumentsInCurrentPageOnly();
-		doclist.bulkRelease(securityGrp1);
-
+		doclist.docListToBulkRelease(securityGrp1);
+		
 		// logout
 		loginPage.logout();
 
