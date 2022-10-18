@@ -562,6 +562,23 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//*[@id=\"divBulkAction\"]/div[1]/div/fieldset/div[1]/div/label[2]/i");
 	}
 
+	public Element getEmailRecipient(String emailRecipient) {
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailRecipient + "']");
+	}
+
+	public Element getEmailRecipientValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//tr//div");
+
+	}
+	public Element getDocExp_EmailSubFileSearchName(String emailSubFile) {
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailSubFile + "']");
+	}
+
+	public Element getEmailSubFileValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div");
+
+	}
+	
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3497,6 +3514,42 @@ public class DocExplorerPage {
 		
 		
 
+	}
+	
+	/**
+	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the Email Recipient field values in doc exp list
+	 *               view
+	 */
+	public void verifyEmailRecipientValuesInDocExp(String[] emailRecipientValues) {
+
+		for (int j = 0; j < emailRecipientValues.length; j++) {
+			
+			bc.waitForElement(getEmailRecipient("EMAILRECIPIENTS"));
+			getEmailRecipient("EMAILRECIPIENTS").SendKeys(emailRecipientValues[j]);
+			getEmailRecipient("EMAILRECIPIENTS").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getEmailRecipientValues(),emailRecipientValues[j]);
+			driver.Navigate().refresh();
+		}
+	}
+	
+	/**
+	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the EmailSubject/Filename field values in doc exp list
+	 *               view
+	 */
+	public void verifyEmailSubjectFilenameValuesInDocExp(String[] emailFileValues) {
+
+		for (int j = 0; j < emailFileValues.length; j++) {
+			
+			bc.waitForElement(getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME"));
+			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeys(emailFileValues[j]);
+			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getEmailSubFileValues(),emailFileValues[j]);
+			driver.Navigate().refresh();
+		}
 	}
 }
 

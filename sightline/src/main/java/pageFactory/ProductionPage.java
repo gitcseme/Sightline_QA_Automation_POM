@@ -3552,6 +3552,7 @@ public class ProductionPage {
 	public Element getBlankPageRemovalMsg() {
 		return driver.FindElementByXPath("//a[contains(@data-content,'Blnk Page')]/../following-sibling::td");
 	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -15918,10 +15919,12 @@ public class ProductionPage {
 					return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
 				}
 			}), Input.wait120);
-			String actualText = getStatusSuccessTxt().getText();
-			System.out.println(actualText);
+			if (getStatusSuccessTxt().isElementAvailable(5)) {
 
-			softAssertion.assertTrue(actualText.contains(expectedText));
+				String actualText = getStatusSuccessTxt().getText();
+				System.out.println(actualText);
+				softAssertion.assertTrue(actualText.contains(expectedText));
+			}
 			base.passedStep("Documents Generated successfully");
 
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -21401,7 +21404,9 @@ public class ProductionPage {
 	public void verifyTiffFile(int purehit, String prefixID, String suffixID, String subBates, String searchString) {
 		driver.waitForPageToBeReady();
 		for (int i = 2; i < purehit; i++) {
-			getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+			if (getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(5)) {
+				getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+			}
 		}
 
 		driver.waitForPageToBeReady();
@@ -22730,6 +22735,7 @@ public class ProductionPage {
 		getAddSelected().waitAndClick(10);
 
 	}
+
 	
 	/**
 	 * @author NA
@@ -22753,6 +22759,7 @@ public class ProductionPage {
 		}
 		return PDfont;
 	}
+
 	/**
 	 * @author Brundha
 	 * @param firstFile
@@ -22770,7 +22777,7 @@ public class ProductionPage {
 		String home = System.getProperty("user.home");
 
 		for (int i = firstFile; i < lastFile; i++) {
-
+			driver.waitForPageToBeReady();
 			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
 			ITesseract instance = new Tesseract1();
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata");

@@ -16,6 +16,7 @@ import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
 import pageFactory.ConceptExplorerPage;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
@@ -64,8 +65,7 @@ public class ReportsRegression_23 {
 
 	@DataProvider(name = "paRmuUsers")
 	public Object[][] paRmuUsers() {
-		Object[][] users = {
-				{ Input.pa1userName, Input.pa1password, "PA" },
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
 				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
 		return users;
 	}
@@ -220,7 +220,7 @@ public class ReportsRegression_23 {
 		// Login
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
-		//save search in All 3 TAbs
+		// save search in All 3 TAbs
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(saveSearch1);
 
@@ -248,6 +248,130 @@ public class ReportsRegression_23 {
 
 		// logout
 		loginPage.logout();
+	}
+
+	/**
+	 * @author Jeevitha.R
+	 * @Description : To verify that user can Export all searches on Search Term
+	 *              Report [RPMXCON-56486]
+	 */
+	@Test(description = "RPMXCON-56486", dataProvider = "paRmuUsers", groups = { "regression" }, enabled = true)
+	public void verifyUserCanExportSearchOnSTR(String userName, String password, String role)
+			throws InterruptedException, ParseException {
+		String saveSearch1 = "Search1" + Utility.dynamicNameAppender();
+		String saveSearch2 = "Search2" + Utility.dynamicNameAppender();
+		String[] searchList = { saveSearch1, saveSearch2 };
+		String columnName = "Hits".toUpperCase();
+		String[] metaDataFields = { "CustodianName", Input.documentKey };
+
+		CustomDocumentDataReport cddReport = new CustomDocumentDataReport(driver);
+
+		baseClass.stepInfo("Test case Id:RPMXCON-56486 Reports/Search Term");
+		baseClass.stepInfo("To verify that user can Export all searches on Search Term Report");
+
+		// Login
+		loginPage.loginToSightLine(userName, password);
+
+		// Configure query & save search
+		sessionSearch.basicContentSearch(Input.searchString6);
+		sessionSearch.saveSearch(saveSearch1);
+		sessionSearch.saveSearch(saveSearch2);
+
+		// select Search and generate STR report
+		reports.navigateToReportsPage("");
+		searchterm.GenerateReportWithAllSearches(searchList);
+
+		// Select Column
+		searchterm.selectColumnFromSTRPage(columnName);
+
+		// click on Export Data from action & navigate to export page
+		searchterm.STR_ToExportData();
+		driver.waitForPageToBeReady();
+
+		// Select Metadata
+		cddReport.selectMetaDataFields(metaDataFields);
+
+		// run report,verify Success Msg & click on recieved Notification
+		cddReport.runReportandVerifyFileDownloaded();
+
+		// delete search
+		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
+		savedSearch.deleteSearch(saveSearch2, Input.mySavedSearch, Input.yesButton);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Jeevitha.R
+	 * @Description : To verify custom Search Term report should be overwrite or
+	 *              update. [RPMXCON-56357]
+	 */
+	@Test(description = "RPMXCON-56357", groups = { "regression" }, enabled = true)
+	public void verifyCustomReportOverwriteOrUpdate() throws InterruptedException, ParseException {
+		String saveSearch1 = "Search1" + Utility.dynamicNameAppender();
+		String[] searchList = { saveSearch1 };
+
+		baseClass.stepInfo("Test case Id:RPMXCON-56357 Reports/Search Term");
+		baseClass.stepInfo("To verify custom Search Term report should be overwrite or update.");
+
+		// Login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		sessionSearch.basicContentSearch(Input.searchString6);
+		sessionSearch.saveSearch(saveSearch1);
+
+		// select Search and generate STR report
+		reports.navigateToReportsPage("");
+		searchterm.GenerateReportWithAllSearches(searchList);
+
+		// save custom Report ,verify and click saved custom report
+		String reportName1 = searchterm.ValidateSearchTermreportSaveandImpact(saveSearch1, true);
+		driver.waitForPageToBeReady();
+
+		// generate second custom report
+		searchterm.GenerateReportWithAllSearches(searchList);
+		String reportName2 = searchterm.ValidateSearchTermreportSaveandImpact(saveSearch1, true);
+
+		// Overwrite the Custom Report , verify popup & click yes button
+		reports.getCustomReport(reportName2).waitAndClick(10);
+		searchterm.CustomStrOverwriteOrUpdate(reportName2, true, reportName1, true, true);
+
+		// Overwrite the Custom Report , verify popup & click No button
+		searchterm.CustomStrOverwriteOrUpdate(reportName2, false, reportName1, true, false);
+
+		// delete search
+		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Jeevitha.R
+	 * @Description : To verify that Users can expand/collapsed the Searches
+	 *              Criteria. [RPMXCON-56364]
+	 */
+	@Test(description = "RPMXCON-56364", groups = { "regression" }, enabled = true)
+	public void verifyExpandAndCollapsed() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-56364 Reports/Search Term");
+		baseClass.stepInfo("To verify that Users can expand/collapsed the Searches Criteria.");
+
+		// Login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// select Search and generate STR report
+		reports.navigateToReportsPage("");
+		baseClass.waitForElement(searchterm.getSearchTermReport());
+		searchterm.getSearchTermReport().waitAndClick(10);
+
+		searchterm.verifySearchExpand(true, false);
+		searchterm.verifySearchExpand(true, true);
+
+		// logout
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

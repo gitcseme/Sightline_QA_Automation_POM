@@ -352,15 +352,15 @@ public class DocViewAudio_Regression1_23 {
 
 		// Audio search
 		baseClass.selectproject();
-		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString3, Input.language);
 		sessionSearch.saveSearchInNewNode(searchName1, newNode);
 
 		// Added another Audio search and add
 		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
 		sessionSearch.saveSearchInNewNode(searchName2, newNode);
-		searchTerm.add(Input.audioSearchString2.toLowerCase());
 		searchTerm.add(Input.audioSearchString3.toLowerCase());
+		searchTerm.add(Input.audioSearchString2.toLowerCase());
 
 		// View in DocView via SS
 		saveSearch.navigateToSavedSearchPage();
@@ -370,7 +370,7 @@ public class DocViewAudio_Regression1_23 {
 		baseClass.stepInfo("Navigated to DocList page vis SavedSearch page");
 
 		// view in docview
-		doclist.selectingAllDocFromAllPagesAndAllChildren();
+		doclist.selectingAllDocuments();
 		baseClass.stepInfo("View selected docs in Doc View");
 		doclist.viewSelectedDocumentsInDocView();
 
@@ -420,15 +420,15 @@ public class DocViewAudio_Regression1_23 {
 
 		// Audio search
 		baseClass.selectproject();
-		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString3, Input.language);
 		sessionSearch.addPureHit();
 
 		// Added another Audio search and add
 		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
 		sessionSearch.addPureHit();
-		searchTerm.add(Input.audioSearchString2.toLowerCase());
 		searchTerm.add(Input.audioSearchString3.toLowerCase());
+		searchTerm.add(Input.audioSearchString2.toLowerCase());
 
 		// Go to doclist page
 		baseClass.stepInfo("Navigating to DocList page via Session Search");
@@ -436,7 +436,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 
 		// View in docview
-		doclist.selectingAllDocFromAllPagesAndAllChildren();
+		doclist.selectingAllDocuments();
 		baseClass.stepInfo("View selected docs in Doc View");
 		doclist.viewSelectedDocumentsInDocView();
 
@@ -579,7 +579,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.bulkAssign();
@@ -594,7 +594,7 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// logout
 		loginPage.logout();
@@ -607,6 +607,7 @@ public class DocViewAudio_Regression1_23 {
 	 *              on persistent hits panel on completing the document same as
 	 *              last.
 	 */
+	
 	@Test(description = "RPMXCON-51808", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsHitSaveSeachesWithCompleteSameAsLast() throws Exception {
 
@@ -657,11 +658,10 @@ public class DocViewAudio_Regression1_23 {
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 
 		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
@@ -721,11 +721,12 @@ public class DocViewAudio_Regression1_23 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
 		docview.getAudioPersistantHitEyeIcon().Click();
-		docview.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docview.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// logout
 		loginPage.logout();
 	}
+	
 
 	@DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {
@@ -739,7 +740,6 @@ public class DocViewAudio_Regression1_23 {
                 { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
         return users;
     }
-
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

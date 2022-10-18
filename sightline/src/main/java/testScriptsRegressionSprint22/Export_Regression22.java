@@ -26,7 +26,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Export_Regression {
+public class Export_Regression22 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -215,74 +215,78 @@ public class Export_Regression {
 	}
 	
 	
-	/**
-	 * @author  sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-47978
-	 * @Description: Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.
-	 **/
-	@Test(description = "RPMXCON-47978", enabled = true, groups = { "regression" })
-	public void verifyBatesNumBrandinExpData() throws Exception {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Test case Id: RPMXCON-47978");
-		base.stepInfo("To Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.");
+	 /**
+     * @author  sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-47978
+     * @Description: Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.
+     **/
+    @Test(description = "RPMXCON-47978", enabled = true, groups = { "regression" })
+    public void verifyBatesNumBrandinExpData() throws Exception {
+        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        base.stepInfo("Test case Id: RPMXCON-47978");
+        base.stepInfo("To Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.");
 
-		String tagName = "Tag" + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-	    String exportName = "Export" + Utility.dynamicNameAppender();
-	    String subBates = page.getRandomNumber(2);
-	    productionname = "p" + Utility.dynamicNameAppender();
-	    String beginningBates = page.getRandomNumber(2);
-	    String prodBatesRange = "B1-10";
-	    
-	    tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
-		int purehit = sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkTagExisting(tagName);	
+       String tagName = "Tag" + Utility.dynamicNameAppender();
+        String prefixID = Input.randomText + Utility.dynamicNameAppender();
+        String suffixID = Input.randomText + Utility.dynamicNameAppender();
+        String prefixID1= Input.randomText + Utility.dynamicNameAppender();
+        String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
+        String exportName = "Export" + Utility.dynamicNameAppender();
+        String subBates = page.getRandomNumber(2);
+        productionname = "p" + Utility.dynamicNameAppender();
+        String beginningBates = page.getRandomNumber(2);
+        String prodBatesRange = "B1-10";
+        
+        tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+        int purehit = sessionSearch.basicContentSearch(Input.testData1);
+        sessionSearch.bulkTagExisting(tagName);    
 
-		base = new BaseClass(driver);
-		page.navigateToProductionPage();
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
+       base = new BaseClass(driver);
+        page.navigateToProductionPage();
+        page.selectingDefaultSecurityGroup();
+        page.addANewProduction(productionname);
+        page.fillingDATSection();
         page.addDATFieldAtSecondRow(Input.bates, "ProductionBatesRange", prodBatesRange);
-		page.tiffBrandingSelection(tagName);
-		page.tiffPrivilegeDocumentSelection(tagName);
-		page.slipSheetToggleEnable();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionWithTag(tagName);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPageAndPassingText(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-        page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		
-		page.navigateToProductionPage();
-		page.selectingDefaultSecurityGroup();
-		page.selectDefaultExport();
-		page.addANewExportwithProduction(exportName, productionname);
-		page.afterCompletingNavigatingToNextPage();	
-		page.afterCompletingNavigatingToNextPage();
-		page.fillingDocumentSelectionWithTag(tagName);
-		page.afterCompletingNavigatingToNextPage();
-		base.waitForElement(page.getOkButton());
-		page.getOkButton().waitAndClick(3);
-		page.fillingExportLocationPage(exportName);
-		page.afterCompletingNavigatingToNextPage();
-		page.afterCompletingNavigatingToNextPage();
-		page.fillingExportGeneratePageWithContinueGenerationPopup();
-		String batesRange = prefixID + beginningBates + suffixID ;
-		String actualCopedText = page.getCopiedTextFromClipBoard();
-		String parentTab = page.openNewTab(actualCopedText);	
-		page.goToImageFiles();
-		page.verifyTiffFile(purehit, prefixID, suffixID, subBates, batesRange);
-		
-		// delete tags and folders
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		tagsAndFolderPage.DeleteTagWithClassification(tagName, Input.securityGroup);
-		loginPage.logout();
-	}
+        page.tiffBrandingSelection(tagName);
+        page.tiffPrivilegeDocumentSelection(tagName);
+        page.slipSheetToggleEnable();
+        page.navigateToNextSection();
+        page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+        page.navigateToNextSection();
+        page.fillingDocumentSelectionWithTag(tagName);
+        page.navigateToNextSection();
+        page.fillingPrivGuardPage();
+        page.fillingProductionLocationPage(productionname);
+        page.navigateToNextSection();
+        page.fillingSummaryAndPreview();
+        page.fillingGeneratePageWithContinueGenerationPopup();
+        
+        page.navigateToProductionPage();
+        page.selectingDefaultSecurityGroup();
+        page.selectDefaultExport();
+        page.addANewExportwithProduction(exportName,productionname);
+        page.getNextButton().waitAndClick(10);
+        page.navigateToNextSection();
+        page.navigateToNextSection();
+        page.fillingDocumentSelectionWithTag(tagName);
+        page.navigateToNextSection();
+        base.waitForElement(page.getOkButton());
+        page.getOkButton().waitAndClick(3);
+        page.fillingExportLocationPage(exportName);
+        page.navigateToNextSection();
+        page.fillingSummaryAndPreview();
+        page.fillingExportGeneratePageWithContinueGenerationPopup();
+        
+        String batesRange = prefixID + beginningBates + suffixID ;
+        String actualCopedText = page.getCopiedTextFromClipBoard();
+        String parentTab = page.openNewTab(actualCopedText);   
+        page.goToImageFiles();
+        page.verifyTiffFile(purehit, prefixID, suffixID, subBates, batesRange);
+        
+        // delete tags and folders
+        tagsAndFolderPage.navigateToTagsAndFolderPage();
+        tagsAndFolderPage.DeleteTagWithClassification(tagName, Input.securityGroup);
+        loginPage.logout();
+    }
 	
 	/**
 	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-63853

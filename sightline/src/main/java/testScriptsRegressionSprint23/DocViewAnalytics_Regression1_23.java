@@ -128,8 +128,8 @@ public class DocViewAnalytics_Regression1_23 {
 		//verify Doc Selected in analytical panel view doc
 		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
 		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
-		baseClass.waitForElement(docView.getDocView_Analytics_NearDupe_Doc(2));
-		docView.getDocView_Analytics_NearDupe_Doc(2).waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupe_Doc(1));
+		docView.getDocView_Analytics_NearDupe_Doc(1).waitAndClick(5);
 		baseClass.stepInfo("Document is selected in analytical panel");
 		baseClass.waitForElement(docView.getDocView_ChildWindow_ActionButton());
 		docView.getDocView_ChildWindow_ActionButton().waitAndClick(15);

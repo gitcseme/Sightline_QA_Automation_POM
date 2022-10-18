@@ -9124,6 +9124,7 @@ public class SessionSearch {
 			getAdvanceSearch_DraftQuerySave_Button().waitAndClick(10);
 			System.out.println("Advance Save");
 		} else if (GetAdvSaveBtn_New().isDisplayed()) {
+			base.waitForElement(GetAdvSaveBtn_New());
 			GetAdvSaveBtn_New().waitAndClick(10);
 			System.out.println("Advance Save1");
 		}
@@ -13809,6 +13810,7 @@ public class SessionSearch {
 		base.waitForElement(assignmentElement);
 		base.waitTillElemetToBeClickable(assignmentElement);
 		action.moveToElement(assignmentElement.getWebElement()).clickAndHold().build().perform();
+		base.waitForElement(getToolTipTextInAssignUnassignPopUp());
 		String assignmentNameInToolTip = getToolTipTextInAssignUnassignPopUp().getText();
 		base.textCompareEquals(assignmentName, assignmentNameInToolTip,
 				"Expected AssignmentName : '" + assignmentName + "' match with the  AssignmentName In Tool Tip : '"

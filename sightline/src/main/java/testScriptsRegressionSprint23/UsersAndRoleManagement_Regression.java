@@ -459,6 +459,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// Login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.selectdomain(Input.domainName);
 		
 		// creating user
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
@@ -686,8 +687,8 @@ public class UsersAndRoleManagement_Regression {
 
 		doclist.sortColumn(true, Input.documentKey, false);
 		doclist.selectAllDocumentsInCurrentPageOnly();
-		doclist.bulkRelease(securityGrp2);
-
+		doclist.docListToBulkRelease(securityGrp1);
+		
 		// logout
 		loginPage.logout();
 
@@ -1056,8 +1057,8 @@ public class UsersAndRoleManagement_Regression {
 
 		doclist.sortColumn(true, Input.documentKey, false);
 		doclist.selectAllDocumentsInCurrentPageOnly();
-		doclist.bulkRelease(securityGrp1);
-
+		doclist.docListToBulkRelease(securityGrp1);
+		
 		// logout
 		loginPage.logout();
 

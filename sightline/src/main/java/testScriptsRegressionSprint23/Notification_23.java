@@ -3,6 +3,7 @@ package testScriptsRegressionSprint23;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -38,6 +39,7 @@ public class Notification_23 {
 	TagsAndFoldersPage tagsAndFolderPage;
 	Utility utility;
 	SoftAssert softAssertion;
+	BatchPrintPage batch;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -308,9 +310,33 @@ public class Notification_23 {
 		
 		String idValue=batchPrint.getBatchId(1).getText();
 		System.out.println("Id : "+ idValue);
-		sessionSearch.getTxtDownloadFile(idValue).isElementAvailable(200);
-		driver.Navigate().refresh();
 		
+		for (int i = 0; i < 30; i++) {
+//			try {
+//				driver.WaitUntil((new Callable<Boolean>() {
+//					public Boolean call() {
+//						return sessionSearch.getTxtDownloadFile(idValue).Visible() && sessionSearch.getTxtDownloadFile(idValue).Enabled();
+//					}
+//				}), Input.wait120);
+//				if( sessionSearch.getTxtDownloadFile(idValue).Visible() && sessionSearch.getTxtDownloadFile(idValue).Enabled())
+//				{
+//					break;
+//				}
+//			} catch (Exception e) {
+//				driver.Navigate().refresh();
+//				System.out.println("Refresh");
+//				UtilityLog.info("Refresh");
+//			}
+			if (sessionSearch.getTxtDownloadFile(idValue).isDisplayed()) {
+                base.stepInfo("DOWNLOAD link is Available");
+                break;
+		}
+			else {
+                driver.Navigate().refresh();
+                System.out.println("Refresh");
+                driver.waitForPageToBeReady();
+            }
+		}
 		driver.waitForPageToBeReady();
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
 		System.out.println("status is : "+status);

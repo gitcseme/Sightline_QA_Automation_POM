@@ -114,8 +114,8 @@ public class TagsAndFolders_23 {
 		String selectedTag = tagsAndFolderPage.getCreatedTag(tagname).getText();
 		System.out.println(selectedTag +"is selected.");
 		
-		base.waitForElement(tagsAndFolderPage.getCreatedTag("Tag4023903"));
-		tagsAndFolderPage.getCreatedTag("Tag4023903").waitAndClick(10);
+		base.waitForElement(tagsAndFolderPage.getCreatedTag(tagname));
+		tagsAndFolderPage.getCreatedTag(tagname).waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
@@ -320,6 +320,7 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -327,12 +328,13 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getSaveTag());
 		tagsAndFolderPage.getSaveTag().waitAndClick(10);
 	    asserts.assertTrue(tagsAndFolderPage.getTagErrorMsg().isElementAvailable(10));
-	    asserts.assertAll();
+//	    asserts.assertAll();
 	    
 	    driver.Navigate().refresh();
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -353,6 +355,7 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -381,6 +384,7 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -395,6 +399,7 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -419,6 +424,7 @@ public class TagsAndFolders_23 {
 	    base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -432,6 +438,7 @@ public class TagsAndFolders_23 {
 		base.waitForElement(tagsAndFolderPage.getAddTagTable());
 		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
 		driver.scrollPageToTop();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
 		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
 		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
 		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
@@ -474,6 +481,7 @@ public class TagsAndFolders_23 {
 		base.passedStep("verified - validation/move/delete a New Tag");
 		loginPage.logout();
 	}
+
 	
 	/**
 	 * @author NA Testcase No:RPMXCON-53440

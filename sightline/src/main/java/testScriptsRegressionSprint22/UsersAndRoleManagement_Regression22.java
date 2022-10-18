@@ -39,7 +39,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class UsersAndRoleManagement_Regression {
+public class UsersAndRoleManagement_Regression22 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

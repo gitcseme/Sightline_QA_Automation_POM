@@ -2828,4 +2828,54 @@ public class CollectionPage {
 		}
 	}
 
+	/**
+	 * @author Raghuram.A
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @param actionRole
+	 * @param actionUserName
+	 * @param actionPassword
+	 * @return
+	 * @throws Exception
+	 * @description : Pre-requesties for Collection draft creation
+	 */
+	public HashMap<String, String> verifyUserAbleToSaveCollectionAsDraft(String username, String password, String role,
+			String actionRole, String actionUserName, String actionPassword, String selectedFolder,
+			String additional1Status, Boolean additional2) throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		DataSets dataSets = new DataSets(driver);
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String dataName;
+		HashMap<String, String> colllectionDataToReturn = new HashMap<>();
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, additional1Status, "Button", 3, true, "");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+		colllectionDataToReturn.put(collectionID, dataName);
+
+		// Verify Collection presence
+		verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus, true, false,
+				"");
+		base.passedStep("Pre-requestied created colleciton Name :" + dataName);
+
+		// return dataNmae created / used
+		return colllectionDataToReturn;
+	}
 }

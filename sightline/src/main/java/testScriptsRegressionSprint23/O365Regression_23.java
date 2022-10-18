@@ -747,6 +747,136 @@ public class O365Regression_23 {
 		login.logout();
 	}
 
+	/**
+	 * @author 
+	 * @throws Exception
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Cancel Collection' action when Collection is in 'Virus
+	 *              Scanning Completed' status RPMXCON-61092
+	 */
+	@Test(description = "RPMXCON-61092", enabled = true, groups = { "regression" })
+	public void verifyCancelCollectionInVirusScanCompletedStats() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", "Collection Progress",
+				"Action" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Cancel in progress", "Draft" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		base.stepInfo("Test case Id: RPMXCON-61092 - O365");
+		base.stepInfo("Verify 'Cancel Collection' action when Collection is in 'Virus Scanning Completed' status");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence with expected Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, true, "", "");
+
+		// Cancel collection
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Action", false, "");
+		collection.confirmationAction("Yes", Input.cancelCollectionNotification, false);
+
+		// Cancel back to draft status
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+
+		// Progress status check
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+		String collProgressStats = collection
+				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
+				.getText();
+		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
+				"Progress Bar value remains the same");
+
+		// Delete Collection
+		base.stepInfo("Initiating Delete Collection");
+		collection.deleteUsingCollectionName(collectionName, true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that user can execute (run) the collection process on a
+	 *              draft collection RPMXCON-60617
+	 */
+	@Test(description = "RPMXCON-60617", enabled = true, groups = { "regression" })
+	public void verifyEexecuteDraft() throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60617 - O365");
+		base.stepInfo("Verify that user can execute (run) the collection process on a draft collection");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("Test case Id: RPMXCON-61633 - O365");
+		base.stepInfo("Verify sorting from Manage Collection page");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Execute / Start collection Verifications
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Start Collection").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Collection extraction process started successfully.");
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, true, "", "");
+		base.passedStep("Collection execution started Successfully");
+
+		// Logout
+		login.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

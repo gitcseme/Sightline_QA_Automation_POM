@@ -1,4 +1,4 @@
-package signtline.codingForms;
+package sightline.codingForms;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
