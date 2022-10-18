@@ -105,6 +105,7 @@ public class Notification_Regression24 {
 		base.stepInfo("RPMXCON - 53776");
 		base.stepInfo("To verify as an RMU user login, Start/End Date Sorting works correctly "
 				+ "on My Background Tasks");
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Logged in As : " + Input.rmu1userName);
 		
