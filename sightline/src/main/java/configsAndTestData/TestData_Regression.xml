@@ -322,7 +322,7 @@
 	<searchString7>term</searchString7>
 	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
-	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
+	<fileDataErrMsg>Error in file saving or upload format. Please confirm your file is a valid format and try again.</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
 	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>

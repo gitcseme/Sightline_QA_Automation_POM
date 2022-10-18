@@ -71,10 +71,13 @@ public class SavedSearch {
 	public Element getSavedSearch_ApplyFilterButton() {
 		return driver.FindElementById("btnApplyFilter");
 	}
-
+	public Element getSavedSearch_name(String serachName) {
+		return driver.FindElementById("//td[contains(text(),'" + serachName +"')]");
+	}
+	
 	public Element getSelectWithName(String serachName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
+		return driver.FindElementByXPath("//td[contains(text(),'" + serachName +"')]/parent::tr/td[1]");
+		//return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
 	}
 
 	public Element getSavedSearch_ScheduleButton() {
@@ -2060,8 +2063,8 @@ public class SavedSearch {
 		getSavedSearchNewGroupButton().waitAndClick(2);
 
 		driver.waitForPageToBeReady();
-		base.VerifySuccessMessage("Save search tree node successfully created.");
-		base.CloseSuccessMsgpopup();
+		//base.VerifySuccessMessage("Save search tree node successfully created.");
+		//base.CloseSuccessMsgpopup();
 		driver.Navigate().refresh();
 
 		// Get created node text
@@ -7710,7 +7713,6 @@ public class SavedSearch {
 			getSavedSearch_ApplyFilterButton().waitAndClick(2);
 			list = getListFromSavedSearchTable(column);
 		}
-
 		if (list.size() > 0) {
 			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
 		} else {

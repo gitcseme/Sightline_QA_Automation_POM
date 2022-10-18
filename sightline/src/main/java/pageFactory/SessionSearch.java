@@ -1110,8 +1110,7 @@ public class SessionSearch {
 	}
 
 	public Element getEditSessionSearchTextField(int searchNum, String searchName) {
-		return driver.FindElementByXPath("//div[@lang='" + searchNum
-				+ "']//span[@class='editable editable-pre-wrapped editable-click' and text()='" + searchName + "']");
+		return driver.FindElementByXPath("//span[@class='editable editable-pre-wrapped editable-click' and text()='" + searchName + "']");
 	}
 
 	public Element getTextAreaEdit() {
