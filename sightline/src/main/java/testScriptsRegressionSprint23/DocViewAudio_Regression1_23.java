@@ -352,15 +352,15 @@ public class DocViewAudio_Regression1_23 {
 
 		// Audio search
 		baseClass.selectproject();
-		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString3, Input.language);
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
 		sessionSearch.saveSearchInNewNode(searchName1, newNode);
 
 		// Added another Audio search and add
 		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
 		sessionSearch.saveSearchInNewNode(searchName2, newNode);
-		searchTerm.add(Input.audioSearchString3.toLowerCase());
 		searchTerm.add(Input.audioSearchString2.toLowerCase());
+		searchTerm.add(Input.audioSearchString3.toLowerCase());
 
 		// View in DocView via SS
 		saveSearch.navigateToSavedSearchPage();
@@ -420,15 +420,15 @@ public class DocViewAudio_Regression1_23 {
 
 		// Audio search
 		baseClass.selectproject();
-		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString3, Input.language);
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
 		sessionSearch.addPureHit();
 
 		// Added another Audio search and add
 		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
 		sessionSearch.addPureHit();
-		searchTerm.add(Input.audioSearchString3.toLowerCase());
 		searchTerm.add(Input.audioSearchString2.toLowerCase());
+		searchTerm.add(Input.audioSearchString3.toLowerCase());
 
 		// Go to doclist page
 		baseClass.stepInfo("Navigating to DocList page via Session Search");
