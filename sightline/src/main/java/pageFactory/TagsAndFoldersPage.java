@@ -3279,4 +3279,153 @@ public class TagsAndFoldersPage {
 		}
 	}
 
+	/**
+	 * @description : Doc Count toggle off
+	 * @param element
+	 */
+	public void turnOffToggle(Element element) {
+		base.waitForElement(element);
+		if (element.GetAttribute("class").equalsIgnoreCase("true")) {
+			element.waitAndClick(3);
+			driver.waitForPageToBeReady();
+			base.stepInfo("Doc Count turned off");
+		}
+	}
+	
+	
+	/**
+	 * @description : Folder creation without URl
+	 * @param strFolder
+	 * @param securityGroup
+	 * @throws InterruptedException
+	 */
+	public void CreateFolderCC(String strFolder, String securityGroup) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderActionDropDownArrow().Enabled();
+			}
+		}), Input.wait30);
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(2);// added thread.sleep to avoid exception while executing in batch
+
+		base.waitForElement(getAddFolder());
+		getAddFolder().waitAndClick(5);
+
+		if (!gettxtPropogateFolderTo().Enabled()) {
+
+			base.waitForElement(getbtnFolderCancel());
+			getbtnFolderCancel().Click();
+
+			base.waitForElement(getAddFolder());
+			getAddFolder().Click();
+
+		}
+
+		base.waitForElement(getFolderName());
+		getFolderName().SendKeys(strFolder);
+
+		base.stepInfo("New folder created");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveFolder().Enabled();
+			}
+		}), Input.wait30);
+		getSaveFolder().waitAndClick(10);
+
+		base.VerifySuccessMessage("Folder added successfully");
+		base.CloseSuccessMsgpopup();
+		Reporter.log("Folder " + strFolder + " added to security group -" + securityGroup, true);
+		UtilityLog.info("Folder Successful");
+	}
+
+
+	/**
+	 * @author Sowndarya.velraj
+	 * @description: Create a new tag and not saving
+	 */
+	public void createNewTagNotSave(String tagName, String classificationname) {
+	    navigateToTagsAndFolderPage();
+	    driver.waitForPageToBeReady();
+	    base.waitForElement(getTagsTab());
+	    getTagsTab().waitAndClick(5);
+		base.stepInfo("Tag Tab Clicked");
+		driver.scrollPageToTop();
+		base.waitForElement(getAllTagRoot());
+		getAllTagRoot().waitAndClick(5);
+		base.waitForElement(getTagActionDropDownArrow());
+		getTagActionDropDownArrow().waitAndClick(5);
+		base.waitForElement(getAddTag());
+		getAddTag().waitAndClick(10);
+		base.waitForElement(getTagName());
+		getTagName().SendKeys(tagName);
+		base.waitForElement(getTagClassification());
+		getTagClassification().selectFromDropdown().selectByVisibleText(classificationname);
+	}
+	
+	/**
+	 * @description : Tag creation without URl
+	 * @param strtag
+	 * @param securityGroup
+	 * @throws InterruptedException
+	 */
+	public void CreateTagCC(String strtag, String securityGroup) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagActionDropDownArrow().Visible();
+			}
+		}), Input.wait30);
+		getTagActionDropDownArrow().waitAndClick(10);
+		base.waitTime(2);// added thread.sleep to avoid exception while executing in batch
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddTag().Visible();
+			}
+		}), Input.wait30);
+		getAddTag().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagName().Visible();
+			}
+		}), Input.wait30);
+		getTagName().SendKeys(strtag);
+
+		base.waitTime(1);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveTag().Visible();
+			}
+		}), Input.wait30);
+		getSaveTag().waitAndClick(10);
+		base.VerifySuccessMessage("Tag added successfully");
+		Reporter.log("Tag '" + strtag + "' is added successfully to security group " + securityGroup, true);
+		UtilityLog.info("Tag Successful");
+
+		base.CloseSuccessMsgpopup();
+
+	}
+
+	/**
+	 * @author Sowndarya.velraj
+	 * @description: Create a new folder and not saving
+	 */
+	public void createNewFolderNotSave(String foldername) {
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		base.stepInfo("Folder Tab Clicked");
+		driver.scrollPageToTop();
+		getAllFolderRoot().waitAndClick(5);
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(5);
+		base.waitForElement(getAddFolder());
+		getAddFolder().waitAndClick(10);
+		base.waitForElement(getFolderName());
+		getFolderName().SendKeys(foldername);
+	}
 }

@@ -29,8 +29,12 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -22730,6 +22734,30 @@ public class ProductionPage {
 		base.waitForElement(getAddSelected());
 		getAddSelected().waitAndClick(10);
 
+	}
+
+	
+	/**
+	 * @author NA
+	 * @param file
+	 * @Description verifying text on the tiff image file on downloaded zip file
+	 */
+	public PDFont verifyFontDetailsPDF(File file) throws IOException {					
+		PDFont PDfont = null;
+		PDDocument doc = PDDocument.load(file);
+		PDPageTree pages = doc.getDocumentCatalog().getPages();
+		for(PDPage page : pages) {
+			PDResources res = page.getResources();
+			for(COSName fontName : res.getFontNames()) {
+
+				try {
+					PDfont = res.getFont(fontName);				
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return PDfont;
 	}
 
 	/**

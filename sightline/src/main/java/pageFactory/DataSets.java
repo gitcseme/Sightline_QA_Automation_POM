@@ -158,6 +158,10 @@ public class DataSets {
 
 	// added by sowndariya
 
+	public Element getDataset(String dataset) {
+        return driver.FindElementByXPath("//a[contains(@title,'" + dataset
+                + "')]//..//..//input[@value='View Set in...']//..//button[@id='idAction']");
+  	  }
 	public Element allSourcesDataset() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]");
 	}
@@ -397,7 +401,7 @@ public class DataSets {
 		driver.waitForPageToBeReady();
 		int i = 1;
 		try {
-			while (!getDataSetActionBtn(DataSet).isElementAvailable(10)) {
+			while (!getDataset(DataSet).isElementAvailable(10)) {
 				driver.scrollingToBottomofAPage();
 				driver.waitForPageToBeReady();
 				if (loadMoreOption().isElementAvailable(10)) {
@@ -410,9 +414,14 @@ public class DataSets {
 				}
 				i++;
 			}
-			getDataSetActionBtn(DataSet).ScrollTo();
+			getDataset(DataSet).ScrollTo();
 			driver.waitForPageToBeReady();
-			getDataSetActionBtn(DataSet).waitAndClick(10);
+			try {
+				getDataset(DataSet).waitAndClick(10);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			base.waitForElement(getDataSetViewInDocList(DataSet));
 			getDataSetViewInDocList(DataSet).waitAndClick(10);
 			base.stepInfo("DataSet is selected and viewed in DocList.");
