@@ -1386,6 +1386,14 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
+	public ElementCollection getMultipleCodingForm() {
+		return driver.FindElementsByXPath("//input[@name='selectCodingForm']/following-sibling::i");
+	}
+
+	public Element getCodingFormBasedOnIndex(int index) {
+		return driver.FindElementByXPath("(//input[@name='selectCodingForm']/following-sibling::i)[" + index + "]");
+	}
+
 	public Element getKeepFamilyTogetther_Text() {
 		return driver
 				.FindElementByXPath("//input[@id='IsKeepFamiliesTogether']/parent::label /i//following-sibling::span");
@@ -1595,6 +1603,7 @@ public class AssignmentsPage {
 		return driver.FindElementsByXPath(
 				"//input[@name='assKeywordsList' and @checked='checked']/parent::*/following-sibling::div");
 	}
+
 	public Element getAssignmentAction_FolderAll() {
 		return driver.FindElementByXPath("//a[text()='Folder All Documents']");
 	}
@@ -2290,7 +2299,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait60);
 		getAssignmentName().SendKeys(assgngrpName);
-		
+
 		bc.waitForElement(getAssgngrp_CascadeSetting());
 		getAssgngrp_CascadeSetting().waitAndClick(10);
 		bc.waitForElement(getAssgnGrp_Create_DrawPoolCount());
@@ -2830,10 +2839,10 @@ public class AssignmentsPage {
 
 	}
 
-    /**
-     * @Modified 03/10/2022
-     * @param assignmentName
-     */
+	/**
+	 * @Modified 03/10/2022
+	 * @param assignmentName
+	 */
 	public void Viewindoclistfromassgn(String assignmentName) {
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		driver.waitForPageToBeReady();
@@ -10576,7 +10585,7 @@ public class AssignmentsPage {
 			getsampleMethod().selectFromDropdown().selectByVisibleText("Parent Level Docs Only");
 			bc.stepInfo(
 					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
-		}else if (samplemethod.equalsIgnoreCase("Inclusive Email")) {
+		} else if (samplemethod.equalsIgnoreCase("Inclusive Email")) {
 			getsampleMethod().selectFromDropdown().selectByVisibleText("Inclusive Email");
 			bc.stepInfo(
 					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
@@ -10907,7 +10916,8 @@ public class AssignmentsPage {
 	}
 
 	/**
-	 * @author: Arun Created Date: 19/09/2022 Modified by: NA Modified Date: 10/11/2022
+	 * @author: Arun Created Date: 19/09/2022 Modified by: NA Modified Date:
+	 *          10/11/2022
 	 * @description: this method will check the availability of keyword in
 	 *               assignment keywords popup
 	 * 
@@ -10919,9 +10929,9 @@ public class AssignmentsPage {
 
 		for (int i = 0; i < keywords.length; i++) {
 			if (getKeywordCheckBox(keywords[i]).isElementAvailable(5)) {
-				bc.passedStep("Added keyword available"+keywords[i]);
+				bc.passedStep("Added keyword available" + keywords[i]);
 			} else {
-				bc.failedStep("Added keyword not available"+keywords[i]);
+				bc.failedStep("Added keyword not available" + keywords[i]);
 			}
 		}
 		bc.waitForElement(getKeywordPopUpCancelBtn());
@@ -11059,9 +11069,18 @@ public class AssignmentsPage {
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
-			bc.waitForElement(getSelectAllCodingForm());
-			getSelectAllCodingForm().ScrollTo();
-			getSelectAllCodingForm().waitAndClick(5);
+			bc.waitForElementCollection(getMultipleCodingForm());
+			int noOfCodingForm = getMultipleCodingForm().size();
+			if (noOfCodingForm > 15) {
+				for (int i = 1; i < 15; i++) {
+					getCodingFormBasedOnIndex(i).waitAndClick(5);
+				}
+				getSelectCF_CheckBox(setDefaultCodingForm).waitAndClick(5);
+			} else {
+				bc.waitForElement(getSelectAllCodingForm());
+				getSelectAllCodingForm().ScrollTo();
+				getSelectAllCodingForm().waitAndClick(5);
+			}
 			bc.waitTime(1);
 			getSelectCodeFormRadioBtn(setDefaultCodingForm).waitAndClick(5);
 			bc.waitTime(1);
@@ -11290,7 +11309,6 @@ public class AssignmentsPage {
 		}
 		return listOfKeywords;
 	}
-	
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -11315,11 +11333,11 @@ public class AssignmentsPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will check the availability of de-associated keyword in
-	 *               assignment keywords popup
+	 * @description: this method will check the availability of de-associated
+	 *               keyword in assignment keywords popup
 	 * 
 	 */
 	public void verifyDeAssociatedKeywordsAvailabilityInAssignment(String[] keywords) {
@@ -11329,15 +11347,14 @@ public class AssignmentsPage {
 
 		for (int i = 0; i < keywords.length; i++) {
 			if (getKeywordCheckBox(keywords[i]).isElementAvailable(5)) {
-				bc.failedStep(keywords[i] +"De-associated keyword available");
+				bc.failedStep(keywords[i] + "De-associated keyword available");
 			} else {
-				bc.passedStep(keywords[i] +"De-associated keyword not available");
+				bc.passedStep(keywords[i] + "De-associated keyword not available");
 			}
 		}
 		bc.waitForElement(getKeywordPopUpCancelBtn());
 		getKeywordPopUpCancelBtn().waitAndClick(10);
 
 	}
-	
 
 }
