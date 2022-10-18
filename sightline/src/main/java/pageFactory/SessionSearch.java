@@ -382,6 +382,9 @@ public class SessionSearch {
 	public Element getMasterDate() {
 		return driver.FindElementByXPath("//td[@class=' formatDate']");
 	}
+	public Element getMetaDataInDropdown(String field) {
+		return driver.FindElementByXPath("//select[@id='metatagSelect']//option[@value='"+field+"']");
+	}
 
 	// Metadata
 	public Element getBasicSearch_MetadataBtn() {
