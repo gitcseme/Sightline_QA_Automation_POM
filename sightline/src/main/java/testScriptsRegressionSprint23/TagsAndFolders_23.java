@@ -229,7 +229,7 @@ public class TagsAndFolders_23 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolderInRMU(folderName);
 		loginPage.logout();
-//		
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
 		sgPage.navigateToSecurityGropusPageURL();
@@ -243,6 +243,7 @@ public class TagsAndFolders_23 {
 		userManage.navigateToUsersPAge();
 		driver.waitForPageToBeReady();
 		userManage.assignAccessToSecurityGroups(sgName1, Input.rmu1userName);
+		driver.waitForPageToBeReady();
 		userManage.assignAccessToSecurityGroups(sgName2, Input.rmu1userName);	
 		
 		sgPage.navigateToSecurityGropusPageURL();
