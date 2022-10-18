@@ -73,7 +73,7 @@ public class DocExplorer_Regression24 {
 				"Verify that “EmailReceipients” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] cjkChar = {"让","我","打","电","话","给","你","延","长","石","油","集","团"};
+		String[] cjkChar = {"好","人","良い","一个","一個"};
 		
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -131,15 +131,13 @@ public class DocExplorer_Regression24 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 		
-		baseClass.stepInfo("Select a single document and select bulk assign action");
+		baseClass.stepInfo("Create assignment");
+		assignment.createAssignment(assignName, Input.codeFormName);
 		docExplorer.navigateToDocExplorerPage();
+		baseClass.stepInfo("Select a multiple document and select bulk assign action");
 		docExplorer.selectDocument(1);
 		docExplorer.docExp_BulkAssign();
-		assignment.FinalizeAssignmentAfterBulkAssign();
-		
-		baseClass.stepInfo("Create assignment");
-		assignment.assignmentCreation(assignName, Input.codeFormName);
-		baseClass.stepInfo("select assignment with sampling method and finalize");
+		baseClass.stepInfo("select existing assignment with sampling method and finalize");
 		
 		assignment.assignwithSamplemethod(assignName,"Count of Selected Docs","1");
 		baseClass.passedStep("User can select single doc and bulk assign to new assignment");

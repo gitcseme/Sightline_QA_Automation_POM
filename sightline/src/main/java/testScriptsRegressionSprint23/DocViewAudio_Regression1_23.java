@@ -634,7 +634,7 @@ public class DocViewAudio_Regression1_23 {
 		// Audio search And Save
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
 		sessionSearch.addPureHit();
 		sessionSearch.saveSearch(searchName1);
 
@@ -658,10 +658,11 @@ public class DocViewAudio_Regression1_23 {
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 
 		// Check Display persistant hit - notrepetative
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().Click();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
