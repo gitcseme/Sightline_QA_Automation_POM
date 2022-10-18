@@ -2668,7 +2668,7 @@ public class TagsAndFoldersPage {
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(10);
 		getFolder_ToggleDocCount().waitAndClick(10);
-		getFolderandCount(folderName, count).WaitUntilPresent();
+//		getFolderandCount(folderName, count).WaitUntilPresent();
 		if (getFolderandCount(folderName, count).isElementAvailable(3)) {
 			base.passedStep(folderName + " could be seen under tags and folder page "
 					+ getFolderandCount(folderName, count).getText());

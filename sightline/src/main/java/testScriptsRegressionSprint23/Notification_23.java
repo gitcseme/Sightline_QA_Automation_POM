@@ -118,6 +118,9 @@ public class Notification_23 {
 		base = new BaseClass(driver);
 		base.selectproject(Input.largeVolDataProject);
 
+		base.waitForElement(sessionSearch.getBullHornIcon());
+        sessionSearch.getBullHornIcon().waitAndClick(20);
+        
 		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR",
 				Input.metaDataName, Input.searchStringStar, true);
 		sessionSearch.SearchBtnAction();
@@ -167,6 +170,9 @@ public class Notification_23 {
 		base = new BaseClass(driver);
 		base.selectproject(Input.largeVolDataProject);
 
+		base.waitForElement(sessionSearch.getBullHornIcon());
+        sessionSearch.getBullHornIcon().waitAndClick(20);
+        
 		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR",
 				Input.metaDataName, Input.searchStringStar, true);
 		sessionSearch.SearchBtnAction();

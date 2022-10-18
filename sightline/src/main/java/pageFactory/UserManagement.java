@@ -1672,6 +1672,7 @@ public class UserManagement {
 		wait.until(ExpectedConditions.elementToBeClickable(manageBtn().getWebElement()));
 		actions.moveToElement(manageBtn().getWebElement());
 		actions.click().build().perform();
+		bc.waitForElement(manageUser());
 		wait.until(ExpectedConditions.elementToBeClickable(manageUser().getWebElement()));
 		actions.moveToElement(manageUser().getWebElement());
 		actions.click().build().perform();

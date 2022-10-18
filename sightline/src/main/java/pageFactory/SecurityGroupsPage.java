@@ -709,7 +709,8 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getFolder(folderName));
 			for (int i = 0; i < 7; i++) {
 				try {
-					getFolder(folderName).Click();
+					bc.waitForElement(getFolder(folderName));
+					getFolder(folderName).waitAndClick(10);
 				} catch (Exception e) {
 					Thread.sleep(1000);
 				}
