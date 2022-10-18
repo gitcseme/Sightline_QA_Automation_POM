@@ -567,7 +567,7 @@ public class DocExplorerPage {
 	}
 
 	public Element getEmailRecipientValues() {
-		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//tr//div");
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[9]//div");
 
 	}
 	public Element getDocExp_EmailSubFileSearchName(String emailSubFile) {
@@ -575,7 +575,7 @@ public class DocExplorerPage {
 	}
 
 	public Element getEmailSubFileValues() {
-		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div");
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[6]//div");
 
 	}
 	
