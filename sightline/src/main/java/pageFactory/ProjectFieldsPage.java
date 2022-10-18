@@ -734,4 +734,26 @@ public class ProjectFieldsPage {
 		getFieldCancelButton().waitAndClick(3);
 		
 	}
+	
+	/**
+	 * @author: Arun Created Date: 17/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check values of the field is searchable and tallyable
+	 */
+	public void verifyExpectedFieldStatus(String field,String tally,String search,String status) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFieldStatus(field,2));
+			String tallyStatus =getFieldStatus(field,2).getText().trim();
+			base.stepInfo(field+"field is tallyable status: "+ tallyStatus);
+			String searchStatus =getFieldStatus(field,3).getText().trim();
+			base.stepInfo(field+"field is searchable status:"+ searchStatus);
+			String activeStatus =getFieldStatus(field,4).getText().trim();
+			base.stepInfo(field+"field active status"+ activeStatus);
+			if(searchStatus.equalsIgnoreCase(search) && tallyStatus.equalsIgnoreCase(tally)
+					&& activeStatus.equalsIgnoreCase(status)) {
+				base.passedStep("Field Tallyable,Searchable and Active status displayed as expected");
+			}
+			else {
+				base.failedStep("Field status not displayed as expected");
+			}
+	}
 }
