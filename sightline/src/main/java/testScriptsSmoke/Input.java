@@ -419,6 +419,8 @@ public class Input {
 	public static String pdfPathDat;
 	public static String pdfPathKey;
 	public static String char400Error;
+	public static String hiddenPropDat;
+	public static String hiddenPropNative;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1398,6 +1400,8 @@ public class Input {
 		pdfPathDat = testData.getPdfPathDat();
 		pdfPathKey = testData.getPdfPathKey();
 		char400Error = testData.getChar400Error();
+		hiddenPropDat = testData.getHiddenPropDat();
+		hiddenPropNative = testData.getHiddenPropNative();
 		
 		
 		// Added by Raghuram 02/24/22

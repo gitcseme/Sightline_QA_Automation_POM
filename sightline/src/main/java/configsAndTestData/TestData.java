@@ -300,6 +300,8 @@ public class TestData {
 	public String pdfPathDat;
 	public String pdfPathKey;
 	public String char400Error;
+	public String hiddenPropDat;
+	public String hiddenPropNative;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22
