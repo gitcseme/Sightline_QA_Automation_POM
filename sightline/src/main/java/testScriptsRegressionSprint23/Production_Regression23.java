@@ -1,13 +1,8 @@
 package testScriptsRegressionSprint23;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.testng.ITestResult;
@@ -28,8 +23,8 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
-import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -423,6 +418,172 @@ public class Production_Regression23 {
 		int count = doc.getNumberOfPages();
 		System.out.println(count);
 		base.digitCompareEquals(TotalPages, count,"Blank Page is not removed as expected","Blank Page is Removed");
+		loginPage.logout();
+	}
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-49047
+	 * @Description: Verify Priv tag of a document from one security is correctly
+	 *               considered for the same document in another security group
+	 **/
+	@Test(description = "RPMXCON-49047", enabled = true, groups = { "regression" })
+	public void verifyPrivCountDiffSG() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49047 -Production Component");
+		base.stepInfo("Verify Priv tag of a document from one security is correctly"
+				+ "considered for the same document in another security group");
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String securityGroup = "Production_Security_Group" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		sg.navigateToSecurityGropusPageURL();
+		sg.createSecurityGroups(securityGroup);
+
+		// search for folder
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		doc.selectAllDocs();
+		doc.docListToBulkRelease(securityGroup);
+		driver.waitForPageToBeReady();
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		sg.navigateToSecurityGropusPageURL();
+		sg.addTagToSecurityGroup(securityGroup, tagname);
+
+		base = new BaseClass(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingSecurityGroup(securityGroup);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		String privCount = page.getPrivDocCountInSummaryPage().getText();
+		if (Integer.valueOf(privCount).equals(0)) {
+			base.passedStep("Priv Doc Count in Summary Tab as Expected");
+		} else {
+			base.failedStep("Priv Doc Count in Summary Tab Not as Expected");
+		}
+		base.passedStep("Verified - that Priv tag of a document from one security is correctly considered"
+				+ " for the same document in another security group");
+		loginPage.logout();
+	}
+	/**
+	 * @author  sowndarya.velraj  Testcase No:RPMXCON-48980
+	 * @throws Exception
+	 * @Description: Verify that branding text should be truncated when Branding
+	 *               text exceeds the space and no space after wrapping while
+	 *               production for a PDF file
+	 **/
+	@Test(description = "RPMXCON-48980", enabled = true, groups = { "regression" })
+	public void verifyBrandingTextTruncated() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48980");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		base.stepInfo("Verify that branding text should be truncated when Branding text exceeds the "
+				+ "space and no space after wrapping while production for a PDF file");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSection();
+		page.fillingAndverifySixBrandingMultiLine(tagname);
+		base.stepInfo("Added a Multi line branding to all six  locations");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		String url = home + "/Downloads/VOL0001/PDF/0001/";
+		String name = prefixID + beginningBates + suffixID;
+
+		String topLeftText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Left", 0);
+		softAssertion.assertTrue(topLeftText.contains("..."));
+
+		String topCenterText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Center", 0);
+		softAssertion.assertFalse(topCenterText.contains("..."));
+
+		String topRightText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Right", 0);
+		softAssertion.assertTrue(topRightText.contains("..."));
+
+		String bottomLeftText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Left", 0);
+		softAssertion.assertTrue(bottomLeftText.contains("..."));
+
+		String bottomCenterText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Center", 0);
+		softAssertion.assertFalse(bottomCenterText.contains("..."));
+
+		String bottomRightText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Right", 0);
+		softAssertion.assertTrue(bottomRightText.contains("..."));
+		softAssertion.assertAll();
+		base.passedStep("Verified - that branding text should be truncated when Branding text exceeds the space"
+				+ " and no space after wrapping while production for a PDF file");
+		loginPage.logout();
+	}
+	/**
+	 * @author N/A Testcase No:RPMXCON-48295
+	 * @Description: Verify New Line delimiters on Production.
+	 **/
+	@Test(description = "RPMXCON-48295", enabled = true, groups = { "regression" })
+	public void verifyNewLineDelimiter() throws Exception {
+		base.stepInfo("RPMXCON-48295");
+		base.stepInfo("To Verify -  New Line delimiters on Production");
+		base = new BaseClass(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As " + Input.pa1userName);
+
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.verifyNewLineDimiOptions();
+		base.passedStep("Verified - that New Line delimiters on Production");
 		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
