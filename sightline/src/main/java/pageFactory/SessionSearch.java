@@ -2057,6 +2057,15 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
+	public ElementCollection getStartDatesInBG() {
+		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
+	}
+	public Element getStartDateButton() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//th[6]");
+	}
+	public Element getStatusText(String id,String status) {
+		return driver.FindElementByXPath("//td[contains(text(),'"+id+"')]//following-sibling::td[text()='"+status+"']");
+	}
 
 	public Element getTxtDownloadFile(String id) {
 		return driver.FindElementByXPath(
@@ -13917,5 +13926,57 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 				+ "Like Document Popup.", "The Count not match with count in Like Document Popup.");
 
 	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void checkingStatusUsingRefresh(String backGroundID,String status) {
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
+				
+                base.stepInfo("waiting for status"+status);
+                break;
+		}
+			else {
+                driver.Navigate().refresh();
+                System.out.println("Refresh");
+                driver.waitForPageToBeReady();
+            }
+		}
+		
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void advancedNewContentSearchNotPureHit(String SearchString) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewSearchButton().Visible() && getNewSearchButton().Enabled();
+			}
+		}), Input.wait30);
+		driver.scrollPageToTop();
+		getNewSearchButton().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDataBtn().Visible() && getContentAndMetaDataBtn().Enabled();
+			}
+		}), Input.wait30);
+		getContentAndMetaDataBtn().waitAndClick(5);
+		// Enter seatch string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterStringInBSCurrent().Visible();
+			}
+		}), Input.wait30);
+		getEnterStringInBSCurrent().SendKeys(SearchString);
+		// Click on Search button
+		getQuerySearchBtn().Click();
+	}
+	
+	
 
 }
