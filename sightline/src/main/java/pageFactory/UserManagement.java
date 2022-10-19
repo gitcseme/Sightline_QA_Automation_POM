@@ -1063,6 +1063,9 @@ public class UserManagement {
 	public Element getEmailAddressError() {
 		return driver.FindElementById("txtBxUserEmailID-error");
 	}
+	public Element getPopupWindowHeader() {
+		return driver.FindElementByXPath("//div[contains(text(),'Modify Multiple User Profiles')]");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -4858,6 +4861,33 @@ public void verifyingReadonlyInProjectAndSecurityGrp() {
 	bc.textCompareEquals(BulkUserPrjt,"true","Bulk user project is disabled as expected","Bulk user project  not disabled");
 	String BulkUserSecurityGroup=getBulkUserSecurityGroup().GetAttribute("disabled");
 	bc.textCompareEquals(BulkUserSecurityGroup,"true","Security Group is disabled as expected","Security Group not disabled");
+}
+/**
+ * @author Brundha.T
+ * @param Value
+ * @param users Description:method for enableor disable user rights
+ */
+public void enableOrDisableUsersRights(String Value, String[] users) {
+	selectRoleBulkUserAccessControl(Input.ProjectAdministrator, Input.projectName, null);
+	defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false, false,
+			false, false, false, false);
+
+	if ("Enable".equals(Value)) {
+		bc.waitForElement(getEnableRadioBtn());
+		getEnableRadioBtn().waitAndClick(10);
+
+	} else {
+		bc.waitForElement(getDisableRadioBtn());
+		getDisableRadioBtn().waitAndClick(10);
+	}
+	Actions Act = new Actions(driver.getWebDriver());
+	Act.clickAndHold(getPopupWindowHeader().getWebElement());
+	Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
+	Act.release().build().perform();
+	selectBulkAccessUsers(users);
+	driver.waitForPageToBeReady();
+	getBulkUserSaveBtn().waitAndClick(10);
+	bc.VerifySuccessMessage("Access rights applied successfully");
 }
 
 }
