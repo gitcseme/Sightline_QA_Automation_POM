@@ -178,7 +178,7 @@ public class SavedSearch {
 
 	// Xpath change based on new implemetation - ("document-btn");
 	public Element getToDocView() {
-		return driver.FindElementById("document-btn");
+		return driver.FindElementById("view");
 	}
 
 	public Element getToDocViewoption() {
@@ -571,7 +571,7 @@ public class SavedSearch {
 	}
 
 	public Element getshareASearchPopup() {
-		return driver.FindElementByXPath("//span[text()='Share a Search']");
+		return driver.FindElementByXPath("//h3[text()='Share a Search']");
 	}
 
 	// only when MySavedsearch is selected and not expanded
@@ -4727,7 +4727,7 @@ public class SavedSearch {
 	 *               PARMUREV
 	 * 
 	 */
-	public void verifySavedSearchProperOptionsSharedWithAsPARMUREV() {
+	public void verifySavedSearchProperOptionsSharedWithAsPARMUREV(String user) {
 
 		try {
 			driver.waitForPageToBeReady();
@@ -4755,26 +4755,24 @@ public class SavedSearch {
 				base.passedStep("Folder Button is displayed in Saved Search Page");
 			}
 
-			try {
-				base.stepInfo("Verify whether the Report Button is getting displayed in Saved Search Page");
+			base.stepInfo("Verify whether the Report Button is getting displayed in Saved Search Page");
+			if(user.equals("PA")||user.equals("RMU"))
+			{
 				softAssertion.assertEquals(getSavedSearchToTermReport().Displayed().booleanValue(), true);
 				base.passedStep("Report Button is displayed in Saved Search Page");
-
-			} catch (Exception e) {
-				try {
-					base.waitForElement(getSavedSearchExecuteButton());
-					getSavedSearchExecuteButton().Displayed();
-					base.passedStep("User is on Reviewer Mode");
-				} finally {
-					base.stepInfo("Performed On Reviewer");
+			}
+			else if(user.equals("REV"))
+				{
+				base.passedStep("Report Button is not displayed in Saved Search Page for reviewer");
 				}
-			}
-
-			base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
-			if (getSavedSearchExecuteButton().Displayed()) {
-				softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
-				base.passedStep("Execute Button is displayed in Saved Search Page");
-			}
+			
+		
+		base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
+		if(getSavedSearchExecuteButton().Displayed()); {
+			softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
+			base.passedStep("Execute Button is displayed in Saved Search Page");
+		}
+		
 
 			base.stepInfo("Verify whether the Export Button is getting displayed in Saved Search Page");
 			if (getSavedSearchExportButton().Displayed()) {
@@ -4782,21 +4780,18 @@ public class SavedSearch {
 				base.passedStep("Export Button is displayed in Saved Search Page");
 			}
 
-			try {
+			if(user.equals("PA"))
+			{
 				base.stepInfo("Verify whether the Release Button is getting displayed in Saved Search Page");
-				softAssertion.assertTrue(getReleaseIcon().Displayed());
+				softAssertion.assertEquals(getReleaseIcon().Displayed().booleanValue(), true);
 				base.passedStep("Release Button is displayed in Saved Search Page");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				try {
-					base.stepInfo("Verify whether the Assign Button is getting displayed in Saved Search Page");
+			}
+			else if(user.equals("RMU"))
+			{
+				base.stepInfo("Verify whether the Assign Button is getting displayed in Saved Search Page");
 					softAssertion.assertTrue(getSavedSearchToBulkAssign().Displayed());
 					base.passedStep("Assign Button is displayed in Saved Search Page");
 
-				} catch (Exception e2) {
-					base.passedStep("User is on Reviewer Mode");
-				}
 			}
 
 			base.stepInfo("Verify whether the Refresh Button is getting displayed in Saved Search Page");

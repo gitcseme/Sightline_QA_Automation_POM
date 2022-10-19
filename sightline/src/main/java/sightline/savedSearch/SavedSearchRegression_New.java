@@ -139,6 +139,14 @@ public class SavedSearchRegression_New {
 				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "REV", 0 } };
 		return users;
 	}
+	
+	@DataProvider(name = "SavedSearchwithUsersandrole")
+	public Object[][] SavedSearchwithUsersandrole() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName,"PA" },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName ,"RMU"},
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName ,"REV"} };
+		return users;
+	}
 
 	/**
 	 * @author Raghuram A Date: 10/11/21 Modified date:N/A Modified by: Description
@@ -1893,7 +1901,7 @@ public class SavedSearchRegression_New {
 
 		base.waitForElement(saveSearch.getSavedSearchTreeNode(nodeName));
 		saveSearch.getSavedSearchTreeNode(nodeName).waitAndClick(10);
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(null);
 		base.stepInfo("-----------------------------" + nodeName + " Completed--------------------------------");
 
 		// navigate to Doclist and return back to Saved Search page
@@ -1914,8 +1922,8 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49038",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
-	public void validateSavedSearchPageProperOptionsSharedWith(String username, String password, String fullName)
+	@Test(description ="RPMXCON-49038",enabled = true, dataProvider = "SavedSearchwithUsersandrole", groups = { "regression" } )
+	public void validateSavedSearchPageProperOptionsSharedWith(String username, String password, String fullName,String role)
 			throws InterruptedException, ParseException {
 
 		int noOfNodesToCreate = 5;
@@ -1961,13 +1969,13 @@ public class SavedSearchRegression_New {
 		base.waitForElement(saveSearch.getSavedSearchTreeNode(SGtoShare));
 		saveSearch.getSavedSearchTreeNode(SGtoShare).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(role);
 		base.stepInfo("-----------------------------" + SGtoShare + " Completed--------------------------------");
 		// navigate to Doclist and return back to Saved Search page
 		saveSearch.navigateToDoclistAndReturnBackToSavedSearch();
 
 		// verify Saved Search Proper Option
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(role);
 
 		base.stepInfo("-----------------------------" + SGtoShare + " Completed--------------------------------");
 
