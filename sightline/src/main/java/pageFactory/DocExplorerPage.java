@@ -199,6 +199,18 @@ public class DocExplorerPage {
 	}
 
 	// added by sowndariya
+	public Element getExportDataSaveReport() {
+		return driver.FindElementByXPath("//i[@id='saveReport']");
+	}
+	
+	public Element getExportDataCustomRepName() {
+		return driver.FindElementById("txtReportname");
+	}
+	
+	public Element getExportSaveBtn() {
+		return driver.FindElementById("saveXML");
+	}
+	
 	public Element getBulkFolder() {
 		return driver.FindElementByXPath(" //a[text()='Bulk Folder']");
 	}
@@ -3551,5 +3563,53 @@ public class DocExplorerPage {
 			driver.Navigate().refresh();
 		}
 	}
+	
+	public void docExpExportDataSaveReport(String customReportName) throws Exception {
+
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(exportDataFromActionDropdown());
+		exportDataFromActionDropdown().waitAndClick(5);
+		bc.stepInfo("Export pop up is open Successfully");
+
+		bc.waitForElement(exportWindow_AllCustodiansCheckbox());
+		exportWindow_AllCustodiansCheckbox().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(exportWindow_AddToSelectedButton());
+		exportWindow_AddToSelectedButton().waitAndClick(10);
+
+		bc.waitForElement(getExportDataSaveReport());
+		getExportDataSaveReport().waitAndClick(5);
+		bc.stepInfo("Save Report pop up is open Successfully");
+
+		bc.waitForElement(getExportDataCustomRepName());
+		getExportDataCustomRepName().SendKeys(customReportName);
+		
+		bc.waitForElement(getExportSaveBtn());
+		getExportSaveBtn().waitAndClick(5);
+		
+		bc.VerifySuccessMessage("Report save successfully");
+		bc.stepInfo("Report Saved Successfully With the name "+ customReportName);
+	}
+
 }
 

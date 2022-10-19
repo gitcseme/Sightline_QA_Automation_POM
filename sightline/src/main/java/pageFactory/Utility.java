@@ -24,6 +24,12 @@ public class Utility {
 			return random.nextInt(10000000);
 		
 	}
+	
+	public static int dynamicRandomNumberAppender() {
+		 Random random = new Random();
+			return random.nextInt(1000);
+		
+	}
 public static String randomCharacterAppender(int num) {
 		
 		String Alphabet=RandomStringUtils.randomAlphabetic(num);

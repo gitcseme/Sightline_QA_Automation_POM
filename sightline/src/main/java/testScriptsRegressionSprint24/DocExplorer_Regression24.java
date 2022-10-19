@@ -19,6 +19,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
+import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -176,6 +177,45 @@ public class DocExplorer_Regression24 {
 	
 	}
 	
+	/**
+	 * @author N/A
+	 * @Description : Verify that error message does not display and application accepts -
+	 *                when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report 
+	 *                [RPMXCON-65051]
+	 */
+	@Test(description = "RPMXCON-65051", groups = { "regression" }, enabled = true)
+	public void verifyErrorMsgSaveReport() throws Exception {
+		String custReportName = "< > * ; ‘ / ( ) # &" + Utility.randomCharacterAppender(4);
+		
+		baseClass.stepInfo("RPMXCON - 65051 ");
+		baseClass.stepInfo("To Verify that error message does not display and application accepts - "
+				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As : " + Input.pa1userName);
+		DocExplorerPage docExp = new DocExplorerPage(driver);
+		
+		docExp.docExpExportDataSaveReport(custReportName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		ReportsPage report = new ReportsPage(driver);
+		report.navigateToReportsPage("");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getThisLink(custReportName));
+		
+		if(report.getThisLink(custReportName).isElementAvailable(10)) {
+			baseClass.passedStep("Application accept 'Report Name :" + custReportName + "Successfully..");
+		} else {
+			baseClass.failedStep("Application Not accept 'Report Name :" + custReportName);
+		}
+		
+		report.deleteCustomReport(custReportName);
+		baseClass.passedStep("Verified - that error message does not display and application accepts - "
+				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
