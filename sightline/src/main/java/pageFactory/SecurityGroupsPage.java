@@ -1681,4 +1681,32 @@ public class SecurityGroupsPage {
 		}
 
 	}
+	
+	/**
+	 * @Author jeevitha
+	 * @Dsecription : unmap Tag from SG
+	 * @param securityGrp
+	 * @param tagName
+	 */
+	public void unmapTagFromSecurityGrp(String securityGrp, String tagName) {
+		selectSecurityGroup(securityGrp);
+
+		bc.waitForElement(getTagsLink());
+		bc.waitTillElemetToBeClickable(getTagsLink());
+		getTagsLink().waitAndClick(10);
+
+		bc.waitForElement(getSelectedTagsCheckBox(tagName));
+		bc.waitTillElemetToBeClickable(getSelectedTagsCheckBox(tagName));
+		getSelectedTagsCheckBox(tagName).waitAndClick(5);
+		bc.stepInfo("Selected Tag : " + tagName);
+
+		bc.waitForElement(getSG_Tag_Left());
+		getSG_Tag_Left().waitAndClick(10);
+
+		bc.waitForElement(getSG_AnnSaveButton());
+		bc.waitTillElemetToBeClickable(getSG_AnnSaveButton());
+		getSG_AnnSaveButton().waitAndClick(10);
+		bc.VerifySuccessMessage("Your selections were saved successfully");
+		bc.passedStep("Unmapped Tag " + tagName + " from : " + securityGrp);
+	}
 }
