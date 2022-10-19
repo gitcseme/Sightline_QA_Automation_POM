@@ -3,6 +3,8 @@ package testScriptsRegressionSprint24;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -16,6 +18,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
+import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
@@ -75,6 +78,7 @@ public class BatchPrintRegression_24 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String Folder = "Folder" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
+		DocListPage doclist = new DocListPage(driver);
 
 		// Login As User
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -89,7 +93,17 @@ public class BatchPrintRegression_24 {
 		session.basicContentSearch(Input.testData1);
 		session.bulkFolder(Folder);
 
-		// Generate Production with dat,TIFF,native & select Slipsheet
+		session.ViewInDocListWithOutPureHit();
+
+		// sort in Ascending Order
+		doclist.sortColumn(true, Input.documentKey, true);
+
+		// expected Downloaded Document Names list ,Desc Order of LastSaveDate
+		int index = baseClass.getIndex(doclist.getColumnHeader(), Input.documentKey);
+		baseClass.waitForElementCollection(doclist.GetColumnData(index));
+		List<String> docidList = doclist.availableListofElementsForDocList(doclist.GetColumnData(index));
+
+		// Generate Production with dat,TIFF,native & select Slipsheet as docid
 		String productionname = "P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -100,7 +114,7 @@ public class BatchPrintRegression_24 {
 		page.fillingTIFFSectionwithBurnRedaction();
 		page.slipSheetToggleEnable();
 		page.getSlipCalculatedTabSelection().ScrollTo();
-		page.availableFieldSelection(Input.batesNumber);
+		page.availableFieldSelection(Input.documentKey);
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, Folder, productionname,
 				beginningBates);
@@ -131,8 +145,14 @@ public class BatchPrintRegression_24 {
 		String extractedFile = batchPrint.extractFile(fileName);
 
 		// verify Downloaded File Count ,filename and Format
-		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
 
+		// verify ProductionSlipsheet name in Downloaded file
+		boolean result = baseClass.compareListViaContainsTrimSpace(actualFileName, docidList);
+		baseClass.printResutInReport(result, "Downloaded FileNames has selected production slipsheet Name",
+				"Production slipsheet name is not generated", "Pass");
+		
 		loginPage.logout();
 	}
 
