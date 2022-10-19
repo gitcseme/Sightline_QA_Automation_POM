@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -169,13 +170,25 @@ public class Domain_Management_Regression24 {
 			baseClass.failedStep("Logged session is failed");
 
 		}
+		baseClass.stepInfo("Impersonating DA as PA");
 		baseClass.waitForElement(baseClass.getSignoutMenu());
 		baseClass.getSignoutMenu().waitAndClick(5);
 		baseClass.getChangeRole().waitAndClick(10);
 		baseClass.ValidateElement_Presence(baseClass.text(Input.DomainAdministrator), Input.DomainAdministrator);
-		driver.Navigate().refresh();
-		baseClass.stepInfo("Impersonating DA as PA");
-		baseClass.impersonateDAtoPA();
+		baseClass.getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		baseClass.waitForElement(baseClass.getAvlDomain());
+		baseClass.getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitForElement(baseClass.getSelectProjectTo());
+		
+		int ProjectList=baseClass.getSelectProjectTo().selectFromDropdown().getOptions().size();
+		if(ProjectList>2) {
+			baseClass.passedStep("List of Project available under project dropdown");
+		}
+		else {
+			baseClass.failedStep("list of project is not available in project dropdown");
+		}
+		baseClass.getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+		baseClass.getSaveChangeRole().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verifying ProjectAdministrator Landing page");
 
