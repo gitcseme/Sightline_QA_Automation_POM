@@ -233,6 +233,18 @@ public class SearchTermReportPage {
 
 	// Added By Jeevitha
 
+	public Element getGearIconBackground() {
+		return driver.FindElementByClassName("ColVis_collectionBackground");
+	}
+
+	public Element getCBInGearIcon(String columnName) {
+		return driver.FindElementByXPath("//ul[@class='ColVis_collection']//span[text()='" + columnName + "']");
+	}
+
+	public Element getGearIcon() {
+		return driver.FindElementByXPath("//div[@class='ColVis']");
+	}
+
 	public Element getSearchExpand() {
 		return driver.FindElementByXPath("//div[@id='divDASearches']//a[@data-toggle='collapse']");
 	}
@@ -906,6 +918,7 @@ public class SearchTermReportPage {
 
 	/*
 	 * @Author Jeevitha
+	 * 
 	 * @Description : overwrite Custom Search term report
 	 */
 	public void CustomStrOverwriteOrUpdate(String customSearchReportName, boolean runReport, String updateReportName,
@@ -969,13 +982,54 @@ public class SearchTermReportPage {
 		}
 
 		driver.waitForPageToBeReady();
-		boolean status=getsearchOrTab_CB(Input.mySavedSearch).isDisplayed();
+		boolean status = getsearchOrTab_CB(Input.mySavedSearch).isDisplayed();
 		if (status && shudExpand) {
 			bc.passedStep("Search Tree Structure is Expanded");
 		} else if (!status && !shudExpand) {
 			bc.passedStep("Search Tree Structure is Collapsed");
 		} else {
 			bc.failedStep("Tree Structure status is not As expected");
+		}
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : select or unselect checkbox after clicking gear icon and
+	 *              verify if that column is present in report
+	 * @param clickApplyBtn
+	 * @param clickGear
+	 * @param ColumnName
+	 * @param columnShouldBePresent
+	 */
+	public void ClickGearIconAndSelectOrUnselectColm(boolean clickApplyBtn, boolean clickGear, String[] ColumnName,
+			boolean columnShouldBePresent) {
+		driver.waitForPageToBeReady();
+
+		if (clickApplyBtn) {
+			bc.waitForElement(getApplyBtn());
+			getApplyBtn().waitAndClick(10);
+			bc.waitForElement(getSTReport());
+		}
+		if (clickGear) {
+			getGearIcon().waitAndClick(10);
+			bc.stepInfo("Clicked Gear Icon");
+
+			for (int i = 0; i < ColumnName.length; i++) {
+				bc.waitForElement(getCBInGearIcon(ColumnName[i]));
+				getCBInGearIcon(ColumnName[i]).waitAndClick(10);
+				bc.stepInfo("Clicked " + ColumnName[i] + " Checkbox inside gear icon");
+			}
+			getGearIconBackground().waitAndClick(10);
+		}
+		for (int i = 0; i < ColumnName.length; i++) {
+			boolean columnStatus = selectColumnInSTRPage(ColumnName[i].toUpperCase()).isDisplayed();
+			if (columnShouldBePresent) {
+				bc.printResutInReport(columnStatus, ColumnName[i] + "Column is Present in Report",
+						ColumnName[i] + "Column is Not Present in Report", "Pass");
+			} else {
+				bc.printResutInReport(columnStatus, ColumnName[i] + "Column is Not Present in Report",
+						ColumnName[i] + "Column is Present in Report", "Fail");
+			}
 		}
 	}
 
