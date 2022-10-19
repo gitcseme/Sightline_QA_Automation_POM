@@ -231,6 +231,26 @@ public class ProjectPage {
 	 
 	 //added by sowndarya
 		
+	 
+	 public Element getProcessingEngineTxt() {
+			return driver.FindElementByXPath("//div[@id='domainentitysettingsdiv']//strong[contains(text(),'Processing Engine')]");
+		}
+		
+		public Element getClientShortName() {
+			return driver.FindElementByXPath("//div[@class='col-md-9']//input[@name='EntityCode']");
+		}
+		public Element getClientName() {
+			return driver.FindElementByXPath("//div[@class='col-md-9']//input[@name='EntityLabel']");
+		}
+
+		public Element getAddNewClient() {
+			return driver.FindElementById("btnAddEntity");
+		}
+
+		public Element getManageClientBtn() {
+			return driver.FindElementByXPath("//a[contains(text(),' Clients')]");
+		}
+
 		public Element getEnableAnalyticsToogle() {
 			return driver.FindElementByXPath("//input[@id='chkIsEnabledAnalytics']/../i");
 		}
@@ -1204,5 +1224,40 @@ public class ProjectPage {
 		bc.VerifySuccessMessage("Project updated successfully");
 	}
 
+	/**
+	 * @author sowndarya.
+	 */
+	public void navigateToClientFromHomePage() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getManageBtn());
+		bc.waitTillElemetToBeClickable(getManageBtn());
+		getManageBtn().Click();
+		bc.waitForElement(getManageClientBtn());
+		bc.waitTillElemetToBeClickable(getManageClientBtn());
+		getManageClientBtn().Click();
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author sowndarya.
+	 */
+	public void addNewClient(String clientName,String shortName,String type) {
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAddNewClient());
+		getAddNewClient().ScrollTo();
+		getAddNewClient().waitAndClick(10);
+		
+		bc.waitForElement(getClientName());
+		getClientName().SendKeys(clientName);
+		
+		bc.waitForElement(getClientShortName());
+		getClientShortName().SendKeys(shortName);
+		
+		bc.waitForElement(getSelectEntity());
+		getSelectEntity().waitAndClick(10);
+		getSelectEntity().selectFromDropdown().selectByVisibleText(type);
+
+	}
 
 }

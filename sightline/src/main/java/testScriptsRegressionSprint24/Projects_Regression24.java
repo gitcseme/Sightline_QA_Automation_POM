@@ -23,7 +23,7 @@ import pageFactory.ProjectPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Projects_Regression {
+public class Projects_Regression24 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass base;
@@ -44,6 +44,7 @@ public class Projects_Regression {
 
 	}
 
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
@@ -228,4 +229,32 @@ public class Projects_Regression {
 	}
 
 	
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-56175
+	 * @Description:Verify that when creating a non-domain client, the processing engine section doesn't present on 'Create Client' page
+	 **/
+	
+	@Test(description = "RPMXCON-56175", enabled = true, groups = { "regression" })
+	public void verifyNonDomainClient() throws Exception {
+		String clientName = "C" + Utility.dynamicNameAppender();
+		String shortName="S"+ Utility.dynamicNameAppender();
+		
+		base = new BaseClass(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-56175");
+		base.stepInfo("Verify that when creating a non-domain client, the processing engine section doesn't present on 'Create Client' page");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a SA user :"+Input.sa1userName);
+		
+		projects.navigateToClientFromHomePage();
+		projects.addNewClient(clientName, shortName,"Not a Domain");
+		
+		String pass="The processing engine section not present on 'Create Client' page";
+		String fail="The processing engine section is present on 'Create Client' page";
+		
+		Boolean result = projects.getProcessingEngineTxt().isDisplayed();
+		base.printResutInReport(result, pass, fail,"Fail");
+}
 }
