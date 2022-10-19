@@ -1607,6 +1607,18 @@ public class AssignmentsPage {
 	public Element getAssignmentAction_FolderAll() {
 		return driver.FindElementByXPath("//a[text()='Folder All Documents']");
 	}
+	
+	//added by arun
+	public Element showDocCountToggle() {
+		return driver.FindElementByXPath("//i[@id='showUnAssignDocCounts']");
+	}
+	public Element getExisitingAssignTab() {
+		return driver.FindElementById("tabExitingUnAssign");
+	}
+	public Element getStartingCountDoc() {
+		return driver.FindElementByXPath("//label[contains(text(),'Starting Count Of Docs:')]//following-sibling::div//div");
+	}
+
 
 	public AssignmentsPage(Driver driver) {
 
