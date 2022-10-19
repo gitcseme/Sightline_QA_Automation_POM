@@ -103,6 +103,81 @@ public class AssignmentsRegression_24 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 19/10/2022 TestCase Id:RPMXCON-54327
+	 * Description :Verify that the Show Document Counts toggle is OFF by default
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-54327",enabled = true, groups = { "regression" })
+	public void verifyShowDocsCountToggleStatus() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54327");
+		baseClass.stepInfo("Verify that the Show Document Counts toggle is OFF by default.");
+		String assignName = "Aassign"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Pre-requisite: assigning docs to assignment");
+		assignment.createAssignment(assignName, Input.codeFormName);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssignExisting(assignName);
+		baseClass.stepInfo("Search for documents and action as bulk assign");
+		baseClass.selectproject();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		baseClass.stepInfo("Select unassign documents radio button");
+		baseClass.waitForElement(assignment.getUnassignbutton());
+		assignment.getUnassignbutton().waitAndClick(10);
+		//verify
+		if(assignment.getSelectAssignmentToBulkAssign(assignName).isElementAvailable(10)
+				&& assignment.getExisitingAssignTab().isElementAvailable(10)) {
+			baseClass.passedStep("Existing assignment,group and tab present in the assign/unassign popup");
+			String toggleStatus = assignment.showDocCountToggle().GetAttribute("class");
+			baseClass.stepInfo("Toggle off status :"+toggleStatus);
+			if(toggleStatus.equalsIgnoreCase("true")) {
+				baseClass.failedStep("Show docscount toggle enabled by default");
+			}
+			else {
+				baseClass.passedStep("Show Document Count toggle is OFF by default");
+			}
+		}
+		else {
+			baseClass.failedStep("Existing tab and assignment not present in the assign/unassign popup");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 19/10/2022 TestCase Id:RPMXCON-54326
+	 * Description :Verify that the Starting Count of Docs is consistent with the selection on the prior screen
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-54326",enabled = true, groups = { "regression" })
+	public void verifyStartingCountOfDocsStatus() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54326");
+		baseClass.stepInfo("Verify that the Starting Count of Docs is consistent with selection.");
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Search for docs and action as bulk assign");
+		int count = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify the starting count of docs");
+		baseClass.waitForElement(assignment.getStartingCountDoc());
+		int docCount = Integer.parseInt(assignment.getStartingCountDoc().getText());
+		baseClass.stepInfo("count in shopping cart for pure hit :"+count);
+		baseClass.stepInfo("starting count of docs in assign/unassign popup :"+docCount);
+		if(count==docCount) {
+			baseClass.passedStep("Starting count of docs same as selection in prior screen");
+		}
+		else {
+			baseClass.failedStep("Starting count of docs not same as selection in prior screen");
+		}
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
