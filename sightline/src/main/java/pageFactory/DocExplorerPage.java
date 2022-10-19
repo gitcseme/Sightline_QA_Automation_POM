@@ -578,7 +578,30 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[6]//div");
 
 	}
-	
+	public Element getLastPage() {
+		return driver.FindElementByXPath("//a[text()='Next']/..//preceding-sibling::li//a");
+
+	}
+	public Element getFirstPage() {
+		return driver.FindElementByXPath("//a[text()='Previous']/..//following-sibling::li//a");
+
+	}
+	public Element getNavigationPageNumber(String PageNo) {
+		return driver.FindElementByXPath("//li[contains(@class,'paginate_button')]//a[text()='"+PageNo+"']");
+
+	}
+	public ElementCollection getTableHeader() {
+		return driver.FindElementsByXPath("//table//thead//th");
+
+	}
+	public ElementCollection getRowData(int FieldValue) {
+		return driver.FindElementsByXPath("//table[@id='dtDocumentList']//tbody//tr//td["+FieldValue+"]");
+
+	}
+	public Element getNavigationBtn(String Btn) {
+		return driver.FindElementByXPath("//a[text()='"+Btn+"']/..");
+
+	}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3550,6 +3573,33 @@ public class DocExplorerPage {
 			bc.validatingGetTextElement(getEmailSubFileValues(),emailFileValues[j]);
 			driver.Navigate().refresh();
 		}
+	}
+	/**
+	 * @author Brundha.T
+	 * @param RowNo
+	 * @param ele
+	 * @param Value
+	 * Description: method to verify the navigation option in docexplorer page
+	 */
+		public void verifyingNavigationOption(int RowNo,Element ele, String Value) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			List<String> DefaultPage = bc.availableListofElements(getRowData(RowNo));
+			System.out.println(DefaultPage);
+			bc.waitTime(2);
+			ele.waitAndClick(5);
+			driver.waitForPageToBeReady();
+			List<String> NavigatedPage = bc.availableListofElements(getRowData(RowNo));
+			System.out.println(NavigatedPage);
+			if(Value.equals("NotCompareEqual")) {
+			bc.listCompareNotEquals(DefaultPage, NavigatedPage,"Navigated as per the page number", "Not navigated");
+			}else if(Value.equals("Compare")){
+				bc.listCompareEquals(DefaultPage, NavigatedPage,"Navigated as per the page number", "Not navigated");
+			}
+			else if(Value.equals("yes")) {
+			bc.ValidateElementCollection_Presence(getRowData(RowNo), "Documents in DocExplorer");
+			}
+			driver.waitForPageToBeReady();
 	}
 }
 
