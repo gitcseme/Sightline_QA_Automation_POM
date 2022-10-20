@@ -21,8 +21,11 @@ import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -91,8 +94,7 @@ public class BatchPrintRegression_24 {
 
 		// configure query & bulk folder
 		session.basicContentSearch(Input.testData1);
-		session.bulkFolder(Folder);
-
+		session.bulkFolderExisting(Folder);
 		session.ViewInDocListWithOutPureHit();
 
 		// sort in Ascending Order
@@ -112,9 +114,7 @@ public class BatchPrintRegression_24 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction();
-		page.slipSheetToggleEnable();
-		page.getSlipCalculatedTabSelection().ScrollTo();
-		page.availableFieldSelection(Input.documentKey);
+		page.fillingSlipSheetWithMetadataInTiffSection(Input.documentKey);
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, Folder, productionname,
 				beginningBates);
@@ -152,8 +152,175 @@ public class BatchPrintRegression_24 {
 		boolean result = baseClass.compareListViaContainsTrimSpace(actualFileName, docidList);
 		baseClass.printResutInReport(result, "Downloaded FileNames has selected production slipsheet Name",
 				"Production slipsheet name is not generated", "Pass");
-		
+
 		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects a tag/folder with zero count for
+	 *              batch print[RPMXCON-49418]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-49418", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyWhenUserselectZeroDoc(String username, String password) throws Exception {
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49418 Batch Print");
+		baseClass.stepInfo("Verify when user selects a tag/folder with zero count for batch print");
+
+		// create Empty Tag
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+
+		// Select Tag for source tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, tagname, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+
+		// verify Displayed Message in Analysis tab
+		batchPrint.verifyCurrentTab("Analysis");
+		batchPrint.verifyAnalysisReportMessage();
+
+		// Delete Tag
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteTag(tagname, Input.securityGroup);
+
+		// Logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that for RMU, when Tag/Folder is unmapped should not be
+	 *              displayed under source selection for batch print [RPMXCON-49432]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-49432", enabled = true, groups = { "regression" })
+	public void verifyUnmappedTagIsnotDisplayed() throws Exception {
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49432 Batch Print");
+		baseClass.stepInfo(
+				"Verify that for RMU, when Tag/Folder is unmapped should not be displayed under source selection for batch print");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged In As PA");
+
+		// create Tag
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+
+		// Unmap tag from security group
+		security.navigateToSecurityGropusPageURL();
+		security.unmapTagFromSecurityGrp(Input.securityGroup, tagname);
+
+		// Logout
+		loginPage.logout();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As RMU");
+		baseClass.selectsecuritygroup(Input.securityGroup);
+
+		// verify Unmapped Tag present in source selection
+		batchPrint.navigateToBatchPrintPage();
+		boolean tagStatus = batchPrint.fillingSourceSelectionTab(Input.tag, tagname, false);
+		baseClass.printResutInReport(tagStatus, "Source slection tab doesnot Contain unmapped tag : " + tagname,
+				"Source Selection Tab contains unmapped Tag", "Fail");
+
+		// Logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that for RMU, Tag/Folder should be displayed in that
+	 *              security group only [RPMXCON-49429]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-49429", enabled = true, groups = { "regression" })
+	public void verifyTagOrFolderDislayedInThatSG() throws Exception {
+		String tagname = "TAG" + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname2 = "TAG" + Utility.dynamicNameAppender();
+		String foldername2 = "Folder" + Utility.dynamicNameAppender();
+		String securityGrp = "Security" + Utility.dynamicNameAppender();
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement user = new UserManagement(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49429 Batch Print");
+		baseClass.stepInfo("Verify that for RMU, Tag/Folder should be displayed in that security group only");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged In As PA");
+
+		// add security grp and assign access to RMU user
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGrp);
+		user.assignAccessToSecurityGroups(securityGrp, Input.rmu1userName);
+
+		// Logout
+		loginPage.logout();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As RMU");
+
+		// create Tag & Folder in default SG
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		// create Tag & Folder in Other SG
+		baseClass.selectsecuritygroup(securityGrp);
+		tagsAndFolderPage.CreateTag(tagname2, securityGrp);
+		tagsAndFolderPage.CreateFolder(foldername2, securityGrp);
+
+		// select default sg
+		baseClass.selectsecuritygroup(Input.securityGroup);
+
+		// verify only default sg Tags present in source selection tab
+		batchPrint.navigateToBatchPrintPage();
+		boolean tagStatus = batchPrint.fillingSourceSelectionTab(Input.tag, tagname, true);
+		driver.Navigate().refresh();
+		boolean tag2Status = batchPrint.fillingSourceSelectionTab(Input.tag, tagname2, false);
+		baseClass.printResutInReport(tagStatus, "Source Selection tab Contain tag created in this sg : " + tagname,
+				"Source Selection Tab doesnot contains Tag", "Pass");
+		baseClass.printResutInReport(tag2Status,
+				"Source Selection tab Doesnot Contain tag created in Different sg: " + tagname2,
+				"Source Selection Tab contains Tag of other SG", "Fail");
+
+		// verify only default sg Folder present in source selection tab
+		driver.Navigate().refresh();
+		boolean folderStatus = batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
+		driver.Navigate().refresh();
+		boolean folder2Status = batchPrint.fillingSourceSelectionTab("Folder", foldername2, false);
+		baseClass.printResutInReport(folderStatus,
+				"Source Selection tab Contain folder created in this sg : " + foldername,
+				"Source Selection Tab doesnot contains Folder", "Pass");
+		baseClass.printResutInReport(folder2Status,
+				"Source Selection tab Doesnot Contain folder created in other sg : " + foldername2,
+				"Source Selection Tab contains Folder of other SG", "Fail");
+
+		// Logout
+		loginPage.logout();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// delete sg
+		security.deleteSecurityGroups(securityGrp);
+
+		// Logout
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

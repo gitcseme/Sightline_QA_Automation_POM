@@ -254,7 +254,15 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getAnalysisRequestHeader() {
+		return driver.FindElementByXPath("//div[@class='clearfix']//following-sibling::div//strong");
+	}
 
+	public Element getAnalysisMessage() {
+		return driver
+				.FindElementByXPath("//div[@class='clearfix']//following-sibling::div//h4//following-sibling::div//p");
+	}
+	
 	public Element getAscAndDescDDlist() {
 		return driver.FindElementByXPath("//select[@id='exportFileSortingOrderDropDown']");
 	}
@@ -2124,13 +2132,13 @@ public class BatchPrintPage {
 	 * @param searchOrTagOrFol : SaerchNAme OR TAgNAme OR FOlderNAme
 	 * @param Next             : Next Button
 	 */
-	public void fillingSourceSelectionTab(String select, String searchOrTagOrFol, boolean Next) {
+	public boolean fillingSourceSelectionTab(String select, String searchOrTagOrFol, boolean Next) {
 		if (getSelectRadioButton().isElementAvailable(3) && getTagBatchPrint().isElementAvailable(3)
 				&& getFolderBatchPrint().isElementAvailable(3)) {
 			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
 			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
 		}
-
+        boolean flag=false;
 		if (select.equalsIgnoreCase("Search")) {
 			saveSearchRadiobutton(searchOrTagOrFol);
 
@@ -2139,25 +2147,37 @@ public class BatchPrintPage {
 			getTagBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllTagsArrow());
 			getAllTagsArrow().waitAndClick(10);
+			
+			if(getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
 			base.waitForElement(getSelectTag(searchOrTagOrFol));
 			getSelectTag(searchOrTagOrFol).waitAndClick(10);
 			System.out.println("Selected Tag : " + searchOrTagOrFol);
 			base.passedStep("Selected Tag From Source Selection Tab: " + searchOrTagOrFol);
+			flag= true;
+			}else {
+				flag= false;
+			}
 
 		} else if (select.equalsIgnoreCase("Folder")) {
 			base.waitForElement(getFolderBatchPrint());
 			getFolderBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllFoldersArrow());
 			getAllFoldersArrow().waitAndClick(10);
+			
+			if(getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
 			base.waitForElement(getSelectFolder(searchOrTagOrFol));
 			getSelectFolder(searchOrTagOrFol).waitAndClick(10);
 			System.out.println("Selected Folder : " + searchOrTagOrFol);
 			base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
-
+			flag= true;
+			}else {
+				flag= false;
+			}
 		}
 		if (Next) {
 			navigateToNextPage(1);
 		}
+		return flag;
 	}
 
 	/**
@@ -2772,4 +2792,22 @@ public class BatchPrintPage {
 				"Current tab is not as expected");
 	}
 
+	/**
+	 * @Author jeevitha
+	 * @Description : verify message in analysis tab
+	 */
+	public void verifyAnalysisReportMessage() {
+		String header = getAnalysisRequestHeader().getText();
+		String expectedMsg = "Analysis of your request";
+		base.textCompareEquals(header, expectedMsg, expectedMsg, "Expected header in Analysis Tab is not displayed");
+
+		if (getAnalysisMessage().isElementAvailable(5)) {
+			base.stepInfo("Analysis Message is displayed");
+			String actualReport = getAnalysisMessage().getText();
+			String expected = "You requested to print 0 documents.";
+			base.compareTextViaContains(actualReport, expected, expected, "Expected message is not dispalyed");
+		} else {
+			base.failedStep("Analysis Message is not displayed in Analysis tab");
+		}
+	}
 }
