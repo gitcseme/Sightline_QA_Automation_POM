@@ -2281,7 +2281,7 @@ public class SavedSearch {
 	public String createNewSearchGrp(String nodeName, int count) throws InterruptedException {
 
 		String childNodeName = null;
-		driver.Navigate().refresh();
+		//driver.Navigate().refresh();
 		base.waitForElement(getCreatedNodeName(nodeName));
 		getCreatedNodeName(nodeName).waitAndClick(10);
 		System.out.println("Clicked " + nodeName);
@@ -6313,7 +6313,7 @@ public class SavedSearch {
 			node = newNodeList.get(i);
 			getSavedSearchGroupName(node).waitAndClick(5);
 			Thread.sleep(3000);// To handle abnormal waits
-			String searchName2 = "Search Name" + UtilityLog.dynamicNameAppender();
+			String searchName2 = "SearchName" + UtilityLog.dynamicNameAppender();
 
 			driver.waitForPageToBeReady();
 			savedSearch_SearchandSelect(nodeSearchpair.get(node), "Yes");
