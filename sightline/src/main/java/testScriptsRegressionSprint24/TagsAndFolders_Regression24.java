@@ -172,7 +172,7 @@ public class TagsAndFolders_Regression {
 	}
 
 	/**
-	 * @author Raghuram A Date: 10/14/22 Modified date:N/A Modified by: N/A
+	 * @author NA A Date: 10/14/22 Modified date:N/A Modified by: N/A
 	 *         Description : Verify the count is displayed correctly instead of
 	 *         number of documents in tag group /folder group. RPMXCON-52934 Sprint
 	 *         23
@@ -261,4 +261,62 @@ public class TagsAndFolders_Regression {
 		loginPage.logout();
 
 	}
+	
+	
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-53282
+	 * @Description:Verify that RMU should be able to delete the Tag from application if created by him and associated to only one security group
+	 **/
+	@Test(description = "RPMXCON-53282", enabled = true, groups = { "regression" })
+	public void verifyTagDeleteInRMU() throws Exception {
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("Verify that RMU should be able to delete the Tag from application if created by him and associated to only one security group");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in As : " + Input.rmu1userName);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.DeleteTag(tagname, Input.securityGroup);
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)), "Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
+	
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)), "Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
+		
+	}
+	
+	
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-53283
+	 * @Description:Verify that RMU should be able to delete the Folder from application if created by him and associated to only one security group
+	 **/
+	@Test(description = "RPMXCON-53283", enabled = true, groups = { "regression" })
+	public void verifyFolderDeleteInRMU() throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("Verify that RMU should be able to delete the Folder from application if created by him and associated to only one security group");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in As : " + Input.rmu1userName);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolder(foldername, Input.securityGroup);
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)), "Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
+	
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)), "Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
+		
+	}
+	
+	
 }
