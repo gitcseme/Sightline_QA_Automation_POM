@@ -176,6 +176,7 @@ public class DocExplorer_Regression24 {
 		loginPage.logout();
 	
 	}
+
 	
 	/**
 	 * @author N/A
@@ -214,6 +215,42 @@ public class DocExplorer_Regression24 {
 		report.deleteCustomReport(custReportName);
 		baseClass.passedStep("Verified - that error message does not display and application accepts - "
 				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
+    		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Id:RPMXCON-54644 
+	 * Description Verify the page navigation
+	 * from the list view of doc explorer page
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54644", enabled = true, groups = { "regression" })
+	public void verifyingNavigationPage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54644");
+		baseClass.stepInfo("Verify the page navigation from the list view of doc explorer page");
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		docExplorer.navigateToDocExplorerPage();
+		driver.waitForPageToBeReady();
+		int RowHeader=baseClass.getIndex(docExplorer.getTableHeader(),"DOCID");
+		
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getNavigationPageNumber("2"),"NotCompareEqual");
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getLastPage(),"yes");
+		String NextBtn=docExplorer.getNavigationBtn("Next").GetAttribute("class");
+		System.out.println(NextBtn);
+		
+		baseClass.compareTextViaContains(NextBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getFirstPage(),"Compare");
+		String PreviousBtn=docExplorer.getNavigationBtn("Previous").GetAttribute("class");
+		System.out.println(PreviousBtn);
+		baseClass.compareTextViaContains(PreviousBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+
 		loginPage.logout();
 	}
 	
