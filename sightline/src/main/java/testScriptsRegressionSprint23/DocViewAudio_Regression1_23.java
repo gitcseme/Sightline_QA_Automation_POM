@@ -633,14 +633,18 @@ public class DocViewAudio_Regression1_23 {
 
 		// Audio search And Save
 		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
 		sessionSearch.addNewSearch();
 		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
+		driver.waitForPageToBeReady();
 		sessionSearch.addPureHit();
 		sessionSearch.saveSearch(searchName1);
 
 		// Added another Audio search and save
+		driver.waitForPageToBeReady();
 		sessionSearch.addNewSearch();
 		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		driver.waitForPageToBeReady();
 		sessionSearch.addPureHit();
 		sessionSearch.saveSearch(searchName1);
 		// Click on bulkAssign
@@ -655,6 +659,7 @@ public class DocViewAudio_Regression1_23 {
 		baseClass.impersonateRMUtoReviewer();
 
 		// Assignment Selection and Reviewer
+		driver.waitForPageToBeReady();
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 
 		// Check Display persistant hit - notrepetative
@@ -665,6 +670,7 @@ public class DocViewAudio_Regression1_23 {
 		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// Complete the document And SameAs Last
+		driver.waitForPageToBeReady();
 		docviewPage.editingCodingFormWithCompleteButton();
 
 		// logout
