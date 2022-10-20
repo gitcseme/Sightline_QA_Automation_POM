@@ -291,10 +291,10 @@ public class BatchPrintRegression_24 {
 		boolean tagStatus = batchPrint.fillingSourceSelectionTab(Input.tag, tagname, true);
 		driver.Navigate().refresh();
 		boolean tag2Status = batchPrint.fillingSourceSelectionTab(Input.tag, tagname2, false);
-		baseClass.printResutInReport(tagStatus, "Source slection tab Contain tag created in this sg : " + tagname,
+		baseClass.printResutInReport(tagStatus, "Source Selection tab Contain tag created in this sg : " + tagname,
 				"Source Selection Tab doesnot contains Tag", "Pass");
 		baseClass.printResutInReport(tag2Status,
-				"Source slection tab Doesnot Contain tag created in Different sg: " + tagname2,
+				"Source Selection tab Doesnot Contain tag created in Different sg: " + tagname2,
 				"Source Selection Tab contains Tag of other SG", "Fail");
 
 		// verify only default sg Folder present in source selection tab
@@ -303,10 +303,10 @@ public class BatchPrintRegression_24 {
 		driver.Navigate().refresh();
 		boolean folder2Status = batchPrint.fillingSourceSelectionTab("Folder", foldername2, false);
 		baseClass.printResutInReport(folderStatus,
-				"Source slection tab Contain folder created in this sg : " + foldername,
+				"Source Selection tab Contain folder created in this sg : " + foldername,
 				"Source Selection Tab doesnot contains Folder", "Pass");
 		baseClass.printResutInReport(folder2Status,
-				"Source slection tab Doesnot Contain folder created in other sg : " + foldername2,
+				"Source Selection tab Doesnot Contain folder created in other sg : " + foldername2,
 				"Source Selection Tab contains Folder of other SG", "Fail");
 
 		// Logout
