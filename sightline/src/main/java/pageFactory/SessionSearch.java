@@ -13841,6 +13841,7 @@ public class SessionSearch {
 		base.waitForElement(assignmentElement);
 		base.waitTillElemetToBeClickable(assignmentElement);
 		action.moveToElement(assignmentElement.getWebElement()).clickAndHold().build().perform();
+		base.waitTime(3);
 		base.waitForElement(getToolTipTextInAssignUnassignPopUp());
 		String assignmentNameInToolTip = getToolTipTextInAssignUnassignPopUp().getText();
 		base.textCompareEquals(assignmentName, assignmentNameInToolTip,
