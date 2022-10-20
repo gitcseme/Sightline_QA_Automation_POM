@@ -860,6 +860,14 @@ public class SavedSearch {
 	}
 
 	// Added By sowndarya.velraj
+	
+	public Element getPersistantHitCb_Existing() {
+		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
+	}
+	public Element getPersistantHitCheckBox() {
+		return driver.FindElementByXPath("sdz");
+	}
+	
 	public Element getLastStatusAs(String status) {
 		return driver.FindElementByXPath("//select[@id='ddlSavedSearchStatus']//option[text()='" + status + "']");
 	}
@@ -8349,6 +8357,34 @@ public class SavedSearch {
 			Log.info("Pop up message does not appear");
 		}
 		base.stepInfo("Saved search is opened in doc list");
+	}
+	
+	
+	/**
+	 * @author Sowndarya.Velraj
+	 * @param searchName
+	 * @param persistant
+	 */
+	public void bulkAssignPersistencSS(String searchName, boolean persistant) {
+		navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		savedSearch_Searchandclick(searchName);
+		
+		base.waitForElement(getSavedSearchToBulkAssign());
+		getSavedSearchToBulkAssign().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
+		if (persistant) {
+			driver.waitForPageToBeReady();
+			if (getPersistantHitCb_Existing().isElementAvailable(3))
+				getPersistantHitCb_Existing().waitAndClick(5);
+		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
+			    getPersistantHitCheckBox().waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+
 	}
 
 }

@@ -257,4 +257,171 @@ public class Projects_Regression24 {
 		Boolean result = projects.getProcessingEngineTxt().isDisplayed();
 		base.printResutInReport(result, pass, fail,"Fail");
 }
+	
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-55913
+	 * @Description:Validate minimum length value for DocID Format for Domain project
+	 **/
+	
+	@Test(description = "RPMXCON-55913", enabled = true, groups = { "regression" })
+	public void verifyMinimumLengthValue_DomainProject() throws Exception {
+		
+		String projectName="P"+ utility.dynamicNameAppender();
+		String clientName="CN"+utility.dynamicNameAppender();
+		System.out.println(clientName);
+		String shortName="S"+utility.dynamicRandomNumberAppender();
+		base = new BaseClass(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-55913");
+		base.stepInfo("Validate minimum length value for DocID Format for Domain project");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a SA user :"+Input.sa1userName);
+		
+		projects.navigateToClientFromHomePage();
+		projects.addNewClient(clientName, shortName, "Domain");
+		System.out.println("client is created"+clientName);
+		
+		projects.navigateToProductionPage();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getManageProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+		
+		projects.AddDomainProject(projectName,clientName);
+		System.out.println("project is created"+projectName);
+		projects.navigateToProductionPage();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+		
+		projects.editProject(projectName);
+		driver.waitForPageToBeReady();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getManageProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getProjectFolder());
+		
+		base.waitForElement(projects.getAddProject_SettingsTab());
+		projects.getAddProject_SettingsTab().waitAndClick(10);
+
+		base.stepInfo("Modify minimum length value with special characters and Save changes");
+		base.waitForElement(projects.getMinLengthValue());
+		projects.getMinLengthValue().waitAndClick(10);
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("*&");
+		String text = projects.getMinLengthValue().getText();
+		base.printResutInReport(text.isEmpty(), "Special characters should not be accepted", "Special characters got accepted", "Pass");
+		
+		base.stepInfo("Enter minimum value with alphanumeric characters and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("A123");
+		String text1 = projects.getMinLengthValue().getText();
+		base.printResutInReport(text1.isEmpty(), "AlphaNumeric characters should not be accepted", "AlphaNumeric characters got accepted", "Pass");
+		
+		base.stepInfo("Enter minimum value with more than 12 and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("1234567890123");
+		projects.getButtonSaveProject().waitAndClick(10);
+		base.VerifyErrorMessage("The specified minimum length cannot be greater than 12.");
+		
+		base.stepInfo("Enter minimum value with less than or equal to 12 and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("8");
+		projects.getButtonSaveProject().waitAndClick(10);
+		if (projects.getBgTaskPopup().isElementAvailable(5)) {
+			projects.getBtnOK().waitAndClick(10);
+		}
+		base.VerifySuccessMessage("Project updated successfully");
+		
+	}
+	
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-55912
+	 * @Description:Validate minimum length value for DocID Format for Non-Domain project
+	 **/
+	
+	@Test(description = "RPMXCON-55912", enabled = true, groups = { "regression" })
+	public void verifyMinimumLengthValue_NonDomainProject() throws Exception {
+		
+		String projectName="P"+ utility.dynamicNameAppender();
+		String clientName="CN"+utility.dynamicNameAppender();
+		System.out.println(clientName);
+		String shortName="S"+utility.dynamicRandomNumberAppender();
+		String hCode="H"+utility.dynamicRandomNumberAppender();
+		base = new BaseClass(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-55912");
+		base.stepInfo("Validate minimum length value for DocID Format for Non-Domain project");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a SA user :"+Input.sa1userName);
+		
+		projects.navigateToClientFromHomePage();
+		projects.addNewClient_NonDomainProject(clientName, shortName, "Not a Domain");
+		System.out.println("client is created"+clientName);
+		
+		projects.navigateToProductionPage();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getManageProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+		
+		projects.AddNonDomainProject(projectName, hCode);
+		System.out.println("project is created"+projectName);
+		projects.navigateToProductionPage();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getAddProjectBtn());
+		
+		projects.editProject(projectName);
+		driver.waitForPageToBeReady();
+		
+		//hovering action is performed temporarily to make the panel disappear
+//		base.mouseHoverOnElement(projects.getManageProjectBtn());
+//		driver.waitForPageToBeReady();
+//		base.mouseHoverOnElement(projects.getProjectFolder());
+		
+		base.waitForElement(projects.getAddProject_SettingsTab());
+		projects.getAddProject_SettingsTab().waitAndClick(10);
+
+		base.stepInfo("Modify minimum length value with special characters and Save changes");
+		base.waitForElement(projects.getMinLengthValue());
+		projects.getMinLengthValue().waitAndClick(10);
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("*&");
+		String text = projects.getMinLengthValue().getText();
+		base.printResutInReport(text.isEmpty(), "Special characters should not be accepted", "Special characters got accepted", "Pass");
+		
+		base.stepInfo("Enter minimum value with alphanumeric characters and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("A123");
+		String text1 = projects.getMinLengthValue().getText();
+		base.printResutInReport(text1.isEmpty(), "AlphaNumeric characters should not be accepted", "AlphaNumeric characters got accepted", "Pass");
+		
+		base.stepInfo("Enter minimum value with more than 12 and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("1234567890123");
+		projects.getButtonSaveProject().waitAndClick(10);
+		base.VerifyErrorMessage("The specified minimum length cannot be greater than 12.");
+		
+		base.stepInfo("Enter minimum value with less than or equal to 12 and save changes");
+		projects.getMinLengthValue().Clear();
+		projects.getMinLengthValue().SendKeys("8");
+		projects.getButtonSaveProject().waitAndClick(10);
+		if (projects.getBgTaskPopup().isElementAvailable(5)) {
+			projects.getBtnOK().waitAndClick(10);
+		}
+		base.VerifySuccessMessage("Project updated successfully");
+		
+	}
 }

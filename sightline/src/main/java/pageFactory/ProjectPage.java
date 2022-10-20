@@ -37,11 +37,11 @@ public class ProjectPage {
 	}
 
 	public Element getProjectServerPath() {
-		return driver.FindElementByXPath("//*[@id='ddlProjectWS']/option[1]");
+		return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]");
 	}
 
 	public Element getIngestionserverpath() {
-		return driver.FindElementByXPath(".//*[@id='ddlLoadWS']");
+		return driver.FindElementByXPath("//*[@id='ddlLoadWS']/option[1]");
 	}
 
 	public Element getProductionserverpath() {
@@ -73,7 +73,7 @@ public class ProjectPage {
 	}
 
 	public Element getButtonSaveProject() {
-		return driver.FindElementById("btnSaveProject");
+		return driver.FindElementByXPath("//button[@id='btnSaveProject']");
 	}
 
 	public Element getSearchProjectName() {
@@ -230,9 +230,33 @@ public class ProjectPage {
 	 }
 	 
 	 //added by sowndarya
-		
+	
+	 public Element getBtnOK() {
+			return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'OK')]");
+		}
+	
+	 public Element getBgTaskPopup() {
+			return driver.FindElementByXPath("//p[@class='pText']");
+		}
+	
+	 public Element getMinLengthValue() {
+			return driver.FindElementByXPath("//input[@id='docIDNum']");
+		}
+	
+	
+	 public Element getSelectClientName() {
+			return driver.FindElementByXPath("//select[@id='ddlEntityTypeList']");
+		}
 	 
-	 public Element getProcessingEngineTxt() {
+	 public Element getDomainName() {
+			return driver.FindElementByXPath("//input[@id='entity_domainid']");
+		}
+	 	public Element getClientNameSaveBtn() {
+			return driver.FindElementById("btnsave");
+		}
+	 
+	 
+	 	public Element getProcessingEngineTxt() {
 			return driver.FindElementByXPath("//div[@id='domainentitysettingsdiv']//strong[contains(text(),'Processing Engine')]");
 		}
 		
@@ -289,20 +313,12 @@ public class ProjectPage {
 		}), Input.wait30);
 		getProjectName().SendKeys(projectname);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectEntityType().Visible();
-			}
-		}), Input.wait30);
+		bc.waitForElement(getSelectEntityType());
 		getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectEntity().Visible();
-			}
-		}), Input.wait30);
-		getSelectEntity().selectFromDropdown().selectByVisibleText(clientname);
-
+		bc.waitForElement(getSelectClientName());
+		getSelectClientName().selectFromDropdown().selectByVisibleText(clientname);
+		
 		driver.scrollingToBottomofAPage();
 
 		getProjectFolder().Clear();
@@ -315,32 +331,26 @@ public class ProjectPage {
 		getProductionFolder().SendKeys("Automation");
 
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAddProject_SettingsTab().Visible();
-			}
-		}), Input.wait30);
+		
+		//temporily added
+//		bc.mouseHoverOnElement(getManageProjectBtn());
+//		bc.mouseHoverOnElement(getSelectClientName());
+		
+		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-		;
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNoOfDocuments().Visible();
-			}
-		}), Input.wait30);
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
 		UtilityLog.info(Bgcount);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getButtonSaveProject().Visible();
-			}
-		}), Input.wait30);
+		
 		driver.scrollingToBottomofAPage();
-		getButtonSaveProject().Click();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
 
 		bc.VerifySuccessMessage(
 				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
@@ -387,73 +397,39 @@ public class ProjectPage {
 
 		driver.scrollingToBottomofAPage();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProjectDBServerDropdown().Visible();
-			}
-		}), Input.wait30);
-		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProjectServerPath().Visible();
-			}
-		}), Input.wait30);
-		getProjectServerPath().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionserverpath().Visible();
-			}
-		}), Input.wait30);
-		getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-		getIngestionserverpath().selectFromDropdown().selectByIndex(1);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProductionserverpath().Visible();
-			}
-		}), Input.wait30);
-		getProductionserverpath().Click();
-		/*
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getIsActiveButton().Visible() ;}}), Input.wait30);
-		 * getIsActiveButton().Click();
-		 */
+		getProjectFolder().Clear();
 		getProjectFolder().SendKeys("Automation");
 
+		getIngestionFolder().Clear();
 		getIngestionFolder().SendKeys("Automation");
 
+		getProductionFolder().Clear();
 		getProductionFolder().SendKeys("Automation");
 
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAddProject_SettingsTab().Visible();
-			}
-		}), Input.wait30);
+		
+		//temporily added
+//		bc.mouseHoverOnElement(getManageProjectBtn());
+//		bc.mouseHoverOnElement(getSelectClientName());
+		
+		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-		;
+		
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNoOfDocuments().Visible();
-			}
-		}), Input.wait30);
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
 		UtilityLog.info(Bgcount);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getButtonSaveProject().Visible();
-			}
-		}), Input.wait30);
+		
 		driver.scrollingToBottomofAPage();
-		getButtonSaveProject().Click();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
 
+		bc.waitTime(5);
 		bc.VerifySuccessMessage(
 				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
 
@@ -464,23 +440,6 @@ public class ProjectPage {
 		}), Input.wait120 + Input.wait60);
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
-
-		/*
-		 * this.driver.getWebDriver().get(Input.url+"Project/Project");
-		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getSearchProjectName().Visible() ;}}), Input.wait30);
-		 * getSearchProjectName().SendKeys(projectname);
-		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getProjectFilterButton().Visible() ;}}), Input.wait30);
-		 * getProjectFilterButton().Click();
-		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getProjectName().Visible() ;}}), Input.wait30);
-		 * getProjectName(projectname).Displayed();
-		 */
-
 	}
 
 	/**
@@ -1122,12 +1081,12 @@ public class ProjectPage {
 		getProductionFolder().Clear();
 		getProductionFolder().SendKeys("Automation");
 
-		driver.scrollPageToTop();
-		bc.waitForElement(getAddProject_SettingsTab());
-		getAddProject_SettingsTab().waitAndClick(5);
+//		driver.scrollPageToTop();
+//		bc.waitForElement(getAddProject_SettingsTab());
+//		getAddProject_SettingsTab().waitAndClick(5);
 
-		bc.waitForElement(getNoOfDocuments());
-		getNoOfDocuments().SendKeys("20000");
+//		bc.waitForElement(getNoOfDocuments());
+//		getNoOfDocuments().SendKeys("20000");
 		bc.stepInfo("project details added ");
 
 	}
@@ -1257,7 +1216,62 @@ public class ProjectPage {
 		bc.waitForElement(getSelectEntity());
 		getSelectEntity().waitAndClick(10);
 		getSelectEntity().selectFromDropdown().selectByVisibleText(type);
+		
+		driver.waitForPageToBeReady();
+		
+		if (getSelectEntity().getText().contains("Domain")) {
+			String domainName="D"+Utility.dynamicRandomNumberAppender();
+			bc.waitForElement(getDomainName());
+			getDomainName().SendKeys(domainName);
+			driver.scrollingToBottomofAPage();
 
+			bc.waitForElement(getProjectDBServerDropdown());
+		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+
+		bc.waitForElement(getProjectServerPath());
+		getProjectServerPath().waitAndClick(10);
+
+		bc.waitForElement(getIngestionserverpath());
+		getIngestionserverpath().waitAndClick(10);
+
+		bc.waitForElement(getProductionserverpath());
+		getProductionserverpath().waitAndClick(10);
+		
+	}
+		bc.waitForElement(getClientNameSaveBtn());
+		getClientNameSaveBtn().waitAndClick(10);
+		
+		bc.waitTime(2);
+		bc.VerifySuccessMessage("The new client was added successfully");
+		bc.CloseSuccessMsgpopup();
 	}
 
+	/**
+	 * @author sowndarya.
+	 */
+	public void addNewClient_NonDomainProject(String clientName,String shortName,String type) {
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAddNewClient());
+		getAddNewClient().ScrollTo();
+		getAddNewClient().waitAndClick(10);
+		
+		bc.waitForElement(getClientName());
+		getClientName().SendKeys(clientName);
+		
+		bc.waitForElement(getClientShortName());
+		getClientShortName().SendKeys(shortName);
+		
+		bc.waitForElement(getSelectEntity());
+		getSelectEntity().waitAndClick(10);
+		getSelectEntity().selectFromDropdown().selectByVisibleText(type);
+		
+		bc.waitForElement(getClientNameSaveBtn());
+		getClientNameSaveBtn().waitAndClick(10);
+		
+		bc.waitTime(2);
+		bc.VerifySuccessMessage("The new client was added successfully");
+		bc.CloseSuccessMsgpopup();
+	}
+	
 }
