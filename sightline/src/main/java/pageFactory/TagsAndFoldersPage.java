@@ -59,7 +59,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getAddTag() {
-		return driver.FindElementById("aAddTag");
+		return driver.FindElementByXPath("//ul[@id='ddlTagActions']//a[text()='New Tag']");
 	}
 
 	public Element getTagName() {
