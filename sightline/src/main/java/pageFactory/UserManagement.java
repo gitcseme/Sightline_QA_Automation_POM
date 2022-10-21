@@ -4992,5 +4992,60 @@ public void enableOrDisableUsersRights(String Value, String[] users) {
 						}	
 					}	
 				}
+				/**
+				 * @author Brundha.T
+				 * @param role
+				 * @param Prjt
+				 * @param SG
+				 * @param Rights
+				 * @param Rbtn
+				 * @param users
+				 * Description: filling Bulk access control popup window
+				 */
+				public void selectRole(String role, String Prjt, String SG,boolean Rights,String Rbtn) {
 
+					bc.waitForElement(getBulkUserAccessTab());
+					getBulkUserAccessTab().waitAndClick(10);
+					if(role!=null) {
+					bc.waitForElement(getSelectRollId());
+					getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+					}
+					if(Prjt!=null) {
+					bc.waitForElement(getSelectDropProject(Prjt));
+					driver.scrollingToElementofAPage(getSelectDropProject(Prjt));
+					getSelectDropProject(Prjt).waitAndClick(10);
+					}
+					if (SG!=null) {
+						bc.waitForElement(getBulkUserSecurityGroup());
+						getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(SG);
+					}
+					
+					if (Rights == true) {
+						driver.waitForPageToBeReady();
+						getBulkManage().waitAndClick(5);
+					}
+					if (Rbtn!=null) {
+						driver.waitForPageToBeReady();
+						getEnableRadioBtn().waitAndClick(5);
+					} else {
+						driver.waitForPageToBeReady();
+				}
+					Actions Act = new Actions(driver.getWebDriver());
+					Act.clickAndHold(getPopupWindowHeader().getWebElement());
+					Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
+					Act.release().build().perform();
+					
+				}
+				/**
+				 * @author Brundha.T
+				 * @param ErrorMsg
+				 * Description:verifying the error msg
+				 */
+				public void saveAndVerifyingErrorMsg(String ErrorMsg) {
+					bc.waitForElement(getBulkUserSaveBtn());
+					getBulkUserSaveBtn().waitAndClick(10);
+					bc.VerifyErrorMessage(ErrorMsg);
+					driver.Navigate().refresh();
+					driver.waitForPageToBeReady();
+				}
 }

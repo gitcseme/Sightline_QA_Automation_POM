@@ -624,7 +624,15 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//a[text()='" + Btn + "']/..");
 
 	}
+	
+	public Element getSelectAllDocuments() {
+	return driver.FindElementByXPath("//*[@id='divNodeTree']//a[contains(@data-content,'All Documents')]");
 
+}
+	public Element getYesRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='Yes']");
+		}
+	
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3771,4 +3779,20 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
+	/**
+	 * @author Brundha.T
+	 * @param fieldVal
+	 * Description:Selecting documents in docExplorerpage
+	 */
+	public void SelectingAllDocuments(String fieldVal) {
+		bc.waitForElement(getDocExp_SelectAllDocs());
+		getDocExp_SelectAllDocs().waitAndClick(10);
+		if(fieldVal.equalsIgnoreCase("yes")) {
+			getYesRadioBtn().waitAndClick(10);
+			bc.stepInfo("Documents from all pages are selected");
+		}
+		doclist.getPopUpOkBtn().Click();
+		bc.stepInfo("Documents from first page is selected");
+	}
+	
 }

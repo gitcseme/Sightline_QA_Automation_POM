@@ -1618,7 +1618,17 @@ public class AssignmentsPage {
 	public Element getStartingCountDoc() {
 		return driver.FindElementByXPath("//label[contains(text(),'Starting Count Of Docs:')]//following-sibling::div//div");
 	}
-
+	public Element getNewAssignmentsampleMethod() {
+		return driver.FindElementById("sampleMethodNewAssignment");
+	}
+	
+	public Element getNewAssignmentDocCount() {
+		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+	}
+	
+	public Element getSelectDocCount() {
+		return driver.FindElementById("txtCountToAssignNewAssignment");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -11366,6 +11376,48 @@ public class AssignmentsPage {
 		}
 		bc.waitForElement(getKeywordPopUpCancelBtn());
 		getKeywordPopUpCancelBtn().waitAndClick(10);
+
+	}
+	/**
+	 * @author Brundha.T
+	 * @param SampleMethod
+	 * @return Description:selecting new assignment with sample method
+	 */
+	public String selectNewAssignmentWithSampleMethod(String samplemethod, String countToAssign, boolean Value) {
+
+		bc.waitForElement(getBulkAssign_NewAssignment());
+		getBulkAssign_NewAssignment().waitAndClick(20);
+		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewAssignmentDocCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+
+		bc.waitForElement(getNewAssignmentsampleMethod());
+		getNewAssignmentsampleMethod().selectFromDropdown().selectByVisibleText(samplemethod);
+		if (samplemethod.equalsIgnoreCase("Count of Selected Docs")) {
+			getSelectDocCount().SendKeys(countToAssign);
+		}
+
+		getContinueBulkAssign().waitAndClick(15);
+		final BaseClass bc = new BaseClass(driver);
+		 bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		String FinalCount = getFinalCount().getText();
+
+		getFinalizeButton().Click();
+
+		if (Value) {
+			bc.digitCompareEquals(Integer.parseInt(countToAssign), Integer.parseInt(FinalCount),
+					"Doc Count is displayed as expected", "Doc Count not displayed");
+		}
+		return FinalCount;
 
 	}
 
