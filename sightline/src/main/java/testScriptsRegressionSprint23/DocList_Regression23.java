@@ -308,6 +308,11 @@ public class DocList_Regression23 {
 
 		// verifying waveform after zoom
 		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
+		baseClass.waitTime(1);
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
 		boolean waveforms = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
 		softAssertion.assertTrue(waveforms);
 		baseClass.passedStep("Waveform is displayed for same document after zoom in");
