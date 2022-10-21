@@ -1421,6 +1421,11 @@ public class DocListPage {
 		return driver.FindElementById("btnClearAllBits");
 
 	}
+	
+	public Element getEmailAuthorNameNoRestultData() {
+		return driver.FindElementByXPath("//ul[@id='select2-EmailAuthorName-results']/li");
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
