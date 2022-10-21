@@ -198,6 +198,7 @@ public class LoginPage {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
 			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
 				bc.selectproject();
+			    bc.stepInfo(Input.projectName);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
