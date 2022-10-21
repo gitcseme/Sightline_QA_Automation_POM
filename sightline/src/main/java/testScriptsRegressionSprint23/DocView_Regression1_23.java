@@ -47,6 +47,9 @@ public class DocView_Regression1_23 {
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
 	ProjectPage projectPage;
+	DocViewPage docView;
+	AssignmentsPage assignmentsPage;
+	DocListPage doclist;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -84,36 +87,36 @@ public class DocView_Regression1_23 {
 		baseClass.stepInfo("Test case Id: RPMXCON-63747");
 		baseClass.stepInfo(
 				"Verify user can apply the saved coding stamp which includes Comments saved with the Copy menu ");
-		DocViewPage docView = new DocViewPage(driver);
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		assignmentsPage = new AssignmentsPage(driver);
+		doclist = new DocListPage(driver);
+		docexp = new DocExplorerPage(driver);
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String fieldText = "stamp" + Utility.dynamicNameAppender();
 		String docid = "T2541D";
-		String docid1 = "ID00000158";
-		docexp = new DocExplorerPage(driver);
-		DocListPage doclist = new DocListPage(driver);
-
+        String docid1= "T2507D";
+		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
-
 		// DocExploer to viewindocView Page
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.navigateToDocExplorerPage();
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
 		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
 		doclist.getApplyFilter().waitAndClick(10);
-
+		
 		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
 		docexp.getDocExp_SelectAllDocs().Click();
 		driver.waitForPageToBeReady();
 		if (doclist.getYesAllPageDocs().isDisplayed()) {
-			doclist.getYesAllPageDocs().waitAndClick(5);
-			doclist.getPopUpOkBtn().waitAndClick(5);
-		}
-		baseClass.waitTime(5);
+            doclist.getYesAllPageDocs().waitAndClick(5);
+            doclist.getPopUpOkBtn().waitAndClick(5);           
+        }
+        baseClass.waitTime(5);
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
@@ -157,21 +160,14 @@ public class DocView_Regression1_23 {
 		docView.deleteStampColour(Input.stampColours);
 		docView.deleteStampColour(Input.stampSelection);
 		docView.deleteStampColour(Input.stampColour);
-		driver.waitForPageToBeReady();
-		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.navigateToDocExplorerPage();
-		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
-		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Message");
-		doclist.getApplyFilter().waitAndClick(10);
-
+		loginPage.logout();
 
 		// Create assignment and go to docview
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.bulkAssign();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.assignmentDistributingToReviewer();
-
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
@@ -181,6 +177,7 @@ public class DocView_Regression1_23 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid1);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		driver.scrollPageToTop();
 		docView.perfromCodingStampSelection(Input.stampColours);
@@ -208,9 +205,7 @@ public class DocView_Regression1_23 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.deleteStampColour(Input.stampColours);
-		driver.waitForPageToBeReady();
 		docView.deleteStampColour(Input.stampSelection);
-		driver.waitForPageToBeReady();
 		docView.deleteStampColour(Input.stampColour);
 	}
 
