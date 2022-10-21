@@ -202,15 +202,15 @@ public class DocExplorerPage {
 	public Element getExportDataSaveReport() {
 		return driver.FindElementByXPath("//i[@id='saveReport']");
 	}
-	
+
 	public Element getExportDataCustomRepName() {
 		return driver.FindElementById("txtReportname");
 	}
-	
+
 	public Element getExportSaveBtn() {
 		return driver.FindElementById("saveXML");
 	}
-	
+
 	public Element getBulkFolder() {
 		return driver.FindElementByXPath(" //a[text()='Bulk Folder']");
 	}
@@ -471,17 +471,18 @@ public class DocExplorerPage {
 	// Added by Gopinath - 16/03/2022
 	public Element getDocExplorerTabAfterDashBoard() {
 		return driver.FindElementByXPath(
-				"//ul[@id='LeftMenu']/li/a[@title='Dashboard']/../following-sibling::li/a[@title='Doc Explorer']");
+				"//nav[@id='LeftMenu']/ul/li/a[@title='Dashboard']/../following-sibling::li/a[@title='Doc Explorer']");
 	}
 
 	public Element getDocExplorerAboveDatasets() {
 		return driver.FindElementByXPath(
-				"//ul[@id='LeftMenu']/li/a[@title='Datasets']/../preceding-sibling::li/a[@title='Doc Explorer']");
+				"//nav[@id='LeftMenu']/ul/li/a[@title='Datasets']/../preceding-sibling::li/a[@title='Doc Explorer']");
 	}
 
 	public Element getDocExplorerTab() {
-        return driver.FindElementByXPath("//nav[@id='LeftMenu']/ul/li/a[@title='Doc Explorer']");
-    }
+		return driver.FindElementByXPath("//nav[@id='LeftMenu']/ul/li/a[@title='Doc Explorer']");
+	}
+
 	// Added by Gopinath - 21/03/2022
 	public ElementCollection getDocExplorerFolders() {
 		return driver.FindElementsByXPath(
@@ -575,45 +576,55 @@ public class DocExplorerPage {
 	}
 
 	public Element getEmailRecipient(String emailRecipient) {
-		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailRecipient + "']");
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailRecipient + "']");
 	}
 
 	public Element getEmailRecipientValues() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[9]//div");
 
 	}
+
 	public Element getDocExp_EmailSubFileSearchName(String emailSubFile) {
-		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailSubFile + "']");
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailSubFile + "']");
 	}
 
 	public Element getEmailSubFileValues() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[6]//div");
 
 	}
+
 	public Element getLastPage() {
 		return driver.FindElementByXPath("//a[text()='Next']/..//preceding-sibling::li//a");
 
 	}
+
 	public Element getFirstPage() {
 		return driver.FindElementByXPath("//a[text()='Previous']/..//following-sibling::li//a");
 
 	}
+
 	public Element getNavigationPageNumber(String PageNo) {
-		return driver.FindElementByXPath("//li[contains(@class,'paginate_button')]//a[text()='"+PageNo+"']");
+		return driver.FindElementByXPath("//li[contains(@class,'paginate_button')]//a[text()='" + PageNo + "']");
 
 	}
+
 	public ElementCollection getTableHeader() {
 		return driver.FindElementsByXPath("//table//thead//th");
 
 	}
+
 	public ElementCollection getRowData(int FieldValue) {
-		return driver.FindElementsByXPath("//table[@id='dtDocumentList']//tbody//tr//td["+FieldValue+"]");
+		return driver.FindElementsByXPath("//table[@id='dtDocumentList']//tbody//tr//td[" + FieldValue + "]");
 
 	}
+
 	public Element getNavigationBtn(String Btn) {
-		return driver.FindElementByXPath("//a[text()='"+Btn+"']/..");
+		return driver.FindElementByXPath("//a[text()='" + Btn + "']/..");
 
 	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3161,12 +3172,12 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
 	 *               by Docfiletype.
-	 *               
+	 * 
 	 */
 	public void verifyExcludeFunctionlityForDocFileType() {
 
@@ -3175,18 +3186,19 @@ public class DocExplorerPage {
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
 			driver.waitForPageToBeReady();
-			if(bc.text("ID000").isDisplayed()) {
+			if (bc.text("ID000").isDisplayed()) {
 				bc.passedStep("Exclude filter functionality by folder is working as expected");
 			} else {
 				bc.failedStep("Exclude filter functionality by folder is not working as expected.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
-					+ e.getMessage());
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
+							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude another filter for DocFileType.
@@ -3219,7 +3231,6 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA
@@ -3311,13 +3322,13 @@ public class DocExplorerPage {
 
 		doclist.getApplyFilter().waitAndClick(10);
 		bc.stepInfo(" Value entered applied only to the \"DocFileType\" corresponding field.");
-		if(bc.text("MS Word").isDisplayed()) {
+		if (bc.text("MS Word").isDisplayed()) {
 			bc.passedStep("It return documents filter functionality by docs is working as expected");
-		}else {
+		} else {
 			bc.failedStep("It return documents filter functionality by docs is not working as expected");
 		}
 	}
-	
+
 	/**
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for IngestionName
@@ -3348,8 +3359,7 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occcured while performing exclude filter for IngestionName" + e.getMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude another filter for IngestionName.
@@ -3381,12 +3391,12 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occcured while performing exclude filter for IngestionName" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
 	 *               by IngestionName.
-	 *               
+	 * 
 	 */
 	public void verifyExcludeFunctionlityForIngestionName() {
 
@@ -3395,20 +3405,21 @@ public class DocExplorerPage {
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
 			driver.waitForPageToBeReady();
-			if(bc.text("ID000").isDisplayed()) {
+			if (bc.text("ID000").isDisplayed()) {
 				bc.passedStep("Exclude filter functionality by IngestionName is working as expected");
 			} else {
 				bc.failedStep("Exclude filter functionality by IngestionName is not working as expected.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occcured while verifying documents after applying exclude functionality by IngestionName"
-					+ e.getMessage());
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by IngestionName"
+							+ e.getMessage());
 		}
 	}
 
 	/**
-	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @author : Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for folder..
 	 * @param folderName : folderName is a string value that name of folder need to
 	 *                   select.
@@ -3442,7 +3453,7 @@ public class DocExplorerPage {
 	}
 
 	/**
-	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @author : Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying Include functionality
 	 *               by Docfiletype.
 	 * 
@@ -3466,8 +3477,9 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
+
 	/**
-	 * @author :  Created date: NA Modified date: NA Modified by:NA.
+	 * @author : Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude another filter for folder..
 	 * @param folderName : folderName is a string value that name of folder need to
 	 *                   select.
@@ -3497,11 +3509,10 @@ public class DocExplorerPage {
 			e.printStackTrace();
 			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
 		}
-		}
+	}
 
-	
 	/**
-	 * @author : sowndariya 
+	 * @author : sowndariya
 	 * @Description: Method for selecting some documents and action bulk tag them..
 	 * @param tagName           : tagName is a string value that name of tag need to
 	 *                          select.
@@ -3511,83 +3522,84 @@ public class DocExplorerPage {
 	 */
 	public ArrayList<String> selectDocumentsAndActionBulkTag(int numberOfDocuments, String tagName) {
 		ArrayList<String> docids = new ArrayList<String>();
-		
-			driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-			driver.getWebDriver().navigate().refresh();
-			driver.waitForPageToBeReady();
-			for (int i = 0; i < 5; i++) {
-				try {
-					bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
-					bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
-					break;
-				} catch (Exception e) {
-					bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
-					bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
-				}
-			}
-		
-			for (int row = 0; row < numberOfDocuments; row++) {
+
+		driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+		for (int i = 0; i < 5; i++) {
+			try {
 				bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
 				bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
-				getDocumentsCheckBoxbyRowNum(row + 1).Click();
-				docids.add(getDocumentsIdbyRowNum(row + 1).GetAttribute("data-content").trim());
+				break;
+			} catch (Exception e) {
+				bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
+				bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
 			}
-			for (int i = 0; i < 7; i++) {
-				try {
-					bc.waitForElement(getDocExp_actionButton());
-					bc.waitTillElemetToBeClickable(getDocExp_actionButton());
-					getDocExp_actionButton().Click();
-					break;
-				} catch (Exception e) {
+		}
+
+		for (int row = 0; row < numberOfDocuments; row++) {
+			bc.waitForElement(getDocumentsCheckBoxbyRowNum(1));
+			bc.waitTillElemetToBeClickable(getDocumentsCheckBoxbyRowNum(1));
+			getDocumentsCheckBoxbyRowNum(row + 1).Click();
+			docids.add(getDocumentsIdbyRowNum(row + 1).GetAttribute("data-content").trim());
+		}
+		for (int i = 0; i < 7; i++) {
+			try {
+				bc.waitForElement(getDocExp_actionButton());
+				bc.waitTillElemetToBeClickable(getDocExp_actionButton());
+				getDocExp_actionButton().Click();
+				break;
+			} catch (Exception e) {
 //					Thread.sleep(Input.wait30 / 10);
-				}
 			}
-			bc.waitTillElemetToBeClickable(getBulkTagButton());
-			getBulkTagButton().Click();
-			driver.scrollingToBottomofAPage();
-			return docids;
-		
-		
+		}
+		bc.waitTillElemetToBeClickable(getBulkTagButton());
+		getBulkTagButton().Click();
+		driver.scrollingToBottomofAPage();
+		return docids;
 
 	}
-	
+
 	/**
-	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the Email Recipient field values in doc exp list
-	 *               view
+	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the Email Recipient field values in doc
+	 *               exp list view
 	 */
 	public void verifyEmailRecipientValuesInDocExp(String[] emailRecipientValues) {
 
 		for (int j = 0; j < emailRecipientValues.length; j++) {
-			
+
 			bc.waitForElement(getEmailRecipient("EMAILRECIPIENTS"));
 			getEmailRecipient("EMAILRECIPIENTS").SendKeys(emailRecipientValues[j]);
 			getEmailRecipient("EMAILRECIPIENTS").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
-			bc.validatingGetTextElement(getEmailRecipientValues(),emailRecipientValues[j]);
+			bc.validatingGetTextElement(getEmailRecipientValues(), emailRecipientValues[j]);
+			
 			driver.Navigate().refresh();
 		}
 	}
-	
+
 	/**
-	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the EmailSubject/Filename field values in doc exp list
-	 *               view
+	 * @author: Vijaya.Rani Created Date: 17/10/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the EmailSubject/Filename field values
+	 *               in doc exp list view
 	 */
 	public void verifyEmailSubjectFilenameValuesInDocExp(String[] emailFileValues) {
 
 		for (int j = 0; j < emailFileValues.length; j++) {
-			
+
 			bc.waitForElement(getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME"));
 			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeys(emailFileValues[j]);
 			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
-			bc.validatingGetTextElement(getEmailSubFileValues(),emailFileValues[j]);
+			bc.validatingGetTextElement(getEmailSubFileValues(), emailFileValues[j]);
+			bc.stepInfo("Selected email value is "+ emailFileValues[j]);
 			driver.Navigate().refresh();
 		}
 	}
 
-	
 	public void docExpExportDataSaveReport(String customReportName) throws Exception {
 
 		bc = new BaseClass(driver);
@@ -3627,42 +3639,136 @@ public class DocExplorerPage {
 
 		bc.waitForElement(getExportDataCustomRepName());
 		getExportDataCustomRepName().SendKeys(customReportName);
-		
+
 		bc.waitForElement(getExportSaveBtn());
 		getExportSaveBtn().waitAndClick(5);
-		
-		bc.VerifySuccessMessage("Report save successfully");
-		bc.stepInfo("Report Saved Successfully With the name "+ customReportName);
-	}
 
+		bc.VerifySuccessMessage("Report save successfully");
+		bc.stepInfo("Report Saved Successfully With the name " + customReportName);
+	}
 
 	/**
 	 * @author Brundha.T
 	 * @param RowNo
 	 * @param ele
-	 * @param Value
-	 * Description: method to verify the navigation option in docexplorer page
+	 * @param Value Description: method to verify the navigation option in
+	 *              docexplorer page
 	 */
-		public void verifyingNavigationOption(int RowNo,Element ele, String Value) {
-			driver.scrollingToBottomofAPage();
-			driver.waitForPageToBeReady();
-			List<String> DefaultPage = bc.availableListofElements(getRowData(RowNo));
-			System.out.println(DefaultPage);
-			bc.waitTime(2);
-			ele.waitAndClick(5);
-			driver.waitForPageToBeReady();
-			List<String> NavigatedPage = bc.availableListofElements(getRowData(RowNo));
-			System.out.println(NavigatedPage);
-			if(Value.equals("NotCompareEqual")) {
-			bc.listCompareNotEquals(DefaultPage, NavigatedPage,"Navigated as per the page number", "Not navigated");
-			}else if(Value.equals("Compare")){
-				bc.listCompareEquals(DefaultPage, NavigatedPage,"Navigated as per the page number", "Not navigated");
-			}
-			else if(Value.equals("yes")) {
+	public void verifyingNavigationOption(int RowNo, Element ele, String Value) {
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		List<String> DefaultPage = bc.availableListofElements(getRowData(RowNo));
+		System.out.println(DefaultPage);
+		bc.waitTime(2);
+		ele.waitAndClick(5);
+		driver.waitForPageToBeReady();
+		List<String> NavigatedPage = bc.availableListofElements(getRowData(RowNo));
+		System.out.println(NavigatedPage);
+		if (Value.equals("NotCompareEqual")) {
+			bc.listCompareNotEquals(DefaultPage, NavigatedPage, "Navigated as per the page number", "Not navigated");
+		} else if (Value.equals("Compare")) {
+			bc.listCompareEquals(DefaultPage, NavigatedPage, "Navigated as per the page number", "Not navigated");
+		} else if (Value.equals("yes")) {
 			bc.ValidateElementCollection_Presence(getRowData(RowNo), "Documents in DocExplorer");
-			}
-			driver.waitForPageToBeReady();
+		}
+		driver.waitForPageToBeReady();
 	}
 
-}
+	/**
+	 * @author: Vijaya.Rani
+	 * @description: Get Count for docexplorer folder count
+	 */
+	public int getcount(String folderNumber) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		bc.waitTime(5);
+		String folderName = getfolderFromTreeByNumber(folderNumber).getText();
+		String folderCount = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+		int treeviewCount = Integer.parseInt(folderCount.replace(",", ""));
+		return treeviewCount;
+	}
 
+	/**
+	 * @author: Vijaya.Rani
+	 * @description: this method will return the docsCount from selected All
+	 *               Document folder tree view
+	 */
+	public int getAllDocumentFolderCountFromTreeView() {
+		bc.waitForElement(getAllDocumentsCount());
+		getAllDocumentsCount().waitAndClick(10);
+		String folderName = getAllDocumentsCount().getText();
+		String folderCount = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+		int treeviewCount = Integer.parseInt(folderCount.replace(",", ""));
+		return treeviewCount;
+
+	}
+
+	/**
+	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude filter for Comments
+	 */
+	public void performExculdeCommentsFilter(String Comments, String Comments1) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getDocExp_CommentsFilter());
+			bc.waitTillElemetToBeClickable(getDocExp_CommentsFilter());
+			getDocExp_CommentsFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(Comments);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAddToFilter());
+			bc.waitTillElemetToBeClickable(getAddToFilter());
+			getAddToFilter().Click();
+			if (Comments1 != null) {
+				bc.waitTillElemetToBeClickable(doclist.getMakeSureSelectedValue());
+				doclist.getMakeSureSelectedValue().Click();
+				getSearchTextArea().SendKeys(Comments1);
+				Thread.sleep(Input.wait30 / 30);
+				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getAddToFilter());
+				bc.waitTillElemetToBeClickable(getAddToFilter());
+				getAddToFilter().Click();
+
+			}
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while performing exclude filter for Comments" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method to verify documents after applying exclude functionality
+	 *               by Comments.
+	 * 
+	 */
+	public void verifyExcludeFunctionlityForComments(String DocID) {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getPresentDocCount());
+			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			driver.waitForPageToBeReady();
+			if (bc.text(DocID).isDisplayed()) {
+				bc.passedStep("Exclude filter functionality by Comments is working as expected");
+			} else {
+				bc.failedStep("Exclude filter functionality by Comments is not working as expected.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by Comments"
+							+ e.getMessage());
+		}
+	}
+}
