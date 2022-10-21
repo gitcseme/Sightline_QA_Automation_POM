@@ -386,7 +386,8 @@ public class TestData {
 	public String BatchFileduplicateHeader;
 	public String SearchBatchFile;
 	public String AutomationBackUpDomain;
-	
+	public String RetrievalCountFold;
+
 	//Added By Jeevitha [Collection] 
     public String TenantID;
     public String ApplicationID;
@@ -876,5 +877,20 @@ public class TestData {
     public  String filterDataInput3;
     public String transcriptId;
 	
+    public String Searching;
+    public String DownloadNative;
+    public String Highlighting;
+    public String Redactions;
+    public String ReviewerRemarks;
+    public String AnalyticsPanels;
+    public String Manage;
+    public String Productions;
+    public String AllReports;
+    public String ConceptExplorer;
+    public String CommunicationsExplorer;
+    public String Categorize;
+    public String Datasets;
+    public String ManageDomainProjects;
+    public String Ingestions;
 	
 }

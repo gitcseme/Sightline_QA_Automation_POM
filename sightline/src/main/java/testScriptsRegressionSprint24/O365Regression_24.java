@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -78,7 +79,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel Collection' when Collection is in 'Retrieval
 	 *              Failed' status RPMXCON-61090
 	 */
-	@Test(description = "RPMXCON-61090", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-61090", enabled = false, groups = { "regression" })
 	public void verifyCancelCollectionInRetrievalFailedStats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -161,7 +162,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel Collection' action when Collection is in
 	 *              'Creating Datasets' status RPMXCON-61093
 	 */
-	@Test(description = "RPMXCON-61093", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-61093", enabled = false, groups = { "regression" })
 	public void verifyCancelCollectionInCreationDSstats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -238,7 +239,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel' action when Collection is in 'Retrieved with
 	 *              Errors' status RPMXCON-61076
 	 */
-	@Test(description = "RPMXCON-61076", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-61076", enabled = false, groups = { "regression" })
 	public void verifyIgnoreErrorsActionInRetrievedDSErr() throws Exception {
 
 		HashMap<String, String> colllectionData = new HashMap<>();
@@ -348,6 +349,201 @@ public class O365Regression_24 {
 
 		// Logout
 		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that column name "Total Retrieved Count" is available
+	 *              on "Manage Collections" screen (Grid). [RPMXCON-61528]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61528", enabled = true, groups = { "regression" })
+	public void verifyRetrievedCountColumn() throws Exception {
+		String selectedFolder = Input.RetrievalCountFold;
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String headerListDS[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader5, Input.collectionDataHeader4, Input.collectionDataHeader6 };
+		String[] statusList = { "Completed" };
+
+		base.stepInfo("Test case Id: RPMXCON-61528 - O365");
+		base.stepInfo(
+				"Verify that column name \"Total Retrieved Count\" is available on \"Manage Collections\" screen (Grid).");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Click create New Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+		base.stepInfo("Selected source location : " + dataSourceName);
+
+		// click created source location and verify navigated page
+		colllectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, true);
+		collectionName = base.returnKey(colllectionData, "", false);
+		collectionId = colllectionData.get(collectionName);
+
+		// DataSet creation
+		collection.fillinDS(collectionName, firstName, lastName, collectionEmailId, selectedApp, colllectionData,
+				selectedFolder, headerListDS, "Button", 3, false, "Save", false, "");
+		driver.waitForPageToBeReady();
+
+		// Start collection
+		collection.clickOnNextAndStartAnCollection();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// check completed status
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+
+		// verify Total retrieve count column is displayed
+		List<String> headerListcolln = base.availableListofElements(collection.getDataSetDetailsHeader());
+		base.compareListWithOnlyOneString(headerListcolln, Input.totalRetrievedCount,
+				Input.totalRetrievedCount + " : Column is Displayed", "Expected Column is not Dispalyed");
+
+		// verify Retrieved file count .
+		int index = base.getIndex(collection.getDataSetDetailsHeader(), Input.totalRetrievedCount);
+		String totalRetriveCount = collection.getDataSetDetails(collectionName, index).getText();
+		base.textCompareEquals(totalRetriveCount, "2", "Total retreive count is as expected : " + totalRetriveCount,
+				"Datasets Count is not as expected");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 10/21/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that - User can Uncheck Collections access control and
+	 *              remove the permissions for 'Collections' on Edit User Screen
+	 *              RPMXCON-60711
+	 */
+	@Test(description = "RPMXCON-60711", enabled = true, groups = { "regression" })
+	public void verifyPAandRMUAcessWhileDSUnchecked() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60711 - O365");
+		base.stepInfo(
+				"Verify that - User can  Uncheck Collections access control and remove the permissions for 'Collections' on Edit User Screen");
+
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" },
+				{ Input.rmu1userName, "Review Manager", "SA" } };
+
+		// Login as SA
+		base.stepInfo("**Pre-requisite : At least one PA User should exists");
+		base.stepInfo("**Login to Application with SA**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// Now Uncheck \"Collections\" access control on Edit User Screen
+		base.stepInfo(
+				"** Verify that when “Datasets” access control is NOT checked then 'Collections' option is also Un-checked on Edit User Screen. **");
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, false, false, "Yes");
+
+		// Logout
+		login.logout();
+
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @createdDate : 10/19/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that user should be able to add name for the collection
+	 *              being added RPMXCON-60646
+	 */
+	@Test(description = "RPMXCON-60646", enabled = true, groups = { "regression" })
+	public void verifyCollectionNameAdded() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60646 - O365");
+		base.stepInfo("Verify that user should be able to add name for the collection being added");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 10/21/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that - User can Uncheck Collections access control and
+	 *              remove the permissions for 'Collections' on Edit User Screen
+	 *              RPMXCON-60710
+	 */
+	@Test(description = "RPMXCON-60710", enabled = true, groups = { "regression" })
+	public void verifyPAandRMUAcessWhileUnchecked() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60710 - O365");
+		base.stepInfo(
+				"Verify that - User can  Uncheck Collections access control and remove the permissions for 'Collections' on Edit User Screen");
+
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" },
+				{ Input.rmu1userName, "Review Manager", "SA" } };
+
+		// Login as SA
+		base.stepInfo("**Pre-requisite : At least one PA User should exists");
+		base.stepInfo("**Login to Application with SA**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// Now Uncheck \"Collections\" access control on Edit User Screen
+		base.stepInfo("** Now Uncheck \"Collections\" access control on Edit User Screen **");
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, false, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("** Via PA Click on Dataset Menu and Verify that \"Collections\" menu is not available **");
+		dataSets.CollectionAndSourcecomponentAbsenceCheck();
+
+		// Logout
+		login.logout();
+
+		// Login as RMU and repeat the same
+		base.stepInfo("**Repeat Same Steps for RMU User**");
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("**Via RMU Click on Dataset Menu and Verify that \"Collections\" menu is not available **");
+		dataSets.CollectionAndSourcecomponentAbsenceCheck();
+
+		// Logout
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
