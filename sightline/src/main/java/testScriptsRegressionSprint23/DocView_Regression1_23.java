@@ -54,8 +54,8 @@ public class DocView_Regression1_23 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -164,16 +164,14 @@ public class DocView_Regression1_23 {
 		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Message");
 		doclist.getApplyFilter().waitAndClick(10);
 
-		docexp.getDocExp_SelectAllDocs().isElementAvailable(5);
-		docexp.getDocExp_SelectAllDocs().Click();
-		driver.waitForPageToBeReady();
-		if (doclist.getYesAllPageDocs().isDisplayed()) {
-			doclist.getYesAllPageDocs().waitAndClick(5);
-			doclist.getPopUpOkBtn().waitAndClick(5);
-		}
-		baseClass.waitTime(5);
-		docexp.docExp_BulkAssign();
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		// Create assignment and go to docview
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.assignmentDistributingToReviewer();
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
@@ -186,16 +184,19 @@ public class DocView_Regression1_23 {
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		driver.scrollPageToTop();
 		docView.perfromCodingStampSelection(Input.stampColours);
+		baseClass.CloseSuccessMsgpopup();
 		baseClass.waitForElement(docView.getMiniDocId(docid1));
 		docView.getMiniDocId(docid1).waitAndClick(2);
 		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampSelection);
+		baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		docView.completeButton();
 		docView.editCodingForm(comment);
 		docView.codingStampButton();
 		docView.popUpAction(fieldText, Input.stampColour);
 		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
+		baseClass.CloseSuccessMsgpopup();
 		String getAttribute1 = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
 		if (getAttribute1.equals(comment)) {
 			baseClass.passedStep("Comment is displayed on codingform panel successfully");
