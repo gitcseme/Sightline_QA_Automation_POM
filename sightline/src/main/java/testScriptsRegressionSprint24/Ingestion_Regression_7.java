@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -194,6 +194,78 @@ public class Ingestion_Regression_7 {
 		else {
 			baseClass.failedStep(field+"Counts not matched for search result and tally report");
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 21/10/2022 TestCase Id:RPMXCON-49554
+	 * Description :Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is available.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49554",enabled = true, groups = { "regression" })
+	public void verifyEmailCcMetadataAvailability() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49554");
+		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is available");
+		String data ="EmailCCNamesAndAddresses";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//add dataset details and click next
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Adding ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		//Verify destination field 'EmailCCNamesAndAddresses' metadata
+		baseClass.stepInfo("Select 'EMAIL' in field category");
+		baseClass.waitForElement(ingestionPage.getMappingCategoryField(6));
+		ingestionPage.getMappingCategoryField(6).selectFromDropdown().selectByVisibleText(Input.email);
+		baseClass.stepInfo("verify metadata");
+		ingestionPage.verifyMetadataAvailability(ingestionPage.getMappingDestinationField(6), data);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 21/10/2022 TestCase Id:RPMXCON-49555
+	 * Description :Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49555",enabled = true, groups = { "regression" })
+	public void verifyEmailBccMetadataAvailability() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49555");
+		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available");
+		String data ="EmailBCCNamesAndAddresses";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//add dataset details and click next
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Adding ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		//Verify destination field 'EmailBCCNamesAndAddresses' metadata
+		baseClass.stepInfo("Select 'EMAIL' in field category");
+		baseClass.waitForElement(ingestionPage.getMappingCategoryField(6));
+		ingestionPage.getMappingCategoryField(6).selectFromDropdown().selectByVisibleText(Input.email);
+		baseClass.stepInfo("verify metadata");
+		ingestionPage.verifyMetadataAvailability(ingestionPage.getMappingDestinationField(6), data);
 		loginPage.logout();
 	}
 		
