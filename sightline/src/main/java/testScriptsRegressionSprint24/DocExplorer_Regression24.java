@@ -481,6 +481,84 @@ public class DocExplorer_Regression24 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @author Brundha.T Id:RPMXCON-54635 Description :Verify that user can select all
+	 *         documents from page from List view, and select action as Bulk Assign
+	 *         from Actions drop down to Assign documents to new assignment
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54635", enabled = true, groups = { "regression" })
+	public void verifyDocumentInPagesAfterBulkAssign() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54635");
+		baseClass.stepInfo(
+				"Verify that user can select all documents from page from List view, and select action as Bulk Assign from Actions drop down to Assign documents to new assignment");
+
+		AssignmentsPage Assign = new AssignmentsPage(driver);
+		String assigname = "assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Navigating to Docexplorer page");
+		docExplorer.navigateToDocExplorerPage();
+		driver.waitForPageToBeReady();
+		docExplorer.getfolderFromTreeByNumber("1").waitAndClick(10);
+		docExplorer.SelectingAllDocuments("No");
+		driver.scrollingToBottomofAPage();
+		String count = docExplorer.getDocExp_DocumentList_info().getText().toString();
+		String []Doc=count.split(" ");
+		String ListViewCount=Doc[3];
+		System.out.println(ListViewCount);
+		driver.scrollPageToTop();
+		docExplorer.docExp_BulkAssign();
+		
+		baseClass.stepInfo("Selecting new Assignment with sample method");
+		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs",ListViewCount,true);
+		Assign.quickAssignCreation(assigname, Input.codeFormName);
+		String AssignmentCount=Assign.selectAssignmentToView(assigname);
+		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount),Integer.valueOf(AssignmentCount), "Document count is displayed in assignment",
+				"DocCount is Not Displayed as expected");
+
+	}
+
+	/**
+	 * @author Brundha.T Id:RPMXCON-54636 Description:Verify that user can select
+	 *         all documents from all pages from List view, and select action as
+	 *         Bulk Assign from Actions drop down to Assign documents to new
+	 *         assignment
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54636", enabled = true, groups = { "regression" })
+	public void verifyDocumentInAllPagesAfterBulkAssign() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54636");
+		baseClass.stepInfo(
+				"Verify that user can select all documents from all pages from List view, and select action as Bulk Assign from Actions drop down to Assign documents to new assignment");
+
+		AssignmentsPage Assign = new AssignmentsPage(driver);
+		String assigname = "assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		docExplorer.navigateToDocExplorerPage();
+		driver.waitForPageToBeReady();
+		docExplorer.getSelectAllDocuments().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		docExplorer.SelectingAllDocuments("yes");
+		int ListViewCount= docExplorer.getDocumentCountFromListView();
+		driver.scrollPageToTop();
+		docExplorer.docExp_BulkAssign();
+		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs",String.valueOf(ListViewCount),true);
+		Assign.quickAssignCreation(assigname, Input.codeFormName);
+		String DocCountInAssignMent = Assign.selectAssignmentToView(assigname);
+		baseClass.digitCompareEquals(Integer.valueOf(DocCountInAssignMent), ListViewCount, "Document count is displayed in assignment",
+				"DocCount is Not Displayed as expected");
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

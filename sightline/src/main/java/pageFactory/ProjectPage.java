@@ -1,6 +1,11 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.WebElement;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -1273,5 +1278,39 @@ public class ProjectPage {
 		bc.VerifySuccessMessage("The new client was added successfully");
 		bc.CloseSuccessMsgpopup();
 	}
+	/**
+	 * @author Brundha.T
+	 * @param ColValue
+	 * Description:verifying the in domain column header
+	 */
+public void VerifyingColumnValuesInProjects(String ColValue) throws InterruptedException {
 	
+	ArrayList<String> ColumnHeaderValue=new ArrayList<>();
+	List<WebElement> ListOfEle = getProjectTableHeader().FindWebElements();
+	for(int i=0;i<ListOfEle.size();i++) {
+		   String ColText=ListOfEle.get(i).getText();
+		    ColumnHeaderValue.add(ColText);
+	}
+	 System.out.println(ColumnHeaderValue);
+	if(ColumnHeaderValue.contains(ColValue)) {
+		bc.passedStep("In Domain is displayed expected in Project column");
+	}else {
+		bc.failedStep("In Domain value is not in Projects column");
+	}
+	bc.stepInfo("verifying the position of "+ColValue+"");
+	 int  Prjtcodeposition=ColumnHeaderValue.indexOf("PROJECT CODE")+1;
+	 System.out.println(Prjtcodeposition);
+	 int  InDomain=ColumnHeaderValue.indexOf(ColValue);
+	 System.out.println(InDomain);
+	 int  PrjtActive=ColumnHeaderValue.indexOf("IS PROJECT ACTIVE")-1;
+	 System.out.println(PrjtActive);
+	
+	if (Prjtcodeposition==InDomain && PrjtActive==InDomain) {
+		bc.passedStep("InDomain position inbetween Project code and is project active");
+	} else {
+		bc.failedStep("Postion is not maintained");
+	}
+	
+}
+
 }

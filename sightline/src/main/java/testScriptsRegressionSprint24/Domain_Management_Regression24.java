@@ -26,6 +26,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
@@ -281,7 +282,85 @@ public class Domain_Management_Regression24 {
 
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha.T RPMXCON-52852
+	 * @Description :Validate new column “In Domain” on Project list screen for System Admin user
+	 */
+	@Test(description = "RPMXCON-52852", enabled = true, groups = { "regression" })
+	public void verifyingSortingInColumn() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-52852");
+		baseClass.stepInfo("Validate new column “In Domain” on Project list screen for System Admin user");
+		// login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Successfully login as da user'" + Input.sa1userName + "'");
+
+		ProjectPage prjt = new ProjectPage(driver);
+		prjt.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("verifying the column header in projects");
+		prjt.VerifyingColumnValuesInProjects("IN DOMAIN");
+		
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T,RPMXCON-52807
+	 * @Description :Verify that error/validation message should be displayed when
+	 *              Role, Project and Security Group is not selected on click of
+	 *              'Save'.
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-52807", enabled = true, groups = { "regression" })
+	public void validatingErrorMsgInBulkAccessControl() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52807");
+		baseClass.stepInfo(
+				"Verify that error/validation message should be displayed when Role, Project and Security Group is not selected on click of 'Save'.");
+
+		String UserErrorMsg = "Please select at least one user to apply access rights";
+		String AccessRightsMsg = "You have not chosen to either enable or disable access rights. Please select at least one of the two options.";
+		// login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Login as a da user :" + Input.da1userName);
+		baseClass.selectproject(Input.domainName);
+
+		baseClass = new BaseClass(driver);
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("verifying Error Msg for Role");
+		user.selectRole(null, null, null, false, null);
+		user.saveAndVerifyingErrorMsg("Please select the role to proceed");
+
+		baseClass.stepInfo("verifying Error Msg for Project");
+		user.selectRole(Input.ProjectAdministrator, null, null, false, null);
+		user.saveAndVerifyingErrorMsg("Please select the project to proceed");
+
+		baseClass.stepInfo("verifying Error Msg for Access Rights");
+		user.selectRole(Input.ProjectAdministrator, Input.projectName, null, true, null);
+		user.saveAndVerifyingErrorMsg(AccessRightsMsg);
+
+		baseClass.stepInfo("verifying Error Msg for SecurityGroup");
+		user.selectRole(Input.ReviewManager, Input.projectName, null, false, null);
+		user.saveAndVerifyingErrorMsg("Please select the security group to proceed");
+
+		baseClass.stepInfo("verifying Error Msg for users in PA");
+		user.selectRole(Input.ProjectAdministrator, Input.projectName, null, true, "Enable");
+		user.saveAndVerifyingErrorMsg(UserErrorMsg);
+
+		baseClass.stepInfo("verifying Error Msg for Access rights in RMU ");
+		user.selectRole(Input.ReviewManager, Input.projectName, Input.securityGroup, false, null);
+		user.saveAndVerifyingErrorMsg(AccessRightsMsg);
+
+		baseClass.stepInfo("verifying Error Msg for Users in RMU ");
+		user.selectRole(Input.ReviewManager, Input.projectName, Input.securityGroup, false, "Enable");
+		user.saveAndVerifyingErrorMsg(UserErrorMsg);
+
+		baseClass.passedStep("Verified Error Msg in Bulkaccess control popup Window");
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
