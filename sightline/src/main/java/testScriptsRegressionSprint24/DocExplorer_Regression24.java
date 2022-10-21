@@ -334,7 +334,7 @@ public class DocExplorer_Regression24 {
 	@Test(description = "RPMXCON-54715", enabled = true, groups = { "regression" })
 	public void verifyDefaultMenuSADAImpersonateAsPARMU() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-54715");
+		baseClass.stepInfo("Test case Id: RPMXCON-54715 DocExplorer");
 		baseClass.stepInfo("Verify the default menu when SA/DA impersonates as PA/RMU");
 		SoftAssert softAssert = new SoftAssert();
 		DomainDashboard domainDash = new DomainDashboard(driver);

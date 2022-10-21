@@ -3575,6 +3575,7 @@ public class DocExplorerPage {
 			getEmailRecipient("EMAILRECIPIENTS").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailRecipientValues(), emailRecipientValues[j]);
+			
 			driver.Navigate().refresh();
 		}
 	}
@@ -3594,6 +3595,7 @@ public class DocExplorerPage {
 			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailSubFileValues(), emailFileValues[j]);
+			bc.stepInfo("Selected email value is "+ emailFileValues[j]);
 			driver.Navigate().refresh();
 		}
 	}
