@@ -105,14 +105,34 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getWorkProductTextBox() {
+		return driver.FindElementByXPath("//div[@id='workproduct']//input[@class='textboxlist-bit-editable-input']");
+	}
+
+	public Element getSelectSampleMethod() {
+		return driver.FindElementByXPath("//select[@id='sampleMethod']");
+	}
+
+	public Element getSelectSampleMethodOptions(String Option) {
+		return driver.FindElementByXPath("//select[@id='sampleMethod']/option[text()='" + Option + "']");
+	}
+
+	public Element getTextBoxLableOfSampleMethod() {
+		return driver.FindElementByXPath("//label[@id='CountToAssignLabel']");
+	}
+
+	public Element getTextBoxLableRemovedOfSampleMethod() {
+		return driver.FindElementByXPath("//div[@id='divNumberToAssign' and @style='display: none;']");
+	}
+
 	public Element getShowDocumentCountToggle() {
 		return driver.FindElementByXPath("//i[@id='showUnAssignDocCounts']");
 	}
-	
+
 	public Element getAssignmentToUnAssign(String assignName) {
 		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[contains(text(),'" + assignName + "')]");
 	}
-	
+
 	public Element getToolTipTextInAssignUnassignPopUp() {
 		return driver.FindElementByXPath("//div[@role='tooltip']/div[@class='popover-content']");
 	}
@@ -381,6 +401,10 @@ public class SessionSearch {
 
 	public Element getMasterDate() {
 		return driver.FindElementByXPath("//td[@class=' formatDate']");
+	}
+
+	public Element getMetaDataInDropdown(String field) {
+		return driver.FindElementByXPath("//select[@id='metatagSelect']//option[@value='" + field + "']");
 	}
 
 	// Metadata
@@ -1107,8 +1131,8 @@ public class SessionSearch {
 	}
 
 	public Element getEditSessionSearchTextField(int searchNum, String searchName) {
-		return driver.FindElementByXPath("//div[@lang='" + searchNum
-				+ "']//span[@class='editable editable-pre-wrapped editable-click' and text()='" + searchName + "']");
+		return driver.FindElementByXPath(
+				"//span[@class='editable editable-pre-wrapped editable-click' and text()='" + searchName + "']");
 	}
 
 	public Element getTextAreaEdit() {
@@ -1437,7 +1461,8 @@ public class SessionSearch {
 	}
 
 	public Element getContinueCountAssign() {
-		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+		return driver.FindElementByXPath(
+				"//div[@id='newassignmentdiv']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 
 	public Element getSavedAppear() {
@@ -2057,21 +2082,31 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
+	public ElementCollection getStartDatesInBG() {
+		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
+	}
+	public Element getStartDateButton() {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//th[6]");
+	}
+	public Element getStatusText(String id,String status) {
+		return driver.FindElementByXPath("//td[contains(text(),'"+id+"')]//following-sibling::td[text()='"+status+"']");
+	}
 
 	public Element getTxtDownloadFile(String id) {
 		return driver.FindElementByXPath(
 				"//table[@id='dt_basic']//td[contains(text(),'" + id + "')]//..//a[contains(text(),'Download File')]");
 	}
-	//added by jayanthi
+
+	// added by jayanthi
 	public Element getContinueCount_ExistingAssign() {
-		return driver.FindElementByXPath("//div[@id='existingassignment']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+		return driver.FindElementByXPath(
+				"//div[@id='existingassignment']//div//div/div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
+
 	public Element getActionPopupCloseBtn() {
-		return driver
-				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 
 	}
-
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -5439,7 +5474,6 @@ public class SessionSearch {
 
 	}
 
-
 	/**
 	 * @author Jayanthi
 	 * @param remarks
@@ -5473,7 +5507,6 @@ public class SessionSearch {
 		return pureHit;
 
 	}
-
 
 	/**
 	 * @author Gopinath modified date-NA
@@ -13517,7 +13550,6 @@ public class SessionSearch {
 		}
 	}
 
-	
 	/**
 	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check search result count for configured query
@@ -13786,7 +13818,6 @@ public class SessionSearch {
 		return docCount;
 	}
 
-
 	/**
 	 * @Author Jeevitha
 	 * @param assignmentName
@@ -13810,6 +13841,7 @@ public class SessionSearch {
 		base.waitForElement(assignmentElement);
 		base.waitTillElemetToBeClickable(assignmentElement);
 		action.moveToElement(assignmentElement.getWebElement()).clickAndHold().build().perform();
+		base.waitTime(3);
 		base.waitForElement(getToolTipTextInAssignUnassignPopUp());
 		String assignmentNameInToolTip = getToolTipTextInAssignUnassignPopUp().getText();
 		base.textCompareEquals(assignmentName, assignmentNameInToolTip,
@@ -13819,8 +13851,8 @@ public class SessionSearch {
 						+ "' Doesn't match with the  AssignmentName In Tool Tip : '" + assignmentNameInToolTip + "'");
 		return assignmentNameInToolTip;
 	}
-	
-public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignments) {
+
+	public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignments) {
 		driver.waitForPageToBeReady();
 		if (getPureHitAddButton().isElementAvailable(1)) {
 			getPureHitAddButton().Click();
@@ -13843,10 +13875,10 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 		getBulkAssignAction().Click();
 		UtilityLog.info("performing bulk assign");
 		driver.waitForPageToBeReady();
-		for(String assignment : listOfAssignments) {
-		base.waitForElement(getSelectAssignmentExisting(assignment));
-		driver.waitForPageToBeReady();
-		getSelectAssignmentExisting(assignment).Click();
+		for (String assignment : listOfAssignments) {
+			base.waitForElement(getSelectAssignmentExisting(assignment));
+			driver.waitForPageToBeReady();
+			getSelectAssignmentExisting(assignment).Click();
 		}
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
@@ -13868,41 +13900,39 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 				return bc.initialBgCount() == Bgcount + 1;
 			}
 		}), Input.wait60);
-		for(String assignment : listOfAssignments) {
-		UtilityLog.info("Bulk assign is done, assignment is : " + assignment);
-		Reporter.log("Bulk assign is done, assignment is : " + assignment, true);
+		for (String assignment : listOfAssignments) {
+			UtilityLog.info("Bulk assign is done, assignment is : " + assignment);
+			Reporter.log("Bulk assign is done, assignment is : " + assignment, true);
 		}
-}
+	}
 
-	
 	/**
 	 * @author Jayanthi.ganesan Modified date-18/10/21
 	 * @description To finalize the assignment after bulk assigning the documents to
 	 *              assignment
 	 */
-	public void verifyDocsFluctuation_BulkAssign(String docCount ) {
+	public void verifyDocsFluctuation_BulkAssign(String docCount) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount_ExistingAssign().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait30);
 		String actualCount_continue = getContinueCount_ExistingAssign().getText();
-		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate", "Count is not same as expected.");
-		
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate",
+				"Count is not same as expected.");
+
 		base.stepInfo("Now clicking new assignment tab");
-	
+
 		getBulkAssign_NewAssignment().waitAndClick(20);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCountAssign().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait30);
-		String passMsg=" Count didn't fluctuate and count didn't "
-				+ "even change after selecting the New assign.";
+		String passMsg = " Count didn't fluctuate and count didn't " + "even change after selecting the New assign.";
 		String actualCount_AfterNewTabClick = getContinueCountAssign().getText();
-		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick,
-				passMsg, "Count is not same as expected.");
-		
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick, passMsg,
+				"Count is not same as expected.");
 
 		getContinueBulkAssign().waitAndClick(30);
 
@@ -13913,9 +13943,106 @@ public void bulkAssignForMultipleExistingAssignments(List<String> listOfAssignme
 		}), Input.wait60);
 		base.waitForElement(getAssgn_TotalCount());
 		String actualCount_final = getAssgn_TotalCount().getText();
-		base.textCompareEquals(actualCount_final, docCount, "The Count matching with count in "
-				+ "Like Document Popup.", "The Count not match with count in Like Document Popup.");
+		base.textCompareEquals(actualCount_final, docCount,
+				"The Count matching with count in " + "Like Document Popup.",
+				"The Count not match with count in Like Document Popup.");
 
 	}
+
+	/**
+	 * @Author
+	 * @param optionToSelect
+	 * @param verifyTextBoxLableOfSampleMethod
+	 * @param verifyAllOptionsInDropDown
+	 */
+	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethod(String optionToSelect,
+			boolean verifyTextBoxLableOfSampleMethod, boolean verifyAllOptionsInDropDown) {
+
+		if (verifyAllOptionsInDropDown) {
+			String listOfSampleMethodOptions[] = { "Count of Selected Docs", "Percent of Selected Docs",
+					"Parent Level Docs Only", "Inclusive Email" };
+			for (String SampleMethodOption : listOfSampleMethodOptions) {
+				base.ValidateElement_Presence(getSelectSampleMethodOptions(SampleMethodOption),
+						"sample Method Option '" + SampleMethodOption + "'");
+			}
+		}
+
+		getSelectSampleMethod().selectFromDropdown().selectByVisibleText(optionToSelect);
+		;
+
+		if (verifyTextBoxLableOfSampleMethod) {
+
+			if (optionToSelect.equals("Count of Selected Docs")) {
+				String actualTextBoxLable = getTextBoxLableOfSampleMethod().getText();
+				String expectedTextBoxLable = "Number to Assign:";
+				base.textCompareEquals(expectedTextBoxLable, actualTextBoxLable,
+						"Verified that label is changed to \"Number to Assign\"",
+						"actual lable Text doesn't match with expected lable Text");
+			} else if (optionToSelect.equals("Percent of Selected Docs")) {
+				String actualTextBoxLable = getTextBoxLableOfSampleMethod().getText();
+				String expectedTextBoxLable = "Percentage to Assign:";
+				base.textCompareEquals(expectedTextBoxLable, actualTextBoxLable,
+						"Verify that Label is changed to \"Percentage to Assign\"",
+						"actual lable Text doesn't match with expected lable Text");
+			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
+				softAssert.assertEquals(getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
+				softAssert.assertAll();
+				base.passedStep("Verified that label is removed.");
+			}
+		}
+
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void checkingStatusUsingRefresh(String backGroundID,String status) {
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
+				
+                base.stepInfo("waiting for status"+status);
+                break;
+		}
+			else {
+                driver.Navigate().refresh();
+                System.out.println("Refresh");
+                driver.waitForPageToBeReady();
+            }
+		}
+		
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void advancedNewContentSearchNotPureHit(String SearchString) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewSearchButton().Visible() && getNewSearchButton().Enabled();
+			}
+		}), Input.wait30);
+		driver.scrollPageToTop();
+		getNewSearchButton().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDataBtn().Visible() && getContentAndMetaDataBtn().Enabled();
+			}
+		}), Input.wait30);
+		getContentAndMetaDataBtn().waitAndClick(5);
+		// Enter seatch string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterStringInBSCurrent().Visible();
+			}
+		}), Input.wait30);
+		getEnterStringInBSCurrent().SendKeys(SearchString);
+		// Click on Search button
+		getQuerySearchBtn().Click();
+	}
+	
+	
 
 }

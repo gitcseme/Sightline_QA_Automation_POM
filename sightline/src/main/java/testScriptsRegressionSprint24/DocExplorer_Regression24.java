@@ -19,6 +19,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
+import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -73,7 +74,7 @@ public class DocExplorer_Regression24 {
 				"Verify that “EmailReceipients” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] cjkChar = {"让","我","打","电","话","给","你","延","长","石","油","集","团"};
+		String[] cjkChar = {"好","人","良い","一个","一個"};
 		
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -131,15 +132,13 @@ public class DocExplorer_Regression24 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 		
-		baseClass.stepInfo("Select a single document and select bulk assign action");
+		baseClass.stepInfo("Create assignment");
+		assignment.createAssignment(assignName, Input.codeFormName);
 		docExplorer.navigateToDocExplorerPage();
+		baseClass.stepInfo("Select a multiple document and select bulk assign action");
 		docExplorer.selectDocument(1);
 		docExplorer.docExp_BulkAssign();
-		assignment.FinalizeAssignmentAfterBulkAssign();
-		
-		baseClass.stepInfo("Create assignment");
-		assignment.assignmentCreation(assignName, Input.codeFormName);
-		baseClass.stepInfo("select assignment with sampling method and finalize");
+		baseClass.stepInfo("select existing assignment with sampling method and finalize");
 		
 		assignment.assignwithSamplemethod(assignName,"Count of Selected Docs","1");
 		baseClass.passedStep("User can select single doc and bulk assign to new assignment");
@@ -177,7 +176,83 @@ public class DocExplorer_Regression24 {
 		loginPage.logout();
 	
 	}
+
 	
+	/**
+	 * @author N/A
+	 * @Description : Verify that error message does not display and application accepts -
+	 *                when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report 
+	 *                [RPMXCON-65051]
+	 */
+	@Test(description = "RPMXCON-65051", groups = { "regression" }, enabled = true)
+	public void verifyErrorMsgSaveReport() throws Exception {
+		String custReportName = "< > * ; ‘ / ( ) # &" + Utility.randomCharacterAppender(4);
+		
+		baseClass.stepInfo("RPMXCON - 65051 ");
+		baseClass.stepInfo("To Verify that error message does not display and application accepts - "
+				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As : " + Input.pa1userName);
+		DocExplorerPage docExp = new DocExplorerPage(driver);
+		
+		docExp.docExpExportDataSaveReport(custReportName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		ReportsPage report = new ReportsPage(driver);
+		report.navigateToReportsPage("");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getThisLink(custReportName));
+		
+		if(report.getThisLink(custReportName).isElementAvailable(10)) {
+			baseClass.passedStep("Application accept 'Report Name :" + custReportName + "Successfully..");
+		} else {
+			baseClass.failedStep("Application Not accept 'Report Name :" + custReportName);
+		}
+		
+		report.deleteCustomReport(custReportName);
+		baseClass.passedStep("Verified - that error message does not display and application accepts - "
+				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
+    		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Id:RPMXCON-54644 
+	 * Description Verify the page navigation
+	 * from the list view of doc explorer page
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54644", enabled = true, groups = { "regression" })
+	public void verifyingNavigationPage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54644");
+		baseClass.stepInfo("Verify the page navigation from the list view of doc explorer page");
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		docExplorer.navigateToDocExplorerPage();
+		driver.waitForPageToBeReady();
+		int RowHeader=baseClass.getIndex(docExplorer.getTableHeader(),"DOCID");
+		
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getNavigationPageNumber("2"),"NotCompareEqual");
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getLastPage(),"yes");
+		String NextBtn=docExplorer.getNavigationBtn("Next").GetAttribute("class");
+		System.out.println(NextBtn);
+		
+		baseClass.compareTextViaContains(NextBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getFirstPage(),"Compare");
+		String PreviousBtn=docExplorer.getNavigationBtn("Previous").GetAttribute("class");
+		System.out.println(PreviousBtn);
+		baseClass.compareTextViaContains(PreviousBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

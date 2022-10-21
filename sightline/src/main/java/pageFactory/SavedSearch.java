@@ -71,10 +71,13 @@ public class SavedSearch {
 	public Element getSavedSearch_ApplyFilterButton() {
 		return driver.FindElementById("btnApplyFilter");
 	}
-
+	public Element getSavedSearch_name(String serachName) {
+		return driver.FindElementById("//td[contains(text(),'" + serachName +"')]");
+	}
+	
 	public Element getSelectWithName(String serachName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
+		return driver.FindElementByXPath("//td[contains(text(),'" + serachName +"')]/parent::tr/td[1]");
+		//return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
 	}
 
 	public Element getSavedSearch_ScheduleButton() {
@@ -175,7 +178,7 @@ public class SavedSearch {
 
 	// Xpath change based on new implemetation - ("document-btn");
 	public Element getToDocView() {
-		return driver.FindElementById("document-btn");
+		return driver.FindElementById("view");
 	}
 
 	public Element getToDocViewoption() {
@@ -568,7 +571,7 @@ public class SavedSearch {
 	}
 
 	public Element getshareASearchPopup() {
-		return driver.FindElementByXPath("//span[text()='Share a Search']");
+		return driver.FindElementByXPath("//h3[text()='Share a Search']");
 	}
 
 	// only when MySavedsearch is selected and not expanded
@@ -857,6 +860,14 @@ public class SavedSearch {
 	}
 
 	// Added By sowndarya.velraj
+	
+	public Element getPersistantHitCb_Existing() {
+		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
+	}
+	public Element getPersistantHitCheckBox() {
+		return driver.FindElementByXPath("sdz");
+	}
+	
 	public Element getLastStatusAs(String status) {
 		return driver.FindElementByXPath("//select[@id='ddlSavedSearchStatus']//option[text()='" + status + "']");
 	}
@@ -2060,8 +2071,8 @@ public class SavedSearch {
 		getSavedSearchNewGroupButton().waitAndClick(2);
 
 		driver.waitForPageToBeReady();
-		base.VerifySuccessMessage("Save search tree node successfully created.");
-		base.CloseSuccessMsgpopup();
+		//base.VerifySuccessMessage("Save search tree node successfully created.");
+		//base.CloseSuccessMsgpopup();
 		driver.Navigate().refresh();
 
 		// Get created node text
@@ -4724,7 +4735,7 @@ public class SavedSearch {
 	 *               PARMUREV
 	 * 
 	 */
-	public void verifySavedSearchProperOptionsSharedWithAsPARMUREV() {
+	public void verifySavedSearchProperOptionsSharedWithAsPARMUREV(String user) {
 
 		try {
 			driver.waitForPageToBeReady();
@@ -4752,26 +4763,24 @@ public class SavedSearch {
 				base.passedStep("Folder Button is displayed in Saved Search Page");
 			}
 
-			try {
-				base.stepInfo("Verify whether the Report Button is getting displayed in Saved Search Page");
+			base.stepInfo("Verify whether the Report Button is getting displayed in Saved Search Page");
+			if(user.equals("PA")||user.equals("RMU"))
+			{
 				softAssertion.assertEquals(getSavedSearchToTermReport().Displayed().booleanValue(), true);
 				base.passedStep("Report Button is displayed in Saved Search Page");
-
-			} catch (Exception e) {
-				try {
-					base.waitForElement(getSavedSearchExecuteButton());
-					getSavedSearchExecuteButton().Displayed();
-					base.passedStep("User is on Reviewer Mode");
-				} finally {
-					base.stepInfo("Performed On Reviewer");
+			}
+			else if(user.equals("REV"))
+				{
+				base.passedStep("Report Button is not displayed in Saved Search Page for reviewer");
 				}
-			}
-
-			base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
-			if (getSavedSearchExecuteButton().Displayed()) {
-				softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
-				base.passedStep("Execute Button is displayed in Saved Search Page");
-			}
+			
+		
+		base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
+		if(getSavedSearchExecuteButton().Displayed()); {
+			softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
+			base.passedStep("Execute Button is displayed in Saved Search Page");
+		}
+		
 
 			base.stepInfo("Verify whether the Export Button is getting displayed in Saved Search Page");
 			if (getSavedSearchExportButton().Displayed()) {
@@ -4779,21 +4788,18 @@ public class SavedSearch {
 				base.passedStep("Export Button is displayed in Saved Search Page");
 			}
 
-			try {
+			if(user.equals("PA"))
+			{
 				base.stepInfo("Verify whether the Release Button is getting displayed in Saved Search Page");
-				softAssertion.assertTrue(getReleaseIcon().Displayed());
+				softAssertion.assertEquals(getReleaseIcon().Displayed().booleanValue(), true);
 				base.passedStep("Release Button is displayed in Saved Search Page");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				try {
-					base.stepInfo("Verify whether the Assign Button is getting displayed in Saved Search Page");
+			}
+			else if(user.equals("RMU"))
+			{
+				base.stepInfo("Verify whether the Assign Button is getting displayed in Saved Search Page");
 					softAssertion.assertTrue(getSavedSearchToBulkAssign().Displayed());
 					base.passedStep("Assign Button is displayed in Saved Search Page");
 
-				} catch (Exception e2) {
-					base.passedStep("User is on Reviewer Mode");
-				}
 			}
 
 			base.stepInfo("Verify whether the Refresh Button is getting displayed in Saved Search Page");
@@ -7710,7 +7716,6 @@ public class SavedSearch {
 			getSavedSearch_ApplyFilterButton().waitAndClick(2);
 			list = getListFromSavedSearchTable(column);
 		}
-
 		if (list.size() > 0) {
 			base.compareListWithString(list, statusToCHeck, passMsg, failMsg);
 		} else {
@@ -8352,6 +8357,34 @@ public class SavedSearch {
 			Log.info("Pop up message does not appear");
 		}
 		base.stepInfo("Saved search is opened in doc list");
+	}
+	
+	
+	/**
+	 * @author Sowndarya.Velraj
+	 * @param searchName
+	 * @param persistant
+	 */
+	public void bulkAssignPersistencSS(String searchName, boolean persistant) {
+		navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		savedSearch_Searchandclick(searchName);
+		
+		base.waitForElement(getSavedSearchToBulkAssign());
+		getSavedSearchToBulkAssign().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
+		if (persistant) {
+			driver.waitForPageToBeReady();
+			if (getPersistantHitCb_Existing().isElementAvailable(3))
+				getPersistantHitCb_Existing().waitAndClick(5);
+		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
+			    getPersistantHitCheckBox().waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+
 	}
 
 }

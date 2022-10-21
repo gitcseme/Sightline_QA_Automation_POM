@@ -1039,7 +1039,8 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              searches in PAU role -RPMXCON-57387 Sprint 08
 	 * @throws InterruptedException
 	 * @throws ParseException
-	 */
+
+	 */ 
 	@Test(description ="RPMXCON-57387",enabled = true, groups = { "regression" } )
 	public void performBulkActionsAgainstMySavedSearchesDA() throws InterruptedException {
 
@@ -3540,8 +3541,8 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		base.stepInfo("Test case Id: RPMXCON-47562 Saved Search - Sprint 12");
-		base.stepInfo(
-				"To verify as an RM user login, I will be able to search a saved query based on search status 'COMPLETED' under My Saved Search folder");
+
+		base.stepInfo("To verify as an RM user login, I will be able to search a saved query based on search status 'COMPLETED' under My Saved Search folder");
 
 		// Perform create node - Search - SaveSearch in nodes
 		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");

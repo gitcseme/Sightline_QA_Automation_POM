@@ -59,7 +59,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getAddTag() {
-		return driver.FindElementById("aAddTag");
+		return driver.FindElementByXPath("//ul[@id='ddlTagActions']//a[text()='New Tag']");
 	}
 
 	public Element getTagName() {
@@ -2668,7 +2668,7 @@ public class TagsAndFoldersPage {
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(10);
 		getFolder_ToggleDocCount().waitAndClick(10);
-		getFolderandCount(folderName, count).WaitUntilPresent();
+//		getFolderandCount(folderName, count).WaitUntilPresent();
 		if (getFolderandCount(folderName, count).isElementAvailable(3)) {
 			base.passedStep(folderName + " could be seen under tags and folder page "
 					+ getFolderandCount(folderName, count).getText());

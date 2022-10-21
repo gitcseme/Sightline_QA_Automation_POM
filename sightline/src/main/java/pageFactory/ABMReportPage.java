@@ -406,52 +406,60 @@ public class ABMReportPage {
 	 * @throws InterruptedException
 	 */
 	public void validateRevListAndgenerateABM_Report(final String savedsearch, final String assgnname,
-			boolean manageBatch, boolean TocheckreviewerList) throws InterruptedException {
+            boolean manageBatch, boolean TocheckreviewerList) throws InterruptedException {
 
-		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
-		bc.waitForElement(getReport_ABM());
-		getReport_ABM().Click();
-		driver.waitForPageToBeReady();
-		if (manageBatch) {
-			getManageBatchAt().selectFromDropdown().selectByVisibleText("Document");
-		}
-		bc.waitForElement(getABM_SelectSource());
-		getABM_SelectSource().Click();
-		getABM_SearchButton().waitAndClick(10);
-		bc.waitForElement(getABM_SelectSearch(savedsearch));
-		getABM_SelectSearch(savedsearch).Click();
-		bc.waitForElement(getABM_Searchsavebutton());
-		getABM_Searchsavebutton().Click();
-		bc.waitForElement(getABM_ReviewerExpandbutton());
-		getABM_ReviewerExpandbutton().Click();
-		bc.waitForElement(getABM_Reviewer_SelectAll());
-		getABM_Reviewer_SelectAll().Click();
-		if (TocheckreviewerList) {
-			getABM_RevList(Input.pa1FullName).isElementAvailable(2);
-			// getABM_RevList(Input.da1FullName).isElementAvailable(2);
-			getABM_RevList(Input.rev1FullName).isElementAvailable(2);
-			getABM_RevList(Input.rmu1FullName).isElementAvailable(2);
-			bc.stepInfo("PA/DA/RMU/REviewer Associated to the project is avialable under ABM.");
-		}
-		getABM_ReviewerExpandbutton().ScrollTo();
-		getABM_ReviewerExpandbutton().Click();
-		bc.waitForElement(getABM_SelectAssignment());
-		getABM_SelectAssignment().Click();
-		bc.waitTime(2);
-		getABM_SelectAssgn(assgnname).Click();
-		driver.scrollPageToTop();
-		getApplyBtn().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		bc.waitForElement(getABM_SummaryPage());
-		if (getABM_SummaryPage().isDisplayed()) {
-			bc.passedStep("Advanced Batch Manage Report generated with saved search " + savedsearch
-					+ " as Source and assignment seelcted is " + assgnname);
-		} else {
-			bc.failedMessage("Advanced Batch Management report not generated.");
-		}
 
-	}
+       driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+
+
+
+       bc.waitForElement(getReport_ABM());
+        getReport_ABM().Click();
+        driver.waitForPageToBeReady();
+        if (manageBatch) {
+            getManageBatchAt().selectFromDropdown().selectByVisibleText("Document");
+        }
+        bc.waitForElement(getABM_SelectSource());
+        getABM_SelectSource().Click();
+        getABM_SearchButton().waitAndClick(10);
+        bc.waitForElement(getABM_SelectSearch(savedsearch));
+        getABM_SelectSearch(savedsearch).Click();
+        bc.waitForElement(getABM_Searchsavebutton());
+        getABM_Searchsavebutton().Click();
+        bc.waitForElement(getABM_ReviewerExpandbutton());
+        getABM_ReviewerExpandbutton().Click();
+        bc.waitForElement(getABM_Reviewer_SelectAll());
+        getABM_Reviewer_SelectAll().Click();
+        if (TocheckreviewerList) {
+            getABM_RevList(Input.pa1FullName).isElementAvailable(2);
+            // getABM_RevList(Input.da1FullName).isElementAvailable(2);
+            getABM_RevList(Input.rev1FullName).isElementAvailable(2);
+            getABM_RevList(Input.rmu1FullName).isElementAvailable(2);
+            bc.stepInfo("PA/DA/RMU/REviewer Associated to the project is avialable under ABM.");
+        }
+        getABM_ReviewerExpandbutton().ScrollTo();
+        getABM_ReviewerExpandbutton().Click();
+        bc.waitTime(3);
+        getABM_SelectAssignment().ScrollTo();
+        bc.waitTillElemetToBeClickable(getABM_SelectAssignment());
+        getABM_SelectAssignment().waitAndClick(20);
+        bc.waitTime(2);
+        getABM_SelectAssgn(assgnname).Click();
+        driver.scrollPageToTop();
+        getApplyBtn().waitAndClick(10);
+        driver.waitForPageToBeReady();
+        bc.waitForElement(getABM_SummaryPage());
+        if (getABM_SummaryPage().isDisplayed()) {
+            bc.passedStep("Advanced Batch Manage Report generated with saved search " + savedsearch
+                    + " as Source and assignment seelcted is " + assgnname);
+        } else {
+            bc.failedMessage("Advanced Batch Management report not generated.");
+        }
+
+
+
+   }
 
 	/**
 	 * @author Jayanthi.ganesan

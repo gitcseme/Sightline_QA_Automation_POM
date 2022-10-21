@@ -261,7 +261,7 @@ public class DocList_Regression23 {
 	 *              than 1 hour from preview document of doc list.
 	 */
 
-	@Test(description = "RPMXCON-54283", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54283", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyWaveFormAudioPlayerInperviewDocumentInDocList(String username, String password, String role)
 			throws InterruptedException {
 
@@ -280,12 +280,15 @@ public class DocList_Regression23 {
 
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.oneHourAudio);
+		driver.waitForPageToBeReady();
 		sessionSearch.ViewInDocList();
 
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getDocListPerviewBtn());
 		docList.getDocListPerviewBtn().waitAndClick(5);
 
 		// verifying more than one hour audio docs
+		driver.waitForPageToBeReady();
 		String overAllAudioTime = docViewPage.getDocview_Audio_EndTime().getText();
 		String[] splitData = overAllAudioTime.split(":");
 		String data = splitData[0].toString();
@@ -304,11 +307,13 @@ public class DocList_Regression23 {
 		baseClass.passedStep("Zoom functionality working for more than one hour of document");
 
 		// verifying waveform after zoom
+		driver.waitForPageToBeReady();
 		boolean waveforms = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
 		softAssertion.assertTrue(waveforms);
 		baseClass.passedStep("Waveform is displayed for same document after zoom in");
 
 		// validating audio is still playing after zoom
+		driver.waitForPageToBeReady();
 		boolean audioPlays = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
 		softAssertion.assertTrue(audioPlays);
 		baseClass.stepInfo("Audio button docs are in play mode after zoom in");

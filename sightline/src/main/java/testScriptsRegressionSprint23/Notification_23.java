@@ -108,6 +108,7 @@ public class Notification_23 {
 	 **/
 	@Test(description = "RPMXCON-54421", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyCompldInBGWhenAllResReady(String userName, String passWord) throws Exception {
+		base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-54421");
 		base.stepInfo(
 				"Verify that correct status Completed appears on My BackGround screen when user clicks When All Results Are Ready"
@@ -115,9 +116,11 @@ public class Notification_23 {
 
 		loginPage.loginToSightLine(userName, passWord);
 		base.stepInfo("Logged in As " + userName);
-		base = new BaseClass(driver);
 		base.selectproject(Input.largeVolDataProject);
 
+		base.waitForElement(sessionSearch.getBullHornIcon());
+        sessionSearch.getBullHornIcon().waitAndClick(20);
+        
 		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR",
 				Input.metaDataName, Input.searchStringStar, true);
 		sessionSearch.SearchBtnAction();
@@ -133,10 +136,9 @@ public class Notification_23 {
 
 		driver.waitForPageToBeReady();
 		base.stepInfo("Navigated to My BackGround Task Page...");
-		base.waitForNotification();
-		driver.Navigate().refresh();
+		
+		sessionSearch.checkingStatusUsingRefresh(backGroundID, "COMPLETED");
 		driver.waitForPageToBeReady();
-
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", backGroundID);
 		System.out.println(status);
 		if (status.equals("COMPLETED")) {
@@ -167,6 +169,9 @@ public class Notification_23 {
 		base = new BaseClass(driver);
 		base.selectproject(Input.largeVolDataProject);
 
+		base.waitForElement(sessionSearch.getBullHornIcon());
+        sessionSearch.getBullHornIcon().waitAndClick(20);
+        
 		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR",
 				Input.metaDataName, Input.searchStringStar, true);
 		sessionSearch.SearchBtnAction();
@@ -186,8 +191,12 @@ public class Notification_23 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 
+		sessionSearch.checkingStatusUsingRefresh(backGroundID, "COMPLETED");
+		driver.waitForPageToBeReady();
+		
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", backGroundID);
 		System.out.println(status);
+		
 		if (status.equals("COMPLETED")) {
 			base.passedStep("COMPLETED Status Appear On BackGround Screen..As Expected");
 		} else {

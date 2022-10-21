@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -568,6 +569,17 @@ public class TallyPage {
 	public ElementCollection getSelectSourcedOptionsList() {
 		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
 	}
+	
+	//added by arun
+	public Element getMetaData(String field) {
+		return driver.FindElementByXPath("//select[@id='metadataselect']//option[contains(text(),'"+field+"')]");
+	}
+	public Element getToolTipCount() {
+		return driver.FindElementByXPath("//div[@class='tipsy-inner']");
+	}
+	public Element getValues(int i) {
+		return driver.FindElementByCssSelector("rect[class='selected'][y='"+i+"']");
+	}
 
 	public TallyPage(Driver driver) {
 
@@ -1127,8 +1139,9 @@ public class TallyPage {
 	 */
 	public void selectSourceByProject() {
 		try {
-			getTally_SelectSource().Click();
-			getProjectSource().Click();
+			getTally_SelectSource().waitAndClick(10);
+			getProjectSource().waitAndClick(10);
+			base.waitForElement(getProjectCheckbox());
 			for (int i = 0; i < 20; i++) {
 				try {
 					getProjectCheckbox().Click();
@@ -1137,7 +1150,7 @@ public class TallyPage {
 					base.waitForElement(getProjectCheckbox());
 				}
 			}
-			getProjectSaveButton().Click();
+			getProjectSaveButton().waitAndClick(10);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while selecting project in tally page" + e.getMessage());
@@ -2434,6 +2447,55 @@ public class TallyPage {
 					"Exception occcured while verifying documents count by folderName subtally" + e.getMessage());
 		}
 
+	}
+	
+	/**
+	 * @author: Arun Created Date: 17/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the field available un metadata list
+	 */
+	public void verifyMetaDataUnAvailabilityInTallyReport(String field) {
+		
+		navigateTo_Tallypage();
+		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+		getTally_SelectaTallyFieldtoruntallyon().Click();
+		base.waitForElement(getTally_Metadataselect());
+		if(getMetaData(field).isElementAvailable(10)) {
+			base.failedStep(field+"is available in metadata list");
+		}
+		else {
+			base.passedStep(field+"is not available in metadata list");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 18/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will get the mapping in tally report
+	 */
+	
+	public HashMap<String,Integer> getDocsCountFortallyReport() {
+		
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		
+		List<String> meta =verifyTallyChart();
+		List<Integer> count = new ArrayList<Integer>();
+		Actions action = new Actions(driver.getWebDriver());
+		int chartnumber =getrectValues().size();
+		System.out.println(chartnumber);
+		for(int i=0;i<30*chartnumber;i+=30) {
+			Element ele = getValues(i);
+			action.moveToElement(ele.getWebElement()).build().perform();
+			String text =getToolTipCount().getText();
+			String[] data = text.split(" ");
+			int docsCount = Integer.parseInt(data[0]);
+			count.add(docsCount);
+		}
+		for(int j=0;j<meta.size();j++) {
+			map.put(meta.get(j), count.get(j));
+		}
+		base.passedStep("DocsCount mapping in tally report"+map);
+		return map;
+		
+		
 	}
 
 }

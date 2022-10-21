@@ -113,7 +113,8 @@
 	<pdfPathDat>DAT4_STC_09172014_PDF_Native_Path.dat</pdfPathDat>
 	<pdfPathKey>PDFPath</pdfPathKey>
 	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
-	
+	<hiddenPropDat>DAT_FileWithHiddenProperties.dat</hiddenPropDat>
+	<hiddenPropNative>Natives_FileWithHiddenProperties.lst</hiddenPropNative>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
