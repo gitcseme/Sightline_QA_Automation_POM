@@ -10750,5 +10750,28 @@ public class IngestionPage_Indium {
 				base.failedStep("action failed");
 			}
 		}
+		
+		/**
+		 * @author: Arun Created Date: 21/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the availability of metadata in mapping section
+		 */
+
+		public void verifyMetadataAvailability(Element ele,String data) {
+			
+			base.waitForElement(ele);
+			List<WebElement> options = ele.selectFromDropdown().getOptions();
+			//verify the value available in dropdown
+			for(int i=0;i<options.size();i++) {
+				String metadata = options.get(i).getText();
+				System.out.println(metadata);
+				if(metadata.equalsIgnoreCase(data)) {
+					base.passedStep(data +"- field available in the mapping section dropdown");
+					break;
+				}
+				else {
+					System.out.println(data+"other metadata");
+				}
+			}
+		}
 	
 }
