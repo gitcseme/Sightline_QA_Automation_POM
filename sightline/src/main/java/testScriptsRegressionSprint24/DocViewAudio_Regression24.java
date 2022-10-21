@@ -154,7 +154,143 @@ public class DocViewAudio_Regression24 {
 		
 	}
 	
-	
+	/**
+	 * @author N/A
+	 * @Description :To Verify Audio Documents assigned from Advanced search- Verify that when documents are re-assigned to same/other reviewer in an assignment,"
+				+ " any previously saved persistent search hits in the assignment should be displayed in the assignment[51767]
+	 */
+	@Test(description = "RPMXCON-51767", enabled = true, groups = { "regression" })
+	public void verifyPersisForAudioReAssignSameRevAdvSrc() throws InterruptedException {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String audioSearch = Input.audioSearch.toUpperCase();
+		
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("RPMXCON-51767");
+		baseClass.stepInfo("To Verify Audio Documents assigned from Advanced search- Verify that when documents are re-assigned to same/other reviewer in an assignment,"
+				+ " any previously saved persistent search hits in the assignment should be displayed in the assignment");
+		
+		// Login as RMU  (Pre - Req)
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);	
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		sessionSearch.navigateToSessionSearchPageURL();
+		int pureHit = sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		baseClass.waitForElement(sessionSearch.getDocsMetYourCriteriaLabel());
+		baseClass.dragAndDrop(sessionSearch.getDocsMetYourCriteriaLabel(), sessionSearch.getActionPad());
+		sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);	
+		assignmentPage.editAssignmentUsingPaginationConcept(assignmentName);
+		assignmentPage.addReviewerInManageReviewerTab();
+		assignmentPage.distributeGivenDocCountToReviewers(Integer.toString(pureHit));
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in As : " + Input.rev1userName);
+		driver.waitForPageToBeReady();
+		Dashboard dash = new Dashboard(driver);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignmentName));
+		dash.getSelectAssignmentFromDashborad(assignmentName).waitAndClick(5);		
+		String hitscount = docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel",
+				"persistent search terms is Removed");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		assignmentPage.editAssignmentUsingPaginationConcept(assignmentName);
+		assignmentPage.removeDocs(Input.rev1userName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		assignmentPage.reassignDocs(Input.rev1userName);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in As : " + Input.rev1userName);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignmentName));
+		dash.getSelectAssignmentFromDashborad(assignmentName).waitAndClick(5);
+	    docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel",
+				"persistent search terms is Removed");
+		baseClass.passedStep("Verified - Audio Documents assigned from Advanced search- Verify that when documents are re-assigned to same/other reviewer in an assignment, "
+				+ "any previously saved persistent search hits in the assignment should be displayed in the assignment");
+		loginPage.logout();
+		
+	}
+
+	/**
+	 * @author N/A
+	 * @Description :To verify Audio Documents assigned from Saved Search group- Verify that when documents are re-assigned to same/other reviewer in an assignment,"
+				+ " any previously saved persistent search hits in the assignment should be displayed in the assignment {RPMXCON-51768]
+	 */
+	@Test(description = "RPMXCON-51768", enabled = true, groups = { "regression" })
+	public void verifyPersisForAudioReAssignSameRevSrcGrp() throws InterruptedException {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String audioSearch = Input.audioSearch.toUpperCase();
+		
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass = new BaseClass(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		SavedSearch search = new SavedSearch(driver);
+		baseClass.stepInfo("RPMXCON-51768");
+		baseClass.stepInfo("To verify Audio Documents assigned from Saved Search group- Verify that when documents are re-assigned to same/other reviewer in an assignment,"
+				+ " any previously saved persistent search hits in the assignment should be displayed in the assignment");
+		
+		// Login as RMU  (Pre - Req)
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);	
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		String searchName = "Search " + Utility.dynamicNameAppender();
+		String newNode = search.createSearchGroupAndReturn(searchName, "RMU", "Yes");
+		sessionSearch.navigateToSessionSearchPageURL();
+		int pureHit = sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.saveSearchInNewNode(searchName, newNode);
+		search.bulkAssignPersisSrcGrpSS(Input.mySavedSearch, true);
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);	
+		assignmentPage.editAssignmentUsingPaginationConcept(assignmentName);
+		assignmentPage.addReviewerInManageReviewerTab();
+		assignmentPage.distributeGivenDocCountToReviewers(Integer.toString(pureHit));
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in As : " + Input.rev1userName);
+		driver.waitForPageToBeReady();
+		Dashboard dash = new Dashboard(driver);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignmentName));
+		dash.getSelectAssignmentFromDashborad(assignmentName).waitAndClick(5);		
+		String hitscount = docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel",
+				"persistent search terms is Removed");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		assignmentPage.editAssignmentUsingPaginationConcept(assignmentName);
+		assignmentPage.removeDocs(Input.rev1userName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		assignmentPage.reassignDocs(Input.rev1userName);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in As : " + Input.rev1userName);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignmentName));
+		dash.getSelectAssignmentFromDashborad(assignmentName).waitAndClick(5);
+	    docViewPage.getAudioPersistentHit(audioSearch);
+		baseClass.compareTextViaContains(hitscount, audioSearch, "persistent search term is present in panel",
+				"persistent search terms is Removed");
+		baseClass.passedStep("Verified - Audio Documents assigned from Saved Search group- Verify that when documents are re-assigned to same/other reviewer in an assignment, "
+				+ "any previously saved persistent search hits in the assignment should be displayed in the assignment");
+		loginPage.logout();	
+	}
+
 	
 
 }

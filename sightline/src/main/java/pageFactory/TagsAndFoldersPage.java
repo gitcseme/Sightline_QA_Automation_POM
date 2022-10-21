@@ -285,6 +285,9 @@ public class TagsAndFoldersPage {
 
 	// added by sowndariya
 
+	public Element getWarningPopup() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//label[contains(text(),'delete')]");
+	}
 	public Element getPropFolderExactDuplic() {
 		return driver.FindElementByXPath("//input[@id='chkFolderExactDuplicates']//following-sibling::i");
 	}
@@ -854,8 +857,15 @@ public class TagsAndFoldersPage {
 		}), Input.wait30);
 		getDeleteTag().waitAndClick(10);
 
-		base.getYesBtn().waitAndClick(10);
+		String expected = "Existing searches using this tag name in their queries may no longer work correctly. Do you still want to delete?";
+		driver.waitForPageToBeReady();
+		String actual = getWarningPopup().getText();
+		System.out.println(actual);
+		if (actual.equals(expected)) {
 
+			base.waitForElement(base.getYesBtn());
+			base.getYesBtn().waitAndClick(10);
+		}
 		base.VerifySuccessMessage("Tag deleted successfully");
 		base.CloseSuccessMsgpopup();
 
@@ -907,13 +917,16 @@ public class TagsAndFoldersPage {
 		}), Input.wait30);
 		getDeleteFolder().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return base.getYesBtn().Visible();
-			}
-		}), Input.wait30);
-		base.getYesBtn().waitAndClick(10);
+		String expected = "Existing searches using this folder name in their queries may no longer work correctly. Do you still want to delete?";
+		driver.waitForPageToBeReady();
+		String actual = getWarningPopup().getText();
+		System.out.println(actual);
+		if (actual.equals(expected)) {
 
+			base.waitForElement(base.getYesBtn());
+			base.getYesBtn().waitAndClick(10);
+		}
+		
 		base.VerifySuccessMessage("Folder deleted successfully");
 		base.CloseSuccessMsgpopup();
 		Reporter.log(strFolder + " Folder delete Successful", true);

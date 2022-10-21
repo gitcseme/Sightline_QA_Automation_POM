@@ -8386,5 +8386,33 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj
+	 * @param searchGroup
+	 * @param persistant
+	 */
+	public void bulkAssignPersisSrcGrpSS(String searchGroup, boolean persistant) {
+		navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		selectRootGroupTab(searchGroup);
+		
+		base.waitForElement(getSavedSearchToBulkAssign());
+		getSavedSearchToBulkAssign().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("performing bulk assign");
+		UtilityLog.info("performing bulk assign");
+
+		if (persistant) {
+			driver.waitForPageToBeReady();
+			if (getPersistantHitCb_Existing().isElementAvailable(3))
+				getPersistantHitCb_Existing().waitAndClick(5);
+		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
+			    getPersistantHitCheckBox().waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+
+	}
+
 
 }
