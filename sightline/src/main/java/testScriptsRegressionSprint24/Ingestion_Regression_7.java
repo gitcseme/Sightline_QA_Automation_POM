@@ -268,7 +268,154 @@ public class Ingestion_Regression_7 {
 		ingestionPage.verifyMetadataAvailability(ingestionPage.getMappingDestinationField(6), data);
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 25/10/2022 TestCase Id:RPMXCON-49504
+	 * Description :Verify that tooltip should be displayed for 'Date & Time Format' field.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49504",enabled = true, groups = { "regression" })
+	public void verifyToolTipForDateFormat() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49504");
+		baseClass.stepInfo("Verify that tooltip should be displayed for 'Date & Time Format' field");
 		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		//verify tool tip for date format
+		baseClass.stepInfo("check the tooltip message for date field");
+		ingestionPage.VerifyToolTipMessageForDateFormat();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/10/2022 TestCase Id:RPMXCON-49503
+	 * Description :Verify that in the ingestion wizard page, "date & time format" field should present 
+	 * the dropdown with the different supported formats
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49503",enabled = true, groups = { "regression" })
+	public void verifyToolTipAndDefaultSelectionForDateFormat() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49503");
+		baseClass.stepInfo("Verify that different formats present in 'Date & Time Format' field");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		//verify tool tip,number of formats and default selection for date-time format
+		ingestionPage.VerifyToolTipMessageForDateFormat();
+		ingestionPage.verifyDateFormatDropDownValidations();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/10/2022 TestCase Id:RPMXCON-47363
+	 * Description :To verify that user is able to view two buttons of Grid and Tile view.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47363",enabled = true, groups = { "regression" })
+	public void verifyGridAndTileviewOptions() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47363");
+		baseClass.stepInfo("To verify that user is able to view two buttons of Grid and Tile view.");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.waitForElement(ingestionPage.getIngestion_GridView());
+		if(ingestionPage.getIngestion_GridView().isDisplayed() && 
+				ingestionPage.getIngestion_TileView().isDisplayed()) {
+			baseClass.passedStep("both grid and tile view button displayed in home page");
+		}
+		else {
+			baseClass.failedStep("both grid and tile view buttons not available");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/10/2022 TestCase Id:RPMXCON-47307
+	 * Description :To verify that Ingestion Count on Ingested Home page is displayed correctly
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47307",enabled = true, groups = { "regression" })
+	public void verifyIngestionCountOnHomePage() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47307");
+		baseClass.stepInfo("To verify that Ingestion Count on Ingested Home page is displayed correctly");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("add new ingestion details and start ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		//verify
+		baseClass.stepInfo("verify ingestion count on home page");
+		ingestionPage.verifyIngestionCountInHomePage();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/10/2022 TestCase Id:RPMXCON-47458
+	 * Description :To verify that Back button functionality on Configure Mapping page.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47458",enabled = true, groups = { "regression" })
+	public void verifyBackButtonFunctionality() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47458");
+		baseClass.stepInfo("To verify that Back button functionality on Configure Mapping page.");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Add new ingestion details and click on next");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		//verify status after clicking next button
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.verifyAutoPopulatedSourceFieldInMappingSection();
+		baseClass.passedStep("Source field gets auto populated as per the fields available in the DAT file.");
+		//verify status after clicking back button
+		ingestionPage.verifySourceAndMappingSectionStatusAfterClickingBackButton();
+		ingestionPage.verifyAutoPopulatedSourceFieldInMappingSection();
+		baseClass.passedStep("Auto populated field remains on the disabled mapping section");
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
