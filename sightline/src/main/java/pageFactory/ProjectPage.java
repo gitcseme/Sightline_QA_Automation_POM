@@ -7,6 +7,26 @@ import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
+/**
+ * @author Sowndarya.Velraj
+ *
+ */
+/**
+ * @author Sowndarya.Velraj
+ *
+ */
+/**
+ * @author Sowndarya.Velraj
+ *
+ */
+/**
+ * @author Sowndarya.Velraj
+ *
+ */
+/**
+ * @author Sowndarya.Velraj
+ *
+ */
 public class ProjectPage {
 
 	Driver driver;
@@ -230,6 +250,9 @@ public class ProjectPage {
 	 }
 	 
 	 //added by sowndarya
+	 public ElementCollection getProjectDataCount() {
+	        return driver.FindElementsByXPath("//table[@id='ProjectDataTable']//tr");
+	    }
 	
 	 public Element getBtnOK() {
 			return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'OK')]");
@@ -1246,8 +1269,12 @@ public class ProjectPage {
 		bc.CloseSuccessMsgpopup();
 	}
 
+
 	/**
-	 * @author sowndarya.
+	 * @author Sowndarya.Velraj
+	 * @param clientName
+	 * @param shortName
+	 * @param type
 	 */
 	public void addNewClient_NonDomainProject(String clientName,String shortName,String type) {
 		
@@ -1273,5 +1300,24 @@ public class ProjectPage {
 		bc.VerifySuccessMessage("The new client was added successfully");
 		bc.CloseSuccessMsgpopup();
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj
+	 * @param projectName
+	 * @param hCode
+	 */
+	 public String addNonDomainProjectBasedOnAvailablitity(String projectName, String hCode) {
+
+	       System.out.println(getProjectDataCount().size());
+	       driver.waitForPageToBeReady();
+	        if (!(getProjectDataCount().size() > 1)) {
+	            AddNonDomainProject(projectName, hCode);
+	        } else {
+	            int n = bc.getIndex(getProjectTableHeader(), "NAME");
+	            projectName = getColumValue(n).getText();
+	            System.out.println(projectName);
+	        }
+	        return projectName;
+	    }
 	
 }
