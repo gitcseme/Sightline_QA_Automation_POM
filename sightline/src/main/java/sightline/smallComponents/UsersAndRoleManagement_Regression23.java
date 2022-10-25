@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint23;
+package sightline.smallComponents;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -41,7 +41,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class UsersAndRoleManagement_Regression {
+public class UsersAndRoleManagement_Regression23 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
