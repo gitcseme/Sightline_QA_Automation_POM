@@ -958,6 +958,7 @@ public class Input {
 	public static String filterDataInput2;
     public static String filterDataInput3; 
 	public static String transcriptId;
+	public static String env;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -998,6 +999,7 @@ public class Input {
 		jiraProject = config.getJiraProject();
 		testingBuild = config.getTestingBuild();
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
+		env = config.getEnv();
 		// Added by krishna - new projects
 
 		if (mode) {

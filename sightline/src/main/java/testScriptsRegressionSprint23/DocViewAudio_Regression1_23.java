@@ -628,9 +628,7 @@ public class DocViewAudio_Regression1_23 {
 		// Audio search
 		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
 		sessionSearch.viewInDocView();
-		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
-		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
-
+		driver.waitForPageToBeReady();
 		// Audio search And Save
 		sessionSearch.navigateToSessionSearchPageURL();
 		driver.waitForPageToBeReady();
@@ -661,12 +659,15 @@ public class DocViewAudio_Regression1_23 {
 		// Assignment Selection and Reviewer
 		driver.waitForPageToBeReady();
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
-
+        baseClass.waitTime(3);
+        baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList2 = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
 		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
 		driver.waitForPageToBeReady();
+		
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
-		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
 
 		// Complete the document And SameAs Last

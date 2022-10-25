@@ -25,7 +25,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class TagsAndFolders_Regression {
+public class TagsAndFolders_Regression24 {
 	
 
 	Driver driver;
