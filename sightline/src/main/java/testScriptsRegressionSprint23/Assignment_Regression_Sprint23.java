@@ -63,51 +63,7 @@ public class Assignment_Regression_Sprint23 {
 		sessionSearch = new SessionSearch(driver);
 		softAssert = new SoftAssert();
 
-	}
-
-	/**
-	 * @author Jayanthi.ganesan
-	 */
-	@Test(description = "RPMXCON-54484", enabled = true, groups = { "regression" })
-	public void VerifyTotalDocsSelectedFluctuation() throws InterruptedException, ParseException, IOException {
-
-		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		baseClass.stepInfo(
-				"Verifying the fluctuation of document count for " + "all the bulk actions in Manage Assignments");
-		baseClass.stepInfo("Test case Id: RPMXCON-54484");
-
-		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-		String folderTagNAme = "folderTag" + Utility.dynamicNameAppender();
-
-		String count = String.valueOf(sessionSearch.basicContentSearch(Input.searchString1));
-		sessionSearch.bulkAssign();
-		assignment.FinalizeAssignmentAfterBulkAssign();
-		assignment.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-		driver.scrollingToElementofAPage(assignment.getAssignmentSaveButton());
-		baseClass.waitForElement(assignment.getAssignmentSaveButton());
-		assignment.getAssignmentSaveButton().waitAndClick(3);
-
-		assignment.navigateToAssignmentsPage();
-		assignment.viewSelectedAssgnUsingPagination(assignmentName);
-		driver.scrollingToElementofAPage(assignment.getSelectAssignment(assignmentName));
-		assignment.getSelectAssignment(assignmentName).waitAndClick(5);
-		baseClass.stepInfo("Verification for Tag All Option");
-		assignment.Bulk_TagAll_FolderAll(true);
-		sessionSearch.bulkTag_FluctuationVerify(folderTagNAme, count);
-
-		assignment.navigateToAssignmentsPage();
-		assignment.viewSelectedAssgnUsingPagination(assignmentName);
-		driver.scrollingToElementofAPage(assignment.getSelectAssignment(assignmentName));
-		assignment.getSelectAssignment(assignmentName).waitAndClick(5);
-		baseClass.stepInfo("Verification for Folder All Option");
-		assignment.Bulk_TagAll_FolderAll(false);
-		sessionSearch.bulkFolder_FluctuationVerify(folderTagNAme, count);
-
-		assignment.deleteAssgnmntUsingPagination(assignmentName);
-		loginPage.logout();
-	}
+	}	
 
 	/**
 	 * @author
