@@ -24,6 +24,7 @@ import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
@@ -557,6 +558,153 @@ public class DocExplorer_Regression24 {
 		baseClass.digitCompareEquals(Integer.valueOf(DocCountInAssignMent), ListViewCount, "Document count is displayed in assignment",
 				"DocCount is Not Displayed as expected");
 
+	}
+	
+	/**
+	 * @author Krishna ModifyDate:NA RPMXCON-54991
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate and
+	 *              EmailRecipientNames filters and ticks the 'Select All' check-box
+	 *              and navigates Doc-Explorer to DocView then documents gets loaded
+	 *              on DocView screen.
+	 */
+	@Test(description = "RPMXCON-54991", enabled = true, groups = { "regression" })
+	public void verifyMasterDateEmailRecipientNamesDocsGetsLoadedOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54991");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate and EmailRecipientNames filters and ticks the 'Select All' check-box and navigates Doc-Explorer to DocView then documents gets loaded on DocView screen.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		String EmailRecipienetname = Input.emailReciepientName2;
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		baseClass.waitForElement(docexp.getEmailRecipientColumnTextField());
+		docexp.getEmailRecipientColumnTextField().SendKeys(EmailRecipienetname);
+		docexp.getApplyFilter().waitAndClick(10);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(8);
+		docexp.getDocExp_SelectAllDocs().waitAndClick(5);
+		baseClass.stepInfo("Select all checkboxes in docexp");
+		driver.waitForPageToBeReady();
+		if (docList.getYesAllPageDocs().isDisplayed()) {
+			docList.getYesAllPageDocs().waitAndClick(5);
+			docList.getPopUpOkBtn().waitAndClick(5);
+		}
+		baseClass.waitTime(3);
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docview.getMiniDocListTable());
+		baseClass.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		if (docview.getMiniDocListTable().isElementPresent()) {
+			baseClass.passedStep("navigated to Docview page is displayed without any runtime error as expected");
+
+		} else {
+			baseClass.failedStep("error displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author Krishna ModifyDate:NA RPMXCON-54990
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate and EmailSubject
+	 *              filters and ticks the 'Select All' check-box and navigates
+	 *              Doc-Explorer to DocView then documents gets loaded on DocView
+	 *              screen.
+	 */
+	@Test(description = "RPMXCON-54990", enabled = true, groups = { "regression" })
+	public void verifyMasterDateEmailSubjectsDocsGetsLoadedOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54990");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate and EmailSubject filters and ticks the 'Select All' check-box and navigates Doc-Explorer to DocView then documents gets loaded on DocView screen.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		baseClass.waitForElement(docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME"));
+		docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeys("Proximity");
+		docexp.getApplyFilter().waitAndClick(10);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		baseClass.stepInfo("Select all checkboxes");
+		driver.waitForPageToBeReady();
+		if (docList.getYesAllPageDocs().isDisplayed()) {
+			docList.getYesAllPageDocs().waitAndClick(5);
+			docList.getPopUpOkBtn().waitAndClick(5);
+		}
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docview.getMiniDocListTable());
+		baseClass.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		if (docview.getMiniDocListTable().isElementPresent()) {
+			baseClass.passedStep("Docview page is displayed without any runtime error");
+
+		} else {
+			baseClass.failedStep("erroris  displayed");
+		}
+	}
+
+	/**
+	 * @author Krishna ModifyDate:NA RPMXCON-54997
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate and EmailSubject
+	 *              filters and ticks the 'Select All' check-box and navigates
+	 *              Doc-Explorer to DocList then documents gets loaded on DocList
+	 *              screen.
+	 */
+	@Test(description = "RPMXCON-54997", enabled = true, groups = { "regression" })
+	public void verifyMasterDateEmailSubjectsDocsGetsLoadedOnDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54997");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate and EmailSubject filters and ticks the 'Select All' check-box and navigates Doc-Explorer to DocList then documents gets loaded on DocList screen.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		baseClass.waitForElement(docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME"));
+		docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeys("Proximity");
+		docexp.getApplyFilter().waitAndClick(10);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		baseClass.stepInfo("Select all checkboxes");
+		driver.waitForPageToBeReady();
+		if (docList.getYesAllPageDocs().isDisplayed()) {
+			docList.getYesAllPageDocs().waitAndClick(5);
+			docList.getPopUpOkBtn().waitAndClick(5);
+		}
+		baseClass.waitTime(3);
+		docexp.navigateToDoclistFromDocExplorer();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.verifyUrlLanding(Input.url + "en-us/Document/DocList", " on doc List page", "Not on doc List page");
+		if (docList.getHeaderText().isElementPresent()) {
+			baseClass.passedStep("Navigated to DocList page is displayed without any runtime error");
+
+		} else {
+			baseClass.failedStep("error is displayed");
+		}
 	}
 
 	@AfterMethod(alwaysRun = true)
