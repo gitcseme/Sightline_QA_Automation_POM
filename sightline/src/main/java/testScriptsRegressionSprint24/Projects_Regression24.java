@@ -286,6 +286,7 @@ public class Projects_Regression24 {
 		projects.navigateToProductionPage();
 		
 		//hovering action is performed temporarily to make the panel disappear
+		
 //		base.mouseHoverOnElement(projects.getManageProjectBtn());
 //		driver.waitForPageToBeReady();
 //		base.mouseHoverOnElement(projects.getAddProjectBtn());
