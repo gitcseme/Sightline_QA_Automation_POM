@@ -286,6 +286,7 @@ public class Projects_Regression24 {
 		projects.navigateToProductionPage();
 		
 		//hovering action is performed temporarily to make the panel disappear
+		
 //		base.mouseHoverOnElement(projects.getManageProjectBtn());
 //		driver.waitForPageToBeReady();
 //		base.mouseHoverOnElement(projects.getAddProjectBtn());
@@ -351,9 +352,7 @@ public class Projects_Regression24 {
 	public void verifyMinimumLengthValue_NonDomainProject() throws Exception {
 		
 		String projectName="P"+ utility.dynamicNameAppender();
-		String clientName="CN"+utility.dynamicNameAppender();
 		System.out.println(clientName);
-		String shortName="S"+utility.dynamicRandomNumberAppender();
 		String hCode="H"+utility.dynamicRandomNumberAppender();
 		base = new BaseClass(driver);
 		
@@ -363,33 +362,12 @@ public class Projects_Regression24 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("Login as a SA user :"+Input.sa1userName);
 		
-		projects.navigateToClientFromHomePage();
-		projects.addNewClient_NonDomainProject(clientName, shortName, "Not a Domain");
-		System.out.println("client is created"+clientName);
-		
 		projects.navigateToProductionPage();
 		
-		//hovering action is performed temporarily to make the panel disappear
-//		base.mouseHoverOnElement(projects.getManageProjectBtn());
-//		driver.waitForPageToBeReady();
-//		base.mouseHoverOnElement(projects.getAddProjectBtn());
-		
-		projects.AddNonDomainProject(projectName, hCode);
+		projectName = projects.addNonDomainProjectBasedOnAvailablitity(projectName, hCode);
 		System.out.println("project is created"+projectName);
-		projects.navigateToProductionPage();
-		
-		//hovering action is performed temporarily to make the panel disappear
-//		base.mouseHoverOnElement(projects.getAddProjectBtn());
-//		driver.waitForPageToBeReady();
-//		base.mouseHoverOnElement(projects.getAddProjectBtn());
-		
 		projects.editProject(projectName);
 		driver.waitForPageToBeReady();
-		
-		//hovering action is performed temporarily to make the panel disappear
-//		base.mouseHoverOnElement(projects.getManageProjectBtn());
-//		driver.waitForPageToBeReady();
-//		base.mouseHoverOnElement(projects.getProjectFolder());
 		
 		base.waitForElement(projects.getAddProject_SettingsTab());
 		projects.getAddProject_SettingsTab().waitAndClick(10);
