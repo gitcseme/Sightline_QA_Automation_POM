@@ -624,15 +624,21 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//a[text()='" + Btn + "']/..");
 
 	}
-	
-	public Element getSelectAllDocuments() {
-	return driver.FindElementByXPath("//*[@id='divNodeTree']//a[contains(@data-content,'All Documents')]");
 
-}
+	public Element getSelectAllDocuments() {
+		return driver.FindElementByXPath("//*[@id='divNodeTree']//a[contains(@data-content,'All Documents')]");
+
+	}
+
 	public Element getYesRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='Yes']");
-		}
-	
+	}
+
+	public Element getDocExplorerUnFolder() {
+		return driver.FindElementByXPath("//input[@id='toUnfolder']");
+
+	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3583,7 +3589,7 @@ public class DocExplorerPage {
 			getEmailRecipient("EMAILRECIPIENTS").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailRecipientValues(), emailRecipientValues[j]);
-			
+
 			driver.Navigate().refresh();
 		}
 	}
@@ -3603,7 +3609,7 @@ public class DocExplorerPage {
 			getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailSubFileValues(), emailFileValues[j]);
-			bc.stepInfo("Selected email value is "+ emailFileValues[j]);
+			bc.stepInfo("Selected email value is " + emailFileValues[j]);
 			driver.Navigate().refresh();
 		}
 	}
@@ -3779,20 +3785,53 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Brundha.T
-	 * @param fieldVal
-	 * Description:Selecting documents in docExplorerpage
+	 * @param fieldVal Description:Selecting documents in docExplorerpage
 	 */
 	public void SelectingAllDocuments(String fieldVal) {
 		bc.waitForElement(getDocExp_SelectAllDocs());
 		getDocExp_SelectAllDocs().waitAndClick(10);
-		if(fieldVal.equalsIgnoreCase("yes")) {
+		if (fieldVal.equalsIgnoreCase("yes")) {
 			getYesRadioBtn().waitAndClick(10);
 			bc.stepInfo("Documents from all pages are selected");
 		}
 		doclist.getPopUpOkBtn().Click();
 		bc.stepInfo("Documents from first page is selected");
 	}
-	
+
+	/**
+	 * @author Vijaya.Rani
+	 * @param folderName Description:bulkFolder Existing In UnFolder Docs
+	 */
+	public void bulkFolderExistingInUnFolderDocs(String folderName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkFolder());
+		getBulkFolder().waitAndClick(5);
+		System.out.println("Popup is displayed");
+
+		bc.waitForElement(getDocExplorerUnFolder());
+		getDocExplorerUnFolder().waitAndClick(5);
+
+		bc.waitForElement(getBulkFolderCheckBox(folderName));
+		getBulkFolderCheckBox(folderName).Click();
+		getBulkFolderCheckBox(folderName).ScrollTo();
+		System.out.println("Folder is selected");
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getContinueButton());
+		getContinueButton().Click();
+		System.out.println("Clicked continue");
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getFinalizeButton());
+
+		getFinalizeButton().Click();
+		bc.VerifySuccessMessage("Records saved successfully");
+	}
+
 }
