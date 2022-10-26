@@ -511,6 +511,42 @@ public class SecurityGroupsPage {
 	public Element getProjectSelector() {
 		return driver.FindElementById("project-selector");
 	}
+	
+	public Element getCommentsCheckBox(String comment) {
+		return driver.FindElementByXPath(
+				"//*[@id='commentJSTree']//a[text()='" + comment + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSelectedCommentsCheckBox(String comment) {
+		return driver.FindElementByXPath("//*[@id='commentJSTree_Selected']//a[text()='" + comment
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSG_Comment_Right() {
+		return driver.FindElementByXPath("//*[@onclick='CommentRightShift();']");
+	}
+
+	public Element getSG_Comment_Left() {
+		return driver.FindElementByXPath("//*[@onclick='CommentLeftShift();']");
+	}
+
+	public Element getKeyWordsCheckBox(String keyword) {
+		return driver.FindElementByXPath(
+				"//*[@id='keywordJSTree']//a[text()='" + keyword + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSelectedKeyWordCheckBox(String Keyword) {
+		return driver.FindElementByXPath("//*[@id='keywordJSTree_Selected']//a[text()='" + Keyword
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSG_Keyword_Right() {
+		return driver.FindElementByXPath("//*[@onclick='KeywordRightshift();']");
+	}
+
+	public Element getSG_Keyword_Left() {
+		return driver.FindElementByXPath("//*[@onclick='KeywordLeftShift();']");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
@@ -1708,5 +1744,67 @@ public class SecurityGroupsPage {
 		getSG_AnnSaveButton().waitAndClick(10);
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 		bc.passedStep("Unmapped Tag " + tagName + " from : " + securityGrp);
+	}
+	
+	/**
+	 * @author Krishna date:NA Modified date:NA
+	 * @Description: verify selected comments on avalaible field and assign selected
+	 *               fields
+	 */
+	public void verifySelectCommentisAssignedInSelectedList(String foldername) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCommentsCheckBox(foldername).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(foldername);
+		softassert.assertTrue((getCommentsCheckBox(foldername).isDisplayed()));
+		bc.stepInfo("Selected comments is displayed on available list");
+		bc.waitTillElemetToBeClickable(getCommentsCheckBox(foldername));
+		getCommentsCheckBox(foldername).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_Comment_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedCommentsCheckBox(foldername));
+		System.out.println(foldername);
+		softassert.assertTrue(getSelectedCommentsCheckBox(foldername).isElementAvailable(5));
+		if (getSelectedCommentsCheckBox(foldername).isElementAvailable(5)) {
+			bc.passedStep(foldername + "is displayed on Rightside Selected list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
+		}
+	}
+
+	/**
+	 * @author Krishna date:NA Modified date:NA
+	 * @Description: verify selected Keywords on avalaible field and assign selected
+	 *               fields
+	 */
+	public void verifySelectKeywordsAssignedInSelectedList(String foldername) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeyWordsCheckBox(foldername).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(foldername);
+		softassert.assertTrue((getKeyWordsCheckBox(foldername).isDisplayed()));
+		bc.stepInfo("Selected comments is displayed on available list");
+		bc.waitTillElemetToBeClickable(getKeyWordsCheckBox(foldername));
+		getKeyWordsCheckBox(foldername).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_Keyword_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedKeyWordCheckBox(foldername));
+		System.out.println(foldername);
+		softassert.assertTrue(getSelectedKeyWordCheckBox(foldername).isElementAvailable(5));
+		if (getSelectedKeyWordCheckBox(foldername).isElementAvailable(5)) {
+			bc.passedStep(foldername + "is displayed on Rightside Selected list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
+		}
 	}
 }
