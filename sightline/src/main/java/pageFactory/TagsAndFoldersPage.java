@@ -285,6 +285,33 @@ public class TagsAndFoldersPage {
 
 	// added by sowndariya
 
+	public Element getPropFolderToHelpBtn() {
+		return driver.FindElementByXPath("//label[text()='Propagate Folder To: ']//a[@class='helptip fa fa-question-circle']");
+	}
+	
+	public Element getPropFolderToHelpTXT() {
+		return driver.FindElementByXPath("//div[@class='popover-content']//p");
+	}
+	
+	public Element getAllFoldersTab() {
+		return driver.FindElementByXPath("//div[@id='folderJSTree']");
+	}
+
+	public Element getViewInDoclist_Folders() {
+		return driver.FindElementById("liViewFolderInDocList");
+	}
+
+	public Element getViewInDocView_Folders() {
+		return driver.FindElementById("liViewFolderInDocView");
+	}
+
+	public Element getViewInDoclist_Tags() {
+		return driver.FindElementById("liViewTagInDocList");
+	}
+
+	public Element getViewInDocView_Tags() {
+		return driver.FindElementById("liViewTagInDocView");
+	}
 	public Element getWarningPopup() {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//label[contains(text(),'delete')]");
 	}

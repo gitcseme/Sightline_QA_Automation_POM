@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -90,6 +91,13 @@ public class TagsAndFolders_Regression24 {
 			System.out.println("Sessions already closed");
 		}
 	}
+	
+	
+	@DataProvider(name = "PAandRMU")
+	public Object[][] userLoginDetails() {
+		return new Object[][] {{ Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }};
+	}
+	
 	/**
 	 * @author N/A Testcase No:RPMXCON-53445
 	 * @Description: Verify that if the doc being applied to are standalone with same MD5 hash,
@@ -318,5 +326,206 @@ public class TagsAndFolders_Regression24 {
 		
 	}
 	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-53439
+	 * @Description: Verify that Folder propagation must be based on the ingested MD5Hash field
+	 **/
+	@Test(description = "RPMXCON-53439", enabled = true, groups = { "regression" })
+	public void verifyFolderPropagation() throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("Verify that Folder propagation must be based on the ingested MD5Hash field");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("logged in As : " + Input.pa1userName);
+		base.selectproject(Input.additionalDataProject);
+		
+		tagsAndFolderPage.createNewFolderNotSave(foldername);
+		base.waitForElement(tagsAndFolderPage.getSaveFolder());
+		tagsAndFolderPage.getSaveFolder().waitAndClick(10);
+		base.waitForElement(tagsAndFolderPage.getPropFolderExactDuplic());
+		tagsAndFolderPage.getPropFolderExactDuplic().waitAndClick(10);
+		base.passedStep("created new folder and checked the checkbox  'Propagate Tag To: Exact Duplicates (Use MD5Hash)'");
+		
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		dataset.selectDataSetWithName("_MD5Hash");
+
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+		doc.documentSelection(3);
+		doc.bulkFolderExisting(foldername);
+		base.passedStep("Documents with MD5Hash field is selected and Bulk Folder action performed");
+
+	}
 	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-53183
+	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Tags are not selected
+	 **/
+	@Test(description = "RPMXCON-53183",  dataProvider = "PAandRMU",enabled = true, groups = { "regression" })
+	public void verifyDocListAndDocViewDisabled_Tags(String userName, String passWord) throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Tags are not selected");
+		loginPage.loginToSightLine(userName, passWord);
+		base.stepInfo("Logged in As " + userName);
+		
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.waitForElement(tagsAndFolderPage.getSecurityGroupTag());
+		tagsAndFolderPage.getSecurityGroupTag().selectFromDropdown().selectByVisibleText(Input.securityGroup);
+		base.waitForElement(tagsAndFolderPage.getAddTagTable());
+		tagsAndFolderPage.getAddTagTable().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(tagsAndFolderPage.getAllTagRoot());
+		tagsAndFolderPage.getAllTagRoot().waitAndClick(5);
+		base.waitForElement(tagsAndFolderPage.getTagActionDropDownArrow());
+		tagsAndFolderPage.getTagActionDropDownArrow().waitAndClick(5);
+
+		if (tagsAndFolderPage.getViewInDoclist_Tags().GetAttribute("class").contains("disabled")) {
+			base.passedStep("View in Doclist is disabled");
+		}
+		else {
+			base.failedMessage("View in Doclist is enabled");
+		}
+		driver.waitForPageToBeReady();
+		
+		if (tagsAndFolderPage.getViewInDocView_Tags().GetAttribute("class").contains("disabled")) {
+			base.passedStep("View in DocView is disabled");
+		}
+		else {
+			base.failedMessage("View in DocView is enabled");
+		}
+		
+	}
+	
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-53184
+	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Folder is not selected
+	 **/
+	@Test(description = "RPMXCON-53184",  dataProvider = "PAandRMU",enabled = true, groups = { "regression" })
+	public void verifyDocListAndDocViewDisbled_Folders(String userName, String passWord) throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Folder is not selected");
+		loginPage.loginToSightLine(userName, passWord);
+		base.stepInfo("Logged in As " + userName);
+		
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.waitForElement(tagsAndFolderPage.getFoldersTab());
+		tagsAndFolderPage.getFoldersTab().waitAndClick(10);
+		base.waitForElement(tagsAndFolderPage.getFolderSecutiryGroup());
+		tagsAndFolderPage.getFolderSecutiryGroup().selectFromDropdown().selectByVisibleText(Input.securityGroup);
+		base.waitForElement(tagsAndFolderPage.getAllFoldersTab());
+		tagsAndFolderPage.getAllFoldersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(tagsAndFolderPage.getFolderActionDropDownArrow());
+		tagsAndFolderPage.getFolderActionDropDownArrow().waitAndClick(5);
+
+		if (tagsAndFolderPage.getViewInDoclist_Folders().GetAttribute("class").contains("disabled")) {
+			base.passedStep("View in Doclist is disabled");
+		}
+		else {
+			base.failedMessage("View in Doclist is enabled");
+		}
+		
+		driver.waitForPageToBeReady();
+		
+		if (tagsAndFolderPage.getViewInDocView_Folders().GetAttribute("class").contains("disabled")) {
+			base.passedStep("View in DocView is disabled");
+		}
+		else {
+			base.failedMessage("View in DocView is enabled");
+		}
+		
+	}
+
+	/**
+	 * @author N/A Testcase No:RPMXCON-53194
+	 * @Description:verify that if Folder contains Zero document and select action 'View in Doc List', "
+				+ "message should be displayed 'Your query returned no data      
+	 **/
+	@Test(description = "RPMXCON-53194", enabled = true, dataProvider = "PAandRMU", groups = { "regression" })
+	public void verifyFoldwithZeroDocinViewinDL(String username, String password) throws Exception {
+		String foldername = "Folder"  + Utility.dynamicNameAppender();
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+		String expMSG = "There are NO documents in the tags or folders that you have selected";
+		
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		base = new BaseClass(driver);
+		
+		base.stepInfo("RPMXCON-53194");
+		base.stepInfo("To verify that if Folder contains Zero document and select action 'View in Doc List', "
+				+ "message should be displayed 'Your query returned no data'");
+		
+		loginPage.loginToSightLine(username, password);
+		base.stepInfo("Logged in As " + username);
+		tags.navigateToTagsAndFolderPage();
+		
+		if(username.equals(Input.rmu1userName)) {
+			tags.CreateFolderInRMU(folderName);
+		} else {
+		    tags.CreateFolder(foldername, Input.securityGroup);
+		}
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		if(username.equals(Input.rmu1userName)) {
+			tags.selectFolderViewInDocList(folderName);
+		} else {
+			tags.selectFolderViewInDocList(foldername);
+		}
+		
+		base.VerifyWarningMessage(expMSG);
+		base.passedStep("verified-  that if Folder contains Zero document and select action 'View in Doc List',"
+				+ " message should be displayed 'Your query returned no data'");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author N/A Testcase No:RPMXCON-53436
+	 * @Description:Verify contentual help text from Create Tag pop up for the 'Propagate Tag To     
+	 **/
+	@Test(description = "RPMXCON-53436", enabled = true, groups = { "regression" })
+	public void verifyConceptualHelpText() throws Exception {
+		String expPopUpMsg = "Please specify the relevant options for tag/folder propagation. "
+				+ "For example, select the 'Family Members' option, if you would like the same tag/folder to be propagated/applied"
+				+ " to all the other family members of this document, when a document is being tagged/foldered. "
+				+ "Similarly, you can propagate this tag to Exact Duplicates, Email Threads (all other documents with the same ThreadID) "
+				+ "and Email Duplicates by selecting the corresponding options. Note that Exact Duplicates propagates tag/folder to all other docs having the same MD5Hash metadata, "
+				+ "irrespective of whether these docs are parents, children or standalone docs.";
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		base.stepInfo("RPMXCON-53436");
+		base.stepInfo("Verify contentual help text from Create Tag pop up for the 'Propagate Tag To'");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As " + Input.pa1userName);
+		tags.navigateToTagsAndFolderPage();
+		base.waitForElement(tags.getFoldersTab());
+		tags.getFoldersTab().waitAndClick(5);
+		base.waitForElement(tags.getAllFolderRoot());
+		tags.getAllFolderRoot().waitAndClick(5);
+		base.waitForElement(tags.getFolderActionDropDownArrow());
+		tags.getFolderActionDropDownArrow().waitAndClick(5);
+		base.waitForElement(tags.getAddFolder());
+		tags.getAddFolder().waitAndClick(5);
+		base.waitForElement(tags.getPropFolderToHelpBtn());
+		tags.getPropFolderToHelpBtn().waitAndClick(5);
+		base.waitForElement(tags.getPropFolderToHelpTXT());
+		String actPopUpMsg =  tags.getPropFolderToHelpTXT().getText();
+	    base.stepInfo("Actual Text In Popup : " + actPopUpMsg);
+		if(expPopUpMsg.equals(actPopUpMsg)) {
+			base.passedStep("Verified -  contentual help text from Create Tag pop up for the 'Propagate Tag To'");
+		} else {
+			base.failedStep("Contentual help text from Create Tag pop up for the 'Propagate Tag To Not as Expected");
+		}
+	   loginPage.logout();
+	}
+
 }
