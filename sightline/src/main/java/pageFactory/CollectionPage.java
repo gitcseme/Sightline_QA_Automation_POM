@@ -763,7 +763,13 @@ public class CollectionPage {
 			getCollectioName().waitAndClick(5);
 			getCollectioName().SendKeys(collectionName);
 			base.passedStep("Collection Name Field Is displayed");
-			base.stepInfo("Entered collection Name : " + collectionName);
+
+			// Verifying Entered collection name is displayed as expected
+			String displayedCname = driver
+					.findAttributeValueViaJS("return document.querySelector('#txtCollectionName').value");
+			base.textCompareEquals(displayedCname, collectionName, "Entered collection name is displayed",
+					"Collection name mis-match");
+
 		} else {
 			base.failedStep("Collection Name Field is Not displayed");
 		}

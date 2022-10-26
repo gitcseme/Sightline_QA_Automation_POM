@@ -402,6 +402,7 @@
 	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 	    <AutomationBackUpDomain>Automation_Regression_BackUp</AutomationBackUpDomain>
+	     <RetrievalCountFold>RetrievalCount-2</RetrievalCountFold>
 	
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
@@ -893,5 +894,20 @@
 	<filterDataInput3>enron.com</filterDataInput3>
 	<transcriptId>STC4_00001000</transcriptId>
 	
-
+	<searching>Searching</searching>
+	<dwnldNative>DownloadNative</dwnldNative>
+	<highlight>Highlighting</highlight>
+	<redactions>Redactions</redactions>
+	<reviewRemarks>Reviewer Remarks</reviewRemarks>
+	<analyticPanel>Analytics Panels</analyticPanel>
+	<manage>Manage</manage>
+	<productionsC>Productions</productionsC>
+	<allReport>All Reports</allReport>
+	<conceptExp>Concept Explorer</conceptExp>
+	<commExp>Communications Explorer</commExp>
+	<categorize>Categorize</categorize>
+	<datasetsN>Datasets</datasetsN>
+	<manageDprjt>Manage Domain Projects</manageDprjt>
+	<injections>Ingestions</injections>
+    
 </TestData>

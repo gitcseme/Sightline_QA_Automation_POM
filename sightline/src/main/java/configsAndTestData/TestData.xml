@@ -115,6 +115,7 @@
 	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
 	<hiddenPropDat>DAT_FileWithHiddenProperties.dat</hiddenPropDat>
 	<hiddenPropNative>Natives_FileWithHiddenProperties.lst</hiddenPropNative>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -321,7 +322,7 @@
 	<searchString7>term</searchString7>
 	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
-	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
+	<fileDataErrMsg>Error in file saving or upload format. Please confirm your file is a valid format and try again.</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
 	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
@@ -375,7 +376,7 @@
    <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
    <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
-   
+    
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
 	<orderCriteria>DocID</orderCriteria>
@@ -401,6 +402,7 @@
 	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 	    <AutomationBackUpDomain>Automation_Regression_BackUp</AutomationBackUpDomain>
+	     <RetrievalCountFold>RetrievalCount-2</RetrievalCountFold>
 	
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
@@ -892,5 +894,20 @@
 	<filterDataInput3>enron.com</filterDataInput3>
 	<transcriptId>STC4_00001000</transcriptId>
 	
+	<searching>Searching</searching>
+	<dwnldNative>DownloadNative</dwnldNative>
+	<highlight>Highlighting</highlight>
+	<redactions>Redactions</redactions>
+	<reviewRemarks>Reviewer Remarks</reviewRemarks>
+	<analyticPanel>Analytics Panels</analyticPanel>
+	<manage>Manage</manage>
+	<productionsC>Productions</productionsC>
+	<allReport>All Reports</allReport>
+	<conceptExp>Concept Explorer</conceptExp>
+	<commExp>Communications Explorer</commExp>
+	<categorize>Categorize</categorize>
+	<datasetsN>Datasets</datasetsN>
+	<manageDprjt>Manage Domain Projects</manageDprjt>
+	<injections>Ingestions</injections>
 
 </TestData>

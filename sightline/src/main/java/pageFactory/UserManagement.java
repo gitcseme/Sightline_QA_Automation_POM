@@ -997,37 +997,45 @@ public class UserManagement {
 	public Element getSGDropDown() {
 		return driver.FindElementByXPath("//select[@id='SysAdminSecGroup']");
 	}
+
 	public Element getUserNotLoggedPopup() {
 		return driver.FindElementById("PendingActivationUserGrid_wrapper");
 	}
-	
+
 	public Element getUserData(String data) {
-		return driver.FindElementByXPath("//table[@id='PendingActivationUserGrid']//tbody//td[contains(text(),'"+data+"')]");
+		return driver.FindElementByXPath(
+				"//table[@id='PendingActivationUserGrid']//tbody//td[contains(text(),'" + data + "')]");
 	}
+
 	public Element getResendButton(String user) {
-		return driver.FindElementByXPath("//td[contains(text(),'"+user+"')]//following-sibling::td//a");
+		return driver.FindElementByXPath("//td[contains(text(),'" + user + "')]//following-sibling::td//a");
 	}
+
 	public Element getCloseBtn() {
 		return driver.FindElementByXPath("//button[@id='Close']");
 	}
+
 	public Element getUsersInfo() {
 		return driver.FindElementByXPath("//div[@id='dtUserList_info']");
 	}
+
 	public Element getInactiveStatus() {
 		return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td[contains(text(),'InActive')]");
 	}
+
 	public Element getactiveStatus() {
 		return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td[contains(text(),'Active')]");
 	}
+
 	public Element getStatusHeader() {
 		return driver.FindElementByXPath("//table[@role='grid']//th[contains(text(),'Status')]");
 	}
 
-	//@Modified By Jeevitha
+	// @Modified By Jeevitha
 	public Element getProjectBillableCheckBox() {
 		return driver.FindElementByXPath("//input[@id='IsBillableCheckbox']/../i");
 	}
-	
+
 	public ElementCollection getUserListHeaderIndex() {
 		return driver
 				.FindElementsByXPath("//*[@id=\"dtUserList_wrapper\"]//div[@class='dataTables_scrollHead']//table//th");
@@ -1049,48 +1057,65 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//li[text()='20001000020 : Your account has been locked. To unlock your account, please reset your password.']");
 	}
+
 	public Element getAttorneyProfileExistUser() {
 		return driver.FindElementByXPath("//div[@id='divAttorneyProfileEdit']");
 	}
+
 	public Element getLoginUserShouldNotCreate() {
-		return driver.FindElementByXPath("//p[text()='20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.']");
-	}  
+		return driver.FindElementByXPath(
+				"//p[text()='20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.']");
+	}
+
 	public Element getLoginUserShouldNotCreateRmu() {
-		return driver.FindElementByXPath("//p[text()='20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.']");
-	} 
+		return driver.FindElementByXPath(
+				"//p[text()='20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.']");
+	}
+
 	public Element getFilterByType() {
 		return driver.FindElementById("ddlEntityType");
 	}
+
 	public Element getApplyFilter() {
 		return driver.FindElementById("btnSearch");
 	}
+
 	public ElementCollection getTableHeaderInDomainClient() {
 		return driver.FindElementsByXPath("//table[@id='EntityDataTable']//th");
 	}
+
 	public Element getFilterByName() {
 		return driver.FindElementByXPath("//input[@id='EntityLabel']");
 	}
+
 	public Element getPrjtField() {
 		return driver.FindElementById("txtUserProj");
 	}
+
 	public ElementCollection getColumnValueinDomainClient(int i) {
-		return driver.FindElementsByXPath("//table[@id='EntityDataTable']//tbody//td["+i+"]");
+		return driver.FindElementsByXPath("//table[@id='EntityDataTable']//tbody//td[" + i + "]");
 	}
+
 	public Element getFirstNameError() {
 		return driver.FindElementById("txtBxUserName-error");
 	}
+
 	public Element getLastNameError() {
 		return driver.FindElementById("txtBxUserLastName-error");
 	}
+
 	public Element getRoleError() {
 		return driver.FindElementById("ddlDomainAdminCreateUserRoles-error");
 	}
+
 	public Element getEmailAddressError() {
 		return driver.FindElementById("txtBxUserEmailID-error");
 	}
+
 	public Element getPopupWindowHeader() {
 		return driver.FindElementByXPath("//div[contains(text(),'Modify Multiple User Profiles')]");
 	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1733,7 +1758,7 @@ public class UserManagement {
 	}
 
 	/**
-	 * @author Gopinath  @Modiified By Jeevitha
+	 * @author Gopinath @Modiified By Jeevitha
 	 * @Description : Method for creating new user.
 	 */
 	public void createNewUser(String firstName, String lastName, String role, String emailId, String domain,
@@ -2904,7 +2929,7 @@ public class UserManagement {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar  @Modified By : Jeevitha
+	 * @author Aathith.Senthilkumar @Modified By : Jeevitha
 	 * @param firstName
 	 * @param lastName
 	 * @param role
@@ -3949,7 +3974,7 @@ public class UserManagement {
 		try {
 			bc.waitForElement(getDeleteBtn());
 			getDeleteBtn().waitAndClick(10);
-			if(getConfirmDelete().isElementAvailable(15)) {
+			if (getConfirmDelete().isElementAvailable(15)) {
 				getConfirmDelete().waitAndClick(10);
 			}
 			bc.VerifySuccessMessage("User has been deactivated");
@@ -4678,122 +4703,118 @@ public class UserManagement {
 			bc.failedStep("Delete User Popup is Not Displayed");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
-	 * @description: this method will verify the status of billable/non billable in edit user popup
+	 * @throws Exception
+	 * @description: this method will verify the status of billable/non billable in
+	 *               edit user popup
 	 */
-	public void verifyBillableUserCheckBoxStatus(String email,String userType) throws Exception {
-		
-		if(userType.equalsIgnoreCase("Existing")) {
+	public void verifyBillableUserCheckBoxStatus(String email, String userType) throws Exception {
+
+		if (userType.equalsIgnoreCase("Existing")) {
 			filterByName(email);
 			bc.waitForElement(getUserEditBtn());
 			getUserEditBtn().waitAndClick(10);
 			bc.waitForElement(getCancel());
-		}
-		else {
+		} else {
 			bc.waitForElement(getAddUserBtn());
 			getAddUserBtn().waitAndClick(10);
 			bc.waitForElement(getDomainUserCancelButton());
 		}
-		//check billable/non-billable field
-		if(getBilliableUserCheckBox().isElementAvailable(10)) {
-			bc.passedStep("billable/non-billable user checkbox displayed for"+email);
+		// check billable/non-billable field
+		if (getBilliableUserCheckBox().isElementAvailable(10)) {
+			bc.passedStep("billable/non-billable user checkbox displayed for" + email);
+		} else {
+			bc.failedStep("billable/non-billable user checkbox not displayed in the user edit popup" + email);
 		}
-		else {
-			bc.failedStep("billable/non-billable user checkbox not displayed in the user edit popup"+email);
-		}
-		if(userType.equalsIgnoreCase("Existing")) {
+		if (userType.equalsIgnoreCase("Existing")) {
 			getCancel().waitAndClick(10);
-		}
-		else {
+		} else {
 			getDomainUserCancelButton().waitAndClick(10);
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
-	 * @description: this method will verify the error msg when adding existing user to same project/same role
+	 * @throws Exception
+	 * @description: this method will verify the error msg when adding existing user
+	 *               to same project/same role
 	 */
-		public void verifyErrorMsgForCreatingExistedUser(String firstName, String lastName,String role,
-				String email,String domain,String project) {
-				
-				bc.waitForElement(getAddUserBtn());
-				getAddUserBtn().waitAndClick(10);
-				bc.waitForElement(getFirstName());
-				getFirstName().SendKeys(firstName);
-				bc.waitForElement(getLastName());
-				getLastName().SendKeys(lastName);
-				bc.waitForElement(getSelectRole());
-				getSelectRole().selectFromDropdown().selectByVisibleText(role);
-				bc.waitForElement(getEmail());
-				getEmail().SendKeys(email);
+	public void verifyErrorMsgForCreatingExistedUser(String firstName, String lastName, String role, String email,
+			String domain, String project) {
 
-				if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
-					bc.waitForElement(getSGDropDown());
-					getSGDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
-				}
-				bc.waitForElement(getSave());
-				getSave().waitAndClick(10);
-				if (role.equalsIgnoreCase("Review Manager")) {
-					bc.VerifyErrorMessage("20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
-				}
-				else {
-					bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
-				}
+		bc.waitForElement(getAddUserBtn());
+		getAddUserBtn().waitAndClick(10);
+		bc.waitForElement(getFirstName());
+		getFirstName().SendKeys(firstName);
+		bc.waitForElement(getLastName());
+		getLastName().SendKeys(lastName);
+		bc.waitForElement(getSelectRole());
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getEmail());
+		getEmail().SendKeys(email);
+
+		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			bc.waitForElement(getSGDropDown());
+			getSGDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
 		}
-		
-		/**
-		 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
-		 * @throws Exception 
-		 * @description: this method will verify the status of attorney profile while adding new user/edit existing
-		 */
-			public void verifyAttorneyProfileForNewOrExistingUser(String firstName,String lastName,String email,
-					String role,String userType) {
-				//for adding new user or selecting existing user
-				if(userType.equalsIgnoreCase("New")) {
-					bc.waitForElement(getAddUserBtn());
-					getAddUserBtn().waitAndClick(10);
-					bc.waitForElement(getFirstName());
-					getFirstName().SendKeys(firstName);
-					bc.waitForElement(getLastName());
-					getLastName().SendKeys(lastName);
-					bc.waitForElement(getSelectRole());
-					getSelectRole().selectFromDropdown().selectByVisibleText(role);
-				} 
-				else if(userType.equalsIgnoreCase("existing")){
-					filterByName(email);
-					bc.waitForElement(getUserEditBtn());
-					getUserEditBtn().waitAndClick(10);
-					bc.waitTime(2);
-				}
-				//verifying attorney profile for all role
-				if(!(role.equalsIgnoreCase(Input.ReviewManager))) {
-					if(!(getAttorneyprofilecheckbox().isDisplayed()) && !(getAttorneyProfileExistUser().isDisplayed()) ) {
-						bc.passedStep("Attorney profile not displayed for: "+role);
-						}
-						else {
-							bc.failedStep("Attorney profile displayed for:"+role);
-						}
-				}
-				else if(role.equalsIgnoreCase(Input.ReviewManager)) {
-					if((getAttorneyprofilecheckbox().isDisplayed()) || (getAttorneyProfileExistUser().isDisplayed())) {
-						bc.passedStep("Attorney profile displayed for :"+role);
-						}
-						else {
-							bc.failedStep("Attorney profile not displayed for:"+role);
-						}
-				}
-				//for closing the popup
-				if(userType.equalsIgnoreCase("Existing")) {
-					getCancel().waitAndClick(10);
-				}
-				else {
-					getDomainUserCancelButton().waitAndClick(10);
-				}
+		bc.waitForElement(getSave());
+		getSave().waitAndClick(10);
+		if (role.equalsIgnoreCase("Review Manager")) {
+			bc.VerifyErrorMessage(
+					"20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
+		} else {
+			bc.VerifyErrorMessage(
+					"20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 12/10/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception
+	 * @description: this method will verify the status of attorney profile while
+	 *               adding new user/edit existing
+	 */
+	public void verifyAttorneyProfileForNewOrExistingUser(String firstName, String lastName, String email, String role,
+			String userType) {
+		// for adding new user or selecting existing user
+		if (userType.equalsIgnoreCase("New")) {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().waitAndClick(10);
+			bc.waitForElement(getFirstName());
+			getFirstName().SendKeys(firstName);
+			bc.waitForElement(getLastName());
+			getLastName().SendKeys(lastName);
+			bc.waitForElement(getSelectRole());
+			getSelectRole().selectFromDropdown().selectByVisibleText(role);
+		} else if (userType.equalsIgnoreCase("existing")) {
+			filterByName(email);
+			bc.waitForElement(getUserEditBtn());
+			getUserEditBtn().waitAndClick(10);
+			bc.waitTime(2);
+		}
+		// verifying attorney profile for all role
+		if (!(role.equalsIgnoreCase(Input.ReviewManager))) {
+			if (!(getAttorneyprofilecheckbox().isDisplayed()) && !(getAttorneyProfileExistUser().isDisplayed())) {
+				bc.passedStep("Attorney profile not displayed for: " + role);
+			} else {
+				bc.failedStep("Attorney profile displayed for:" + role);
 			}
+		} else if (role.equalsIgnoreCase(Input.ReviewManager)) {
+			if ((getAttorneyprofilecheckbox().isDisplayed()) || (getAttorneyProfileExistUser().isDisplayed())) {
+				bc.passedStep("Attorney profile displayed for :" + role);
+			} else {
+				bc.failedStep("Attorney profile not displayed for:" + role);
+			}
+		}
+		// for closing the popup
+		if (userType.equalsIgnoreCase("Existing")) {
+			getCancel().waitAndClick(10);
+		} else {
+			getDomainUserCancelButton().waitAndClick(10);
+		}
+	}
 
 	/**
 	 * @Author jeevitha
@@ -4832,220 +4853,254 @@ public class UserManagement {
 			}
 		}
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param Dropdown
-	 * @param value
-	 * Description:Applying filter
+	 * @param value    Description:Applying filter
 	 */
-public void applyingFilterInClient(String Dropdown,boolean value) {
-	this.driver.getWebDriver().get(Input.url+ "Entity/Entity");
-	driver.waitForPageToBeReady();
-	getFilterByType().selectFromDropdown().selectByVisibleText(Dropdown);
-	if(value) {
-		getFilterByName().waitAndClick(10);
-	}
-	bc.waitForElement(getApplyFilter());
-	getApplyFilter().Click();
-	bc.waitTime(2);
-}
-
-/**
- * @author Brundha.T
- * @return
- * Description: validating bulkuser control
- */
-public ArrayList<String> ValidatingBulkUserAccessControl() {
-	this.driver.getWebDriver().get(Input.url+ "User/UserListView");
-	ArrayList<String> Values=new ArrayList<>();
-	driver.waitForPageToBeReady();
-	bc.waitForElement(getBulkUserAccessTab());
-	getBulkUserAccessTab().waitAndClick(5);
-	bc.waitForElement(getSelectRollId());
-	List<WebElement> ListOfEle = getSelectRollId().selectFromDropdown().getOptions();
-	System.out.println(ListOfEle.size());
-	for (int j =1; j < ListOfEle.size(); j++) {
-	    String DropdownTxt=ListOfEle.get(j).getText();
-	    System.out.println(DropdownTxt);
-	    Values.add(DropdownTxt);
-}
-	driver.waitForPageToBeReady();
-	return Values;
+	public void applyingFilterInClient(String Dropdown, boolean value) {
+		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
+		driver.waitForPageToBeReady();
+		getFilterByType().selectFromDropdown().selectByVisibleText(Dropdown);
+		if (value) {
+			getFilterByName().waitAndClick(10);
+		}
+		bc.waitForElement(getApplyFilter());
+		getApplyFilter().Click();
+		bc.waitTime(2);
 	}
 
-/**
- * @author Brundha.T
- * Description: verifying readonly in project and security group
- */
-public void verifyingReadonlyInProjectAndSecurityGrp() {
-	String BulkUserPrjt=getSelectingProject().GetAttribute("disabled");
-	bc.textCompareEquals(BulkUserPrjt,"true","Bulk user project is disabled as expected","Bulk user project  not disabled");
-	String BulkUserSecurityGroup=getBulkUserSecurityGroup().GetAttribute("disabled");
-	bc.textCompareEquals(BulkUserSecurityGroup,"true","Security Group is disabled as expected","Security Group not disabled");
-}
-/**
- * @author Brundha.T
- * @param Value
- * @param users Description:method for enableor disable user rights
- */
-public void enableOrDisableUsersRights(String Value, String[] users) {
-	selectRoleBulkUserAccessControl(Input.ProjectAdministrator, Input.projectName, null);
-	defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false, false,
-			false, false, false, false);
-
-	if ("Enable".equals(Value)) {
-		bc.waitForElement(getEnableRadioBtn());
-		getEnableRadioBtn().waitAndClick(10);
-
-	} else {
-		bc.waitForElement(getDisableRadioBtn());
-		getDisableRadioBtn().waitAndClick(10);
+	/**
+	 * @author Brundha.T
+	 * @return Description: validating bulkuser control
+	 */
+	public ArrayList<String> ValidatingBulkUserAccessControl() {
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		ArrayList<String> Values = new ArrayList<>();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(5);
+		bc.waitForElement(getSelectRollId());
+		List<WebElement> ListOfEle = getSelectRollId().selectFromDropdown().getOptions();
+		System.out.println(ListOfEle.size());
+		for (int j = 1; j < ListOfEle.size(); j++) {
+			String DropdownTxt = ListOfEle.get(j).getText();
+			System.out.println(DropdownTxt);
+			Values.add(DropdownTxt);
+		}
+		driver.waitForPageToBeReady();
+		return Values;
 	}
-	Actions Act = new Actions(driver.getWebDriver());
-	Act.clickAndHold(getPopupWindowHeader().getWebElement());
-	Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
-	Act.release().build().perform();
-	selectBulkAccessUsers(users);
-	driver.waitForPageToBeReady();
-	getBulkUserSaveBtn().waitAndClick(10);
-	bc.VerifySuccessMessage("Access rights applied successfully");
-}
+
+	/**
+	 * @author Brundha.T Description: verifying readonly in project and security
+	 *         group
+	 */
+	public void verifyingReadonlyInProjectAndSecurityGrp() {
+		String BulkUserPrjt = getSelectingProject().GetAttribute("disabled");
+		bc.textCompareEquals(BulkUserPrjt, "true", "Bulk user project is disabled as expected",
+				"Bulk user project  not disabled");
+		String BulkUserSecurityGroup = getBulkUserSecurityGroup().GetAttribute("disabled");
+		bc.textCompareEquals(BulkUserSecurityGroup, "true", "Security Group is disabled as expected",
+				"Security Group not disabled");
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Value
+	 * @param users Description:method for enableor disable user rights
+	 */
+	public void enableOrDisableUsersRights(String Value, String[] users) {
+		selectRoleBulkUserAccessControl(Input.ProjectAdministrator, Input.projectName, null);
+		defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false, false,
+				false, false, false, false);
+
+		if ("Enable".equals(Value)) {
+			bc.waitForElement(getEnableRadioBtn());
+			getEnableRadioBtn().waitAndClick(10);
+
+		} else {
+			bc.waitForElement(getDisableRadioBtn());
+			getDisableRadioBtn().waitAndClick(10);
+		}
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(getPopupWindowHeader().getWebElement());
+		Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		selectBulkAccessUsers(users);
+		driver.waitForPageToBeReady();
+		getBulkUserSaveBtn().waitAndClick(10);
+		bc.VerifySuccessMessage("Access rights applied successfully");
+	}
 
 	/**
 	 * @author: Arun Created Date: 20/10/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
+	 * @throws Exception
 	 * @description: this method will verify the status of user details in popup
 	 */
-		public void verifyUserDetailsOnUserNotLoggedInPopup(String[] details,String user) {
-			
-			bc.waitForElement(getNotYetLoggedInUserBtn());
-			getNotYetLoggedInUserBtn().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			String[] data = {"FirstName","LastName","Email Id"};
-			if(getUserNotLoggedPopup().isElementAvailable(10)){
-				bc.passedStep("user not logged in popup available");
-				if(getResendButton(user).isElementAvailable(10)) {
-					bc.passedStep("Resend button available");
-					for(int j=0;j<details.length;j++) {
-						if(getUserData(details[j]).isElementAvailable(10)) {
-							bc.passedStep(data[j]+"user details displayed");
-						}
-						else {
-							bc.failedStep(data[j]+"user details not displayed");
-						}
+	public void verifyUserDetailsOnUserNotLoggedInPopup(String[] details, String user) {
+
+		bc.waitForElement(getNotYetLoggedInUserBtn());
+		getNotYetLoggedInUserBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String[] data = { "FirstName", "LastName", "Email Id" };
+		if (getUserNotLoggedPopup().isElementAvailable(10)) {
+			bc.passedStep("user not logged in popup available");
+			if (getResendButton(user).isElementAvailable(10)) {
+				bc.passedStep("Resend button available");
+				for (int j = 0; j < details.length; j++) {
+					if (getUserData(details[j]).isElementAvailable(10)) {
+						bc.passedStep(data[j] + "user details displayed");
+					} else {
+						bc.failedStep(data[j] + "user details not displayed");
 					}
 				}
-				else {
-					bc.failedStep("Resend button not available for user:"+user);
-				}
+			} else {
+				bc.failedStep("Resend button not available for user:" + user);
 			}
-		else {
+		} else {
 			bc.failedStep("user not logged in popup not available");
 		}
-			bc.waitForElement(getCloseBtn());
-			getCloseBtn().waitAndClick(10);
-		}
-	
-		
-		/**
-		 * @author: Arun Created Date: 20/10/2022 Modified by: NA Modified Date: NA 
-		 * @description: this method will get and return the number of users present in userslist
-		 */
-			public int getUserCountInfo() {
-				String info=null;
-				bc.waitForElement(getUsersInfo());
-				//waiting for page to load to get count info
-				for(int i=0;i<10;i++) {
-					bc.waitTime(2);
-					info = getUsersInfo().getText().toString();
-					System.out.println("info"+info);
-					if(!(info.isEmpty())) {
-						break;
-					}
-				}
-				String userCount = info.substring(info.indexOf("of") + 3, info.indexOf(" entries"));
-				int count = Integer.parseInt(userCount.replace(",", ""));
-				return count;
-			}
-			
-			/**
-			 * @author: Arun Created Date: 20/10/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the status of users list after turning on 
-			 * inactive users toggle
-			 */
-				public void verifyInactiveUsersListDisplayedStatus() {
-					driver.waitForPageToBeReady();
-					if(getactiveStatus().isElementAvailable(10)) {
-						bc.passedStep("Active users list displayed");
-					}
-					else {
-						bc.failedStep("active users list not displayed");
-					}
-					//changing the sort order of status to descending and verify inactive status
-					bc.waitForElement(getStatusHeader());
-					for(int i=0;i<10;i++) {
-						getStatusHeader().waitAndClick(10);
-						bc.waitTime(2);
-						if(getInactiveStatus().isElementAvailable(10)) {
-							bc.passedStep("inactive Users list displayed");
-							break;
-						}	
-					}	
-				}
-				/**
-				 * @author Brundha.T
-				 * @param role
-				 * @param Prjt
-				 * @param SG
-				 * @param Rights
-				 * @param Rbtn
-				 * @param users
-				 * Description: filling Bulk access control popup window
-				 */
-				public void selectRole(String role, String Prjt, String SG,boolean Rights,String Rbtn) {
+		bc.waitForElement(getCloseBtn());
+		getCloseBtn().waitAndClick(10);
+	}
 
-					bc.waitForElement(getBulkUserAccessTab());
-					getBulkUserAccessTab().waitAndClick(10);
-					if(role!=null) {
-					bc.waitForElement(getSelectRollId());
-					getSelectRollId().selectFromDropdown().selectByVisibleText(role);
-					}
-					if(Prjt!=null) {
-					bc.waitForElement(getSelectDropProject(Prjt));
-					driver.scrollingToElementofAPage(getSelectDropProject(Prjt));
-					getSelectDropProject(Prjt).waitAndClick(10);
-					}
-					if (SG!=null) {
-						bc.waitForElement(getBulkUserSecurityGroup());
-						getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(SG);
-					}
-					
-					if (Rights == true) {
-						driver.waitForPageToBeReady();
-						getBulkManage().waitAndClick(5);
-					}
-					if (Rbtn!=null) {
-						driver.waitForPageToBeReady();
-						getEnableRadioBtn().waitAndClick(5);
-					} else {
-						driver.waitForPageToBeReady();
-				}
-					Actions Act = new Actions(driver.getWebDriver());
-					Act.clickAndHold(getPopupWindowHeader().getWebElement());
-					Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
-					Act.release().build().perform();
-					
-				}
-				/**
-				 * @author Brundha.T
-				 * @param ErrorMsg
-				 * Description:verifying the error msg
-				 */
-				public void saveAndVerifyingErrorMsg(String ErrorMsg) {
-					bc.waitForElement(getBulkUserSaveBtn());
-					getBulkUserSaveBtn().waitAndClick(10);
-					bc.VerifyErrorMessage(ErrorMsg);
-					driver.Navigate().refresh();
-					driver.waitForPageToBeReady();
-				}
+	/**
+	 * @author: Arun Created Date: 20/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will get and return the number of users present in
+	 *               userslist
+	 */
+	public int getUserCountInfo() {
+		String info = null;
+		bc.waitForElement(getUsersInfo());
+		// waiting for page to load to get count info
+		for (int i = 0; i < 10; i++) {
+			bc.waitTime(2);
+			info = getUsersInfo().getText().toString();
+			System.out.println("info" + info);
+			if (!(info.isEmpty())) {
+				break;
+			}
+		}
+		String userCount = info.substring(info.indexOf("of") + 3, info.indexOf(" entries"));
+		int count = Integer.parseInt(userCount.replace(",", ""));
+		return count;
+	}
+
+	/**
+	 * @author: Arun Created Date: 20/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the status of users list after turning
+	 *               on inactive users toggle
+	 */
+	public void verifyInactiveUsersListDisplayedStatus() {
+		driver.waitForPageToBeReady();
+		if (getactiveStatus().isElementAvailable(10)) {
+			bc.passedStep("Active users list displayed");
+		} else {
+			bc.failedStep("active users list not displayed");
+		}
+		// changing the sort order of status to descending and verify inactive status
+		bc.waitForElement(getStatusHeader());
+		for (int i = 0; i < 10; i++) {
+			getStatusHeader().waitAndClick(10);
+			bc.waitTime(2);
+			if (getInactiveStatus().isElementAvailable(10)) {
+				bc.passedStep("inactive Users list displayed");
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param role
+	 * @param Prjt
+	 * @param SG
+	 * @param Rights
+	 * @param Rbtn
+	 * @param users  Description: filling Bulk access control popup window
+	 */
+	public void selectRole(String role, String Prjt, String SG, boolean Rights, String Rbtn) {
+
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+		if (role != null) {
+			bc.waitForElement(getSelectRollId());
+			getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+		}
+		if (Prjt != null) {
+			bc.waitForElement(getSelectDropProject(Prjt));
+			driver.scrollingToElementofAPage(getSelectDropProject(Prjt));
+			getSelectDropProject(Prjt).waitAndClick(10);
+		}
+		if (SG != null) {
+			bc.waitForElement(getBulkUserSecurityGroup());
+			getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(SG);
+		}
+
+		if (Rights == true) {
+			driver.waitForPageToBeReady();
+			getBulkManage().waitAndClick(5);
+		}
+		if (Rbtn != null) {
+			driver.waitForPageToBeReady();
+			getEnableRadioBtn().waitAndClick(5);
+		} else {
+			driver.waitForPageToBeReady();
+		}
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(getPopupWindowHeader().getWebElement());
+		Act.moveToElement(getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param ErrorMsg Description:verifying the error msg
+	 */
+	public void saveAndVerifyingErrorMsg(String ErrorMsg) {
+		bc.waitForElement(getBulkUserSaveBtn());
+		getBulkUserSaveBtn().waitAndClick(10);
+		bc.VerifyErrorMessage(ErrorMsg);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify components checkbox in functionality tab 
+	 * @throws Exception
+	 */
+	public void verifyFunctionalityCheckbox(String[][] usersToCheck, String[] checkedCbPa, String[] disabledCBPa,
+			String[] uncheckedCBPa, String[] checkedCb, String[] disabledCB, String[] uncheckedCB,
+			String[] checkedCbRev, String[] disabledCBRev, String[] uncheckedCBRev, boolean performcheckAndUncheck,String selectComponent)
+			throws Exception {
+		for (int i = 0; i < usersToCheck.length; i++) {
+			int j = 0;
+			driver.waitForPageToBeReady();
+
+			filterTheRole(usersToCheck[i][j]);
+			j++;
+			navigateToFunctionTab(usersToCheck[i][j], usersToCheck[i][usersToCheck.length - 1], Input.projectName,
+					true);
+
+			// verify checkbox of functionality popup
+			if (usersToCheck[i][j].equalsIgnoreCase(Input.pa1userName)) {
+				verifyCheckBoxStatus(checkedCbPa, disabledCBPa, uncheckedCBPa, true, true, true);
+			} else if (usersToCheck[i][j].equalsIgnoreCase(Input.rmu1userName)) {
+				verifyCheckBoxStatus(checkedCb, disabledCB, uncheckedCB, true, true, true);
+			} else if (usersToCheck[i][j].equalsIgnoreCase(Input.rev1userName)) {
+				verifyCheckBoxStatus(checkedCbRev, disabledCBRev, uncheckedCBRev, true, true, true);
+			}
+
+			if (performcheckAndUncheck) {
+				verifyStatusForComponents(getComponentCheckBoxStatus(selectComponent), selectComponent, false);
+				verifyStatusForComponents(getComponentCheckBoxStatus(selectComponent), selectComponent, true);
+			}
+			driver.Navigate().refresh();
+		}
+	}
+
 }

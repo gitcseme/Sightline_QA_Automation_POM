@@ -506,6 +506,23 @@ public class Input {
 	public static String BatchFileduplicateHeader;
 	public static String SearchBatchFile;
 	public static String AutomationBackUpDomain;
+	public static String RetrievalCountFold;
+	
+	public static String Searching;
+	public static String DownloadNative;
+	public static String Highlighting;
+	public static String Redactions;
+	public static String ReviewerRemarks;
+	public static String AnalyticsPanels;
+	public static String Manage;
+	public static String Productions;
+	public static String AllReports;
+	public static String ConceptExplorer;
+	public static String CommunicationsExplorer;
+	public static String Categorize;
+	public static String Datasets;
+	public static String ManageDomainProjects;
+	public static String Ingestions;
 	
 	// Added By Jeevitha [Collection]
 	public static String TenantID;
@@ -1492,6 +1509,24 @@ public class Input {
 		metaDataCNcount = testData.getMetaDataCNcount();
 		SearchBatchFile = testData.getSearchBatchFile();
 		AutomationBackUpDomain = testData.getAutomationBackUpDomain();
+		RetrievalCountFold= testData.getRetrievalCountFold();
+		
+		//
+		Searching= testData.getSearching();
+		DownloadNative= testData.getDownloadNative();
+		Highlighting= testData.getHighlighting();
+		Redactions= testData.getRedactions();
+		ReviewerRemarks= testData.getReviewerRemarks();
+		AnalyticsPanels= testData.getAnalyticsPanels();
+		Manage= testData.getManage();
+		Productions= testData.getProductions();
+		AllReports= testData.getAllReports();
+		ConceptExplorer= testData.getConceptExplorer();
+		CommunicationsExplorer= testData.getCommunicationsExplorer();
+		Categorize= testData.getCategorize();
+		Datasets= testData.getDatasets();
+		ManageDomainProjects= testData.getManageDomainProjects();
+		Ingestions= testData.getIngestions();
 		
 		// Added By Jeevitha [Collection]
 		TenantID = testData.getTenantID();
