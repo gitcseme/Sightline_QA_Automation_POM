@@ -135,10 +135,19 @@ public class Categorization {
 	}
 
 	// Added By Jeevitha
+	
+	public ElementCollection getAvailableSecurityGroups() {
+		return driver.FindElementsByXPath("//div[@class='tagselector']//label");
+	}
+
+	public Element getCategoreStatusBG(int i) {
+		return driver.FindElementByXPath("(//td[text()='Categorization']//..//td)[ " + i + "]");
+	}
+
 	public Element getAssignmentBtn() {
 		return driver.FindElementByXPath("//button[@id='btnAssign']");
 	}
-	
+
 	public Element getSelectYesBtn() {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
@@ -636,7 +645,10 @@ public class Categorization {
 		if (select.equalsIgnoreCase("Tag")) {
 			base.waitForElement(getSelectIdentifyByTags());
 			getSelectIdentifyByTags().waitAndClick(5);
+			driver.waitForPageToBeReady();
 			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			base.waitTime(4);
 			getSelectTag(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
 
@@ -658,8 +670,8 @@ public class Categorization {
 			driver.scrollingToBottomofAPage();
 			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
-			
-		}else if (select.equalsIgnoreCase("Assignment")) {
+
+		} else if (select.equalsIgnoreCase("Assignment")) {
 			selectTrainingSet("Identify by Assignment");
 			driver.scrollingToBottomofAPage();
 			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
@@ -675,7 +687,7 @@ public class Categorization {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description :  select source from step2 corpus section 
+	 * @Description : select source from step2 corpus section
 	 * @param select
 	 * @param folderOrSearch
 	 * @param searchtab
@@ -699,8 +711,8 @@ public class Categorization {
 			base.waitForElement(getSelectSearchInCorpus(searchtab, folderOrSearch));
 			getSelectSearchInCorpus(searchtab, folderOrSearch).waitAndClick(10);
 			base.stepInfo("Selected " + select + " from corpus analyze is : " + folderOrSearch);
-			
-		}else if(select.equalsIgnoreCase("Assignment")) {
+
+		} else if (select.equalsIgnoreCase("Assignment")) {
 			getAnalyzeTab("Analyze Select Assignments").waitAndClick(10);
 			base.waitForElement(getAssignmentBtn());
 			getAssignmentBtn().waitAndClick(5);

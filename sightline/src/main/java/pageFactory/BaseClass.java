@@ -4631,4 +4631,35 @@ public class BaseClass {
 
 		driver.waitForPageToBeReady();
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : sort and compare two list
+	 */
+	public void sortAndCompareList(List<String> listOne, List<String> listTwo, Boolean sortOrder, String sortType,
+			String passMsg, String failMsg) throws InterruptedException, AWTException {
+
+		if (sortOrder) {
+			if (sortType.equals("Ascending")) {
+				Collections.sort(listOne);
+				Collections.sort(listTwo);
+			} else if (sortType.equals("Descending")) {
+				Collections.sort(listOne, Collections.reverseOrder());
+				Collections.sort(listTwo, Collections.reverseOrder());
+			}
+		}
+
+		// List comparison
+		System.out.println("Source String  : " + listOne);
+		System.out.println("Compare String  : " + listTwo);
+
+		softAssertion.assertEquals(listOne, listTwo);
+		if (listOne.equals(listTwo)) {
+			passedStep(passMsg);
+		} else if (!listOne.equals(listTwo)) {
+			failedStep(failMsg);
+		}
+		softAssertion.assertAll();
+
+	}
 }
