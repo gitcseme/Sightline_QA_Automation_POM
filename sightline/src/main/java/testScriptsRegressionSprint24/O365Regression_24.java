@@ -79,7 +79,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel Collection' when Collection is in 'Retrieval
 	 *              Failed' status RPMXCON-61090
 	 */
-	@Test(description = "RPMXCON-61090", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-61090", enabled = true, groups = { "regression" })
 	public void verifyCancelCollectionInRetrievalFailedStats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -162,7 +162,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel Collection' action when Collection is in
 	 *              'Creating Datasets' status RPMXCON-61093
 	 */
-	@Test(description = "RPMXCON-61093", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-61093", enabled = true, groups = { "regression" })
 	public void verifyCancelCollectionInCreationDSstats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -239,7 +239,7 @@ public class O365Regression_24 {
 	 * @Description : Verify 'Cancel' action when Collection is in 'Retrieved with
 	 *              Errors' status RPMXCON-61076
 	 */
-	@Test(description = "RPMXCON-61076", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-61076", enabled = true, groups = { "regression" })
 	public void verifyIgnoreErrorsActionInRetrievedDSErr() throws Exception {
 
 		HashMap<String, String> colllectionData = new HashMap<>();
