@@ -543,6 +543,7 @@ public class SecurityGroupsPage {
 	public Element getSG_Keyword_Right() {
 		return driver.FindElementByXPath("//*[@onclick='KeywordRightshift();']");
 	}
+	
 
 	public Element getSG_Keyword_Left() {
 		return driver.FindElementByXPath("//*[@onclick='KeywordLeftShift();']");
