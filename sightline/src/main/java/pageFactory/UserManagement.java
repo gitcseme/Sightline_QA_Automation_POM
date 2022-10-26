@@ -3555,7 +3555,7 @@ public class UserManagement {
 		if (flagChecked == true && status == false) {
 			bc.waitForElement(getComponentCheckBoxClick(componentName));
 			getComponentCheckBoxClick(componentName).waitAndClick(5);
-			getIngestion().waitAndClick(5);
+//			getIngestion().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo(componentName + " checkbox is unchecked");
@@ -5097,6 +5097,9 @@ public class UserManagement {
 
 			if (performcheckAndUncheck) {
 				verifyStatusForComponents(getComponentCheckBoxStatus(selectComponent), selectComponent, false);
+				navigateToFunctionTab(usersToCheck[i][j], usersToCheck[i][usersToCheck.length - 1], Input.projectName,
+						true);
+				driver.waitForPageToBeReady();
 				verifyStatusForComponents(getComponentCheckBoxStatus(selectComponent), selectComponent, true);
 			}
 			driver.Navigate().refresh();
