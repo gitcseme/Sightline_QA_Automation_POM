@@ -16,16 +16,21 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.BaseClass;
 import pageFactory.BatchRedactionPage;
+import pageFactory.DocViewPage;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression_20 {
+public class BatchRedactionRegression_20_21_22 {
 
 	Driver driver;
 	LoginPage login;
@@ -234,6 +239,269 @@ public class BatchRedactionRegression_20 {
 		// logout
 		login.logout();
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects the saved search containing audio
+	 *              documents for batch redaction [RPMXCON-53389]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53389", enabled = true, groups = { "regression" })
+	public void verifyRedactBtnIsDisabledForAudio() throws Exception {
+		String audioSearch = "Search1" + Utility.dynamicNameAppender();
+		String wpSearch = "Search2" + Utility.dynamicNameAppender();
+
+		String[] searchList = { audioSearch, wpSearch };
+
+		// Login as a User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged In As : RMU");
+
+		base.stepInfo("Test case Id:RPMXCON-53389 Batch Redaction");
+		base.stepInfo("Verify when user selects the saved search containing audio documents for batch redaction");
+
+		// Configure Audio Search
+		session.audioSearch(Input.audioSearchString1, Input.language);
+		session.saveSearch(audioSearch);
+
+		// configure workProduct search
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("redactions", Input.defaultRedactionTag, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpSearch);
+
+		for (int i = 0; i < searchList.length; i++) {
+			// Navigate to Batch redaction & verify Analyze Button
+			batch.performAnalysisGroupForRedcation(searchList[i], null, 0, false, true);
+
+			// verify search hit count , Readact doc
+			batch.verifySearchTree(searchList[i]);
+
+			// verify readct btn disabled
+			batch.verifyRedactBtnDisabled(searchList[i], true);
+
+			saveSearch.deleteSearch(searchList[i], Input.mySavedSearch, "Yes");
+		}
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects the saved search with work
+	 *              product/comment/remark document count for batch redaction
+	 *              [RPMXCON-53388]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53388", enabled = true, groups = { "regression" })
+	public void verifyRedactBtnIsDisabledForWpComment() throws Exception {
+		String wpFolder = "Search1" + Utility.dynamicNameAppender();
+		String wpTag = "Search2" + Utility.dynamicNameAppender();
+		String wpRedactTag = "Search3" + Utility.dynamicNameAppender();
+		String commentSearch = "Comment" + Utility.dynamicNameAppender();
+
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String tag = "Tag" + Utility.dynamicNameAppender();
+		String docComment1 = "Comment" + Utility.dynamicNameAppender();
+
+		DocViewPage docview = new DocViewPage(driver);
+		String[] searchList = { wpFolder, wpTag, wpRedactTag, commentSearch };
+
+		// Login as a User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged In As : RMU");
+
+		base.stepInfo("Test case Id: RPMXCON-53388 Batch Redaction");
+		base.stepInfo(
+				"Verify when user selects the saved search with work product/comment/remark document count for batch redactionF");
+
+		//Add redacion tag, bulk tag, bulk folder, And Add comment 
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(tag);
+		session.bulkFolderWithOutHitADD(folder);
+		session.ViewInDocViewWithoutPureHit();
+		docview.addCommentAndSave(docComment1, true, 1);
+
+		//configure search with comment
+		base.selectproject();
+		session.getCommentsOrRemarksCount(Input.documentComments, docComment1);
+		session.saveSearch(commentSearch);
+
+		// configure workProduct Folder
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("folder", folder, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpFolder);
+
+		// configure workProduct Tag
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("tag", tag, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpTag);
+
+		// configure workProduct Redaction
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("redactions", Input.defaultRedactionTag, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpRedactTag);
+
+		for (int i = 0; i < searchList.length; i++) {
+			// Navigate to Batch redaction & verify Analyze Button
+			batch.performAnalysisGroupForRedcation(searchList[i], null, 0, false, true);
+
+			// verify search hit count , Readact doc
+			batch.verifySearchTree(searchList[i]);
+
+			// verify readct btn disabled
+			batch.verifyRedactBtnDisabled(searchList[i], true);
+
+			saveSearch.deleteSearch(searchList[i], Input.mySavedSearch, "Yes");
+		}
+
+		// logout
+		login.logout();
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that batch redaction history should be security group
+	 *              specific and entries should be vertically centered
+	 *              [RPMXCON-53337]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53337", enabled = true, groups = { "regression" })
+	public void verifybatchRedactionHistory() throws Exception {
+		String otherSGR1 = "Search1" + Utility.dynamicNameAppender();
+		String defSGR1 = "Search2" + Utility.dynamicNameAppender();
+		String otherSGR2 = "Search3" + Utility.dynamicNameAppender();
+		String ReadctionTag = "Redaction_Tag" + Utility.dynamicNameAppender();
+		String Annotation = "AnnotationLayer" + Utility.dynamicNameAppender();
+
+		String securityGrp = "Security" + Utility.dynamicNameAppender();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		UserManagement user = new UserManagement(driver);
+		RedactionPage redact = new RedactionPage(driver);
+		AnnotationLayer layer = new AnnotationLayer(driver);
+
+		// Login As PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Craete Redaction Tag & annotation layer
+		redact.navigateToRedactionsPageURL();
+		redact.manageRedactionTagsPage(ReadctionTag);
+		layer.navigateToAnnotationLayerPage();
+		layer.AddAnnotation(Annotation);
+
+		// Add SG & assign Redaction tag & assign annoattion layer
+		sg.navigateToSecurityGropusPageURL();
+		sg.AddSecurityGroup(securityGrp);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		base.waitTime(2);	
+		sg.selectSecurityGroup(securityGrp);
+		driver.waitForPageToBeReady();
+		sg.assignRedactionTagtoSG(ReadctionTag);
+		sg.assignAnnotationToSG(Annotation);
+
+		// assign access to users
+		user.navigateToUsersPAge();
+		user.assignAccessToSecurityGroups(securityGrp, Input.rmu1userName);
+		base.waitTime(2);
+		user.assignAccessToSecurityGroups(securityGrp, Input.rmu2userName);
+
+		// bulk release doc's to SG
+		session.basicContentSearch(Input.testData1);
+		session.bulkRelease(securityGrp);
+		
+		// logout
+		login.logout();
+
+		// Login as a User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged In As : RMU");
+		base.selectsecuritygroup(securityGrp);
+
+		base.stepInfo("Test case Id:RPMXCON-53337 Batch Redaction");
+		base.stepInfo(
+				"Verify that batch redaction history should be security group specific and entries should be vertically centered");
+
+		// Configure Audio Search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(otherSGR1);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(otherSGR1, true);
+		driver.waitForPageToBeReady();
+		batch.viewAnalysisAndBatchReport(ReadctionTag, Input.yesButton);
+		batch.verifyBatchHistoryStatus(otherSGR1);
+
+		// Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(defSGR1);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(defSGR1, true);
+		driver.waitForPageToBeReady();
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		batch.verifyBatchHistoryStatus(defSGR1);
+
+		// logout
+		login.logout();
+
+		// Login as a RMU2
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		base.stepInfo("Logged In As : RMU2");
+		base.selectsecuritygroup(securityGrp);
+
+		// Configure Audio Search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(otherSGR2);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(otherSGR2, true);
+		driver.waitForPageToBeReady();
+		batch.viewAnalysisAndBatchReport(ReadctionTag, Input.yesButton);
+		batch.verifyBatchHistoryStatus(otherSGR2);
+
+		// verify history contains only Other Security grup batch redactions of all
+		// users
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(batch.getColorStatusMsg(otherSGR2), otherSGR2 + " Of Other SG of RMU2");
+		base.ValidateElement_Presence(batch.getColorStatusMsg(otherSGR1), otherSGR1 + " Of Other SG Of RMU1");
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Absence(batch.getColorStatusMsg(defSGR1), defSGR1 + " of Default SG is not present ");
+
+		base.passedStep(
+				"Batch Redaction history display as per logged in users security group i.e here selected is Default SG");
+		base.passedStep("Batch redaction performed by other users in same Sg is displayed");
+
+		// verify allignment of enteries
+		batch.verifyAllignmentOfHistoryEnteries();
+
+		base.selectsecuritygroup(Input.securityGroup);
+
+		// logout
+		login.logout();
+
+		// Delete Security Group
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sg.deleteSecurityGroups(securityGrp);
+
+		// logout
+		login.logout();
+
+	}
+
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
