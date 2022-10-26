@@ -1083,6 +1083,15 @@ public class IngestionPage_Indium {
 	public Element getLanguagePack(String language) {
 		return driver.FindElementByXPath("//select[@id='worldSelect']//option[text()='"+language+"']");
 	}
+	public Element getTotalIngestionCount() {
+		return driver.FindElementById("totalIngestionCount");
+	}
+	public ElementCollection getIngestionTilesCount() {
+		return driver.FindElementsByXPath("//ul[@class='cards']//li");
+	}
+	public Element sourceSystemMandatoryError() {
+		return driver.FindElementById("ddlSourceSystem-error");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -10773,5 +10782,81 @@ public class IngestionPage_Indium {
 				}
 			}
 		}
-	
+		
+		/**
+		 * @author: Arun Created Date: 25/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the date format dropdown in source setting section
+		 */
+		
+		public void verifyDateFormatDropDownValidations() {
+			
+			base.waitForElement(getDateFormat());
+			//verify number of formats available in date-time dropdown
+			int formats = getDateFormat().selectFromDropdown().getOptions().size();
+			base.stepInfo("Number of different date formats available :"+formats);
+			//verify default selection in dropdown
+			String defaultSelection =getDateFormat().selectFromDropdown().getFirstSelectedOption().getText();
+			base.stepInfo("default selection of date format in dropdown"+defaultSelection);
+			
+			if(formats>2 && defaultSelection.equalsIgnoreCase("Select a format")) {
+				base.passedStep("different date formats available and no value selected in the dropdown by default");
+			}
+			else {
+				base.failedStep("different date formats not available and default value selected");
+			}
+		}
+		/**
+		 * @author: Arun Created Date: 25/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the tool tip message for date format
+		 */
+		public void VerifyToolTipMessageForDateFormat() {
+			
+			String expected ="The date format of the date-time fields in the DAT file being ingested";
+			//verify tool tip message
+			base.waitForElement(getDateFormat());
+			String tooltip= getDateFormat().GetAttribute("title");
+			base.stepInfo("Tool tip displayed:"+tooltip);
+			if(tooltip.equalsIgnoreCase(expected)) {
+				base.passedStep("Tool tip displayed as expected for date and time format");
+			}
+			else {
+				base.failedStep("Tool tip not displayed as expected for date and time format");
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 25/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the auto population of source field in mapping section
+		 */
+		public void verifyAutoPopulatedSourceFieldInMappingSection() {
+			
+			if(configureMappingRows().isElementAvailable(10)) {
+				int rows = configureMappingRows().size();
+				base.passedStep("Number of rows auto populated in configure mapping -'"+rows+"'");
+			}
+			else {
+				base.failedStep("Rows not populated or the configure mapping section not enabled");
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 25/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify and compare the tiles count and number of ingestion count
+		 */
+		public void verifyIngestionCountInHomePage() {
+			
+			//getting number of ingestion count 
+			int ingestionCount = Integer.parseInt(getTotalIngestionCount().getText());
+			base.stepInfo("Total number of ingestion:"+ingestionCount);
+			//getting the number of tiles count
+			int tilesCount = getIngestionTilesCount().size();
+			base.stepInfo("Number of ingestion tiles count : "+tilesCount);
+			if(ingestionCount==tilesCount) {
+				base.passedStep("Number of tiles available matches with the ingestion count");
+			}
+			else {
+				base.failedStep("Number of tiles available not matched with ingestion count");
+			}
+		}
+					
 }
