@@ -162,6 +162,81 @@ public class DocList_Regression24 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/10/2022 RPMXCON-53671
+	 * @throws Exception
+	 * @Description To verify as a Reviewer user login, I will be able to sort (Both
+	 *              Ascending & Descending) a column from grid of Doc List page.
+	 */
+	@Test(description = "RPMXCON-53671", enabled = true, groups = { "regression" })
+	public void verifyAsReviewerSelectColumnAscendingAndDescending() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53671");
+		baseClass.stepInfo(
+				"To verify as a Reviewer user login, I will be able to sort (Both Ascending & Descending) a column from grid of Doc List page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
+
+		// Searching Content document go to doclist
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+
+		// sort in Ascending Order
+		docList.sufflingColumnValueInDocListPage();
+
+		// sort in Descending Order
+		docList.verifyingDescendingOrderSortingInColumn();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/10/2022 RPMXCON-53657
+	 * @throws Exception
+	 * @Description To Verify, As a Admin user login, In Doc List page maximum 500
+	 *              Documents will show per page.
+	 */
+	@Test(description = "RPMXCON-53657", enabled = true, groups = { "regression" })
+	public void verifyAdminUserDocListPageDocsCount() throws Exception {
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53657 DocList Component");
+		baseClass.stepInfo(
+				"To Verify, As a Admin user login, In Doc List page maximum 500 Documents will show per page");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Selecting page length in doclist page");
+		docList.getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(Input.pageLength);
+		driver.scrollingToBottomofAPage();
+		driver.scrollingToElementofAPage(docList.getTableFooterDocListCount());
+		driver.waitForPageToBeReady();
+		String DocListCount = docList.getTableFooterDocListCount().getText();
+		System.out.println(DocListCount);
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[3];
+		System.out.println("doclist page document count is" + Document);
+		baseClass.textCompareEquals(Input.pageLength, Document, Input.pageLength + "is displayedas expected",
+				Input.pageLength + "is not displayed as expected");
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

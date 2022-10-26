@@ -1607,27 +1607,36 @@ public class AssignmentsPage {
 	public Element getAssignmentAction_FolderAll() {
 		return driver.FindElementByXPath("//a[text()='Folder All Documents']");
 	}
-	
-	//added by arun
+
+	// added by arun
 	public Element showDocCountToggle() {
 		return driver.FindElementByXPath("//i[@id='showUnAssignDocCounts']");
 	}
+
 	public Element getExisitingAssignTab() {
 		return driver.FindElementById("tabExitingUnAssign");
 	}
+
 	public Element getStartingCountDoc() {
-		return driver.FindElementByXPath("//label[contains(text(),'Starting Count Of Docs:')]//following-sibling::div//div");
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Starting Count Of Docs:')]//following-sibling::div//div");
 	}
+
 	public Element getNewAssignmentsampleMethod() {
 		return driver.FindElementById("sampleMethodNewAssignment");
 	}
-	
+
 	public Element getNewAssignmentDocCount() {
-		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+		return driver
+				.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
-	
+
 	public Element getSelectDocCount() {
 		return driver.FindElementById("txtCountToAssignNewAssignment");
+	}
+
+	public Element getSelectAssignmentToUnAssignDocs(String assignmentName) {
+		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//li/a[text()='" + assignmentName + "']");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -11378,6 +11387,7 @@ public class AssignmentsPage {
 		getKeywordPopUpCancelBtn().waitAndClick(10);
 
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param SampleMethod
@@ -11402,7 +11412,7 @@ public class AssignmentsPage {
 
 		getContinueBulkAssign().waitAndClick(15);
 		final BaseClass bc = new BaseClass(driver);
-		 bc.initialBgCount();
+		bc.initialBgCount();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11419,6 +11429,31 @@ public class AssignmentsPage {
 		}
 		return FinalCount;
 
+	}
+
+	/**
+	 * @author Vijaya.Rani
+	 * @param assignmentName
+	 * @return Description:Unassign Docs from Existing Assgn
+	 */
+	public void UnassignDocsfromExistingAssgn(final String assignmentName) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getStartingCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+
+		getUnassignbutton().waitAndClick(5);
+		getSelectAssignmentToUnAssignDocs(assignmentName).waitAndClick(20);
+
+		getContinueBulkAssign().waitAndClick(5);
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		bc.VerifySuccessMessage(
+				"Bulk UnAssign has been added to background process. You will get notification on completion.");
 	}
 
 }
