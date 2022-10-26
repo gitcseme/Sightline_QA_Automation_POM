@@ -168,7 +168,135 @@ public class Production_Regression24 {
 		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, PlaceholderText);
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49118
+	 * @Description:To verify that value of Redacted Documents on Production-Summary tab
+	 **/
+	@Test(description = "RPMXCON-49118", enabled = true, groups = { "regression" })
+	public void verifyingRedactDocOnSummaryTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		
+		base.stepInfo("RPMXCON-49118 -Production Component");
+		base.stepInfo("To verify that value of Redacted Documents on Production-Summary tab");
 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		String Foldername = "Fold" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(Foldername,Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.comments);
+		sessionSearch.bulkFolderExisting(Foldername);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		DocRedactions.doclistTable(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		DocRedactions.redactRectangleUsingOffset(10,10,60,60);
+		DocRedactions.selectingRedactionTag2(Redactiontag1);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		DocRedactions.doclistTable(3).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		DocRedactions.redactRectangleUsingOffset(10,10,70,70);
+		DocRedactions.selectingRedactionTag2(Redactiontag1);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.getClk_burnReductiontoggle().ScrollTo();
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.fillingBurnRedaction(Redactiontag1, "White with black font", false, null, null);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(Foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		
+		driver.waitForPageToBeReady();
+		String RedactDocCount=page.redactedDocCountInSummaryPage().getText();
+		System.out.println(RedactDocCount);
+		base.stepInfo("verifying Redacted Document count in summary tab");
+		base.digitCompareEquals(Integer.valueOf(RedactDocCount),2, "Redacted document count is displayed as expected","Redacted Doc count mismatch");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49117
+	 * @Description:To verify that the value of Privileged Documents on production summary tab
+	 **/
+	@Test(description = "RPMXCON-49117", enabled = true, groups = { "regression" })
+	public void verifyingPrivDocCountOnSummaryTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		
+		base.stepInfo("RPMXCON-49117 -Production Component");
+		base.stepInfo("To verify that the value of Privileged Documents on production summary tab");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String Foldername = "p" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(Foldername,Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(Foldername);
+		sessionSearch.ViewInDocListWithOutPureHit();
+
+		DocListPage doc = new DocListPage(driver);
+		int docCount=3;
+		doc.documentSelection(docCount);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionPrivDocs(tagname, tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(Foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		
+		driver.waitForPageToBeReady();
+		String PrivDocCount=page.getPrivDocCountInSummaryPage().getText().trim();
+		System.out.println(PrivDocCount);
+		base.stepInfo("verifying Priviledged Document count in summary tab");
+		base.digitCompareEquals(Integer.valueOf(PrivDocCount),docCount, "Priviledged document count is displayed as expected","Priviledged Doc count mismatch");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
