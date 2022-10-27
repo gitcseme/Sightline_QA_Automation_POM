@@ -2845,14 +2845,24 @@ public class BaseClass {
 	 */
 	public void elementDisplayCheck(Element element) {
 		if (element.isDisplayed()) {
-			passedStep("Element is displayed :" + element);
+			passedStep("Expected element is displayed ");
 			System.out.println("element is displayed");
 		} else {
 			failedStep("Element verification failed :" + element);
 			System.out.println("element not is displayed");
 		}
 	}
-
+	/**
+	 * @author Iyappan
+	 * @param element
+	 */
+	public void elementNotdisplayed(Element element, String description) {
+		if (element.isDisplayed()) {
+			failedStep(description+" is displayed");
+		} else {
+			passedStep(description+" is not displayed");
+		}
+	}
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
