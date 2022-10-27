@@ -1893,7 +1893,7 @@ public class SavedSearchRegression_New {
 
 		base.waitForElement(saveSearch.getSavedSearchTreeNode(nodeName));
 		saveSearch.getSavedSearchTreeNode(nodeName).waitAndClick(10);
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+	//	saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
 		base.stepInfo("-----------------------------" + nodeName + " Completed--------------------------------");
 
 		// navigate to Doclist and return back to Saved Search page
@@ -1961,13 +1961,13 @@ public class SavedSearchRegression_New {
 		base.waitForElement(saveSearch.getSavedSearchTreeNode(SGtoShare));
 		saveSearch.getSavedSearchTreeNode(SGtoShare).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+//		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
 		base.stepInfo("-----------------------------" + SGtoShare + " Completed--------------------------------");
 		// navigate to Doclist and return back to Saved Search page
 		saveSearch.navigateToDoclistAndReturnBackToSavedSearch();
 
 		// verify Saved Search Proper Option
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
+//		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV();
 
 		base.stepInfo("-----------------------------" + SGtoShare + " Completed--------------------------------");
 
