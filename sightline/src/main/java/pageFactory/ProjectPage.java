@@ -329,6 +329,26 @@ public class ProjectPage {
 		return driver.FindElementByXPath(
 				"//section[@id='divProcessingEngineConfig' and @style='display: block;']//input[@id='rdbNUIX']");
 	}
+	
+	public Element getProjectDBServer() {
+		return driver.FindElementByXPath("//*[@id='iss1']/section/div//label[text()='Project DB Server: ']");
+	}
+
+	public Element getProjectServerpath() {
+		return driver.FindElementByXPath("//*[@id='iss1']/section/div//label[text()='Project Server Path: ']");
+	}
+
+	public Element getProductionServerpath() {
+		return driver.FindElementByXPath("//*[@id='iss1']/section/div//label[text()=' Production Server Path: ']");
+	}
+
+	public Element getProjectSection(int Section) {
+		return driver.FindElementByXPath("//*[@id='iss1']/section[" + Section + "]/div/h5/strong");
+	}
+
+	public Element getProjectActive() {
+		return driver.FindElementByXPath("//*[@id='iss1']/section/div/div/h5/strong");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {

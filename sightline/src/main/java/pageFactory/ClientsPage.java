@@ -151,6 +151,12 @@ public class ClientsPage {
 	public Element getProcessingEngineType(){ 
 		 return driver.FindElementById("ddlICEProcessingInstance"); 
 	 }
+	
+	public Element getInitialSizeOfProjectDatabase() {
+		return driver.FindElementByXPath(
+				"//h5//strong[contains(text(),'Database ')]//..//..//following-sibling::div//label[contains(text(),'Initial Size of Project Database: ')]");
+	}
+
 
 	// Annotation Layer added successfully
 	public ClientsPage(Driver driver) {
