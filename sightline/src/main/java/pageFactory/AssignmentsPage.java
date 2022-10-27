@@ -1464,9 +1464,13 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "']/parent::label/i");
 	}
+	public Element isCfCheckBoxSelected(String CFName) {
+		return driver.FindElementByXPath(
+				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "'][@checked='']");
+	}
 
 	public Element SelectCFPopUpSG_Step1() {
-		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Security Group']");
+		return driver.FindElementByXPath("//h3[text()='Add / Remove Coding Forms in this Security Group']");
 	}
 
 	public Element SelectCFPopUp_Step1() {
