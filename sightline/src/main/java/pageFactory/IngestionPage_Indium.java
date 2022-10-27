@@ -10859,5 +10859,18 @@ public class IngestionPage_Indium {
 			}
 		}
 		
+		/**
+		 * @author: Arun Created Date: 27/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will uncheck the load file when checked by default
+		 */
+		public void unCheckLoadFile(Element ele1,Element ele2) {
+	
+			if(ele1.isDisplayed()) {
+				base.stepInfo("load file checked by default");
+				base.waitForElement(ele2);
+				ele2.waitAndClick(10);
+			}
+		}
+		
 					
 }

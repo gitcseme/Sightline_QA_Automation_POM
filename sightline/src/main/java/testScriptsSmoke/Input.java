@@ -421,6 +421,11 @@ public class Input {
 	public static String char400Error;
 	public static String hiddenPropDat;
 	public static String hiddenPropNative;
+	public static String uncPath;
+	public static String uncPathFolder;
+	public static String uncAbsoluteDat;
+	public static String uncAbsoluteTranslation;
+	public static String uncAbsoluteTranscript;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1421,7 +1426,11 @@ public class Input {
 		char400Error = testData.getChar400Error();
 		hiddenPropDat = testData.getHiddenPropDat();
 		hiddenPropNative = testData.getHiddenPropNative();
-		
+		uncPath = testData.getUncPath();
+		uncPathFolder = testData.getUncPathFolder();
+		uncAbsoluteDat = testData.getUncAbsoluteDat();
+		uncAbsoluteTranslation = testData.getUncAbsoluteTranslation();
+		uncAbsoluteTranscript = testData.getUncAbsoluteTranscript();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

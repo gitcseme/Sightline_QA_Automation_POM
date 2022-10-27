@@ -302,6 +302,11 @@ public class TestData {
 	public String char400Error;
 	public String hiddenPropDat;
 	public String hiddenPropNative;
+	public String uncPathFolder;
+	public String uncPath;
+	public String uncAbsoluteDat;
+	public String uncAbsoluteTranslation;
+	public String uncAbsoluteTranscript;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

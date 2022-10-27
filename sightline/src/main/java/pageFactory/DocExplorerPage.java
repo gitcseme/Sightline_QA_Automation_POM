@@ -638,6 +638,9 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//input[@id='toUnfolder']");
 
 	}
+	public ElementCollection getNumberOfDocsCount() {
+		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr");
+	}
 
 	public DocExplorerPage(Driver driver) {
 
@@ -3040,6 +3043,7 @@ public class DocExplorerPage {
 		String count = getDocExp_DocumentList_info().getText().toString();
 		String docsCount = count.substring(count.indexOf("of") + 3, count.indexOf(" entries"));
 		int listViewCount = Integer.parseInt(docsCount.replace(",", ""));
+		driver.scrollPageToTop();
 		return listViewCount;
 	}
 
@@ -3797,7 +3801,9 @@ public class DocExplorerPage {
 			getYesRadioBtn().waitAndClick(10);
 			bc.stepInfo("Documents from all pages are selected");
 		}
-		doclist.getPopUpOkBtn().Click();
+		if(doclist.getPopUpOkBtn().isElementAvailable(10)) {
+			doclist.getPopUpOkBtn().waitAndClick(10);
+		}
 		bc.stepInfo("Documents from first page is selected");
 	}
 
@@ -3832,6 +3838,35 @@ public class DocExplorerPage {
 
 		getFinalizeButton().Click();
 		bc.VerifySuccessMessage("Records saved successfully");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select all return documents and perform action as docview
+	 */
+	
+	public void docExpToDocViewWithIngestion(String ingestionName,String value) {
+		
+		applyIngestionNameFilter("include",ingestionName);
+		driver.waitForPageToBeReady();
+		int count = getDocumentCountFromListView();
+		bc.stepInfo("Docs available in doc explorer: "+count);
+		//select all docs and view in docview
+		SelectingAllDocuments(value);
+		docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		bc.waitForElementCollection(getNumberOfDocsCount());
+		bc.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		int docsCount = getNumberOfDocsCount().size();
+		bc.stepInfo("Docs available in docview: "+docsCount);
+		if(count==docsCount) {
+			bc.passedStep("All selected docs loaded in docview");
+		}
+		else {
+			bc.failedStep("docs not loaded in docview");
+		}
+				
 	}
 
 }
