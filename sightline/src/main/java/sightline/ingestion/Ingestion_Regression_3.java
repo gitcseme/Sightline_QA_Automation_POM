@@ -365,7 +365,7 @@ public class Ingestion_Regression_3 {
 		System.out.println(status);
 		if (status == false) {
 		baseClass.stepInfo("perform add only ingestion");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
 		baseClass.stepInfo("perform indexing without selecting audio");
@@ -373,7 +373,7 @@ public class Ingestion_Regression_3 {
 		ingestionPage.validateIndexingStatus();
 		ingestionPage.rollBackIngestion();
 		baseClass.stepInfo("perform add only ingestion till copying stage");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
 		baseClass.stepInfo("perform indexing with audio");
@@ -404,7 +404,7 @@ public class Ingestion_Regression_3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		baseClass.stepInfo("Perform overlay ingestion for same files");
@@ -434,7 +434,7 @@ public class Ingestion_Regression_3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		else {
@@ -475,7 +475,7 @@ public class Ingestion_Regression_3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		else {
@@ -516,7 +516,7 @@ public class Ingestion_Regression_3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		else {
@@ -763,7 +763,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);	
 		}
 		baseClass.stepInfo("Perform add only ingestion with NUIX source system");

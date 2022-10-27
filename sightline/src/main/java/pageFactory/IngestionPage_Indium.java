@@ -8907,12 +8907,12 @@ public class IngestionPage_Indium {
 		}
 		
 		/**
-		 * @author: Arun Created Date: 21/06/2022 Modified by: NA Modified Date: NA
+		 * @author: Arun Created Date: 21/06/2022 Modified by: Arun Modified Date: 27/10/2022
 		 * @description: this method will perform ingestion for AllSourcesFolder
 		 */
 		
-		public void performAutomationAllsourcesIngestion(String datFile,String docKey) {
-			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
+		public void performAutomationAllsourcesIngestion(String system,String datFile,String docKey) {
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", system, Input.sourceLocation, Input.AllSourcesFolder);
 			base.waitTime(2);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -10858,5 +10858,6 @@ public class IngestionPage_Indium {
 				base.failedStep("Number of tiles available not matched with ingestion count");
 			}
 		}
+		
 					
 }
