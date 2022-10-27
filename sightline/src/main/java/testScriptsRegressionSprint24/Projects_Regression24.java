@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.ClientsPage;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -402,4 +403,82 @@ public class Projects_Regression24 {
 		base.VerifySuccessMessage("Project updated successfully");
 		
 	}
+	
+	/**
+	 * @author Krishna ModifyDate:NA RPMXCON-55958
+	 * @throws Exception
+	 * @Description Verify that "Initial Size of Project Database" field appears in
+	 *              database section on Create Client page.
+	 */
+	@Test(description = "RPMXCON-55958", enabled = true, groups = { "regression" })
+	public void verifyInitialSizeOfProjectDataBaseAppearsDataBaseSection() throws InterruptedException {
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-55958");
+		baseClass.stepInfo(
+				"Verify that \"Initial Size of Project Database\"  field  appears in database section on Create Client page.");
+
+		ClientsPage client = new ClientsPage(driver);
+
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SAU as with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Create client screen is opened");
+		client.addNewClientWithDomainType();
+		baseClass.stepInfo("Domain value is selected From clientType box");
+
+		baseClass.waitForElement(client.getInitialSizeOfProjectDatabase());
+		if (client.getInitialSizeOfProjectDatabase().isElementPresent()) {
+			baseClass.passedStep(
+					"Initial Size of Project Database  field is displayed in database section on Create Client page as expected");
+
+		} else {
+			baseClass.failedStep(" Initial Size of Project Database  field  is not displayed");
+
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Krishna TestCase id:55574 DATE:NA
+	 * @Description: To verify the Project-General TAB details.
+	 */
+	@Test(description = "RPMXCON-55574", enabled = true, groups = { "regression" })
+	public void verifyProjectGeneralTabDetails() throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("To verify the Project-General TAB details.");
+		ProjectPage project = new ProjectPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		baseClass.stepInfo("Navigating to project field page");
+		project.navigateToProductionPage();
+		baseClass.waitForElement(project.getAddProjectBtn());
+		project.getAddProjectBtn().waitAndClick(10);
+		baseClass.stepInfo("Clicked general tab go to project page");
+		driver.waitForPageToBeReady();
+		String Database = project.getProjectSection(4).getText();
+		softassert.assertTrue(project.getProjectSection(4).isElementPresent());
+		baseClass.passedStep(Database + " is displayed successfully");
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(project.getProjectDBServer().isElementPresent());
+		baseClass.passedStep("Projectdbserver is displayed successfully");
+		driver.waitForPageToBeReady();
+		String Workspace = project.getProjectSection(5).getText();
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(project.getProjectSection(5).isElementPresent());
+		baseClass.passedStep(Workspace + " is displayed successfully");
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(project.getProjectServerpath().isElementPresent());
+		baseClass.passedStep("Projectseverpath is displayed successfully");
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(project.getProductionServerpath().isElementPresent());
+		baseClass.passedStep("Productionserverpath is displayed successfully");
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(project.getProjectActive().isElementPresent());
+		baseClass.passedStep("ProjectActive is displayed successfully");
+		softassert.assertAll();
+	}
+
 }
