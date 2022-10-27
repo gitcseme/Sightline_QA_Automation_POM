@@ -1,6 +1,8 @@
 package executionMaintenance;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +26,10 @@ import com.thed.zephyr.cloud.rest.ZFJCloudRestClient;
 import testScriptsSmoke.Input;
 
 
+
+
 public class TestListener implements ITestListener {
+	
 	
 	static String API_GET_EXECUTIONS = "{SERVER}/public/rest/api/1.0/executions/search/cycle/";
 	static String API_GET_CYCLES = "{SERVER}/public/rest/api/1.0/cycles/search?";
@@ -49,7 +54,7 @@ public class TestListener implements ITestListener {
 //	static String secretKey = "lrtlquTOgzHQhuiFgLPybeBlNDDCHrwsx0mXbW_b9Xo";
 //	// Jira accountId
 //	static String accountId = "61efa3c478b7fd0072d72c35";
-	
+
 	public static String versionId = "13146";
 	public static String projectId = "10500";
 	public static String projectName = "RPMXCON";
@@ -57,6 +62,8 @@ public class TestListener implements ITestListener {
 	public static String cycleName = "Test Cycle";
 	public static String cycleDescription = "Created by ZAPI CLOUD API";
 	public static String cycleID = "b2e24bbb-34b4-4070-bbad-cb17ae390978";
+	static String environment = "PT";
+	static String build="";
 	static String zephyrBaseUrl = "https://prod-api.zephyr4jiracloud.com/connect";
 	static String accessKey = "amlyYToxNjU1NTc2OSA1NTcwNTglM0E3Njk2NjlkOS04MTk1LTRhZWUtOThkYi1iM2Y3NWQ1OGI1NTQgVVNFUl9ERUZBVUxUX05BTUU";
 	static String secretKey = "JhW9oChT4S_izF2C1MJwp3UXCy8PfBrb7MqgzcSizOo";
@@ -89,7 +96,7 @@ public class TestListener implements ITestListener {
     	
     	Date date = new Date();
     	String modifiedDate= new SimpleDateFormat("yyyyMMddhhmmss").format(date);
-    	
+    	String startDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
     	
     	cycleName =context.getName() + " - "+modifiedDate;
     	System.out.println("Cycle name : "+cycleName);
@@ -102,6 +109,9 @@ public class TestListener implements ITestListener {
     		createCycleObj.put("description", cycleDescription);			
     		createCycleObj.put("projectId", projectId);
     		createCycleObj.put("versionId", versionId);
+    		createCycleObj.put("environment", environment);
+    		createCycleObj.put("build", build);
+    		createCycleObj.put("startDate", startDate);
 
     		StringEntity cycleJSON = null;
     		try {
@@ -176,6 +186,7 @@ public class TestListener implements ITestListener {
     @Override        
     public void onTestSuccess(ITestResult Result)                    
     {        
+    	
         System.out.println("The name of the testcase passed is :"+Result.getName());    
         System.out.println("attribute is :"+Result.getMethod().getDescription());
         String issueID = Result.getMethod().getDescription();
@@ -273,6 +284,7 @@ public class TestListener implements ITestListener {
 	    	executeTestsObj.put("projectId", projectId);
 	    	executeTestsObj.put("versionId", versionId);
 	    	//executeTestsObj.put("comment", "Executed by ZAPI Cloud");
+	    	System.out.println("issue -- "+issue);
 
 	    	String execId = executionIds.get(issue).split(";")[1];
 	    	final String updateExecutionUri = API_UPDATE_EXECUTION.replace("{SERVER}", zephyrBaseUrl) + execId;
