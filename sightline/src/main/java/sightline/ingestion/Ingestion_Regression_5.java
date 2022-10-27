@@ -250,7 +250,7 @@ public class Ingestion_Regression_5 {
 		baseClass.stepInfo("perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		else {
@@ -287,7 +287,7 @@ public class Ingestion_Regression_5 {
 		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 			baseClass.stepInfo("Perform post ingestion validation steps");
 			ingestionPage.verifyDetailsAfterStartedIngestion();
 			String ingestionName=ingestionPage.getIngestionNameFromPopup();

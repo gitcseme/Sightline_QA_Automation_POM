@@ -193,7 +193,7 @@ public class Regression_Ingestion02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Perform add only ingestion");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
 		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
@@ -218,7 +218,7 @@ public class Regression_Ingestion02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("perform add only ingestion and start indexing");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
 		String ingestionName=ingestionPage.startIndexing(true, Input.language);
@@ -349,7 +349,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Ingest Transcript along with native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 			baseClass.passedStep("performed ingesting transcript along with native successfully");
 		}
