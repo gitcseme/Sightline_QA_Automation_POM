@@ -320,9 +320,47 @@ public class BatchPrintRegression_24 {
 
 		// Logout
 		loginPage.logout();
-
 	}
 
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify that on click on Back button, it will redirect to Source Selection tab.RPMXCON-47798
+	 */
+	
+	@Test(description = "RPMXCON-47798",dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyOnClickBackButtonRedirectToSourceSelectionTab(String username, String password) throws Exception {
+		String searchName = "savedSearch"+Utility.dynamicNameAppender();
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String expectCurrentTab ="Basis for Printing";
+		String expectNavigationTab ="Source Selection";
+		
+		// Login As User
+		loginPage.loginToSightLine(username,password);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47798 Batch Print");
+		baseClass.stepInfo("To verify that on click on Back button, it will redirect to Source Selection tab.");
+		
+		// performing basic content search and saving the search Result
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName);
+		
+		// selecting the source in source selection tab and navigating to next tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search",searchName,false);
+		baseClass.waitTime(4);
+		
+		// verifying redirect to previous tab
+		batchPrint.ClickBackButtonAndVerify(true,expectCurrentTab,1,true,expectNavigationTab);
+		
+		// deleting the savedSearch
+		savedSearch.SaveSearchDelete(searchName);
+		
+		// Logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

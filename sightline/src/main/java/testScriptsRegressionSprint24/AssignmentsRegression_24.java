@@ -1,8 +1,13 @@
 package testScriptsRegressionSprint24;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -15,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -176,6 +182,221 @@ public class AssignmentsRegression_24 {
 		else {
 			baseClass.failedStep("Starting count of docs not same as selection in prior screen");
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :New Assignment - Keywords created by PAU and RMU part of the
+	 *              security group should be selected for the assignment.
+	 *              RPMXCON-54752
+	 */
+	@Test(description = "RPMXCON-54752", enabled = true, groups = { "regression" })
+	public void verifyNewAssignmentKeywordsCreatedByPAUandRMUPartOfSecurityGrpSelectedForAssignment()
+			throws AWTException, InterruptedException {
+		keyPage = new KeywordPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		List<String> keywordName01 = new ArrayList<String>(Arrays.asList("a", "b", "c", "d", "e"));
+		List<String> keywordName02 = new ArrayList<String>(Arrays.asList("f", "g", "h", "i", "j"));
+		List<String> color01 = new ArrayList<String>(Arrays.asList("Aqua", "Blue", "Gold", "Pink", "Aqua"));
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54752 Assignments");
+		baseClass.stepInfo(
+				"New Assignment - Keywords created by PAU and RMU part of the security group should be selected for the assignment.");
+
+		// creating keywords as PAU
+		keyPage.navigateToKeywordPage();
+		baseClass.stepInfo("creating keywords as PAU");
+		List<String> listOfKeywordGroup01 = keyPage.addMultipleKeywords(keywordName01, color01, true,
+				Input.securityGroup);
+		loginPage.logout();
+
+		// creating keywords as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		keyPage.navigateToKeywordPage();
+		baseClass.stepInfo("creating keywords as RMU");
+		List<String> listOfKeywordGroup02 = keyPage.addMultipleKeywords(keywordName02, color01, false,
+				Input.securityGroup);
+
+		// Adding into list
+		keywordName01.addAll(keywordName02);
+		listOfKeywordGroup01.addAll(listOfKeywordGroup02);
+		String[] allKeywordsGroup = new String[listOfKeywordGroup01.size()];
+		listOfKeywordGroup01.toArray(allKeywordsGroup);
+
+		// creating assignment with keywords
+		assignment.createAssignment_withoutSave(assignmentName, Input.codingFormName);
+
+		// verify that Add Keyword window should pop-up with all keywords associated the
+		// security group (keywords created by both PAU and RMU) selected
+		assignment.verifyKeywordsAvailabilityInAssignment(allKeywordsGroup);
+		assignment.verifyAddedKeywordsChecked();
+		baseClass.passedStep(
+				"verified that Add Keyword window pop-up with all keywords associated the security group (keywords created by both PAU and RMU) selected.");
+		assignment.getSaveBtn().waitAndClick(5);
+		baseClass.stepInfo("assignment : '" + assignmentName + " created.");
+
+		// performing bulk assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+
+		// adding reviewers and distributing documents to reviewers
+		baseClass.stepInfo("adding reviewers and distributing documents to reviewers");
+		assignment.add2ReviewerAndDistribute();
+
+		// logOut
+		loginPage.logout();
+
+		// login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting assignment from DashBoard and navigating to DocView
+		baseClass.stepInfo("selecting assignment from DashBoard and navigating to DocView.");
+		assignment.SelectAssignmentByReviewer(assignmentName);
+
+		// Keyword should be highlighted on the DocView
+		docView.verifyKeywordsOnDocView(keywordName01);
+		baseClass.ValidateElementCollection_Presence(docView.getAnnotations(), "Highlights in Document");
+		baseClass.passedStep("verified that Keywords are highlighted on the DocView.");
+
+		// logOut
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// delete all keywords
+		keyPage.navigateToKeywordPage();
+		keyPage.deleteMultipleKeywords(listOfKeywordGroup01);
+
+		// delete assignment
+		assignment.deleteAssignment(assignmentName);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Existing Assignment - All Keywords created by PAU and RMU part
+	 *              of the security group should be selected for existing
+	 *              assignment.. RPMXCON-54754
+	 */
+	@Test(description = "RPMXCON-54754", enabled = true, groups = { "regression" })
+	public void verifyExistingAssignmentAllKeywordsCreadtedByPAUandRMUPartOfSecurityGroupSelectedForExistingAssignment()
+			throws AWTException, InterruptedException {
+		keyPage = new KeywordPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		String existingKeyword = "t";
+		String existingKeywordGroup = "t" + Utility.dynamicNameAppender();
+		String PauKeyword = "u";
+		String RmuKeyword = "v";
+		String RmuKeywordGroup = "v" + Utility.dynamicNameAppender();
+		List<String> allKeywords = new ArrayList<String>();
+		List<String> colors = new ArrayList<String>();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54754 Assignments");
+		baseClass.stepInfo(
+				"Existing Assignment - All Keywords created by PAU and RMU part of the security group should be selected for existing assignment.");
+
+		// creating keyword for pre-requisite
+		keyPage.navigateToKeywordPage();
+
+		// keyPage.addKeyword(existingKeyword,Input.KeyWordColour);
+		keyPage.addKeyword(existingKeywordGroup, existingKeyword, Input.KeyWordColour);
+		assignment.createAssignment(assignmentName, Input.codingFormName);
+
+		// performing bulk assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+
+		// adding reviewers and distributing documents to reviewers
+		baseClass.stepInfo("adding reviewers and distributing documents to reviewers");
+		assignment.add2ReviewerAndDistribute();
+
+		// logOut
+		loginPage.logout();
+
+		// login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating keyword as PAU
+		keyPage.navigateToKeywordPage();
+		baseClass.stepInfo("creating keyword as PAU");
+		allKeywords.add(PauKeyword);
+		colors.add(Input.KeyWordColour);
+		List<String> listOfKeywordGroup = keyPage.addMultipleKeywords(allKeywords, colors, true, Input.securityGroup);
+		listOfKeywordGroup.add(existingKeywordGroup);
+		listOfKeywordGroup.add(RmuKeywordGroup);
+
+		// logOut
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// creating keyword as RMU
+		keyPage.navigateToKeywordPage();
+		baseClass.stepInfo("creating keyword as RMU");
+
+		// keyPage.addKeyword(RmuKeyword,Input.KeyWordColour);
+		keyPage.addKeyword(RmuKeywordGroup, RmuKeyword, Input.KeyWordColour);
+		allKeywords.add(existingKeyword);
+		allKeywords.add(RmuKeyword);
+		String[] keywords = new String[listOfKeywordGroup.size()];
+		listOfKeywordGroup.toArray(keywords);
+
+		// verify that Add Keyword window pop-up with all keywords selected (added by
+		// PAU and RMU as well)
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		assignment.verifyKeywordsAvailabilityInAssignment(keywords);
+		assignment.verifyAddedKeywordsChecked();
+		baseClass.passedStep(
+				"verified that Add Keyword window pop-up with all keywords selected (added by PAU and RMU as well).");
+		assignment.getSaveBtn().waitAndClick(5);
+
+		// logOut
+		loginPage.logout();
+
+		// login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting assignment from DashBoard and navigating to DocView
+		baseClass.stepInfo("selecting assignment from DashBoard and navigating to DocView.");
+		assignment.SelectAssignmentByReviewer(assignmentName);
+
+		// Keyword should be highlighted on the DocView
+		docView.verifyKeywordsOnDocView(allKeywords);
+		baseClass.ValidateElementCollection_Presence(docView.getAnnotations(), "Highlights in Document");
+		baseClass.passedStep("verified that Keywords are highlighted on the DocView.");
+
+		// logOut
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// delete all keywords
+		keyPage.navigateToKeywordPage();
+		keyPage.deleteMultipleKeywords(listOfKeywordGroup);
+
+		// delete assignment
+		assignment.deleteAssignment(assignmentName);
+
+		// logOut
 		loginPage.logout();
 	}
 

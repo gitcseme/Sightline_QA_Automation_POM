@@ -217,6 +217,25 @@ public class TagsAndFoldersPage {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupRedaction']");
 	}
 
+	// added by jeevitha
+	public ElementCollection getAvailableFolderList() {
+		return driver.FindElementsByXPath("//div[starts-with(@id,'folderJSTree')]//ul//li//a");
+	}
+	
+	public ElementCollection getAllClosedArrow() {
+		return driver.FindElementsByXPath(
+				"//li[contains(@class,'jstree-node  jstree-closed')]//i[@class='jstree-icon jstree-ocl']");
+	}
+
+	public Element getAllClosedArrow(int i) {
+		return driver.FindElementByXPath(
+				"(//li[contains(@class,'jstree-node  jstree-closed')]//i[@class='jstree-icon jstree-ocl'])[" + i + "]");
+	}
+
+	public ElementCollection getAvailableTagList() {
+		return driver.FindElementsByXPath("//div[starts-with(@id,'tagsJSTree')]//ul//li//a");
+	}
+
 	public Element getRedDefaultSecgrp() {
 		return driver.FindElementByXPath(
 				"//select[@id='ddlSecurityGroupRedaction']//option[contains(text(),'Default Security Group')]");
@@ -286,13 +305,14 @@ public class TagsAndFoldersPage {
 	// added by sowndariya
 
 	public Element getPropFolderToHelpBtn() {
-		return driver.FindElementByXPath("//label[text()='Propagate Folder To: ']//a[@class='helptip fa fa-question-circle']");
+		return driver.FindElementByXPath(
+				"//label[text()='Propagate Folder To: ']//a[@class='helptip fa fa-question-circle']");
 	}
-	
+
 	public Element getPropFolderToHelpTXT() {
 		return driver.FindElementByXPath("//div[@class='popover-content']//p");
 	}
-	
+
 	public Element getAllFoldersTab() {
 		return driver.FindElementByXPath("//div[@id='folderJSTree']");
 	}
@@ -312,9 +332,11 @@ public class TagsAndFoldersPage {
 	public Element getViewInDocView_Tags() {
 		return driver.FindElementById("liViewTagInDocView");
 	}
+
 	public Element getWarningPopup() {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//label[contains(text(),'delete')]");
 	}
+
 	public Element getPropFolderExactDuplic() {
 		return driver.FindElementByXPath("//input[@id='chkFolderExactDuplicates']//following-sibling::i");
 	}
@@ -953,7 +975,7 @@ public class TagsAndFoldersPage {
 			base.waitForElement(base.getYesBtn());
 			base.getYesBtn().waitAndClick(10);
 		}
-		
+
 		base.VerifySuccessMessage("Folder deleted successfully");
 		base.CloseSuccessMsgpopup();
 		Reporter.log(strFolder + " Folder delete Successful", true);
@@ -3331,8 +3353,7 @@ public class TagsAndFoldersPage {
 			base.stepInfo("Doc Count turned off");
 		}
 	}
-	
-	
+
 	/**
 	 * @description : Folder creation without URl
 	 * @param strFolder
@@ -3380,16 +3401,15 @@ public class TagsAndFoldersPage {
 		UtilityLog.info("Folder Successful");
 	}
 
-
 	/**
 	 * @author Sowndarya.velraj
 	 * @description: Create a new tag and not saving
 	 */
 	public void createNewTagNotSave(String tagName, String classificationname) {
-	    navigateToTagsAndFolderPage();
-	    driver.waitForPageToBeReady();
-	    base.waitForElement(getTagsTab());
-	    getTagsTab().waitAndClick(5);
+		navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTagsTab());
+		getTagsTab().waitAndClick(5);
 		base.stepInfo("Tag Tab Clicked");
 		driver.scrollPageToTop();
 		base.waitForElement(getAllTagRoot());
@@ -3403,7 +3423,7 @@ public class TagsAndFoldersPage {
 		base.waitForElement(getTagClassification());
 		getTagClassification().selectFromDropdown().selectByVisibleText(classificationname);
 	}
-	
+
 	/**
 	 * @description : Tag creation without URl
 	 * @param strtag
@@ -3467,5 +3487,17 @@ public class TagsAndFoldersPage {
 		getAddFolder().waitAndClick(10);
 		base.waitForElement(getFolderName());
 		getFolderName().SendKeys(foldername);
+	}
+
+	/**
+	 * @Author jeevitha
+	 */
+	public void expandAllClosedArrow() {
+		driver.waitForPageToBeReady();
+//		base.waitForElementCollection(getAllClosedArrow());
+		for (int i = 1; i <= getAllClosedArrow().size(); i++) {
+			getAllClosedArrow(i).waitAndClick(10);
+			base.stepInfo("Expanded Arrow ");
+		}
 	}
 }
