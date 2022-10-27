@@ -19,7 +19,9 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.ProjectFieldsPage;
@@ -43,6 +45,8 @@ public class Ingestion_Regression_7 {
 	Input ip;
 	ProjectPage project;
 	TallyPage tally;
+	DocExplorerPage docExplorer;
+	DocViewPage docView;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -413,6 +417,143 @@ public class Ingestion_Regression_7 {
 		ingestionPage.verifySourceAndMappingSectionStatusAfterClickingBackButton();
 		ingestionPage.verifyAutoPopulatedSourceFieldInMappingSection();
 		baseClass.passedStep("Auto populated field remains on the disabled mapping section");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 26/10/2022 TestCase Id:RPMXCON-60818
+	 * Description :Verify that if the Absolute path is present in the Transcript LST, 
+	 * then Ingestion should be successful. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60818",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInTranscript() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60818");
+		baseClass.stepInfo("To verify that if the Absolute path is present in the Transcript LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion with transcript");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting transcript file");
+			ingestionPage.selectAudioTranscriptSource(Input.uncAbsoluteTranscript, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.custodian);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 27/10/2022 TestCase Id:RPMXCON-60819
+	 * Description :Verify that if the Absolute path is present in the Translation LST, 
+	 * then Ingestion should be successful.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60819",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInTranslation() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60819");
+		baseClass.stepInfo("To verify that Absolute path is present in the Translation LST.");
+		String ingestionName = null;
+
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion with transcript");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting translation file");
+			ingestionPage.selectOtherSource("Translation", Input.uncAbsoluteTranslation, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.custodian);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 27/10/2022 TestCase Id:RPMXCON-58507
+	 * Description :Verify if user ingest documents with 'Mapped Data' as Source System then 
+	 * same dataset cannot ingest with any other Source System 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-58507",enabled = true, groups = { "regression" })
+	public void verifyAddOnlyForDifferentSourceSystem() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58507");
+		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		//perform add only ingestion with 'mapped data' source system
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.mappedData,Input.DATFile1, Input.prodBeg);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		//perform same dataset ingestion with different source system
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
+		ingestionPage.verifyDuplicateIngestionErrorMessage();
+		baseClass.passedStep("Ingestion failed in the catalog stage when ingesting same dataset");
 		loginPage.logout();
 	}
 	

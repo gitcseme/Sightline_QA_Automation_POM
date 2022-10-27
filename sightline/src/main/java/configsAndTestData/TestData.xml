@@ -115,6 +115,11 @@
 	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
 	<hiddenPropDat>DAT_FileWithHiddenProperties.dat</hiddenPropDat>
 	<hiddenPropNative>Natives_FileWithHiddenProperties.lst</hiddenPropNative>
+	<uncPathFolder>UNC Path</uncPathFolder>
+	<uncPath>UNC_Path</uncPath>
+	<uncAbsoluteDat>Ingestion Path_DAT_AbsolutePath.dat</uncAbsoluteDat>
+	<uncAbsoluteTranslation>Ingestion Path_Translation_AbsolutePath.lst</uncAbsoluteTranslation>
+	<uncAbsoluteTranscript>Ingestion Path_Transcript_AbsolutePath.lst</uncAbsoluteTranscript>
 	
 
 	<!-- Production path for redaction master doc -->
@@ -909,5 +914,5 @@
 	<Datasets>Datasets</Datasets>
 	<ManageDomainProjects>Manage Domain Projects</ManageDomainProjects>
 	<Ingestions>Ingestions</Ingestions>
-
+    
 </TestData>
