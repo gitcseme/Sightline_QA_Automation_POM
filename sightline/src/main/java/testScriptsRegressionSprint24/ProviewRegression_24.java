@@ -318,6 +318,144 @@ public class ProviewRegression_24 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that RMU can view all the existing tags which is
+	 *              assosicated to the security group. [RPMXCON-54104]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54104", enabled = true, groups = { "regression" })
+	public void verifyAllTagDisplayed() throws Exception {
+		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
+
+		base.stepInfo("RPMXC0N-54104  Proview");
+		base.stepInfo("To verify that RMU can view all the existing tags which is assosicated to the security group.");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in as RMU User");
+
+		// fetch All Available Tags
+		tagsandfolder.navigateToTagsAndFolderPage();
+		tagsandfolder.expandAllClosedArrow();
+		base.waitForElementCollection(tagsandfolder.getAvailableTagList());
+		List<String> actualTagPresent = base.availableListofElements(tagsandfolder.getAvailableTagList());
+
+		// navigate to categorize page
+		categorize.navigateToCategorizePage();
+
+		// Fetch displayed Tags in Categorization page
+		base.waitForElement(categorize.getSelectIdentifyByTags());
+		categorize.getSelectIdentifyByTags().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElementCollection(categorize.getAvailableTags());
+		List<String> tagPresentInCategorize = base.availableListofElements(categorize.getAvailableTags());
+
+		// Verify All existing Tags is Displayed
+		base.sortAndCompareList(actualTagPresent, tagPresentInCategorize, true, "Ascending",
+				"All existing Tags is displayed.", "All existing Tags is not displayed.");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Project Admin can view all the existing folders
+	 *              at Project level [RPMXCON-54125]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54125", enabled = true, groups = { "regression" })
+	public void verifyAllFolderDisplayed() throws Exception {
+		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
+
+		base.stepInfo("RPMXC0N-54125  Proview");
+		base.stepInfo("To verify that Project Admin can view all the existing folders at Project level");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as PA User");
+
+		// fetch All Available Folders
+		tagsandfolder.selectallFolderRoot();
+		tagsandfolder.expandAllClosedArrow();
+		base.waitForElementCollection(tagsandfolder.getAvailableFolderList());
+		List<String> actualFolderPresent = base.availableListofElements(tagsandfolder.getAvailableFolderList());
+
+		// navigate to categorize page
+		categorize.navigateToCategorizePage();
+
+		// Fetch displayed Folders in Categorization page
+		categorize.selectTrainingSet("Identify by Folder");
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElementCollection(categorize.getAvailableFoldersInTraining());
+		List<String> folderPresentInCategorize = base
+				.availableListofElements(categorize.getAvailableFoldersInTraining());
+
+		// Verify All existing Folders is Displayed
+		base.sortAndCompareList(actualFolderPresent, folderPresentInCategorize, true, "Ascending",
+				"All existing Folders is displayed.", "All existing Folders is not displayed.");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that on clicking on 'Folder' icon, all existing
+	 *              folders should be displayed at Project level. [RPMXCON-54127]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54127", enabled = true, groups = { "regression" })
+	public void verifyAllFolderDisplayedAtAnalyzePart() throws Exception {
+		String tagName = "TAG" + Utility.dynamicNameAppender();
+		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
+
+		base.stepInfo("RPMXC0N-54127  Proview");
+		base.stepInfo(
+				"To verify that on clicking on 'Folder' icon, all existing folders should be displayed at Project level.");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as PA User");
+
+		// fetch All Available Folders
+		tagsandfolder.selectallFolderRoot();
+		tagsandfolder.expandAllClosedArrow();
+		base.waitForElementCollection(tagsandfolder.getAvailableFolderList());
+		List<String> actualFolderPresent = base.availableListofElements(tagsandfolder.getAvailableFolderList());
+
+		// create a folder
+		tagsandfolder.CreateTag(tagName, Input.securityGroup);
+		
+		// navigate to categorize page
+		categorize.navigateToCategorizePage();
+
+		// Select Tag in Training Set & navigate to Analyze Section 
+		categorize.fillingTrainingSetSection("Tag", tagName, null, null);
+
+		// Fetch Folders Displayed in Analyze section
+		categorize.getAnalyzeSelectFolders().ScrollTo();
+		categorize.getAnalyzeSelectFolders().waitAndClick(5);
+		base.waitForElement(categorize.getFolderSelectionPopUp());
+		categorize.getFolderSelectionPopUp().waitAndClick(5);
+
+		base.waitForElementCollection(categorize.getAvailableFoldersInAnalyzed());
+		List<String> folderPresentInCategorize = base
+				.availableListofElements(categorize.getAvailableFoldersInAnalyzed());
+
+		// Verify All existing Folders is Displayed
+		base.sortAndCompareList(actualFolderPresent, folderPresentInCategorize, true, "Ascending",
+				"All existing Folders is displayed in Analyze section.", "All existing Folders is not displayed.");
+
+		// Logout
+		login.logout();
+	}
+
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
@@ -330,13 +468,6 @@ public class ProviewRegression_24 {
 		session = new SessionSearch(driver);
 		tagsAndFolder = new TagsAndFoldersPage(driver);
 
-	}
-
-	@DataProvider(name = "Users_PARMU")
-	public Object[][] PA_RMU() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.pa1userName, Input.pa1password, "PA" } };
-		return users;
 	}
 
 	@AfterMethod(alwaysRun = true)
