@@ -30,6 +30,7 @@ import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -706,7 +707,98 @@ public class DocExplorer_Regression24 {
 			baseClass.failedStep("error is displayed");
 		}
 	}
+	/**
+     * @author Brundha.T TestCase Id:RPMXCON-54617 Description:Verify that user can
+     *         select a single document from List view, and select action as Bulk
+     *         Folder from Actions drop down to Folder document
+     *
+     * @throws Exception
+     */
+    @Test(description = "RPMXCON-54617", enabled = true, groups = { "regression" })
+    public void verifyingBulkFolderInDocExplorer() throws Exception {
 
+       baseClass.stepInfo("Test case Id: RPMXCON-54617");
+        baseClass.stepInfo(
+                "Verify that user can select a single document from List view, and select action as Bulk Folder from Actions drop down to Folder document");
+
+       String Foldername = "Fold" + Utility.dynamicNameAppender();
+        int Doc = 1;
+        // Login As PA
+        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+       // Selecting Doc in tree view
+        driver.waitForPageToBeReady();
+        baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
+        docExplorer.getfolderFromTreeByNumber("3").waitAndClick(5);
+        
+        int DocumentInList = docExplorer.getDocumentsName().size();
+        if (DocumentInList >= 1) {
+            baseClass.passedStep("Documents are loaded for selected folder in tree view");
+        } else {
+            baseClass.failedStep("Documents are not loaded for selected folder in tree view");
+        }
+       docExplorer.getDocumentsCheckBoxbyRowNum(Doc).waitAndClick(5);
+        int TotalDocCount = docExplorer.newBulkFolder(Foldername);
+        System.out.println(TotalDocCount);
+        baseClass.digitCompareEquals(Doc, TotalDocCount, "Document count is displayed as expected",
+                "Doc Count is not displayed");
+
+       TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+        this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+        tagsAndFolderPage.verifyFolderDocCount(Foldername, Doc);
+        loginPage.logout();
+    }
+
+
+
+   /**
+     * @author Brundha.T TestCase Id:RPMXCON-54606
+     *  Description:Verify that user can select all documents 
+     *       from page from List view, and select action as View 
+     *        in DocView from Actions drop down
+     * @throws Exception
+     */
+    @Test(description = "RPMXCON-54606", enabled = true, groups = { "regression" })
+    public void verifyingDocumentInDocView() throws Exception {
+
+       baseClass.stepInfo("Test case Id: RPMXCON-54606");
+        baseClass.stepInfo(
+                "Verify that user can select all documents from page from List view, and select action as View in DocView from Actions drop down");
+
+       // Login As PA
+        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+       // Selecting Doc in tree view
+        for (int i = 1; i <= 2; i++) {
+            docExplorer.navigateToDocExplorerPage();
+            driver.waitForPageToBeReady();
+            baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
+            if (i == 1) {
+                baseClass.stepInfo("Selecting a folder in Tree view");
+                docExplorer.getfolderFromTreeByNumber("1").waitAndClick(5);
+            } else {
+                baseClass.stepInfo("Selecting Multiple folder in Tree view");
+                docExplorer.selectMultipleFoldersOfTree(4);
+            }
+            int CountOfDoc = docExplorer.DocviewDocCountByIndex(3);
+            if (Integer.valueOf(CountOfDoc) != 0) {
+                baseClass.passedStep("Documents are loaded for selected folder in treeview");
+            } else {
+                baseClass.failedStep("Documents are not loaded");}
+            docExplorer.SelectingAllDocuments("No");
+            docExplorer.docExpViewInDocView();
+            DocViewPage Docview = new DocViewPage(driver);
+            int DocCountInDocView = Docview.verifyingDocCount();
+            
+            baseClass.stepInfo("Validating Document count ");
+            baseClass.digitCompareEquals(Integer.valueOf(CountOfDoc), DocCountInDocView,
+                    "Selected documents from list view is displayed on doc view", "Documents are not loaded");
+            loginPage.logout();
+       }
+       
+   }
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
