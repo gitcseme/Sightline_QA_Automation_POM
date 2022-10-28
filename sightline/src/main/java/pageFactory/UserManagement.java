@@ -5124,15 +5124,20 @@ public class UserManagement {
 
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Domain Administrator");
+			String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 			String alertText = getAlertMessageFromRole().getText();
-			if (getConfirmTab().isElementAvailable(5)) {
-				bc.waitForElement(getConfirmTab());
-				getConfirmTab().waitAndClick(5);
-				bc.passedStep(
-						"Alert message is displayed as: "+alertText+"");
-			} else {
-				bc.failedStep("Alert message is not displayed");
-			}
+				
+				if (getConfirmTab().isElementAvailable(5)) {
+					bc.waitForElement(getConfirmTab());
+					getConfirmTab().waitAndClick(5);
+					softAssertion.assertEquals(actualText, alertText);
+					softAssertion.assertAll();
+					bc.passedStep(
+							"Alert message is displayed as: "+alertText+"");
+					
+				} else {
+					bc.failedStep("Alert message is not displayed");
+				} 
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
@@ -5171,12 +5176,17 @@ public class UserManagement {
 			if (role.contains("Project")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
+				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 				String alertText = getAlertMessageFromRole().getText();
+				
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
 					getConfirmTab().waitAndClick(5);
+					softAssertion.assertEquals(actualText, alertText);
+					softAssertion.assertAll();
 					bc.passedStep(
 							"Alert message is displayed as: "+alertText+"");
+					
 				} else {
 					bc.failedStep("Alert message is not displayed");
 				} 
@@ -5186,12 +5196,17 @@ public class UserManagement {
 			}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
+				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 				String alertText = getAlertMessageFromRole().getText();
+				
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
 					getConfirmTab().waitAndClick(5);
+					softAssertion.assertEquals(actualText, alertText);
+					softAssertion.assertAll();
 					bc.passedStep(
 							"Alert message is displayed as: "+alertText+"");
+					
 				} else {
 					bc.failedStep("Alert message is not displayed");
 				} 
