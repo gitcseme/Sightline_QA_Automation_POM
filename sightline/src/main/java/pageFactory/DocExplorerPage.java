@@ -1,32 +1,21 @@
 package pageFactory;
 
-import java.awt.Robot;
-import java.text.DateFormatSymbols;
+import java.awt.AWTException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.concurrent.Callable;
-
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
 public class DocExplorerPage {
@@ -3867,6 +3856,23 @@ public class DocExplorerPage {
 			bc.failedStep("docs not loaded in docview");
 		}
 				
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify the user is on DocExp Page
+	 */
+	public void verifyUserIsOnDocExplorerPage() {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDocExplorerPageHeader());
+		String pageTitle = getDocExplorerPageHeader().getText();
+		if (getDocExplorerPageHeader().isElementAvailable(5)) {
+			bc.passedStep("The user is on "+pageTitle+" page");
+		}else {
+			bc.failedStep("The user is not on"+pageTitle+" page ");
+		}
 	}
 
 }

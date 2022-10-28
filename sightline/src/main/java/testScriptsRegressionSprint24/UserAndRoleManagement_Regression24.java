@@ -2,7 +2,6 @@ package testScriptsRegressionSprint24;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -12,17 +11,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
-import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
-import pageFactory.DocViewMetaDataPage;
+import pageFactory.Dashboard;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
-import pageFactory.ManageAssignment;
-import pageFactory.MiniDocListPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
@@ -249,6 +245,163 @@ public class UserAndRoleManagement_Regression24 {
 
 		// logout
 		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Mohan date: 28/10/2022 TestCase Id:RPMXCON-52418
+	 * Description :To verify when Project Admin emulates RMU role and check Dashboard and my assignments page
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52418",enabled = true, groups = { "regression" })
+	public void verifyProjectAdminEmulatesRMURoleAndCheckDashboardAndAssignmentPage() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52418");
+		baseClass.stepInfo("To verify when Project Admin emulates RMU role and check Dashboard and my assignments page");
+		
+		//login as project admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		
+		//Verify logged in user is PA
+		DocExplorerPage docExplorerPage = new DocExplorerPage(driver);
+		docExplorerPage.verifyUserIsOnDocExplorerPage();
+		
+		//Impersonate from PA to RMU
+		baseClass.impersonatePAtoRMU();
+		Dashboard dashboard = new Dashboard(driver);
+		dashboard.verifyDashboardPage();
+		
+		//verify when clicked on assignment should go to assignment page
+		dashboard.clickonAssignmentPanelTile();
+		
+		//logout
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Mohan date: 26/10/2022 TestCase Id:RPMXCON-52546
+	 * Description :To verify Sys Admin can change user rights in bulk for Project Admin
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52546",enabled = true, groups = { "regression" })
+	public void verifySystemAdminChangeUserRightsInBulkAsPA() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52546");
+		baseClass.stepInfo("To verify Sys Admin can change user rights in bulk for Project Admin");
+		
+		//login as project admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		String PA1 = userManage.getfirstUserName();
+		driver.Navigate().refresh();
+		userManage.filterByName(Input.pa2userName);
+		String PA2 = userManage.getfirstUserName();
+		String[] users = { PA1, PA2 };
+
+		// select role and enable
+		baseClass.stepInfo("Enable users rights");
+		userManage.enableOrDisableUsersRights("Enable", users);
+		loginPage.logout();
+
+		String[] username = { Input.pa1userName, Input.pa2userName };
+		String[] password = { Input.pa1password, Input.pa2password };
+
+		baseClass.stepInfo("verifying Enabled users rights");
+		for (int i = 0; i < username.length; i++) {
+			loginPage.loginToSightLine(username[i], password[i]);
+
+			baseClass.stepInfo("Login as a pa user :" + username[i]);
+			baseClass.ValidateElement_Presence(baseClass.text("Datasets"), "Datasets");
+			baseClass.ValidateElement_Presence(baseClass.text("Categorize"), "Categorize");
+			loginPage.logout();
+		}
+		
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		// disable rights
+		userManage.navigateToUsersPAge();
+		baseClass.stepInfo("Disable users rights");
+		userManage.enableOrDisableUsersRights("disable", users);
+		loginPage.logout();
+
+		baseClass.stepInfo("verifying disabled users rights");
+		for (int j = 0; j < username.length; j++) {
+			loginPage.loginToSightLine(username[j], password[j]);
+
+			baseClass.stepInfo("Login as a pa user :" + username[j]);
+			if(!baseClass.text("Datasets").isElementAvailable(2)) {
+				baseClass.passedStep("Dataset is not available");
+			}
+			else {baseClass.failedStep("Dataset is available");}
+			
+			if(!baseClass.text("Categorize").isElementAvailable(2)) {
+				baseClass.passedStep("Categorize is not available");
+			}
+			else {baseClass.failedStep("Categorize is available");}
+			
+			loginPage.logout();
+		}
+		baseClass.passedStep("verified Domain Admin can change user rights in bulk for PA");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.navigateToUsersPAge();
+		userManage.enableOrDisableUsersRights("Enable", users);
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Mohan date: 26/10/2022 TestCase Id:RPMXCON-52887
+	 * Description :To verify project and domain drop down values when user change role to DA/SA/RMU/Reviewer in Edit pop up as PA user
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52887",enabled = true, groups = { "regression" })
+	public void verifyProjectAndDomainDropValuesWhenUserChageRoleToDASARMUReviewer() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52887");
+		baseClass.stepInfo("To verify project and domain drop down values when user change role to DA/SA/RMU/Reviewer in Edit pop up as PA user");
+		
+		//login as sys admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		
+		//change role from PA to DA
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from PA to DA");
+		userManage.changeRoleToDAFromAnyUser();
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to PA");
+		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		
+		//change role from RMU to DA 
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from RMU to DA");
+		userManage.changeRoleToDAFromAnyUser();
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to RMU");
+		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
+		
+		// change role from RMU to DA
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from Reviewer to DA");
+		userManage.changeRoleToDAFromAnyUser();
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to Reviewer");
+		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);
+		
+		loginPage.logout();
+		
 	}
 
 	@AfterMethod(alwaysRun = true)

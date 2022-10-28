@@ -4,10 +4,9 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
-
+import org.apache.commons.collections4.Get;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -16,7 +15,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -701,6 +699,11 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+
+	public Element getUserTabelDropDownValues(String headerName, int columnNo) {
+		return driver.FindElementByXPath("//*[@class='dataTables_scroll']//th[contains(text(),'" + headerName
+				+ "')]//ancestor::div//*[@id='dtUserList']//td[" + columnNo + "]");
+	}
 
 	public Element getManageBtn() {
 		return driver.FindElementByName("Manage");
@@ -5067,16 +5070,16 @@ public class UserManagement {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 	}
-	
+
 	/**
 	 * @Author Jeevitha
-	 * @Description : verify components checkbox in functionality tab 
+	 * @Description : verify components checkbox in functionality tab
 	 * @throws Exception
 	 */
 	public void verifyFunctionalityCheckbox(String[][] usersToCheck, String[] checkedCbPa, String[] disabledCBPa,
 			String[] uncheckedCBPa, String[] checkedCb, String[] disabledCB, String[] uncheckedCB,
-			String[] checkedCbRev, String[] disabledCBRev, String[] uncheckedCBRev, boolean performcheckAndUncheck,String selectComponent)
-			throws Exception {
+			String[] checkedCbRev, String[] disabledCBRev, String[] uncheckedCBRev, boolean performcheckAndUncheck,
+			String selectComponent) throws Exception {
 		for (int i = 0; i < usersToCheck.length; i++) {
 			int j = 0;
 			driver.waitForPageToBeReady();
@@ -5103,6 +5106,107 @@ public class UserManagement {
 				verifyStatusForComponents(getComponentCheckBoxStatus(selectComponent), selectComponent, true);
 			}
 			driver.Navigate().refresh();
+		}
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role to DA from any user.
+	 */
+	public void changeRoleToDAFromAnyUser() {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Domain Administrator");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+				bc.passedStep(
+						"Alert message is displayed as: User Role Change The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
+			} else {
+				bc.failedStep("Alert message is not displayed");
+			}
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("User profile is modified successfully");
+
+			// verify project and domain drop down
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserTabelDropDownValues("Project", 6));
+			String projectName = getUserTabelDropDownValues("Project", 6).getText();
+			String domainName = getUserTabelDropDownValues("Domain", 7).getText();
+			if (projectName.isEmpty() && !domainName.isEmpty()) {
+				bc.passedStep("User is changed role to DA successfully");
+
+			} else {
+				bc.failedStep("User is not changed rolec to DA");
+			}
+		} catch (Exception e) {
+			bc.failedStep("User profile is not modified" + Get.class);
+		}
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role any user id.
+	 * @param role, projectName , securityGroup
+	 */
+	public void changeRoleToAnyUser(String role, String projectName , String securityGroup) {
+
+		try {
+			
+			driver.waitForPageToBeReady();
+			
+			if (role.contains("Project")) {
+				bc.waitForElement(getUserChangeDropDown());
+				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
+				
+				if (getConfirmTab().isElementAvailable(5)) {
+					bc.waitForElement(getConfirmTab());
+					getConfirmTab().waitAndClick(5);
+					bc.passedStep(
+							"Alert message is displayed as: User Role Change The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
+				} else {
+					bc.failedStep("Alert message is not displayed");
+				} 
+				
+				bc.waitForElement(selectProject());
+				selectProject().selectFromDropdown().selectByVisibleText(projectName);
+			}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
+				bc.waitForElement(getUserChangeDropDown());
+				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
+				
+				if (getConfirmTab().isElementAvailable(5)) {
+					bc.waitForElement(getConfirmTab());
+					getConfirmTab().waitAndClick(5);
+					bc.passedStep(
+							"Alert message is displayed as: User Role Change The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
+				} else {
+					bc.failedStep("Alert message is not displayed");
+				} 
+				
+				bc.waitForElement(selectProject());
+				selectProject().selectFromDropdown().selectByVisibleText(projectName);
+				
+				bc.waitForElement(userSelectSecurityGroup());
+				userSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+			}
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("User profile is modified successfully");
+			
+			
+		} catch (Exception e) {
+			bc.failedStep("User profile is not updated");
 		}
 	}
 

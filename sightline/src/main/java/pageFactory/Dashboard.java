@@ -3,11 +3,9 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
 import java.util.List;
-
+import org.apache.commons.collections4.Get;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -270,6 +268,15 @@ public class Dashboard {
 
 	public ElementCollection getReviewerProdTop6Header() {
 		return driver.FindElementsByXPath("//div[@id='divReviewerProuctivity']//tbody//td//strong");
+	}
+
+	// Added by Mohan
+	public Element getAssignmentHeaderInDashboard() {
+		return driver.FindElementByXPath("//h2[contains(text(),'Assignments within Assignment Group >>')]");
+	}
+
+	public Element getAssignmentPageTitleInAssignmentPage() {
+		return driver.FindElementByXPath("//h1[text()='My Assignments']");
 	}
 
 	public Dashboard(Driver driver) {
@@ -663,6 +670,43 @@ public class Dashboard {
 					base.failedStep("Popup is not displayed");
 				}
 			}
+		}
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify dashboard page
+	 */
+	public void verifyDashboardPage() {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAssignmentHeaderInDashboard());
+		if (getAssignmentHeaderInDashboard().isElementAvailable(5)) {
+			base.passedStep("User is on Dashboard home page");
+		} else {
+			base.failedStep("User is not in Dashboard home page");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To click on assignment panel tile
+	 */
+	public void clickonAssignmentPanelTile() {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAssignmentHeaderInDashboard());
+			getAssignmentHeaderInDashboard().waitAndClick(5);
+
+			if (getAssignmentPageTitleInAssignmentPage().isElementAvailable(5)) {
+				base.passedStep("Assignments page is displayed successfully");
+			} else {
+				base.failedStep("Assignments is not displayed");
+			}
+		} catch (Exception e) {
+			base.failedStep("Assignments is not displayed" + Get.class);
 		}
 	}
 
