@@ -908,6 +908,7 @@ public class TagsAndFoldersPage {
 
 		String expected = "Existing searches using this tag name in their queries may no longer work correctly. Do you still want to delete?";
 		driver.waitForPageToBeReady();
+		base.waitForElement(getWarningPopup());
 		String actual = getWarningPopup().getText();
 		System.out.println(actual);
 		if (actual.equals(expected)) {
@@ -945,11 +946,7 @@ public class TagsAndFoldersPage {
 		}
 
 		driver.scrollingToBottomofAPage();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFolderName(strFolder).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFolderName(strFolder));
 		getFolderName(strFolder).waitAndClick(10);
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {

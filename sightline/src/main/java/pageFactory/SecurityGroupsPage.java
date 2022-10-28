@@ -511,7 +511,7 @@ public class SecurityGroupsPage {
 	public Element getProjectSelector() {
 		return driver.FindElementById("project-selector");
 	}
-	
+
 	public Element getCommentsCheckBox(String comment) {
 		return driver.FindElementByXPath(
 				"//*[@id='commentJSTree']//a[text()='" + comment + "']/./i[@class='jstree-icon jstree-checkbox']");
@@ -543,7 +543,6 @@ public class SecurityGroupsPage {
 	public Element getSG_Keyword_Right() {
 		return driver.FindElementByXPath("//*[@onclick='KeywordRightshift();']");
 	}
-	
 
 	public Element getSG_Keyword_Left() {
 		return driver.FindElementByXPath("//*[@onclick='KeywordLeftShift();']");
@@ -739,41 +738,29 @@ public class SecurityGroupsPage {
 	 *          getYesButton()
 	 */
 	public void addFolderToSecurityGroup(String securityGroupName, String folderName) {
-		try {
-			bc.waitForElement(getSelectSecurityGroup());
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getFolder(folderName));
-			for (int i = 0; i < 7; i++) {
-				try {
-					bc.waitForElement(getFolder(folderName));
-					getFolder(folderName).waitAndClick(10);
-				} catch (Exception e) {
-					Thread.sleep(1000);
-				}
-			}
-			bc.waitForElement(getFolderRightShiftButton());
-			getFolderRightShiftButton().Click();
-			getProjectLevelEmailCheckBox().Click();
-			if (getYesButton().isElementAvailable(1)) {
-				getYesButton().waitAndClick(10);
-			} else {
-				getSG_AnnSaveButton().waitAndClick(10);
-			}
-			bc.waitForElement(bc.getSuccessMsg());
-			bc.getSuccessMsg().waitAndFind(10);
-			Assert.assertEquals("Success message is not displayed", true,
-					bc.getSuccessMsg().getWebElement().isDisplayed());
-			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
-				bc.passedStep("Success message is displayed successfully");
-				bc.CloseSuccessMsgpopup();
-			}
+		bc.waitForElement(getSelectSecurityGroup());
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			bc.failedStep("Exception occcured while adding folder to security group" + e.getMessage());
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getFolder(folderName));
+		getFolder(folderName).waitAndClick(10);
 
-		}
+		bc.waitForElement(getFolderRightShiftButton());
+		getFolderRightShiftButton().waitAndClick(10);
+
+//		bc.waitForElement(getProjectLevelEmailCheckBox());
+//		getProjectLevelEmailCheckBox().waitAndClick(10);
+//		
+//		if (getYesButton().isElementAvailable(1)) {
+//			getYesButton().waitAndClick(10);
+//		} else {
+		bc.waitForElement(getSG_AnnSaveButton());
+		getSG_AnnSaveButton().waitAndClick(10);
+//		}
+		driver.waitForPageToBeReady();
+
+		bc.VerifySuccessMessage("Your selections were saved successfully");
+		bc.CloseSuccessMsgpopup();
 	}
 
 	/**
@@ -819,43 +806,21 @@ public class SecurityGroupsPage {
 	 * @param tagName           -- (tagName is a string value that name of tag)
 	 */
 	public void addTagToSecurityGroup(String securityGroupName, String tagName) {
-		try {
-			bc.waitForElement(getSelectSecurityGroup());
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getTagsLink());
-			bc.waitTillElemetToBeClickable(getTagsLink());
-			getTagsLink().Click();
-			bc.waitForElement(getTagBoard());
-			getTagBoard().Click();
-			for (int i = 0; i < 20; i++) {
-				try {
-					getTagName(tagName).getWebElement().click();
-					break;
-				} catch (Exception e) {
-					bc.waitForElement(getTagName(tagName));
-					bc.waitTillElemetToBeClickable(getTagName(tagName));
-				}
-			}
-			bc.waitForElement(getTagRightShiftButton());
-			getTagRightShiftButton().Click();
-			getProjectLevelEmailCheckBox().Click();
-			driver.scrollingToBottomofAPage();
-			getSG_AnnSaveButton().Click();
-			bc.waitForElement(bc.getSuccessMsg());
-			bc.getSuccessMsg().waitAndFind(10);
-			Assert.assertEquals("Success message is not displayed", true,
-					bc.getSuccessMsg().getWebElement().isDisplayed());
-			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
-				bc.passedStep("Success message is displayed successfully");
-				bc.CloseSuccessMsgpopup();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			bc.failedStep("Exception occcured while adding folder to security group" + e.getMessage());
-
-		}
+		bc.waitForElement(getSelectSecurityGroup());
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getTagsLink());
+		bc.waitTillElemetToBeClickable(getTagsLink());
+		getTagsLink().Click();
+		bc.waitForElement(getTagBoard());
+		getTagBoard().Click();
+		bc.waitForElement(getTagRightShiftButton());
+		getTagRightShiftButton().Click();
+		getProjectLevelEmailCheckBox().Click();
+		driver.scrollingToBottomofAPage();
+		getSG_AnnSaveButton().waitAndClick(10);
+		bc.waitForElement(bc.getSuccessMsg());
+		bc.VerifySuccessMessage("Your selections were saved successfully");
 	}
 
 	/**
@@ -1148,49 +1113,39 @@ public class SecurityGroupsPage {
 	 *                          comment field)
 	 */
 	public void addCommentToSecurityGroup(String securityGroupName, String commentName) {
-		try {
-			bc.waitForElement(getSelectSecurityGroup());
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getCommentLink());
-			bc.waitTillElemetToBeClickable(getCommentLink());
-			getCommentLink().isElementAvailable(10);
-			getCommentLink().Click();
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getCommentBoard());
-			getCommentBoard().isElementAvailable(10);
-			getCommentBoard().Click();
-			for (int i = 0; i < 20; i++) {
-				try {
-					getCommentCheckBox(commentName).isElementAvailable(10);
-					getCommentCheckBox(commentName).getWebElement().click();
-					break;
-				} catch (Exception e) {
-					bc.waitForElement(getCommentCheckBox(commentName));
-				}
-			}
-			bc.waitForElement(getCommentRightShiftButton());
-			getCommentRightShiftButton().isElementAvailable(10);
-			getCommentRightShiftButton().Click();
-			driver.scrollingToBottomofAPage();
-			getProjectLevelEmailCheckBox().Click();
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getSG_AnnSaveButton());
-			getSG_AnnSaveButton().isElementAvailable(10);
-			getSG_AnnSaveButton().Click();
-			bc.waitForElement(bc.getSuccessMsg());
-			bc.getSuccessMsg().waitAndFind(10);
-			Assert.assertEquals("Success message is not displayed", true,
-					bc.getSuccessMsg().getWebElement().isDisplayed());
-			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
-				bc.passedStep("Success message is displayed successfully");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			bc.failedStep("Exception occcured while adding comment to security group" + e.getMessage());
-
+		bc.waitForElement(getSelectSecurityGroup());
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getCommentLink());
+		bc.waitTillElemetToBeClickable(getCommentLink());
+		getCommentLink().isElementAvailable(10);
+		getCommentLink().Click();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getCommentBoard());
+		getCommentBoard().isElementAvailable(10);
+		getCommentBoard().Click();
+		getCommentCheckBox(commentName).isElementAvailable(10);
+		getCommentCheckBox(commentName).getWebElement().click();
+		bc.waitForElement(getCommentRightShiftButton());
+		getCommentRightShiftButton().isElementAvailable(10);
+		getCommentRightShiftButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getProjectLevelEmailCheckBox());
+		getProjectLevelEmailCheckBox().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getSG_AnnSaveButton());
+		getSG_AnnSaveButton().isElementAvailable(10);
+		getSG_AnnSaveButton().waitAndClick(10);
+//				bc.waitForElement(getYesButton());
+//				getYesButton().waitAndClick(10);
+		bc.waitForElement(bc.getSuccessMsg());
+		bc.getSuccessMsg().waitAndFind(10);
+		Assert.assertEquals("Success message is not displayed", true, bc.getSuccessMsg().getWebElement().isDisplayed());
+		if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
+			bc.passedStep("Success message is displayed successfully");
 		}
+
 	}
 
 	/**
@@ -1718,7 +1673,7 @@ public class SecurityGroupsPage {
 		}
 
 	}
-	
+
 	/**
 	 * @Author jeevitha
 	 * @Dsecription : unmap Tag from SG
@@ -1746,7 +1701,7 @@ public class SecurityGroupsPage {
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 		bc.passedStep("Unmapped Tag " + tagName + " from : " + securityGrp);
 	}
-	
+
 	/**
 	 * @author Krishna date:NA Modified date:NA
 	 * @Description: verify selected comments on avalaible field and assign selected

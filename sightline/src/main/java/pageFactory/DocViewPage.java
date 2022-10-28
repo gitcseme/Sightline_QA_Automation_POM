@@ -2204,6 +2204,11 @@ public class DocViewPage {
 	}
 
 	// added by sowndarya.velraj
+
+	public Element RevRemarkNotchinPlayer() {
+		return driver.FindElementByXPath("//div[@id='divAudioReviewerRemark']//span//i");
+	}
+	
 	public Element getTermCardInPersistentPanel() {
 		return driver.FindElementByXPath("//span[contains(text(),'Term:')]//following::p");
 	}
