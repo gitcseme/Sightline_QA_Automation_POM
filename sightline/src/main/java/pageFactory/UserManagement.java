@@ -704,6 +704,10 @@ public class UserManagement {
 		return driver.FindElementByXPath("//*[@class='dataTables_scroll']//th[contains(text(),'" + headerName
 				+ "')]//ancestor::div//*[@id='dtUserList']//td[" + columnNo + "]");
 	}
+	
+	public Element getAlertMessageFromRole() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
 
 	public Element getManageBtn() {
 		return driver.FindElementByName("Manage");
@@ -5120,12 +5124,12 @@ public class UserManagement {
 
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Domain Administrator");
-
+			String alertText = getAlertMessageFromRole().getText();
 			if (getConfirmTab().isElementAvailable(5)) {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 				bc.passedStep(
-						"Alert message is displayed as: User Role Change The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
+						"Alert message is displayed as: "+alertText+"");
 			} else {
 				bc.failedStep("Alert message is not displayed");
 			}
@@ -5167,12 +5171,12 @@ public class UserManagement {
 			if (role.contains("Project")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
-				
+				String alertText = getAlertMessageFromRole().getText();
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
 					getConfirmTab().waitAndClick(5);
 					bc.passedStep(
-							"Alert message is displayed as: User Role Change The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
+							"Alert message is displayed as: "+alertText+"");
 				} else {
 					bc.failedStep("Alert message is not displayed");
 				} 
