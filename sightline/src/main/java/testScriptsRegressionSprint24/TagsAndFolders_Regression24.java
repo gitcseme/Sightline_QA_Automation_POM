@@ -17,17 +17,21 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CommentsPage;
 import pageFactory.DataSets;
 import pageFactory.DocListPage;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class TagsAndFolders_Regression24 {
-	
 
 	Driver driver;
 	LoginPage loginPage;
@@ -63,7 +67,7 @@ public class TagsAndFolders_Regression24 {
 		base = new BaseClass(driver);
 		saveSearch = new SavedSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		tagsAndFolderPage=new TagsAndFoldersPage(driver);
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -91,31 +95,30 @@ public class TagsAndFolders_Regression24 {
 			System.out.println("Sessions already closed");
 		}
 	}
-	
-	
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] userLoginDetails() {
-		return new Object[][] {{ Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }};
+		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 	}
-	
+
 	/**
 	 * @author N/A Testcase No:RPMXCON-53445
-	 * @Description: Verify that if the doc being applied to are standalone with same MD5 hash,
-	 *               then Folder propagation should happen      
+	 * @Description: Verify that if the doc being applied to are standalone with
+	 *               same MD5 hash, then Folder propagation should happen
 	 **/
-	
+
 	@Test(description = "RPMXCON-53445", enabled = true, groups = { "regression" })
-		public void verifyFolderProginIngMD5Hash() throws Exception {
+	public void verifyFolderProginIngMD5Hash() throws Exception {
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		base.stepInfo("RPMXCON-53445");
 		base.stepInfo("To Verify that if the doc being applied to are standalone with same MD5 hash, "
 				+ "then Folder propagation should happen");
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in As : " + Input.pa1userName);
 		base = new BaseClass(driver);
 		base.selectproject(Input.additionalDataProject);
-		
+
 		tagsAndFolderPage.createNewFolderNotSave(foldername);
 		base.waitForElement(tagsAndFolderPage.getPropFolderExactDuplic());
 		tagsAndFolderPage.getPropFolderExactDuplic().waitAndClick(3);
@@ -123,7 +126,7 @@ public class TagsAndFolders_Regression24 {
 		tagsAndFolderPage.getSaveFolder().waitAndClick(10);
 		base.VerifySuccessMessage("Folder added successfully");
 		base.stepInfo("Folder : " + foldername + " Created Successfully With Exact Duplicate (MD5Hash)");
-		
+
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
@@ -136,26 +139,26 @@ public class TagsAndFolders_Regression24 {
 		base.passedStep("Verify that if the doc being applied to are standalone with same MD5 hash,"
 				+ " then Folder propagation should happen");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * @author N/A Testcase No:RPMXCON-53438
-	 * @Description: Verify that Tag propagation must be based on the ingested 
-	 *               MD5Hash field         
+	 * @Description: Verify that Tag propagation must be based on the ingested
+	 *               MD5Hash field
 	 **/
 
 	@Test(description = "RPMXCON-53438", enabled = true, groups = { "regression" })
 	public void verifyTagProginIngMD5HashField() throws Exception {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		base.stepInfo("RPMXCON - 53438");
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in As : " + Input.pa1userName);
 		base.stepInfo("To Verify that Tag propagation must be based on the ingested MD5Hash field");
 		base = new BaseClass(driver);
 		base.selectproject(Input.additionalDataProject);
-		
+
 		tagsAndFolderPage.createNewTagNotSave(tagname, Input.tagNamePrev);
 		base.waitForElement(tagsAndFolderPage.getPropTagExactDuplic());
 		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(3);
@@ -163,7 +166,7 @@ public class TagsAndFolders_Regression24 {
 		tagsAndFolderPage.getSaveTag().waitAndClick(10);
 		base.VerifySuccessMessage("Tag added successfully");
 		base.stepInfo("Tag : " + tagname + " Created Successfully With Exact Duplicate (MD5Hash)");
-		
+
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
@@ -173,17 +176,15 @@ public class TagsAndFolders_Regression24 {
 		driver.waitForPageToBeReady();
 		doc.documentSelection(3);
 		doc.bulkTagExistingFromDoclist(tagname);
-		base.passedStep("Verified -  that Tag propagation must be based on the "
-				+ "ingested MD5Hash field");
-		loginPage.logout();	
+		base.passedStep("Verified -  that Tag propagation must be based on the " + "ingested MD5Hash field");
+		loginPage.logout();
 
 	}
 
 	/**
-	 * @author NA A Date: 10/14/22 Modified date:N/A Modified by: N/A
-	 *         Description : Verify the count is displayed correctly instead of
-	 *         number of documents in tag group /folder group. RPMXCON-52934 Sprint
-	 *         23
+	 * @author NA A Date: 10/14/22 Modified date:N/A Modified by: N/A Description :
+	 *         Verify the count is displayed correctly instead of number of
+	 *         documents in tag group /folder group. RPMXCON-52934 Sprint 23
 	 */
 	@Test(description = "RPMXCON-52934", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
 	public void tagFoderGroupDocToggleAction(String userName, String password, String role) throws Exception {
@@ -269,12 +270,12 @@ public class TagsAndFolders_Regression24 {
 		loginPage.logout();
 
 	}
-	
-	
-	
+
 	/**
 	 * @author NA Testcase No:RPMXCON-53282
-	 * @Description:Verify that RMU should be able to delete the Tag from application if created by him and associated to only one security group
+	 * @Description:Verify that RMU should be able to delete the Tag from
+	 *                     application if created by him and associated to only one
+	 *                     security group
 	 **/
 	@Test(description = "RPMXCON-53282", enabled = true, groups = { "regression" })
 	public void verifyTagDeleteInRMU() throws Exception {
@@ -282,27 +283,30 @@ public class TagsAndFolders_Regression24 {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
-		base.stepInfo("Verify that RMU should be able to delete the Tag from application if created by him and associated to only one security group");
+		base.stepInfo(
+				"Verify that RMU should be able to delete the Tag from application if created by him and associated to only one security group");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("logged in As : " + Input.rmu1userName);
 
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.DeleteTag(tagname, Input.securityGroup);
-		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)), "Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
-	
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)),
+				"Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)), "Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
-		
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)),
+				"Deleted Tag is not displayed", "Deleted Tag is  displayed", "Pass");
+
 	}
-	
-	
-	
+
 	/**
 	 * @author NA Testcase No:RPMXCON-53283
-	 * @Description:Verify that RMU should be able to delete the Folder from application if created by him and associated to only one security group
+	 * @Description:Verify that RMU should be able to delete the Folder from
+	 *                     application if created by him and associated to only one
+	 *                     security group
 	 **/
 	@Test(description = "RPMXCON-53283", enabled = true, groups = { "regression" })
 	public void verifyFolderDeleteInRMU() throws Exception {
@@ -310,25 +314,29 @@ public class TagsAndFolders_Regression24 {
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
-		base.stepInfo("Verify that RMU should be able to delete the Folder from application if created by him and associated to only one security group");
+		base.stepInfo(
+				"Verify that RMU should be able to delete the Folder from application if created by him and associated to only one security group");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("logged in As : " + Input.rmu1userName);
 
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteFolder(foldername, Input.securityGroup);
-		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)), "Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
-	
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)),
+				"Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)), "Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
-		
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getFolderName(foldername)),
+				"Deleted Folder is not displayed", "Deleted Folder is  displayed", "Pass");
+
 	}
-	
+
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-53439
-	 * @Description: Verify that Folder propagation must be based on the ingested MD5Hash field
+	 * @Description: Verify that Folder propagation must be based on the ingested
+	 *               MD5Hash field
 	 **/
 	@Test(description = "RPMXCON-53439", enabled = true, groups = { "regression" })
 	public void verifyFolderPropagation() throws Exception {
@@ -340,14 +348,15 @@ public class TagsAndFolders_Regression24 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in As : " + Input.pa1userName);
 		base.selectproject(Input.additionalDataProject);
-		
+
 		tagsAndFolderPage.createNewFolderNotSave(foldername);
 		base.waitForElement(tagsAndFolderPage.getSaveFolder());
 		tagsAndFolderPage.getSaveFolder().waitAndClick(10);
 		base.waitForElement(tagsAndFolderPage.getPropFolderExactDuplic());
 		tagsAndFolderPage.getPropFolderExactDuplic().waitAndClick(10);
-		base.passedStep("created new folder and checked the checkbox  'Propagate Tag To: Exact Duplicates (Use MD5Hash)'");
-		
+		base.passedStep(
+				"created new folder and checked the checkbox  'Propagate Tag To: Exact Duplicates (Use MD5Hash)'");
+
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
@@ -360,21 +369,23 @@ public class TagsAndFolders_Regression24 {
 		base.passedStep("Documents with MD5Hash field is selected and Bulk Folder action performed");
 
 	}
-	
+
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-53183
-	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Tags are not selected
+	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions
+	 *                 should be disabled if Tags are not selected
 	 **/
-	@Test(description = "RPMXCON-53183",  dataProvider = "PAandRMU",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53183", dataProvider = "PAandRMU", enabled = true, groups = { "regression" })
 	public void verifyDocListAndDocViewDisabled_Tags(String userName, String passWord) throws Exception {
 
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
-		base.stepInfo("To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Tags are not selected");
+		base.stepInfo(
+				"To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Tags are not selected");
 		loginPage.loginToSightLine(userName, passWord);
 		base.stepInfo("Logged in As " + userName);
-		
+
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		base.waitForElement(tagsAndFolderPage.getSecurityGroupTag());
 		tagsAndFolderPage.getSecurityGroupTag().selectFromDropdown().selectByVisibleText(Input.securityGroup);
@@ -388,36 +399,35 @@ public class TagsAndFolders_Regression24 {
 
 		if (tagsAndFolderPage.getViewInDoclist_Tags().GetAttribute("class").contains("disabled")) {
 			base.passedStep("View in Doclist is disabled");
-		}
-		else {
+		} else {
 			base.failedMessage("View in Doclist is enabled");
 		}
 		driver.waitForPageToBeReady();
-		
+
 		if (tagsAndFolderPage.getViewInDocView_Tags().GetAttribute("class").contains("disabled")) {
 			base.passedStep("View in DocView is disabled");
-		}
-		else {
+		} else {
 			base.failedMessage("View in DocView is enabled");
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-53184
-	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Folder is not selected
+	 * @Description:To verify that 'View in Doc List'and 'View in Doc View' actions
+	 *                 should be disabled if Folder is not selected
 	 **/
-	@Test(description = "RPMXCON-53184",  dataProvider = "PAandRMU",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53184", dataProvider = "PAandRMU", enabled = true, groups = { "regression" })
 	public void verifyDocListAndDocViewDisbled_Folders(String userName, String passWord) throws Exception {
 
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
 
-		base.stepInfo("To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Folder is not selected");
+		base.stepInfo(
+				"To verify that 'View in Doc List'and 'View in Doc View' actions should be disabled if Folder is not selected");
 		loginPage.loginToSightLine(userName, passWord);
 		base.stepInfo("Logged in As " + userName);
-		
+
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		base.waitForElement(tagsAndFolderPage.getFoldersTab());
 		tagsAndFolderPage.getFoldersTab().waitAndClick(10);
@@ -431,67 +441,67 @@ public class TagsAndFolders_Regression24 {
 
 		if (tagsAndFolderPage.getViewInDoclist_Folders().GetAttribute("class").contains("disabled")) {
 			base.passedStep("View in Doclist is disabled");
-		}
-		else {
+		} else {
 			base.failedMessage("View in Doclist is enabled");
 		}
-		
+
 		driver.waitForPageToBeReady();
-		
+
 		if (tagsAndFolderPage.getViewInDocView_Folders().GetAttribute("class").contains("disabled")) {
 			base.passedStep("View in DocView is disabled");
-		}
-		else {
+		} else {
 			base.failedMessage("View in DocView is enabled");
 		}
-		
+
 	}
 
 	/**
 	 * @author N/A Testcase No:RPMXCON-53194
-	 * @Description:verify that if Folder contains Zero document and select action 'View in Doc List', "
-				+ "message should be displayed 'Your query returned no data      
+	 * @Description:verify that if Folder contains Zero document and select action
+	 *                     'View in Doc List', " + "message should be displayed
+	 *                     'Your query returned no data
 	 **/
 	@Test(description = "RPMXCON-53194", enabled = true, dataProvider = "PAandRMU", groups = { "regression" })
 	public void verifyFoldwithZeroDocinViewinDL(String username, String password) throws Exception {
-		String foldername = "Folder"  + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String folderName = "Folder" + Utility.dynamicNameAppender();
 		String expMSG = "There are NO documents in the tags or folders that you have selected";
-		
+
 		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
 		base = new BaseClass(driver);
-		
+
 		base.stepInfo("RPMXCON-53194");
 		base.stepInfo("To verify that if Folder contains Zero document and select action 'View in Doc List', "
 				+ "message should be displayed 'Your query returned no data'");
-		
+
 		loginPage.loginToSightLine(username, password);
 		base.stepInfo("Logged in As " + username);
 		tags.navigateToTagsAndFolderPage();
-		
-		if(username.equals(Input.rmu1userName)) {
+
+		if (username.equals(Input.rmu1userName)) {
 			tags.CreateFolderInRMU(folderName);
 		} else {
-		    tags.CreateFolder(foldername, Input.securityGroup);
+			tags.CreateFolder(foldername, Input.securityGroup);
 		}
-		
+
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		if(username.equals(Input.rmu1userName)) {
+		if (username.equals(Input.rmu1userName)) {
 			tags.selectFolderViewInDocList(folderName);
 		} else {
 			tags.selectFolderViewInDocList(foldername);
 		}
-		
+
 		base.VerifyWarningMessage(expMSG);
 		base.passedStep("verified-  that if Folder contains Zero document and select action 'View in Doc List',"
 				+ " message should be displayed 'Your query returned no data'");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author N/A Testcase No:RPMXCON-53436
-	 * @Description:Verify contentual help text from Create Tag pop up for the 'Propagate Tag To     
+	 * @Description:Verify contentual help text from Create Tag pop up for the
+	 *                     'Propagate Tag To
 	 **/
 	@Test(description = "RPMXCON-53436", enabled = true, groups = { "regression" })
 	public void verifyConceptualHelpText() throws Exception {
@@ -518,14 +528,193 @@ public class TagsAndFolders_Regression24 {
 		base.waitForElement(tags.getPropFolderToHelpBtn());
 		tags.getPropFolderToHelpBtn().waitAndClick(5);
 		base.waitForElement(tags.getPropFolderToHelpTXT());
-		String actPopUpMsg =  tags.getPropFolderToHelpTXT().getText();
-	    base.stepInfo("Actual Text In Popup : " + actPopUpMsg);
-		if(expPopUpMsg.equals(actPopUpMsg)) {
+		String actPopUpMsg = tags.getPropFolderToHelpTXT().getText();
+		base.stepInfo("Actual Text In Popup : " + actPopUpMsg);
+		if (expPopUpMsg.equals(actPopUpMsg)) {
 			base.passedStep("Verified -  contentual help text from Create Tag pop up for the 'Propagate Tag To'");
 		} else {
 			base.failedStep("Contentual help text from Create Tag pop up for the 'Propagate Tag To Not as Expected");
 		}
-	   loginPage.logout();
+		loginPage.logout();
 	}
 
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-52492
+	 * @Description:To verify Tags and Folders displays at security group level.
+	 **/
+	@Test(description = "RPMXCON-52492", enabled = true, groups = { "regression" })
+	public void verifyTagsDisplay_SecurityGroupLevel() throws Exception {
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String securityGroup = "Security" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("To verify Tags and Folders displays at security group level.");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("logged in As : " + Input.pa1userName);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		base.stepInfo("created a tag under Default Security Group");
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		security.createSecurityGroups(securityGroup);
+		System.out.println(securityGroup);
+		base.stepInfo("created a new Security Group");
+
+		UserManagement user = new UserManagement(driver);
+		user.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected other security group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)),
+				"Tag is not displayed under another security group", "Tag is  displayed under another security group",
+				"Pass");
+
+		base.selectproject(Input.additionalDataProject);
+		base.stepInfo("Selected other project");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagName(tagname)),
+				"Tag is not displayed under another security group", "Tag is  displayed under another security group",
+				"Pass");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-52684
+	 * @Description:Verify Tag/comment/keyword/folder/redaction tag created by one
+	 *                     RMU can not deleted by other RMU after release by Project
+	 *                     Admin
+	 **/
+	@Test(description = "RPMXCON-52684", enabled = true, groups = { "regression" })
+	public void verifyAccessAfterReleaseForUsers() throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String redTag = "Redaction" + Utility.dynamicNameAppender();
+		String keyword = "K" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		String securityGroup = "Security" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo(
+				"Verify Tag/comment/keyword/folder/redaction tag created by one RMU can not deleted by other RMU after release by Project Admin");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in As : " + Input.rmu1userName);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+
+		KeywordPage keyWord = new KeywordPage(driver);
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeyword(keyword, color);
+		base.passedStep("keyword created successfully");
+
+		RedactionPage redaction = new RedactionPage(driver);
+		redaction.navigateToRedactionsPageURL();
+		redaction.createRedactionTagWithExistingNameAndVerifyErrorMessage(redTag);
+		base.passedStep("Redaction tag created successfully");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		security.createSecurityGroups(securityGroup);
+		System.out.println(securityGroup);
+		base.stepInfo("created security group 2" + securityGroup);
+
+		security.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		security.addFolderToSecurityGroup(securityGroup, foldername);
+
+		driver.waitForPageToBeReady();
+		security.addTagToSecurityGroup(securityGroup, tagname);
+
+		security.addKeywordToSecurityGroup(securityGroup, keyword);
+		driver.waitForPageToBeReady();
+
+		security.assignRedactionTagtoSG(redTag);
+
+		base.stepInfo("Released created tag/comment/keyword/redaction tag to security group 2");
+
+		UserManagement user = new UserManagement(driver);
+		user.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		base.selectsecuritygroup(securityGroup);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteFolder(foldername, securityGroup);
+		driver.waitForPageToBeReady();
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.DeleteTag(tagname, securityGroup);
+		driver.waitForPageToBeReady();
+
+		keyWord.navigateToKeywordPage();
+		keyWord.deleteKeywordByName(keyword);
+		driver.waitForPageToBeReady();
+
+		redaction.navigateToRedactionsPageURL();
+		redaction.DeleteRedaction(redTag);
+		driver.waitForPageToBeReady();
+
+		base.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-53444
+	 * @Description:Verify that if the doc being applied to are standalone with same
+	 *                     MD5hash, then Tag propagation should happen
+	 **/
+	@Test(description = "RPMXCON-53444", enabled = true, groups = { "regression" })
+	public void verifyStandaloneDocsTagPropagation() throws Exception {
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo(
+				"Verify that if the doc being applied to are standalone with same MD5hash, then Tag propagation should happen");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("logged in As : " + Input.pa1userName);
+		base.selectproject(Input.additionalDataProject);
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagNotSave(tagname,Input.tagNamePrev);
+		base.waitForElement(tagsAndFolderPage.getPropTagExactDuplic());
+		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(3);
+		base.waitForElement(tagsAndFolderPage.getSaveTag());
+		tagsAndFolderPage.getSaveTag().waitAndClick(10);
+		base.VerifySuccessMessage("Tag added successfully");
+		base.stepInfo("Tag : " + tagname + " Created Successfully With Exact Duplicate (MD5Hash)");
+
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.metadataIngestion, "MediaID10COMBINEDMD5Hash");
+		sessionSearch.ViewInDocList();
+
+		DocListPage docList = new DocListPage(driver);
+		docList.documentSelection(2);
+		driver.scrollPageToTop();
+		docList.bulkTagExistingFromDoclist(tagname);
+		if (tagname.equals(docList.getSelectExistingTag(tagname))) {
+			base.passedStep(
+					"Document are Tagged successfully and standalone documents having same MD5Hash areTag propagated");
+		}
+
+	}
 }

@@ -1,6 +1,8 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.asserts.SoftAssert;
@@ -135,7 +137,23 @@ public class Categorization {
 	}
 
 	// Added By Jeevitha
-	
+
+	public Element getDome() {
+		return driver.FindElementByXPath("//div[@class='panel-collapse collapse in']//div[@class='panel-body']");
+	}
+
+	public ElementCollection getAvailableFoldersInAnalyzed() {
+		return driver.FindElementsByXPath("//div[@id='divTree']//a");
+	}
+
+	public ElementCollection getAvailableFoldersInTraining() {
+		return driver.FindElementsByXPath("//div[@id='folders']//a");
+	}
+
+	public ElementCollection getAvailableTags() {
+		return driver.FindElementsByXPath("//div[@id='tags']//a");
+	}
+
 	public ElementCollection getAvailableSecurityGroups() {
 		return driver.FindElementsByXPath("//div[@class='tagselector']//label");
 	}
@@ -646,21 +664,26 @@ public class Categorization {
 			base.waitForElement(getSelectIdentifyByTags());
 			getSelectIdentifyByTags().waitAndClick(5);
 			driver.waitForPageToBeReady();
+
 			driver.scrollingToBottomofAPage();
-			driver.waitForPageToBeReady();
-			base.waitTime(4);
+			base.mouseHoverOnElement(getDome());
+			base.waitTime(3);
 			getSelectTag(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
 
 		} else if (select.equalsIgnoreCase("SG")) {
 			selectTrainingSet("Identify by Security Group");
 			driver.scrollingToBottomofAPage();
+			base.mouseHoverOnElement(getDome());
+			base.waitTime(2);
 			getSGCheckbox(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
 
 		} else if (select.equalsIgnoreCase("Search")) {
 			selectTrainingSet("Identify by Saved Search");
 			driver.scrollingToBottomofAPage();
+			base.mouseHoverOnElement(getDome());
+			base.waitTime(2);
 			base.waitForElement(getSelectSearchInTraining(searchtab, checkBoxName));
 			getSelectSearchInTraining(searchtab, checkBoxName).waitAndClick(10);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
@@ -668,12 +691,16 @@ public class Categorization {
 		} else if (select.equalsIgnoreCase("Folder")) {
 			selectTrainingSet("Identify by Folder");
 			driver.scrollingToBottomofAPage();
+			base.mouseHoverOnElement(getDome());
+			base.waitTime(2);
 			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
 
 		} else if (select.equalsIgnoreCase("Assignment")) {
 			selectTrainingSet("Identify by Assignment");
 			driver.scrollingToBottomofAPage();
+			base.mouseHoverOnElement(getDome());
+			base.waitTime(2);
 			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
 			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
 		}
@@ -764,4 +791,5 @@ public class Categorization {
 		}
 
 	}
+
 }

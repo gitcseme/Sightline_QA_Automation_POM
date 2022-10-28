@@ -3857,6 +3857,7 @@ public class DocExplorerPage {
 		}
 				
 	}
+
 	
 	
 	/**
@@ -3874,5 +3875,61 @@ public class DocExplorerPage {
 			bc.failedStep("The user is not on"+pageTitle+" page ");
 		}
 	}
+
+
+	/**
+     * @author Brundha.T
+     * @param folderName
+     * @return
+     * @throws InterruptedException
+     * @Decription: method for new bulk folder
+     */
+    public int newBulkFolder(String folderName) throws InterruptedException {
+       bc.waitForElement(actionDropdown());
+       actionDropdown().Click();
+
+       getBulkFolder().waitAndClick(10);
+       System.out.println("Clicked Bulk Folder");
+        
+        bc.waitForElement(getDocExplorer_NewFolder());
+        getDocExplorer_NewFolder().waitAndClick(5);
+
+       bc.waitForElement(getBulkFolder_SelectAllFolder());
+       getBulkFolder_SelectAllFolder().waitAndClick(5);
+
+       bc.waitForElement(getDocExplorer_NewFolderName());
+       getDocExplorer_NewFolderName().SendKeys(folderName);
+
+       bc.waitForElement(getContinueButton());
+       getContinueButton().Click();
+       System.out.println("Clicked continue");
+
+       driver.waitForPageToBeReady();
+        SessionSearch session=new SessionSearch(driver);
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return session.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+            }
+        }), Input.wait30);
+        int TotalCount = Integer.parseInt(session.getFinalCount().getText());
+        getFinalizeButton().Click();
+        driver.Manage().window().maximize();
+        bc.VerifySuccessMessage("Records saved successfully");
+        return TotalCount;
+    }
+    
+    /**
+     * @author Brundha.T
+     * @param Index
+     * @return
+     * Description: getting the document count in doc explorer page
+     */
+    public int DocviewDocCountByIndex(int Index) {
+        String count1 = getDocExp_DocumentList_info().getText();
+        String[] Doc1= count1.split(" ");
+        String DocCount = Doc1[Index];
+        System.out.println(DocCount);
+        return Integer.valueOf(DocCount);
+    }
 
 }

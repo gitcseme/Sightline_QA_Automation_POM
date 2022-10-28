@@ -362,6 +362,31 @@ public class Domain_Management_Regression24 {
 		loginPage.logout();
 	}
 
+	/**
+     * @author Brundha.T date: 28/10/2022 TestCase Id:RPMXCON-52835 Description
+     *         :Verify that error /validation message should be displayed when
+     *         domain admin user adds existing domain admin user of currently logged
+     *         in users domain
+     * @throws Exception
+     */
+    @Test(description = "RPMXCON-52835", enabled = true, groups = { "regression" })
+    public void verifyAddingExistingUserUnderSameProject() throws Exception {
+
+       baseClass.stepInfo("Test case Id: RPMXCON-52835");
+        baseClass.stepInfo(
+                "Verify that error /validation message should be displayed when domain admin user adds existing domain admin user of currently logged in users domain");
+        userManage = new UserManagement(driver);
+
+       loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+        baseClass.stepInfo("Logged in as " + Input.da1userName);
+        baseClass.selectproject(Input.domainName);
+        userManage.navigateToUsersPAge();
+        baseClass.stepInfo("Add existing user under to the same Domain and verifying error message");
+        userManage.verifyErrorMsgForCreatingExistedUser("QA", "user", Input.DomainAdministrator, Input.da1userName,
+                null, Input.projectName);
+        baseClass.passedStep("Error message displayed when adding existing user as user:" + Input.da1userName);
+        loginPage.logout();
+    }
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

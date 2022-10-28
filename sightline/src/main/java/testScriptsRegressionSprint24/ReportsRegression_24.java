@@ -180,6 +180,47 @@ public class ReportsRegression_24 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify that on Report Landing page Custom Document Data Report option is provided.RPMXCON-56389
+	 */
+	
+	@Test(description = "RPMXCON-56389", groups = { "regression" }, enabled = true)
+	public void verifyOnReportPageCustomDocumentDataReportOptionProvided() {
+		
+		baseClass.stepInfo("Test case Id:RPMXCON-56389 Reports/Search Term");
+		baseClass.stepInfo("To verify that on Report Landing page Custom Document Data Report option is provided.");
+		
+		// Login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		// navigating to Reports page
+		reports.navigateToReportsPage("");
+		
+		//verify that In Others section option should be provided with Customer Documents Data Report
+		baseClass.ValidateElement_Presence(reports.getCustomDocumentDataReport(),"Custom Document Data Report");
+		baseClass.passedStep("verified that In Others section option provided with Customer Documents Data Report.");
+		
+		// logout
+		loginPage.logout();
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// navigating to Reports page
+		reports.navigateToReportsPage("");
+		
+		// verify that In Others section option should be provided with Customer Documents Data Report
+		baseClass.ValidateElement_Presence(reports.getCustomDocumentDataReport(),"Custom Document Data Report");
+		baseClass.passedStep("verified that In Others section option provided with Customer Documents Data Report.");
+		
+		// logout
+		loginPage.logout();
+		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

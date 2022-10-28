@@ -2204,6 +2204,11 @@ public class DocViewPage {
 	}
 
 	// added by sowndarya.velraj
+
+	public Element RevRemarkNotchinPlayer() {
+		return driver.FindElementByXPath("//div[@id='divAudioReviewerRemark']//span//i");
+	}
+	
 	public Element getTermCardInPersistentPanel() {
 		return driver.FindElementByXPath("//span[contains(text(),'Term:')]//following::p");
 	}
@@ -28752,6 +28757,29 @@ public class DocViewPage {
 		System.out.println(totaltext);
 		return totaltext;
 	}
+	
+	/**
+	 * @description : verifyKeywordsOnDocView
+	 * @param keywords
+	 */
+	public void verifyKeywordsOnDocView(List<String>keywords) {
+		base.waitForElement(getEyeIcon());
+		if(getPersistentPanel().isElementAvailable(3)) {
+			System.out.println("the Persistent Panel is already available.");
+		}else {
+			base.waitForElement(getEyeIcon());
+			getEyeIcon().waitAndClick(5);
+		}
+		base.waitTime(3);
+		for(String keyword : keywords) {
+			if(getHitPanleVerify(keyword).isElementAvailable(5)) {
+				base.passedStep("keyword '"+keyword+"' is present in the DocView page");			
+		}else {
+			base.failedStep("keyword '"+keyword+"' is Not present in the DocView page");
+		}
+		}
+	}
+
 }
 
 
