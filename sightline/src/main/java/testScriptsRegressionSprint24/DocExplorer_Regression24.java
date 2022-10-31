@@ -69,11 +69,12 @@ public class DocExplorer_Regression24 {
 		docExplorer = new DocExplorerPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:17/10/2022 RPMXCON-54735
 	 * @throws Exception
-	 * @Description Verify that “EmailReceipients” Column header Filter with CJK characters is working correctly on Doc Explorer list.
+	 * @Description Verify that “EmailReceipients” Column header Filter with CJK
+	 *              characters is working correctly on Doc Explorer list.
 	 */
 	@Test(description = "RPMXCON-54735", enabled = true, groups = { "regression" })
 	public void verifyEmailReceipientsColumnHeaderFilterWithCJKChars() throws Exception {
@@ -83,24 +84,26 @@ public class DocExplorer_Regression24 {
 				"Verify that “EmailReceipients” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] cjkChar = {"好","人","良い","一个","一個"};
-		
+		String[] cjkChar = { "好", "人", "良い", "一个", "一個" };
+
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 		baseClass.selectproject(Input.projectName01);
-		
-		//verify EmailRecipient names in CJK Chars
+
+		// verify EmailRecipient names in CJK Chars
 		docexp.verifyEmailRecipientValuesInDocExp(cjkChar);
-		baseClass.passedStep("Verify that “EmailReceipients” Column header Filter with CJK characters is working Successfully on Doc Explorer list");
-		
+		baseClass.passedStep(
+				"Verify that “EmailReceipients” Column header Filter with CJK characters is working Successfully on Doc Explorer list");
+
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:17/10/2022 RPMXCON-54732
 	 * @throws Exception
-	 * @Description Verify that “EmailSubject/Filename” Column header Filter with CJK characters is working correctly on Doc Explorer list.
+	 * @Description Verify that “EmailSubject/Filename” Column header Filter with
+	 *              CJK characters is working correctly on Doc Explorer list.
 	 */
 	@Test(description = "RPMXCON-54732", enabled = true, groups = { "regression" })
 	public void verifyEmailSubjectFilenameColumnHeaderFilterWithCJKChars() throws Exception {
@@ -109,38 +112,43 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo(
 				"Verify that “EmailSubject/Filename” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
 
-		DocExplorerPage docexp = new DocExplorerPage(driver); 
-		String[] cjkChar = {"让","我","打","电","话","给","你","延","长","石","油","集","团"};
-		
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		String[] cjkChar = { "让", "我", "打", "电", "话", "给", "你", "延", "长", "石", "油", "集", "团" };
+
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 		baseClass.selectproject(Input.projectName01);
-		
-		//verify EmailRecipient names in CJK Chars
+
+		// verify EmailRecipient names in CJK Chars
 		docexp.verifyEmailSubjectFilenameValuesInDocExp(cjkChar);
-		baseClass.passedStep("Verify that “EmailSubject/Filename” Column header Filter with CJK characters is working Successfully on Doc Explorer list");
-		
+		baseClass.passedStep(
+				"Verify that “EmailSubject/Filename” Column header Filter with CJK characters is working Successfully on Doc Explorer list");
+
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Vijaya.Rani  date: 17/10/2022 TestCase Id:RPMXCON-54633
-	 * Description :Verify that user can select a single document from List view, and select action as Bulk Assign from Actions drop down to Assign document to new assignment.
-	 * @throws Exception 
+	 * Author :Vijaya.Rani date: 17/10/2022 TestCase Id:RPMXCON-54633 Description
+	 * :Verify that user can select a single document from List view, and select
+	 * action as Bulk Assign from Actions drop down to Assign document to new
+	 * assignment.
+	 * 
+	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-54633",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54633", enabled = true, groups = { "regression" })
 	public void verifySingleDocumentBulkAssignInListViewDoxExplorer() throws Exception {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-54633");
-		baseClass.stepInfo("Verify that user can select a single document from List view, and select action as Bulk Assign from Actions drop down to Assign document to new assignment");
-		String assignName = "assign"+Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"Verify that user can select a single document from List view, and select action as Bulk Assign from Actions drop down to Assign document to new assignment");
+		String assignName = "assign" + Utility.dynamicNameAppender();
 		AssignmentsPage assignment = new AssignmentsPage(driver);
 
-		//Login As RMU 
+		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
-		
+
 		baseClass.stepInfo("Create assignment");
 		assignment.createAssignment(assignName, Input.codeFormName);
 		docExplorer.navigateToDocExplorerPage();
@@ -148,30 +156,34 @@ public class DocExplorer_Regression24 {
 		docExplorer.selectDocument(1);
 		docExplorer.docExp_BulkAssign();
 		baseClass.stepInfo("select existing assignment with sampling method and finalize");
-		
-		assignment.assignwithSamplemethod(assignName,"Count of Selected Docs","1");
+
+		assignment.assignwithSamplemethod(assignName, "Count of Selected Docs", "1");
 		baseClass.passedStep("User can select single doc and bulk assign to new assignment");
-		
+
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Vijaya.Rani  date: 17/10/2022 TestCase Id:RPMXCON-54634
-	 * Description :Verify that user can select multiple documents from List view, and select action as Bulk Assign from Actions drop down to Assign documents to existing assignment.
-	 * @throws Exception 
+	 * Author :Vijaya.Rani date: 17/10/2022 TestCase Id:RPMXCON-54634 Description
+	 * :Verify that user can select multiple documents from List view, and select
+	 * action as Bulk Assign from Actions drop down to Assign documents to existing
+	 * assignment.
+	 * 
+	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-54634",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54634", enabled = true, groups = { "regression" })
 	public void verifyMultipleDocumentBulkAssignInListViewDoxExplorer() throws Exception {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-54634");
-		baseClass.stepInfo("Verify that user can select multiple documents from List view, and select action as Bulk Assign from Actions drop down to Assign documents to existing assignment");
-		String assignName = "assign"+Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"Verify that user can select multiple documents from List view, and select action as Bulk Assign from Actions drop down to Assign documents to existing assignment");
+		String assignName = "assign" + Utility.dynamicNameAppender();
 		AssignmentsPage assignment = new AssignmentsPage(driver);
-		
-		//Login As RMU 
+
+		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
-		
+
 		baseClass.stepInfo("Create assignment");
 		assignment.createAssignment(assignName, Input.codeFormName);
 		docExplorer.navigateToDocExplorerPage();
@@ -179,58 +191,57 @@ public class DocExplorer_Regression24 {
 		docExplorer.selectDocument(5);
 		docExplorer.docExp_BulkAssign();
 		baseClass.stepInfo("select existing assignment with sampling method and finalize");
-		
-		assignment.assignwithSamplemethod(assignName,"Count of Selected Docs","5");
+
+		assignment.assignwithSamplemethod(assignName, "Count of Selected Docs", "5");
 		baseClass.passedStep("User can select single doc and bulk assign to existing assignment");
 		loginPage.logout();
-	
+
 	}
 
-	
 	/**
 	 * @author N/A
-	 * @Description : Verify that error message does not display and application accepts -
-	 *                when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report 
-	 *                [RPMXCON-65051]
+	 * @Description : Verify that error message does not display and application
+	 *              accepts - when 'Report Name' entered with < > * ; ‘ / ( ) # & ”
+	 *              from Doc Explorer > Export > Save Report [RPMXCON-65051]
 	 */
 	@Test(description = "RPMXCON-65051", groups = { "regression" }, enabled = true)
 	public void verifyErrorMsgSaveReport() throws Exception {
 		String custReportName = "< > * ; ‘ / ( ) # &" + Utility.randomCharacterAppender(4);
-		
+
 		baseClass.stepInfo("RPMXCON - 65051 ");
 		baseClass.stepInfo("To Verify that error message does not display and application accepts - "
 				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in As : " + Input.pa1userName);
 		DocExplorerPage docExp = new DocExplorerPage(driver);
-		
+		baseClass.selectproject(Input.additionalDataProject);
+
 		docExp.docExpExportDataSaveReport(custReportName);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		ReportsPage report = new ReportsPage(driver);
 		report.navigateToReportsPage("");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(report.getThisLink(custReportName));
-		
-		if(report.getThisLink(custReportName).isElementAvailable(10)) {
+
+		if (report.getThisLink(custReportName).isElementAvailable(10)) {
 			baseClass.passedStep("Application accept 'Report Name :" + custReportName + "Successfully..");
 		} else {
 			baseClass.failedStep("Application Not accept 'Report Name :" + custReportName);
 		}
-		
+
 		report.deleteCustomReport(custReportName);
 		baseClass.passedStep("Verified - that error message does not display and application accepts - "
 				+ "when 'Report Name' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Save Report");
-    		loginPage.logout();
+		loginPage.logout();
 	}
 
 	/**
-	 * @author Brundha.T Id:RPMXCON-54644 
-	 * Description Verify the page navigation
-	 * from the list view of doc explorer page
+	 * @author Brundha.T Id:RPMXCON-54644 Description Verify the page navigation
+	 *         from the list view of doc explorer page
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-54644", enabled = true, groups = { "regression" })
@@ -245,26 +256,28 @@ public class DocExplorer_Regression24 {
 
 		docExplorer.navigateToDocExplorerPage();
 		driver.waitForPageToBeReady();
-		int RowHeader=baseClass.getIndex(docExplorer.getTableHeader(),"DOCID");
-		
-		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getNavigationPageNumber("2"),"NotCompareEqual");
-		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getLastPage(),"yes");
-		String NextBtn=docExplorer.getNavigationBtn("Next").GetAttribute("class");
+		int RowHeader = baseClass.getIndex(docExplorer.getTableHeader(), "DOCID");
+
+		docExplorer.verifyingNavigationOption(RowHeader, docExplorer.getNavigationPageNumber("2"), "NotCompareEqual");
+		docExplorer.verifyingNavigationOption(RowHeader, docExplorer.getLastPage(), "yes");
+		String NextBtn = docExplorer.getNavigationBtn("Next").GetAttribute("class");
 		System.out.println(NextBtn);
-		
-		baseClass.compareTextViaContains(NextBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+
+		baseClass.compareTextViaContains(NextBtn, "disabled", "Previous Button is disabled",
+				"Previous button is not disabled");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docExplorer.verifyingNavigationOption(RowHeader,docExplorer.getFirstPage(),"Compare");
-		String PreviousBtn=docExplorer.getNavigationBtn("Previous").GetAttribute("class");
+		docExplorer.verifyingNavigationOption(RowHeader, docExplorer.getFirstPage(), "Compare");
+		String PreviousBtn = docExplorer.getNavigationBtn("Previous").GetAttribute("class");
 		System.out.println(PreviousBtn);
-		baseClass.compareTextViaContains(PreviousBtn, "disabled", "Previous Button is disabled", "Previous button is not disabled");
+		baseClass.compareTextViaContains(PreviousBtn, "disabled", "Previous Button is disabled",
+				"Previous button is not disabled");
 
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Vijaya.Rani date: 20/10/2022 TestCase Id:RPMXCON-54596 
+	 * Author :Vijaya.Rani date: 20/10/2022 TestCase Id:RPMXCON-54596
 	 * Description:Verify when user selects multiple folders from the tree view
 	 * 
 	 * @throws Exception
@@ -279,10 +292,10 @@ public class DocExplorer_Regression24 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
-		//Select multiple folder and get count
+		// Select multiple folder and get count
 		ElementCollection Table = driver.FindElementsByXPath("//div[@id='divNodeTree']//ul//li");
 		List<WebElement> Tag = Table.FindWebElements();
-		
+
 		docExplorer.getfolderFromTreeByNumber("7").waitAndClick(5);
 		int fold = docExplorer.getcount("3");
 		Actions actions = new Actions(driver.getWebDriver());
@@ -293,7 +306,7 @@ public class DocExplorer_Regression24 {
 		actions.click(Tag.get(4));
 		int fold3 = docExplorer.getcount("4");
 		actions.keyUp(Keys.LEFT_CONTROL).build().perform();
-		int treeViewCount = fold+fold1 + fold2 + fold3;
+		int treeViewCount = fold + fold1 + fold2 + fold3;
 		System.out.println(treeViewCount);
 		baseClass.stepInfo("Docs count in multiple folder from treeview:" + treeViewCount);
 
@@ -304,8 +317,8 @@ public class DocExplorer_Regression24 {
 	}
 
 	/**
-	 * Author :Vijaya.Rani date: 19/10/2022 TestCase Id:RPMXCON-54601
-	 * Description :Verify the Tree View for new project when Dataset is not uploaded and
+	 * Author :Vijaya.Rani date: 19/10/2022 TestCase Id:RPMXCON-54601 Description
+	 * :Verify the Tree View for new project when Dataset is not uploaded and
 	 * Ingestion is not completed
 	 */
 	@Test(description = "RPMXCON-54601", enabled = true, groups = { "regression" })
@@ -330,7 +343,7 @@ public class DocExplorer_Regression24 {
 	}
 
 	/**
-	 * Author :Vijaya.Rani date: 20/10/2022 TestCase Id:RPMXCON-54715 
+	 * Author :Vijaya.Rani date: 20/10/2022 TestCase Id:RPMXCON-54715
 	 * Description:Verify the default menu when SA/DA impersonates as PA/RMU
 	 */
 	@Test(description = "RPMXCON-54715", enabled = true, groups = { "regression" })
@@ -412,9 +425,10 @@ public class DocExplorer_Regression24 {
 	}
 
 	/**
-	 * @author Vijaya.Rani ModifyDate:20/10/2022 RPMXCON-54728                
+	 * @author Vijaya.Rani ModifyDate:20/10/2022 RPMXCON-54728
 	 * @throws Exception
-	 * @Description Verify that “EmailSubject/Filename” Column header Filter with special characters is working correctly on Doc Explorer list.
+	 * @Description Verify that “EmailSubject/Filename” Column header Filter with
+	 *              special characters is working correctly on Doc Explorer list.
 	 */
 	@Test(description = "RPMXCON-54728", enabled = true, groups = { "regression" })
 	public void verifyEmailSubjectFilenameColumnHeaderFilterWithSpecialChars() throws Exception {
@@ -424,7 +438,8 @@ public class DocExplorer_Regression24 {
 				"Verify that “EmailSubject/Filename” Column header Filter with special characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] specialChars = {"~","!","@","#","$","%","&",";","(",")","_","-","+","=","[","]","?","/",".","'" };
+		String[] specialChars = { "~", "!", "@", "#", "$", "%", "&", ";", "(", ")", "_", "-", "+", "=", "[", "]", "?",
+				"/", ".", "'" };
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -441,7 +456,8 @@ public class DocExplorer_Regression24 {
 	/**
 	 * @author Vijaya.Rani ModifyDate:20/10/2022 RPMXCON-54700
 	 * @throws Exception
-	 * @Description Verify that “Comments” Filter with "Exclude" functionality is working correctly on Doc Explorer list.
+	 * @Description Verify that “Comments” Filter with "Exclude" functionality is
+	 *              working correctly on Doc Explorer list.
 	 */
 	@Test(description = "RPMXCON-54700", enabled = true, groups = { "regression" })
 	public void verifyCommentsWithExcludeInDocExplorerList() throws Exception {
@@ -455,39 +471,39 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
-		CommentsPage comments=new CommentsPage(driver);
-		String random = Input.reviewed+ Utility.dynamicNameAppender();
-		String random1 = "Completed"+ Utility.dynamicNameAppender();
-		
+		CommentsPage comments = new CommentsPage(driver);
+		String random = Input.reviewed + Utility.dynamicNameAppender();
+		String random1 = "Completed" + Utility.dynamicNameAppender();
+
 		comments.navigateToCommentsPage();
 		comments.AddComments(random);
 		comments.AddComments(random1);
 
 		docExplorer.navigateToDocExplorerPage();
-		String Docs = docExplorer.getDocExp_DocID().getText();
 		baseClass.stepInfo("Perform exclude filter by Comments");
-		docExplorer.performExculdeCommentsFilter(random,null);
+		docExplorer.performExculdeCommentsFilter(random);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by Comments");
-		docExplorer.verifyExcludeFunctionlityForComments(Docs);
+		docExplorer.verifyExcludeFunctionlityForComments();
 
 		baseClass.stepInfo("Refresh page");
 		docExplorer.refreshPage();
 
 		baseClass.stepInfo("Perform exclude filter by Comments");
-		docExplorer.performExculdeCommentsFilter(random,random1);
+		docExplorer.performExculdeCommentsFilter(random);
+		docExplorer.performUpdateExculdeEmailFilter(random1);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by Comments");
-		docExplorer.verifyExcludeFunctionlityForComments(Docs);
+		docExplorer.verifyExcludeFunctionlityForComments();
 
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * @author Brundha.T Id:RPMXCON-54635 Description :Verify that user can select all
-	 *         documents from page from List view, and select action as Bulk Assign
-	 *         from Actions drop down to Assign documents to new assignment
+	 * @author Brundha.T Id:RPMXCON-54635 Description :Verify that user can select
+	 *         all documents from page from List view, and select action as Bulk
+	 *         Assign from Actions drop down to Assign documents to new assignment
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-54635", enabled = true, groups = { "regression" })
@@ -510,18 +526,18 @@ public class DocExplorer_Regression24 {
 		docExplorer.SelectingAllDocuments("No");
 		driver.scrollingToBottomofAPage();
 		String count = docExplorer.getDocExp_DocumentList_info().getText().toString();
-		String []Doc=count.split(" ");
-		String ListViewCount=Doc[3];
+		String[] Doc = count.split(" ");
+		String ListViewCount = Doc[3];
 		System.out.println(ListViewCount);
 		driver.scrollPageToTop();
 		docExplorer.docExp_BulkAssign();
-		
+
 		baseClass.stepInfo("Selecting new Assignment with sample method");
-		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs",ListViewCount,true);
+		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs", ListViewCount, true);
 		Assign.quickAssignCreation(assigname, Input.codeFormName);
-		String AssignmentCount=Assign.selectAssignmentToView(assigname);
-		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount),Integer.valueOf(AssignmentCount), "Document count is displayed in assignment",
-				"DocCount is Not Displayed as expected");
+		String AssignmentCount = Assign.selectAssignmentToView(assigname);
+		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount), Integer.valueOf(AssignmentCount),
+				"Document count is displayed in assignment", "DocCount is Not Displayed as expected");
 
 	}
 
@@ -550,17 +566,17 @@ public class DocExplorer_Regression24 {
 		docExplorer.getSelectAllDocuments().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		docExplorer.SelectingAllDocuments("yes");
-		int ListViewCount= docExplorer.getDocumentCountFromListView();
+		int ListViewCount = docExplorer.getDocumentCountFromListView();
 		driver.scrollPageToTop();
 		docExplorer.docExp_BulkAssign();
-		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs",String.valueOf(ListViewCount),true);
+		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs", String.valueOf(ListViewCount), true);
 		Assign.quickAssignCreation(assigname, Input.codeFormName);
 		String DocCountInAssignMent = Assign.selectAssignmentToView(assigname);
-		baseClass.digitCompareEquals(Integer.valueOf(DocCountInAssignMent), ListViewCount, "Document count is displayed in assignment",
-				"DocCount is Not Displayed as expected");
+		baseClass.digitCompareEquals(Integer.valueOf(DocCountInAssignMent), ListViewCount,
+				"Document count is displayed in assignment", "DocCount is Not Displayed as expected");
 
 	}
-	
+
 	/**
 	 * @author Krishna ModifyDate:NA RPMXCON-54991
 	 * @throws Exception
@@ -611,8 +627,7 @@ public class DocExplorer_Regression24 {
 			baseClass.failedStep("error displayed");
 		}
 	}
-	
-	
+
 	/**
 	 * @author Krishna ModifyDate:NA RPMXCON-54990
 	 * @throws Exception
@@ -707,98 +722,98 @@ public class DocExplorer_Regression24 {
 			baseClass.failedStep("error is displayed");
 		}
 	}
+
 	/**
-     * @author Brundha.T TestCase Id:RPMXCON-54617 Description:Verify that user can
-     *         select a single document from List view, and select action as Bulk
-     *         Folder from Actions drop down to Folder document
-     *
-     * @throws Exception
-     */
-    @Test(description = "RPMXCON-54617", enabled = true, groups = { "regression" })
-    public void verifyingBulkFolderInDocExplorer() throws Exception {
+	 * @author Brundha.T TestCase Id:RPMXCON-54617 Description:Verify that user can
+	 *         select a single document from List view, and select action as Bulk
+	 *         Folder from Actions drop down to Folder document
+	 *
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54617", enabled = true, groups = { "regression" })
+	public void verifyingBulkFolderInDocExplorer() throws Exception {
 
-       baseClass.stepInfo("Test case Id: RPMXCON-54617");
-        baseClass.stepInfo(
-                "Verify that user can select a single document from List view, and select action as Bulk Folder from Actions drop down to Folder document");
+		baseClass.stepInfo("Test case Id: RPMXCON-54617");
+		baseClass.stepInfo(
+				"Verify that user can select a single document from List view, and select action as Bulk Folder from Actions drop down to Folder document");
 
-       String Foldername = "Fold" + Utility.dynamicNameAppender();
-        int Doc = 1;
-        // Login As PA
-        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-        baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		String Foldername = "Fold" + Utility.dynamicNameAppender();
+		int Doc = 1;
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
-       // Selecting Doc in tree view
-        driver.waitForPageToBeReady();
-        baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
-        docExplorer.getfolderFromTreeByNumber("3").waitAndClick(5);
-        
-        int DocumentInList = docExplorer.getDocumentsName().size();
-        if (DocumentInList >= 1) {
-            baseClass.passedStep("Documents are loaded for selected folder in tree view");
-        } else {
-            baseClass.failedStep("Documents are not loaded for selected folder in tree view");
-        }
-       docExplorer.getDocumentsCheckBoxbyRowNum(Doc).waitAndClick(5);
-        int TotalDocCount = docExplorer.newBulkFolder(Foldername);
-        System.out.println(TotalDocCount);
-        baseClass.digitCompareEquals(Doc, TotalDocCount, "Document count is displayed as expected",
-                "Doc Count is not displayed");
+		// Selecting Doc in tree view
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
+		docExplorer.getfolderFromTreeByNumber("3").waitAndClick(5);
 
-       TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-        this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-        tagsAndFolderPage.verifyFolderDocCount(Foldername, Doc);
-        loginPage.logout();
-    }
+		int DocumentInList = docExplorer.getDocumentsName().size();
+		if (DocumentInList >= 1) {
+			baseClass.passedStep("Documents are loaded for selected folder in tree view");
+		} else {
+			baseClass.failedStep("Documents are not loaded for selected folder in tree view");
+		}
+		docExplorer.getDocumentsCheckBoxbyRowNum(Doc).waitAndClick(5);
+		int TotalDocCount = docExplorer.newBulkFolder(Foldername);
+		System.out.println(TotalDocCount);
+		baseClass.digitCompareEquals(Doc, TotalDocCount, "Document count is displayed as expected",
+				"Doc Count is not displayed");
 
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.verifyFolderDocCount(Foldername, Doc);
+		loginPage.logout();
+	}
 
+	/**
+	 * @author Brundha.T TestCase Id:RPMXCON-54606 Description:Verify that user can
+	 *         select all documents from page from List view, and select action as
+	 *         View in DocView from Actions drop down
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54606", enabled = true, groups = { "regression" })
+	public void verifyingDocumentInDocView() throws Exception {
 
-   /**
-     * @author Brundha.T TestCase Id:RPMXCON-54606
-     *  Description:Verify that user can select all documents 
-     *       from page from List view, and select action as View 
-     *        in DocView from Actions drop down
-     * @throws Exception
-     */
-    @Test(description = "RPMXCON-54606", enabled = true, groups = { "regression" })
-    public void verifyingDocumentInDocView() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54606");
+		baseClass.stepInfo(
+				"Verify that user can select all documents from page from List view, and select action as View in DocView from Actions drop down");
 
-       baseClass.stepInfo("Test case Id: RPMXCON-54606");
-        baseClass.stepInfo(
-                "Verify that user can select all documents from page from List view, and select action as View in DocView from Actions drop down");
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
-       // Login As PA
-        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-        baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		// Selecting Doc in tree view
+		for (int i = 1; i <= 2; i++) {
+			docExplorer.navigateToDocExplorerPage();
+			driver.waitForPageToBeReady();
+			baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
+			if (i == 1) {
+				baseClass.stepInfo("Selecting a folder in Tree view");
+				docExplorer.getfolderFromTreeByNumber("1").waitAndClick(5);
+			} else {
+				baseClass.stepInfo("Selecting Multiple folder in Tree view");
+				docExplorer.selectMultipleFoldersOfTree(4);
+			}
+			int CountOfDoc = docExplorer.DocviewDocCountByIndex(3);
+			if (Integer.valueOf(CountOfDoc) != 0) {
+				baseClass.passedStep("Documents are loaded for selected folder in treeview");
+			} else {
+				baseClass.failedStep("Documents are not loaded");
+			}
+			docExplorer.SelectingAllDocuments("No");
+			docExplorer.docExpViewInDocView();
+			DocViewPage Docview = new DocViewPage(driver);
+			int DocCountInDocView = Docview.verifyingDocCount();
 
-       // Selecting Doc in tree view
-        for (int i = 1; i <= 2; i++) {
-            docExplorer.navigateToDocExplorerPage();
-            driver.waitForPageToBeReady();
-            baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
-            if (i == 1) {
-                baseClass.stepInfo("Selecting a folder in Tree view");
-                docExplorer.getfolderFromTreeByNumber("1").waitAndClick(5);
-            } else {
-                baseClass.stepInfo("Selecting Multiple folder in Tree view");
-                docExplorer.selectMultipleFoldersOfTree(4);
-            }
-            int CountOfDoc = docExplorer.DocviewDocCountByIndex(3);
-            if (Integer.valueOf(CountOfDoc) != 0) {
-                baseClass.passedStep("Documents are loaded for selected folder in treeview");
-            } else {
-                baseClass.failedStep("Documents are not loaded");}
-            docExplorer.SelectingAllDocuments("No");
-            docExplorer.docExpViewInDocView();
-            DocViewPage Docview = new DocViewPage(driver);
-            int DocCountInDocView = Docview.verifyingDocCount();
-            
-            baseClass.stepInfo("Validating Document count ");
-            baseClass.digitCompareEquals(Integer.valueOf(CountOfDoc), DocCountInDocView,
-                    "Selected documents from list view is displayed on doc view", "Documents are not loaded");
-            loginPage.logout();
-       }
-       
-   }
+			baseClass.stepInfo("Validating Document count ");
+			baseClass.digitCompareEquals(Integer.valueOf(CountOfDoc), DocCountInDocView,
+					"Selected documents from list view is displayed on doc view", "Documents are not loaded");
+			loginPage.logout();
+		}
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

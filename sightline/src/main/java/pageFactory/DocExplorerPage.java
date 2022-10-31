@@ -3714,7 +3714,7 @@ public class DocExplorerPage {
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for Comments
 	 */
-	public void performExculdeCommentsFilter(String Comments, String Comments1) {
+	public void performExculdeCommentsFilter(String Comments) {
 		try {
 
 			driver.waitForPageToBeReady();
@@ -3732,24 +3732,13 @@ public class DocExplorerPage {
 			bc.waitForElement(getAddToFilter());
 			bc.waitTillElemetToBeClickable(getAddToFilter());
 			getAddToFilter().Click();
-			if (Comments1 != null) {
-				bc.waitTillElemetToBeClickable(doclist.getMakeSureSelectedValue());
-				doclist.getMakeSureSelectedValue().Click();
-				getSearchTextArea().SendKeys(Comments1);
-				Thread.sleep(Input.wait30 / 30);
-				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
-				driver.waitForPageToBeReady();
-				bc.waitForElement(getAddToFilter());
-				bc.waitTillElemetToBeClickable(getAddToFilter());
-				getAddToFilter().Click();
-
-			}
 			bc.waitForElement(getApplyFilter());
 			bc.waitTillElemetToBeClickable(getApplyFilter());
 			getApplyFilter().Click();
 		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occcured while performing exclude filter for Comments" + e.getMessage());
+			bc.failedStep(
+					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
 		}
 	}
 
@@ -3759,14 +3748,14 @@ public class DocExplorerPage {
 	 *               by Comments.
 	 * 
 	 */
-	public void verifyExcludeFunctionlityForComments(String DocID) {
+	public void verifyExcludeFunctionlityForComments() {
 
 		try {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
 			driver.waitForPageToBeReady();
-			if (bc.text(DocID).isDisplayed()) {
+			if (bc.text("ID000").isDisplayed()) {
 				bc.passedStep("Exclude filter functionality by Comments is working as expected");
 			} else {
 				bc.failedStep("Exclude filter functionality by Comments is not working as expected.");
@@ -3778,6 +3767,41 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude another filter for
+	 *               EmailRecipientNames.
+	 *
+	 */
+	public void performUpdateExculdeEmailFilter(String EmailRecipient) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getActiveFilter());
+			bc.waitTillElemetToBeClickable(getActiveFilter());
+			getActiveFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(EmailRecipient);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUpdateFilter());
+			bc.waitTillElemetToBeClickable(getUpdateFilter());
+			getUpdateFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
+		}
+	}
+
 
 	/**
 	 * @author Brundha.T
