@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.testng.ITestResult;
@@ -17,6 +18,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.Dashboard;
@@ -642,6 +644,84 @@ public class DocViewAudio_Regression24 {
 	    baseClass.passedStep("Verified - that application should not hang when the user tries to "
 	    		+ "edit/delete a reviewer remark, when the audio is in Stopped state.");
 	    loginPage.logout();
+	}
+	/**
+	 * @author Vijaya.Rani ModifyDate:22/09/2022 RPMXCON-51808
+	 * @throws Exception
+	 * @Description Verify that when document present in different save searches
+	 *              with common term then, should not display repetitive search term
+	 *              on persistent hits panel on completing the document same as
+	 *              last.
+	 */
+	
+	@Test(description = "RPMXCON-51808", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsHitSaveSeachesWithCompleteSameAsLast() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51808");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel on completing the document same as last.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search
+		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		// Audio search And Save
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
+		driver.waitForPageToBeReady();
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+
+		// Added another Audio search and save
+		driver.waitForPageToBeReady();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		driver.waitForPageToBeReady();
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+		// Click on bulkAssign
+		sessionSearch.bulkAssignWithOutPureHit();
+
+		// Create Assigment
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		baseClass.stepInfo("Impersnated from RMU to Reviewer");
+		baseClass.impersonateRMUtoReviewer();
+
+		// Assignment Selection and Reviewer
+		driver.waitForPageToBeReady();
+		assignmentPage.SelectAssignmentByReviewer(Asssignment);
+        baseClass.waitTime(3);
+        baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList2 = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
+		// Check Display persistant hit - notrepetative
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
+		driver.waitForPageToBeReady();
+		
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
+
+		// Complete the document And SameAs Last
+		driver.waitForPageToBeReady();
+		docviewPage.editingCodingFormWithCompleteButton();
+
+		// logout
+		loginPage.logout();
 	}
 	
 }
