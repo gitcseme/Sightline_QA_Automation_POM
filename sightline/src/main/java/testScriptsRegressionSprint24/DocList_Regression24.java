@@ -64,7 +64,8 @@ public class DocList_Regression24 {
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/10/2022 RPMXCON-54519
 	 * @throws Exception
-	 * @Description Validate onpage filter for EmailAuthorName with any special charatcers (,/"/-/_ /) on DocList page.
+	 * @Description Validate onpage filter for EmailAuthorName with any special
+	 *              charatcers (,/"/-/_ /) on DocList page.
 	 */
 	@Test(description = "RPMXCON-54519", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterForEmailAuthorNameWithAnySpecialCharaters(String username, String password, String role)
@@ -77,7 +78,7 @@ public class DocList_Regression24 {
 		DocListPage docList = new DocListPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		String domain1 = "(#NOS OCRM FKNMS-ALL);";
-		String domain2="Amol.Gawande/,@consilio.com";
+		String domain2 = "Amol.Gawande/,@consilio.com";
 
 		// Login As user
 		loginPage.loginToSightLine(username, password);
@@ -94,9 +95,9 @@ public class DocList_Regression24 {
 		docList.getEmailAuthNameFilter().waitAndClick(5);
 		docList.include(domain1);
 		driver.waitForPageToBeReady();
-		if(baseClass.text(domain1).isDisplayed()) {
-		baseClass.passedStep("Documents containing only the selected email IDs only filtered");
-		}else {
+		if (baseClass.text(domain1).isDisplayed()) {
+			baseClass.passedStep("Documents containing only the selected email IDs only filtered");
+		} else {
 			baseClass.failedStep("Documents containing selected email IDs not filtered");
 		}
 
