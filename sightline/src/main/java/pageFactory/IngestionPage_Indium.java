@@ -1092,6 +1092,9 @@ public class IngestionPage_Indium {
 	public Element sourceSystemMandatoryError() {
 		return driver.FindElementById("ddlSourceSystem-error");
 	}
+	public ElementCollection textFormatDocs() {
+		return driver.FindElementsByXPath("//tr[@role='row']//td[contains(text(),'.txt')]");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -10872,5 +10875,70 @@ public class IngestionPage_Indium {
 			}
 		}
 		
-					
+		/**
+		 * @author: Arun Created Date: 31/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the mandatory field warning message in ingestion wizard
+		 */
+		
+		public void validateMandatoryFieldMessagesDisplayed() {
+			
+			String[] mandatoryFields = {"Source System","Source Location","Source Folder",
+					"Date and Time format"};
+			Element[] ele = {sourceSystemMandatoryError(),sourceLocationMandatoryError(),
+					sourceFolderMandatoryError(),dateFormatMandatoryError()};
+			
+			for(int i=0;i<mandatoryFields.length;i++) {
+				if(ele[i].isDisplayed()) {
+					String message = ele[i].getText();
+					base.stepInfo(mandatoryFields[i]+" validation message :"+message);
+					base.passedStep("Mandatory field validation message displayed for :"+mandatoryFields[i]);
+				}
+				else {
+					base.failedStep("Mandatory validation message not displayed for :"+mandatoryFields[i]);
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 31/10/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the availability of different available file types in ingestion wizard
+		 */
+		
+		public void verifySourceAndOverwriteSectionFieldsAvailability() {
+			
+			// validate source selection section
+			if(getIngestion_IngestionType().isDisplayed() && getSpecifySourceSystem().isDisplayed() &&
+					getSpecifyLocation().isDisplayed() && getSpecifySourceFolder().isDisplayed()) {
+				base.passedStep("source system,location,folder fields displayed");
+			}
+			else {
+				base.failedStep("source section fields not displayed");
+			}
+			// validate delimiters
+			if(getDATDelimitersFieldSeparator().isDisplayed() && getDATDelimitersTextQualifier().isDisplayed()
+					&& getDATDelimitersNewLine().isDisplayed()) {
+				base.passedStep("All the three delimiters displayed in source selection");
+			}
+			else {
+				base.failedStep("delimiters not displayed for selection");
+			}
+			//validate checkbox for different files
+			driver.scrollingToBottomofAPage();
+			if(getDatCheckBox().isDisplayed() && getNativeCheckBox().isDisplayed() && 
+					getTextCheckBox().isDisplayed() && getPDFCheckBoxButton().isDisplayed()) {
+				base.passedStep("Dat, Native, Text, Pdf file types available under source selection");
+			}
+			else {
+				base.failedStep("Dat, Native, Text, Pdf files not available");
+			}
+			
+			if(getTIFFCheckBox().isDisplayed() && getMP3CheckBoxButton().isDisplayed() && 
+					getAudioTranscriptCheckBoxstionButton().isDisplayed() && getOtherCheckBox().isDisplayed()) {
+				base.passedStep("Tiff,Mp3,Audio transcript,other file types available under source selection");
+			}
+			else {
+				base.failedStep("Tiff,Mp3,Audio transcript,other file options not available");
+			}
+			
+		}
 }

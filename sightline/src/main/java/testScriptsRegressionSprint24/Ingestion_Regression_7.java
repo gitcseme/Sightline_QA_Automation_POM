@@ -557,6 +557,150 @@ public class Ingestion_Regression_7 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 31/10/2022 TestCase Id:RPMXCON-48615
+	 * Description :To verify that after a text overlay ingestion, the Ingestion Details popup page
+	 * should reflect the count of indexed text files under the Indexing section
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48615",enabled = true, groups = { "regression" })
+	public void verifyTextOverlayCountUnderIndexingSection() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48615");
+		baseClass.stepInfo("Verify overlay text files count reflecting under indexing section");
+		String ingestionName = null;
+		String searchName = "Search"+Utility.dynamicNameAppender();
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		//add new ingestion with text files
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if (status == false) {
+			baseClass.stepInfo("Perform new add only ingestion with text files");
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionName =ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.UniCodeFilesFolder);
+		}
+		//unpublish files and start overlay
+		baseClass.stepInfo("search and unpublish text files");
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.saveSearch(searchName);
+		ingestionPage.unpublish(searchName);
+		baseClass.stepInfo("Perform overlay ingestion for unpublished text files");
+		ingestionPage.OverlayIngestionWithDat(Input.UniCodeFilesFolder, Input.datLoadFile1, Input.documentKey,
+				"text", Input.textFile1);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.verifyDataPresentInIndexTableColumn(Input.text, Input.sourceDocs);
+		baseClass.passedStep("overlaid Text files count reflected under indexing section");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 31/10/2022 TestCase Id:RPMXCON-47290
+	 * Description :Specify Source and overwrite option' page is accessable and
+	 * verify that all fieldsets are mandatory.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47290",enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldsInSourceAndSettingsOption() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47290");
+		baseClass.stepInfo("verify the mandatory fields in source and overwrite settings option");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Click on add new ingestion link");
+		baseClass.waitForElement(ingestionPage.getAddanewIngestionButton());
+		ingestionPage.getAddanewIngestionButton().waitAndClick(10);
+		baseClass.verifyUrlLanding(Input.url + "en-us/Ingestion/Wizard", "source/overwrite page displayed", 
+				"source/overwrite setting page not displayed");
+		baseClass.stepInfo("Without entering mandatory fields click next button");
+		baseClass.waitForElement(ingestionPage.getNextButton());
+		ingestionPage.getNextButton().waitAndClick(10);
+		baseClass.stepInfo("verify mandatory fields warning messages");
+		ingestionPage.validateMandatoryFieldMessagesDisplayed();
+		baseClass.passedStep("Validation messages displayed to all mandatory fields");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 31/10/2022 TestCase Id:RPMXCON-48605
+	 * Description :To verify that users should be able to successfully conduct searches 
+	 * which take the text files ingested into consideration
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48605",enabled = true, groups = { "regression" })
+	public void verifyTextFilesSearchConsideration() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48605");
+		baseClass.stepInfo("Verify that users should be able to successfully conduct searches");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		//add new ingestion with text files
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if (status == false) {
+			baseClass.stepInfo("Perform new add only ingestion with text files");
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		baseClass.stepInfo("Perform search with 'docfileextension' metadata");
+		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.docFileExt,".txt");
+		baseClass.stepInfo("Text files search result:"+count);
+		sessionSearch.verifySearchResultReturnsForConfiguredQuery(count);
+		int textFormatDocs = ingestionPage.textFormatDocs().size();
+		baseClass.stepInfo("text format docs:"+textFormatDocs);
+		if(textFormatDocs>0) {
+			baseClass.passedStep("pure hit considered docs with .txt format");
+		}
+		else {
+			baseClass.failedStep("pure hit not considered docs with .txt format");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 31/10/2022 TestCase Id:RPMXCON-47286
+	 * Description :To verify Ingestion Wizards "Source Selection & Ingestion Type" Sections 
+	 * for various Options
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47286",enabled = true, groups = { "regression" })
+	public void verifyVariousOptionsInIngestionWizard() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47286");
+		baseClass.stepInfo("verify 'Source Selection & Ingestion Type' Sections for various Options");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Click on add new ingestion link");
+		baseClass.waitForElement(ingestionPage.getAddanewIngestionButton());
+		ingestionPage.getAddanewIngestionButton().waitAndClick(10);
+		baseClass.verifyUrlLanding(Input.url + "en-us/Ingestion/Wizard", "source/overwrite page displayed", 
+				"source/overwrite setting page not displayed");
+		//validate fields availability
+		ingestionPage.verifySourceAndOverwriteSectionFieldsAvailability();
+		baseClass.passedStep("All the required fields displayed on 'source and overwrite'section");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
