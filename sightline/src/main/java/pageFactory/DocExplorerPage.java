@@ -585,7 +585,7 @@ public class DocExplorerPage {
 	}
 
 	public Element getLastPage() {
-		return driver.FindElementByXPath("//a[text()='Next']/..//preceding-sibling::li//a");
+		return driver.FindElementByXPath("//a[text()='Next']/..//preceding-sibling::li[1]//a");
 
 	}
 
@@ -3924,8 +3924,16 @@ public class DocExplorerPage {
        bc.waitForElement(getDocExplorer_NewFolderName());
        getDocExplorer_NewFolderName().SendKeys(folderName);
 
-       bc.waitForElement(getContinueButton());
-       getContinueButton().Click();
+       for (int i = 0; i <10; i++) {
+			try {
+				bc.waitTime(4);
+				bc.waitTillElemetToBeClickable(getContinueButton());
+				getContinueButton().Click();
+				break;
+			} catch (Exception e) {
+				bc.waitTillElemetToBeClickable(getContinueButton());
+			}
+		}
        System.out.println("Clicked continue");
 
        driver.waitForPageToBeReady();
