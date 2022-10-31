@@ -815,6 +815,55 @@ public class DocExplorer_Regression24 {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-54994
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate and EmailSubject
+	 *              filters and selects check-boxes manually and navigates
+	 *              Doc-Explorer to DocView then documents gets loaded on DocView
+	 *              screen.
+	 */
+	@Test(description = "RPMXCON-54994", enabled = true, groups = { "regression" })
+	public void verifyMasterDateEmailDocsGetsLoadedOnDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54994");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate and EmailSubject filters and  selects check-boxes manually and navigates Doc-Explorer to DocView then documents gets loaded on DocView screen.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		baseClass.waitForElement(docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME"));
+		docexp.getDocExp_EmailSubFileSearchName("EMAILSUBJECT/FILENAME").SendKeys("Proximity");
+		docexp.getApplyFilter().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		int allDoc = docexp.getDocumentsName().size();
+		driver.waitForPageToBeReady();
+		docexp.selectDocument(allDoc);
+		baseClass.stepInfo("Select all checkboxes manually as expected");
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
+		
+		// verify displayed without runtime error
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docview.getMiniDocListTable());
+		baseClass.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		if (docview.getMiniDocListTable().isElementPresent()) {
+			baseClass.passedStep("Docview page is displayed without any runtime error");
+
+		} else {
+			baseClass.failedStep("displayed with error");
+		}
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

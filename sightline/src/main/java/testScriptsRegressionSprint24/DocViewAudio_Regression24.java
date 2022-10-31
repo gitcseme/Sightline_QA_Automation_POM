@@ -724,4 +724,115 @@ public class DocViewAudio_Regression24 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-51671
+	 * @throws Exception
+	 * @Description Delete the remarks for the audio documents in Docview
+	 */
+	@Test(description = "RPMXCON-51671", enabled = true, groups = { "regression" })
+	public void verifyDeleteRemarksAudioDocDocview() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51671");
+		baseClass.stepInfo("Update the Remarks for the existing audio documents");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		// adding remarks and verifying success message
+		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+
+
+		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+		docviewPage.audioRemarkDataInput(remark,"Success");
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docviewPage.getDeleteRedaction(remark));
+		docviewPage.getDeleteRedaction(remark).waitAndClick(5);
+		baseClass.waitForElement(docviewPage.getDocview_ButtonNO());
+		docviewPage.getDocview_ButtonNO().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		boolean redactionTrue = docviewPage.getDeleteRedaction(remark).isElementAvailable(4);
+		System.out.println(redactionTrue);
+		softAssertion.assertTrue(redactionTrue);
+		baseClass.passedStep("All the settings remain as expected");
+		driver.waitForPageToBeReady();
+		docviewPage.deleteRemark(remark);
+		softAssertion.assertAll();
+		loginPage.logout();
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		// click on remarks button
+		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkIcon());
+		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		boolean radctionFalse = docviewPage.getDeleteRedaction(remark).isElementAvailable(4);
+		System.out.println(radctionFalse);
+		softAssertion.assertFalse(radctionFalse);	
+		softAssertion.assertAll();
+
+	}
+	/**
+	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-51176
+	 * @throws Exception
+	 * @Description Verfiy that RMU can view the reviewer remarks in audio doc view.
+	 */
+	@Test(description = "RPMXCON-51176", enabled = true, groups = { "regression" })
+	public void verifyRmuViewReviewerRemarksInAudio() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51176");
+		baseClass.stepInfo("Update the Remarks for the existing audio documents");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		String remark1 = "Remark" + Utility.dynamicNameAppender();
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		
+		// verify adding remarks
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(docviewPage.getAdvancedSearchAudioRemarkIcon().isElementPresent());
+		baseClass.passedStep("Remarks tab is displayed as expected");
+		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkIcon());
+		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkPlusIcon());
+		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+		docviewPage.audioRemarkDataInput(remark,"Success");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		// verify reviewer remark
+		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkIcon());
+		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		boolean radctionTrue = docviewPage.getDeleteRedaction(remark).isElementAvailable(4);
+		softAssertion.assertTrue(radctionTrue);
+		baseClass.passedStep("Existing reviewer remark is displayed as expected");
+		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkPlusIcon());
+		softAssertion.assertTrue(docviewPage.getAdvancedSearchAudioRemarkPlusIcon().isElementPresent());
+		baseClass.passedStep(" + sign is displayed successfully");
+		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+		docviewPage.audioRemarkDataInput(remark1,"Success");
+		baseClass.passedStep("Record added Successfully");
+		softAssertion.assertAll();
+		docviewPage.deleteRemark(remark);
+		docviewPage.deleteRemark(remark1);
+	}
+
+	
 }
