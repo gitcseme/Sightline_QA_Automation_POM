@@ -523,6 +523,7 @@ public class DocExplorer_Regression24 {
 		docExplorer.navigateToDocExplorerPage();
 		driver.waitForPageToBeReady();
 		docExplorer.getfolderFromTreeByNumber("1").waitAndClick(10);
+		driver.waitForPageToBeReady();
 		docExplorer.SelectingAllDocuments("No");
 		driver.scrollingToBottomofAPage();
 		String count = docExplorer.getDocExp_DocumentList_info().getText().toString();
@@ -562,8 +563,8 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 
 		docExplorer.navigateToDocExplorerPage();
-		driver.waitForPageToBeReady();
-		docExplorer.getSelectAllDocuments().waitAndClick(10);
+		baseClass.waitTime(1);
+		docExplorer.getfolderFromTreeByNumber("1").waitAndClick(10);
 		driver.waitForPageToBeReady();
 		docExplorer.SelectingAllDocuments("yes");
 		int ListViewCount = docExplorer.getDocumentCountFromListView();
@@ -804,14 +805,15 @@ public class DocExplorer_Regression24 {
 			docExplorer.SelectingAllDocuments("No");
 			docExplorer.docExpViewInDocView();
 			DocViewPage Docview = new DocViewPage(driver);
+			baseClass.waitTime(2);
 			int DocCountInDocView = Docview.verifyingDocCount();
 
 			baseClass.stepInfo("Validating Document count ");
 			baseClass.digitCompareEquals(Integer.valueOf(CountOfDoc), DocCountInDocView,
 					"Selected documents from list view is displayed on doc view", "Documents are not loaded");
-			loginPage.logout();
+			
 		}
-
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

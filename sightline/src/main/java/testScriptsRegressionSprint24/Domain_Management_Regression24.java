@@ -181,6 +181,7 @@ public class Domain_Management_Regression24 {
 		baseClass.getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 		baseClass.waitForElement(baseClass.getSelectProjectTo());
 		
+		driver.waitForPageToBeReady();
 		int ProjectList=baseClass.getSelectProjectTo().selectFromDropdown().getOptions().size();
 		if(ProjectList>2) {
 			baseClass.passedStep("List of Project available under project dropdown");
