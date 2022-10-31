@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
@@ -21,6 +22,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -235,6 +237,175 @@ public class DocList_Regression24 {
 		System.out.println("doclist page document count is" + Document);
 		baseClass.textCompareEquals(Input.pageLength, Document, Input.pageLength + "is displayedas expected",
 				Input.pageLength + "is not displayed as expected");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:31/10/2022 RPMXCON-53772
+	 * @throws Exception
+	 * @Description To Verify, As an Project Admin user login, I will be able to
+	 *              release multiple documents to some security group from DocList
+	 *              page from Saved search.
+	 */
+	@Test(description = "RPMXCON-53772", enabled = true, groups = { "regression" })
+	public void verifyPAUserReleaseMultipleDocsSomeSG() throws Exception {
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53772 DocList Component");
+		baseClass.stepInfo(
+				"To Verify, As an Project Admin user login, I will be able to release multiple documents to some security group from DocList page from Saved search.");
+
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		String SG = "Security Group_" + UtilityLog.dynamicNameAppender();
+		SavedSearch savedSearch = new SavedSearch(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+
+		// Create SG
+		sg.navigateToSecurityGropusPageURL();
+		sg.AddSecurityGroup(SG);
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		// Save searched content
+		sessionSearch.saveSearch(searchName1);
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+
+		// select multiple Documents and bulkRelease
+		docList.documentSelection(5);
+		docList.docListToBulkRelease(SG);
+		baseClass.passedStep("Selected Documents will release in the selected security group successfully");
+		// deleteSG
+		sg.deleteSecurityGroups(SG);
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:31/10/2022 RPMXCON-53773
+	 * @throws Exception
+	 * @Description To Verify, As an Project Admin user login, I will be able to
+	 *              release multiple documents to some security group from DocList
+	 *              page from Saved search.
+	 */
+	@Test(description = "RPMXCON-53773", enabled = true, groups = { "regression" })
+	public void verifyPAUserUnReleaseMultipleDocsSomeSGFromSavedSearch() throws Exception {
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53773 DocList Component");
+		baseClass.stepInfo(
+				"To Verify, As an Project Admin user login, I will be able to release multiple documents to some security group from DocList page from Saved search.");
+
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		String SG = "Security Group_" + UtilityLog.dynamicNameAppender();
+		SavedSearch savedSearch = new SavedSearch(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+
+		// Create SG
+		sg.navigateToSecurityGropusPageURL();
+		sg.AddSecurityGroup(SG);
+
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		// Save searched content
+		sessionSearch.saveSearch(searchName1);
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+
+		// select multiple Documents and bulkRelease
+		docList.documentSelection(5);
+		// BulkUnrelease
+		docList.bulkUnRelease(SG);
+		baseClass.passedStep("Selected Documents will Un-release from the selected security group successfully");
+		// deleteSG
+		sg.deleteSecurityGroups(SG);
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:31/10/2022 RPMXCON-53835
+	 * @throws Exception
+	 * @Description To verify, As an RM user login, I can be able to go to Doc List
+	 *              page from saved search page after selecting any saved query from
+	 *              My Search & apply action Document List from View Group.
+	 */
+	@Test(description = "RPMXCON-53835", enabled = true, groups = { "regression" })
+	public void verifyAsRMUGotoDocListPageFromSavedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53835");
+		baseClass.stepInfo(
+				"To verify, As an RM user login, I can be able to go to Doc List page from saved search page after selecting any saved query from My Search & apply action Document List from View Group.");
+		sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+		// verify doclist page
+		if (docList.getDocList_info().isDisplayed()) {
+			baseClass.passedStep("User will land in Document List page from saved search page Successsfully");
+		} else {
+			baseClass.failedStep("User will not land in Document List page from saved search page");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:31/10/2022 RPMXCON-53836
+	 * @throws Exception
+	 * @Description To verify, As an Reviewer user login, I can be able to go to Doc
+	 *              List page from saved search page after selecting any saved query
+	 *              from My Search & apply action Document List from View Group.
+	 */
+	@Test(description = "RPMXCON-53836", enabled = true, groups = { "regression" })
+	public void verifyAsReviewerGoToDocListFromSavedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53836");
+		baseClass.stepInfo(
+				"To verify, As an Reviewer user login, I can be able to go to Doc List page from saved search page after selecting any saved query from My Search & apply action Document List from View Group.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
+
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.saveSearch(searchName1);
+
+		// Open Doc list from Saved search page
+		savedSearch.savedSearchToDocList(searchName1);
+		// verify doclist page
+		if (docList.getDocList_info().isDisplayed()) {
+			baseClass.passedStep("User will land in Document List page from saved search page Successsfully");
+		} else {
+			baseClass.failedStep("User will not land in Document List page from saved search page");
+		}
 		loginPage.logout();
 	}
 
