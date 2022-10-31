@@ -22,6 +22,12 @@
 <class name= "sightline.advancedSearch.AdvancedSearchRegression2" />
 <class name= "sightline.advancedSearch.AdvancedSearchRegression" />
 <class name= "sightline.advancedSearch.ModifySearchInAdvancedSearch_Regression" />
+<class name= "sightline.advancedSearch.AdvancedSearch_21" />
+<class name= "sightline.advancedSearch.AdvanceSearchRegression_2_20" />
+<class name= "sightline.advancedSearch.AdvanceSearchRegression_2_21" />
+<class name= "sightline.advancedSearch.AdvancedSearchRegression_2_19" />
+<class name= "sightline.advancedSearch.AdvancedSearchRegression_22" />
+
 </classes>
 </test>
 
