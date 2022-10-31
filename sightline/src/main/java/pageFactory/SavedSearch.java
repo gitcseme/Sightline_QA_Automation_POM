@@ -5566,7 +5566,7 @@ public class SavedSearch {
 
 			// create new searchGroup and Save Search
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
-			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
+			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.language);
 			search.saveAdvanceSearchInNode(SearchName, newNode);
 			base.stepInfo("--- Share Saved Search with Security group ---");
 			shareSavedSearchFromNode(SearchName, shareTo);
@@ -5575,7 +5575,7 @@ public class SavedSearch {
 			base.stepInfo("--- Within My Saved Search root node ---");
 
 			// Save Search within MySearch
-			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
+			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.language);
 			search.saveAdvancedSearchQuery(SearchName);
 			base.stepInfo("--- Share Saved Search with Security group ---");
 			shareSavedSearchRMU(SearchName, shareTo);
@@ -5598,7 +5598,7 @@ public class SavedSearch {
 
 			// create new searchGroup and Save Search
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
-			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
+			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.language);
 			search.saveAdvanceSearchInNode(SearchName, newNode);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			driver.waitForPageToBeReady();
@@ -5608,7 +5608,7 @@ public class SavedSearch {
 			base.stepInfo("--- Within My Saved Search root node ---");
 
 			// Save Search within MySearch
-			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.audioLanguage);
+			pureHits = search.AudioAndNonAudioSearch(Input.audioSearch, Input.language);
 			search.saveAdvancedSearchQuery(SearchName);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			driver.waitForPageToBeReady();
@@ -7710,6 +7710,7 @@ public class SavedSearch {
 		} else {
 			getStatusDropDown().waitAndClick(2);
 			getLastStatusAs(statusToCHeck).waitAndClick(2);
+			Thread.sleep(1000);
 			getSavedSearch_ApplyFilterButton().waitAndClick(2);
 			list = getListFromSavedSearchTable(column);
 		}
