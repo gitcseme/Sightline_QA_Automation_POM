@@ -100,6 +100,12 @@ public class TagsAndFolders_Regression24 {
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 	}
+	@DataProvider(name = "PaAndRmuUser")
+    public Object[][] PaAndRmuUser() {
+        Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+                { Input.rmu1userName, Input.rmu1password, "Review Manager" } };
+        return users;
+    }
 
 	/**
 	 * @author N/A Testcase No:RPMXCON-53445
@@ -629,7 +635,7 @@ public class TagsAndFolders_Regression24 {
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
 		security.createSecurityGroups(securityGroup);
 		System.out.println(securityGroup);
-		base.stepInfo("created security group 2" + securityGroup);
+		base.stepInfo("created security group 2 : " + securityGroup);
 
 		security.navigateToSecurityGropusPageURL();
 		driver.waitForPageToBeReady();
@@ -651,6 +657,7 @@ public class TagsAndFolders_Regression24 {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
+		driver.waitForPageToBeReady();
 		base.selectsecuritygroup(securityGroup);
 
 		tagsAndFolderPage.navigateToTagsAndFolderPage();

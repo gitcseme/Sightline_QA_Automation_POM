@@ -515,7 +515,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getNewFolderGroupPopup() {
-		return driver.FindElementByXPath("//span[text()='New Folder Group']");
+		return driver.FindElementByXPath("//h3[text()='New Folder Group']");
 	}
 
 	public Element getEditFolderGroup() {
@@ -2398,6 +2398,7 @@ public class TagsAndFoldersPage {
 
 			if (verifyNotification.equalsIgnoreCase("Success")) {
 				base.VerifySuccessMessage("Tag group added successfully");
+				base.CloseSuccessMsgpopup();
 			}
 		}
 
@@ -2496,6 +2497,7 @@ public class TagsAndFoldersPage {
 
 			if (verifyNotification.equalsIgnoreCase("Success")) {
 				base.VerifySuccessMessage("Folder group added successfully");
+				base.CloseSuccessMsgpopup();
 			}
 		}
 

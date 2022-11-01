@@ -738,6 +738,7 @@ public class SecurityGroupsPage {
 	 *          getYesButton()
 	 */
 	public void addFolderToSecurityGroup(String securityGroupName, String folderName) {
+		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectSecurityGroup());
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
 
@@ -811,14 +812,17 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getTagsLink());
 		bc.waitTillElemetToBeClickable(getTagsLink());
-		getTagsLink().Click();
+		getTagsLink().waitAndClick(10);
 		bc.waitForElement(getTagBoard());
-		getTagBoard().Click();
+		getTagBoard().waitAndClick(10);
+		bc.waitForElement(getTagName(tagName));
+		getTagName(tagName).waitAndClick(10);
 		bc.waitForElement(getTagRightShiftButton());
-		getTagRightShiftButton().Click();
-		getProjectLevelEmailCheckBox().Click();
+		getTagRightShiftButton().waitAndClick(10);
+		getProjectLevelEmailCheckBox().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		getSG_AnnSaveButton().waitAndClick(10);
+		System.out.println("created "+tagName+"is added to "+securityGroupName);
 		bc.waitForElement(bc.getSuccessMsg());
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 	}
