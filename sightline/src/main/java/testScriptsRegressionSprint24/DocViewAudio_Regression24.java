@@ -91,17 +91,15 @@ public class DocViewAudio_Regression24 {
 
 	}
 
-
 	@DataProvider(name = "Allusers")
 	public Object[][] AlluserLoginDetails() {
-		return new Object[][] {{Input.pa1userName, Input.pa1password}, 
-			                   { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password }};
+		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
 	}
-	
+
 	@DataProvider(name = "RMUandREV")
 	public Object[][] RMUandREV() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password},
-				{ Input.rev1userName, Input.rev1password} };
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password } };
 		return users;
 	}
 
@@ -412,8 +410,7 @@ public class DocViewAudio_Regression24 {
 	 *              audio doc view..[RPMXCON-51177]
 	 */
 	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
-	public void verifyRemarks1000chars(String username, String password)
-			throws InterruptedException, Exception {
+	public void verifyRemarks1000chars(String username, String password) throws InterruptedException, Exception {
 		DocViewPage docView = new DocViewPage(driver);
 
 		SoftAssert asserts = new SoftAssert();
@@ -440,211 +437,216 @@ public class DocViewAudio_Regression24 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @author N/A
-	 * @Description :Verify navigating to the audio document should bring up the document in 4 sec "
-				+ "and ready for the user to act up on when navigating from DocList")[RPMXCON-51527]
+	 * @Description :Verify navigating to the audio document should bring up the
+	 *              document in 4 sec " + "and ready for the user to act up on when
+	 *              navigating from DocList")[RPMXCON-51527]
 	 */
-	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers" , groups = { "regression" })
+	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
 	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
 		DocViewPage docview = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("RPMXCON-51527");
 		baseClass.stepInfo("Verify navigating to the audio document should bring up the document in 4 sec "
 				+ "and ready for the user to act up on when navigating from DocList");
-		
+
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("Logged in As : " + username);
 		sessionSearch.navigateToSessionSearchPageURL();
-	    sessionSearch.audioSearch(Input.audioSearch, Input.language);
-	    baseClass.waitForElement(sessionSearch.getDocsMetYourCriteriaLabel());
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		baseClass.waitForElement(sessionSearch.getDocsMetYourCriteriaLabel());
 		baseClass.dragAndDrop(sessionSearch.getDocsMetYourCriteriaLabel(), sessionSearch.getActionPad());
-	    sessionSearch.ViewInDocList();	
-	    doclist.selectAllDocs();
+		sessionSearch.ViewInDocList();
+		doclist.selectAllDocs();
 		driver.scrollPageToTop();
 		baseClass.waitForElement(doclist.getDocList_actionButton());
 		doclist.getDocList_actionButton().waitAndClick(5);
 		long start = System.currentTimeMillis();
 		baseClass.waitForElement(doclist.getViewInDocView());
 		doclist.getViewInDocView().waitAndClick(5);
-  
-	    driver.waitForPageToBeReady();
-	    baseClass.waitForElement(docview.getDocView_ImagesTab());
-	    long finish = System.currentTimeMillis();
-	    long totalTime = finish - start;
 
-	    if(totalTime < 4000){
-	    	baseClass.passedStep("Audio doc view bring up the document in 4 sec when navigating from doclist");
-	    }else {
-	    	baseClass.failedStep("Audio doc view NOT bring up the document in 4 sec when navigating from doclist");
-	    }
-	    baseClass.passedStep("Verified - navigating to the audio document should bring up the document in 4 sec "
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docview.getDocView_ImagesTab());
+		long finish = System.currentTimeMillis();
+		long totalTime = finish - start;
+
+		if (totalTime < 4000) {
+			baseClass.passedStep("Audio doc view bring up the document in 4 sec when navigating from doclist");
+		} else {
+			baseClass.failedStep("Audio doc view NOT bring up the document in 4 sec when navigating from doclist");
+		}
+		baseClass.passedStep("Verified - navigating to the audio document should bring up the document in 4 sec "
 				+ "and ready for the user to act up on when navigating from DocList");
-	    loginPage.logout();
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author N/A
-	 * @Description :Verify that application should not hang when the user tries to "
-				+ "add a new reviewer remark, when the audio is in stopped state.[RPMXCON-51468]
+	 * @Description :Verify that application should not hang when the user tries to
+	 *              " + "add a new reviewer remark, when the audio is in stopped
+	 *              state.[RPMXCON-51468]
 	 */
 	@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangNewReviewWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
-		
+
 		DocViewPage docView = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("RPMXCON-51468");
 		baseClass.stepInfo("Verify that application should not hang when the user tries to "
 				+ "add a new reviewer remark, when the audio is in stopped state");
-		loginPage.loginToSightLine(username, password);	
+		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("Logged in As : " + username);
 		sessionSearch.navigateToSessionSearchPageURL();
-	    sessionSearch.audioSearch(Input.audioSearch, Input.language);
-	    sessionSearch.ViewInDocView();	
-	    
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	   
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    docView.getDocView_AudioPause().waitAndClick(3);
-	    
-	    baseClass.waitForElement(docView.getDocView_IconStop());  
-	    docView.getDocView_IconStop().waitAndClick(3);
-	    
-	    docView.audioRemark(remarkText);
-	    
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	    SoftAssert asserts = new SoftAssert();
-	    asserts.assertTrue(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
-	    asserts.assertTrue(docView.getRemarkText(remarkText).isElementAvailable(5));
-	    asserts.assertAll();
-	    baseClass.stepInfo("Notch Displaying As Expected After Added Remark..");
-	    baseClass.stepInfo("Remark Successfully Added in Remarks Panel..");
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    if(docView.getDocView_AudioPause().isElementAvailable(5)) {
-	    	baseClass.passedStep("Audio Player Is In Stopped State..");
-	    } else {
-	    	baseClass.failedStep("Audio Player Not In Stopped State..");
-	    }
-	    baseClass.passedStep("Verify that application should not hang when the user tries to "
-	    		+ "add a new reviewer remark, when the audio is in stopped state");
-	    loginPage.logout();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.ViewInDocView();
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		docView.getDocView_AudioPause().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getDocView_IconStop());
+		docView.getDocView_IconStop().waitAndClick(3);
+
+		docView.audioRemark(remarkText);
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertTrue(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
+		asserts.assertTrue(docView.getRemarkText(remarkText).isElementAvailable(5));
+		asserts.assertAll();
+		baseClass.stepInfo("Notch Displaying As Expected After Added Remark..");
+		baseClass.stepInfo("Remark Successfully Added in Remarks Panel..");
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		if (docView.getDocView_AudioPause().isElementAvailable(5)) {
+			baseClass.passedStep("Audio Player Is In Stopped State..");
+		} else {
+			baseClass.failedStep("Audio Player Not In Stopped State..");
+		}
+		baseClass.passedStep("Verify that application should not hang when the user tries to "
+				+ "add a new reviewer remark, when the audio is in stopped state");
+		loginPage.logout();
 	}
 
 	/**
 	 * @author N/A
-	 * @Description :Verify that application should not hang when the user tries to "
-				+ "edit/delete a reviewer remark, when the audio is in paused state.[RPMXCON-51467]
+	 * @Description :Verify that application should not hang when the user tries to
+	 *              " + "edit/delete a reviewer remark, when the audio is in paused
+	 *              state.[RPMXCON-51467]
 	 */
 	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangtheAudioInPause(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
 		Map<String, String> updateDatas = new HashMap<String, String>();
-		
+
 		DocViewPage docView = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("RPMXCON-51467");
 		baseClass.stepInfo("To Verify that application should not hang when the user tries to "
 				+ "edit/delete a reviewer remark, when the audio is in paused state.");
-		loginPage.loginToSightLine(username, password);	
+		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("Logged in As : " + username);
 		sessionSearch.navigateToSessionSearchPageURL();
-	    sessionSearch.audioSearch(Input.audioSearch, Input.language);
-	    sessionSearch.ViewInDocView();	
-	    docView.audioRemark(remarkText);
-	    
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	   
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    docView.getDocView_AudioPause().waitAndClick(3);
-	    
-	    baseClass.waitForElement(docView.getDocView_AudioPlay());  
-	    docView.getDocView_AudioPlay().waitAndClick(3);
-	    
-	    baseClass.waitForElement(docView.getAdvancedSearchAudioRemarkIcon());
-	    docView.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
-	    baseClass.waitForElement(docView.getAudioReMarkEdit(remarkText));
-	    docView.editAndVerifyData(remarkText, updateDatas, editedRemark);
-        docView.deleteExistingRemark();
-        SoftAssert asserts = new SoftAssert();
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	    
-	    asserts.assertFalse(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
-	    asserts.assertAll();
-	    baseClass.stepInfo("After deleted Remarks Notch Removed From the Player as Expected...");
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    if(docView.getDocView_AudioPause().isElementAvailable(5)) {
-	    	baseClass.passedStep("Audio Player Is In Pause State..");
-	    } else {
-	    	baseClass.failedStep("Audio Player Not In Pause State..");
-	    }
-	    baseClass.passedStep("Verified - that application should not hang when the user tries to "
-	    		+ "edit/delete a reviewer remark, when the audio is in paused state.");
-	    loginPage.logout();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.ViewInDocView();
+		docView.audioRemark(remarkText);
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		docView.getDocView_AudioPause().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getDocView_AudioPlay());
+		docView.getDocView_AudioPlay().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getAdvancedSearchAudioRemarkIcon());
+		docView.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getAudioReMarkEdit(remarkText));
+		docView.editAndVerifyData(remarkText, updateDatas, editedRemark);
+		docView.deleteExistingRemark();
+		SoftAssert asserts = new SoftAssert();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		asserts.assertFalse(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
+		asserts.assertAll();
+		baseClass.stepInfo("After deleted Remarks Notch Removed From the Player as Expected...");
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		if (docView.getDocView_AudioPause().isElementAvailable(5)) {
+			baseClass.passedStep("Audio Player Is In Pause State..");
+		} else {
+			baseClass.failedStep("Audio Player Not In Pause State..");
+		}
+		baseClass.passedStep("Verified - that application should not hang when the user tries to "
+				+ "edit/delete a reviewer remark, when the audio is in paused state.");
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author N/A
-	 * @Description :Verify that application should not hang when the user tries to "
-				+ "edit/delete a reviewer remark, when the audio is in Stopped state.[RPMXCON-51469]
+	 * @Description :Verify that application should not hang when the user tries to
+	 *              " + "edit/delete a reviewer remark, when the audio is in Stopped
+	 *              state.[RPMXCON-51469]
 	 */
 	@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
 		Map<String, String> updateDatas = new HashMap<String, String>();
-		
+
 		DocViewPage docView = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("RPMXCON-51469");
 		baseClass.stepInfo("To Verify that application should not hang when the user tries to "
 				+ "edit/delete a reviewer remark, when the audio is in Stopped state.");
-		loginPage.loginToSightLine(username, password);	
+		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("Logged in As : " + username);
 		sessionSearch.navigateToSessionSearchPageURL();
-	    sessionSearch.audioSearch(Input.audioSearch, Input.language);
-	    sessionSearch.ViewInDocView();	
-	    docView.audioRemark(remarkText);
-	    
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	   
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    docView.getDocView_AudioPause().waitAndClick(3);
-	    
-	    baseClass.waitForElement(docView.getDocView_IconStop());  
-	    docView.getDocView_IconStop().waitAndClick(3);
-	    
-	    baseClass.waitForElement(docView.getAdvancedSearchAudioRemarkIcon());
-	    docView.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
-	    baseClass.waitForElement(docView.getAudioReMarkEdit(remarkText));
-	    docView.editAndVerifyData(remarkText, updateDatas, editedRemark);
-        docView.deleteExistingRemark();
-        
-	    driver.Navigate().refresh();
-	    driver.waitForPageToBeReady();
-	    SoftAssert asserts = new SoftAssert();
-	    asserts.assertFalse(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
-	    asserts.assertAll();
-	    baseClass.stepInfo("After deleted Remarks Notch Removed From the Player as Expected...");
-	    baseClass.waitForElement(docView.getDocView_AudioPause());
-	    if(docView.getDocView_AudioPause().isElementAvailable(5)) {
-	    	baseClass.passedStep("Audio Player Is In Stopped State..");
-	    } else {
-	    	baseClass.failedStep("Audio Player Not In Stopped State..");
-	    }
-	    baseClass.passedStep("Verified - that application should not hang when the user tries to "
-	    		+ "edit/delete a reviewer remark, when the audio is in Stopped state.");
-	    loginPage.logout();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.ViewInDocView();
+		docView.audioRemark(remarkText);
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		docView.getDocView_AudioPause().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getDocView_IconStop());
+		docView.getDocView_IconStop().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getAdvancedSearchAudioRemarkIcon());
+		docView.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getAudioReMarkEdit(remarkText));
+		docView.editAndVerifyData(remarkText, updateDatas, editedRemark);
+		docView.deleteExistingRemark();
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertFalse(docView.RevRemarkNotchinPlayer().isElementAvailable(5));
+		asserts.assertAll();
+		baseClass.stepInfo("After deleted Remarks Notch Removed From the Player as Expected...");
+		baseClass.waitForElement(docView.getDocView_AudioPause());
+		if (docView.getDocView_AudioPause().isElementAvailable(5)) {
+			baseClass.passedStep("Audio Player Is In Stopped State..");
+		} else {
+			baseClass.failedStep("Audio Player Not In Stopped State..");
+		}
+		baseClass.passedStep("Verified - that application should not hang when the user tries to "
+				+ "edit/delete a reviewer remark, when the audio is in Stopped state.");
+		loginPage.logout();
 	}
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:22/09/2022 RPMXCON-51808
 	 * @throws Exception
@@ -653,7 +655,7 @@ public class DocViewAudio_Regression24 {
 	 *              on persistent hits panel on completing the document same as
 	 *              last.
 	 */
-	
+
 	@Test(description = "RPMXCON-51808", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsHitSaveSeachesWithCompleteSameAsLast() throws Exception {
 
@@ -694,36 +696,26 @@ public class DocViewAudio_Regression24 {
 		// Click on bulkAssign
 		sessionSearch.bulkAssignWithOutPureHit();
 
-		// Create Assigment
+		// Select Assignment goto docview
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
-		assignmentPage.toggleCodingStampEnabled();
-		assignmentPage.add2ReviewerAndDistribute();
-
-		baseClass.stepInfo("Impersnated from RMU to Reviewer");
-		baseClass.impersonateRMUtoReviewer();
-
-		// Assignment Selection and Reviewer
-		driver.waitForPageToBeReady();
-		assignmentPage.SelectAssignmentByReviewer(Asssignment);
-        baseClass.waitTime(3);
-        baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(Asssignment);
+		
+		baseClass.waitTime(3);
+		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
 		List<String> DocIDInMiniDocList2 = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		
+
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString3);
-
-		// Complete the document And SameAs Last
-		driver.waitForPageToBeReady();
-		docviewPage.editingCodingFormWithCompleteButton();
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-51671
 	 * @throws Exception
@@ -749,9 +741,8 @@ public class DocViewAudio_Regression24 {
 		// adding remarks and verifying success message
 		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
-
 		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
-		docviewPage.audioRemarkDataInput(remark,"Success");
+		docviewPage.audioRemarkDataInput(remark, "Success");
 		driver.waitForPageToBeReady();
 
 		baseClass.waitForElement(docviewPage.getDeleteRedaction(remark));
@@ -777,10 +768,11 @@ public class DocViewAudio_Regression24 {
 		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 		boolean radctionFalse = docviewPage.getDeleteRedaction(remark).isElementAvailable(4);
 		System.out.println(radctionFalse);
-		softAssertion.assertFalse(radctionFalse);	
+		softAssertion.assertFalse(radctionFalse);
 		softAssertion.assertAll();
 
 	}
+
 	/**
 	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-51176
 	 * @throws Exception
@@ -804,7 +796,7 @@ public class DocViewAudio_Regression24 {
 		// Audio search
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocView();
-		
+
 		// verify adding remarks
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(docviewPage.getAdvancedSearchAudioRemarkIcon().isElementPresent());
@@ -813,10 +805,10 @@ public class DocViewAudio_Regression24 {
 		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkPlusIcon());
 		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
-		docviewPage.audioRemarkDataInput(remark,"Success");
+		docviewPage.audioRemarkDataInput(remark, "Success");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		// verify reviewer remark
 		baseClass.waitForElement(docviewPage.getAdvancedSearchAudioRemarkIcon());
 		docviewPage.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
@@ -827,12 +819,11 @@ public class DocViewAudio_Regression24 {
 		softAssertion.assertTrue(docviewPage.getAdvancedSearchAudioRemarkPlusIcon().isElementPresent());
 		baseClass.passedStep(" + sign is displayed successfully");
 		docviewPage.getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
-		docviewPage.audioRemarkDataInput(remark1,"Success");
+		docviewPage.audioRemarkDataInput(remark1, "Success");
 		baseClass.passedStep("Record added Successfully");
 		softAssertion.assertAll();
 		docviewPage.deleteRemark(remark);
 		docviewPage.deleteRemark(remark1);
 	}
 
-	
 }
