@@ -334,7 +334,7 @@ public class IngestionCreationClass02 {
 		ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
 
 		baseClass.stepInfo("Select Date and Time format.");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
@@ -491,7 +491,7 @@ public class IngestionCreationClass02 {
 		ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
 
 		baseClass.stepInfo("Select Date and Time format.");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
@@ -699,7 +699,7 @@ public class IngestionCreationClass02 {
 
 			baseClass.stepInfo("Select Date and Time format.");
 			//Input.dateFormat used for choosing the stranded data format
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingestion.clickOnNextButton();
@@ -754,7 +754,7 @@ public class IngestionCreationClass02 {
 			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectPDFSource("PDF.lst",false);
 			ingestion.selectTIFFSource("Image.lst",false,true);
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 			ingestion.clickOnNextButton();
 			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
@@ -813,7 +813,7 @@ public class IngestionCreationClass02 {
 			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectPDFSource("PDF.lst",false);
 			ingestion.selectTIFFSource("Image.lst",false,true);
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 			ingestion.clickOnNextButton();
 			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
@@ -863,7 +863,7 @@ public class IngestionCreationClass02 {
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectTIFFSource("Image.lst",false,true);
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 			ingestion.clickOnNextButton();
 			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
@@ -919,7 +919,7 @@ public class IngestionCreationClass02 {
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			ingestion.selectDATSource("C2322695-9767-44C3-A290-B21B12B82A32_DAT.dat", Input.documentKeyBNum);
 			ingestion.getTIFFSearchablePDFCheckBox().waitAndClick(10);
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 			ingestion.clickOnNextButton();
 			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
@@ -1105,7 +1105,7 @@ public class IngestionCreationClass02 {
 			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			ingestionPage.selectDATSource("C2322695-9767-44C3-A290-B21B12B82A32_DAT.dat", Input.documentKeyBNum);
 			ingestionPage.getTIFFSearchablePDFCheckBox().waitAndClick(10);
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -1744,7 +1744,7 @@ public class IngestionCreationClass02 {
 		ingestion.getTIFFLST().selectFromDropdown().selectByVisibleText(Input.tiffLoadFile);
 		ingestion.getTIFFSearchablePDFCheckBox().isElementAvailable(10);
 		ingestion.getTIFFSearchablePDFCheckBox().waitAndClick(5);
-		ingestion.selectDateAndTimeForamt(Input.dateFormat);
+		ingestion.selectDateAndTimeFormat(Input.dateFormat);
 		ingestion.clickOnNextButton();
 		ingestion.clickOnPreviewAndRunButton();
 		ingestion.ignoreErrorsAndCatlogging();
@@ -1861,7 +1861,7 @@ public class IngestionCreationClass02 {
 			ingestion.selectTIFFSource(Input.Images5DocsLst, false, true);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.selectDateAndTimeFormat(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingestion.clickOnNextButton();

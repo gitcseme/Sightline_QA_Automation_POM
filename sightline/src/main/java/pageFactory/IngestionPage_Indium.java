@@ -503,7 +503,7 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//input[@id='chkLoadMP3VariantfileDAT']//..//i");
 	}
 
-	public Element getAudioTransistPathInDATFileCheckBox() {
+	public Element getAudioTranscriptPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadTranscriptfileDAT']/following-sibling::i");
 	}
 
@@ -1988,8 +1988,8 @@ public class IngestionPage_Indium {
 			getAudioTranscriptLST().isElementAvailable(15);
 			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(loadFile);
 			if (pathInDATFileflag) {
-				getAudioTransistPathInDATFileCheckBox().isElementAvailable(10);
-				getAudioTransistPathInDATFileCheckBox().Click();
+				getAudioTranscriptPathInDATFileCheckBox().isElementAvailable(10);
+				getAudioTranscriptPathInDATFileCheckBox().Click();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2033,7 +2033,7 @@ public class IngestionPage_Indium {
 	 * @description: Method to select Date and Time format.
 	 * @param format : format is String value that date format.
 	 */
-	public void selectDateAndTimeForamt(String format) {
+	public void selectDateAndTimeFormat(String format) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -5656,9 +5656,9 @@ public class IngestionPage_Indium {
 					break;
 				}
 			}
+			base.VerifySuccessMessage("Publish has Started successfully");
 			driver.Navigate().refresh();
-			publishButton().isElementAvailable(10);
-			if (publishButton().getWebElement().isEnabled()) {
+			if (!(publishButton().getWebElement().isEnabled())) {
 				driver.waitForPageToBeReady();
 				base.passedStep("Published ingested documents successfully");
 			}
@@ -9546,9 +9546,9 @@ public class IngestionPage_Indium {
 			if(getAudioTranscriptCheckBoxstionButton().isElementAvailable(5)) {
 				base.stepInfo("Verify available options and status for Audio transcript file");
 				getAudioTranscriptCheckBoxstionButton().waitAndClick(5);
-				if(getAudioTranscriptLST().isElementAvailable(5) && getAudioTransistPathInDATFileCheckBox().isElementAvailable(5)) {
+				if(getAudioTranscriptLST().isElementAvailable(5) && getAudioTranscriptPathInDATFileCheckBox().isElementAvailable(5)) {
 					base.passedStep("Load file and is path in dat option available for Audio transcript File");
-					getAudioTransistPathInDATFileCheckBox().waitAndClick(5);
+					getAudioTranscriptPathInDATFileCheckBox().waitAndClick(5);
 					base.waitTime(1);
 					String status =getAudioTranscriptLST().GetAttribute("disabled");
 					if(status.contains("true")) {
@@ -10300,7 +10300,7 @@ public class IngestionPage_Indium {
 			selectDATSource(datFile,Input.documentKey);
 			base.stepInfo("Selecting Text file");
 			selectTextSource(textFile, false);
-			selectDateAndTimeForamt(Input.dateFormat);
+			selectDateAndTimeFormat(Input.dateFormat);
 			clickOnNextButton();
 			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.dataSource, Input.custodian);
 			clickOnPreviewAndRunButton();
@@ -10941,4 +10941,5 @@ public class IngestionPage_Indium {
 			}
 			
 		}
+
 }

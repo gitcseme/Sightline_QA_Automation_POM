@@ -780,7 +780,7 @@ public class Ingestion_Regression_3 {
 		ingestionPage.selectPDFSource(Input.PDFFile, false);
 		baseClass.stepInfo("Selecting Mp3 file");
 		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
 		ingestionPage.clickOnPreviewAndRunButton();
