@@ -132,7 +132,7 @@ public class Ingestion_Regression_7 {
 			baseClass.stepInfo("Selecting Native file");
 			ingestionPage.selectNativeSource(Input.hiddenPropNative, false);
 			baseClass.stepInfo("Select date format");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			baseClass.stepInfo("click on next button");
 			ingestionPage.clickOnNextButton();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -224,7 +224,7 @@ public class Ingestion_Regression_7 {
 		baseClass.stepInfo("Selecting Dat file");
 		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
 		baseClass.stepInfo("Select date format");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		baseClass.stepInfo("click on next button");
 		ingestionPage.clickOnNextButton();
 		driver.waitForPageToBeReady();
@@ -260,7 +260,7 @@ public class Ingestion_Regression_7 {
 		baseClass.stepInfo("Selecting Dat file");
 		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
 		baseClass.stepInfo("Select date format");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		baseClass.stepInfo("click on next button");
 		ingestionPage.clickOnNextButton();
 		driver.waitForPageToBeReady();
@@ -406,7 +406,7 @@ public class Ingestion_Regression_7 {
 		baseClass.stepInfo("Selecting Dat file");
 		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
 		baseClass.stepInfo("Select date format");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		baseClass.stepInfo("click on next button");
 		ingestionPage.clickOnNextButton();
 		//verify status after clicking next button
@@ -450,11 +450,11 @@ public class Ingestion_Regression_7 {
 			ingestionPage.selectAudioTranscriptSource(Input.uncAbsoluteTranscript, false);
 			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
 			baseClass.stepInfo("Select date format");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			baseClass.stepInfo("click on next button");
 			ingestionPage.clickOnNextButton();
 			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
-					Input.documentKey, Input.custodian);
+					Input.documentKey, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
 			baseClass.stepInfo("Publish add only ingestion");
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
@@ -504,11 +504,11 @@ public class Ingestion_Regression_7 {
 			ingestionPage.selectOtherSource("Translation", Input.uncAbsoluteTranslation, false);
 			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
 			baseClass.stepInfo("Select date format");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			baseClass.stepInfo("click on next button");
 			ingestionPage.clickOnNextButton();
 			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
-					Input.documentKey, Input.custodian);
+					Input.documentKey, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
 			baseClass.stepInfo("Publish add only ingestion");
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
@@ -701,6 +701,7 @@ public class Ingestion_Regression_7 {
 		baseClass.passedStep("All the required fields displayed on 'source and overwrite'section");
 		loginPage.logout();
 	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

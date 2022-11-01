@@ -359,7 +359,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 			ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
 			ingestionPage.selectMP3VarientSource(Input.MP3File, false);
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -411,7 +411,7 @@ public class Ingestion_Regression01 {
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
 		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -514,7 +514,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -567,7 +567,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -634,7 +634,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -769,7 +769,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
@@ -829,7 +829,7 @@ public class Ingestion_Regression01 {
 		ingestionPage.addDelimitersInIngestionWizard( Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFormatFile,Input.docId);
 		ingestionPage.selectNativeSource("DAT4_STC_NativesEmailData NEWID.lst",false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -878,7 +878,7 @@ public class Ingestion_Regression01 {
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
 		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.fillingSourceField();
 		ingestionPage.clickOnPreviewAndRunButton();

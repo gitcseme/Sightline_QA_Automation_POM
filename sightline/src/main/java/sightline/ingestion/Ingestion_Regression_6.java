@@ -87,7 +87,7 @@ public class Ingestion_Regression_6 {
 				Input.folder61759);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFile6, Input.prodBeg);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("verify dat fields available in source field mapping in configuring page" );
@@ -149,7 +149,7 @@ public class Ingestion_Regression_6 {
 		baseClass.stepInfo("Selecting Dat and mp3 file");
 		ingestionPage.selectDATSource( Input.audioDatFile, Input.docIdKey);
 		ingestionPage.selectMP3VarientSource(Input.selectMp3File, false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.performMappingInConfigureSection(2, Input.docIdKey,Input.ingDocBasic, Input.sourceParentDocId);
 		ingestionPage.clickOnPreviewAndRunButton();
@@ -339,7 +339,7 @@ public class Ingestion_Regression_6 {
 			baseClass.waitForElement(ingestionPage.getPDFFilePathFieldinDAT());
 			ingestionPage.getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(Input.pdfPathKey);
 			baseClass.stepInfo("Select date format");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			baseClass.stepInfo("Save as draft and verify status");
 			ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 			baseClass.stepInfo("action as open in wizard");
@@ -389,7 +389,7 @@ public class Ingestion_Regression_6 {
 			baseClass.stepInfo("Selecting Dat file");
 			ingestionPage.selectDATSource(Input.pdfPathDat, Input.prodBeg);
 			baseClass.stepInfo("Select date format");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			baseClass.stepInfo("click on next button");
 			ingestionPage.clickOnNextButton();
 			baseClass.stepInfo("perform mapping and run ingestion");
@@ -409,7 +409,7 @@ public class Ingestion_Regression_6 {
 		baseClass.waitForElement(ingestionPage.getPDFFilePathFieldinDAT());
 		ingestionPage.getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(Input.pdfPathKey);
 		baseClass.stepInfo("Select date format");
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		baseClass.stepInfo("click on next button and run ingestion");
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();

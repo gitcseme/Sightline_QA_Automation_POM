@@ -217,7 +217,7 @@ public class Ingestion_Regression_5 {
 			ingestionPage.selectNativeSource(Input.NativeFile, false);		
 			baseClass.stepInfo("Selecting Tiff file");
 			ingestionPage.selectTIFFSource(Input.TIFFFile, false,false);
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
 			ingestionPage.clickOnPreviewAndRunButton();

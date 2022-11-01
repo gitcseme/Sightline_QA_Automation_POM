@@ -151,7 +151,7 @@ public class Ingestion_Regression_4 {
 				"RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Perform repeated mapping on destination field and verify");
 		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
@@ -177,7 +177,7 @@ public class Ingestion_Regression_4 {
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Perform repeated mapping on source field and verify");
 		ingestionPage.performRepeatedMapppingOnConfiguringSection("sourceField");
@@ -204,7 +204,7 @@ public class Ingestion_Regression_4 {
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Perform repeated mapping on destination field and verify");
 		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
@@ -437,7 +437,7 @@ public class Ingestion_Regression_4 {
 				Input.sourceLocation, Input.HiddenPropertiesFolder);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("save ingestion as draft");
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
