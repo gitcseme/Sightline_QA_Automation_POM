@@ -307,6 +307,11 @@ public class TestData {
 	public String uncAbsoluteDat;
 	public String uncAbsoluteTranslation;
 	public String uncAbsoluteTranscript;
+	public String nativePathField;
+	public String pdfPathField;
+	public String mp3PathField;
+	public String tiffPathField;
+	public String transcriptPathField;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22
