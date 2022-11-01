@@ -280,7 +280,7 @@ public class Ingestion_Regression {
 		ingetion.selectMP3VarientSource(mp3LoadFile, false);
 
 		baseClass.stepInfo("Select Date and Time format.");
-		ingetion.selectDateAndTimeForamt(dateFormat);
+		ingetion.selectDateAndTimeFormat(dateFormat);
 
 		baseClass.stepInfo("Click on next button.");
 		ingetion.clickOnNextButton();
@@ -370,7 +370,7 @@ public class Ingestion_Regression {
 		ingetion.selectMP3VarientSource(mp3LoadFile, false);
 
 		baseClass.stepInfo("Select Date and Time format.");
-		ingetion.selectDateAndTimeForamt(dateFormat);
+		ingetion.selectDateAndTimeFormat(dateFormat);
 
 		baseClass.stepInfo("Click on next button.");
 		ingetion.clickOnNextButton();
@@ -470,7 +470,7 @@ public class Ingestion_Regression {
 		ingetion.selectDATSource(datLoadFile, documentKey);
 
 		baseClass.stepInfo("Select Date and Time format.");
-		ingetion.selectDateAndTimeForamt(dateFormat);
+		ingetion.selectDateAndTimeFormat(dateFormat);
 
 		baseClass.stepInfo("Click on next button.");
 		ingetion.clickOnNextButton();
