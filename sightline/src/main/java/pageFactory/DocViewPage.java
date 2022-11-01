@@ -3887,6 +3887,7 @@ public class DocViewPage {
 
 	}
 
+	
 	public void audioRemark(String remark) throws InterruptedException, ParseException {
 
 		// adding remarks
@@ -3960,6 +3961,7 @@ public class DocViewPage {
 		getDocView_RemarkTextField().SendKeys(remark);
 
 		// click on save button
+		base.waitForElement(getDocView_AudioRemark_SaveButton());
 		getDocView_AudioRemark_SaveButton().Click();
 
 		// verify success message
