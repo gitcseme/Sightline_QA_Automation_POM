@@ -536,7 +536,10 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo("Selecting new Assignment with sample method");
 		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs", ListViewCount, true);
 		Assign.quickAssignCreation(assigname, Input.codeFormName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		String AssignmentCount = Assign.selectAssignmentToView(assigname);
+		driver.waitForPageToBeReady();
 		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount), Integer.valueOf(AssignmentCount),
 				"Document count is displayed in assignment", "DocCount is Not Displayed as expected");
 
@@ -749,6 +752,7 @@ public class DocExplorer_Regression24 {
 		baseClass.ValidateElement_Presence(baseClass.text("Doc Explorer"), "Doc Explorer Page");
 		docExplorer.getfolderFromTreeByNumber("3").waitAndClick(5);
 
+		driver.waitForPageToBeReady();
 		int DocumentInList = docExplorer.getDocumentsName().size();
 		if (DocumentInList >= 1) {
 			baseClass.passedStep("Documents are loaded for selected folder in tree view");
