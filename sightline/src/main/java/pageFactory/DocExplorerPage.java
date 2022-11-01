@@ -624,9 +624,10 @@ public class DocExplorerPage {
 	}
 
 	public Element getDocExplorerUnFolder() {
-		return driver.FindElementByXPath("//input[@id='toUnfolder']");
+		return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i");
 
 	}
+
 	public ElementCollection getNumberOfDocsCount() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr");
 	}
@@ -3767,7 +3768,7 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude another filter for
@@ -3802,7 +3803,6 @@ public class DocExplorerPage {
 		}
 	}
 
-
 	/**
 	 * @author Brundha.T
 	 * @param fieldVal Description:Selecting documents in docExplorerpage
@@ -3814,7 +3814,7 @@ public class DocExplorerPage {
 			getYesRadioBtn().waitAndClick(10);
 			bc.stepInfo("Documents from all pages are selected");
 		}
-		if(doclist.getPopUpOkBtn().isElementAvailable(10)) {
+		if (doclist.getPopUpOkBtn().isElementAvailable(10)) {
 			doclist.getPopUpOkBtn().waitAndClick(10);
 		}
 		bc.stepInfo("Documents from first page is selected");
@@ -3835,55 +3835,70 @@ public class DocExplorerPage {
 
 		bc.waitForElement(getDocExplorerUnFolder());
 		getDocExplorerUnFolder().waitAndClick(5);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderCheckBox(folderName).Visible();
+			}
+		}), Input.wait60);
+		getBulkFolderCheckBox(folderName).waitAndClick(5);
 
-		bc.waitForElement(getBulkFolderCheckBox(folderName));
-		getBulkFolderCheckBox(folderName).Click();
-		getBulkFolderCheckBox(folderName).ScrollTo();
-		System.out.println("Folder is selected");
-
-		driver.waitForPageToBeReady();
-		bc.waitForElement(getContinueButton());
-		getContinueButton().Click();
+		for (int i = 0; i < 10; i++) {
+			try {
+				bc.waitTime(4);
+				bc.waitTillElemetToBeClickable(getContinueButton());
+				getContinueButton().Click();
+				break;
+			} catch (Exception e) {
+				bc.waitTillElemetToBeClickable(getContinueButton());
+			}
+		}
 		System.out.println("Clicked continue");
 
-		driver.waitForPageToBeReady();
-		bc.waitForElement(getFinalizeButton());
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
 
-		getFinalizeButton().Click();
 		bc.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk Unfolder is done, folder is : " + folderName);
+		UtilityLog.info("Bulk Unfolder is done, folder is : " + folderName);
+
+		driver.getWebDriver().navigate().refresh();
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will select all return documents and perform action as docview
+	 * @description: this method will select all return documents and perform action
+	 *               as docview
 	 */
-	
-	public void docExpToDocViewWithIngestion(String ingestionName,String value) {
-		
-		applyIngestionNameFilter("include",ingestionName);
+
+	public void docExpToDocViewWithIngestion(String ingestionName, String value) {
+
+		applyIngestionNameFilter("include", ingestionName);
 		driver.waitForPageToBeReady();
 		int count = getDocumentCountFromListView();
-		bc.stepInfo("Docs available in doc explorer: "+count);
-		//select all docs and view in docview
+		bc.stepInfo("Docs available in doc explorer: " + count);
+		// select all docs and view in docview
 		SelectingAllDocuments(value);
 		docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		bc.waitForElementCollection(getNumberOfDocsCount());
-		bc.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
-				"Not on doc view page");
+		bc.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page", "Not on doc view page");
 		int docsCount = getNumberOfDocsCount().size();
-		bc.stepInfo("Docs available in docview: "+docsCount);
-		if(count==docsCount) {
+		bc.stepInfo("Docs available in docview: " + docsCount);
+		if (count == docsCount) {
 			bc.passedStep("All selected docs loaded in docview");
-		}
-		else {
+		} else {
 			bc.failedStep("docs not loaded in docview");
 		}
-				
+
 	}
 
-	
-	
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To verify the user is on DocExp Page
@@ -3894,37 +3909,36 @@ public class DocExplorerPage {
 		bc.waitForElement(getDocExplorerPageHeader());
 		String pageTitle = getDocExplorerPageHeader().getText();
 		if (getDocExplorerPageHeader().isElementAvailable(5)) {
-			bc.passedStep("The user is on "+pageTitle+" page");
-		}else {
-			bc.failedStep("The user is not on"+pageTitle+" page ");
+			bc.passedStep("The user is on " + pageTitle + " page");
+		} else {
+			bc.failedStep("The user is not on" + pageTitle + " page ");
 		}
 	}
 
-
 	/**
-     * @author Brundha.T
-     * @param folderName
-     * @return
-     * @throws InterruptedException
-     * @Decription: method for new bulk folder
-     */
-    public int newBulkFolder(String folderName) throws InterruptedException {
-       bc.waitForElement(actionDropdown());
-       actionDropdown().Click();
+	 * @author Brundha.T
+	 * @param folderName
+	 * @return
+	 * @throws InterruptedException
+	 * @Decription: method for new bulk folder
+	 */
+	public int newBulkFolder(String folderName) throws InterruptedException {
+		bc.waitForElement(actionDropdown());
+		actionDropdown().Click();
 
-       getBulkFolder().waitAndClick(10);
-       System.out.println("Clicked Bulk Folder");
-        
-        bc.waitForElement(getDocExplorer_NewFolder());
-        getDocExplorer_NewFolder().waitAndClick(5);
+		getBulkFolder().waitAndClick(10);
+		System.out.println("Clicked Bulk Folder");
 
-       bc.waitForElement(getBulkFolder_SelectAllFolder());
-       getBulkFolder_SelectAllFolder().waitAndClick(5);
+		bc.waitForElement(getDocExplorer_NewFolder());
+		getDocExplorer_NewFolder().waitAndClick(5);
 
-       bc.waitForElement(getDocExplorer_NewFolderName());
-       getDocExplorer_NewFolderName().SendKeys(folderName);
+		bc.waitForElement(getBulkFolder_SelectAllFolder());
+		getBulkFolder_SelectAllFolder().waitAndClick(5);
 
-       for (int i = 0; i <10; i++) {
+		bc.waitForElement(getDocExplorer_NewFolderName());
+		getDocExplorer_NewFolderName().SendKeys(folderName);
+
+		for (int i = 0; i < 10; i++) {
 			try {
 				bc.waitTime(4);
 				bc.waitTillElemetToBeClickable(getContinueButton());
@@ -3934,34 +3948,33 @@ public class DocExplorerPage {
 				bc.waitTillElemetToBeClickable(getContinueButton());
 			}
 		}
-       System.out.println("Clicked continue");
+		System.out.println("Clicked continue");
 
-       driver.waitForPageToBeReady();
-        SessionSearch session=new SessionSearch(driver);
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return session.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-            }
-        }), Input.wait30);
-        int TotalCount = Integer.parseInt(session.getFinalCount().getText());
-        getFinalizeButton().Click();
-        driver.Manage().window().maximize();
-        bc.VerifySuccessMessage("Records saved successfully");
-        return TotalCount;
-    }
-    
-    /**
-     * @author Brundha.T
-     * @param Index
-     * @return
-     * Description: getting the document count in doc explorer page
-     */
-    public int DocviewDocCountByIndex(int Index) {
-        String count1 = getDocExp_DocumentList_info().getText();
-        String[] Doc1= count1.split(" ");
-        String DocCount = Doc1[Index];
-        System.out.println(DocCount);
-        return Integer.valueOf(DocCount);
-    }
+		driver.waitForPageToBeReady();
+		SessionSearch session = new SessionSearch(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return session.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		int TotalCount = Integer.parseInt(session.getFinalCount().getText());
+		getFinalizeButton().Click();
+		driver.Manage().window().maximize();
+		bc.VerifySuccessMessage("Records saved successfully");
+		return TotalCount;
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Index
+	 * @return Description: getting the document count in doc explorer page
+	 */
+	public int DocviewDocCountByIndex(int Index) {
+		String count1 = getDocExp_DocumentList_info().getText();
+		String[] Doc1 = count1.split(" ");
+		String DocCount = Doc1[Index];
+		System.out.println(DocCount);
+		return Integer.valueOf(DocCount);
+	}
 
 }

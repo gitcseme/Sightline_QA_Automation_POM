@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -62,15 +63,15 @@ public class DocList_Regression24 {
 		docExplorer = new DocExplorerPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/10/2022 RPMXCON-54519
 	 * @throws Exception
 	 * @Description Validate onpage filter for EmailAuthorName with any special
 	 *              charatcers (,/"/-/_ /) on DocList page.
 	 */
-	@Test(description = "RPMXCON-54519", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
-	public void verifyFilterForEmailAuthorNameWithAnySpecialCharaters(String username, String password, String role)
+	@Test(description = "RPMXCON-53853", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterForEmailAuthorNameWithAnySpecialCharatersInDocList(String username, String password, String role)
 			throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54519");
@@ -117,11 +118,13 @@ public class DocList_Regression24 {
 
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/10/2022 RPMXCON-53853
 	 * @throws Exception
-	 * @Description To verify, as an Reviewer user login, When I will select all the documents in Doc List, I will be able to see this documents on Doc View page, from View Document action button.
+	 * @Description To verify, as an Reviewer user login, When I will select all the
+	 *              documents in Doc List, I will be able to see this documents on
+	 *              Doc View page, from View Document action button.
 	 */
 	@Test(description = "RPMXCON-53853", enabled = true, groups = { "regression" })
 	public void verifyAsReviewerSelectAllDocsInDocListPageGotoDocView() throws Exception {
@@ -131,7 +134,7 @@ public class DocList_Regression24 {
 				"To verify, as an Reviewer user login, When I will select all the documents in Doc List, I will be able to see this documents on Doc View page, from View Document action button.");
 		sessionSearch = new SessionSearch(driver);
 		DocListPage docList = new DocListPage(driver);
-		DocViewPage docView=new DocViewPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
 
 		// Login As REV
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -149,23 +152,23 @@ public class DocList_Regression24 {
 		String[] doccount = DocListCount.split(" ");
 		String DoclistDocCount = doccount[3];
 		System.out.println("doclist page document count is" + DoclistDocCount);
-		
-		//DocView Form Doclist
+
+		// DocView Form Doclist
 		docList.docListToDocView();
 		softAssert.assertTrue(docView.getDocView_DefaultViewTab().Displayed());
 		baseClass.passedStep("Navigate to DocViewPage Successfully");
-		//verify Select docs display
+		// verify Select docs display
 		baseClass.waitForElementCollection(docView.getDocumetCountMiniDocList());
 		int miniDocListCount = docView.getDocumetCountMiniDocList().WaitUntilPresent().size();
 		System.out.println(miniDocListCount);
-		baseClass.digitCompareEquals(Integer.valueOf(DoclistDocCount),Integer.valueOf(miniDocListCount), "Document count is displayed As expected from DocListPage",
-				"DocCount is Not Displayed as expected");
+		baseClass.digitCompareEquals(Integer.valueOf(DoclistDocCount), Integer.valueOf(miniDocListCount),
+				"Document count is displayed As expected from DocListPage", "DocCount is Not Displayed as expected");
 		softAssert.assertAll();
-		
+
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:25/10/2022 RPMXCON-53671
 	 * @throws Exception
@@ -424,6 +427,12 @@ public class DocList_Regression24 {
 		}
 	}
 
+	@DataProvider(name = "Users_PARMU")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA" } };
+		return users;
+	} 
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		System.out.println("**Executed  DocExplorer_Regression_22.**");

@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -113,6 +114,7 @@ public class DocExplorer_Regression1_24 {
 				"Verify that user should be able to remove documents from Folder from Doc Explorer.");
 		TagsAndFoldersPage tagAndFolder=new TagsAndFoldersPage(driver);
 		String folderName="folder"+ Utility.dynamicNameAppender();
+		sessionSearch = new SessionSearch(driver);
 	
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -128,7 +130,7 @@ public class DocExplorer_Regression1_24 {
 		baseClass.passedStep(
 				"Records saved successfully  Documents is unfoldered from the selected folder Successfully");
 		
-		tagAndFolder.navigateToTagsAndFolderPage();
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagAndFolder.verifyFolderDocCount(folderName, 0);
 
 		loginPage.logout();
@@ -197,6 +199,13 @@ public class DocExplorer_Regression1_24 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+	
+	@DataProvider(name = "Users_PARMU")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA" } };
+		return users;
 	}
 
 	@AfterClass(alwaysRun = true)
