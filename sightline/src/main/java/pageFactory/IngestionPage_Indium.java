@@ -10998,7 +10998,7 @@ public class IngestionPage_Indium {
 		public void isPathInDatForTiffFile(String filePath) {
 			//enable checkbox for tiff
 			if(getTIFFPathInDATFileCheckBox().isDisplayed()) {
-				base.passedStep("native file checkbox enabled already");
+				base.passedStep("Tiff file checkbox enabled already");
 			}
 			else {
 				getTIFFCheckBox().waitAndClick(10);
@@ -11017,7 +11017,7 @@ public class IngestionPage_Indium {
 		public void isPathInDatForMp3File(String filePath) {
 			//enable checkbox for mp3
 			if(getMP3PathInDATFileCheckBox().isDisplayed()) {
-				base.passedStep("native file checkbox enabled already");
+				base.passedStep("MP3 file checkbox enabled already");
 			}
 			else {
 				getMP3CheckBoxButton().waitAndClick(10);
@@ -11036,7 +11036,7 @@ public class IngestionPage_Indium {
 		public void isPathInDatForTranscriptFile(String filePath) {
 			//enable checkbox for transcript
 			if(getAudioTranscriptPathInDATFileCheckBox().isDisplayed()) {
-				base.passedStep("native file checkbox enabled already");
+				base.passedStep("Transcript file checkbox enabled already");
 			}
 			else {
 				getAudioTranscriptCheckBoxstionButton().waitAndClick(10);
@@ -11046,7 +11046,7 @@ public class IngestionPage_Indium {
 			getAudioTranscriptPathInDATFileCheckBox().waitAndClick(10);
 			base.waitForElement(getTranscriptFilePathFieldinDAT());
 			getTranscriptFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
-			base.passedStep("added is path in dat for native file type");
+			base.passedStep("added is path in dat for transcript file type");
 		}
 
 }
