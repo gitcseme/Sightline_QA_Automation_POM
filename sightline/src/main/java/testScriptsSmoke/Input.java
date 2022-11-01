@@ -426,6 +426,11 @@ public class Input {
 	public static String uncAbsoluteDat;
 	public static String uncAbsoluteTranslation;
 	public static String uncAbsoluteTranscript;
+	public static String nativePathField;
+	public static String pdfPathField;
+	public static String mp3PathField;
+	public static String tiffPathField;
+	public static String transcriptPathField;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1431,6 +1436,12 @@ public class Input {
 		uncAbsoluteDat = testData.getUncAbsoluteDat();
 		uncAbsoluteTranslation = testData.getUncAbsoluteTranslation();
 		uncAbsoluteTranscript = testData.getUncAbsoluteTranscript();
+		nativePathField = testData.getNativePathField();
+		pdfPathField = testData.getPdfPathField();
+		mp3PathField = testData.getMp3PathField();;
+		tiffPathField = testData.getTiffPathField();
+		transcriptPathField = testData.getTranscriptPathField();
+		
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

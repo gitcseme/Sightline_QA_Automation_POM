@@ -10941,5 +10941,112 @@ public class IngestionPage_Indium {
 			}
 			
 		}
+		
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will click on the add new ingestion button and verify current loaded url
+		 */
+		public void ClickOnAddNewIngestionLink() {
+			base.waitForElement(getAddanewIngestionButton());
+			getAddanewIngestionButton().waitAndClick(10);
+			base.verifyUrlLanding(Input.url + "en-us/Ingestion/Wizard", "source/overwrite page displayed", 
+					"source/overwrite setting page not displayed");
+		}
+		
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action as is path in dat for native file
+		 */
+		public void isPathInDatForNativeFile(String filePath) {
+			//enable checkbox for native
+			if(getNativePathInDATFileCheckBox().isDisplayed()) {
+				base.passedStep("native file checkbox enabled already");
+			}
+			else {
+				getNativeLoadFileCheckBox().waitAndClick(10);
+			}
+			//perform action is path in dat for native
+			base.waitForElement(getNativePathInDATFileCheckBox());
+			getNativePathInDATFileCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeFilePathFieldinDAT());
+			getNativeFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
+			base.passedStep("added is path in dat for native file type");
+		}
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action as is path in dat for pdf file
+		 */
+		public void isPathInDatForPdfFile(String filePath) {
+			//enable checkbox for pdf
+			if(getPDFPathInDATFileCheckBox().isDisplayed()) {
+				base.passedStep("pdf file checkbox enabled already");
+			}
+			else {
+				getPDFCheckBoxButton().waitAndClick(10);
+			}
+			//perform action is path in dat for pdf
+			base.waitForElement(getPDFPathInDATFileCheckBox());
+			getPDFPathInDATFileCheckBox().waitAndClick(10);
+			base.waitForElement(getPDFFilePathFieldinDAT());
+			getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
+			base.passedStep("added is path in dat for pdf file type");
+		}
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action as is path in dat for tiff file
+		 */
+		public void isPathInDatForTiffFile(String filePath) {
+			//enable checkbox for tiff
+			if(getTIFFPathInDATFileCheckBox().isDisplayed()) {
+				base.passedStep("native file checkbox enabled already");
+			}
+			else {
+				getTIFFCheckBox().waitAndClick(10);
+			}
+			//perform action is path in dat for tiff
+			base.waitForElement(getTIFFPathInDATFileCheckBox());
+			getTIFFPathInDATFileCheckBox().waitAndClick(10);
+			base.waitForElement(getTIFFFilePathFieldinDAT());
+			getTIFFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
+			base.passedStep("added is path in dat for tiff file type");
+		}
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action as is path in dat for mp3 file
+		 */
+		public void isPathInDatForMp3File(String filePath) {
+			//enable checkbox for mp3
+			if(getMP3PathInDATFileCheckBox().isDisplayed()) {
+				base.passedStep("native file checkbox enabled already");
+			}
+			else {
+				getMP3CheckBoxButton().waitAndClick(10);
+			}
+			//perform action is path in dat for mp3
+			base.waitForElement(getMP3PathInDATFileCheckBox());
+			getMP3PathInDATFileCheckBox().waitAndClick(10);
+			base.waitForElement(getMp3FilePathFieldinDAT());
+			getMp3FilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
+			base.passedStep("added is path in dat for Mp3 file type");
+		}
+		/**
+		 * @author: Arun Created Date: 01/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action as is path in dat for transcript file
+		 */
+		public void isPathInDatForTranscriptFile(String filePath) {
+			//enable checkbox for transcript
+			if(getAudioTranscriptPathInDATFileCheckBox().isDisplayed()) {
+				base.passedStep("native file checkbox enabled already");
+			}
+			else {
+				getAudioTranscriptCheckBoxstionButton().waitAndClick(10);
+			}
+			//perform action is path in dat for transcript
+			base.waitForElement(getAudioTranscriptPathInDATFileCheckBox());
+			getAudioTranscriptPathInDATFileCheckBox().waitAndClick(10);
+			base.waitForElement(getTranscriptFilePathFieldinDAT());
+			getTranscriptFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
+			base.passedStep("added is path in dat for native file type");
+		}
 
 }

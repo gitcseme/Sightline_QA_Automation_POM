@@ -702,6 +702,155 @@ public class Ingestion_Regression_7 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 01/11/2022 TestCase Id:RPMXCON-58522
+	 * Description :Verify that after Cataloging if user rollback the ingestion then draft Ingestion 
+	 * with same data set with different source system should be completed successfully
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-58522",enabled = true, groups = { "regression" })
+	public void verifyDifferentSourceSystemFromDraft() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58522");
+		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			//perform add only ingestion
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
+			baseClass.stepInfo("perform catalogging");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			baseClass.stepInfo("perform rollback using action dropdown menu");
+			ingestionPage.rollBackIngestionUsingActionMenu();
+			ingestionPage.VerifyDraftIngestionStatusAfterRollback();
+			baseClass.stepInfo("perform open in wizard action from draft state");
+			ingestionPage.performActionAsOpenWizardOption();
+			ingestionPage.validateDetailsAfterOpeningIngestionFromDraft(Input.ingestionType, Input.AllSourcesFolder);
+			baseClass.stepInfo("Change the source system and complete ingestion");
+			baseClass.waitForElement(ingestionPage.getSpecifySourceSystem());
+			ingestionPage.getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(Input.mappedData);
+			baseClass.stepInfo("click on next and preview");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+			baseClass.passedStep("Ingestion completed successfully");
+		}
+		else {
+			baseClass.failedMessage("Add  only ingestion already present in the current project");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 01/11/2022 TestCase Id:RPMXCON-47457
+	 * Description :To verify that unless mandatory fields are entered, user is not allowed to go to Mapping Page 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47457",enabled = true, groups = { "regression" })
+	public void verifyNavigatingToMappingPageWithBlankFields() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47457");
+		baseClass.stepInfo("Verify user is not allowed to go to Mapping Page unless mandatory fields are entered.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		ingestionPage.ClickOnAddNewIngestionLink();
+		//enter all fields and verify
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		//verify status after clicking next button
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.verifyAutoPopulatedSourceFieldInMappingSection();
+		baseClass.passedStep("Source field gets auto populated as per the fields available in the DAT file.");
+		//keep all fields blank and verify status
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Without entering mandatory fields click next button");
+		baseClass.waitForElement(ingestionPage.getNextButton());
+		ingestionPage.getNextButton().waitAndClick(10);
+		baseClass.stepInfo("verify mandatory fields warning messages");
+		ingestionPage.validateMandatoryFieldMessagesDisplayed();
+		baseClass.passedStep("User is not allowed to go to mapping page section");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 01/11/2022 TestCase Id:RPMXCON-60813
+	 * Description :Verify that if DAT file contain the Absolute path then Ingestion 
+	 * should be completed successfully  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60813",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInDat() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60813");
+		baseClass.stepInfo("verify the ingestion status if DAT file contain the Absolute path.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion with transcript");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("is path in dat for native");
+			ingestionPage.isPathInDatForNativeFile(Input.nativePathField);
+			baseClass.stepInfo("is path in dat for pdf");
+			ingestionPage.isPathInDatForPdfFile(Input.pdfPathField);
+			baseClass.stepInfo("is path in dat for tiff");
+			ingestionPage.isPathInDatForTiffFile(Input.tiffPathField);
+			baseClass.stepInfo("is path in dat for mp3");
+			ingestionPage.isPathInDatForMp3File(Input.mp3PathField);
+			baseClass.stepInfo("is path in dat for transcript");
+			ingestionPage.isPathInDatForTranscriptFile(Input.transcriptPathField);
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

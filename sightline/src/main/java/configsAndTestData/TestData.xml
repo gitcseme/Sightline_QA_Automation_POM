@@ -120,7 +120,11 @@
 	<uncAbsoluteDat>Ingestion Path_DAT_AbsolutePath.dat</uncAbsoluteDat>
 	<uncAbsoluteTranslation>Ingestion Path_Translation_AbsolutePath.lst</uncAbsoluteTranslation>
 	<uncAbsoluteTranscript>Ingestion Path_Transcript_AbsolutePath.lst</uncAbsoluteTranscript>
-	
+	<nativePathField>NativeLink</nativePathField>
+	<pdfPathField>PDFLink</pdfPathField>
+	<mp3PathField>MP3Link</mp3PathField>
+	<tiffPathField>TIFFLINK</tiffPathField>
+	<transcriptPathField>TranscriptLink</transcriptPathField>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
