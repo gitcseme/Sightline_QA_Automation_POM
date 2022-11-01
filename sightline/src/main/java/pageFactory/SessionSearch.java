@@ -13985,7 +13985,7 @@ public class SessionSearch {
 						"Verify that Label is changed to \"Percentage to Assign\"",
 						"actual lable Text doesn't match with expected lable Text");
 			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
-				softAssert.assertEquals(getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
+				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
 				softAssert.assertAll();
 				base.passedStep("Verified that label is removed.");
 			}
