@@ -377,7 +377,9 @@ public class SearchTermReportPage {
 		bc.waitForElement(getSTR_SaveInputField());
 		getSTR_SaveInputField().SendKeys(reportName);
 
-		getSTR_SaveReportBtn().Click();
+		getSTR_SaveReportBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
 		if (verifySave) {
 			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 			driver.waitForPageToBeReady();
