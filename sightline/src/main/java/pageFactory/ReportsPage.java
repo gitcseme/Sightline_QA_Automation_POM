@@ -1211,7 +1211,11 @@ public class ReportsPage {
 		} else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Communications Explorer")) {
 			getThisLink(componentName).waitAndClick(10);
 			base.verifyPageNavigation("DataAnalysisReport/CommunicationExplorerReport");
+		}else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Search Term Report")) {
+			getThisLink("Search Term Report").waitAndClick(10);
+			base.verifyPageNavigation("DataAnalysisReport/SearchTermReport");
 		}
+
 	}
 
 }
