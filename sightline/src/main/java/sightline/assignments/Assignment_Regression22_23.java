@@ -576,7 +576,7 @@ public class Assignment_Regression22_23 {
 		// is selected from the Assignments/Group tree.
 		sessionSearch.bulkAssign();
 		sessionSearch.getBulkUntagbutton().waitAndClick(10);
-		softAssert.assertEquals(sessionSearch.getContinueButton().Enabled(), false);
+		softAssert.assertEquals((boolean)sessionSearch.getContinueButton().Enabled(), false);
 		baseClass.passedStep(
 				"verified that Continue button should not be active until at least one Assignment is selected from the Assignments/Group tree.");
 
