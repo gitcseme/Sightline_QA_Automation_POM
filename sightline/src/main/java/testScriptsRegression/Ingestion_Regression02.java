@@ -183,7 +183,7 @@ public class Ingestion_Regression02 {
 					Input.sourceLocation, Input.TiffImagesFolder);
 			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
@@ -196,7 +196,7 @@ public class Ingestion_Regression02 {
 		ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 		ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 		ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-		ingestionPage.selectDateAndTimeForamt(dateFormat);
+		ingestionPage.selectDateAndTimeFormat(dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -422,7 +422,7 @@ public class Ingestion_Regression02 {
 			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(Input.dateFormat);
+			ingetion.selectDateAndTimeFormat(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingetion.clickOnNextButton();
@@ -512,7 +512,7 @@ public class Ingestion_Regression02 {
 			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingestionPage.clickOnNextButton();
@@ -573,7 +573,7 @@ public class Ingestion_Regression02 {
 		ingestionPage.addDelimitersInIngestionWizard( Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.datFormatFile,Input.docId);
 		ingestionPage.selectNativeSource("DAT4_STC_NativesEmailData NEWID.lst",false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -618,7 +618,7 @@ public class Ingestion_Regression02 {
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
 		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
-		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.fillingSourceField();
 		ingestionPage.clickOnPreviewAndRunButton();

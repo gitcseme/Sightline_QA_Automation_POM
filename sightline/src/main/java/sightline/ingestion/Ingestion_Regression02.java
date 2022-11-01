@@ -181,7 +181,7 @@ public class Ingestion_Regression02 {
 					Input.sourceLocation, Input.TiffImagesFolder);
 			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeFormat(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
@@ -194,7 +194,7 @@ public class Ingestion_Regression02 {
 		ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 		ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
 		ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-		ingestionPage.selectDateAndTimeForamt(dateFormat);
+		ingestionPage.selectDateAndTimeFormat(dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
