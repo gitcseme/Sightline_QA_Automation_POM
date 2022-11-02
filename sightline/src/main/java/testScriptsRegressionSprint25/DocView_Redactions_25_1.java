@@ -32,7 +32,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Redactions_25 {
+public class DocView_Redactions_25_1 {
 	
 	Driver driver;
 	LoginPage loginPage;

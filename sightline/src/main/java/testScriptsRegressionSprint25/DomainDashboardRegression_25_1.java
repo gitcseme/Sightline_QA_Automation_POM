@@ -27,7 +27,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DomainDashboardRegression_25 {
+public class DomainDashboardRegression_25_1 {
 
 	Driver driver;
 	LoginPage login;
