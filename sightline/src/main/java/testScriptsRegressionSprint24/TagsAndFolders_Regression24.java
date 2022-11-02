@@ -100,12 +100,13 @@ public class TagsAndFolders_Regression24 {
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 	}
+
 	@DataProvider(name = "PaAndRmuUser")
-    public Object[][] PaAndRmuUser() {
-        Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
-                { Input.rmu1userName, Input.rmu1password, "Review Manager" } };
-        return users;
-    }
+	public Object[][] PaAndRmuUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
+		return users;
+	}
 
 	/**
 	 * @author N/A Testcase No:RPMXCON-53445
@@ -638,6 +639,7 @@ public class TagsAndFolders_Regression24 {
 		base.stepInfo("created security group 2 : " + securityGroup);
 
 		security.navigateToSecurityGropusPageURL();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		security.addFolderToSecurityGroup(securityGroup, foldername);
 
@@ -702,7 +704,7 @@ public class TagsAndFolders_Regression24 {
 		base.selectproject(Input.additionalDataProject);
 
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		tagsAndFolderPage.createNewTagNotSave(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagNotSave(tagname, Input.tagNamePrev);
 		base.waitForElement(tagsAndFolderPage.getPropTagExactDuplic());
 		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(3);
 		base.waitForElement(tagsAndFolderPage.getSaveTag());

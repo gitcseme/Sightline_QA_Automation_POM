@@ -162,7 +162,7 @@ public class ReportsRegression_24 {
 
 		// select ALL tabs and generate STR report
 		reports.navigateToReportsPage("");
-		searchterm.GenerateReportWithAnySearchOrTab(tabList);
+		searchterm.GenerateReportWithAnySearchOrTab(tabList,true);
 
 		// Select Unique Hit column
 		searchterm.selectColumnFromSTRPage(columnName);
