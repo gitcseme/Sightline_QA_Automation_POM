@@ -536,11 +536,13 @@ public class DocExplorer_Regression24 {
 		baseClass.stepInfo("Selecting new Assignment with sample method");
 		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs", ListViewCount, true);
 		Assign.quickAssignCreation(assigname, Input.codeFormName);
-		String AssignmentCount = Assign.selectAssignmentToView(assigname);
+		Assign.editCopyAssignmentUsingPaginationConcept(assigname);
+		baseClass.waitForElement(Assign.getDistributeTab());
+		Assign.getDistributeTab().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount), Integer.valueOf(AssignmentCount),
+		String AssignmentsCounts=Assign.getAssgn_docsToDistribute().GetAttribute("value");
+		baseClass.digitCompareEquals(Integer.valueOf(ListViewCount), Integer.valueOf(AssignmentsCounts),
 				"Document count is displayed in assignment", "DocCount is Not Displayed as expected");
-
 	}
 
 	/**
@@ -573,8 +575,12 @@ public class DocExplorer_Regression24 {
 		docExplorer.docExp_BulkAssign();
 		Assign.selectNewAssignmentWithSampleMethod("Count of Selected Docs", String.valueOf(ListViewCount), true);
 		Assign.quickAssignCreation(assigname, Input.codeFormName);
-		String DocCountInAssignMent = Assign.selectAssignmentToView(assigname);
-		baseClass.digitCompareEquals(Integer.valueOf(DocCountInAssignMent), ListViewCount,
+		Assign.editCopyAssignmentUsingPaginationConcept(assigname);
+		baseClass.waitForElement(Assign.getDistributeTab());
+		Assign.getDistributeTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String AssignmentsCounts=Assign.getAssgn_docsToDistribute().GetAttribute("value");
+		baseClass.digitCompareEquals(Integer.valueOf(AssignmentsCounts), ListViewCount,
 				"Document count is displayed in assignment", "DocCount is Not Displayed as expected");
 
 	}
