@@ -114,9 +114,9 @@ public class ReportRegression_25 {
 		// Login as User
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
-		//create empty search group
+		// create empty search group
 		String searchGrp = savedSearch.createNewSearchGrp(Input.mySavedSearch);
-		String[] selectSearchGrp = { searchGrp};
+		String[] selectSearchGrp = { searchGrp };
 
 		// Select empty search group and Click Apply button
 		reports.navigateToReportsPage("");
@@ -129,6 +129,67 @@ public class ReportRegression_25 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Jeevitha.R
+	 * @throws AWTException
+	 * @Description : Search Term Report - Verify bulk folder action on Unique Hits
+	 *              / Unique Family Hits records [RPMXCON-56596]
+	 */
+	@Test(description = "RPMXCON-56596", groups = { "regression" }, enabled = true)
+	public void verifyViewBulkFolder() throws InterruptedException, ParseException, AWTException {
+		String saveSearch1 = "Search1" + Utility.dynamicNameAppender();
+		String saveSearch2 = "Search2" + Utility.dynamicNameAppender();
+		String saveSearch3 = "Search3" + Utility.dynamicNameAppender();
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+
+		String columnName = "Unique Hits".toUpperCase();
+
+		String[] tabList = { Input.mySavedSearch, Input.shareSearchPA, Input.shareSearchDefaultSG };
+
+		baseClass.stepInfo("Test case Id:RPMXCON-56596 Reports/Search Term");
+		baseClass
+				.stepInfo("Search Term Report - Verify bulk folder action on Unique Hits / Unique Family Hits records");
+
+		// Login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// save search in All 3 TAbs
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(saveSearch1);
+
+		sessionSearch.getNewSearchButton().waitAndClick(5);
+		sessionSearch.multipleBasicContentSearch(Input.searchString2);
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch2, Input.shareSearchPA);
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch3, Input.shareSearchDefaultSG);
+
+		// select ALL tabs and generate STR report
+		reports.navigateToReportsPage("");
+		searchterm.GenerateReportWithAnySearchOrTab(tabList, true);
+
+		// Select Unique Hit column
+		searchterm.selectColumnFromSTRPage(columnName);
+
+		//get Unique Hit count from search term report page
+		int hitcount=searchterm.verifyaggregateCount(columnName);
+		
+		// perform Bulk Folder
+		searchterm.BulkFolder(folderName);
+		baseClass.passedStep("Bulk Folder Performed Successfully");
+		
+		//verify the selected document is moved to the folder
+		TagsAndFoldersPage tagsAndFolder= new TagsAndFoldersPage(driver);
+		tagsAndFolder.navigateToTagsAndFolderPage();
+		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folderName, hitcount);
+		
+		// delete search
+		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
+		savedSearch.deleteSearch(saveSearch2, Input.shareSearchPA, Input.yesButton);
+		savedSearch.deleteSearch(saveSearch3, Input.shareSearchDefaultSG, Input.yesButton);
+
+		// logout
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
