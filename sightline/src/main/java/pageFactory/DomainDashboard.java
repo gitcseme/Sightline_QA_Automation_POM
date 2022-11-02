@@ -217,7 +217,16 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("//span[@id='project-selector']/../i[@class='fa fa-chevron-down']");
 	}
 	
-	
+	public Element getEditIcon() {
+		return driver.FindElementByXPath("//a[@id='wEdit']");
+	}
+
+	public Element getSelectAddWidget() {
+		return driver.FindElementByXPath("//input[@id='wAdd']");
+	}
+	public Element getWidget() {
+		return driver.FindElementByXPath("//Span[@class='pName font-xs'][text()='Active Users']");
+	}
 	
 	
 
