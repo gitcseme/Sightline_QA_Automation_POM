@@ -87,7 +87,6 @@ public class Production_Regression {
 		base.stepInfo("Test Cases Id : RPMXCON-47975");
 		base.stepInfo("To Verify Rich Text configuration in Production branding should be of Arial, Font Size 10 and Bold format");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.selectproject(Input.additionalDataProject);
 //		 create tag
 		base = new BaseClass(driver);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
