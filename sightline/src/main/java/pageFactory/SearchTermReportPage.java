@@ -894,7 +894,7 @@ public class SearchTermReportPage {
 	 * @author Jeevitha
 	 * @param searchName
 	 */
-	public void GenerateReportWithAnySearchOrTab(String[] searchOrTabName) {
+	public void GenerateReportWithAnySearchOrTab(String[] searchOrTabName,boolean verifyStrReport) {
 		bc.waitForElement(getSearchTermReport());
 		getSearchTermReport().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -909,12 +909,14 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
-		bc.waitTime(3);
-		bc.waitForElement(getSTReport());
-		if (getSTReport().isDisplayed()) {
-			bc.stepInfo("Report generated sucessfull");
-		} else {
-			bc.failedStep("Report not generated sucessfull");
+		if (verifyStrReport) {
+			bc.waitTime(3);
+			bc.waitForElement(getSTReport());
+			if (getSTReport().isDisplayed()) {
+				bc.stepInfo("Report generated sucessfull");
+			} else {
+				bc.failedStep("Report not generated sucessfull");
+			} 
 		}
 	}
 
