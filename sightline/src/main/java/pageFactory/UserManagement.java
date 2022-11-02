@@ -699,6 +699,13 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+	public Element getFirstNameEditUserPopup() {
+		return driver.FindElementById("txtBxUserName");
+	}
+	
+	public Element getLastNameEditUserPopup() {
+		return driver.FindElementById("txtBxUserLastName");
+	}
 
 	public Element getUserTabelDropDownValues(String headerName, int columnNo) {
 		return driver.FindElementByXPath("//*[@class='dataTables_scroll']//th[contains(text(),'" + headerName
@@ -5168,11 +5175,8 @@ public class UserManagement {
 	 * @param role, projectName , securityGroup
 	 */
 	public void changeRoleToAnyUser(String role, String projectName , String securityGroup) {
-
 		try {
-			
 			driver.waitForPageToBeReady();
-			
 			if (role.contains("Project")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
@@ -5186,18 +5190,26 @@ public class UserManagement {
 					softAssertion.assertAll();
 					bc.passedStep(
 							"Alert message is displayed as: "+alertText+"");
-					
 				} else {
 					bc.failedStep("Alert message is not displayed");
 				} 
-				
-				bc.waitForElement(selectProject());
-				selectProject().selectFromDropdown().selectByVisibleText(projectName);
+				if (selectProject().isElementAvailable(5)) {
+					bc.waitForElement(selectProject());
+					String selectProject = selectProject().GetAttribute("class");
+					if (selectProject.contains("form")) {
+						bc.waitForElement(selectProject());
+						selectProject().selectFromDropdown().selectByVisibleText(projectName);
+					}else {
+						bc.stepInfo("The Project is already selected");
+					}
+				}else {
+						bc.stepInfo("The Project is already selected");
+				}
 			}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
-				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 				String alertText = getAlertMessageFromRole().getText();
+				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 				
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
@@ -5206,27 +5218,65 @@ public class UserManagement {
 					softAssertion.assertAll();
 					bc.passedStep(
 							"Alert message is displayed as: "+alertText+"");
-					
 				} else {
 					bc.failedStep("Alert message is not displayed");
 				} 
-				
-				bc.waitForElement(selectProject());
-				selectProject().selectFromDropdown().selectByVisibleText(projectName);
-				
+				if (getProjectTextBox().isElementAvailable(5)) {
+					bc.waitForElement(getProjectTextBox());
+					String selectProject = getProjectTextBox().GetAttribute("class");
+					if (selectProject.contains("valid")) {
+						bc.passedStep("The Project is already selected"); 
+					}						
+					}else{
+						bc.failedStep("The project is unable to select");
+					}
 				bc.waitForElement(userSelectSecurityGroup());
 				userSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
 			}
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
-
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("User profile is modified successfully");
-			
-			
 		} catch (Exception e) {
 			bc.failedStep("User profile is not updated");
 		}
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To edit First Name and Last name in User edit popup
+	 * @param firstName, lastName
+	 */
+	public void editFirstAndLastNameInEditUserPopup(String firstName, String lastName) {
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getFirstNameEditUserPopup());
+			getFirstNameEditUserPopup().Clear();
+			getFirstNameEditUserPopup().SendKeys(firstName);
+			bc.waitForElement(getLastNameEditUserPopup());
+			getLastNameEditUserPopup().Clear();
+			getLastNameEditUserPopup().SendKeys(lastName);
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("User profile is modified successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To get the table value present in UserManagement Homepage
+	 * @param tableHeader, cloumnNo
+	 */
+	public String getUserTableValuesFromManageUserTable(String tableHeader, int cloumnNo) {
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getUserTabelDropDownValues(tableHeader, cloumnNo));
+		String tableValue = getUserTabelDropDownValues(tableHeader, cloumnNo).getText();
+		return tableValue;
 	}
 
 }
