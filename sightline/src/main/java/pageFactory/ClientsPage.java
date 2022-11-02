@@ -481,8 +481,7 @@ public class ClientsPage {
 		bc.stepInfo("project server path was selected");
 
 		bc.waitForElement(project.getIngestionserverpath());
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+		project.getIngestionserverpath().waitAndClick(10);
 		bc.stepInfo("Ingetion path is selected");
 
 		project.getProductionserverpath().waitAndClick(10);
@@ -551,8 +550,7 @@ public class ClientsPage {
 	  	bc.stepInfo("project server path was selected");
 	  	
 	  	bc.waitForElement(project.getIngestionserverpath());
-	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+	  	project.getIngestionserverpath().waitAndClick(10);
 	  	bc.stepInfo("Ingetion path is selected");
 	  	
 	  	project.getProductionserverpath().waitAndClick(10);
