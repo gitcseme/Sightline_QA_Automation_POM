@@ -1031,6 +1031,10 @@ public class SavedSearch {
 	public Element getSavesSreachSharedWithPA() {
 		return driver.FindElementByXPath("//div[@id='jsTreeSavedSearch']/ul/li[2]/a");
 	}
+	
+	public Element getUnBulkTagConfirmationButton() {
+		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
+	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -2073,7 +2077,7 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 		//base.VerifySuccessMessage("Save search tree node successfully created.");
 		//base.CloseSuccessMsgpopup();
-		driver.Navigate().refresh();
+		//driver.Navigate().refresh();
 
 		// Get created node text
 		String newNode = currentClickedNode().getText();
@@ -5631,11 +5635,11 @@ public class SavedSearch {
 				dcPage.getBackToSourceBtn().waitAndClick(10);
 			}
 			driver.waitForPageToBeReady();
-			if (selectNode) {
+			/*if (selectNode) {
 				base.waitForElement(getSavedSearchNodeWithRespectiveSG(Input.shareSearchDefaultSG, nodeName));
 				getSavedSearchNodeWithRespectiveSG(Input.shareSearchDefaultSG, nodeName).waitAndClick(10);
 				System.out.println("Node clicked again");
-			}
+			}*/
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
@@ -7582,6 +7586,7 @@ public class SavedSearch {
 		driver.Manage().window().maximize();
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
+		getUnBulkTagConfirmationButton().Click();
 
 		bc.VerifySuccessMessage("Records saved successfully");
 
