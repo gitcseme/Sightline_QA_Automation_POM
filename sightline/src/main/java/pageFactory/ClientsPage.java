@@ -477,12 +477,11 @@ public class ClientsPage {
 		bc.stepInfo("db size was selected");
 
 		bc.waitForElement(getEntityServerPath());
-		getEntityServerPath().waitAndClick(10);
+		getEntityServerPath().waitAndClick(5);
 		bc.stepInfo("project server path was selected");
 
 		bc.waitForElement(project.getIngestionserverpath());
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+		project.getIngestionserverpath().waitAndClick(10);
 		bc.stepInfo("Ingetion path is selected");
 
 		project.getProductionserverpath().waitAndClick(10);
@@ -516,7 +515,7 @@ public class ClientsPage {
 	  * @param dbsize
 	  * @Description Add a Domain Client with choosing database size Processing engine
 	  */
-	 public void AddDomainClientProcessingEngine(String Clientnamedomain,String domainid,String dbsize) {
+	 public void AddDomainClientProcessingEnginee(String Clientnamedomain,String domainid,String dbsize) {
 			
 	  	this.driver.getWebDriver().get(Input.url+"Entity/Entity");
 	  	SoftAssert softAssertion = new SoftAssert();
@@ -551,8 +550,7 @@ public class ClientsPage {
 	  	bc.stepInfo("project server path was selected");
 	  	
 	  	bc.waitForElement(project.getIngestionserverpath());
-	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+	  	project.getIngestionserverpath().waitAndClick(10);
 	  	bc.stepInfo("Ingetion path is selected");
 	  	
 	  	project.getProductionserverpath().waitAndClick(10);
