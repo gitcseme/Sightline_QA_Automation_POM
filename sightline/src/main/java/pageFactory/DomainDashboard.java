@@ -878,4 +878,27 @@ public class DomainDashboard {
 		base.ValidateElement_Presence(base.getAvlProject(),"Project Dropdown");
 		base.ValidateElement_Presence(base.getSelectSecurityGroup(), "Security Group dropdown");
 	}
+	
+	/**
+	 * @author Krishna
+	 * @param projectName
+	 * Description: Verify searching project is listed in dasboard
+	 */
+	public void verifyFilterProjectIsListed(String ProjectName) {
+		driver.waitForPageToBeReady();
+		base.waitTime(8);
+		filterProject(ProjectName);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFirstHyperLink().Visible();
+			}
+		}), Input.wait120);
+		base.waitForElement(getFirstHyperLink());
+		String project = getFirstHyperLink().getText();
+		if (project.equals(ProjectName)) {
+		base.passedStep(ProjectName+" Filtered project is listed as expected");
+		}else {
+			base.failedStep("filtered project is not listed");
+		}
+	}
 }
