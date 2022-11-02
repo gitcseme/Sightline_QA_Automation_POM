@@ -2291,6 +2291,7 @@ public class SavedSearch {
 		String childNodeName = null;
 		//driver.Navigate().refresh();
 		base.waitForElement(getCreatedNodeName(nodeName));
+		selectNode1(nodeName);
 		getCreatedNodeName(nodeName).waitAndClick(10);
 		System.out.println("Clicked " + nodeName);
 		Thread.sleep(3000);

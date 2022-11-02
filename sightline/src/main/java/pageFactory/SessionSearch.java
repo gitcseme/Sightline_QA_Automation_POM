@@ -1119,7 +1119,7 @@ public class SessionSearch {
 	}
 
 	public Element getSaveSearchPopupTitle() {
-		return driver.FindElementByXPath("//span[text()='Save Search']");
+		return driver.FindElementByXPath("//h3[text()='Save Search']");
 	}
 
 	public Element getSaveSearchPopupRadioButton(String buttonName) {
@@ -5079,6 +5079,7 @@ public class SessionSearch {
 	 */
 	public void saveSearchPopupVerification() {
 		try {
+			base.waitForElement(getSaveSearchPopupTitle());
 			softAssert.assertTrue(getSaveSearchPopupTitle().Visible());
 			base.stepInfo("Search Popup landed ");
 		} catch (Exception e) {
