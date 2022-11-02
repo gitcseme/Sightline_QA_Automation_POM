@@ -822,6 +822,7 @@ public class DocViewAudio_Regression24 {
 		docviewPage.audioRemarkDataInput(remark1, "Success");
 		baseClass.passedStep("Record added Successfully");
 		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
 		docviewPage.deleteRemark(remark);
 		docviewPage.deleteRemark(remark1);
 	}
