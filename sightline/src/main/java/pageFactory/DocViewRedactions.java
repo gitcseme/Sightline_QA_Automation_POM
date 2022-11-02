@@ -4182,6 +4182,7 @@ public void popOutCodingFormChildWindow() {
 			base.failedStep("Exception occcured while setting this page redaction" + e.getMessage());
 		}
 	}
+
 /**
  * @author Brundha.T
  * @param FieldValue
@@ -4221,5 +4222,54 @@ public String verifyingRevertOffAndOn(Element ele) {
 	System.out.println(ActColor);
 	return ActColor;
 }
+
+	
+	/**
+	 * @author Krishna
+	 * @Description -- Verify multi page and all page options is removed from highlighting sub menus
+	 * @param Text , Text1
+	 */
+	public void verifyMultiPageandAllpageHighlight(String text, String text1) {
+		try {
+			base = new BaseClass(driver);
+			driver.waitForPageToBeReady();
+			if (base.textValue(text).isElementAvailable(5) && base.textValue(text1).isElementAvailable(5)) {
+				base.failedStep(
+						"multi page and all page options is not removed from highlighting sub menus as expected ");
+
+			} else {
+				base.passedStep("multi page and all page options is removed from highlighting sub menus as expected");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while setting this page redaction" + e.getMessage());
+		}
+	}
+	/**
+	 * @author Krishna
+	 * @Description -- Verify Redaction icon is selected
+	 *
+	 */
+	public void verifyRedactionIconRemain() {
+	    driver.waitForPageToBeReady();
+	    base = new BaseClass(driver);
+	    driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionIcon().Displayed() && redactionIcon().Enabled();
+			}
+		}), Input.wait120);
+		base.waitTime(3);
+		String status = redactionIcon().GetAttribute("class");
+		System.out.println(status);
+		if (status.equals("active")) {
+			base.passedStep("Redaction menu is remain selected as expected");
+		} else {
+			
+			base.failedStep(" not selected");;
+		}
+	 
+	}
+
 
 }

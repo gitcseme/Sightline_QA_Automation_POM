@@ -546,6 +546,72 @@ public class O365Regression_24 {
 
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that error message does not display and application
+	 *              accepts - when Collection Name entered with special characters <
+	 *              > & ‘ [ RPMXCON-68752]
+	 */
+	@Test(description = "RPMXCON-68752", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgWithCollectionName() throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Collection Progress", "Error Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String collectionName = "Collection< > & ‘" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-68752 - O365");
+		base.stepInfo(
+				"Verify that error message does not display and application accepts - when Collection Name entered with special characters < > & ‘");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		collectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+
+		collection.getNextBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		boolean errorStatus = base.ValidateElement_AbsenceReturn(collection.getCollectErrorMsg());
+		String passMsg = "Error Message is Not dispalyed When Special Characters are Passed as Collection Name";
+		String failMsg = "Error Message is displayed";
+		base.printResutInReport(errorStatus, passMsg, failMsg, "Pass");
+
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+		collection.clickNextBtnOnDatasetTab();
+		collection.collectionSaveAsDraft();
+
+		// Verify Collection presence
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName,
+				expectedCollectionStatus, true, false, "");
+
+		// Logout
+		login.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
