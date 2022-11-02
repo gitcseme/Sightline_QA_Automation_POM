@@ -250,7 +250,7 @@ public class Projects_Regression24 {
 		base.stepInfo("Login as a SA user :"+Input.sa1userName);
 		
 		projects.navigateToClientFromHomePage();
-		projects.addNewClient(clientName, shortName,"Not a Domain");
+		projects.addNewClient_NonDomainProject(clientName, shortName,"Not a Domain");
 		
 		String pass="The processing engine section not present on 'Create Client' page";
 		String fail="The processing engine section is present on 'Create Client' page";
