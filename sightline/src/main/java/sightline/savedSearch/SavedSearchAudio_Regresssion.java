@@ -271,7 +271,7 @@ public class SavedSearchAudio_Regresssion {
 
 		session.basicContentSearch(Input.searchString2);
 		base.waitForElement(session.getSaveSearch_Button());
-		session.getSaveSearch_Button().Click();
+		session.getSaveSearch_Button().waitAndClick(15);
 
 		session.saveSearchPopupVerification();
 		base.stepInfo("Pop-up verification completed");

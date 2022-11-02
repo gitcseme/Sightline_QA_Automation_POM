@@ -375,13 +375,13 @@ public class Categorization {
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, "RMU");
 
 		selectTrainingSet("Identify by Saved Search");
-		getGoToStepTwoBtn().waitAndClick(5);
+		getGoToStepTwoBtn().waitAndClick(10);
 		selectTrainingSet("Analyze Select Saved Search Results Sets");
 		base.stepInfo("Analyze Select Saved Search Results Sets Expanded");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSavedSearchBtn());
 		try {
-			getSavedSearchBtn().waitAndClick(5);
+			getSavedSearchBtn().waitAndClick(10);
 			base.stepInfo("Clicked Saved Search Button");
 			System.out.println("Clicked Saved Search Button");
 			driver.waitForPageToBeReady();
@@ -402,7 +402,7 @@ public class Categorization {
 			checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
 //			reportPage.checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
 
-			getSelectSavedSearchPopupCloseBtn().waitAndClick(5);
+			getSelectSavedSearchPopupCloseBtn().waitAndClick(15);
 		}
 	}
 
