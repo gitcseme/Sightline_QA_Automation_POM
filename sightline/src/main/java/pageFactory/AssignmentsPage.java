@@ -1386,6 +1386,18 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
+	public ElementCollection getListOfReviewersInRedistributePopUp() {
+		return driver.FindElementsByXPath("//tr[not(contains(@style,'display: none')) and @class='bg']/td[2]/label");
+	}
+
+	public Element getRedistributePopUpHeader() {
+		return driver.FindElementByXPath("//h3[text()='Redistribute Documents']");
+	}
+
+	public Element getLiveFilterSearchInputField() {
+		return driver.FindElementById("kwd_search");
+	}
+
 	public ElementCollection getMultipleCodingForm() {
 		return driver.FindElementsByXPath("//input[@name='selectCodingForm']/following-sibling::i");
 	}
@@ -1464,6 +1476,7 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "']/parent::label/i");
 	}
+
 	public Element isCfCheckBoxSelected(String CFName) {
 		return driver.FindElementByXPath(
 				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "'][@checked='']");
@@ -11460,6 +11473,26 @@ public class AssignmentsPage {
 
 		bc.VerifySuccessMessage(
 				"Bulk UnAssign has been added to background process. You will get notification on completion.");
+	}
+
+	public void selectReviewerAndClickRedistributeAction() {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		bc.waitTillElemetToBeClickable(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitTime(6);
+		getAssgn_ManageRev_selectrev().waitAndClick(10);
+
+		getAssgn_ManageRev_Action().waitAndClick(10);
+
+		Assert.assertTrue(getAssgn_ManageRev_Action_redistributedoc().isDisplayed());
+		getAssgn_ManageRev_Action_redistributedoc().waitAndClick(10);
+		bc.getYesBtn().waitAndClick(10);
+
+		assertion.assertEquals(getRedistributePopUpHeader().isElementAvailable(5), true);
+		assertion.assertAll();
+		bc.stepInfo("Redistribute Documents PopUp is Opened.");
+
 	}
 
 }

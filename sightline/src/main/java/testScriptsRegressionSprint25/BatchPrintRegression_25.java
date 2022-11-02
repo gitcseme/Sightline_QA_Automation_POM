@@ -178,6 +178,116 @@ public class BatchPrintRegression_25 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify PDF file should be generated at the displayed path of
+	 *              batch print background process as per selected 'One PDF for each
+	 *              document' with File Name as selected in asc sort [RPMXCON-47834]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-47834", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void validatePdfFileIsGeneratedDocfileForAsc(String username, String password)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47834 Batch Print");
+		baseClass.stepInfo(
+				"Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in asc sort");
+
+		// configure query & perform Bulk Tag
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(Tag);
+
+		// Select TAG & Select Native in basis for printing
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+		batchPrint.navigateToNextPage(1);
+
+		// select sorting "Asc" Order
+		batchPrint.selectSortingFromExportPage("ASC");
+
+		// Select Export File Name as 'DocFileName', select Sort by 'DocFileName' &
+		// select one Pdf for each document
+		// verify Batchprint is completed & check file download link in background task
+		// page
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.docFileName, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// check the Downloaded file
+		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that user can select Export file options
+	 *              [RPMXCON-47826]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-47826", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyUserCanSelectExportFileOpt(String username, String password)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47826 Batch Print");
+		baseClass.stepInfo("To verify that user can select Export file options");
+
+		// configure query & perform Bulk Tag
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(Tag);
+
+		// Select TAG & Select Native in basis for printing
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+		batchPrint.navigateToNextPage(1);
+
+		// select sorting "Asc" Order
+		batchPrint.selectSortingFromExportPage("ASC");
+
+		// Select Export File Name as 'DocFileName', select Sort by 'DocFileName' &
+		// select one Pdf for each document
+		// verify Batchprint is completed & check file download link in background task
+		// page
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.docFileName, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// check the Downloaded file
+		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
