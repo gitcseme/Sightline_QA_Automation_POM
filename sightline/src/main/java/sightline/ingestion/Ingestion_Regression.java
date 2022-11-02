@@ -109,7 +109,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.projectName);
 
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
@@ -154,7 +154,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.projectName);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
 
@@ -200,7 +200,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.projectName);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
 
@@ -504,7 +504,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		
@@ -513,11 +513,11 @@ public class Ingestion_Regression {
 		search.verifyTheCountOfDocumentForMetaData();
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName);
 
 		
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
@@ -537,7 +537,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		
@@ -546,13 +546,13 @@ public class Ingestion_Regression {
 		search.verifyTheCountOfDocumentForMetaData();
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName);
 
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName);
 
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
@@ -575,7 +575,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49563");
 		baseClass.stepInfo("### Verify Email metadata in Manage-Project fields ###");
 		String EmailMetaData = "Email";
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo(" Go to Manage > Project Fields");
@@ -609,7 +609,7 @@ public class Ingestion_Regression {
 		SessionSearch	sessionSearch = new SessionSearch(driver);
 		UserManagement user = new UserManagement(driver);
 		DocListPage doclist = new DocListPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		String newSg = "Sg" + Utility.dynamicNameAppender();
@@ -665,7 +665,7 @@ public class Ingestion_Regression {
 
 		// logout as pa
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName);
 		baseClass.selectsecuritygroup(newSg);
 
 		// navigating to doclist
@@ -700,7 +700,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
 		boolean uatFlag=Input.url.contains("sightlineuat");
 		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
@@ -759,7 +759,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
 		boolean uatFlag=Input.url.contains("sightlineuat");
 		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
@@ -911,7 +911,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-50750");
 		baseClass.stepInfo("Validate exporting dataset details at security group level for RMU");
 		
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName);
 		ingestionPage.navigateToDataSetsPage();
 		ingestionPage.verifyToolTipOfExportIcon();
 		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
