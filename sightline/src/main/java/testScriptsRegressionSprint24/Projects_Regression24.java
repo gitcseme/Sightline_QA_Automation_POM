@@ -541,7 +541,7 @@ public class Projects_Regression24 {
 	//Add Domain client
     client.navigateToClientPage();
     driver.waitForPageToBeReady();
-	client.AddDomainClientProcessingEngine(domianName, domianName, "Small (less than 1000 documents)");
+	client.AddDomainClientProcessingEnginee(domianName, domianName, "Small (less than 1000 documents)");
 	baseClass.getSuccessMsgHeader().isElementAvailable(10);
 	baseClass.VerifySuccessMessage("The new client was added successfully");
 	baseClass.CloseSuccessMsgpopup();
