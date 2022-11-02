@@ -7978,6 +7978,8 @@ public class AssignmentsPage {
 	public String selectAssignmentToView(String assignmentName) {
 		String compareCount = null;
 		try {
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			bc.waitForElement(getNumberOfAssignmentsToBeShown());
 			getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
 			driver.scrollingToBottomofAPage();
