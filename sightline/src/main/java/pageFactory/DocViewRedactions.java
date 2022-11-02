@@ -1300,7 +1300,12 @@ public Element get_textHighlightedColorOnRectangleSubMenu() {
 	return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class=\"state-active\"]/a");
 }
 
-
+public Element getRectangleRedactionIconColor() {
+	return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer']//span");
+}
+public Element getHighlightedPageRedactionIconColor() {
+	return driver.FindElementByXPath("//li[@id='highlightCurrentPage_divDocViewer']//span");
+}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -4177,5 +4182,44 @@ public void popOutCodingFormChildWindow() {
 			base.failedStep("Exception occcured while setting this page redaction" + e.getMessage());
 		}
 	}
+/**
+ * @author Brundha.T
+ * @param FieldValue
+ * @param Field
+ * @throws InterruptedException
+ * @Description: selecting highlight icon in docviewpage
+ */
+	public void doubleclickingHighlitingIcon(boolean FieldValue,boolean Field) throws InterruptedException {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return HighliteIcon().Visible() && HighliteIcon().Enabled();
+				}
+			}), Input.wait30);
+			base.waitTillElemetToBeClickable(HighliteIcon());
+			HighliteIcon().waitAndClick(10);
+			
+			if(FieldValue) {
+				thisPageHighlite().waitAndClick(5);	
+			}
+			if(Field) {
+				base.waitTillElemetToBeClickable(HighliteIcon());
+				HighliteIcon().waitAndClick(10);	
+			}
+
+		}
+
+	/**
+	 * @author Brundha.T
+	 * @param ele
+	 * @return
+	 * @description: method to verify revert on or off docview redactions
+	 */
+public String verifyingRevertOffAndOn(Element ele) {
+	String color = ele.getWebElement().getCssValue("color");
+	System.out.println(color);
+	String ActColor = Color.fromString(color).asHex();
+	System.out.println(ActColor);
+	return ActColor;
+}
 
 }
