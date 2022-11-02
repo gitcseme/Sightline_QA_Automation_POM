@@ -634,10 +634,14 @@ public class TagsAndFolders_Regression24 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
 		security.createSecurityGroups(securityGroup);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		System.out.println(securityGroup);
 		base.stepInfo("created security group 2 : " + securityGroup);
 
 		security.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		security.addFolderToSecurityGroup(securityGroup, foldername);
 
