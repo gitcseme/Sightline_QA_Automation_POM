@@ -665,13 +665,22 @@ public class SecurityGroupsPage {
 		wait.until(ExpectedConditions.elementToBeClickable(clickManage().getWebElement()));
 		actions.moveToElement(clickManage().getWebElement());
 		actions.click().build().perform();
+		
 		wait.until(ExpectedConditions.elementToBeClickable(clickSecurityGroup().getWebElement()));
 		actions.moveToElement(clickSecurityGroup().getWebElement());
 		actions.click().build().perform();
-		securityGroupCreate().waitAndClick(5);
-		securityGroupText().waitAndClick(5);
+		
+		bc.waitForElement(securityGroupCreate());
+		securityGroupCreate().waitAndClick(10);
+		
+		bc.waitForElement(securityGroupText());
+		securityGroupText().waitAndClick(10);
 		securityGroupText().SendKeys(securityGroupName);
-		securityGroupSave().waitAndClick(5);
+		
+		bc.waitForElement(securityGroupSave());
+		securityGroupSave().waitAndClick(10);
+		bc.VerifySuccessMessage("Security group added successfully");
+		bc.CloseSuccessMsgpopup();
 	}
 
 	/**

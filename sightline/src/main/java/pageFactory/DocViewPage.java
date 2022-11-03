@@ -3684,11 +3684,8 @@ public class DocViewPage {
 	 */
 	public String getAudioPersistentHit(String searchString) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAudioPersistantHitEyeIcon().Visible();
-			}
-		}), Input.wait60);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
 		getAudioPersistantHitEyeIcon().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
