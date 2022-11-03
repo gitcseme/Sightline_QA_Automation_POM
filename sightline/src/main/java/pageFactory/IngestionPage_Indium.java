@@ -5662,6 +5662,7 @@ public class IngestionPage_Indium {
 				}
 			}
 			base.VerifySuccessMessage("Publish has Started successfully");
+			base.waitTime(5);
 			driver.Navigate().refresh();
 			if (!(publishButton().getWebElement().isEnabled())) {
 				driver.waitForPageToBeReady();
@@ -6561,11 +6562,7 @@ public class IngestionPage_Indium {
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
 		int count;
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTotalIngestedCount().Visible();
-			}
-		}), Input.wait90);
+		base.waitForElement(getTotalIngestedCount());
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
@@ -6584,14 +6581,10 @@ public class IngestionPage_Indium {
 			count =1;
 		}
 		else {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTotalPageCount().Visible();
-			}
-		}), Input.wait60);
+		base.waitForElement(getTotalPageCount());
 		String totalCount = getTotalPageCount().getText();
 		int pageCount = Integer.parseInt(getTotalPageCount().getText());
-		getRefreshButton().waitAndClick(5);
+//		getRefreshButton().waitAndClick(5);
 		if ((String.valueOf(totalCount)).contains("0")) {
 			count = Integer.parseInt(totalCount) / 10;
 		} else if (pageCount < 10) {
@@ -6601,7 +6594,7 @@ public class IngestionPage_Indium {
 		}
 		}
 		System.out.println(count);
-		getRefreshButton().waitAndClick(5);
+//		getRefreshButton().waitAndClick(5);
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
