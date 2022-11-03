@@ -661,15 +661,21 @@ public class Ingestion_Regression_7 {
 		baseClass.stepInfo("Perform search with 'docfileextension' metadata");
 		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.docFileExt,".txt");
 		baseClass.stepInfo("Text files search result:"+count);
-		sessionSearch.verifySearchResultReturnsForConfiguredQuery(count);
-		int textFormatDocs = ingestionPage.textFormatDocs().size();
-		baseClass.stepInfo("text format docs:"+textFormatDocs);
-		if(textFormatDocs>0) {
-			baseClass.passedStep("pure hit considered docs with .txt format");
+		if(count!=0) {
+			sessionSearch.verifySearchResultReturnsForConfiguredQuery(count);
+			int textFormatDocs = ingestionPage.textFormatDocs().size();
+			baseClass.stepInfo("text format docs:"+textFormatDocs);
+			if(textFormatDocs>0) {
+				baseClass.passedStep("pure hit considered docs with .txt format");
+			}
+			else {
+				baseClass.failedStep("pure hit not considered docs with .txt format");
+			}
 		}
 		else {
-			baseClass.failedStep("pure hit not considered docs with .txt format");
+			baseClass.failedMessage("Doc file extension for text files not present");
 		}
+		
 		loginPage.logout();
 	}
 	
