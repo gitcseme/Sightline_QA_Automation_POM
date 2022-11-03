@@ -702,14 +702,17 @@ public class DocViewAudio_Regression24 {
 		assignmentPage.selectAssignmentToViewinDocView(Asssignment);
 		
 		baseClass.waitTime(3);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
 		List<String> DocIDInMiniDocList2 = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
 		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
 		driver.waitForPageToBeReady();
-
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
+		
+		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
 		docviewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
