@@ -3977,4 +3977,73 @@ public class DocExplorerPage {
 		return Integer.valueOf(DocCount);
 	}
 
+	/**
+	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude filter for EmailRecipientNames
+	 */
+	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient,String EmailRecipient1) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getDocExp_EmailRecNameFilter());
+			bc.waitTillElemetToBeClickable(getDocExp_EmailRecNameFilter());
+			getDocExp_EmailRecNameFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(EmailRecipient);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAddToFilter());
+			bc.waitTillElemetToBeClickable(getAddToFilter());
+			getAddToFilter().Click();
+			if(EmailRecipient1 != null) {
+				bc.waitForElement(getExcludeRadioBtn());
+				bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+				getExcludeRadioBtn().Click();
+				getSearchTextArea().SendKeys(EmailRecipient1);
+				Thread.sleep(Input.wait30 / 30);
+				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getAddToFilter());
+				bc.waitTillElemetToBeClickable(getAddToFilter());
+				getAddToFilter().Click();
+			}
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method to verify documents after applying exclude functionality
+	 *               by EmailRecipientNames.
+	 * 
+	 */
+	public void verifyExcludeFunctionlityForEmailRecipientNames(String DocId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getPresentDocCount());
+			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			driver.waitForPageToBeReady();
+			if (bc.text(DocId).isDisplayed()) {
+				bc.passedStep("Exclude filter functionality by EmailRecipientNames is working as expected");
+			} else {
+				bc.failedStep("Exclude filter functionality by EmailRecipientNames is not working as expected.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by EmailRecipientNames"
+							+ e.getMessage());
+		}
+	}
 }

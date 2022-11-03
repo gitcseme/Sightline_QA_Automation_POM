@@ -220,7 +220,7 @@ public class DocListPage {
 	}
 
 	public Element getDocList_Preview_CloseButton() {
-		return driver.FindElementByXPath("//span[@id='ui-id-1']/following-sibling::button");
+		return driver.FindElementByXPath("//h3[@id='ui-id-1']/following-sibling::button");
 	}
 
 	// added by sowndariya
