@@ -7790,7 +7790,7 @@ public class SavedSearch {
 
 		if (groupName.equals(Input.shareSearchDefaultSG) || groupName.equals(Input.shareSearchPA)
 				|| groupName.contains("Shared with ") || (groupName.equals(Input.mySavedSearch))) {
-			getSavedSearchGroupName(groupName).waitAndClick(5);
+			getSavedSearchGroupName(groupName).waitAndClick(15);
 			System.out.println("Clicked :" + groupName);
 		}
 	}
