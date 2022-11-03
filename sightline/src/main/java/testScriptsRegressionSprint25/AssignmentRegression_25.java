@@ -152,7 +152,7 @@ public class AssignmentRegression_25 {
 	 * @Modified date:N/A
 	 * @Modified by: N/A
 	 * @Description :To verify that Coding form field is displayed for Assignment
-	 *              only. RPMXCON-54754
+	 *              only. RPMXCON-53969
 	 */
 	@Test(description = "RPMXCON-53969", enabled = true, groups = { "regression" })
 	public void verifyCodingFormFieldDispalyedForAssignment() {
