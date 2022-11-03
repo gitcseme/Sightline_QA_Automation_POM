@@ -136,7 +136,7 @@ public class Production_Regression24 {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageForOtherProject(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();

@@ -22792,4 +22792,27 @@ public class ProductionPage {
 			}
 		}
 	}
+	/**
+	 * @author Brundha.T
+	 */
+	public void fillingProductionLocationPageForOtherProject(String productionname) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Enabled();
+			}
+		}), Input.wait30);
+
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);;
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Enabled();
+			}
+		}), Input.wait90);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("production location Page section is filled");
+	}
 }

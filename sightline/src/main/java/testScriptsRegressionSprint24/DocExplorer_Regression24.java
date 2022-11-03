@@ -772,6 +772,7 @@ public class DocExplorer_Regression24 {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		baseClass.waitTime(2);
 		tagsAndFolderPage.verifyFolderDocCount(Foldername, Doc);
 		loginPage.logout();
 	}
