@@ -155,14 +155,13 @@ public class Production_Regression24 {
 		File fileName = new File(home + "/Downloads/VOL0001/PDF/0001/" + Bates[i] + ".pdf");
 		driver.waitForPageToBeReady();
 		System.out.println(Bates[i]);
-		
+		base.waitTime(1);
 		if(fileName.exists()) {
 			base.passedStep(" Batesnumber is maintained in sequence order");
 		}else {
 			base.failedStep("Bates number is not maintained in sequence order");
 		}
 		}
-		
 		page.pdfVerificationInDownloadedFile(BatesNumber,PageCount, prefixID, PlaceholderText);
 		page.pdfVerificationInDownloadedFile(BatesNumber1, PageCount2Doc, prefixID, PlaceholderText);
 		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, PlaceholderText);
