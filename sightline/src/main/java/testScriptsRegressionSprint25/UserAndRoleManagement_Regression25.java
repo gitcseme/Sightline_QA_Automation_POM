@@ -160,6 +160,517 @@ public class UserAndRoleManagement_Regression25 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52708 Description :To
+	 * verify when 'Analytics Panels' is Checked/Unchecked from Edit User ->
+	 * functionality tab
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52708", enabled = true, groups = { "regression" })
+	public void verifyAnalyticsPanelIsCheckedUncheckedFromEditFunctionalities() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52708");
+		baseClass
+				.stepInfo("To verify when 'Analytics Panels' is Checked/Unchecked from Edit User -> functionality tab");
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", false);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", true);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", false);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", true);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", false);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", true);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52709 
+	 * Description :To verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User > functionality tab
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52709", enabled = true, groups = { "regression" })
+	public void verifyReviewerRemarkslIsCheckedUncheckedFromEditFunctionalities() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52709");
+		baseClass
+				.stepInfo("To verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User > functionality tab");
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", false);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", true);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", false);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", true);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", false);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Reviewer Remarks"),
+				"Reviewer Remarks", true);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52710 
+	 * Description :To verify for user when 'Redaction' is Checked/Unchecked from Edit User->Functionality tab
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52710", enabled = true, groups = { "regression" })
+	public void verifyRedactionIsCheckedUncheckedFromEditFunctionalities() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52710");
+		baseClass
+				.stepInfo("To verify for user when 'Redaction' is Checked/Unchecked from Edit User->Functionality tab");
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", false);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", true);
+		loginPage.logout();
+
+		// Login As Project Admin
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", false);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", true);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", false);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
+				"Redactions", true);
+		loginPage.logout();
+
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as Reviewer");
+
+		// Navigate to docview
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -187,3 +698,6 @@ public class UserAndRoleManagement_Regression25 {
 	}
 
 }
+
+
+
