@@ -221,15 +221,13 @@ public class TagsAndFoldersPage {
 	public ElementCollection getAvailableFolderList() {
 		return driver.FindElementsByXPath("//div[starts-with(@id,'folderJSTree')]//ul//li//a");
 	}
-	
+
 	public ElementCollection getAllClosedArrow() {
-		return driver.FindElementsByXPath(
-				"//li[contains(@class,'jstree-node  jstree-closed')]//i[@class='jstree-icon jstree-ocl']");
+		return driver.FindElementsByXPath("//li[contains(@class,'jstree-node  jstree-closed')]//a");
 	}
 
-	public Element getAllClosedArrow(int i) {
-		return driver.FindElementByXPath(
-				"(//li[contains(@class,'jstree-node  jstree-closed')]//i[@class='jstree-icon jstree-ocl'])[" + i + "]");
+	public Element getAllClosedArrow(String name) {
+		return driver.FindElementByXPath("//a[text()='" + name + "']//parent::li//i[@class='jstree-icon jstree-ocl']");
 	}
 
 	public ElementCollection getAvailableTagList() {
@@ -3493,10 +3491,13 @@ public class TagsAndFoldersPage {
 	 */
 	public void expandAllClosedArrow() {
 		driver.waitForPageToBeReady();
-//		base.waitForElementCollection(getAllClosedArrow());
-		for (int i = 1; i <= getAllClosedArrow().size(); i++) {
-			getAllClosedArrow(i).waitAndClick(10);
-			base.stepInfo("Expanded Arrow ");
+		base.waitForElementCollection(getAllClosedArrow());
+		List<String> textvalue = base.availableListofElements(getAllClosedArrow());
+
+		for (int i = 0; i < textvalue.size(); i++) {
+			base.waitForElement(getAllClosedArrow(textvalue.get(i)));
+			getAllClosedArrow(textvalue.get(i)).waitAndClick(10);
+			base.stepInfo("Expanded All Arrow ");
 		}
 	}
 }
