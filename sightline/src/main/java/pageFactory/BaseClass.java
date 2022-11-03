@@ -871,14 +871,14 @@ public class BaseClass {
 			}
 		}), 10000);
 		driver.scrollPageToTop();
-		getsgNames().waitAndClick(5);
+		getsgNames().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectsg(sgname).Visible();
 			}
 		}), 10000);
-		getSelectsg(sgname).waitAndClick(5);
+		getSelectsg(sgname).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		UtilityLog.info("Security Group Selected: " + sgname);
 	}
