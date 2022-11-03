@@ -163,7 +163,7 @@ public class SavedSearchRegression_New_Set_01 {
 
 		// Create Node
 		saveSearch.createSearchGroupAndReturn("Input.mysavedsearch", "PA", "No");
-		base.CloseSuccessMsgpopup();
+		//base.CloseSuccessMsgpopup();
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		String new_node = saveSearch.getSavedSearchNewNode().getText();
 		driver.waitForPageToBeReady();
