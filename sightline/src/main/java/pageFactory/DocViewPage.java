@@ -28725,6 +28725,7 @@ public class DocViewPage {
 		base.waitTime(2);
 		String pagesCount = totalPageCount().getText();
 		String[] pageCnt = pagesCount.split(" ");
+		base.waitTime(2);
 		int pagesCnt = Integer.parseInt(pageCnt[1].trim());
 		System.out.println(pagesCnt);
 		return pagesCnt;

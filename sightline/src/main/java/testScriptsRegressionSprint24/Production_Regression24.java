@@ -91,6 +91,9 @@ public class Production_Regression24 {
 		base.stepInfo(
 				"Verify that branding with Bates Number and 'Confidentiality' is applied on all pages for image based documents for generated TIFF/PDF file");
 
+		DocViewPage Doc = new DocViewPage(driver);
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -109,10 +112,7 @@ public class Production_Regression24 {
 		sessionSearch.bulkTagExisting(tagname);
 		doc.documentSelection(3);
 		doc.viewSelectedDocumentsInDocView();
-
-		DocViewPage Doc = new DocViewPage(driver);
-		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
-		base.waitTime(3);
+		base.waitTime(8);
 		int PageCount = Doc.getTotalPagesCount();
 
 		DocRedactions.selectDoc2();
