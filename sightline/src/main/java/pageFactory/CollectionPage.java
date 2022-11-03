@@ -1349,8 +1349,9 @@ public class CollectionPage {
 			getCollectionAction(collectionName).waitAndClick(5);
 			getCollectionActionList(collectionName, "Delete").waitAndClick(10);
 
-			if (getPopupMsg().isElementAvailable(3)) {
+			if (getPopupMsg().isElementAvailable(8)) {
 				String expectedMsg = "Are you sure you want to delete the collection?";
+				driver.waitForPageToBeReady();
 				String actualMsg = getPopupMsg().getText();
 				base.compareTextViaContains(actualMsg, expectedMsg, actualMsg, "Popup msg is not as expected");
 
