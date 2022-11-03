@@ -77,7 +77,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48073",enabled = true, groups = { "regression" })
-	public void verifyEmailDateSentTimeOnlyInTallyAndSearch() throws InterruptedException {
+	public void TCA1verifyEmailDateSentTimeOnlyInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48073");
 		baseClass.stepInfo("Verify EmailDateSentTimeOnly in tally and in Search.");
@@ -112,7 +112,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48080",enabled = true, groups = { "regression" })
-	public void verifyExcelProtectedWorkbookInTallyAndSearch() throws InterruptedException {
+	public void TCB9verifyExcelProtectedWorkbookInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48080");
 		baseClass.stepInfo("Verify ExcelProtectedWorkbook in Tally and Search.");
@@ -171,7 +171,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48074",enabled = true, groups = { "regression" })
-	public void verifyFileDescriptionInTallyAndSearch() throws InterruptedException {
+	public void TCC1verifyFileDescriptionInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48074");
 		baseClass.stepInfo("Verify FileDescription in Tally and Search.");
@@ -207,7 +207,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49554",enabled = true, groups = { "regression" })
-	public void verifyEmailCcMetadataAvailability() throws InterruptedException {
+	public void TCA2verifyEmailCcMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49554");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is available");
@@ -243,7 +243,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49555",enabled = true, groups = { "regression" })
-	public void verifyEmailBccMetadataAvailability() throws InterruptedException {
+	public void TCA3verifyEmailBccMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49555");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available");
@@ -279,7 +279,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49504",enabled = true, groups = { "regression" })
-	public void verifyToolTipForDateFormat() throws InterruptedException {
+	public void TCA4verifyToolTipForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49504");
 		baseClass.stepInfo("Verify that tooltip should be displayed for 'Date & Time Format' field");
@@ -307,7 +307,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49503",enabled = true, groups = { "regression" })
-	public void verifyToolTipAndDefaultSelectionForDateFormat() throws InterruptedException {
+	public void TCA5verifyToolTipAndDefaultSelectionForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49503");
 		baseClass.stepInfo("Verify that different formats present in 'Date & Time Format' field");
@@ -334,7 +334,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47363",enabled = true, groups = { "regression" })
-	public void verifyGridAndTileviewOptions() throws InterruptedException {
+	public void TCA6verifyGridAndTileviewOptions() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47363");
 		baseClass.stepInfo("To verify that user is able to view two buttons of Grid and Tile view.");
@@ -362,7 +362,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47307",enabled = true, groups = { "regression" })
-	public void verifyIngestionCountOnHomePage() throws InterruptedException {
+	public void TCA7verifyIngestionCountOnHomePage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47307");
 		baseClass.stepInfo("To verify that Ingestion Count on Ingested Home page is displayed correctly");
@@ -388,7 +388,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47458",enabled = true, groups = { "regression" })
-	public void verifyBackButtonFunctionality() throws InterruptedException {
+	public void TCA8verifyBackButtonFunctionality() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47458");
 		baseClass.stepInfo("To verify that Back button functionality on Configure Mapping page.");
@@ -427,7 +427,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60818",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathInTranscript() throws InterruptedException {
+	public void TCB8verifyAbsolutePathInTranscript() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60818");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the Transcript LST.");
@@ -480,7 +480,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60819",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathInTranslation() throws InterruptedException {
+	public void TCB7verifyAbsolutePathInTranslation() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60819");
 		baseClass.stepInfo("To verify that Absolute path is present in the Translation LST.");
@@ -533,7 +533,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-58507",enabled = true, groups = { "regression" })
-	public void verifyAddOnlyForDifferentSourceSystem() throws InterruptedException {
+	public void TCB5verifyAddOnlyForDifferentSourceSystem() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58507");
 		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
@@ -564,7 +564,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48615",enabled = true, groups = { "regression" })
-	public void verifyTextOverlayCountUnderIndexingSection() throws InterruptedException {
+	public void TCB6verifyTextOverlayCountUnderIndexingSection() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48615");
 		baseClass.stepInfo("Verify overlay text files count reflecting under indexing section");
@@ -608,7 +608,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47290",enabled = true, groups = { "regression" })
-	public void verifyMandatoryFieldsInSourceAndSettingsOption() throws InterruptedException {
+	public void TCB4verifyMandatoryFieldsInSourceAndSettingsOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47290");
 		baseClass.stepInfo("verify the mandatory fields in source and overwrite settings option");
@@ -640,7 +640,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48605",enabled = true, groups = { "regression" })
-	public void verifyTextFilesSearchConsideration() throws InterruptedException {
+	public void TCB3verifyTextFilesSearchConsideration() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48605");
 		baseClass.stepInfo("Verify that users should be able to successfully conduct searches");
@@ -680,7 +680,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47286",enabled = true, groups = { "regression" })
-	public void verifyVariousOptionsInIngestionWizard() throws InterruptedException {
+	public void TCB1verifyVariousOptionsInIngestionWizard() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47286");
 		baseClass.stepInfo("verify 'Source Selection & Ingestion Type' Sections for various Options");
@@ -709,7 +709,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-58522",enabled = true, groups = { "regression" })
-	public void verifyDifferentSourceSystemFromDraft() throws InterruptedException {
+	public void TCB2verifyDifferentSourceSystemFromDraft() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58522");
 		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
@@ -753,7 +753,7 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47457",enabled = true, groups = { "regression" })
-	public void verifyNavigatingToMappingPageWithBlankFields() throws InterruptedException {
+	public void TCA9verifyNavigatingToMappingPageWithBlankFields() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47457");
 		baseClass.stepInfo("Verify user is not allowed to go to Mapping Page unless mandatory fields are entered.");
@@ -798,13 +798,13 @@ public class Ingestion_Regression_7 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60813",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathInDat() throws InterruptedException {
+	public void TCC2verifyAbsolutePathInDat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60813");
 		baseClass.stepInfo("verify the ingestion status if DAT file contain the Absolute path.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
