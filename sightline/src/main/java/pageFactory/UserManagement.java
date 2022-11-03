@@ -1129,7 +1129,9 @@ public class UserManagement {
 	public Element getPopupWindowHeader() {
 		return driver.FindElementByXPath("//div[contains(text(),'Modify Multiple User Profiles')]");
 	}
-
+	public Element getCollectionsCheckBox() {
+		return driver.FindElementById("chkCanCollections");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -4923,10 +4925,16 @@ public class UserManagement {
 	/**
 	 * @author Brundha.T
 	 * @param Value
-	 * @param users Description:method for enableor disable user rights
+	 * @param users Description:method for enable or disable user rights
+	 * @return 
 	 */
 	public void enableOrDisableUsersRights(String Value, String[] users) {
 		selectRoleBulkUserAccessControl(Input.ProjectAdministrator, Input.projectName, null);
+		driver.waitForPageToBeReady();
+		boolean flag;
+		flag=getCollectionsCheckBox().GetAttribute("disabled") == null ;
+		System.out.println(flag);
+		if(!flag) {
 		defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false, false,
 				false, false, false, false);
 
@@ -4937,6 +4945,19 @@ public class UserManagement {
 		} else {
 			bc.waitForElement(getDisableRadioBtn());
 			getDisableRadioBtn().waitAndClick(10);
+		}
+		}else {
+			driver.waitForPageToBeReady();
+			if ("Enable".equals(Value)) {
+				bc.waitForElement(getEnableRadioBtn());
+				getEnableRadioBtn().waitAndClick(10);
+			}else {
+				defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, false, false, false, false,
+						false, false, false, false);
+				
+				bc.waitForElement(getDisableRadioBtn());
+				getDisableRadioBtn().waitAndClick(10);
+			}
 		}
 		Actions Act = new Actions(driver.getWebDriver());
 		Act.clickAndHold(getPopupWindowHeader().getWebElement());
