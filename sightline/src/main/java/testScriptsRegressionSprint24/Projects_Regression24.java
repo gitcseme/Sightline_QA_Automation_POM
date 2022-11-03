@@ -511,6 +511,7 @@ public class Projects_Regression24 {
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
 		DataSets data = new DataSets(driver);
+		baseClass.waitTime(2);
 		data.getNotificationMessage(0, projectName);
 
 		baseClass.passedStep("Verify that notification has a clear message about the project creation Successfully");
