@@ -22,6 +22,7 @@ import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -231,6 +232,62 @@ public class BatchPrintRegression_25 {
 		// check the Downloaded file
 		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
 
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify that Help is displayed on exception file
+	 *              types..RPMXCON-47801
+	 */
+
+	@Test(description = "RPMXCON-47801", enabled = true, groups = { "regression" })
+	public void verifyHelpDispalyedOnExceptionFileTypes() {
+
+		String searchName = "savedSearch" + Utility.dynamicNameAppender();
+		SavedSearch savedSearch = new SavedSearch(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47801 Batch Print");
+		baseClass.stepInfo("To verify that Help is displayed on exception file types.");
+
+		// performing basic content search and saving the search Result
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchName);
+
+		// selecting the source in source selection tab and navigating to next tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search", searchName, false);
+
+		// navigating to Exception File Types Tab
+		batchPrint.navigateToNextPage(2);
+
+		// clicking Other Exception File Type Help Icon and verifying is that display
+		// Other Exception File Type Help Block
+		batchPrint.getOtherExceptionFileTypeHelpIcon().waitAndClick(5);
+		baseClass.ValidateElement_Presence(batchPrint.getOtherExceptionFileTypeHelpBlock(),
+				"Other Exception File Type Help Block");
+
+		// clicking Media Files Help Icon and verifying is that display Media File Help
+		// Block
+		batchPrint.getMediaFilesHelpIcon().waitAndClick(5);
+		baseClass.ValidateElement_Presence(batchPrint.getMediaFilesHelpBlock(), "Media File Help Block");
+
+		// clicking Excel Files Help Icon and verifying is that display Excel File Help
+		// Block
+		batchPrint.getExcelFilesHelpIcon().waitAndClick(5);
+		baseClass.ValidateElement_Presence(batchPrint.getExcelFilesHelpBlock(), "Excel File Help Block");
+
+		baseClass.passedStep("Verified that Help is displayed for Exception File type, Media Files and Excel Files.");
+
+		// deleting the savedSearch
+		savedSearch.SaveSearchDelete(searchName);
+
+		// Logout
 		loginPage.logout();
 	}
 

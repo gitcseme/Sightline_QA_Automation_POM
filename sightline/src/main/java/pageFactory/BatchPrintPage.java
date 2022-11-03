@@ -254,6 +254,30 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getOtherExceptionFileTypeHelpBlock() {
+		return driver.FindElementByXPath("//h3[text()='Other Exception File Types']/parent::div[@class='popover fade right in']");
+	}
+
+	public Element getExcelFilesHelpBlock() {
+		return driver.FindElementByXPath("//h3[text()='Excel Files']/parent::div[@class='popover fade right in']");
+	}
+	
+	public Element getMediaFilesHelpBlock() {
+		return driver.FindElementByXPath("//h3[text()='Media Files']/parent::div[@class='popover fade right in']");
+	}
+
+	public Element getMediaFilesHelpIcon() {
+		return driver.FindElementByXPath("//a[@data-original-title='Media Files']");
+	}
+	
+	public Element getExcelFilesHelpIcon() {
+		return driver.FindElementByXPath("//a[@data-original-title='Excel Files']");
+	}
+	
+	public Element getOtherExceptionFileTypeHelpIcon() {
+		return driver.FindElementByXPath("//a[@data-original-title='Other Exception File Types']");
+	}
+	
 	public Element getAnalysisRequestHeader() {
 		return driver.FindElementByXPath("//div[@class='clearfix']//following-sibling::div//strong");
 	}
