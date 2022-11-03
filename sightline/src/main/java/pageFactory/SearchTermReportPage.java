@@ -379,7 +379,7 @@ public class SearchTermReportPage {
 
 		getSTR_SaveReportBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
+
 		if (verifySave) {
 			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 			driver.waitForPageToBeReady();
@@ -894,7 +894,7 @@ public class SearchTermReportPage {
 	 * @author Jeevitha
 	 * @param searchName
 	 */
-	public void GenerateReportWithAnySearchOrTab(String[] searchOrTabName,boolean verifyStrReport) {
+	public void GenerateReportWithAnySearchOrTab(String[] searchOrTabName, boolean verifyStrReport) {
 		bc.waitForElement(getSearchTermReport());
 		getSearchTermReport().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -911,12 +911,24 @@ public class SearchTermReportPage {
 		driver.waitForPageToBeReady();
 		if (verifyStrReport) {
 			bc.waitTime(3);
+
+			for (int i = 0; i < 40; i++) {
+				bc.waitTime(1);
+				if (bc.getPopupYesBtn().isElementAvailable(2)) {
+					bc.getPopupYesBtn().waitAndClick(10);
+					System.out.println("wait for task popup is Displayed");
+					break;
+				} else if (getSTReport().isElementAvailable(2)) {
+					System.out.println("Report Displayed");
+					break;
+				}
+			}
 			bc.waitForElement(getSTReport());
 			if (getSTReport().isDisplayed()) {
 				bc.stepInfo("Report generated sucessfull");
 			} else {
 				bc.failedStep("Report not generated sucessfull");
-			} 
+			}
 		}
 	}
 
