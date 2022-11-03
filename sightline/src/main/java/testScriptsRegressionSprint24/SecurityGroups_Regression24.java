@@ -106,7 +106,10 @@ public class SecurityGroups_Regression24 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
 		comments.AddComments(addComment);
+		driver.waitForPageToBeReady();
 		sgpage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(8);
 		sgpage.createSecurityGroups(SGname);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
