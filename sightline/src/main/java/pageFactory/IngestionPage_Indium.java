@@ -5629,7 +5629,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: Arun Modified Date: 03/11/2022
 	 * @description: this method is used to run full analysis and publish.
 	 */
 	public void runFullAnalysisAndPublish() {
@@ -5648,6 +5648,11 @@ public class IngestionPage_Indium {
 				driver.Navigate().refresh();
 				endTime().ScrollTo();
 				String endTime = endTime().getText();
+				String status = getAnalyticsStatus(1,5).getText();
+				System.out.println(status);
+				if(status.contains("FAILED")) {
+					base.failedStep("Analytics ingestion failed, need to contact admin/retry");
+				}
 				publishButton().isElementAvailable(15);
 				if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
 					driver.waitForPageToBeReady();
