@@ -4003,7 +4003,7 @@ public class DocExplorerPage {
 				bc.waitForElement(getExcludeRadioBtn());
 				bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
 				getExcludeRadioBtn().Click();
-				getSearchTextArea().SendKeys(EmailRecipient);
+				getSearchTextArea().SendKeys(EmailRecipient1);
 				Thread.sleep(Input.wait30 / 30);
 				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
 				driver.waitForPageToBeReady();
