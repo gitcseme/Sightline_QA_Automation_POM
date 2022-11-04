@@ -431,6 +431,7 @@ public class Input {
 	public static String mp3PathField;
 	public static String tiffPathField;
 	public static String transcriptPathField;
+	public static String uncAbsoluteNative;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1441,6 +1442,7 @@ public class Input {
 		mp3PathField = testData.getMp3PathField();;
 		tiffPathField = testData.getTiffPathField();
 		transcriptPathField = testData.getTranscriptPathField();
+		uncAbsoluteNative = testData.getUncAbsoluteNative();
 		
 		
 		// Added by Raghuram 02/24/22
