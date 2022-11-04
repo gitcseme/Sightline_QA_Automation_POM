@@ -2852,17 +2852,19 @@ public class BaseClass {
 			System.out.println("element not is displayed");
 		}
 	}
+
 	/**
 	 * @author Iyappan
 	 * @param element
 	 */
 	public void elementNotdisplayed(Element element, String description) {
 		if (element.isDisplayed()) {
-			failedStep(description+" is displayed");
+			failedStep(description + " is displayed");
 		} else {
-			passedStep(description+" is not displayed");
+			passedStep(description + " is not displayed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -4671,5 +4673,19 @@ public class BaseClass {
 		}
 		softAssertion.assertAll();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description  : verify current role
+	 * @param expectedRole
+	 */
+	public void verifyCurrentRole(String expectedRole) {
+		driver.waitForPageToBeReady();
+		getSignoutMenu().waitAndClick(10);
+		waitForElement(getLoginedUserRole());
+		String currentUser = getLoginedUserRole().getText();
+		textCompareEquals(currentUser, expectedRole, "Current Role is : " + expectedRole,
+				"Current role is not as expected");
 	}
 }

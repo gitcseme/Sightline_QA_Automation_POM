@@ -2642,6 +2642,7 @@ public class CollectionPage {
 	 */
 	public void confirmationAction(String action, String verifyMsg, boolean addition) {
 		try {
+			base.waitForElement(getConfirmationBtnAction(action));
 			getConfirmationBtnAction(action).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage(verifyMsg);
