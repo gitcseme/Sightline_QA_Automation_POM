@@ -11489,7 +11489,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_Action_redistributedoc().waitAndClick(10);
 		bc.getYesBtn().waitAndClick(10);
 
-		assertion.assertEquals(getRedistributePopUpHeader().isElementAvailable(5), true);
+		assertion.assertEquals((boolean)getRedistributePopUpHeader().isElementAvailable(5), true);
 		assertion.assertAll();
 		bc.stepInfo("Redistribute Documents PopUp is Opened.");
 
