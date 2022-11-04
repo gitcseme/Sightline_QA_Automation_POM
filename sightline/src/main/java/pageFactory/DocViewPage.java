@@ -28779,6 +28779,26 @@ public class DocViewPage {
 		}
 		}
 	}
+	
+	
+	/**
+	 * @Author Mohan Created on 26/08/2021
+	 * @Description To verify is Analytics panel present or not 'RPMXCON-51844'
+	 */
+	public void verifyAnalyticsPanel(Element elementToCheck, String componentName) {
+
+		try {
+			driver.waitForPageToBeReady();
+			boolean flagPresent = elementToCheck.isElementAvailable(3);
+			if (flagPresent==false) {
+				base.passedStep(componentName + " is not present in Analytics Panel");
+			} else if (flagPresent== true) {
+				base.passedStep(componentName + " is present in Analytics Panel");
+			}
+		} catch (Exception e) {
+			base.failedStep("Can't able to verify analytics panel");
+		}
+	}
 
 }
 
