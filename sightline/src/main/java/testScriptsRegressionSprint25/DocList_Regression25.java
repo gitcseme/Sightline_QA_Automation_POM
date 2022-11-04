@@ -126,7 +126,56 @@ public class DocList_Regression25 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha.T ModifyDate:4/11/2022 RPMXCON-54347
+	 * @throws Exception
+	 * @Description Verify from Doc View- mini doc list navigation and presentation
+	 *              to DocList with selected documents, should complete in less than
+	 *              8 seconds
+	 */
+	@Test(description = "RPMXCON-54347", enabled = true, groups = { "regression" })
+	public void verifyingLoadingOfDocListPage() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-54347");
+		baseClass.stepInfo(
+				"Verify from Doc View- mini doc list navigation and presentation to DocList with selected documents, should complete in less than 8 seconds");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage doc=new DocViewPage(driver);
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PA as with " + Input.pa1userName + "");
+
+		// Searching Content document go to docview
+		int Purehit=sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		long start = System.currentTimeMillis();
+		
+		baseClass.stepInfo("Navigating to doclist page");
+		baseClass.waitForElement(doc.getViewDocAllList());
+		doc.getViewDocAllList().waitAndClick(2);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docList.getTableFooterDocListCount());
+		String DocListCount = docList.getTableFooterDocListCount().getText();
+		
+		long finish = System.currentTimeMillis();
+		long totalTime = finish - start;
+		System.out.println(totalTime);
+
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[5];
+		baseClass.digitCompareEquals(Integer.valueOf(Document), Purehit, "Documents are loaded Successfully", "Documents are not loaded");
+		
+		baseClass.stepInfo("verifying the document loaded within 8 secs");
+		if (totalTime < 8000) {
+			baseClass.passedStep("Selected Documents are loaded in doclist page within 8 secs");
+		}else {
+			baseClass.failedStep("Selected Documents are not loaded in doclist page within 8 secs");
+		}
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

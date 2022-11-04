@@ -101,7 +101,44 @@ public class DocExplorer_Regression25 {
 		loginPage.logout();
 
 	}
-	
+	/**
+	 * @author Brundha.T Date:04/11/2022 RPMXCON-54646
+	 * @throws Exception
+	 * @Description Verify the list of fields from the list view should be displayed
+	 *              in capital
+	 */
+	@Test(description = "RPMXCON-54646", enabled = true, groups = { "regression" })
+	public void verifyingCapitalInListView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54646");
+		baseClass.stepInfo("Verify the list of fields from the list view should be displayed in capital");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+
+		docExplorer.navigateToDocExplorerPage();
+		for(int i=2;i<=9;i++) {
+			driver.waitForPageToBeReady();
+			String ColValue=docExplorer.getListViewHeader(i).getText();
+			System.out.println(ColValue);
+			
+			baseClass.stepInfo("The list view field is:"+ColValue);
+			String CompareString=ColValue.toLowerCase();
+			System.out.println(CompareString);
+			
+			baseClass.stepInfo("The list view field Compare value:"+CompareString);
+			if(!ColValue.equals(CompareString)) {
+				baseClass.passedStep("The list of fields from the list view is displayed in capital");
+			}
+			else {
+				baseClass.failedStep("The list of fields from the list view is not displayed in capital");
+			}
+		}
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
