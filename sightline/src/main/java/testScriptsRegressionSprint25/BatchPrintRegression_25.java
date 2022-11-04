@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 
+import org.apache.poi.ss.formula.ptg.GreaterThanPtg;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -14,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -30,6 +32,7 @@ import testScriptsSmoke.Input;
 
 public class BatchPrintRegression_25 {
 
+	SoftAssert softassert;
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
@@ -63,11 +66,14 @@ public class BatchPrintRegression_25 {
 		session = new SessionSearch(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		page = new ProductionPage(driver);
+		softassert = new SoftAssert();
 	}
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
 
@@ -288,6 +294,144 @@ public class BatchPrintRegression_25 {
 		savedSearch.SaveSearchDelete(searchName);
 
 		// Logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that user can select Export file options
+	 *              [RPMXCON-47826]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-47826", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyUserCanSelectExportFile(String username, String password)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+		String[] expectedList = { Input.documentKey, Input.docFileName };
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47826 Batch Print");
+		baseClass.stepInfo("To verify that user can select Export file options");
+
+		// configure query & perform Bulk Tag
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(Tag);
+
+		boolean[] selectPdfRadio = { false, true };
+		for (int i = 0; i < 2; i++) {
+			boolean radio = selectPdfRadio[i];
+
+			// Select TAG & Select Native in basis for printing
+			batchPrint.navigateToBatchPrintPage();
+			batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+			batchPrint.fillingBasisForPrinting(true, true, null);
+			batchPrint.navigateToNextPage(1);
+			batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+			// filling SlipSheet With metadata
+			batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+			batchPrint.navigateToNextPage(1);
+
+			// verify Export file name dropdown
+			List<String> exportddList = baseClass.availableListofElements(batchPrint.getExportFileNameDD());
+			baseClass.compareArraywithDataList(expectedList, exportddList, true,
+					"Export File Dropdown options are : " + exportddList,
+					"Export File Dropdown options are not as expected");
+
+			// select sorting "DESC" Order
+			batchPrint.selectSortingFromExportPage("DESC");
+			int initialBgCount = baseClass.initialBgCount();
+
+			// When Radio is True it will select One PDF for all
+			// when Radio is false it will select one PDF for each
+			batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, radio, 20);
+
+			// check for notification
+			baseClass.checkNotificationCount(initialBgCount, 1);
+			int afterBgCount = baseClass.initialBgCount();
+			int valuee = Integer.max(initialBgCount, afterBgCount);
+			baseClass.digitCompareEquals(valuee, afterBgCount, "Recieved Notification.",
+					"Notification is not Displayed.");
+
+			// Verify Actual Document Count
+			int index = baseClass.getIndex(batchPrint.getBackGroundPageHeader(), "Actual Docs");
+			String actualDocValue = batchPrint.getValuesFromBackGroundPage(index).getText();
+
+			softassert.assertNotEquals(Integer.parseInt(actualDocValue), 0);
+			baseClass.passedStep("Actual Doc Count is : " + actualDocValue);
+
+			softassert.assertAll();
+			driver.Navigate().refresh();
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Validate printing document with MEDIA file type
+	 *              [RPMXCON-50730]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-50730", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyMediaFileType(String username, String password)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50730 Batch Print");
+		baseClass.stepInfo("Validate printing document with MEDIA file type");
+
+		// configure query & perform Bulk Tag
+		int purehit =session.basicMetaDataSearch(Input.docFileExt, null, "mpeg", null);
+		session.bulkTag(Tag);
+
+		boolean[] selectPdfRadio = { false, true };
+		for (int i = 0; i < 2; i++) {
+			boolean radio = selectPdfRadio[i];
+
+			// Select TAG & Select Native in basis for printing
+			batchPrint.navigateToBatchPrintPage();
+			batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+			batchPrint.fillingBasisForPrinting(true, true, null);
+			batchPrint.navigateToNextPage(1);
+
+			// verify Media file count in exception file Tab
+			batchPrint.DisableMediaToggle(true, purehit);
+			batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+			// filling SlipSheet With metadata
+			batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+			batchPrint.navigateToNextPage(1);
+
+			// Generate Batch Print , When Radio is True it will select One PDF for all
+			// when Radio is false it will select one PDF for each
+			batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, radio);
+
+			// verify Media Files are SKIPPED
+			baseClass.waitForElement(batchPrint.getbackgroundDownLoadLink());
+			String status = batchPrint.getbackgroundDownLoadLink().getText();
+			
+			baseClass.compareTextViaContains(status, "Error Info", "Media files are Skipped as expected",
+					"Media files are not Skipped ");
+
+			// Verify Document Count Since we selected media files
+			int index = baseClass.getIndex(batchPrint.getBackGroundPageHeader(), "Actual Docs");
+			String actualDocValue = batchPrint.getValuesFromBackGroundPage(index).getText();
+
+			softassert.assertEquals(Integer.parseInt(actualDocValue), 0);
+			baseClass.passedStep("Actual Doc Count is 0 since Media files are SKIPPED");
+
+			softassert.assertAll();
+			driver.Navigate().refresh();
+		}
+
 		loginPage.logout();
 	}
 
