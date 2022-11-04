@@ -193,7 +193,7 @@ public class AssignmentsRegression_24 {
 	 *              security group should be selected for the assignment.
 	 *              RPMXCON-54752
 	 */
-	@Test(description = "RPMXCON-54752", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-54752", enabled = true, groups = { "regression" })
 	public void verifyNewAssignmentKeywordsCreatedByPAUandRMUPartOfSecurityGrpSelectedForAssignment()
 			throws AWTException, InterruptedException {
 		keyPage = new KeywordPage(driver);

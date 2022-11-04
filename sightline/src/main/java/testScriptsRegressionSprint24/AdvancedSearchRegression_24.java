@@ -3,9 +3,6 @@ package testScriptsRegressionSprint24;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -121,8 +118,8 @@ public class AdvancedSearchRegression_24 {
 	 *              Proximity with Left double quotes only and combined with other
 	 *              criteria in Advanced Search Query Screen. RPMXCON-57300
 	 */
-	@Test(description = "RPMXCON-57300", enabled = true, dataProvider = "invaildProximitySearchQueriesLeftQuotesOnly", groups = {
-			"regression" }, priority = 6)
+//	@Test(description = "RPMXCON-57300", enabled = true, dataProvider = "invaildProximitySearchQueriesLeftQuotesOnly", groups = {
+//			"regression" }, priority = 6)
 	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingLeftDoubleQuoteOnly(String searches)
 			throws InterruptedException {
 
@@ -164,8 +161,8 @@ public class AdvancedSearchRegression_24 {
 	 *              Proximity with Right double quotes only and combined with other
 	 *              criteria in Advanced Search Query Screen. RPMXCON-57301
 	 */
-	@Test(description = "RPMXCON-57301", enabled = true, dataProvider = "invaildProximitySearchQueriesRightQuotesOnly", groups = {
-			"regression" })
+//	@Test(description = "RPMXCON-57301", enabled = true, dataProvider = "invaildProximitySearchQueriesRightQuotesOnly", groups = {
+//			"regression" })
 	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingRightDoubleQuoteOnly(String searchString1)
 			throws InterruptedException {
 
