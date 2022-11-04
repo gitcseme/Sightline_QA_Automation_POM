@@ -631,7 +631,9 @@ public class DocExplorerPage {
 	public ElementCollection getNumberOfDocsCount() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr");
 	}
-
+	public Element getListViewHeader(int i) {
+		return driver.FindElementByXPath("//table//thead//tr[1]//th["+i+"]");
+	}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
