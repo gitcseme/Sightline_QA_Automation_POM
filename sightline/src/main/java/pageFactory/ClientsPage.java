@@ -515,7 +515,7 @@ public class ClientsPage {
 	  * @param dbsize
 	  * @Description Add a Domain Client with choosing database size Processing engine
 	  */
-	 public void AddDomainClientProcessingEnginee(String Clientnamedomain,String domainid,String dbsize) {
+	 public void AddDomainClientProcessingEngine(String Clientnamedomain,String domainid,String dbsize) {
 			
 	  	this.driver.getWebDriver().get(Input.url+"Entity/Entity");
 	  	SoftAssert softAssertion = new SoftAssert();
