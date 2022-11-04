@@ -1095,6 +1095,9 @@ public class IngestionPage_Indium {
 	public ElementCollection textFormatDocs() {
 		return driver.FindElementsByXPath("//tr[@role='row']//td[contains(text(),'.txt')]");
 	}
+	public Element getErrorPagination() {
+		return driver.FindElementById("myDataTable_paginate");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
