@@ -12,26 +12,6 @@ import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
-/**
- * @author Sowndarya.Velraj
- *
- */
-/**
- * @author Sowndarya.Velraj
- *
- */
-/**
- * @author Sowndarya.Velraj
- *
- */
-/**
- * @author Sowndarya.Velraj
- *
- */
-/**
- * @author Sowndarya.Velraj
- *
- */
 public class ProjectPage {
 
 	Driver driver;
@@ -263,6 +243,25 @@ public class ProjectPage {
 	}
 
 	// added by sowndarya
+
+	public Element getEngineTypeNUIXRadio() {
+		return driver
+				.FindElementByXPath("//div[@class='col-md-4']//input[@id='rdbNUIX']//following::label[text()='NUIX']");
+	}
+
+	public Element getEngineTypeICERadio() {
+		return driver
+				.FindElementByXPath("//div[@class='col-md-4']//input[@id='rdbICE']//following::label[text()='ICE']");
+	}
+
+	public Element getProjServerPathinCreateProjPg() {
+		return driver.FindElementByXPath("//*[@id='ddlProjectWS']/option[1]");
+	}
+
+	public Element getProjDBDropDown() {
+		return driver.FindElementByXPath("//select[@id='ddlProjDBSizeCode']");
+	}
+
 	public ElementCollection getProjectDataCount() {
 		return driver.FindElementsByXPath("//table[@id='ProjectDataTable']//tr");
 	}
@@ -329,7 +328,7 @@ public class ProjectPage {
 		return driver.FindElementByXPath(
 				"//section[@id='divProcessingEngineConfig' and @style='display: block;']//input[@id='rdbNUIX']");
 	}
-	
+
 	public Element getProjectDBServer() {
 		return driver.FindElementByXPath("//*[@id='iss1']/section/div//label[text()='Project DB Server: ']");
 	}
@@ -359,7 +358,6 @@ public class ProjectPage {
 		bc = new BaseClass(driver);
 	}
 
-	
 	public void AddDomainProjectWithDefaultSetting(String projectname, String clientname) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -412,6 +410,7 @@ public class ProjectPage {
 		UtilityLog.info(bc.initialBgCount());
 
 	}
+
 	public void AddDomainProject(String projectname, String clientname) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -1347,10 +1346,11 @@ public class ProjectPage {
 			getProductionserverpath().waitAndClick(10);
 
 		}
+		
 		bc.waitForElement(getClientNameSaveBtn());
 		getClientNameSaveBtn().waitAndClick(10);
 
-		bc.waitTime(2);
+		bc.waitTime(3);
 		bc.VerifySuccessMessage("The new client was added successfully");
 		bc.CloseSuccessMsgpopup();
 	}
@@ -1425,49 +1425,188 @@ public class ProjectPage {
 	 * @param projectName
 	 * @param hCode
 	 */
-	 public String addNonDomainProjectBasedOnAvailablitity(String projectName, String hCode) {
+	public String addNonDomainProjectBasedOnAvailablitity(String projectName, String hCode) {
 
-	       System.out.println(getProjectDataCount().size());
-	       driver.waitForPageToBeReady();
-	        if (!(getProjectDataCount().size() > 1)) {
-	            AddNonDomainProject(projectName, hCode);
-	        } else {
-	            int n = bc.getIndex(getProjectTableHeader(), "NAME");
-	            projectName = getColumValue(n).getText();
-	            System.out.println(projectName);
-	        }
-	        return projectName;
-	    }
-	 
-	 /**
-		 * @author Sowndarya.Velraj
-		 * @param projectName
-		 * @param clientName
-		 */
-	 public void verifyProcessingEngineSection(String projectname, String clientName) {
-		    
-		    AddDomainProjectDetailsWithoutSave(projectname, clientName);
-		    driver.scrollPageToTop();
-		    if(!getProcessEngineTypeICE().isElementAvailable(10)) {
-		    	bc.passedStep("'Processing Setting' section Not Displaying As Expected..");
-		    }else {
-		    	bc.failedStep("'Processing Setting' section Displaying...");
-		    }
-			bc.waitForElement(getAddProject_SettingsTab());
-			getAddProject_SettingsTab().ScrollTo();
-			getAddProject_SettingsTab().waitAndClick(10);
+		System.out.println(getProjectDataCount().size());
+		driver.waitForPageToBeReady();
+		if (!(getProjectDataCount().size() > 1)) {
+			AddNonDomainProject(projectName, hCode);
+		} else {
+			int n = bc.getIndex(getProjectTableHeader(), "NAME");
+			projectName = getColumValue(n).getText();
+			System.out.println(projectName);
+		}
+		return projectName;
+	}
 
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getNoOfDocuments());
-			getNoOfDocuments().waitAndClick(10);
-			getNoOfDocuments().SendKeys("20000");
+	/**
+	 * @author Sowndarya.Velraj
+	 * @param projectName
+	 * @param clientName
+	 */
+	public void verifyProcessingEngineSection(String projectname, String clientName) {
 
+		AddDomainProjectDetailsWithoutSave(projectname, clientName);
+		driver.scrollPageToTop();
+		if (!getProcessEngineTypeICE().isElementAvailable(10)) {
+			bc.passedStep("'Processing Setting' section Not Displaying As Expected..");
+		} else {
+			bc.failedStep("'Processing Setting' section Displaying...");
+		}
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().ScrollTo();
+		getAddProject_SettingsTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
+		getNoOfDocuments().SendKeys("20000");
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+	}
+
+	public void AddNonDomainProjWithEngineType(String projectname, String clientName, String hcode, String engineType) {
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProjectBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddProjectBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectName().Visible();
+			}
+		}), Input.wait30);
+		getProjectName().SendKeys(projectname);
+
+		bc.waitForElement(getSelectEntityType());
+		getSelectEntityType().selectFromDropdown().selectByVisibleText("Not a Domain");
+
+		bc.waitForElement(getSelectClientName());
+		getSelectClientName().selectFromDropdown().selectByVisibleText(clientName);
+
+		bc.waitForElement(getHCode());
+		getHCode().SendKeys(hcode);
+
+		bc.waitForElement(getEngineTypeNUIXRadio());
+		if (engineType.equalsIgnoreCase("NUIX")) {
+			getEngineTypeNUIXRadio().waitAndClick(5);
+		} else if (engineType.equalsIgnoreCase("ICE")) {
+			getEngineTypeICERadio().waitAndClick(5);
+		}
+		driver.scrollingToBottomofAPage();
+
+		bc.waitForElement(getProjectDBServerDropdown());
+		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+
+		bc.waitForElement(getProjServerPathinCreateProjPg());
+		getProjServerPathinCreateProjPg().waitAndClick(10);
+
+		bc.waitForElement(getIngestionserverpath());
+		getIngestionserverpath().waitAndClick(10);
+
+		bc.waitForElement(getProductionserverpath());
+		getProductionserverpath().waitAndClick(10);
+
+		getProjectFolder().Clear();
+		getProjectFolder().SendKeys("Automation");
+
+		getIngestionFolder().Clear();
+		getIngestionFolder().SendKeys("Automation");
+
+		getProductionFolder().Clear();
+		getProductionFolder().SendKeys("Automation");
+
+		driver.scrollPageToTop();
+
+		// temporily added
+// 		bc.mouseHoverOnElement(getManageProjectBtn());
+// 		bc.mouseHoverOnElement(getSelectClientName());
+
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().waitAndClick(10);
+
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
+		getNoOfDocuments().SendKeys("20000");
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
+
+	
+	public void addNewClientWithDBSize(String clientName, String shortName, String type, String dbSize) {
+        ClientsPage client = new ClientsPage(driver);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAddNewClient());
+		getAddNewClient().ScrollTo();
+		getAddNewClient().waitAndClick(10);
+
+		bc.waitForElement(getClientName());
+		getClientName().SendKeys(clientName);
+
+		bc.waitForElement(getClientShortName());
+		getClientShortName().SendKeys(shortName);
+
+		bc.waitForElement(getSelectEntity());
+		getSelectEntity().waitAndClick(10);
+		getSelectEntity().selectFromDropdown().selectByVisibleText(type);
+
+		driver.waitForPageToBeReady();
+
+		if (getSelectEntity().getText().contains("Domain")) {
+			String domainName = "D" + Utility.dynamicRandomNumberAppender();
+			bc.waitForElement(getDomainName());
+			getDomainName().SendKeys(domainName);
 			driver.scrollingToBottomofAPage();
-			bc.waitForElement(getButtonSaveProject());
-			getButtonSaveProject().waitAndClick(10);
 
-			bc.VerifySuccessMessage(
-					"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
-	 }
+			bc.waitForElement(getProjectDBServerDropdown());
+			getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
 
+			bc.waitForElement(client.getDBSizeOption());
+			client.getDBSizeOption().selectFromDropdown().selectByVisibleText(dbSize);
+			bc.stepInfo("db size was selected");
+			
+			bc.waitForElement(getProjectServerPath());
+			getProjectServerPath().waitAndClick(10);
+
+			bc.waitForElement(getIngestionserverpath());
+			getIngestionserverpath().waitAndClick(10);
+
+			bc.waitForElement(getProductionserverpath());
+			getProductionserverpath().waitAndClick(10);
+
+		}
+		bc.waitForElement(getClientNameSaveBtn());
+		getClientNameSaveBtn().waitAndClick(10);
+
+		bc.waitTime(2);
+		bc.VerifySuccessMessage("The new client was added successfully");
+		bc.CloseSuccessMsgpopup();
+	}
 }
