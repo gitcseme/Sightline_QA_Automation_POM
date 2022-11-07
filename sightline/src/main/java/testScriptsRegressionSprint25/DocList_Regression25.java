@@ -207,36 +207,6 @@ public class DocList_Regression25 {
 		docList.verifyAppliedIncludeCustodianNameFilterIsAdded(Input.metaDataCN);
 	}
 
-	/**
-	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-54275
-	 * @throws Exception
-	 * @Description To verify that if any criteria is "Excluded" in the filters, the
-	 *              results should NOT include the docs that match/have the
-	 *              specified criteria
-	 */
-	@Test(description = "RPMXCON-54275", enabled = true, groups = { "regression" })
-	public void verifyExcludedFiltersResultDocsNotSpecifiedCrit() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-54275");
-		baseClass.stepInfo(
-				"To verify that if any criteria is \"Excluded\" in the filters, the results should NOT include the docs that match/have the specified criteria");
-		sessionSearch = new SessionSearch(driver);
-		DocListPage docList = new DocListPage(driver);
-
-		// Login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
-
-		// Searching Content document go to doclist
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-
-		// verify selecting exclude is not equals to author name .
-		docList.SelectColumnDisplay(docList.getSelectAvailMetadata(Input.MetaDataEAName));
-		driver.waitForPageToBeReady();
-		docList.EmailAuthorNameInExcludeVerificationInDoc();
-	}
-
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
