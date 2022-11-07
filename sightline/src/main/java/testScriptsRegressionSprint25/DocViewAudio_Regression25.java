@@ -291,7 +291,7 @@ public class DocViewAudio_Regression25 {
 		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
 		docViewPage.getDocView_TranslationTab().waitAndClick(5);
 		if (baseClass.text("Translations").isDisplayed()) {
-			baseClass.passedStep("Text document is be loaded on the respective tab Succesfully");
+			baseClass.passedStep("Translations document is be loaded on the respective tab Succesfully");
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
