@@ -3,15 +3,8 @@ package sightline.basicSearch;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.Callable;
-import org.testng.asserts.SoftAssert;
-import org.testng.collections.Lists;
-import org.openqa.selenium.Keys;
-import org.testng.Assert;
+
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -24,7 +17,6 @@ import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -60,39 +52,24 @@ public class PerformanceTest_Regression {
     //	in.loadEnvConfig();
 	
 	}
-
-	@DataProvider(name = "reserveWords")
-	public Object[][] reserveWords() {
-		return new Object[][] { // (10K Doc) & (15K Doc)
-				{ "information", "\"money power\"~2", "RPMXCON-57422" }, // (Content) & (proximity Query)
-				{ "CustodianName: ( Allen)", "\"##[0-9]\"", "RPMXCON-57423" }, // (metadata) & (Proximity)
-				{ "transport", "\"##[0-9]\"", "RPMXCON-57424" }, // (Content) & (wildcard phase)
-				{ "transport", "\"##[0-9]*\"", "RPMXCON-57425" }, // (content) & (wildcard,proximity & regular
-																	// Expression)
-				{ "\"money power\"~2", "CustodianName: ( Allen)", "RPMXCON-57463" }, // (proximity) & (metadata)
-				{ "\"##[0-9]\"", "information", "RPMXCON-57464" }, // (regular) & (content)
-				{ "\"##[0-9]\"", "CustodianName: ( Allen)", "RPMXCON-57465" }, // (wildcard) & (metadata)
-				{ "CustodianName: ( Allen)", "\"##[0-9]*\"", "RPMXCON-57466" }, // (metadata), & (wildcard & regular)
-				{ "\"##[0-9]\"", "\"money power*\"", "RPMXCON-57467" }, // (wildcard) & (proximity)
-		};
-	}
-
+	
+	
 	/**
 	 * @author jeevitha Description: validate expanded query. test case no:-
-	 *         (RPMXCON-57467,RPMXCON-57466,RPMXCON-57465,RPMXCON-57464
-	 *         RPMXCON-57463,RPMXCON-57425,RPMXCON-57424
-	 *         RPMXCON-57423,RPMXCON-57422)
+	 *         RPMXCON-57422
 	 * @param data1
 	 * @param data2
 	 * @param TC_Id
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-57467,RPMXCON-57466,RPMXCN-57465,RPMXCON-57464,RPMXCON-57463,RPMXCON-57425,RPMXCON-57424,RPMXCON-57423,RPMXCON-57422",dataProvider = "reserveWords", groups = { "regression" })
-	public void basicSearch4(String data1, String data2, String TC_Id) throws InterruptedException {
+	@Test(description ="RPMXCON-57422", groups = { "regression" })
+	public void basicSearch9() throws InterruptedException {
 		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
 				{ Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } 
 				};
+		String data1="transport";
+		String data2="\"##[0-9]\"";
 
 		for (int i = 0; i < dataSet.length; i++) {
 			int j = 0;
@@ -140,6 +117,522 @@ public class PerformanceTest_Regression {
 
 		}
 	}
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         RPMXCON-57423
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57423", groups = { "regression" })
+	public void basicSearch8() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="CustodianName: ( Allen)";
+		String data2="\"##[0-9]\"";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	
+
+
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         RPMXCON-57424
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57424", groups = { "regression" })
+	public void basicSearch4() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="information";
+		String data2="\"money power\"~2";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	
+	
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57425)
+	 *        
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57425", groups = { "regression" })
+	public void basicSearch11() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="transport";
+		String data2="\"##[0-9]*\"";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57464, RPMXCON-57463,RPMXCON-57425)
+	 *        
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57463", groups = { "regression" })
+	public void basicSearch10() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="\"money power\"~2";
+		String data2="CustodianName: ( Allen)";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57464, RPMXCON-57463,RPMXCON-57425)
+	 *        
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57464", groups = { "regression" })
+	public void basicSearch5() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="\"##[0-9]\"";
+		String data2="information";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57467,RPMXCON-57466,RPMXCON-57465)
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57465", groups = { "regression" })
+	public void basicSearch13() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1= "\"##[0-9]\"";
+		String data2="CustodianName: ( Allen)";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57467,RPMXCON-57466,RPMXCON-57465)
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57466", groups = { "regression" })
+	public void basicSearch12() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1= "CustodianName: ( Allen)";
+		String data2="\"##[0-9]*\"";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+
+	
+	/**
+	 * @author jeevitha Description: validate expanded query. test case no:-
+	 *         (RPMXCON-57467,RPMXCON-57466,RPMXCON-57465)
+	 * @param data1
+	 * @param data2
+	 * @param TC_Id
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-57467", groups = { "regression" })
+	public void basicSearch6() throws InterruptedException {
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
+		String data1="\"##[0-9]\"";
+		String data2="\"money power*\"";
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+			String search1 = "Search" + Utility.dynamicNameAppender();
+			String search2 = "Search" + Utility.dynamicNameAppender();
+
+			String username1 = dataSet[i][j];
+			j++;
+			String password2 = dataSet[i][j];
+			// login
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username1, password2);
+			base.stepInfo(" Basic Search");
+
+			// Create saved search for first First Query
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			int pureHit1 = session.basicContentSearch(data1);
+			
+			session.saveSearchInNewNode(search1, null);
+			System.out.println(pureHit1);
+
+			// Add Operator and Search Second query
+			session.selectOperatorInBasicSearch("OR");
+			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
+			session.saveSearchInNewNode(search2, null);
+			System.out.println(pureHit2);
+
+			// Verify Purehit count
+			if (pureHit1 == pureHit2) {
+				System.out.println("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+				base.stepInfo("PureHit1 : " + pureHit1 + " Is Equal To " + " Purehit2 : " + pureHit2);
+			} else if (pureHit2 > pureHit1) {
+				System.out.println("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + " Is Greater Than " + " PureHit1 : " + pureHit1);
+			} else {
+				System.out.println("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+				base.stepInfo("PureHit2 : " + pureHit2 + "," + "PureHit1 : " + pureHit1);
+			}
+
+			// Execute the Second Search
+			saveSearch.savedSearchExecute(search2, pureHit2);
+			Thread.sleep(3000);
+			lp.logout();
+
+		}
+	}
+
 
 	@DataProvider(name = "SavedSearchwithUsers")
 	public Object[][] SavedSearchwithUsers() {
