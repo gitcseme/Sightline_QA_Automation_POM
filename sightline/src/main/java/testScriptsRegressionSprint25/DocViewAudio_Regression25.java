@@ -279,6 +279,22 @@ public class DocViewAudio_Regression25 {
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		if (baseClass.text("Images").isDisplayed()) {
+			baseClass.passedStep("Images document is be loaded on the respective tab Succesfully");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		docViewPage.getDocView_TranslationTab().waitAndClick(5);
+		if (baseClass.text("Translations").isDisplayed()) {
+			baseClass.passedStep("Text document is be loaded on the respective tab Succesfully");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
 		// logout
 		loginPage.logout();
 	}
