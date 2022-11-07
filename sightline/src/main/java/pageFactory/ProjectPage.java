@@ -348,7 +348,18 @@ public class ProjectPage {
 	public Element getProjectActive() {
 		return driver.FindElementByXPath("//*[@id='iss1']/section/div/div/h5/strong");
 	}
-
+	public Element getDedupingCheckbox() {
+        return driver.FindElementByXPath("//label//input[@id='chkDedupCode']//following-sibling::i");
+    }
+   public Element getInstanceLevelRadioBtn() {
+        return driver.FindElementById("rbInstance");
+    }
+    public Element getProjectLevelRadioBtn() {
+        return driver.FindElementById("rbProject");
+    }
+    public Element getSelectProjectRadioBtn() {
+        return driver.FindElementByXPath("//input[@id='rbProject']/..//i");
+    }
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
 
