@@ -275,7 +275,7 @@ public class DocViewAudio_Regression25 {
 		baseClass.waitForElement(docViewPage.getDocView_TextTab());
 		docViewPage.getDocView_TextTab().waitAndClick(5);
 		if (baseClass.text("TEXT").isDisplayed()) {
-			baseClass.passedStep("In text tab it displayed");
+			baseClass.passedStep("Text document is be loaded on the respective tab Succesfully");
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
