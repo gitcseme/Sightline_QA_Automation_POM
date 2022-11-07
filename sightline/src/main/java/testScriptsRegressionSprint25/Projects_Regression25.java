@@ -707,10 +707,44 @@ public class Projects_Regression25 {
 		loginPage.logout();
 	}	
 	
-	
-	
-	
-	
-	
+	/**
+     * @author Brundha.T Testcase No:RPMXCON-55586
+     * @Description:To verify if Deduping is editable, then only user can select the one of the level.
+     **/
+    @Test(description = "RPMXCON-55586", enabled = true, groups = { "regression" })
+    public void verifyingDedupingIsEditable() throws Exception {
+        ProjectPage project = new ProjectPage(driver);
+        base = new BaseClass(driver);
+        base.stepInfo("TestCase id: RPMXCON-55586");
+        base.stepInfo("To verify if Deduping is editable, then only user can select the one of the level.");
+        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("Logged in As " + Input.sa1userName);
+
+       base.stepInfo("Navigating to Project page");
+        project.navigateToProductionPage();
+        driver.waitForPageToBeReady();
+        project.getAddProjectBtn().Click();
+        base.stepInfo("Select settings option and verifying the selected level in deduping checkbox");
+        project.getAddProject_SettingsTab().waitAndClick(10);
+        driver.scrollingToBottomofAPage();
+        base.waitForElement(project.getDedupingCheckbox());
+        project.getDedupingCheckbox().waitAndClick(10);
+        
+        if(!project.getProjectLevelRadioBtn().Selected()&&project.getInstanceLevelRadioBtn().Selected()) {
+            base.passedStep("User can select only one level as expected");
+        }else {
+            base.failedStep("User is selected with both level");
+        }
+        base.waitForElement(project.getSelectProjectRadioBtn());
+        project.getSelectProjectRadioBtn().waitAndClick(2);
+
+       if(project.getProjectLevelRadioBtn().Selected()&&!project.getInstanceLevelRadioBtn().Selected()) {
+            base.passedStep("User can select only one level as expected");
+        }else {
+            base.failedStep("User is selected with both level");
+        }
+        loginPage.logout();
+        
+    }
 	
 }
