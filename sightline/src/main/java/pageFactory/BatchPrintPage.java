@@ -254,14 +254,27 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public ElementCollection getBackGroundPageHeader() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
+	}
+
+	public Element getValuesFromBackGroundPage(int i) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr[1]/td[" + i + "]");
+	}
+
+	public ElementCollection getExportFileNameDD() {
+		return driver.FindElementsByXPath("//select[@id='exportFileDropDown']//option");
+	}
+
 	public Element getOtherExceptionFileTypeHelpBlock() {
-		return driver.FindElementByXPath("//h3[text()='Other Exception File Types']/parent::div[@class='popover fade right in']");
+		return driver.FindElementByXPath(
+				"//h3[text()='Other Exception File Types']/parent::div[@class='popover fade right in']");
 	}
 
 	public Element getExcelFilesHelpBlock() {
 		return driver.FindElementByXPath("//h3[text()='Excel Files']/parent::div[@class='popover fade right in']");
 	}
-	
+
 	public Element getMediaFilesHelpBlock() {
 		return driver.FindElementByXPath("//h3[text()='Media Files']/parent::div[@class='popover fade right in']");
 	}
@@ -269,15 +282,15 @@ public class BatchPrintPage {
 	public Element getMediaFilesHelpIcon() {
 		return driver.FindElementByXPath("//a[@data-original-title='Media Files']");
 	}
-	
+
 	public Element getExcelFilesHelpIcon() {
 		return driver.FindElementByXPath("//a[@data-original-title='Excel Files']");
 	}
-	
+
 	public Element getOtherExceptionFileTypeHelpIcon() {
 		return driver.FindElementByXPath("//a[@data-original-title='Other Exception File Types']");
 	}
-	
+
 	public Element getAnalysisRequestHeader() {
 		return driver.FindElementByXPath("//div[@class='clearfix']//following-sibling::div//strong");
 	}
@@ -286,7 +299,7 @@ public class BatchPrintPage {
 		return driver
 				.FindElementByXPath("//div[@class='clearfix']//following-sibling::div//h4//following-sibling::div//p");
 	}
-	
+
 	public Element getAscAndDescDDlist() {
 		return driver.FindElementByXPath("//select[@id='exportFileSortingOrderDropDown']");
 	}
@@ -488,14 +501,12 @@ public class BatchPrintPage {
 				"//table[@id='dt_basic']//tbody//td[text()[normalize-space()='" + id + "']]//following-sibling::td[8]");
 	}
 
-	//added by sowndarya
-	
+	// added by sowndarya
+
 	public Element getBatchId(int i) {
-		return driver.FindElementByXPath(
-				"//table[@id='dt_basic']//td[@class='sorting_1']["+ i+"]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']//td[@class='sorting_1'][" + i + "]");
 	}
-	
-	
+
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -2162,7 +2173,7 @@ public class BatchPrintPage {
 			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
 			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
 		}
-        boolean flag=false;
+		boolean flag = false;
 		if (select.equalsIgnoreCase("Search")) {
 			saveSearchRadiobutton(searchOrTagOrFol);
 
@@ -2171,15 +2182,15 @@ public class BatchPrintPage {
 			getTagBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllTagsArrow());
 			getAllTagsArrow().waitAndClick(10);
-			
-			if(getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
-			base.waitForElement(getSelectTag(searchOrTagOrFol));
-			getSelectTag(searchOrTagOrFol).waitAndClick(10);
-			System.out.println("Selected Tag : " + searchOrTagOrFol);
-			base.passedStep("Selected Tag From Source Selection Tab: " + searchOrTagOrFol);
-			flag= true;
-			}else {
-				flag= false;
+
+			if (getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
+				base.waitForElement(getSelectTag(searchOrTagOrFol));
+				getSelectTag(searchOrTagOrFol).waitAndClick(10);
+				System.out.println("Selected Tag : " + searchOrTagOrFol);
+				base.passedStep("Selected Tag From Source Selection Tab: " + searchOrTagOrFol);
+				flag = true;
+			} else {
+				flag = false;
 			}
 
 		} else if (select.equalsIgnoreCase("Folder")) {
@@ -2187,15 +2198,15 @@ public class BatchPrintPage {
 			getFolderBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllFoldersArrow());
 			getAllFoldersArrow().waitAndClick(10);
-			
-			if(getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
-			base.waitForElement(getSelectFolder(searchOrTagOrFol));
-			getSelectFolder(searchOrTagOrFol).waitAndClick(10);
-			System.out.println("Selected Folder : " + searchOrTagOrFol);
-			base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
-			flag= true;
-			}else {
-				flag= false;
+
+			if (getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
+				base.waitForElement(getSelectFolder(searchOrTagOrFol));
+				getSelectFolder(searchOrTagOrFol).waitAndClick(10);
+				System.out.println("Selected Folder : " + searchOrTagOrFol);
+				base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
+				flag = true;
+			} else {
+				flag = false;
 			}
 		}
 		if (Next) {
@@ -2292,7 +2303,7 @@ public class BatchPrintPage {
 	 * @param Download     : download link
 	 */
 	public void fillingExportFormatPage(String exportFile, String sortBy, boolean onePdfForAll, int refreshCount) {
-		// base.waitForElement(getSelectExportFileName());
+//     	base.waitForElement(getSelectExportFileName());
 		getSelectExportFileName().selectFromDropdown().selectByVisibleText(exportFile);
 
 		base.waitForElement(getSelectExportFileSortBy());
@@ -2319,6 +2330,12 @@ public class BatchPrintPage {
 		String expURL = Input.url + "Background/BackgroundTask";
 		String currentUrl = driver.getUrl();
 		base.textCompareEquals(expURL, currentUrl, "Navigated to My backgroud task page.", "");
+
+		// verify INPROGRESS status
+		base.waitForElement(getBatchPrintStatus());
+		String inprogressStatus = getBatchPrintStatus().getText();
+		base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
+				"Batch Print Status Is Not As Expected");
 
 		for (int i = 0; i < refreshCount; i++) {
 
@@ -2473,8 +2490,8 @@ public class BatchPrintPage {
 	}
 
 	/**
-	 * @Author Baskar.Modified by sowndarya on 03/10/22
-	 * (changes success message as per new deployment)
+	 * @Author Baskar.Modified by sowndarya on 03/10/22 (changes success message as
+	 *         per new deployment)
 	 * @Description :filling and generate the batch print
 	 * @param exportFile   :export Filen Name
 	 * @param sortBy       : sort by DropDown
@@ -2733,6 +2750,7 @@ public class BatchPrintPage {
 	public void selectSortingFromExportPage(String ddValue) {
 		base.waitForElement(getAscAndDescDDlist());
 		getAscAndDescDDlist().selectFromDropdown().selectByVisibleText(ddValue);
+		base.stepInfo("Selected Sort from Export format  tab is : " + ddValue);
 	}
 
 	/**
@@ -2834,4 +2852,35 @@ public class BatchPrintPage {
 			base.failedStep("Analysis Message is not displayed in Analysis tab");
 		}
 	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : Disable Media Toggle In Exception file type tab & verify media
+	 *              file count
+	 * @param verifyCount
+	 * @param expectedCount
+	 * @return
+	 */
+	public int DisableMediaToggle(boolean verifyCount, int expectedCount) {
+		base.waitForElement(getMediaFilesPrintableText());
+		String completeText = getMediaFilesPrintableText().getText();
+		String[] count = completeText.split(" ");
+		System.out.println("Media file count : " + count[4]);
+		if (verifyCount) {
+			base.digitCompareEquals(Integer.parseInt(count[4]), expectedCount, "Media File Count is : " + count[4],
+					"Media file count is not as expected");
+		}
+		if (getIncludeMediaCheckBox().GetAttribute("class").contains("active")) {
+			base.passedStep("Media file toogle is enabled");
+			getMediaFilesToogle().waitAndClick(10);
+			base.stepInfo("Media file toogle is Disabled");
+		} else {
+			base.passedStep("Media file toogle is Disabled");
+
+		}
+
+		return Integer.parseInt(count[4]);
+
+	}
+
 }
