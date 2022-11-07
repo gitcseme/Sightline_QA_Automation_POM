@@ -16,18 +16,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
-import executionMaintenance.UtilityLog;
-import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
-import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
-import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -66,66 +61,611 @@ public class BasicSearch_Regression1 {
 
 	}
 
-	@DataProvider(name = "reservedWords")
-	public Object[][] dataProviderMethod() {
-		return new Object[][] { { "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\")", "RPMXCON-57470" },
-				{ "\"Hello U&C\"~5 OR \"U&C\"", "RPMXCON-57471" },
-				{ "( \"economy finance\"~5  ) OR (\"product@consilio.com\")", "RPMXCON-57472" },
-				{ "(( \"Hello U{C\"~5 OR \"U{C\" OR ( \"##U}C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57452" },
-				{ "(( \"Hello U|C\"~5 OR \"U|C\" OR ( \"##U|C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57453" },
-				{ "(( \"Hello U}C\"~5 OR \"U}C\" OR ( \"##U}C[0-9]{2}\" OR EmailAllDomains: ( consilio.com) ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57454" },
-				{ "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  )",
-						"RPMXCON-57469" },
-				{ "( \"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) )",
-						"RPMXCON-57468" },
-				{ "(( \"Hello U«C\"~5 OR \"U«C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57457" },
-				{ "(( \"Hello  U?C \"~5 OR \"U?C \" OR ( \"##U?C [0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57460" },
-				{ "(( \"Hello U?C\"~5 OR \"UU?C\" OR ( \"##UU?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57459" },
-				{ "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57458" },
-				{ "(( \"Hello U C\"~5 OR \"U C\" OR ( \"##U C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57461" },
-				{ "(( \"Hello U%C\"~5 OR \"U%C\" OR ( \"##U%C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57432" },
-				{ "(( \"Hello U$C\"~5 OR \"U$C\" OR ( \"##U$C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57431" },
-				{ "(( \"Hello U^C\"~5 OR \"U^C\" OR ( \"##U^C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57451" },
-				{ "(( \"Hello U\\C\"~5 OR \"U\\C\" OR ( \"##U\\C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57449" },
-				{ "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57447" },
-
-		};
-	}
-
+	
 	/**
 	 * @author Jeevitha
 	 * 
-	 *         Description - verifies the Query .(RPMXCON-57470 ,RPMXCON-57471
-	 *         ,RPMXCON-57472,RPMXCON-57452,
-	 *         RPMXCON-57453,RPMXCON-57454,RPMXCON-57469,RPMXCON-57468,RPMXCON-57457
-	 *         RPMXCON-57460,RPMXCON-57459,RPMXCON-57458,RPMXCON-57461 ).
-	 *         RPMXCON-57432,RPMXCON-57431
-	 *         [#3]RPMXCON-57451,RPMXCON-57449,RPMXCON-57447
-	 * 
+	 *         Description - verifies the Query .
 	 */
-	@Test(description ="RPMXCON-57470,RPMXCON-57471,RPMXCON-57472,RPMXCON-57452,RPMXCON-57453,RPMXCON-57454,RPMXCON-57469,RPMXCON-57468,RPMXCON-57457,RPMXCON-57461,RPMXCON-57458,RPMXCON-57459",dataProvider = "reservedWords", groups = { "regression" })
-	public void verifyBasicSearch(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
+	@Test(description ="RPMXCON-57470", groups = { "regression" })
+	public void verifyBasicSearch1() throws ParseException, InterruptedException, IOException {
 		// login as PA
 
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo(TC_ID + "  basic  Search");
+		bc.stepInfo("57470  basic  Search");
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\")";
 
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query .
+	 */
+	@Test(description ="RPMXCON-57471", groups = { "regression" })
+	public void verifyBasicSearch7() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57471 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "\"Hello U&C\"~5 OR \"U&C\"";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query ..
+	 */
+	@Test(description ="RPMXCON-57472", groups = { "regression" })
+	public void verifyBasicSearch8() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57472 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "( \"economy finance\"~5  ) OR (\"product@consilio.com\")";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query .
+	 */
+	@Test(description ="RPMXCON-57452", groups = { "regression" })
+	public void verifyBasicSearch9() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57452 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U{C\"~5 OR \"U{C\" OR ( \"##U}C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+		
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 * 
+	 */
+	@Test(description ="RPMXCON-57453", groups = { "regression" })
+	public void verifyBasicSearch2() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57453 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U|C\"~5 OR \"U|C\" OR ( \"##U|C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 * 
+	 */
+	@Test(description ="RPMXCON-57454", groups = { "regression" })
+	public void verifyBasicSearch10() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57454 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U}C\"~5 OR \"U}C\" OR ( \"##U}C[0-9]{2}\" OR EmailAllDomains: ( consilio.com) ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 *        
+	 * 
+	 */
+	@Test(description ="RPMXCON-57469", groups = { "regression" })
+	public void verifyBasicSearch11() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57469 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  )";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 *        
+	 */
+	@Test(description ="RPMXCON-57468", groups = { "regression" })
+	public void verifyBasicSearch3() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57468 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data ="( \"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) )";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 *        
+	 */
+	@Test(description ="RPMXCON-57457", groups = { "regression" })
+	public void verifyBasicSearch12() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57457 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data ="(( \"Hello U«C\"~5 OR \"U«C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+		
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 * 
+	 */
+	@Test(description ="RPMXCON-57460", groups = { "regression" })
+	public void verifyBasicSearch4() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57460 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello  U?C \"~5 OR \"U?C \" OR ( \"##U?C [0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 * 
+	 */
+	@Test(description ="RPMXCON-57458", groups = { "regression" })
+	public void verifyBasicSearch13() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57458 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query
+	 * 
+	 */
+	@Test(description ="RPMXCON-57459", groups = { "regression" })
+	public void verifyBasicSearch14() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57459 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U?C\"~5 OR \"UU?C\" OR ( \"##UU?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57461", groups = { "regression" })
+	public void verifyBasicSearch5() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57461 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U C\"~5 OR \"U C\" OR ( \"##U C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57432", groups = { "regression" })
+	public void verifyBasicSearch15() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57432 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U%C\"~5 OR \"U%C\" OR ( \"##U%C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57431", groups = { "regression" })
+	public void verifyBasicSearch16() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57431 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U$C\"~5 OR \"U$C\" OR ( \"##U$C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+
+	
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57451", groups = { "regression" })
+	public void verifyBasicSearch6() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57451 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U^C\"~5 OR \"U^C\" OR ( \"##U^C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57449", groups = { "regression" })
+	public void verifyBasicSearch17() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57449 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U\\C\"~5 OR \"U\\C\" OR ( \"##U\\C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57447", groups = { "regression" })
+	public void verifyBasicSearch18() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57447 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data = "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
 		// Verify Expanded Query
 		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
 		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
@@ -147,17 +687,47 @@ public class BasicSearch_Regression1 {
 
 	/**
 	 * @author Jeevitha Description:Verify the basic search for Near Duplicates
-	 *         Near(RPMXCON-57001)RPMXCON-57002
+	 *         Near
 	 * @throws ParseException
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57001,RPMXCON-57002",groups = { "regression" })
+	@Test(description ="RPMXCON-57001",groups = { "regression" })
 	public void verifyCountOfSearch() throws ParseException, InterruptedException, IOException {
 		// login as PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo("RPMXCON-57001,RPMXCON-57002  BasicSearch ");
+		bc.stepInfo("RPMXCON-57001  BasicSearch ");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// Verify Duplicate count and Family members count
+		sessionSearchPage.basicContentSearch(Input.searchString1);
+
+		System.out.println("Near duplicate count : " + sessionSearchPage.verifyNearDupeCount());
+		bc.stepInfo("Near duplicate count : " + sessionSearchPage.verifyNearDupeCount());
+
+		System.out.println("Family Members count : " + sessionSearchPage.verifyFamilyount());
+		bc.stepInfo("Family Members count : " + sessionSearchPage.verifyFamilyount());
+
+		bc.getPopupYesBtn();
+		System.out.println("Succesfully Searched For Input " + Input.searchString2);
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha Description:Verify the basic search for Near Duplicates
+	 *         Nea
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57002",groups = { "regression" })
+	public void verifyCountOfSearch2() throws ParseException, InterruptedException, IOException {
+		// login as PA
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-57002  BasicSearch ");
 
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -177,18 +747,99 @@ public class BasicSearch_Regression1 {
 	}
 
 	/**
-	 * @author Jeevitha Description:Basic search pin search item(RPMXCON-57030)
-	 *         Description: Verify Family Member Count (RPMXCON-47255) Decription
-	 *         :verify Conceptually similar Count(RPMXCON-47256)
+	 * @author Jeevitha 
+	 * Description:Basic search pin search item(RPMXCON-57030)
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-57030,RPMXCON-47255,RPMXCON-47256",groups = { "regression" })
+	@Test(description ="RPMXCON-57030",groups = { "regression" })
 	public void verifyPinSearch() throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo("RPMXCON-57030,47255,47256 Basic Search");
+		bc.stepInfo("RPMXCON-57030 Basic Search");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		sessionSearchPage.basicMetaDataSearch("CustodianName", null, "Andrew", null);
+		sessionSearchPage.saveSearch(searchName);
+		sessionSearchPage.getConceptuallyPlayButton().waitAndClick(10);
+		sessionSearchPage.getPinBtn(searchName).waitAndClick(10);
+
+		// Get title attribute value
+		String tooltipText = sessionSearchPage.getUnpinToolTipMsg().GetAttribute("title");
+		System.out.println("Retrieved tooltip text as :" + tooltipText);
+		bc.stepInfo("Retrieved tooltip text as :" + tooltipText);
+
+		// Verification if tooltip text is matching expected value
+		if (tooltipText.equalsIgnoreCase("Un Pin this Search")) {
+			System.out.println("Pass : Tooltip matching expected value");
+			bc.stepInfo("Pass : Tooltip matching expected value");
+
+		} else {
+			System.out.println("Fail : Tooltip NOT matching expected value");
+			bc.stepInfo("Fail : Tooltip NOT matching expected value");
+
+		}
+		System.out.println("Family Members count : " + sessionSearchPage.verifyFamilyount());
+		bc.stepInfo("Family Members count : " + sessionSearchPage.verifyFamilyount());
+
+		System.out.println("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+		bc.stepInfo("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha 
+	 *         Description: Verify Family Member Count (RPMXCON-47255)
+	 * @throws InterruptedException
+	 */
+
+	@Test(description ="RPMXCON-47255",groups = { "regression" })
+	public void verifyPinSearch2() throws InterruptedException {
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-47255 Basic Search");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		sessionSearchPage.basicMetaDataSearch("CustodianName", null, "Andrew", null);
+		sessionSearchPage.saveSearch(searchName);
+		sessionSearchPage.getConceptuallyPlayButton().waitAndClick(10);
+		sessionSearchPage.getPinBtn(searchName).waitAndClick(10);
+
+		// Get title attribute value
+		String tooltipText = sessionSearchPage.getUnpinToolTipMsg().GetAttribute("title");
+		System.out.println("Retrieved tooltip text as :" + tooltipText);
+		bc.stepInfo("Retrieved tooltip text as :" + tooltipText);
+
+		// Verification if tooltip text is matching expected value
+		if (tooltipText.equalsIgnoreCase("Un Pin this Search")) {
+			System.out.println("Pass : Tooltip matching expected value");
+			bc.stepInfo("Pass : Tooltip matching expected value");
+
+		} else {
+			System.out.println("Fail : Tooltip NOT matching expected value");
+			bc.stepInfo("Fail : Tooltip NOT matching expected value");
+
+		}
+		System.out.println("Family Members count : " + sessionSearchPage.verifyFamilyount());
+		bc.stepInfo("Family Members count : " + sessionSearchPage.verifyFamilyount());
+
+		System.out.println("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+		bc.stepInfo("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha
+	 *  Decription :verify Conceptually similar Count(RPMXCON-47256)
+	 * @throws InterruptedException
+	 */
+
+	@Test(description ="RPMXCON-47256",groups = { "regression" })
+	public void verifyPinSearch3() throws InterruptedException {
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-47256 Basic Search");
 
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		sessionSearchPage.basicMetaDataSearch("CustodianName", null, "Andrew", null);
@@ -223,20 +874,43 @@ public class BasicSearch_Regression1 {
 	 * @author jeevitha Description : Verify that in "DocFileType" metadata session
 	 *         search, when User tries to do manually keyed terms then Auto-suggest
 	 *         value is NOT selected (Though presence of a space in Multiple
-	 *         words)(RPMXCON-46989)(RPMXCON-46990)
+	 *         words)
 	 * @throws InterruptedException
 	 */
-	@DataProvider(name = "reserveWords")
-	public Object[][] dataMethod() {
-		return new Object[][] { { "DocFileType", "oth" }, { "DocFileName", "tes" } };
-	}
+	
 
-	@Test(description ="RPMXCON-46989,RPMXCON-46990",dataProvider = "reserveWords", groups = { "regression" })
-	public void verifyAutoSuggest(String data1, String data2) throws InterruptedException {
+	@Test(description ="RPMXCON-46989", groups = { "regression" })
+	public void verifyAutoSuggest() throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		bc.stepInfo("RPMXCON-46989,RPMXCON-46990 Basic Search");
+		String data1="DocFileType";
+		String data2="oth";
+		bc.stepInfo("RPMXCON-46989 Basic Search");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		String autoSuggestedValue = sessionSearchPage.basicMetaDataAutosuggest(data1, data2, 1);
+		System.out.println(autoSuggestedValue
+				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
+		bc.stepInfo(autoSuggestedValue
+				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
+		lp.logout();
+	}
+	/**
+	 * @author jeevitha Description : Verify that in "DocFileType" metadata session
+	 *         search, when User tries to do manually keyed terms then Auto-suggest
+	 *         value is NOT selected (Though presence of a space in Multiple
+	 *         words)
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-46990", groups = { "regression" })
+	public void verifyAutoSuggest2() throws InterruptedException {
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String data1="DocFileName";
+		String data2="tes";
+		bc.stepInfo("RPMXCON-46990 Basic Search");
 
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		String autoSuggestedValue = sessionSearchPage.basicMetaDataAutosuggest(data1, data2, 1);
@@ -301,91 +975,93 @@ public class BasicSearch_Regression1 {
 		
 	}
 
-	@DataProvider(name = "reserve")
-	public Object[][] dataset() {
-		return new Object[][] { { "DocFileName", "tes", "\"Testing Special characater\"", "46984" },
-				{ "CustodianName", "P A", "\"P Allen\"", "46985" }, { "CustodianName", "andr", "Andrew", "46992" },
-				{ "EmailToAddresses", "sat", "Satish.Pawal@Consilio.com", "46988" },
-
-		};
-	}
-
 	/**
 	 * @author Jeevitha Description: when auto-suggest value is selected (presence
 	 *         of a space in Multiple words) then corresponding value gets wrapped
-	 *         in double quotes. (RPMXCON- 46984,RPMXCON- 46985,RPMXCON- 46986)
-	 *         (RPMXCON-46988)
+	 *         in double quotes. 
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-46984,RPMXCON-46985,RPMXCON-46988",dataProvider = "reserve", groups = { "regression" })
-	public void verifyAutoSugges(String data1, String data2, String data3, String data4) throws InterruptedException {
+	@Test(description ="RPMXCON-46988", groups = { "regression" })
+	public void verifyAutoSugges3() throws InterruptedException {
 
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo("RPMXCON- " + data4 + " Basic Search");
+		bc.stepInfo("RPMXCON- " + "46988Basic Search");
+		String data1="EmailToAddresses";
+		String data2="sat";
+		String data3="Satish.Pawal@Consilio.com";
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		String autoSuggestedValue = sessionSearchPage.validateAutosuggestSearchResult_BS(data3, data1, data2);
+		lp.logout();
 
+	}
+	/**
+	 * @author Jeevitha Description: when auto-suggest value is selected (presence
+	 *         of a space in Multiple words) then corresponding value gets wrapped
+	 *         in double quotes.
+	 * @throws InterruptedException
+	 */
+
+	@Test(description ="RPMXCON-46985", groups = { "regression" })
+	public void verifyAutoSugges2() throws InterruptedException {
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON- " + "46985Basic Search");
+		String data1="CustodianName";
+		String data2="P A";
+		String data3="\"P Allen\"";
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		String autoSuggestedValue = sessionSearchPage.validateAutosuggestSearchResult_BS(data3, data1, data2);
 		lp.logout();
 
 	}
 
-	@DataProvider(name = "query")
-	public Object[][] dataset2() {
-		return new Object[][] { {
-				"(( \"Hello U>C\"~5 OR \"U>C\" OR ( \"##U>C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-				"RPMXCON-57446" },
-				{ "(( \"Hello U=C\"~5 OR \"U=C\" OR ( \"##U=C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57445" },
-				{ "(( \"Hello U;C\"~5 OR \"U;C\" OR ( \"##U;C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57443" },
-				{ "(( \"Hello U`C\"~5 OR \"U`C\" OR ( \"##U`C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57442" },
-				{ "(( \"Hello U/C\"~5 OR \"U/C\" OR ( \"##U/C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57441" },
-				{ "(( \"Hello U.C\"~5 OR \"U.C\" OR ( \"##U.C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57440" },
-				{ "(( \"Hello U-C\"~5 OR \"U-C\" OR ( \"##U-C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57439" },
-				{ "(( \"Hello U,C\"~5 OR \"U,C\" OR ( \"##U,C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57438" },
-				{ "(( \"Hello U+C\"~5 OR \"U+C\" OR ( \"##U+C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57437" },
-				{ "(( \"Hello U*C\"~5 OR \"U*C\" OR ( \"##U*C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57436" },
-				{ "(( \"Hello U'C\"~5 OR \"U'C\" OR ( \"##U'C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57433" },
-				{ "(( \"Hello U C\"~5 OR \"U C\" OR ( \"##U C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57430" },
-				{ "(( \"Hello U:C\"~5 OR \"U:C\" OR ( \"##U:C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57429" },
-				{ "(( \"Hello U!C\"~5 OR \"U!C\" OR ( \"##U!C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR    \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57427" },
-				{ "(( \"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
-						"RPMXCON-57426" }, };
+	/**
+	 * @author Jeevitha Description: when auto-suggest value is selected (presence
+	 *         of a space in Multiple words) then corresponding value gets wrapped
+	 *         in double quotes
+	 * @throws InterruptedException
+	 */
+
+	@Test(description ="RPMXCON-46984", groups = { "regression" })
+	public void verifyAutoSugges() throws InterruptedException {
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON- " + "46984Basic Search");
+		String data1="DocFileName";
+		String data2="tes";
+		String data3="\"Testing Special characater\"";
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		String autoSuggestedValue = sessionSearchPage.validateAutosuggestSearchResult_BS(data3, data1, data2);
+		lp.logout();
+
 	}
 
+	
 	/**
 	 * @author Jeevitha Description: Verify that correct result appears when User
 	 *         configured Expanded query format and having 'White Space' &
 	 *         character.
-	 *         (RPMXCON-57446,57445,57443,57442,57441,57440,57439,57438,57437,57436,57433,57430,57429,57427,57426)
+	 *        
 	 * @param data
 	 * @param TC_ID
 	 * @throws ParseException
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57446,RPMXCON-57445,RPMXCON-57443,RPMXCON-57442,RPMXCON-57441,RPMXCON-57440,RPMXCON-57439,RPMXCON-57438,RPMXCON-57437,RPMXCON-57436,RPMXCON-57433,RPMXCON-57430,RPMXCON-57429,RPMXCON-57427,RPMXCON-57426",dataProvider = "query", groups = { "regression" })
-	public void verifyBasicSearch2(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
+	@Test(description ="RPMXCON-57446", groups = { "regression" })
+	public void verifyBasicSearch21() throws ParseException, InterruptedException, IOException {
 		// login as PA
 
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo(TC_ID + "  basic  Search");
+		bc.stepInfo("57446 basic  Search");
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U>C\"~5 OR \"U>C\" OR ( \"##U>C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
 
 		// Verify Expanded Query
 		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
@@ -404,6 +1080,562 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
 		lp.logout();
 	}
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *       
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57445", groups = { "regression" })
+	public void verifyBasicSearch20() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57445 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U=C\"~5 OR \"U=C\" OR ( \"##U=C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57443", groups = { "regression" })
+	public void verifyBasicSearch19() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57443 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U;C\"~5 OR \"U;C\" OR ( \"##U;C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *       
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57440", groups = { "regression" })
+	public void verifyBasicSearch24() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57440 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U.C\"~5 OR \"U.C\" OR ( \"##U.C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57441", groups = { "regression" })
+	public void verifyBasicSearch23() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57441 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U/C\"~5 OR \"U/C\" OR ( \"##U/C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57442", groups = { "regression" })
+	public void verifyBasicSearch22() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57442 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U`C\"~5 OR \"U`C\" OR ( \"##U`C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57437", groups = { "regression" })
+	public void verifyBasicSearch27() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57437 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U+C\"~5 OR \"U+C\" OR ( \"##U+C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57438", groups = { "regression" })
+	public void verifyBasicSearch26() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57438 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U,C\"~5 OR \"U,C\" OR ( \"##U,C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57439", groups = { "regression" })
+	public void verifyBasicSearch25() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57439 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U-C\"~5 OR \"U-C\" OR ( \"##U-C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57430",groups = { "regression" })
+	public void verifyBasicSearch30() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57430 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U C\"~5 OR \"U C\" OR ( \"##U C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57433",groups = { "regression" })
+	public void verifyBasicSearch29() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57433 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U'C\"~5 OR \"U'C\" OR ( \"##U'C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57436",groups = { "regression" })
+	public void verifyBasicSearch28() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57436 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U*C\"~5 OR \"U*C\" OR ( \"##U*C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57426", groups = { "regression" })
+	public void verifyBasicSearch33() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57426 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *        
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57427", groups = { "regression" })
+	public void verifyBasicSearch32() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57427 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U!C\"~5 OR \"U!C\" OR ( \"##U!C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR    \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	/**
+	 * @author Jeevitha Description: Verify that correct result appears when User
+	 *         configured Expanded query format and having 'White Space' &
+	 *         character.
+	 *         (57429)
+	 * @param data
+	 * @param TC_ID
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-57429", groups = { "regression" })
+	public void verifyBasicSearch31() throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("57429 basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		String data="(( \"Hello U:C\"~5 OR \"U:C\" OR ( \"##U:C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+	}
+	
+	
 
 	/**
 	 * @author Jeevitha Description: Verify that in "compound query (workproduct and
