@@ -227,6 +227,127 @@ public class DocViewAudio_Regression25 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:07/11/2022 RPMXCON-51700
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when
+	 *              document navigation done from Images tab of previous document.
+	 */
+
+	@Test(description = "RPMXCON-51700", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentImagesTabInMiniDocList(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51700");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document navigation done from Images tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		if (baseClass.text("Images").isDisplayed()) {
+			baseClass.passedStep("In image tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Last());
+		docViewPage.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("Text document is be loaded on the respective tab Succesfully");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
+		docViewPage.getDocView_ImagesTab().waitAndClick(5);
+		if (baseClass.text("Images").isDisplayed()) {
+			baseClass.passedStep("Images document is be loaded on the respective tab Succesfully");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		docViewPage.getDocView_TranslationTab().waitAndClick(5);
+		if (baseClass.text("Translations").isDisplayed()) {
+			baseClass.passedStep("Translations document is be loaded on the respective tab Succesfully");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:07/11/2022 RPMXCON-51696
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when
+	 *              document viewed from mini doc list from Text tab of previous
+	 *              document.
+	 */
+
+	@Test(description = "RPMXCON-51696", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentLoadingSuccessfullyInTextTabInMiniDocList(String username, String password,
+			String role) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51696");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Text tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_Selectdoc(2));
+		docViewPage.getDocView_MiniDoc_Selectdoc(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
