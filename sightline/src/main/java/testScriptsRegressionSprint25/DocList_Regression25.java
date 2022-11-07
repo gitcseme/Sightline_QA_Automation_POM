@@ -176,6 +176,37 @@ public class DocList_Regression25 {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Krishna Date:NA ModifyDate:NA RPMXCON-54274
+	 * @throws Exception
+	 * @Description To verify that if any criteria is "Included" in the filters, the
+	 *              results should include the docs that match/have the specified
+	 *              criteria
+	 */
+	@Test(description = "RPMXCON-54274", enabled = true, groups = { "regression" })
+	public void verifyIncludedFiltersResultDocsSpecifiedCriteria() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54274");
+		baseClass.stepInfo(
+				"To verify that if any criteria is \"Included\" in the filters, the results should include the docs that match/have the specified criteria");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Searching Content document go to doclist
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+
+		// verify applied include custodian filter is added.
+		docList.applyCustodianNameFilter(Input.metaDataCN);
+		driver.waitForPageToBeReady();
+		docList.verifyAppliedIncludeCustodianNameFilterIsAdded(Input.metaDataCN);
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
