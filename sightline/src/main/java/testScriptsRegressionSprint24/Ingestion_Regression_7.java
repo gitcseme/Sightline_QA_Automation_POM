@@ -625,6 +625,8 @@ public class Ingestion_Regression_7 {
 		baseClass.verifyUrlLanding(Input.url + "en-us/Ingestion/Wizard", "source/overwrite page displayed", 
 				"source/overwrite setting page not displayed");
 		baseClass.stepInfo("Without entering mandatory fields click next button");
+		baseClass.waitForElement(ingestionPage.getIngestion_IngestionType());
+		ingestionPage.getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(Input.ingestionType);
 		baseClass.waitForElement(ingestionPage.getNextButton());
 		ingestionPage.getNextButton().waitAndClick(10);
 		baseClass.stepInfo("verify mandatory fields warning messages");
@@ -789,6 +791,8 @@ public class Ingestion_Regression_7 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Without entering mandatory fields click next button");
+		baseClass.waitForElement(ingestionPage.getIngestion_IngestionType());
+		ingestionPage.getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(Input.ingestionType);
 		baseClass.waitForElement(ingestionPage.getNextButton());
 		ingestionPage.getNextButton().waitAndClick(10);
 		baseClass.stepInfo("verify mandatory fields warning messages");
@@ -856,6 +860,8 @@ public class Ingestion_Regression_7 {
 		loginPage.logout();
 		
 	}
+	
+
 	
 	
 	@AfterMethod(alwaysRun = true)
