@@ -20,6 +20,7 @@ import pageFactory.ClientsPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -410,4 +411,306 @@ public class Projects_Regression25 {
 		base.passedStep("Newly added path is available ");
 		
 	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-56192
+	 * @Description:Verify when editing a non-domain project, the whole section 'Processing Setting' will present as read-only if 'NUIX' as the processing engine
+	 **/
+	@Test(description = "RPMXCON-56192", enabled = true, groups = { "regression" })
+	public void verifyEditiNonDomProjProcTypeReadOnlyNUIX() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client " + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String hcode = "hcode" + Utility.dynamicNameAppender();
+		String Clienttype = "Not a Domain";
+		String engineType = "NUIX";
+		
+		base.stepInfo("RPMXCON - 56192");
+		base.stepInfo("Verify when editing a non-domain project, the whole section 'Processing Setting'"
+				+ " will present as read-only if 'NUIX' as the processing engine");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClient_NonDomainProject(clientName, shortName, Clienttype);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddNonDomainProjWithEngineType(projectName, clientName, hcode, engineType);
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+		
+		base.waitForElement(project.getEngineTypeNUIXRadio());
+		String actResult1 = project.getEngineTypeNUIXRadio().GetAttribute("class");
+		String actResult2 = project.getEngineTypeICERadio().GetAttribute("class");
+		if(actResult1.contains("Disabled") && actResult2.contains("Disabled")) {
+			base.passedStep("The whole section 'Processing Setting' Present in Read only Mode..");
+		} else {
+			base.failedStep("The whole section 'Processing Setting' Not Present in Read only Mode..");
+		}
+		base.passedStep("Verify when editing a non-domain project, the whole section 'Processing Setting' "
+				+ "will present as read-only if 'NUIX' as the processing engine");
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * @author NA Testcase No:RPMXCON-55968
+	 * @Description:Verify that for SA - while editing 'Initial Size of Project Database'field appears in database section on Create Project page.
+	 **/
+	@Test(description = "RPMXCON-55968", enabled = true, groups = { "regression" })
+	public void verifyInitialSizeofProjSA() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client" + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String dbSize = "Small (less than 1000 documents)";
+		
+		base.stepInfo("RPMXCON - 55968");
+		base.stepInfo("Verify that for SA - while editing 'Initial Size of Project Database' "
+				+ "field appears in database section on Create Project page.");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClientWithDBSize(clientName, shortName, "Domain", dbSize);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddDomainProject(projectName, clientName);
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+		
+		base.waitForElement(project.getProjDBDropDown());
+		String dbDDStatus = project.getProjDBDropDown().GetAttribute("disabled");
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertNotNull(dbDDStatus);
+		asserts.assertAll();
+		base.waitForElement(project.getProjDBDropDown());
+		String selectedOpt = project.getProjDBDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		if(selectedOpt.equals(dbSize)) {
+			base.passedStep(selectedOpt + "Selected in Initial Size of Project Database DropDown As Expected");
+		} else {
+			base.failedStep(selectedOpt + "Not Selected in Initial Size of Project Database DropDown");
+		}
+		base.passedStep("Verify that for SA - while editing 'Initial Size of Project Database'"
+				+ " field appears in database section on Create Project page.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-55967
+	 * @Description:Verify that for DA - while editing 'Initial Size of Project Database'field appears in database section on Create Project page.
+	 **/
+	@Test(description = "RPMXCON-55967", enabled = true, groups = { "regression" })
+	public void verifyInitialSizeofProjDA() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client" + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String dbSize = "Small (less than 1000 documents)";
+		
+		base.stepInfo("RPMXCON - 55967");
+		base.stepInfo("Verify that for DA - while editing 'Initial Size of Project Database' "
+				+ "field appears in database section on Create Project page.");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClientWithDBSize(clientName, shortName, "Domain", dbSize);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddDomainProject(projectName, clientName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.AssignUserToDomain(clientName, Input.da1FullName);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Logged in As " + Input.da1userName);
+		base = new BaseClass(driver);
+		base.selectdomain(clientName);
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+		
+		base.waitForElement(project.getProjDBDropDown());
+		String dbDDStatus = project.getProjDBDropDown().GetAttribute("disabled");
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertNotNull(dbDDStatus);
+		asserts.assertAll();
+		base.waitForElement(project.getProjDBDropDown());
+		String selectedOpt = project.getProjDBDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		if(selectedOpt.equals(dbSize)) {
+			base.passedStep(selectedOpt + "Selected in Initial Size of Project Database DropDown As Expected");
+		} else {
+			base.failedStep(selectedOpt + "Not Selected in Initial Size of Project Database DropDown");
+		}
+		base.passedStep("Verify that for DA - while editing 'Initial Size of Project Database'"
+				+ " field appears in database section on Create Project page.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56191
+	 * @Description:Verify when editing a non-domain project, the whole section 'Processing Setting'"
+				+ " will present as read-only if 'ICE' as the processing engine and 'ICE-Standalone' as Processing Engine Type
+	 **/
+	@Test(description = "RPMXCON-56191", enabled = true, groups = { "regression" })
+	public void verifyEditiNonDomProjProcTypeReadOnlyICE() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client " + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String hcode = "hcode" + Utility.dynamicNameAppender();
+		String Clienttype = "Not a Domain";
+		String engineType = "ICE";
+		
+		base.stepInfo("RPMXCON - 56191");
+		base.stepInfo("Verify when editing a non-domain project, the whole section 'Processing Setting'"
+				+ " will present as read-only if 'ICE' as the processing engine and 'ICE-Standalone' as Processing Engine Type");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClient_NonDomainProject(clientName, shortName, Clienttype);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddNonDomainProjWithEngineType(projectName, clientName, hcode, engineType);
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+		
+		base.waitForElement(project.getEngineTypeNUIXRadio());
+		String actResult1 = project.getEngineTypeNUIXRadio().GetAttribute("class");
+		String actResult2 = project.getEngineTypeICERadio().GetAttribute("class");
+		if(actResult1.contains("Disabled") && actResult2.contains("Disabled")) {
+			base.passedStep("The whole section 'Processing Setting' Present in Read only Mode..");
+		} else {
+			base.failedStep("The whole section 'Processing Setting' Not Present in Read only Mode..");
+		}
+		base.passedStep("Verified - when editing a non-domain project, the whole section 'Processing Setting'"
+				+ " will present as read-only if 'ICE' as the processing engine and 'ICE-Standalone' as Processing Engine Type");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-55969
+	 * @Description:Verify that a project is created in a given domain with"
+				             + "Initial Size of Project mentioned on Create Project screen
+	 **/
+	@Test(description = "RPMXCON-55969", enabled = true, groups = { "regression" })
+	public void verifyDomainWithIniSizeOfProj() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client" + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String dbSize = "Small (less than 1000 documents)";
+		
+		base.stepInfo("RPMXCON - 55969");
+		base.stepInfo("Verify that a project is created in a given domain with"
+				             + "Initial Size of Project mentioned on Create Project screen");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClientWithDBSize(clientName, shortName, "Domain", dbSize);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddDomainProject(projectName, clientName);
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+	
+		base.waitForElement(project.getProjDBDropDown());
+		String selectedOpt = project.getProjDBDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		if(selectedOpt.equals(dbSize)) {
+			base.passedStep("Project Successfully Created In a Given Domain With Initial Size");
+		} else {
+			base.failedStep("Project Not Successfully Created In a Given Domain WIth Initial Size");
+		}
+		base.passedStep("Verify that a project is created in a given domain with"
+				     + " Initial Size of Project mentioned on Create Project screen");
+		loginPage.logout();
+	}	
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-55996
+	 * @Description:Verify that a Big size project is created in a given domain with"
+				+ "Initial Size of Project mentioned on Create Project screen
+	 **/
+	@Test(description = "RPMXCON-55996", enabled = true, groups = { "regression" })
+	public void verifyDomainWithBIGIniSizeOfProj() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		String clientName = "Client" + Utility.dynamicNameAppender();
+		String shortName = Utility.randomCharacterAppender(5);
+		String dbSize = "Big (more than 25000 documents)";
+		
+		base.stepInfo("RPMXCON - 55996");
+		base.stepInfo("Verify that a Big size project is created in a given domain with"
+				+ "Initial Size of Project mentioned on Create Project screen");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		project.addNewClientWithDBSize(clientName, shortName, "Domain", dbSize);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddDomainProject(projectName, clientName);
+		
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.editProject(projectName);
+	
+		base.waitForElement(project.getProjDBDropDown());
+		String selectedOpt = project.getProjDBDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		if(selectedOpt.equals(dbSize)) {
+			base.passedStep("Project Successfully Created In a Given Domain With Initial SIze");
+		} else {
+			base.failedStep("Project Not Successfully Created In a Given Domain With Initial SIze");
+		}
+		base.passedStep("Verify that a Big size project is created in a given domain with "
+				+ "Initial Size of Project mentioned on Create Project screen.");
+		loginPage.logout();
+	}	
+	
+	
+	
+	
+	
+	
+	
 }
