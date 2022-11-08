@@ -11049,5 +11049,30 @@ public class IngestionPage_Indium {
 			getTranscriptFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(filePath);
 			base.passedStep("added is path in dat for transcript file type");
 		}
+		
+		/**
+		 * @author: Arun Created Date: 08/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will apply filter in ingestion home page
+		 */
+		public void applyFilters() {
+			
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			getFilterByDRAFT().waitAndClick(5);
+			base.waitForElement(getFilterByFAILED());
+			getFilterByFAILED().waitAndClick(5);
+			base.waitForElement(getFilterByCATALOGED());
+			getFilterByCATALOGED().waitAndClick(5);
+			base.waitForElement(getFilterByCOPIED());
+			getFilterByCOPIED().waitAndClick(5);
+			base.waitForElement(getFilterByINDEXED());
+			getFilterByINDEXED().waitAndClick(10);
+			base.waitForElement(getFilterByAPPROVED());
+			getFilterByAPPROVED().waitAndClick(10);
+			base.waitForElement(getFilterByPUBLISHED());
+			getFilterByPUBLISHED().waitAndClick(10);
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
 
 }
