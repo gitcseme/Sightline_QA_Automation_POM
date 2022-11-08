@@ -313,6 +313,9 @@ public class TestData {
 	public String tiffPathField;
 	public String transcriptPathField;
 	public String uncAbsoluteNative;
+	public String uncRelativeDat;
+	public String absoluteOverlayDat;
+	public String relativeOverlayDat;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22
