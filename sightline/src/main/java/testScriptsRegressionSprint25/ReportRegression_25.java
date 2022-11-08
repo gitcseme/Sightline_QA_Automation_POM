@@ -169,18 +169,18 @@ public class ReportRegression_25 {
 		// Select Unique Hit column
 		searchterm.selectColumnFromSTRPage(columnName);
 
-		//get Unique Hit count from search term report page
-		int hitcount=searchterm.verifyaggregateCount(columnName);
-		
+		// get Unique Hit count from search term report page
+		int hitcount = searchterm.verifyaggregateCount(columnName);
+
 		// perform Bulk Folder
 		searchterm.BulkFolder(folderName);
 		baseClass.passedStep("Bulk Folder Performed Successfully");
-		
-		//verify the selected document is moved to the folder
-		TagsAndFoldersPage tagsAndFolder= new TagsAndFoldersPage(driver);
+
+		// verify the selected document is moved to the folder
+		TagsAndFoldersPage tagsAndFolder = new TagsAndFoldersPage(driver);
 		tagsAndFolder.navigateToTagsAndFolderPage();
 		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folderName, hitcount);
-		
+
 		// delete search
 		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
 		savedSearch.deleteSearch(saveSearch2, Input.shareSearchPA, Input.yesButton);
@@ -189,7 +189,63 @@ public class ReportRegression_25 {
 		// logout
 		loginPage.logout();
 	}
-	
+
+	/**
+	 * @author Jeevitha.R
+	 * @throws AWTException
+	 * @Description : Search Term Report - Verify Scheduling/Sharing/Expoting/Saving
+	 *              STR report with Unique Hits / Unique Family Hits column
+	 *              [RPMXCON-56589]
+	 */
+	@Test(description = "RPMXCON-56589", groups = { "regression" }, enabled = true)
+	public void verifyStrReport() throws InterruptedException, ParseException, AWTException {
+		String saveSearch1 = "Search1" + Utility.dynamicNameAppender();
+		String saveSearch2 = "Search2" + Utility.dynamicNameAppender();
+		String saveSearch3 = "Search3" + Utility.dynamicNameAppender();
+		String columnName = "Unique Hits".toUpperCase();
+
+		String[] tabList = { Input.mySavedSearch, Input.shareSearchPA, Input.shareSearchDefaultSG };
+
+		baseClass.stepInfo("Test case Id:RPMXCON-56589 Reports/Search Term");
+		baseClass.stepInfo(
+				"Search Term Report - Verify Scheduling/Sharing/Expoting/Saving STR report with Unique Hits / Unique Family Hits column");
+
+		// Login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// save search in All 3 TAbs
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(saveSearch1);
+
+		sessionSearch.getNewSearchButton().waitAndClick(5);
+		sessionSearch.multipleBasicContentSearch(Input.searchString2);
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch2, Input.shareSearchPA);
+		sessionSearch.saveSearchAtAnyRootGroup(saveSearch3, Input.shareSearchDefaultSG);
+
+		// select ALL tabs and generate STR report
+		reports.navigateToReportsPage("");
+		searchterm.GenerateReportWithAnySearchOrTab(tabList, true);
+
+		// Select Unique Hit column
+		searchterm.selectColumnFromSTRPage(columnName);
+
+		// Perform Saving STR report
+		searchterm.ValidateSearchTermreportSaveandImpact(columnName, false);
+
+		// Perform Export Report
+		baseClass.waitForElement(searchterm.getExportIcon());
+		searchterm.getExportIcon().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Report save successfully");
+
+		// delete search
+		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
+		savedSearch.deleteSearch(saveSearch2, Input.shareSearchPA, Input.yesButton);
+		savedSearch.deleteSearch(saveSearch3, Input.shareSearchDefaultSG, Input.yesButton);
+
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
