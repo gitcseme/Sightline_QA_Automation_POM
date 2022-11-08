@@ -17,12 +17,14 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.Categorization;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -207,7 +209,102 @@ public class DocList_Regression25 {
 		docList.verifyAppliedIncludeCustodianNameFilterIsAdded(Input.metaDataCN);
 	}
 
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @Description :Creation and assigning documents in Folders for Categorization.[RPMXCON-54250]
+	 */
+	@Test(description = "RPMXCON-54250", enabled = true, groups = { "regression" })
+	public void createandCategorizeFolders() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-54250");
+		baseClass.stepInfo("Creation and assigning documents in Folders for Categorization");
+		
+		DocListPage docList = new DocListPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+//		SavedSearch savedSearch=new SavedSearch(driver);
+		Categorization categorize= new Categorization(driver);
+		String folder= "Folder"+ Utility.dynamicNameAppender();
+		String searchName="search"+ Utility.dynamicNameAppender();
+	
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tags.CreateFolder(folder, Input.securityGroup);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.bulkFolderExisting(folder);
+		
+
+		// Navigate to CATEGORIZATION
+		categorize.navigateToCategorizePage();
+
+		// Select Folder In Analyse Section
+		categorize.fillingTrainingSetSection("Folder", folder, null, null);
+
+		// select Folder in Corpus Section
+		categorize.fillingStep2CorpusTab("search", searchName, Input.mySavedSearch, true);
+
+		// verify Run categorization
+		categorize.runCategorization("YES");
+		
+		categorize.ViewInDocLIst();
+		
+		driver.waitForPageToBeReady();
+		String docCount = docList.verifyingDocCount();
+		
+		softAssert.assertEquals(purehit,Integer.parseInt(docCount));
+		softAssert.assertAll();
+		baseClass.passedStep("Same number of documents moved in DocList Screen");
+		
+		}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description :Creation and assigning documents in Tags for Categorization.[RPMXCON-54249]
+	 */
+	@Test(description = "RPMXCON-54249", enabled = true, groups = { "regression" })
+	public void createandCategorizeTags() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54249");
+		baseClass.stepInfo("Creation and assigning documents in Tags for Categorization");
+		
+		DocListPage docList = new DocListPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		Categorization categorize= new Categorization(driver);
+		String tag= "Tag"+ Utility.dynamicNameAppender();
+		String searchName="search"+ Utility.dynamicNameAppender();
+	
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tags.CreateTag(tag, Input.securityGroup);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.bulkTagExisting(tag);
+		
+		// Navigate to CATEGORIZATION
+		categorize.navigateToCategorizePage();
+
+		// Select Folder In Analyse Section
+		categorize.fillingTrainingSetSection("Tag", tag, null, null);
+
+		// select Folder in Corpus Section
+		categorize.fillingStep2CorpusTab("search", searchName, Input.mySavedSearch, true);
+
+		// verify Run categorization
+		categorize.runCategorization("YES");
+		
+		categorize.ViewInDocLIst();
+		
+		driver.waitForPageToBeReady();
+		String docCount = docList.verifyingDocCount();
+		
+		softAssert.assertEquals(purehit,Integer.parseInt(docCount));
+		softAssert.assertAll();
+		baseClass.passedStep("Same number of documents moved in DocList Screen");
+		
+		}
+
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

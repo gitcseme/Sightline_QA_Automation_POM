@@ -1132,6 +1132,24 @@ public class UserManagement {
 	public Element getCollectionsCheckBox() {
 		return driver.FindElementById("chkCanCollections");
 	}
+	
+	//added by sowndarya
+	public Element getRightAssignErrorMessage() {
+		return driver.FindElementById("RightAssignErrorMessage");
+	}
+	public Element getRightAssignErrorMessage1() {
+		return driver.FindElementById("RightAssignErrorMessage2");
+	}
+	public Element getLeftAssignErrorMessage() {
+		return driver.FindElementById("LeftAssignErrorMessage");
+	}
+	public ElementCollection getDomainRoleOptions() {
+		return driver.FindElementsByXPath("//select[@id='lstRoles']/option");
+	}
+	public Element getIsActiveCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsActiveCheckbox']//parent::label//i");
+	}
+	
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;

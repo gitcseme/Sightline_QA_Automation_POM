@@ -116,6 +116,10 @@ public class LoginPage {
 		return driver.FindElementById("txtBxUserLastName");
 	}
 	
+	public Element getLoginErrorMSG() {
+		return driver.FindElementByXPath("//div[@class='validation-summary-errors']//ul//li");
+	}
+	
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
