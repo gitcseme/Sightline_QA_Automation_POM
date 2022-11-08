@@ -180,7 +180,7 @@ public class ReportsPage {
 	}
 
 	public Element getInFolders() {
-		return driver.FindElementByXPath("//a[@data-content='All Folders']//following-sibling::ul/li[2]//a//i");
+		return driver.FindElementByXPath("//a[@data-content='All Folders']//following-sibling::ul");
 	}
 
 	public Element getInTags() {
@@ -741,6 +741,7 @@ public class ReportsPage {
 				return getInFolders().Visible();
 			}
 		}), Input.wait60);
+		driver.scrollingToBottomofAPage();
 		getInFolders().waitAndClick(10);
 		getInFolders().waitAndClick(10);
 		getFolder(folderName).waitAndClick(10);

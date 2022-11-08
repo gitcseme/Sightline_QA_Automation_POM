@@ -181,6 +181,183 @@ public class Ingestion_Regression_8 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Arunkumar date: 07/11/2022 TestCase Id:RPMXCON-60826
+	 * Description :Verify if Ingestion is completed with Absolute path in DAT then Ingestion Overlay 
+	 * should completed with DAT having Relative path 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60826",enabled = true, groups = { "regression" })
+	public void verifyAbsoluteRelativePathIngestionOverlay() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60826");
+		baseClass.stepInfo("verify the ingestion status of overlay with Dat relative path");
+		String ingestionName = null;
+		docExplorer = new DocExplorerPage(driver);
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("select 'is path in dat' for native");
+			ingestionPage.isPathInDatForNativeFile(Input.nativePathField);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Add only Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer and verify ");
+		docExplorer.navigateToDocExplorerPage();
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		//perform overlay ingestion and verify
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.uncPathFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.relativeOverlayDat, Input.documentKey);
+		baseClass.stepInfo("select 'is path in dat' for native");
+		ingestionPage.isPathInDatForNativeFile(Input.nativePathField);
+		ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.passedStep("Overlay Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer.navigateToDocExplorerPage();
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 07/11/2022 TestCase Id:RPMXCON-60825
+	 * Description :Verify if Ingestion is completed with Relative path in DAT then Ingestion Overlay 
+	 * should completed with DAT having absolute path
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60825",enabled = true, groups = { "regression" })
+	public void verifyRelativeAbsolutePathIngestionOverlay() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60825");
+		baseClass.stepInfo("verify the ingestion status of overlay with Dat absolute path");
+		String ingestionName = null;
+		docExplorer = new DocExplorerPage(driver);
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncRelativeDat, Input.documentKey);
+			baseClass.stepInfo("select 'is path in dat' for native");
+			ingestionPage.isPathInDatForNativeFile(Input.nativePathField);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Add only Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer and verify ");
+		docExplorer.navigateToDocExplorerPage();
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		//perform overlay ingestion and verify
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.uncPathFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.absoluteOverlayDat, Input.documentKey);
+		baseClass.stepInfo("select 'is path in dat' for native");
+		ingestionPage.isPathInDatForNativeFile(Input.nativePathField);
+		ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.passedStep("Overlay Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer.navigateToDocExplorerPage();
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 08/11/2022 TestCase Id:RPMXCON-47390
+	 * Description :To verify that on Ingestion Home page displays default 10 tiles.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47390",enabled = true, groups = { "regression" })
+	public void verifyIngestionHomePageTiles() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47390");
+		baseClass.stepInfo("verify that on Ingestion Home page displays default 10 tiles");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Select all filters");
+		ingestionPage.applyFilters();
+		//verify default tiles count
+		int tilesCount = ingestionPage.getIngestionTilesCount().size();
+		baseClass.passedStep("Number of tiles present for all filters selection: "+tilesCount);
+		if(tilesCount<=10) {
+			baseClass.passedStep("ingestion home page displays default limit of 10 tiles");
+		}
+		else {
+			baseClass.failedStep("Ingestion home page not displayed default 10 tiles");
+		}
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

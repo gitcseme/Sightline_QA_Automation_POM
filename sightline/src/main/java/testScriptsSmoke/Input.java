@@ -432,6 +432,9 @@ public class Input {
 	public static String tiffPathField;
 	public static String transcriptPathField;
 	public static String uncAbsoluteNative;
+	public static String uncRelativeDat;
+	public static String absoluteOverlayDat;
+	public static String relativeOverlayDat;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1443,7 +1446,9 @@ public class Input {
 		tiffPathField = testData.getTiffPathField();
 		transcriptPathField = testData.getTranscriptPathField();
 		uncAbsoluteNative = testData.getUncAbsoluteNative();
-		
+		uncRelativeDat = testData.getUncRelativeDat();
+		absoluteOverlayDat = testData.getAbsoluteOverlayDat();
+		relativeOverlayDat = testData.getRelativeOverlayDat();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
