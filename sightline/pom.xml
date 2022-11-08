@@ -82,7 +82,7 @@
 	</systemPropertyVariables> 
 
 <suiteXmlFiles>
-            <suiteXmlFile>SightlineExecutionSuites/Zephyr-DocViewBatch1.xml</suiteXmlFile>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
      </suiteXmlFiles>    
 				</configuration>
 			</plugin>
