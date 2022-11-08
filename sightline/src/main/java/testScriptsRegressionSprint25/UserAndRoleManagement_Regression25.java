@@ -63,14 +63,14 @@ public class UserAndRoleManagement_Regression25 {
 		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
 				{ Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
 	}
+	
 
 	@DataProvider(name = "SaAndPaUser")
 	public Object[][] SaAndPaUser() {
-		return new Object[][] {
-			{ Input.sa1userName, Input.sa1password, "SA" },
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 	}
-	
+
 	/**
 	 * Author :Mohan date: 02/11/2022 TestCase Id:RPMXCON-52914 Description :To
 	 * verify project and domain drop down values when user change role to
@@ -159,7 +159,7 @@ public class UserAndRoleManagement_Regression25 {
 		baseClass.passedStep("User is able to access the functionality as per the rights and logged in role.");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52708 Description :To
 	 * verify when 'Analytics Panels' is Checked/Unchecked from Edit User ->
@@ -336,18 +336,20 @@ public class UserAndRoleManagement_Regression25 {
 		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52709 
-	 * Description :To verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User > functionality tab
+	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52709 Description :To
+	 * verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User >
+	 * functionality tab
+	 * 
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-52709", enabled = true, groups = { "regression" })
 	public void verifyReviewerRemarkslIsCheckedUncheckedFromEditFunctionalities() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52709");
-		baseClass
-				.stepInfo("To verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User > functionality tab");
+		baseClass.stepInfo(
+				"To verify for user when 'Reviewer Remarks' is Checked/Unchecked from Edit User > functionality tab");
 
 		// login as Sys Admin
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -503,10 +505,12 @@ public class UserAndRoleManagement_Regression25 {
 		docView.verifyAnalyticsPanel(docView.getNonAudioRemarkBtn(), "Reviewer Remarks");
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52710 
-	 * Description :To verify for user when 'Redaction' is Checked/Unchecked from Edit User->Functionality tab
+	 * Author :Mohan date: 03/11/2022 TestCase Id:RPMXCON-52710 Description :To
+	 * verify for user when 'Redaction' is Checked/Unchecked from Edit
+	 * User->Functionality tab
+	 * 
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-52710", enabled = true, groups = { "regression" })
@@ -524,8 +528,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", false);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", false);
 		loginPage.logout();
 
 		// Login As Project Admin
@@ -551,8 +554,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", true);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", true);
 		loginPage.logout();
 
 		// Login As Project Admin
@@ -576,8 +578,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", false);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", false);
 		loginPage.logout();
 
 		// Login As Review Manager
@@ -602,8 +603,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", true);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", true);
 		loginPage.logout();
 
 		// Login As Review Manager
@@ -627,8 +627,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", false);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", false);
 		loginPage.logout();
 
 		// Login As Reviewer
@@ -652,8 +651,7 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.waitForElement(userManage.getFunctionalityTab());
 		userManage.getFunctionalityTab().waitAndClick(5);
-		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"),
-				"Redactions", true);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Redactions"), "Redactions", true);
 		loginPage.logout();
 
 		// Login As Reviewer
@@ -668,6 +666,135 @@ public class UserAndRoleManagement_Regression25 {
 		// verify Analytics Panel
 		docView = new DocViewPage(driver);
 		docView.verifyAnalyticsPanel(docView.redactionIcon(), "Redactions");
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52891 Description :To
+	 * verify project and domain drop down values when user change role to
+	 * PA/SA/RMU/Reviewer in Edit pop up as DA user
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52891", enabled = true, groups = { "regression" })
+	public void verifyProjectAndDomainDropValuesWhenUserChageRoleToDASARMUReviewerFromDA() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52891");
+		baseClass.stepInfo(
+				"To verify project and domain drop down values when user change role to PA/SA/RMU/Reviewer in Edit pop up as DA user");
+
+		// login as sys admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+
+		// change role from DA to PA
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to PA");
+		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from PA to DA");
+		userManage.changeRoleToDAFromAnyUser();
+
+		// change role from DA to RMU
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to RMU");
+		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from RMU to DA");
+		userManage.changeRoleToDAFromAnyUser();
+
+		// change role from DA to Reviewer
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
+		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
+		baseClass.stepInfo("Change Role from DA to Reviewer");
+		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.stepInfo("Change Role from Reviewer to DA");
+		userManage.changeRoleToDAFromAnyUser();
+
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52478 
+	 * Description :To verify when Sys Admin edits the users rights for all roles and 'Save' those rights.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52478", enabled = true, groups = { "regression" })
+	public void verifySysAdminEditsUsersRightsForAllRolesAndSave() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52478");
+		baseClass.stepInfo("To verify when Sys Admin edits the users rights for all roles and 'Save' those rights.");
+
+		// login as sys admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		
+		String[] checkedCbPa = { Input.Searching, Input.Highlighting, Input.Redactions, Input.ReviewerRemarks,
+				Input.AnalyticsPanels, Input.Manage, Input.Productions, Input.AllReports, Input.ConceptExplorer,
+				Input.CommunicationsExplorer, Input.Categorize, Input.Datasets };
+		String[] disabledCBPa = { Input.ManageDomainProjects };
+		String[] uncheckedCBPa = { Input.Ingestions };
+
+		String[] checkedCb = { Input.Searching, Input.Highlighting, Input.Redactions, Input.ReviewerRemarks,
+				Input.AnalyticsPanels, Input.Manage, Input.Productions, Input.AllReports, Input.ConceptExplorer,
+				Input.CommunicationsExplorer, Input.Categorize };
+		String[] disabledCB = { Input.ManageDomainProjects, Input.Ingestions };
+		String[] uncheckedCB = { Input.Datasets };
+
+		String[] checkedCbRev = { Input.Searching, Input.Highlighting, Input.Redactions, Input.ReviewerRemarks,
+				Input.AnalyticsPanels };
+		String[] disabledCBRev = { Input.Manage, Input.ManageDomainProjects, Input.Ingestions, Input.Productions,
+				Input.Datasets, Input.AllReports };
+		String[] uncheckedCBRev = { Input.ConceptExplorer, Input.CommunicationsExplorer };
+
+
+		// navigate to userpage
+		userManage.navigateToUsersPAge();
+
+		String[][] usersToCheck = { { Input.ProjectAdministrator, Input.pa1userName, "PA" },
+				{ Input.ReviewManager, Input.rmu1userName, "PA" }, { Input.Reviewer, Input.rev1userName, "PA" } };
+
+		// verify Checked, unchecked, & Disabled checkbox of users
+		// And verification for Check or uncheck Component and save
+		userManage.verifyFunctionalityCheckbox(usersToCheck, checkedCbPa, disabledCBPa, uncheckedCBPa, checkedCb,
+				disabledCB, uncheckedCB, checkedCbRev, disabledCBRev, uncheckedCBRev, true, Input.DownloadNative);
+
+		// logout
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52408 
+	 * Description :Add Existing User: To verify mandatory fields validation when fields are blank
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52408",dataProvider = "users", enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldsValidationWhenFieldsAreBlank(String username, String password, String userRole) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52408");
+		baseClass.stepInfo("Add Existing User: To verify mandatory fields validation when fields are blank");
+
+		// login as Users
+		loginPage.loginToSightLine(username,password);
+		baseClass.stepInfo("Logged in as "+userRole+"");
+		
+		//clickOn Add New User button
+		userManage.navigateToUsersPAge();
+		baseClass.waitForElement(userManage.getAddUserBtn());
+		userManage.getAddUserBtn().waitAndClick(5);
+		
+		//verify Mandatory fields errors
+		userManage.verifyErrorMessageInMandatoryFields();
+		
+		//logout
 		loginPage.logout();
 	}
 
@@ -698,6 +825,3 @@ public class UserAndRoleManagement_Regression25 {
 	}
 
 }
-
-
-
