@@ -231,11 +231,14 @@ public class DocList_Regression24 {
 		baseClass.stepInfo("Selecting page length in doclist page");
 		docList.getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(Input.pageLength);
 		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(docList.getTableFooterDocListCount());
 		driver.waitForPageToBeReady();
 		String DocListCount = docList.getTableFooterDocListCount().getText();
 		System.out.println(DocListCount);
 		String[] doccount = DocListCount.split(" ");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(8);
 		String Document = doccount[3];
 		System.out.println("doclist page document count is" + Document);
 		baseClass.textCompareEquals(Input.pageLength, Document, Input.pageLength + "is displayedas expected",

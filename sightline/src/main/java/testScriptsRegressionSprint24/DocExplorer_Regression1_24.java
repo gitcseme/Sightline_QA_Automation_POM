@@ -171,7 +171,7 @@ public class DocExplorer_Regression1_24 {
 		baseClass.checkNotificationCount(initialBg,1);
 		baseClass.waitForElement(baseClass.getBullHornIcon());
 		baseClass.getBullHornIcon().waitAndClick(10);
-
+		driver.waitForPageToBeReady();
 		String actStatus = saveSearch.getNotificationStatus(1).getText();
 		System.out.println(actStatus);
 		String expStatus = "Your Bulkaction-Unassign with Bulkaction-Unassign Id";
