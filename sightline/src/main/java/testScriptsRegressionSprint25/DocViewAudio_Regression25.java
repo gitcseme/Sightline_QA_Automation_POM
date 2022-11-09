@@ -637,6 +637,7 @@ public class DocViewAudio_Regression25 {
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
 		docViewPage.audioPlayPauseIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		docViewPage.stampColourSelection(filedText, Input.stampColours);
 		docViewPage.docviewPageLoadPerformanceForStamp();
 		baseClass.passedStep("application is not hang on applying the stamp when audio is playing");
