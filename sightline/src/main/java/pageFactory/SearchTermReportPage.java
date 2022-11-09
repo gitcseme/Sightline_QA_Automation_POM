@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -232,6 +233,42 @@ public class SearchTermReportPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getShareUserDDBtn() {
+		return driver.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']");
+	}
+
+	public Element getScheduleSubmit() {
+		return driver.FindElementByXPath("//button[@id='btnScheduleSubmit']");
+	}
+
+	public Element getScheduleIcon() {
+		return driver.FindElementByXPath("//i[@id='btnScheduler']");
+	}
+
+	public Element getEmailtextarea() {
+		return driver.FindElementByXPath("//textarea[@id='txtEmail']");
+	}
+
+	public Element getLastUser() {
+		return driver.FindElementByXPath("(//ul[@class='multiselect-container dropdown-menu']//label)[last()]");
+	}
+
+	public Element getShareBtn() {
+		return driver.FindElementById("btnSaveShareReport");
+	}
+
+	public Element getUserDD(String username) {
+		return driver.FindElementByXPath("//label[normalize-space()='" + username + "']");
+	}
+
+	public Element getShareUsersDD() {
+		return driver.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']");
+	}
+
+	public Element getShareIcon() {
+		return driver.FindElementById("ReportReviewer");
+	}
 
 	public Element getGearIconBackground() {
 		return driver.FindElementByClassName("ColVis_collectionBackground");
@@ -1047,6 +1084,62 @@ public class SearchTermReportPage {
 						ColumnName[i] + "Column is Present in Report", "Fail");
 			}
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription  : perform Scharing action
+	 */
+	public void performSharingAction(String username, String emailId) {
+		getShareIcon().waitAndClick(10);
+		bc.waitForElement(getShareUsersDD());
+		getShareUsersDD().waitAndClick(10);
+		if (getUserDD(username).isElementAvailable(10)) {
+			getUserDD(username).waitAndClick(10);
+		} else {
+			bc.waitForElement(getLastUser());
+			getLastUser().waitAndClick(10);
+		}
+		getShareUsersDD().waitAndClick(10);
+		bc.waitForElement(getEmailtextarea());
+		getEmailtextarea().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getEmailtextarea().SendKeys(emailId);
+
+		bc.waitForElement(getShareBtn());
+		getShareBtn().waitAndClick(10);
+		bc.VerifySuccessMessage("Your Report has been successfully shared with others.");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription  : perform schedule action
+	 */
+	public void performScheduleAction(String username, String emailId) throws ParseException {
+		bc.waitForElement(getScheduleIcon());
+		getScheduleIcon().waitAndClick(10);
+
+		SavedSearch savedSearch = new SavedSearch(driver);
+		bc.waitForElement(savedSearch.getSavedSearch_ScheduleTime());
+		savedSearch.getSavedSearch_ScheduleTime().SendKeys(savedSearch.schdulerTimePlus15Secs());
+
+		bc.waitForElement(getShareUserDDBtn());
+		getShareUserDDBtn().waitAndClick(10);
+		if (getUserDD(username).isElementAvailable(10)) {
+			getUserDD(username).waitAndClick(10);
+		}else {
+			bc.waitForElement(getLastUser());
+			getLastUser().waitAndClick(10);
+		}
+		getShareUserDDBtn().waitAndClick(10);
+		bc.waitForElement(getEmailtextarea());
+		getEmailtextarea().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getEmailtextarea().SendKeys(emailId);
+
+		bc.waitForElement(getScheduleSubmit());
+		getScheduleSubmit().waitAndClick(10);
+		bc.VerifySuccessMessage("Record scheduled successfully");
 	}
 
 }

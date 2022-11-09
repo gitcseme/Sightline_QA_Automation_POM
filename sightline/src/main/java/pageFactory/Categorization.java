@@ -140,6 +140,10 @@ public class Categorization {
 	}
 
 	// Added By Jeevitha
+	
+	public ElementCollection getAvailableSearches() {
+		return driver.FindElementsByXPath("//div[@id='searches']//a");
+	}
 
 	public Element getDome() {
 		return driver.FindElementByXPath("//div[@class='panel-collapse collapse in']//div[@class='panel-body']");
