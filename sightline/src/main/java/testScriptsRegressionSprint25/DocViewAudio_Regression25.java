@@ -539,7 +539,125 @@ public class DocViewAudio_Regression25 {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/11/2022 RPMXCON-51096
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio files move to Next hit functionality is
+	 *              working properly inside Doc view screen.
+	 */
 
+	@Test(description = "RPMXCON-51096", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioClickMoveToNextInDocViewScreen(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51096");
+		baseClass.stepInfo(
+				"Verify that audio files move to Next hit functionality is working properly inside Doc view screen.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		//Click play btn
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
+		baseClass.waitTime(5);
+		String playtime1 = docList.getDocList_Preview_AudioDuration().getText();
+		System.out.println(playtime1);
+		baseClass.stepInfo(playtime1);
+		
+        // click the next hit Btn
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.getDocView_IconNext());
+		docViewPage.getDocView_IconNext().waitAndClick(10);
+		baseClass.stepInfo("Audio Next Hit Icon Clicked Successfully");
+		driver.waitForPageToBeReady();
+		String afterNextPlayTime = docList.getDocList_Preview_AudioDuration().getText();
+		System.out.println(afterNextPlayTime);
+		baseClass.stepInfo(afterNextPlayTime);
+
+		//verify Next hit btn working in docview screen
+		softAssertion.assertNotEquals(playtime1, afterNextPlayTime);
+		baseClass.passedStep("Audio files move to Next hit functionality is work properly inside Doc view screen");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/11/2022 RPMXCON-51480
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that application should not hang when the user tries to
+	 *              complete the audio document by applying coding stamp when audio
+	 *              is playing.
+	 */
+
+	@Test(description = "RPMXCON-51480", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentApplyCodingForm()
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51480");
+		baseClass.stepInfo(
+				"Verify that application should not hang when the user tries to complete the audio document by applying coding stamp when audio is playing.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Create assignment and distribute the docs");
+		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assign, Input.codeFormName, SessionSearch.pureHit);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+
+		// edit codingform and apply stamp
+		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColours);
+		// play Audiofile
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
+		docViewPage.stampColourSelection(filedText, Input.stampColours);
+		docViewPage.docviewPageLoadPerformanceForStamp();
+		baseClass.passedStep("application is not hang on applying the stamp when audio is playing");
+		loginPage.logout();
+		// Login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rev1userName + "");
+		// Assignment Selection and Reviewer
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		// edit codingform and apply stamp
+		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColours);
+		// play Audiofile
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(10);
+		docViewPage.stampColourSelection(filedText, Input.stampColours);
+		docViewPage.docviewPageLoadPerformanceForStamp();
+		baseClass.passedStep("application is not hang on applying the stamp when audio is playing");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
