@@ -2537,7 +2537,7 @@ public class TallyPage {
 				base.stepInfo("perform search with field and verify purehit count with report");
 				SessionSearch search = new SessionSearch(driver);
 				int searchResult =search.MetaDataSearchInBasicSearch("AllCustodians", "\""+custodian+"\"");
-				base.stepInfo("search result for "+custodian+"-" + tallyResult);
+				base.stepInfo("search result for "+custodian+"-" + searchResult);
 				if(tallyResult==searchResult ) {
 					base.passedStep("Counts matched for search result and tally report");
 					break;
