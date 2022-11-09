@@ -580,6 +580,9 @@ public class TallyPage {
 	public Element getValues(int i) {
 		return driver.FindElementByCssSelector("rect[class='selected'][y='"+i+"']");
 	}
+	public Element getExportButtonStatus() {
+		return driver.FindElementByXPath("//button[@id='btnExportTallyReportToExcel']");
+	}
 
 	public TallyPage(Driver driver) {
 
@@ -2496,6 +2499,54 @@ public class TallyPage {
 		return map;
 		
 		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the generation of tally report for metadata
+	 */
+	public void verifyTallyReportGenerationForMetadata(String metadata) {
+		
+		selectSourceByProject();
+		selectTallyByMetaDataField(metadata);
+		base.waitForElement(getTally_btnTallyAll());
+		getTally_btnTallyAll().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		String exportStatus = getExportButtonStatus().GetAttribute("disabled");
+		base.stepInfo("export button disabled status after searching with metadata-"+exportStatus);
+		if(getTallyChartRectbar().isDisplayed() && exportStatus==null) {
+			base.passedStep("Tally report generated for the field-" + metadata);
+		}
+		else {
+			base.failedStep("Tally report not generated and export option not available"+metadata);
+		}
+	}
+	/**
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform tally and search for allcustodians metadata
+	 */
+	public void performTallyAndSearchForAllCustodians() {
+		
+		List<String> custodians =verifyTallyChart();
+		HashMap<String, Integer> map = getDocsCountFortallyReport();
+		for(int i=0;i<custodians.size();i++) {
+			String custodian = custodians.get(i);
+			if(!(custodian.isEmpty())) {
+				int tallyResult = map.get(custodian);
+				base.stepInfo("tally result for "+ custodian + "-" + tallyResult);
+				base.stepInfo("perform search with field and verify purehit count with report");
+				SessionSearch search = new SessionSearch(driver);
+				int searchResult =search.MetaDataSearchInBasicSearch("AllCustodians", "\""+custodian+"\"");
+				base.stepInfo("search result for "+custodian+"-" + tallyResult);
+				if(tallyResult==searchResult ) {
+					base.passedStep("Counts matched for search result and tally report");
+					break;
+				}
+				else {
+					base.failedStep("Counts not matched for search result and tally report");
+				}
+			}
+		}
 	}
 
 }

@@ -227,9 +227,17 @@ public class DomainDashboard {
 	public Element getWidget() {
 		return driver.FindElementByXPath("//Span[@class='pName font-xs'][text()='Active Users']");
 	}
+	//added by arun
+	public Element manageClientGridTable() {
+		return driver.FindElementById("userTable");
+	}
+	public Element getCreatedByColumn() {
+		return driver.FindElementById("hdrEntityCreatedBy");
+	}
+	public Element getCreatedOnColumn() {
+		return driver.FindElementById("hdrEntityCreatedON");
+	}
 	
-	
-
 	public DomainDashboard(Driver driver) {
 
 		this.driver = driver;
@@ -908,6 +916,43 @@ public class DomainDashboard {
 		base.passedStep(ProjectName+" Filtered project is listed as expected");
 		}else {
 			base.failedStep("filtered project is not listed");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform navigation to manage clients page
+	 */
+	public void navigateToManageClientSection() {
+		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(Input.url + "Entity/Entity", "navigated to manage-client section", 
+				"not in manage client page");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the columns present in grid table client section
+	 */
+	public void verifyColumnPresentInClientGridTable() {
+		
+		Element[] columns= {getCreatedByColumn(),getCreatedOnColumn()};
+		
+		//verify columns present in client grid table
+		if(manageClientGridTable().isElementAvailable(10)) {
+			base.passedStep("Client grid table present in manage client section");
+			for(int i=0;i<columns.length;i++) {
+				String column =columns[i].getText().trim();
+				if(columns[i].isDisplayed()) {
+					base.passedStep(column + "column displayed in manage client grid table");
+				}
+				else {
+					base.failedStep(column +"column not displayed in client grid table");
+				}
+			}
+		}
+		else {
+			base.failedStep("manage client grid table not present");
 		}
 	}
 }
