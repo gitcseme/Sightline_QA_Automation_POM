@@ -63,6 +63,9 @@ public class Categorization {
 		return driver.FindElementByXPath("//button[@id='btnNo']");
 	}
 
+	public Element getPopupCancelBtn() {
+		return driver.FindElementByXPath("//button[@id='btnCancel']");
+	}
 	public Element getResults() {
 		return driver.FindElementByXPath("//*[@id='divConfiguration']/div[2]/div[2]/div[1]");
 	}
@@ -773,7 +776,13 @@ public class Categorization {
 			getSelectYesBtn().waitAndClick(10);
 			base.stepInfo("Clicked : YES From You have set the level below 30 Popup");
 		}
-
+		
+		base.waitTime(2);
+		getPopupCancelBtn().isDisplayed();
+		getPopupNoBtn().isDisplayed();
+		getPopupCancelBtn().isDisplayed();
+		base.stepInfo("verified  Yes / No / Cancel buttons are present");
+		
 		if (getPopupYesBtn().isElementAvailable(30)) {
 			if (select.equalsIgnoreCase("YES")) {
 				getPopupYesBtn().waitAndClick(10);
