@@ -666,7 +666,6 @@ public class DocViewAudio_Regression24 {
 		DocViewPage docviewPage = new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
-		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
 
 		// Login As RMU
@@ -674,46 +673,40 @@ public class DocViewAudio_Regression24 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 
 		// Audio search
-		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		int purehit = sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
 		sessionSearch.viewInDocView();
-		driver.waitForPageToBeReady();
-		// Audio search And Save
-		sessionSearch.navigateToSessionSearchPageURL();
-		driver.waitForPageToBeReady();
-		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString2, Input.language);
-		driver.waitForPageToBeReady();
-		sessionSearch.addPureHit();
-		sessionSearch.saveSearch(searchName1);
+		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
+		System.out.println(DocIDInMiniDocList);
 
-		// Added another Audio search and save
-		driver.waitForPageToBeReady();
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(audioSearch, Input.language);
+		sessionSearch.addPureHit();
+		// Added another Audio search and add
 		sessionSearch.addNewSearch();
 		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
-		driver.waitForPageToBeReady();
 		sessionSearch.addPureHit();
-		sessionSearch.saveSearch(searchName1);
-		// Click on bulkAssign
 		sessionSearch.bulkAssignWithOutPureHit();
 
 		// Select Assignment goto docview
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		baseClass.passedStep("Assignment created succcessfully as expected");
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentPage.selectAssignmentToViewinDocView(Asssignment);
-		
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
-		List<String> DocIDInMiniDocList2 = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
+
 		// Check Display persistant hit - notrepetative
-		driver.waitForPageToBeReady();
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList2.get(purehit - 1));
-		
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 5));
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
-		docviewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.verifyAudioPersistanHitNotDisplayed(Input.audioSearchString2);
+		int searchterm = docviewPage.getSearchTermList(Input.audioSearchString3).size();
+		if (searchterm <= 1) {
+			baseClass.passedStep("repetitive search term is not displayed");
+		} else {
+			baseClass.failedStep("repetitive search term is displayed");
+		}
 
 		// logout
 		loginPage.logout();
