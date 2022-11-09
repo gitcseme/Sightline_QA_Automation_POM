@@ -2501,6 +2501,51 @@ public class TallyPage {
 		
 	}
 	
+
+	/* author- Vijaya.Rani
+	 * 
+	 * 
+	 */
+	public void tallyToDocListPage() {
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getDocumentsCount());
+		int count = Integer.parseInt(getDocumentsCount().getWebElement().getText().trim());
+		System.out.println(count);
+		getDocumentsCount().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTally_SubTallyActionButton().Visible();
+			}
+		}), Input.wait30);
+		getTally_SubTallyActionButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTally_SubTally_Action_ViewDocList().Visible();
+			}
+		}), Input.wait30);
+		getTally_SubTally_Action_ViewDocList().Click();
+
+		System.out.println("Navigated to Doclist page");
+		UtilityLog.info("Navigated to Doclist page");
+
+		driver.waitForPageToBeReady();
+		DocListPage docList=new DocListPage(driver);
+		base.waitForElement(docList.getTableFooterDocListCount());
+		base.waitTime(8);
+		String DocListCount = docList.getTableFooterDocListCount().getText();
+
+		driver.waitForPageToBeReady();
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[5];
+		System.out.println(Document);
+		base.digitCompareEquals(Integer.valueOf(Document), count, "Documents are loaded Successfully", "Documents are not loaded");
+		
+
+	}
+	
+	
+
 	/**
 	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check the generation of tally report for metadata
@@ -2548,5 +2593,6 @@ public class TallyPage {
 			}
 		}
 	}
+
 
 }

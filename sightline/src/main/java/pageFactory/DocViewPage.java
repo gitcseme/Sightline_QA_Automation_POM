@@ -28799,6 +28799,35 @@ public class DocViewPage {
 			base.failedStep("Can't able to verify analytics panel");
 		}
 	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void docviewPageLoadPerformanceForStamp() {
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		String pageHang = null;
+
+		// performace testing for page hanging or not
+		Long navigationStart = (Long) jse.executeScript("return window.performance.timing.navigationStart");
+		base.stepInfo("Navigation start from session search to docview" + navigationStart + "");
+		Long responseStart = (Long) jse.executeScript("return window.performance.timing.responseStart");
+		softAssertion.assertNotEquals(navigationStart, responseStart);
+		Long backendDom = (Long) jse
+				.executeScript("return performance.timing.responseStart-performance.timing.navigationStart");
+		Long pageLoaded = (Long) jse.executeScript("return window.performance.timing.domComplete");
+		base.stepInfo("Page loaded completely" + pageLoaded + "");
+		Long pageLoadEnd = (Long) jse.executeScript("return window.performance.timing.loadEventEnd");
+		softAssertion.assertNotEquals(pageLoadEnd, "null");
+		Long frontEnd = (Long) jse
+				.executeScript("return performance.timing.loadEventEnd-window.performance.timing.responseStart");
+
+		// validation for page hang
+		if (!pageLoadEnd.equals(pageHang)) {
+			base.passedStep("Docview page not get hanged when coding form created for large");
+		} else {
+			base.failedMessage("Page get hanged when coding form created for large");
+		}
+	}
 
 }
 
