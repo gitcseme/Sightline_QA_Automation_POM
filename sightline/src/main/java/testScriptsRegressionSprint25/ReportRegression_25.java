@@ -232,10 +232,19 @@ public class ReportRegression_25 {
 		// Perform Saving STR report
 		searchterm.ValidateSearchTermreportSaveandImpact(columnName, false);
 
-		// Perform Export Report
+		// Perform Export STR Report
 		baseClass.waitForElement(searchterm.getExportIcon());
 		searchterm.getExportIcon().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Report save successfully");
+
+		// perform Sharing STR  Report
+		searchterm.performSharingAction(Input.rmu1FullName, Input.rmu1userName);
+
+		// perform Schedule STR Report
+		reports.navigateToReportsPage("");
+		searchterm.GenerateReportWithAnySearchOrTab(tabList, true);
+		searchterm.selectColumnFromSTRPage(columnName);
+		searchterm.performScheduleAction(Input.rmu1FullName, Input.rmu1userName);
 
 		// delete search
 		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
