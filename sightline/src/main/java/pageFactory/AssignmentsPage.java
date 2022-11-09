@@ -10054,7 +10054,16 @@ public class AssignmentsPage {
 				bc.passedStep("Assignment name available in manage assignmnet");
 				bc.stepInfo("Assignment in the name of :" + filedValue + "");
 				break;
-			} else {
+			} else if(status == false){
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.passedStep("Assignment name available in manage assignmnet");
+				bc.stepInfo("Assignment in the name of :" + filedValue + "");
+				break;
+			}
+			
+			else {
 				driver.scrollingToBottomofAPage();
 				bc.waitForElement(getAssgnPaginationNextButton());
 				getAssgnPaginationNextButton().Click();
