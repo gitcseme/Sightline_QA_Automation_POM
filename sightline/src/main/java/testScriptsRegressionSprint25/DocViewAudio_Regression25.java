@@ -3,6 +3,7 @@ package testScriptsRegressionSprint25;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -347,6 +348,197 @@ public class DocViewAudio_Regression25 {
 		// logout
 		loginPage.logout();
 	}
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-51777
+	 * @throws Exception
+	 * @Description Verify when audio document present in two different session
+	 *              searches with common term and assigned to new assignment, then
+	 *              it should not display repetitive search term on persistent hits
+	 *              panel
+	 */
+	@Test(description = "RPMXCON-51777", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsDifferentSearchsNotDisplayPersistentHit() throws Exception {
+
+		DocViewPage docview = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51777 Docview/Audio");
+		baseClass.stepInfo(
+				"Verify when audio document present in two different session searches with common term and assigned to new assignment, then it should not display repetitive search term on persistent hits panel");
+		// Audio search
+		int purehit = sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docview.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docview.getMiniDocListDocIdText());
+		System.out.println(DocIDInMiniDocList);
+
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(audioSearch, Input.language);
+		sessionSearch.addPureHit();
+		// Added another Audio search and add
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.bulkAssignWithOutPureHit();
+
+		// Select Assignment goto docview
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		baseClass.passedStep("Assignment created succcessfully as expected");
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(Asssignment);
+
+		// Check Display persistant hit - notrepetative
+		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 5));
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
+		docview.getAudioPersistantHitEyeIcon().Click();
+		docview.verifyAudioPersistanHitNotDisplayed(Input.audioSearchString2);
+		int searchterm = docview.getSearchTermList(Input.audioSearchString3).size();		
+		if (searchterm <= 1) {
+			baseClass.passedStep("repetitive search term is not displayed");
+		}else {
+			baseClass.failedStep("repetitive search term is displayed");
+		}
+		
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-51778
+	 * @throws Exception
+	 * @Description Verify when audio document present in two different session
+	 *              searches with common term, then it should not display repetitive
+	 *              search term on persistent hits panel
+	 */
+	@Test(description = "RPMXCON-51778", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsPresentInDifferentSearchsNotDisplay() throws Exception {
+
+		DocViewPage docview = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51778 Docview/Audio");
+		baseClass.stepInfo(
+				"Verify when audio document present in two different session searches with common term, then it should not display repetitive search term on persistent hits panel");
+		// Audio search
+		int purehit = sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docview.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docview.getMiniDocListDocIdText());
+		System.out.println(DocIDInMiniDocList);
+
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(audioSearch, Input.language);
+		sessionSearch.addPureHit();
+
+		// Added another Audio search and add
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.viewInDocView();
+
+		// Check Display persistant hit - notrepetative
+		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 5));
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
+		docview.getAudioPersistantHitEyeIcon().Click();
+		docview.verifyAudioPersistanHitNotDisplayed(Input.audioSearchString2);
+		int searchterm = docview.getSearchTermList(Input.audioSearchString3).size();		
+		if (searchterm <= 1) {
+			baseClass.passedStep("repetitive search term is not displayed");
+		}else {
+			baseClass.failedStep("repetitive search term is displayed");
+		}
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-51341
+	 * @throws Exception
+	 * @Description Verify >| icon and |< in the DocView Audio Player controls
+	 *              should move to the next & previous phonetic hit position when
+	 *              file is playing
+	 */
+	@Test(description = "RPMXCON-51341", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioPlayerControlsPhoneticHitIsPlayMode(String userName, String password, String fullName)
+			throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51341");
+		baseClass.stepInfo(
+				"Verify >| icon and |< in the DocView Audio Player controls should move to the next & previous phonetic hit position when file is playing");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As User
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("LoggedIn as : " + fullName);
+
+		// Audio search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docviewPage.getDocView_RunningTime());
+		String nexticon = docviewPage.getDocView_RunningTime().getText();
+		baseClass.waitForElement(docviewPage.getDocView_IconNext());
+		docviewPage.getDocView_IconNext().waitAndClick(5);
+		baseClass.waitForElement(docviewPage.getDocView_RunningTime());
+		String nexticon1 = docviewPage.getDocView_RunningTime().getText();
+		driver.waitForPageToBeReady();
+		if (nexticon.equals(nexticon1)) {
+			baseClass.failedStep("Cursor is not moved");
+
+		} else {
+			baseClass.passedStep("Cursor is moved to the next phonetic hit position successfully");
+		}
+		baseClass.waitTime(5);
+		softAssertion.assertTrue(docviewPage.getDocView_AudioPlay().isElementPresent());
+		baseClass.passedStep("Documentfile has been  in play mode as expected");
+
+		baseClass.waitForElement(docviewPage.getDocView_RunningTime());
+		String previousicon = docviewPage.getDocView_RunningTime().getText();
+		baseClass.waitForElement(docviewPage.getDocView_IconPrev());
+		docviewPage.getDocView_IconPrev().waitAndClick(5);
+		baseClass.waitForElement(docviewPage.getDocView_RunningTime());
+		String previousicon1 = docviewPage.getDocView_RunningTime().getText();
+		driver.waitForPageToBeReady();
+		if (previousicon.equals(previousicon1)) {
+			baseClass.failedStep("Cursor is not moved");
+		} else {
+			baseClass.passedStep("Cursor is moved to the previous phonetic hit position successfully");
+
+		}
+		softAssertion.assertTrue(docviewPage.getDocView_AudioPlay().isElementPresent());
+		baseClass.passedStep("Documentfile has been  in play mode as expected");
+		softAssertion.assertAll();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
