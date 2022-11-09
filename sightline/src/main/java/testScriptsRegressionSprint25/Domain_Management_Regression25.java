@@ -94,7 +94,7 @@ public class Domain_Management_Regression25 {
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
-		System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
+		System.out.println("******TEST CASES EXECUTED******");
 
 	}
 }
