@@ -358,6 +358,56 @@ public class Ingestion_Regression_8 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 09/11/2022 TestCase Id:RPMXCON-48078
+	 * Description :To verify Tally report should be generated with Metadata 'ExceptionResolution'
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48078",enabled = true, groups = { "regression" })
+	public void verifyTallyReportForExceptionResolution() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48078");
+		baseClass.stepInfo("verify Tally report should be generated with Metadata 'ExceptionResolution'");
+		String metadata ="ExceptionResolution";
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		tally.navigateTo_Tallypage();
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata);
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 09/11/2022 TestCase Id:RPMXCON-48081
+	 * Description :To Verify AllCustodians in Tally and Search
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48081",enabled = true, groups = { "regression" })
+	public void verifyTallyReportForAllCustodians() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48081");
+		baseClass.stepInfo("To Verify AllCustodians in Tally and Search");
+		String metadata ="AllCustodians";
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		tally.navigateTo_Tallypage();
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata);
+		baseClass.stepInfo("perform tally and search for 'AllCustodians' metadata");
+		tally.performTallyAndSearchForAllCustodians();
+		loginPage.logout();
+		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
