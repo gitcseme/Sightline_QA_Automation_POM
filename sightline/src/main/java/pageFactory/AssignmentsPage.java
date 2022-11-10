@@ -1657,7 +1657,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getPopUpCloseBtn() {
-		return driver.FindElementByXPath("//body/div[9]/div[1]/button");
+		return driver.FindElementByXPath("//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
 	public AssignmentsPage(Driver driver) {
