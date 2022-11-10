@@ -238,6 +238,7 @@ public class DocList_Regression24 {
 		System.out.println(DocListCount);
 		String[] doccount = DocListCount.split(" ");
 		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
 		baseClass.waitTime(8);
 		String Document = doccount[3];
 		System.out.println("doclist page document count is" + Document);
