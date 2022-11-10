@@ -93,7 +93,7 @@ public class DocViewAudio_Regression24 {
 
 	@DataProvider(name = "Allusers")
 	public Object[][] AlluserLoginDetails() {
-		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
+		return new Object[][] {{ Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } };
 	}
 
@@ -447,7 +447,6 @@ public class DocViewAudio_Regression24 {
 	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
 	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
-		DocViewPage docview = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("RPMXCON-51527");
@@ -465,12 +464,12 @@ public class DocViewAudio_Regression24 {
 		driver.scrollPageToTop();
 		baseClass.waitForElement(doclist.getDocList_actionButton());
 		doclist.getDocList_actionButton().waitAndClick(5);
-		long start = System.currentTimeMillis();
+		
 		baseClass.waitForElement(doclist.getViewInDocView());
 		doclist.getViewInDocView().waitAndClick(5);
-
+		long start = System.currentTimeMillis();
+	
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docview.getDocView_ImagesTab());
 		long finish = System.currentTimeMillis();
 		long totalTime = finish - start;
 
@@ -483,6 +482,7 @@ public class DocViewAudio_Regression24 {
 				+ "and ready for the user to act up on when navigating from DocList");
 		loginPage.logout();
 	}
+
 
 	/**
 	 * @author N/A
