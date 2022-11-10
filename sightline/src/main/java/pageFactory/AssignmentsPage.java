@@ -1657,7 +1657,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getPopUpCloseBtn() {
-		return driver.FindElementByXPath("///body/div[9]/div[1]/button");
+		return driver.FindElementByXPath("//body/div[9]/div[1]/button");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -11479,7 +11479,10 @@ public class AssignmentsPage {
 		getUnassignbutton().waitAndClick(5);
 		getSelectAssignmentToUnAssignDocs(assignmentName).waitAndClick(20);
 
-		getContinueBulkAssign().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getContinueBulkAssign());
+		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+		getContinueBulkAssign().waitAndClick(30);
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -11487,6 +11490,8 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage(
 				"Bulk UnAssign has been added to background process. You will get notification on completion.");
 		bc.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(getPopUpCloseBtn());
 		getPopUpCloseBtn().waitAndClick(10);
 	}
 
