@@ -658,6 +658,49 @@ public class DocViewAudio_Regression25 {
 		baseClass.passedStep("application is not hang on applying the stamp when audio is playing");
 		loginPage.logout();
 	}
+	/**
+	 * Author :  date: NA Modified date: NA Modified by: NA
+	 * Description:Verify after impersonation user can see the transcript in audio
+	 * doc view in context of an assignment
+	 * 
+	 */
+
+	@Test(description = "RPMXCON-51125", enabled = true, groups = { "regression" })
+	public void validateAfterImpersonateTranscriptTabContextAssgn() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51125");
+		baseClass.stepInfo(
+				"Verify after impersonation user can see the transcript in audio doc view in context of an assignment");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignPage = new AssignmentsPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
+
+		// search to docview
+		sessionSearch.MetaDataSearchInBasicSearch("SourceDocID", Input.transcriptId);
+		sessionSearch.bulkAssign();
+		assignPage.assignmentCreation(Asssignment, Input.codingFormName);
+		System.out.println(Asssignment);
+		assignPage.add2ReviewerAndDistribute();
+		baseClass.impersonateRMUtoReviewer();
+		driver.waitForPageToBeReady();
+
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify transcript tab display
+		baseClass.waitForElement(docViewPage.getTranscriptsTab());
+		boolean flagTans = docViewPage.getTranscriptsTab().isDisplayed();
+		softAssertion.assertTrue(flagTans);
+		baseClass.passedStep("Transcript tab displayed for audio docs as expected");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
