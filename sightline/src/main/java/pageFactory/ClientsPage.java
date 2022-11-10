@@ -157,6 +157,9 @@ public class ClientsPage {
 				"//h5//strong[contains(text(),'Database ')]//..//..//following-sibling::div//label[contains(text(),'Initial Size of Project Database: ')]");
 	}
 
+	public Element getColumnValueinDomainClient(int i) {
+		return driver.FindElementByXPath("//table[@id='EntityDataTable']//tbody//td[" + i + "]");
+	}
 
 	// Annotation Layer added successfully
 	public ClientsPage(Driver driver) {
