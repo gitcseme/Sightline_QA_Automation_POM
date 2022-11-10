@@ -67,8 +67,7 @@ public class UserAndRoleManagement_Regression24 {
 
 	@DataProvider(name = "SaAndPaUser")
 	public Object[][] SaAndPaUser() {
-		return new Object[][] {
-			{ Input.sa1userName, Input.sa1password, "SA" },
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 	}
 
@@ -380,30 +379,36 @@ public class UserAndRoleManagement_Regression24 {
 
 		// change role from PA to DA
 		userManage.navigateToUsersPAge();
-		userManage.filterByName(Input.pa1userName);
+		userManage.filterByName(Input.pa2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from PA to DA");
 		userManage.changeRoleToDAFromAnyUser();
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.pa2userName);
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
 
 		// change role from RMU to DA
 		userManage.navigateToUsersPAge();
-		userManage.filterByName(Input.rmu1userName);
+		userManage.filterByName(Input.rmu2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from RMU to DA");
 		userManage.changeRoleToDAFromAnyUser();
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu2userName);
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to RMU");
 		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
 
 		// change role from RMU to DA
 		userManage.navigateToUsersPAge();
-		userManage.filterByName(Input.rev1userName);
+		userManage.filterByName(Input.rev2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from Reviewer to DA");
 		userManage.changeRoleToDAFromAnyUser();
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev2userName);
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to Reviewer");
 		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);

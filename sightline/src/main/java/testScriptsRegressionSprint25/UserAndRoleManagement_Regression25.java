@@ -66,7 +66,6 @@ public class UserAndRoleManagement_Regression25 {
 		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
 				{ Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
 	}
-	
 
 	@DataProvider(name = "SaAndPaUser")
 	public Object[][] SaAndPaUser() {
@@ -98,26 +97,32 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from PA to DA");
 		userManage.changeRoleToDAFromAnyUser();
 
 		// change role from RMU to PA
 		userManage.navigateToUsersPAge();
-		userManage.filterByName(Input.rmu1userName);
+		userManage.filterByName(Input.rmu2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from RMU to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from PA to RMU");
 		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
 
 		// change role from Reviewer to PA
 		userManage.navigateToUsersPAge();
-		userManage.filterByName(Input.rev1userName);
+		userManage.filterByName(Input.rev2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from Reviewer to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rev2userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from PA to Reviewer");
 		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);
@@ -673,15 +678,15 @@ public class UserAndRoleManagement_Regression25 {
 	}
 
 	/**
-	 * Author :NA TestCase Id:RPMXCON-52382 
-	 * Description :To Verify when admin clicks the 'Assign Users' button
+	 * Author :NA TestCase Id:RPMXCON-52382 Description :To Verify when admin clicks
+	 * the 'Assign Users' button
 	 */
-	@Test(description ="RPMXCON-52382",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52382", enabled = true, groups = { "regression" })
 	public void verifyUserAssign() throws Exception {
 		UserManagement userManage = new UserManagement(driver);
 		ProjectPage project = new ProjectPage(driver);
 		SoftAssert asserts = new SoftAssert();
-		
+
 		String projectName = "Project" + Utility.dynamicNameAppender();
 		String clientName = "Client" + Utility.dynamicNameAppender();
 		String shrtName = Utility.randomCharacterAppender(5);
@@ -690,24 +695,24 @@ public class UserAndRoleManagement_Regression25 {
 		String expErrorMsg1 = "Project, User and role selection is mandatory for assigning users";
 		String expErrorMsg2 = "User selection is mandatory for Unassigning Users";
 		String expErrorMsg3 = "For users with roles of Review Manager And Reviewer - Project, security group selection is mandatory";
-		ArrayList<String> expOptionsOrder = new  ArrayList<String>();
+		ArrayList<String> expOptionsOrder = new ArrayList<String>();
 		expOptionsOrder.add("--Select a Role--");
 		expOptionsOrder.add("Project Administrator");
 		expOptionsOrder.add("Review Manager");
-		expOptionsOrder.add("Reviewer");	
-		
+		expOptionsOrder.add("Reviewer");
+
 		baseClass.stepInfo("RPMXCON - 52382");
 		baseClass.stepInfo("To Verify when admin clicks the 'Assign Users' button");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		
+
 		project.navigateToClientFromHomePage();
 		project.addNewClient_NonDomainProject(clientName, shrtName, type);
-		driver.waitForPageToBeReady();	
+		driver.waitForPageToBeReady();
 		project.navigateToProductionPage();
 		driver.waitForPageToBeReady();
 		project.AddNonDomainProjWithEngineType(projectName, clientName, hCode, "ICE");
-	
-		userManage.navigateToUsersPAge();	
+
+		userManage.navigateToUsersPAge();
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
 		userManage.selectProjectInAssignUser(projectName);
@@ -719,12 +724,12 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.getDomainUserRightArrow().waitAndClick(10);
 		baseClass.waitForElement(userManage.getDomainUserCancelButton());
 		userManage.getDomainUserCancelButton().waitAndClick(5);
-		
+
 		userManage.AssignUserToProject(projectName, Input.ProjectAdministrator, Input.pa1FullName);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		userManage.UnAssignUserToProject(projectName, Input.ProjectAdministrator, Input.pa1FullName);
-		
+
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
 		baseClass.waitForElement(userManage.getDomainUserRightArrow());
@@ -735,7 +740,7 @@ public class UserAndRoleManagement_Regression25 {
 		asserts.assertAll();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
 		baseClass.waitForElement(userManage.getLeftArrowForProject());
@@ -746,7 +751,7 @@ public class UserAndRoleManagement_Regression25 {
 		asserts.assertAll();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
 		userManage.selectProjectInAssignUser(projectName);
@@ -761,7 +766,7 @@ public class UserAndRoleManagement_Regression25 {
 		asserts.assertAll();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
 		userManage.selectProjectInAssignUser(projectName);
@@ -777,41 +782,41 @@ public class UserAndRoleManagement_Regression25 {
 		asserts.assertAll();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		userManage.openAssignUser();
 		userManage.goToProjectTabInAssignUser();
-		baseClass.waitForElement(userManage.getDomainRole());	
+		baseClass.waitForElement(userManage.getDomainRole());
 		List<String> actOptionsInDD = baseClass.availableListofElements(userManage.getDomainRoleOptions());
-		baseClass.listCompareEquals(expOptionsOrder, actOptionsInDD, "Options in The Role DropDown As Expected", "Options in The Role DropDown Not As Expected");
+		baseClass.listCompareEquals(expOptionsOrder, actOptionsInDD, "Options in The Role DropDown As Expected",
+				"Options in The Role DropDown Not As Expected");
 		baseClass.stepInfo("Verified -  when admin clicks the 'Assign Users' button");
-		loginPage.logout();	
+		loginPage.logout();
 	}
-	
 
 	/**
-	 * Author :NA TestCase Id:RPMXCON-52544 
-	 * Description :To verify when user with inactive/active status logins to the application
+	 * Author :NA TestCase Id:RPMXCON-52544 Description :To verify when user with
+	 * inactive/active status logins to the application
 	 */
-	@Test(description ="RPMXCON-52544",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52544", enabled = true, groups = { "regression" })
 	public void verifyActiveInActiveStatus() throws Exception {
 		SoftAssert asserts = new SoftAssert();
 		String expErrorMSG = "The specified user is in an inactive state in the system. Please contact your administrator or support.";
-		
+
 		baseClass.stepInfo("RPMXCON-52544");
 		baseClass.stepInfo("To verify when user with inactive/active status logins to the application");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.pa1userName);
-		userManage.editSelectedUser(Input.projectName);	
+		userManage.editSelectedUser(Input.projectName);
 		baseClass.waitTillElemetToBeClickable(userManage.getIsActiveCheckBox());
 		baseClass.waitForElement(userManage.getIsActiveCheckBox());
 		userManage.getIsActiveCheckBox().waitAndClick(5);
 		baseClass.waitForElement(userManage.getConfirmDelete());
-		userManage.getConfirmDelete().waitAndClick(5);	
+		userManage.getConfirmDelete().waitAndClick(5);
 		asserts.assertTrue(userManage.getIsActiveCheckBox().Visible());
 		asserts.assertAll();
 		baseClass.stepInfo("After Clicked Cancel Button In Pop - UP Edit PopUp Displaying As Expected.");
-		
+
 		baseClass.waitTillElemetToBeClickable(userManage.getIsActiveCheckBox());
 		baseClass.waitForElement(userManage.getIsActiveCheckBox());
 		userManage.getIsActiveCheckBox().waitAndClick(5);
@@ -822,7 +827,7 @@ public class UserAndRoleManagement_Regression25 {
 		baseClass.VerifySuccessMessage("User profile was successfully modified");
 		baseClass.stepInfo("Clicked Ok Button In PoP - Up");
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLineVerifyLockedUser(Input.pa1userName, Input.pa1password);
 		baseClass.waitForElement(loginPage.getLoginErrorMSG());
 		String actErrorMSG = loginPage.getLoginErrorMSG().getText();
@@ -830,30 +835,32 @@ public class UserAndRoleManagement_Regression25 {
 		asserts.assertTrue(actErrorMSG.contains(expErrorMSG));
 		asserts.assertAll();
 		baseClass.stepInfo("While Logged- in with Inactive User Application Error Message Displaying As Expected..");
-		
+
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManage.navigateToUsersPAge();
 		baseClass.waitForElement(userManage.getActiveInactiveBtn());
-        userManage.getActiveInactiveBtn().waitAndClick(5);
-        driver.waitForPageToBeReady();
+		userManage.getActiveInactiveBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		userManage.filterByName(Input.pa1userName);
-		userManage.editSelectedUser(Input.projectName);	
+		userManage.editSelectedUser(Input.projectName);
 		baseClass.waitTillElemetToBeClickable(userManage.getIsActiveCheckBox());
 		baseClass.waitForElement(userManage.getIsActiveCheckBox());
-		userManage.getIsActiveCheckBox().waitAndClick(5);	
+		userManage.getIsActiveCheckBox().waitAndClick(5);
 		baseClass.waitForElement(userManage.getSubmit());
 		userManage.getSubmit().waitAndClick(5);
 		baseClass.VerifySuccessMessage("User profile was successfully modified");
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.passedStep("Verified -  when user with inactive/active status logins to the application");
 		loginPage.logout();
 	}
-/*
+
+	/*
 	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52891 Description :To
 	 * verify project and domain drop down values when user change role to
 	 * PA/SA/RMU/Reviewer in Edit pop up as DA user
+	 * 
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-52891", enabled = true, groups = { "regression" })
@@ -873,6 +880,8 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from PA to DA");
 		userManage.changeRoleToDAFromAnyUser();
@@ -883,6 +892,8 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to RMU");
 		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from RMU to DA");
 		userManage.changeRoleToDAFromAnyUser();
@@ -893,6 +904,8 @@ public class UserAndRoleManagement_Regression25 {
 		userManage.selectEditUserUsingPagination(Input.DomainAdministrator, null, null);
 		baseClass.stepInfo("Change Role from DA to Reviewer");
 		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.da1userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
 		baseClass.stepInfo("Change Role from Reviewer to DA");
 		userManage.changeRoleToDAFromAnyUser();
@@ -900,10 +913,12 @@ public class UserAndRoleManagement_Regression25 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52478 
-	 * Description :To verify when Sys Admin edits the users rights for all roles and 'Save' those rights.
+	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52478 Description :To
+	 * verify when Sys Admin edits the users rights for all roles and 'Save' those
+	 * rights.
+	 * 
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-52478", enabled = true, groups = { "regression" })
@@ -915,7 +930,7 @@ public class UserAndRoleManagement_Regression25 {
 		// login as sys admin
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA");
-		
+
 		String[] checkedCbPa = { Input.Searching, Input.Highlighting, Input.Redactions, Input.ReviewerRemarks,
 				Input.AnalyticsPanels, Input.Manage, Input.Productions, Input.AllReports, Input.ConceptExplorer,
 				Input.CommunicationsExplorer, Input.Categorize, Input.Datasets };
@@ -934,7 +949,6 @@ public class UserAndRoleManagement_Regression25 {
 				Input.Datasets, Input.AllReports };
 		String[] uncheckedCBRev = { Input.ConceptExplorer, Input.CommunicationsExplorer };
 
-
 		// navigate to userpage
 		userManage.navigateToUsersPAge();
 
@@ -948,37 +962,37 @@ public class UserAndRoleManagement_Regression25 {
 
 		// logout
 		loginPage.logout();
-		
-		
+
 	}
-	
+
 	/**
-	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52408 
-	 * Description :Add Existing User: To verify mandatory fields validation when fields are blank
+	 * Author :Mohan date: 08/11/2022 TestCase Id:RPMXCON-52408 Description :Add
+	 * Existing User: To verify mandatory fields validation when fields are blank
+	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52408",dataProvider = "users", enabled = true, groups = { "regression" })
-	public void verifyMandatoryFieldsValidationWhenFieldsAreBlank(String username, String password, String userRole) throws Exception {
+	@Test(description = "RPMXCON-52408", dataProvider = "users", enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldsValidationWhenFieldsAreBlank(String username, String password, String userRole)
+			throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52408");
 		baseClass.stepInfo("Add Existing User: To verify mandatory fields validation when fields are blank");
 
 		// login as Users
-		loginPage.loginToSightLine(username,password);
-		baseClass.stepInfo("Logged in as "+userRole+"");
-		
-		//clickOn Add New User button
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as " + userRole + "");
+
+		// clickOn Add New User button
 		userManage.navigateToUsersPAge();
 		baseClass.waitForElement(userManage.getAddUserBtn());
 		userManage.getAddUserBtn().waitAndClick(5);
-		
-		//verify Mandatory fields errors
+
+		// verify Mandatory fields errors
 		userManage.verifyErrorMessageInMandatoryFields();
-		
-		//logout
+
+		// logout
 		loginPage.logout();
 	}
-
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
@@ -1006,5 +1020,4 @@ public class UserAndRoleManagement_Regression25 {
 		}
 	}
 
-	
 }
