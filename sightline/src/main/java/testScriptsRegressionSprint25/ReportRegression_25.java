@@ -237,7 +237,7 @@ public class ReportRegression_25 {
 		searchterm.getExportIcon().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Report save successfully");
 
-		// perform Sharing STR  Report
+		// perform Sharing STR Report
 		searchterm.performSharingAction(Input.rmu1FullName, Input.rmu1userName);
 
 		// perform Schedule STR Report
@@ -253,6 +253,110 @@ public class ReportRegression_25 {
 
 		// logout
 		loginPage.logout();
+	}
+
+	/**
+	 * @author NA
+	 * @Description : To verify that on selecting Delete button the saved custom
+	 *              report is removed [RPMXCON-56356]
+	 */
+	@Test(description = "RPMXCON-56356", enabled = true, groups = { "regression" })
+	public void verifyDeleteFrmSavedCustomReport() throws Exception {
+		ReportsPage report = new ReportsPage(driver);
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		SoftAssert asserts = new SoftAssert();
+
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String[] metaDataFields = { "CustodianName" };
+		String[] workProductFields = { tagName };
+		String reportName = "Report" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("RPMXCON - 56356");
+		baseClass.stepInfo("To verify that on selecting Delete button the saved custom report is removed.");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged In As : " + Input.pa1userName);
+
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTag(tagName);
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		cddr.selectSource("Security Groups", Input.securityGroup);
+		cddr.selectExportFieldFormat("039");
+		cddr.selectExportTextFormat("039");
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		baseClass.waitForElement(cddr.getRunReport());
+		cddr.getRunReport().waitAndClick(3);
+		cddr.reportRunSuccessMsg();
+		cddr.SaveReport(reportName);
+		baseClass.stepInfo("Saved the Custom report " + reportName);
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getdeleteToolTip_CustomReport(reportName));
+		asserts.assertTrue(report.getdeleteToolTip_CustomReport(reportName).isElementAvailable(5));
+		asserts.assertAll();
+		baseClass.stepInfo("Saved Report Displaying As Expected");
+		report.deleteCustomReport(reportName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		if (report.getdeleteToolTip_CustomReport(reportName).isElementAvailable(5)) {
+			baseClass.failedStep("After Deleted the Report, Saved Custom Report Not Removed...");
+		} else {
+			baseClass.passedStep("After Delete the Report, Saved Custom Report Removed As Expected");
+		}
+		baseClass.passedStep("Verified - that on selecting Delete button the saved custom report is removed.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA
+	 * @Description : To verify that Source selection is mandatory for Custom Report
+	 *              [RPMXCON-56394]
+	 */
+	@Test(description = "RPMXCON-56394", enabled = true, dataProvider = "PA & RMU", groups = { "regression" })
+	public void verifySourceMandatoryForCustomRep(String username, String password) throws Exception {
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String[] metaDataFields = { "CustodianName" };
+		String[] workProductFields = { tagName };
+		String expErrorMsg = "Please select source";
+
+		baseClass.stepInfo("RPMXCON-56394");
+		baseClass.stepInfo("To verify that Source selection is mandatory for Custom Report");
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in As : " + username);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTag(tagName);
+
+		cddr.navigateToCDDReportPage();
+		driver.waitForPageToBeReady();
+		cddr.selectExportStyle("CSV");
+		cddr.selectExportFieldFormat("039");
+		cddr.selectExportTextFormat("039");
+		cddr.selectExportNewLineFormat("039");
+		cddr.selectExportDateStyleFormat("YYYY/MM/DD HH:MI:SS");
+		cddr.selectMetaDataFields(metaDataFields);
+		cddr.selectWorkProductFields(workProductFields);
+		driver.waitForPageToBeReady();
+		cddr.validateSelectedExports(workProductFields);
+		cddr.validateSelectedExports(metaDataFields);
+		baseClass.waitForElement(cddr.getRunReport());
+		cddr.getRunReport().waitAndClick(3);
+		baseClass.VerifyErrorMessage(expErrorMsg);
+		baseClass.passedStep("Verified -  that Source selection is mandatory for Custom Report");
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "PA & RMU")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		return users;
 	}
 
 	@AfterMethod(alwaysRun = true)

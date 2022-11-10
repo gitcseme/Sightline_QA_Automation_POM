@@ -17,8 +17,10 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -194,5 +196,94 @@ public class BulkActions_Regression25 {
 	    sessionSearch.verifyDocsFluctuation_BulkAssign(count);
 	    baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in DocList");
 	    loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54478
+	 * @Description:To Verify the fluctuation of document count for all the bulk actions in DocView
+	 **/
+	@Test(description = "RPMXCON-54478", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActionDV() throws Exception {
+	    DocViewPage docView = new DocViewPage(driver);
+	    
+	    String folder = "Folder" + Utility.dynamicNameAppender();
+	    String count = "3";
+	    
+	    baseClass.stepInfo("RPMXCON-54478");
+	    baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in DocView");
+	    loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	    baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+	    
+	    sessionSearch.navigateToSessionSearchPageURL();
+	    sessionSearch.basicContentSearch(Input.searchString2);    
+	    sessionSearch.ViewInDocView();
+	    
+	    docView.documentSelection(Integer.parseInt(count));
+	
+	    baseClass.waitForElement(docView.getDocView_Mini_ActionButton());
+	    docView.getDocView_Mini_ActionButton().waitAndClick(5);
+	    baseClass.waitForElement(docView.getDocView_Mini_FolderAction());
+	    docView.getDocView_Mini_FolderAction().waitAndClick(5);
+	    sessionSearch.bulkFolder_FluctuationVerify(folder, count);  
+	    
+	    baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in DocView");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54482
+	 * @Description:To Verify the fluctuation of document count for all the bulk actions in Search Term Report
+	 **/
+	@Test(description = "RPMXCON-54482", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActionST() throws Exception {
+		SearchTermReportPage srcTermReport = new SearchTermReportPage(driver);
+		
+		 String folderTag = "folderTag" + Utility.dynamicNameAppender();
+		 String saveSearchNamePA = "ST" + Utility.dynamicNameAppender();
+		 String saveSearchNameRMU = "ST" + Utility.dynamicNameAppender();
+		 
+		 baseClass.stepInfo("RPMXCON-54482");
+	     baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Search Term Report");
+	     loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+  	     baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+		    
+		 sessionSearch.navigateToSessionSearchPageURL();
+		 String count = String.valueOf(sessionSearch.basicContentSearch(Input.searchString1));    
+		 sessionSearch.saveSearch(saveSearchNamePA);
+		 
+		 driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		 driver.waitForPageToBeReady();
+		 srcTermReport.GenerateReport(saveSearchNamePA);	 
+		 baseClass.waitForElement(srcTermReport.getActionButton());
+		 srcTermReport.getActionButton().waitAndClick(20);
+		 baseClass.waitForElement(srcTermReport.getActionBulkTag());
+		 srcTermReport.getActionBulkTag().waitAndClick(20); 
+		 sessionSearch.bulkTag_FluctuationVerify(folderTag, count);
+		 
+		 driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		 driver.waitForPageToBeReady();
+		 srcTermReport.GenerateReport(saveSearchNamePA);	 
+		 baseClass.waitForElement(srcTermReport.getActionButton());
+		 srcTermReport.getActionButton().waitAndClick(20);
+		 baseClass.waitForElement(srcTermReport.getActionBulkFolder());
+		 srcTermReport.getActionBulkFolder().waitAndClick(20);
+		 sessionSearch.bulkFolder_FluctuationVerify(folderTag, count); 
+		 
+		 loginPage.logout();
+		 
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  	     baseClass.stepInfo("Logged in As : " + Input.rmu1FullName);
+  	     
+  	     sessionSearch.navigateToSessionSearchPageURL();
+		 String countRMU = String.valueOf(sessionSearch.basicContentSearch(Input.searchString1));    
+		 sessionSearch.saveSearch(saveSearchNameRMU);
+		 
+		 driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		 driver.waitForPageToBeReady();
+		 srcTermReport.GenerateReport(saveSearchNameRMU);
+		 srcTermReport.BulkAssign();
+		 sessionSearch.verifyDocsFluctuation_BulkAssign(countRMU);
+		 baseClass.passedStep("Verifyied - the fluctuation of document count for all the bulk actions in Search Term Report");
+		 loginPage.logout();
 	}
 }

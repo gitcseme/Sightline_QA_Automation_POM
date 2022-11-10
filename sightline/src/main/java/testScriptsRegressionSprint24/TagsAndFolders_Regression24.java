@@ -226,9 +226,10 @@ public class TagsAndFolders_Regression24 {
 		driver.waitForPageToBeReady();
 		tagsAndFolderPage.selectallFolderRoot();
 		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
 		tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(5);
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
 		tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
 
 		// Calculate the unique doc count for the respective searches
@@ -635,7 +636,6 @@ public class TagsAndFolders_Regression24 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
 		security.createSecurityGroups(securityGroup);
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		System.out.println(securityGroup);
 		base.stepInfo("created security group 2 : " + securityGroup);
