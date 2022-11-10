@@ -1285,7 +1285,7 @@ public class DocListPage {
 	}
 
 	public Element getDocList_PlusIcon() {
-		return driver.FindElementByXPath("//td[@class=' details-control']");
+		return driver.FindElementByXPath("//td[@class='details-control']");
 
 	}
 
