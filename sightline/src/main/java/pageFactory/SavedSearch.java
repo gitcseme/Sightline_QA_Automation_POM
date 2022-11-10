@@ -3078,7 +3078,7 @@ public class SavedSearch {
 			System.out.println("Not Enabled - No Access");
 		}
 
-		getRenameButton().waitAndClick(5);
+		getRenameButton().waitAndClick(10);
 		getRenameSearchGroupNode(newNode).SendKeysNoClear(SearchGroupRenamed);
 		getTermReportTitle().Click();
 		base.VerifySuccessMessage("Save search tree node successfully updated.");

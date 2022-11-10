@@ -444,7 +444,7 @@ public class AdvancedSearch_Regression1 {
 		}
 		driver.scrollPageToTop();
 		baseClass.waitForElement(search.getQuerySearchButton());
-		search.getQuerySearchButton().waitAndClick(5);
+		search.getQuerySearchButton().waitAndClick(10);
 		int conceptualHits = search.runAndVerifyConceptualSearch();
 		try {
 			softAssertion.assertNotNull(conceptualHits, "There is No hits occured for the the given search term");
