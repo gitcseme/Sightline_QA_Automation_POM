@@ -103,7 +103,8 @@ public class TagsAndFolders_Regression24 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+		Object[][] users = { 
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
@@ -227,8 +228,10 @@ public class TagsAndFolders_Regression24 {
 		tagsAndFolderPage.selectallFolderRoot();
 		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
 		driver.waitForPageToBeReady();
+		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
 		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
 		tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
+		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
 		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
 		tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
 
