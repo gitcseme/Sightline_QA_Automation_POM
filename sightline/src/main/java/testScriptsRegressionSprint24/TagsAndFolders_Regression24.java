@@ -189,99 +189,95 @@ public class TagsAndFolders_Regression24 {
 
 	}
 
-	/**
-	 * @author NA A Date: 10/14/22 Modified date:N/A Modified by: N/A Description :
-	 *         Verify the count is displayed correctly instead of number of
-	 *         documents in tag group /folder group. RPMXCON-52934 Sprint 23
-	 */
 	@Test(description = "RPMXCON-52934", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void tagFoderGroupDocToggleAction(String userName, String password, String role) throws Exception {
-
-		String tagGroupName = "aTagGroupR" + Utility.dynamicNameAppender();
-		String TagName = "aTagR" + Utility.dynamicNameAppender();
-		String TagName2 = "aTagR" + Utility.dynamicNameAppender();
-
-		String folderGroupName = "aFolderGroupR" + Utility.dynamicNameAppender();
-		String FolderName = "aFolderR" + Utility.dynamicNameAppender();
-		String FolderName2 = "aFolderR" + Utility.dynamicNameAppender();
-
-		base.stepInfo("Test case Id: RPMXCON-52934 - TagsAndFolder Sprint 24");
-		base.stepInfo(
-				"Verify the count is displayed correctly instead of number of documents in tag group /folder group.");
-
-		loginPage.loginToSightLine(userName, password);
-		base.stepInfo("Logged in as : " + userName);
-
-		// Tags And Folder
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		driver.waitForPageToBeReady();
-		tagsAndFolderPage.selectallTagRoot();
-		tagsAndFolderPage.createTagGroup(Input.securityGroup, tagGroupName, "Success", null);
-		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(5);
-		tagsAndFolderPage.CreateTagCC(TagName, Input.securityGroup);
-		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(5);
-		tagsAndFolderPage.CreateTagCC(TagName2, Input.securityGroup);
-
-		// Tags And Folder
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		driver.waitForPageToBeReady();
-		tagsAndFolderPage.selectallFolderRoot();
-		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
-		driver.waitForPageToBeReady();
-		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
-		tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
-		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
-		tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
-
-		// Calculate the unique doc count for the respective searches
-		sessionSearch.basicContentSearch(Input.searchString9);
-		sessionSearch.addPureHit();
-		sessionSearch.getNewSearchButton().waitAndClick(10);
-		sessionSearch.multipleBasicContentSearch(Input.searchString2);
-		sessionSearch.addPureHit();
-		sessionSearch.ViewInDocListWithOutPureHit();
-		int aggregateHitCount = saveSearch.docListPageFooterCountCheck();
-		base.selectproject();
-
-		// Perform Search and release docs to the tags and folders
-		sessionSearch.basicContentSearch(Input.searchString9);
-		sessionSearch.bulkTagExisting(TagName);
-		sessionSearch.bulkFolderExisting(FolderName);
-		base.selectproject();
-
-		// Perform Search and release docs to the tags and folders
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.bulkTagExisting(TagName2);
-		sessionSearch.bulkFolderExisting(FolderName2);
-
-		// Navigate to Tags And Folder and verify Tag group Doc count
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
-		tagsAndFolderPage.verifyTagDocCount(tagGroupName, aggregateHitCount);
-
-		// Turn off toggle
-		tagsAndFolderPage.turnOffToggle(tagsAndFolderPage.getTag_ToggleDocCount());
-		base.printResutInReport(
-				base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagandCount(tagGroupName, aggregateHitCount)),
-				"Tag group doc count not displayed after toggle turned off",
-				"Tag group doc count still displays after toggle turned off", "Pass");
-
-		// verify Folder group Doc count
-		tagsAndFolderPage.verifyFolderDocCount(folderGroupName, aggregateHitCount);
-
-		// Turn off toggle
-		tagsAndFolderPage.turnOffToggle(tagsAndFolderPage.getFolder_ToggleDocCount());
-		base.printResutInReport(
-				base.ValidateElement_AbsenceReturn(
-						tagsAndFolderPage.getTagandCount(folderGroupName, aggregateHitCount)),
-				"Folder group doc count not displayed after toggle turned off",
-				"Folder group doc count still displays after toggle turned off", "Pass");
-
-		loginPage.logout();
-
-	}
-
+    public void tagFoderGroupDocToggleAction(String userName, String password, String role) throws Exception {
+ 
+        String tagGroupName = "aTagGroupR" + Utility.dynamicNameAppender();
+        String TagName = "aTagR" + Utility.dynamicNameAppender();
+        String TagName2 = "aTagR" + Utility.dynamicNameAppender();
+ 
+        String folderGroupName = "aFolderGroupR" + Utility.dynamicNameAppender();
+        String FolderName = "aFolderR" + Utility.dynamicNameAppender();
+        String FolderName2 = "aFolderR" + Utility.dynamicNameAppender();
+ 
+        base.stepInfo("Test case Id: RPMXCON-52934 - TagsAndFolder Sprint 24");
+        base.stepInfo(
+                "Verify the count is displayed correctly instead of number of documents in tag group /folder group.");
+ 
+        loginPage.loginToSightLine(userName, password);
+        base.stepInfo("Logged in as : " + userName);
+ 
+        // Tags And Folder
+        tagsAndFolderPage.navigateToTagsAndFolderPage();
+        driver.waitForPageToBeReady();
+        tagsAndFolderPage.selectallTagRoot();
+        tagsAndFolderPage.createTagGroup(Input.securityGroup, tagGroupName, "Success", null);
+        base.waitForElement(tagsAndFolderPage.getTagNameDataCon(tagGroupName));
+        tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(15);
+        tagsAndFolderPage.CreateTagCC(TagName, Input.securityGroup);
+        base.waitForElement(tagsAndFolderPage.getTagNameDataCon(tagGroupName));
+        tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(15);
+        tagsAndFolderPage.CreateTagCC(TagName2, Input.securityGroup);
+ 
+        // Tags And Folder
+        tagsAndFolderPage.navigateToTagsAndFolderPage();
+        driver.waitForPageToBeReady();
+        tagsAndFolderPage.selectallFolderRoot();
+        tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
+        driver.waitForPageToBeReady();
+        base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
+        tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
+        tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
+        base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
+        tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
+        tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
+ 
+        // Calculate the unique doc count for the respective searches
+        sessionSearch.basicContentSearch(Input.searchString9);
+        sessionSearch.addPureHit();
+        sessionSearch.getNewSearchButton().waitAndClick(10);
+        sessionSearch.multipleBasicContentSearch(Input.searchString2);
+        sessionSearch.addPureHit();
+        sessionSearch.ViewInDocListWithOutPureHit();
+        int aggregateHitCount = saveSearch.docListPageFooterCountCheck();
+        base.selectproject();
+ 
+        // Perform Search and release docs to the tags and folders
+        sessionSearch.basicContentSearch(Input.searchString9);
+        sessionSearch.bulkTagExisting(TagName);
+        sessionSearch.bulkFolderExisting(FolderName);
+        base.selectproject();
+ 
+        // Perform Search and release docs to the tags and folders
+        sessionSearch.basicContentSearch(Input.searchString2);
+        sessionSearch.bulkTagExisting(TagName2);
+        sessionSearch.bulkFolderExisting(FolderName2);
+ 
+        // Navigate to Tags And Folder and verify Tag group Doc count
+        tagsAndFolderPage.navigateToTagsAndFolderPage();
+        tagsAndFolderPage.verifyTagDocCount(tagGroupName, aggregateHitCount);
+ 
+        // Turn off toggle
+        tagsAndFolderPage.turnOffToggle(tagsAndFolderPage.getTag_ToggleDocCount());
+        base.printResutInReport(
+                base.ValidateElement_AbsenceReturn(tagsAndFolderPage.getTagandCount(tagGroupName, aggregateHitCount)),
+                "Tag group doc count not displayed after toggle turned off",
+                "Tag group doc count still displays after toggle turned off", "Pass");
+ 
+        // verify Folder group Doc count
+        tagsAndFolderPage.verifyFolderDocCount(folderGroupName, aggregateHitCount);
+ 
+        // Turn off toggle
+        tagsAndFolderPage.turnOffToggle(tagsAndFolderPage.getFolder_ToggleDocCount());
+        base.printResutInReport(
+                base.ValidateElement_AbsenceReturn(
+                        tagsAndFolderPage.getTagandCount(folderGroupName, aggregateHitCount)),
+                "Folder group doc count not displayed after toggle turned off",
+                "Folder group doc count still displays after toggle turned off", "Pass");
+ 
+        loginPage.logout();
+ 
+    }
 	/**
 	 * @author NA Testcase No:RPMXCON-53282
 	 * @Description:Verify that RMU should be able to delete the Tag from

@@ -1798,10 +1798,10 @@ public class UserManagement {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		if (getSavePassword().isElementAvailable(3)) {
-			getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
+		  if (getSavePassword().isElementAvailable(5)) {
+	            getSavePassword().waitAndClick(20);
+	            driver.waitForPageToBeReady();
+	        }
 	}
 
 	/**
