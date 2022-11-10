@@ -3,6 +3,8 @@ package testScriptsRegressionSprint25;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -746,5 +748,61 @@ public class Projects_Regression25 {
         loginPage.logout();
         
     }
-	
+    /**
+     * @author Brundha.T Testcase No:RPMXCON-47010
+     * @Description:Verify that Analytics section should be displayed on Add Project screen
+     **/
+    @Test(description = "RPMXCON-47010", enabled = true, groups = { "regression" })
+    public void verifyingAnalyticsSection() throws Exception {
+        ProjectPage project = new ProjectPage(driver);
+        base = new BaseClass(driver);
+        base.stepInfo("TestCase id: RPMXCON-47010");
+        base.stepInfo("Verify that Analytics section should be displayed on Add Project screen");
+        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("Logged in As " + Input.sa1userName);
+
+       base.stepInfo("Navigating to Project page");
+        project.navigateToProductionPage();
+        driver.waitForPageToBeReady();
+        
+        base.stepInfo("Selecting Add project button");
+        project.getAddProjectBtn().Click();
+        driver.scrollingToBottomofAPage();
+        
+        base.stepInfo("verifying Analytics Toggle is Enabled by default");
+       String AnalyticsToggle= project.getAnalyticsToggle().GetAttribute("class");
+       if(AnalyticsToggle.contains("activeC")) {
+    	   base.passedStep("Analytics Toggle is enabled by default");
+       }else {
+    	   base.failedStep("Analytics toggle is off");
+       }
+       
+       base.stepInfo("Verifying Analytics Section");
+       List<String>AnalyticsClassification=base.availableListofElements(project.getAnalyticsClassification());
+      System.out.println("AnalyticsClassification"+AnalyticsClassification);
+      base.waitTime(3);
+      String[] ComapreString= {"Components","Automation"};
+      if(AnalyticsClassification.equals(Arrays.asList(ComapreString))) {
+    	  System.out.println("ComapreString"+ComapreString);
+    	  base.passedStep("Analytics panel is with Automation and Component");
+      }else{
+    	  base.failedStep("Analytics panel is not with Automation and Component");
+      }
+      
+      base.stepInfo("verifying Component section checkbox");
+      driver.waitForPageToBeReady();
+      base.ValidateElement_Presence(project.getComponentCheckBox(), "Component Textual Analytics CheckBox");
+      
+      base.stepInfo("verifying Automation section checkbox");
+      int Size=project.getAutomationClassification().size();
+      base.ValidateElementCollection_Presence(project.getAutomationClassification(),"Kicoff Analytics and Incremental Analytics Checkbox");
+      System.out.println(Size);
+      if(Size==2) {
+    	  base.passedStep("KickOff Analytics and Incremental analytics moves under Automation");
+      }else {
+    	  base.failedStep("KickOff Analytics and Incremental analytics is not moves under Automation");
+      }
+    
+        loginPage.logout();
+    }
 }

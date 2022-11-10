@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -359,6 +360,24 @@ public class ProjectPage {
     }
     public Element getSelectProjectRadioBtn() {
         return driver.FindElementByXPath("//input[@id='rbProject']/..//i");
+    }
+    public ElementCollection getColumValues(int colum) {
+		return driver.FindElementsByXPath("//*[@id='ProjectDataTable']/tbody/tr/td[" + colum + "]");
+	}
+    public Element getLastPageNavigation() {
+        return driver.FindElementByXPath("//*[@id='ProjectDataTable_next']//preceding-sibling::li[1]//a");
+    }
+    public Element getAnalyticsToggle() {
+        return driver.FindElementByXPath("//i[@id='IsEnabledAnalytics']/..//input");
+    }
+    public ElementCollection getAnalyticsClassification() {
+        return driver.FindElementsByXPath("//div[contains(@class,'analyticsBox')]//div//label//strong");
+    }
+    public ElementCollection getAutomationClassification() {
+        return driver.FindElementsByXPath("//div[contains(@class,'analyticsBox')]//div//label//input[contains(@id,'Auto')]//following-sibling::i");
+    }
+    public Element getComponentCheckBox() {
+        return driver.FindElementByXPath("//label[contains(text(),'Textual Analytics')]/..//div//label[contains(@class,'checkbox')]");
     }
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -1620,4 +1639,36 @@ public class ProjectPage {
 		bc.VerifySuccessMessage("The new client was added successfully");
 		bc.CloseSuccessMsgpopup();
 	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param ColName
+	 * @param Val
+	 * @param SortingOrder
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description: verifying Sorting order in projects column
+	 */
+	public void verifyingSortingOrderInColumn(String ColName,boolean Val,String SortingOrder) throws InterruptedException, AWTException  {
+		bc.waitTime(3);
+		ArrayList<String> Values = new ArrayList<>();
+		int n = bc.getIndex(getProjectTableHeader(),ColName);
+		List<String> ColVal = bc.availableListofElements(getColumValues(n));
+		System.out.println(n);
+		
+		for (String a : ColVal) {
+			if(Val) {
+			if (a.contains("Yes") || a.contains("No")) {
+				System.out.println("Yes or No is displayed in column as expected");
+			} else {
+				bc.failedStep("Yes or No is not displayed in column");
+			}
+			}
+			Values.add(a);
+		}
+		bc.waitTime(3);
+		System.out.println(Values);
+			bc.verifyOriginalSortOrder(ColVal, Values, SortingOrder, true);
+	}
+
 }

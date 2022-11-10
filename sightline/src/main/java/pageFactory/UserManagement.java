@@ -1153,7 +1153,16 @@ public class UserManagement {
 	public Element getIsActiveCheckBox() {
 		return driver.FindElementByXPath("//input[@id='IsActiveCheckbox']//parent::label//i");
 	}
+	public Element getNextBtn() {
+		return driver.FindElementByXPath("//a[text()='Next']/..");
+	}
+	public Element getDomainProjectDropdown(int i) {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']//option["+i+"]");
+	}
 	
+	public Element getProjectDropdown() {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
