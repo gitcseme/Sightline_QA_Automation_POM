@@ -3359,6 +3359,8 @@ public class TagsAndFoldersPage {
 	 */
 	public void CreateFolderCC(String strFolder, String securityGroup) throws InterruptedException {
 
+		driver.scrollPageToTop();
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFolderActionDropDownArrow().Enabled();
