@@ -3529,6 +3529,7 @@ public class SavedSearchRegression_New_Set_05 {
 		// Login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
+
 		// create search in Other SG
 		base.selectsecuritygroup(securityGroup);
 		base.stepInfo("Selected Security Group : " + securityGroup);
@@ -3549,9 +3550,11 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.selectRootGroupTab(Input.mySavedSearch);
 		saveSearch.selectNode1(defNode);
-
-		Element tallyBtnStatus = saveSearch.getSavedSearchToTally();
-		saveSearch.checkButtonEnabled(tallyBtnStatus, "Should be Enabled", "Tally");
+		
+//		 Element tallyBtnStatus = saveSearch.getSavedSearchToTally();
+//		 saveSearch.checkButtonEnabled(tallyBtnStatus, "Should be Enabled", "Tally");
+		 
+		saveSearch.getSavedSearchSelectRadioButton().waitAndClick(10);
 		saveSearch.getSavedSearchToTally().waitAndClick(10);
 
 		// Have to Continue Scripting Once the Tally Button is Enabled.
