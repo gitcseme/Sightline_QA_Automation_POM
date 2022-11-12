@@ -190,6 +190,7 @@ public class SecurityGroups_Regression24 {
 		sgpage.getSGSelectAccessControlTages(keyword).waitAndClick(3);
 
 		// verify keywords selected and assign/UnAssign
+		baseClass.waitTime(8);
 		sgpage.verifySelectKeywordsAssignedInSelectedList(keywordname);
 		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
 		sgpage.getSG_AnnSaveButton().waitAndClick(20);

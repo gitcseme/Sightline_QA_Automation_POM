@@ -1285,7 +1285,7 @@ public class DocListPage {
 	}
 
 	public Element getDocList_PlusIcon() {
-		return driver.FindElementByXPath("//td[@class=' details-control']");
+		return driver.FindElementByXPath("//td[@class='details-control']");
 
 	}
 
@@ -1426,6 +1426,18 @@ public class DocListPage {
 		return driver.FindElementByXPath("//ul[@id='select2-EmailAuthorName-results']/li");
 	}
 	
+	public Element getAudioDownloadIcon() {
+		return driver.FindElementByXPath("//li[@id='liAudioDocumentTypeDropDown']//i");
+	}
+	
+	public Element getAudioOptionToDownload() {
+		return driver.FindElementByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
+	}
+	
+	public Element getPreviewAudioDocCloseButton() {
+		return driver
+				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;

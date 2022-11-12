@@ -166,6 +166,23 @@ public class CustomDocumentDataReport {
 		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
 	}
 	
+	//added by sowndary
+	public Element getExportNewLineBtn() {
+		return driver.FindElementById("newLineSelect");
+	}
+
+	public Element getExportNewlineValue(String value) {
+		return driver.FindElementByXPath("//*[@id='newLineSelect']/*[contains(text(),'" + value + "')]");
+	}
+	
+	public Element getExportDateStyleDD() {
+		return driver.FindElementById("dateStyleSelect");
+	}
+	
+	public Element getExportStyleDD() {
+		return driver.FindElementById("styleSelect");
+	}
+	
 	public CustomDocumentDataReport(Driver driver) {
 
 		this.driver = driver;
@@ -627,6 +644,7 @@ public class CustomDocumentDataReport {
 		driver.waitForPageToBeReady();
 		
 	}
+	
 	/**
 	 * @author Jayanthi.Ganesan
 	 * This method will retrieve the value from csv file downloaded 
@@ -648,5 +666,49 @@ public class CustomDocumentDataReport {
 			e.printStackTrace();
 		}
 		return lines;
+	}
+	
+	/**
+	 * @author sowndarya
+	 * This method will navigate To CDDReportPage
+	 */
+	public void navigateToCDDReportPage() {
+		ReportsPage report = new ReportsPage(driver);
+		driver.scrollPageToTop();
+		bc.waitForElement(report.navigateToReports());
+		report.navigateToReports().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.verifyPageNavigation("Report/ReportsLanding");
+		bc.waitForElement(report.getCustomDocumentDataReport());
+		report.getCustomDocumentDataReport().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.verifyPageNavigation("Report/ExportData");
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void selectExportStyle(String style) {
+		bc.waitForElement(getExportStyleDD());
+		getExportStyleDD().selectFromDropdown().selectByVisibleText(style);
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void selectExportNewLineFormat(String newLine) {
+		bc.waitForElement(getExportNewLineBtn());
+		getExportNewLineBtn().Click();
+		bc.waitForElement(getExportNewlineValue(newLine));
+		getExportNewlineValue(newLine).waitAndClick(5);
+
+	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void selectExportDateStyleFormat(String dateStyle) {
+		bc.waitForElement(getExportDateStyleDD());
+		getExportDateStyleDD().selectFromDropdown().selectByVisibleText(dateStyle);
 	}
 }

@@ -235,6 +235,11 @@ public class BaseClass {
 	}
 
 	// Added by Jeevitha
+	
+	public Element getLeftNavigationMenu() {
+		return driver.FindElementByXPath("//nav[@id='LeftMenu']//li//ul");
+	}
+
 	public Element getWarningMsgHeader() {
 		return driver.FindElementByXPath("//span[text()='Warning !']");
 	}

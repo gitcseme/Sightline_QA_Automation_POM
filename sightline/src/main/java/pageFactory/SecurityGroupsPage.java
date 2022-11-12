@@ -659,16 +659,21 @@ public class SecurityGroupsPage {
 		}
 	}
 
+
+	/**
+	 *  Modified by sowndarya.
+	 * @Description: Method for creating security group
+	 * @param securityGroupName 
+	 */
 	public void createSecurityGroups(String securityGroupName) {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
-		Actions actions = new Actions(driver.getWebDriver());
-		wait.until(ExpectedConditions.elementToBeClickable(clickManage().getWebElement()));
-		actions.moveToElement(clickManage().getWebElement());
-		actions.click().build().perform();
 		
-		wait.until(ExpectedConditions.elementToBeClickable(clickSecurityGroup().getWebElement()));
-		actions.moveToElement(clickSecurityGroup().getWebElement());
-		actions.click().build().perform();
+		driver.Navigate().refresh();
+		
+		bc.waitForElement(clickManage());
+		clickManage().waitAndClick(10);
+		
+		bc.waitForElement(clickSecurityGroup());
+		clickSecurityGroup().waitAndClick(10);
 		
 		bc.waitForElement(securityGroupCreate());
 		securityGroupCreate().waitAndClick(10);
@@ -679,8 +684,6 @@ public class SecurityGroupsPage {
 		
 		bc.waitForElement(securityGroupSave());
 		securityGroupSave().waitAndClick(10);
-		bc.VerifySuccessMessage("Security group added successfully");
-		bc.CloseSuccessMsgpopup();
 	}
 
 	/**

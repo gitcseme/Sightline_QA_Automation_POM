@@ -17,12 +17,16 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.Categorization;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -207,7 +211,210 @@ public class DocList_Regression25 {
 		docList.verifyAppliedIncludeCustodianNameFilterIsAdded(Input.metaDataCN);
 	}
 
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @Description :Creation and assigning documents in Folders for Categorization.[RPMXCON-54250]
+	 */
+	@Test(description = "RPMXCON-54250", enabled = true, groups = { "regression" })
+	public void createandCategorizeFolders() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-54250");
+		baseClass.stepInfo("Creation and assigning documents in Folders for Categorization");
+		
+		DocListPage docList = new DocListPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+//		SavedSearch savedSearch=new SavedSearch(driver);
+		Categorization categorize= new Categorization(driver);
+		String folder= "Folder"+ Utility.dynamicNameAppender();
+		String searchName="search"+ Utility.dynamicNameAppender();
+	
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tags.CreateFolder(folder, Input.securityGroup);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.bulkFolderExisting(folder);
+		
+
+		// Navigate to CATEGORIZATION
+		categorize.navigateToCategorizePage();
+
+		// Select Folder In Analyse Section
+		categorize.fillingTrainingSetSection("Folder", folder, null, null);
+
+		// select Folder in Corpus Section
+		categorize.fillingStep2CorpusTab("search", searchName, Input.mySavedSearch, true);
+
+		// verify Run categorization
+		categorize.runCategorization("YES");
+		
+		categorize.ViewInDocLIst();
+		
+		driver.waitForPageToBeReady();
+		String docCount = docList.verifyingDocCount();
+		
+		softAssert.assertEquals(purehit,Integer.parseInt(docCount));
+		softAssert.assertAll();
+		baseClass.passedStep("Same number of documents moved in DocList Screen");
+		
+		}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description :Creation and assigning documents in Tags for Categorization.[RPMXCON-54249]
+	 */
+	@Test(description = "RPMXCON-54249", enabled = true, groups = { "regression" })
+	public void createandCategorizeTags() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54249");
+		baseClass.stepInfo("Creation and assigning documents in Tags for Categorization");
+		
+		DocListPage docList = new DocListPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		Categorization categorize= new Categorization(driver);
+		String tag= "Tag"+ Utility.dynamicNameAppender();
+		String searchName="search"+ Utility.dynamicNameAppender();
+	
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tags.CreateTag(tag, Input.securityGroup);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.bulkTagExisting(tag);
+		
+		// Navigate to CATEGORIZATION
+		categorize.navigateToCategorizePage();
+
+		// Select Folder In Analyse Section
+		categorize.fillingTrainingSetSection("Tag", tag, null, null);
+
+		// select Folder in Corpus Section
+		categorize.fillingStep2CorpusTab("search", searchName, Input.mySavedSearch, true);
+
+		// verify Run categorization
+		categorize.runCategorization("YES");
+		
+		categorize.ViewInDocLIst();
+		
+		driver.waitForPageToBeReady();
+		String docCount = docList.verifyingDocCount();
+		
+		softAssert.assertEquals(purehit,Integer.parseInt(docCount));
+		softAssert.assertAll();
+		baseClass.passedStep("Same number of documents moved in DocList Screen");
+		
+		}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/11/2022 RPMXCON-54365
+	 * @throws Exception
+	 * @Description Validate doc List limitation from Sub Tally report - View less than or equal to 500K documents.
+	 */
+	@Test(description = "RPMXCON-54365", enabled = true, groups = { "regression" })
+	public void verifyDocListFromSubtallyInLessDocuments() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54365");
+		baseClass.stepInfo(
+				"Validate doc List limitation from Sub Tally report - View less than or equal to 500K documents");
+		Utility utility = new Utility(driver);
+		String random = Input.betweenTagName + Utility.dynamicNameAppender();
+		final String random1 = random;
+		TagsAndFoldersPage tagAndFol = new TagsAndFoldersPage(driver);
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Create a new Folder contains word between");
+		tagAndFol.CreateFolder(random1, Input.securityGroup);
+
+		baseClass.stepInfo("Verify created folder is added to folder structure");
+		driver.Navigate().refresh();
+		tagAndFol.verifyFolderNameIsAddedToStructure(random1);
+
+		baseClass.stepInfo("Select documets from doc explorer table and bulk folder selected documents");
+		docexp.selectDocumentsAndBulkFolder(10, random1);
+
+		SecurityGroupsPage securityGroup = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Navigate to security group");
+		securityGroup.navigateToSecurityGropusPageURL();
+
+		baseClass.stepInfo("Add Folder to security group");
+		securityGroup.addFolderToSecurityGroup(Input.securityGroup, random1);
+
+		TallyPage tally = new TallyPage(driver);
+
+		baseClass.stepInfo("Navigate to tally page");
+		tally.navigateTo_Tallypage();
+
+		baseClass.stepInfo("Select project as souce for tally");
+		tally.selectSourceByProject();
+
+		baseClass.stepInfo("Select Tally by Meta Data Field");
+		tally.selectTallyByMetaDataField(Input.metaDataName);
+
+		baseClass.stepInfo("Select documents and click on action drop down");
+		tally.tallyActions();
+
+		baseClass.stepInfo("Selecting sub tally from drop down");
+		tally.selectSubTallyFromActionDropDown();
+
+		baseClass.stepInfo("Applying subtally from sub tally field");
+		tally.applyingSubTallyFolderField(random1);
+
+		baseClass.stepInfo("Verify documents count and go to doclistpage");
+		tally.tallyToDocListPage();
+		baseClass.passedStep("User is not be prompted with any message and navigate successfully to DocList screen with selected number of documents.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/11/2022 RPMXCON-54287
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that using the Download option, any of the file variant associated with this document including the MP3 file variant from preview document of doc list.
+	 */
+	@Test(description = "RPMXCON-54287", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentPerviewDocsAndDownload(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54287");
+		baseClass.stepInfo(
+				"Verify that using the Download option, any of the file variant associated with this document including the MP3 file variant from preview document of doc list.");
+
+		DocListPage docList = new DocListPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.basicContentSearch(Input.oneHourAudio);
+		sessionSearch.ViewInDocList();
+		
+		baseClass.waitForElement(docList.getDocListPerviewBtn());
+		docList.getDocListPerviewBtn().waitAndClick(5);
+		baseClass.waitForElement(docList.getAudioDownloadIcon());
+		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
+		docList.getAudioDownloadIcon().Click();
+		baseClass.waitForElement(docList.getAudioOptionToDownload());
+		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
+		docList.getAudioOptionToDownload().Click();
+		docList. getPreviewAudioDocCloseButton().waitAndClick(5);;
+		baseClass.waitUntilFileDownload();
+        String fileName = baseClass.GetFileName();
+        System.out.println(fileName);
+        if(fileName != null) {
+        	baseClass.passedStep("Audio document is download successfully from preview document of doc list");
+        }else {
+        	baseClass.failedStep("No such Download file");
+        }
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -221,6 +428,14 @@ public class DocList_Regression25 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+	
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	@DataProvider(name = "Users_PARMU")

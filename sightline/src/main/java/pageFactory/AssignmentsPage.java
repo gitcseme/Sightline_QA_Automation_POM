@@ -1656,6 +1656,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//li/a[text()='" + assignmentName + "']");
 	}
 
+	public Element getPopUpCloseBtn() {
+		return driver.FindElementByXPath("//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -10054,7 +10058,16 @@ public class AssignmentsPage {
 				bc.passedStep("Assignment name available in manage assignmnet");
 				bc.stepInfo("Assignment in the name of :" + filedValue + "");
 				break;
-			} else {
+			} else if (status == false) {
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.passedStep("Assignment name available in manage assignmnet");
+				bc.stepInfo("Assignment in the name of :" + filedValue + "");
+				break;
+			}
+
+			else {
 				driver.scrollingToBottomofAPage();
 				bc.waitForElement(getAssgnPaginationNextButton());
 				getAssgnPaginationNextButton().Click();
@@ -11466,13 +11479,20 @@ public class AssignmentsPage {
 		getUnassignbutton().waitAndClick(5);
 		getSelectAssignmentToUnAssignDocs(assignmentName).waitAndClick(20);
 
-		getContinueBulkAssign().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getContinueBulkAssign());
+		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+		getContinueBulkAssign().waitAndClick(30);
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
 		bc.VerifySuccessMessage(
 				"Bulk UnAssign has been added to background process. You will get notification on completion.");
+		bc.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(getPopUpCloseBtn());
+		getPopUpCloseBtn().waitAndClick(10);
 	}
 
 	public void selectReviewerAndClickRedistributeAction() {
@@ -11489,7 +11509,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_Action_redistributedoc().waitAndClick(10);
 		bc.getYesBtn().waitAndClick(10);
 
-		assertion.assertEquals((boolean)getRedistributePopUpHeader().isElementAvailable(5), true);
+		assertion.assertEquals((boolean) getRedistributePopUpHeader().isElementAvailable(5), true);
 		assertion.assertAll();
 		bc.stepInfo("Redistribute Documents PopUp is Opened.");
 

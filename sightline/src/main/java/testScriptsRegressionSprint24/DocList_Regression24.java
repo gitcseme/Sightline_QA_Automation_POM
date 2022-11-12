@@ -230,7 +230,9 @@ public class DocList_Regression24 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Selecting page length in doclist page");
 		docList.getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(Input.pageLength);
+		baseClass.waitTime(8);
 		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(docList.getTableFooterDocListCount());
 		driver.waitForPageToBeReady();
 		String DocListCount = docList.getTableFooterDocListCount().getText();

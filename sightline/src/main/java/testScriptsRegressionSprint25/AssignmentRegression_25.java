@@ -179,6 +179,65 @@ public class AssignmentRegression_25 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify the Redistribute functionality is working fine for whole
+	 *              numbers. RPMXCON-54397
+	 */
+
+	@Test(description = "RPMXCON-54397", enabled = true, groups = { "regression" })
+	public void verifyRedistributeFunctionalityWorkingFineForWholeNumbers() throws InterruptedException {
+
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54397 Assignments");
+		baseClass.stepInfo("Verify the Redistribute functionality is working fine for whole numbers.");
+
+		// create assignment using Bulk Assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignWithNewAssignmentWithPersistantHit(assignmentName, Input.codeFormName);
+		baseClass.passedStep("Assignment Name : '" + assignmentName + " created.");
+
+		// add reviewers to assignment and Distribute Documents
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		assignment.add2ReviewerAndDistribute();
+
+		// Performing Redistribute Documents Action.
+		assignment.getAssignment_ManageReviewersTab().waitAndClick(10);
+		baseClass.waitTime(4);
+		int rmuDistributedDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
+		int revDistributedDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rev1userName).getText());
+		assignment.selectReviewerAndClickRedistributeAction();
+		assignment.getAssgn_Redistributepopup().waitAndClick(10);
+		assignment.getAssgn_Redistributepopup_save().waitAndClick(10);
+		baseClass.passedStep("Performing Redistribute Documents Action.");
+		baseClass.waitTime(4);
+
+		// verify that documents should be distributed as per left documents properly.
+		int ExpectedRmuDistributedDocCountAfterRedistribute = rmuDistributedDocCount + revDistributedDocCount;
+		int ActualRmuDistributedDocCountAfterRedistribute = Integer
+				.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
+		baseClass.digitCompareEquals(ActualRmuDistributedDocCountAfterRedistribute,
+				ExpectedRmuDistributedDocCountAfterRedistribute,
+				"Actual Distributed To User Doc Count : '" + ActualRmuDistributedDocCountAfterRedistribute
+						+ "' match with the Expected Distributed To User Doc Count : '"
+						+ ActualRmuDistributedDocCountAfterRedistribute + "'",
+				"Actual Distributed To User Doc Count : '" + ActualRmuDistributedDocCountAfterRedistribute
+						+ "' doesn't match with the Expected Distributed To User Doc Count : '"
+						+ ActualRmuDistributedDocCountAfterRedistribute + "'");
+		baseClass.passedStep("Verified that documents are distributed as per left documents properly.");
+
+		// Delete Assignment
+		assignment.deleteAssgnmntUsingPagination(assignmentName);
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

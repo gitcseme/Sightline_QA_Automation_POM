@@ -699,6 +699,10 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+	public ElementCollection getErrorFieldsFromAddNewUser() {
+		return driver.FindElementsByXPath("//span[@class='field-validation-error']//span");
+	}
+	
 	public Element getFirstNameEditUserPopup() {
 		return driver.FindElementById("txtBxUserName");
 	}
@@ -1131,6 +1135,33 @@ public class UserManagement {
 	}
 	public Element getCollectionsCheckBox() {
 		return driver.FindElementById("chkCanCollections");
+	}
+	
+	//added by sowndarya
+	public Element getRightAssignErrorMessage() {
+		return driver.FindElementById("RightAssignErrorMessage");
+	}
+	public Element getRightAssignErrorMessage1() {
+		return driver.FindElementById("RightAssignErrorMessage2");
+	}
+	public Element getLeftAssignErrorMessage() {
+		return driver.FindElementById("LeftAssignErrorMessage");
+	}
+	public ElementCollection getDomainRoleOptions() {
+		return driver.FindElementsByXPath("//select[@id='lstRoles']/option");
+	}
+	public Element getIsActiveCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsActiveCheckbox']//parent::label//i");
+	}
+	public Element getNextBtn() {
+		return driver.FindElementByXPath("//a[text()='Next']/..");
+	}
+	public Element getDomainProjectDropdown(int i) {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']//option["+i+"]");
+	}
+	
+	public Element getProjectDropdown() {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
 	}
 	public UserManagement(Driver driver) {
 
@@ -1767,10 +1798,10 @@ public class UserManagement {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		if (getSavePassword().isElementAvailable(3)) {
-			getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
+		  if (getSavePassword().isElementAvailable(5)) {
+	            getSavePassword().waitAndClick(20);
+	            driver.waitForPageToBeReady();
+	        }
 	}
 
 	/**
@@ -5220,13 +5251,20 @@ public class UserManagement {
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
-					}else {
+					}
+					else {
 						bc.stepInfo("The Project is already selected");
 					}
-				}else {
+				}else if (getProjectTextBox().isElementAvailable(5)) {
+					bc.waitForElement(getProjectTextBox());
+					String selectProject = getProjectTextBox().GetAttribute("class");
+					if (selectProject.contains("valid")) {
+						bc.passedStep("The Project is already selected"); 
+					}
+				else {
 						bc.stepInfo("The Project is already selected");
 				}
-			}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
+			}}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
 				String alertText = getAlertMessageFromRole().getText();
@@ -5248,7 +5286,15 @@ public class UserManagement {
 					if (selectProject.contains("valid")) {
 						bc.passedStep("The Project is already selected"); 
 					}						
-					}else{
+					}else if (selectProject().isElementAvailable(5)) {
+						bc.waitForElement(selectProject());
+						String selectProject = selectProject().GetAttribute("class");
+						if (selectProject.contains("form")) {
+							bc.waitForElement(selectProject());
+							selectProject().selectFromDropdown().selectByVisibleText(projectName);
+						}else {
+							bc.stepInfo("The Project is already selected");
+						}}else{
 						bc.failedStep("The project is unable to select");
 					}
 				bc.waitForElement(userSelectSecurityGroup());
@@ -5298,6 +5344,36 @@ public class UserManagement {
 		bc.waitForElement(getUserTabelDropDownValues(tableHeader, cloumnNo));
 		String tableValue = getUserTabelDropDownValues(tableHeader, cloumnNo).getText();
 		return tableValue;
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Error Meassage When Madatory fields are Blank.
+	 */
+	public void verifyErrorMessageInMandatoryFields() {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getSave());
+			getSave().waitAndClick(5);
+			
+			//get all error fields
+			bc.waitForElementCollection(getErrorFieldsFromAddNewUser());
+			List<WebElement> errorFields = getErrorFieldsFromAddNewUser().FindWebElements();
+
+			for (int i = 0; i < errorFields.size(); i++) {
+				WebElement errorsPresent = errorFields.get(i);
+				String errorValidations = errorsPresent.getText();
+				//validate when mandatory fields are blank
+				if (errorValidations.contains("You must specify the first name.")||errorValidations.contains("You must specify the last name")||errorValidations.contains("You must specify a specify a role.")||errorValidations.contains("Email Address is required")) {
+					bc.passedStep("Application displays error message when mandatory fields are blank.");
+				}else {
+					bc.failedStep("Application doesn't displays any error message when mandatory fields are blank.");
+				}
+			}
+		} catch (Exception e) {
+			bc.failedStep("Application doesn't displays any error message when mandatory fields are blank."+Get.class);
+		}
 	}
 
 }
