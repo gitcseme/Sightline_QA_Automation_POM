@@ -414,6 +414,90 @@ public class DocList_Regression25 {
         }
 		loginPage.logout();
 	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-66481
+	 * @throws Exception
+	 * @Description Verify that from tile/thumbnail view on unchecking single
+	 *              checkbox the top-right button "Unselect All" becomes "Select
+	 *              All"
+	 */
+	@Test(description = "RPMXCON-66481", enabled = true, groups = { "regression" })
+	public void verifyThumbnailViewUnCheckingAndUnSelect() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-66481");
+		baseClass.stepInfo(
+				"Verify that from tile/thumbnail view on unchecking single checkbox the top-right button \"Unselect All\" becomes \"Select All\"");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		// Searching Content document go to doclist
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		docList.verifySelectAllInTileView();
+		baseClass.waitForElement(docList.getUnSelectAllCheckBox());
+		docList.getUnSelectAllCheckBox().waitAndClick(5);
+		baseClass.waitForElement(docList.getSelectAllOk());
+		docList.getSelectAllOk().waitAndClick(5);
+		baseClass.stepInfo("Unselect all documents in tile view");
+
+		baseClass.waitForElement(docList.getSelectAllCheckBox());
+		docList.getSelectAllCheckBox().waitAndClick(5);
+		baseClass.waitForElement(docList.getSelectAllOk());
+		docList.getSelectAllOk().waitAndClick(5);
+		baseClass.waitForElement(docList.getFirstCheckBox());
+		docList.getFirstCheckBox().waitAndClick(5);
+		baseClass.stepInfo("single checkbox is unchecked");
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docList.getTileViewSelectAll());
+		if (docList.getTileViewSelectAll().isElementPresent()) {
+			baseClass.passedStep("Unselect all checkbox gets removed and displayed select all as expected");
+
+		} else {
+			baseClass.failedStep("selectall checkbox is not displayed ");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+     * @author  Date:NA ModifyDate:NA RPMXCON-66461
+     * @throws Exception
+     * @Description Verify that user should be able to apply filter to the docs in
+     *              the Thumbnail View
+     */
+    @Test(description = "RPMXCON-66461", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+    public void verifyAbleApplyFilterInThumbnail(String userName, String password, String fullName) throws Exception {
+    	baseClass.stepInfo("Test case Id: RPMXCON-66461");
+        baseClass.stepInfo("Verify that user should be able to apply filter to the docs in the Thumbnail View ");
+        sessionSearch = new SessionSearch(driver);
+        DocListPage docList = new DocListPage(driver);
+        SoftAssert softassert = new SoftAssert();
+        String actualCount = "2"; // metadata field doc
+        // Login As User
+        loginPage.loginToSightLine(userName, password);
+        baseClass.stepInfo("LoggedIn as : " + fullName);
+        // Searching Content document go to doclist
+        sessionSearch.basicContentSearch(Input.searchString1);
+        sessionSearch.ViewInDocList();
+       driver.waitForPageToBeReady();
+        docList.getTileView().waitAndClick(5);
+        baseClass.waitForElement(docList.getThumbnailbar());
+        softassert.assertTrue(docList.getThumbnailbar().isElementPresent());
+        baseClass.passedStep("thumbnails view is displayed as expected");
+        docList.getIncludeFilterEmailAllDomain(Input.MetaDataDomainName);
+        baseClass.stepInfo("available documents is filtered as expected");
+        String expectedCount = docList.verifyingDocCount();
+        softassert.assertEquals(expectedCount,actualCount);
+        System.out.println(expectedCount);
+        baseClass.passedStep("User has been  able to apply filter to the docs in the Thumbnail View as expected");
+        softassert.assertAll();
+        loginPage.logout();
+    }
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

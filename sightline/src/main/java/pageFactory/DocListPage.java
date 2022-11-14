@@ -1438,6 +1438,32 @@ public class DocListPage {
 		return driver
 				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
+	public Element getTileView() {
+        return driver.FindElementByXPath("//*[@id='TileView']");
+    }
+    public Element getSelectAllCheckBox() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
+    }
+    public Element getSelectAllOk() {
+        return driver.FindElementByXPath("//*[@id='bot1-Msg1'][text()=' Ok']");
+    }
+    public Element getUnSelectAllCheckBox() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']//following-sibling::label//input");
+    }
+    public Element getFirstCheckBox() {
+        return driver.FindElementByXPath("//*[@id='chkDoc_1']");
+    }
+    public Element getTileViewSelectAll() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']");
+    }
+    public Element getTileViewUnSelectAll() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']");
+
+    }
+    public Element getThumbnailbar() {
+        return driver.FindElementByXPath("//*[@id='infos']/a/i");
+
+    }
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6380,5 +6406,28 @@ public class DocListPage {
 		getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
 		
 	}
+	/**
+	 * @author 
+	 * @Description: verify selectall doc is present to all check box
+	 *
+	 */
+	public void verifySelectAllInTileView() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTileView().Visible();
+			}
+		}), Input.wait60);
+	    getTileView().waitAndClick(5);
+	    base.waitForElement(getSelectAllCheckBox());
+	    if (getSelectAllCheckBox().isElementPresent()) {
+	    	base.waitForElement(getSelectAllCheckBox());
+			getSelectAllCheckBox().waitAndClick(5);	
+			base.passedStep("selectall checkbox is displayed in tileview");
+		}else {
+			base.failedStep("check box is not present");
+		}
+		base.waitForElement(getSelectAllOk());
+		getSelectAllOk().waitAndClick(5);		
+}
 	
 }
