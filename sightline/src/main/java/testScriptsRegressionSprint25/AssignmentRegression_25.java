@@ -238,6 +238,45 @@ public class AssignmentRegression_25 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify the functionality of the ReDistribute Document for
+	 *              Uncompleted Document.RPMXCON-53699
+	 */
+
+	@Test(description = "RPMXCON-53699", enabled = true, groups = { "regression" })
+	public void verifyReDistributeDocumentForUncompletedDocument() throws InterruptedException {
+
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53699");
+		baseClass.stepInfo("To verify the functionality of the ReDistribute Document for Uncompleted Document.");
+
+		// creating Assignment
+		assignment.createAssignment(assignmentName, Input.codingFormName);
+		// performing bulk Assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// adding reviewers and distributing the documents to reviewers
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		assignment.add2ReviewerAndDistribute();
+		baseClass.waitTime(4);
+
+		//select the Reviewer having uncomplete documents  & Redistribute documents to another reviewer
+		//verify All the documents from the Reviewer is reassign to another Reviewer.
+		baseClass.stepInfo("perform ReDistribute Documents in Reviewers Tab.");
+		assignment.RedistributeDocInManageReviewerTab();
+		baseClass.passedStep("Verified that documents of Reviewer are reassigned to another Reviewer");
+
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
