@@ -30,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvanceSearchRegression20_21_22_23 {
+public class AdvanceSearchRegression20_21_22_23_24 {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;
@@ -60,6 +60,43 @@ public class AdvanceSearchRegression20_21_22_23 {
 		savedSearch = new SavedSearch(driver);
 
 	}
+	
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that warning message appears after pre-submittal
+	 *              validations WP on Advanced Search Screen. RPMXCON-57280
+	 */
+	@Test(description = "RPMXCON-57280", enabled = true, groups = { "regression" })
+	public void verifyWarningMessageAppearsAfterPreSubmittalValidationsWPAdv() {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57280 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that warning message appears after pre-submittal validations  WP on Advanced Search Screen.");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// navigating to advanced search page and Configuring the search Query in
+		// WorkProduct Tab
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.getWorkProductTextBox().SendKeys(Input.searchString1);
+		baseClass.stepInfo("navigating to advanced search page and Configuring the search Query in WorkProduct Tab.");
+
+		// perform search action
+		sessionSearch.SearchBtnAction();
+		baseClass.stepInfo("perform search action.");
+
+		// Verify that application displays warning message
+		String expectedWarningMessage = "Please enter a valid search expression";
+		baseClass.VerifyWarningMessage(expectedWarningMessage);
+		baseClass.passedStep("Verified that application displays warning message.");
+		baseClass.printResutInReport(null, expectedWarningMessage, expectedWarningMessage, expectedWarningMessage);
+
+		// logOut
+		loginPage.logout();
+	}
+
 
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
