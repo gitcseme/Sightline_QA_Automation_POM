@@ -1464,6 +1464,20 @@ public class DocListPage {
         return driver.FindElementByXPath("//*[@id='infos']/a/i");
 
     }
+
+   
+	public Element getThumbnailsView() {
+		return driver.FindElementByXPath("//*[@id='docgrid']");
+	}
+
+	public Element getGridViewIcon() {
+		return driver.FindElementById("GridView");
+	}
+
+	public Element getDocListViewsInRow() {
+		return driver.FindElementByXPath(
+				"//a[@id='TileView']/preceding-sibling::a/../../../a[@id='btnSaveProfile']/preceding-sibling::a");
+  }
     public ElementCollection getInfoBtn() {
 		return driver
 				.FindElementsById("infos");
@@ -1479,6 +1493,7 @@ public class DocListPage {
 	public Element getDocIdTileView() {
 		return driver
 				.FindElementByXPath("//*[contains(text(),'DocID:')]/..//following-sibling::td");
+
 	}
 	
 	public DocListPage(Driver driver) {
@@ -6446,6 +6461,31 @@ public class DocListPage {
 		base.waitForElement(getSelectAllOk());
 		getSelectAllOk().waitAndClick(5);		
 }
+
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description: verify select pageLength
+	 *
+	 */
+	public void selectPageLengthInDocList(String pageLength) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Selecting page length in doclist page");
+		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(pageLength);
+		base.waitTime(8);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getTableFooterDocListCount());
+		driver.waitForPageToBeReady();
+		String DocListCount = getTableFooterDocListCount().getText();
+		System.out.println(DocListCount);
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[3];
+		System.out.println("doclist page document count is" + Document);
+		base.textCompareEquals(pageLength, Document, pageLength + " docs is displayed as expected",
+				pageLength + "docs is not displayed as expected");
+	}
+
 	/**
 	 * @author Brundha.T
 	 * @param CompareString
@@ -6460,4 +6500,5 @@ public class DocListPage {
 					"Filters are not applied for thumbnail boxes");
 		}
 	}	
+
 }
