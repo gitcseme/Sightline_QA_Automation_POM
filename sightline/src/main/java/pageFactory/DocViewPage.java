@@ -2205,6 +2205,10 @@ public class DocViewPage {
 
 	// added by sowndarya.velraj
 
+	
+	public Element tagnameInDocview(String tag) {
+		return driver.FindElementByXPath("//div[@id='0_radiogroup']//span[contains(text(),'"+tag+"')]");
+	}
 	public Element RevRemarkNotchinPlayer() {
 		return driver.FindElementByXPath("//div[@id='divAudioReviewerRemark']//span//i");
 	}
@@ -28829,6 +28833,22 @@ public class DocViewPage {
 		}
 	}
 
+	
+	/**
+	 * @Author sowndarya 
+	 * @Description To verify is Analytics panel present or not 'RPMXCON-51844'
+	 */
+	public void saveAndNextNewCodingFormSelectingTags(String tag) {
+	
+	driver.waitForPageToBeReady();
+	base.waitForElement(tagnameInDocview(tag));
+	tagnameInDocview(tag).waitAndClick(10);
+	
+	base.waitForElement(getSaveAndNextButton());
+	getSaveAndNextButton().waitAndClick(10);
+	
+	}
 }
+
 
 
