@@ -3,7 +3,10 @@ package testScriptsRegressionSprint25;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -498,7 +501,126 @@ public class DocList_Regression25 {
         softassert.assertAll();
         loginPage.logout();
     }
-	
+    /**
+	 * @authorBrundha TestCase id:RPMXCON-66483
+	 * @Description Verify that when some/all checkboxes are checked, and applied
+	 *              "Filter Documents By", then the documents showsed should be
+	 *              filtered
+	 */
+	@Test(description = "RPMXCON-66483", enabled = true, groups = { "regression" })
+	public void verifyingIncludedFilterInDocListPage() throws Exception {
+
+
+		baseClass.stepInfo("Test case Id: RPMXCON-66483 DocList Component");
+		baseClass.stepInfo(
+				"Verify that when some/all checkboxes are checked, and applied 'Filter Documents By', then the documents showsed should be filtered");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("applying include filter and verifying the applied filter");
+		docList.applyCustodianNameFilter(Input.metaDataCN);
+		baseClass.waitTillElemetToBeClickable(docList.getApplyFilters());
+		docList.getApplyFilters().Click();
+		int index = baseClass.getIndex(docList.getTableRowHeaderInDocList(),"CUSTODIANNAME");
+		System.out.println(index);
+		baseClass.waitTime(3);
+		List<WebElement> element = docList.getColumValues(index).FindWebElements();
+		for (WebElement ele : element) {
+			driver.waitForPageToBeReady();
+			String text = ele.getText().trim();
+			if (text.contains(Input.metaDataCN)) {
+				System.out.println("Applied filter for" + Input.metaDataCN + " is displayed in list view");
+			} else {
+				baseClass.failedStep("Applied filter for" + Input.metaDataCN + " is not displayed in list view");
+			}
+		}
+		
+		driver.Navigate().refresh();
+		baseClass.waitTime(3);
+
+		baseClass.stepInfo("Navigating to Tile view page and selecting checkboxes");
+		docList.verifySelectAllInTileView();
+
+		baseClass.stepInfo("applying include filter in Thumbnail view and verifying the applied filter");
+		docList.applyCustodianNameFilter(Input.metaDataCN);
+		baseClass.waitTillElemetToBeClickable(docList.getApplyFilters());
+		docList.getApplyFilters().Click();
+		docList.verifyingThumbnailBoxesValues(Input.metaDataCN);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-66464
+	 * @Description Verify that after adding/sorting columns if view changed to
+	 *              thumbnail, docs should show in same order
+	 */
+	@Test(description = "RPMXCON-66464", enabled = true, groups = { "regression" })
+	public void verifyingSortingInTileView() throws Exception {
+
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-66464 DocList Component");
+		baseClass.stepInfo(
+				"Verify that after adding/sorting columns if view changed to thumbnail, docs should show in same order");
+		String[]username= {Input.pa1userName,Input.rmu1userName,Input.rev1userName};
+		String[]password= {Input.pa1password,Input.rmu1password,Input.rev1password};
+		for(int j=0;j<username.length;j++) {
+			
+		loginPage.loginToSightLine(username[j],password[j]);
+
+		DocListPage doc = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Navigating to search page and search for documents");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		doc.getDocID().waitAndClick(2);
+		doc.getDocID().waitAndClick(2);
+		baseClass.waitTime(1);
+		int index = baseClass.getIndex(doc.getTableRowHeaderInDocList(), "DOCID");
+		List<String> ColVal = baseClass.availableListofElements(doc.getColumValues(index));
+		System.out.println("print col header hole value"+ColVal);
+		
+		ArrayList<String> Values=new ArrayList<>();
+		ArrayList<String> TileViewValues=new ArrayList<>();
+		for (String a : ColVal) {
+			Values.add(a);
+		}
+		System.out.println("Array list value"+Values);
+		baseClass.stepInfo("Verifying order in List view");
+		baseClass.verifyOriginalSortOrder(ColVal, Values,"Descending", true);
+		
+		baseClass.waitTillElemetToBeClickable(doc.getTileView());
+		doc.getTileView().waitAndClick(5);
+		
+		baseClass.stepInfo("verifying sorting order reflecting in Tile view");
+		for(int i=1;i<=doc.getInfoBtn().size();i++) {
+			driver.waitForPageToBeReady();
+			doc.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
+			baseClass.waitTime(2);
+			String ActualString=doc.getDocIdTileView().getText();
+			TileViewValues.add(ActualString);
+		}
+		System.out.println(TileViewValues);
+		if(TileViewValues.equals(Values)) {
+			baseClass.passedStep("Sorting order is maintained in Tile view");
+		}else {
+			baseClass.failedStep("Sorting order is not maintained after changing to tile view");
+		}
+		loginPage.logout();
+		}
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
