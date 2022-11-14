@@ -805,4 +805,89 @@ public class Projects_Regression25 {
     
         loginPage.logout();
     }
+    /**
+	 * @author Brundha.T Testcase No:RPMXCON-56185
+	 * @Description:Verify when editing a domain project, the whole section
+	 *                     'Processing Setting' will not present.
+	 **/
+	@Test(description = "RPMXCON-56185", enabled = true, groups = { "regression" })
+	public void verifyingGeneralTabInEditProject() throws Exception {
+
+		base.stepInfo("RPMXCON-56185");
+		base.stepInfo("Verify when editing a domain project, the whole section 'Processing Setting' will not present.");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as " + Input.sa1userName);
+
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		System.out.println(projectName);
+		String clientName = "Client " + Utility.dynamicNameAppender();
+		String shortName = "C" + Utility.randomCharacterAppender(4);
+
+		base.stepInfo("navigating to projects page");
+		projects.navigateToProductionPage();
+
+		if(!projects.getDomainEditBtn().isDisplayed()) {
+		
+		base.stepInfo("navigating to client page");
+		projects.navigateToClientFromHomePage();
+		
+		base.stepInfo("Adding new client");
+		projects.addNewClient(clientName, shortName, "Domain");
+
+		base.stepInfo("Creating new domain project");
+		projects.navigateToProductionPage();
+		projects.AddDomainProjectWithDefaultSetting(projectName, clientName);
+		projects.editProject(projectName);
+		}
+		else {
+			base.stepInfo("Edit existing domain project");
+			driver.waitForPageToBeReady();
+			projects.getDomainEditBtn().waitAndClick(10);
+		}
+		driver.waitForPageToBeReady();
+		if (!projects.getEngineTypeNUIXRadio().isDisplayed()) {
+			base.passedStep("Processing Settings section is not displayed on General tab when editing domain project");
+		} else {
+			base.failedStep("Proccessing settings section is displayed");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-56182
+	 * @Description:Verify when creating a domain project, the 'General' tab in
+	 *                     Create Project should not present the 'Processing
+	 *                     Settings' section.
+	 **/
+	@Test(description = "RPMXCON-56182", enabled = true, groups = { "regression" })
+	public void verifyingGeneralTabInCreateProject() throws Exception {
+
+		base.stepInfo("RPMXCON-56182");
+		base.stepInfo(
+				"Verify when creating a domain project, the 'General' tab in Create Project should not present the 'Processing Settings' section.");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as " + Input.sa1userName);
+
+		String projectname = "Project" + Utility.dynamicNameAppender();
+		System.out.println(projectname);
+
+		base.stepInfo("Creating new domain project");
+		projects.navigateToProductionPage();
+		projects.getAddProjectBtn().waitAndClick(5);
+		base.waitForElement(projects.getProjectName());
+		projects.getProjectName().SendKeys(projectname);
+		base.waitForElement(projects.getSelectEntityType());
+		projects.getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+		base.stepInfo("Client type is selected as Domain");
+
+		driver.waitForPageToBeReady();
+		if (!projects.getEngineTypeNUIXRadio().isDisplayed()) {
+			base.passedStep("Processing Settings is not displayed on General tab when creating domain project");
+		} else {
+			base.failedStep("Proccessing settings section is displayed");
+		}
+		loginPage.logout();
+	}
 }

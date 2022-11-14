@@ -16,6 +16,8 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CommunicationExplorerPage;
+import pageFactory.ConceptExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -285,5 +287,101 @@ public class BulkActions_Regression25 {
 		 sessionSearch.verifyDocsFluctuation_BulkAssign(countRMU);
 		 baseClass.passedStep("Verifyied - the fluctuation of document count for all the bulk actions in Search Term Report");
 		 loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54480
+	 * @Description:To Verify the fluctuation of document count for all the bulk actions in Communication Explorer report
+	 **/
+	@Test(description = "RPMXCON-54480", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActionCommExpRepPage() throws Exception {	
+		CommunicationExplorerPage commExpl = new CommunicationExplorerPage(driver);
+     
+        String folderTag = "folderTag" + Utility.dynamicNameAppender();
+        
+        baseClass.stepInfo("RPMXCON-54480");
+	    baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Communication Explorer report");
+        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+        
+        commExpl.navigateToCommunicationExpPage();
+        commExpl.generateReportusingDefaultSG();
+        commExpl.clickReport();
+        String count1 = commExpl.selectedDocsCount();       
+        commExpl.clickActionBtn(true, false, false);
+        sessionSearch.bulkTag_FluctuationVerify(folderTag, count1);
+        
+        commExpl.navigateToCommunicationExpPage();
+        commExpl.generateReportusingDefaultSG();
+        commExpl.clickReport();
+        String count2 = commExpl.selectedDocsCount();
+        commExpl.clickActionBtn(false, true, false);
+        sessionSearch.bulkFolder_FluctuationVerify(folderTag, count2);
+        
+        loginPage.logout();
+        
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("Logged in As : " + Input.rmu1FullName);
+        
+        commExpl.navigateToCommunicationExpPage();
+        commExpl.generateReportusingDefaultSG();
+        commExpl.clickReport();
+        String count3 = commExpl.selectedDocsCount();       
+        commExpl.clickActionBtn(false, false, true);
+        sessionSearch.verifyDocsFluctuation_BulkAssign(count3);
+        baseClass.passedStep("Verified -  the fluctuation of document count for all the bulk actions in Communication Explorer report");
+        loginPage.logout();
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54479
+	 * @Description:To Verify the fluctuation of document count for all the bulk actions in Concept Explorer Report
+	 **/
+	@Test(description = "RPMXCON-54479", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActionConceptExplPage() throws Exception {
+		ConceptExplorerPage conExp = new ConceptExplorerPage(driver);
+		
+		String sourceToSelect = "Security Groups";
+        String folderTag = "folderTag" + Utility.dynamicNameAppender();
+        
+        baseClass.stepInfo("RPMXCON-54479");
+	    baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Concept Explorer Report");
+        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+        
+        conExp.navigateToConceptExplorerPage();
+        conExp.clickSelectSources();
+        conExp.selectSGsource(sourceToSelect, Input.securityGroup);
+        conExp.applyFilter("Yes", 10);
+		driver.waitForPageToBeReady();
+		String count1 = conExp.addMultipleTilesToCart(3);
+		conExp.performActions("Bulk Tag");
+		sessionSearch.bulkTag_FluctuationVerify(folderTag, count1);
+		
+		conExp.navigateToConceptExplorerPage();
+        conExp.clickSelectSources();
+        conExp.selectSGsource(sourceToSelect, Input.securityGroup);
+        conExp.applyFilter("Yes", 10);
+		driver.waitForPageToBeReady();
+		String count2 = conExp.addMultipleTilesToCart(3);
+		conExp.performActions("Bulk Folder");
+		sessionSearch.bulkFolder_FluctuationVerify(folderTag, count2);
+		
+	    loginPage.logout();
+	        
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    baseClass.stepInfo("Logged in As : " + Input.rmu1FullName);
+	        
+	    conExp.navigateToConceptExplorerPage();
+        conExp.clickSelectSources();
+        conExp.selectSGsource(sourceToSelect, Input.securityGroup);
+        conExp.applyFilter("Yes", 10);
+		driver.waitForPageToBeReady();
+		String count3 = conExp.addMultipleTilesToCart(3);
+		conExp.performActions("Bulk Assign");
+		sessionSearch.verifyDocsFluctuation_BulkAssign(count3);
+		baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in Concept Explorer Report");
+	    loginPage.logout();
+		
 	}
 }

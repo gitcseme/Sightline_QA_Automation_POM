@@ -23,6 +23,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -30,7 +31,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Production_Regression23 {
+public class Production_Regression23_24 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass base;
@@ -73,6 +74,286 @@ public class Production_Regression23 {
 
 	}
 	
+	/**
+	 * @author NA Testcase No:RPMXCON-47975
+	 * @Description:To Verify Rich Text configuration in Production branding should be of Arial, Font Size 10 and Bold format
+	 **/
+	@Test(description = "RPMXCON-47975", enabled = true, groups = { "regression" })
+	public void verifyRIchTextBranding() throws Exception {
+		UtilityLog.info(Input.prodPath);	
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		base.stepInfo("Test Cases Id : RPMXCON-47975");
+		base.stepInfo("To Verify Rich Text configuration in Production branding should be of Arial, Font Size 10 and Bold format");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+//		 create tag
+		base = new BaseClass(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "MP3");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(1);
+		doclist.bulkTagExisting(tagname);
+		
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSectionWithBrandingText();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();	
+		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
+		String fontStyle = page.verifyFontDetailsPDF(pdfFile).getFontDescriptor().getFontFamily();
+		System.out.println(fontStyle);
+	    softAssertion.assertEquals(fontStyle, "Arial");
+	    softAssertion.assertAll();
+	    base.stepInfo("Font Style : " + fontStyle);
+	    base.stepInfo("Branding Text Printed in Arial Format");
+	    base.passedStep("Verified -  Rich Text configuration in Production branding should be of Arial, Font Size 10 and Bold format");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49727
+	 * @Description:Verify that branding with Bates Number and 'Confidentiality' is
+	 *                     applied on all pages for image based documents for
+	 *                     generated TIFF/PDF file
+	 **/
+	@Test(description = "RPMXCON-49727", enabled = true, groups = { "regression" })
+	public void verifyingBrandingTextInReGeneratedDocuments() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.selectproject(Input.additionalDataProject);
+		base.stepInfo("RPMXCON-49727 -Production Component");
+		base.stepInfo(
+				"Verify that branding with Bates Number and 'Confidentiality' is applied on all pages for image based documents for generated TIFF/PDF file");
+
+		DocViewPage Doc = new DocViewPage(driver);
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String PlaceholderText = "Confidentiality";
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
+		sessionSearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		doc.documentSelection(3);
+		sessionSearch.bulkTagExisting(tagname);
+		doc.documentSelection(3);
+		doc.viewSelectedDocumentsInDocView();
+		base.waitTime(8);
+		int PageCount = Doc.getTotalPagesCount();
+
+		DocRedactions.selectDoc2();
+		driver.waitForPageToBeReady();
+		int PageCount2Doc = Doc.getTotalPagesCount();
+
+		DocRedactions.doclistTable(3).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		int PageCount3Doc = Doc.getTotalPagesCount();
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.fillingBrandingInTiffSection(Input.batesNumber, PlaceholderText);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageForOtherProject(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		driver.waitForPageToBeReady();
+		int Count = Integer.valueOf(beginningBates) + PageCount;
+		int LastDoc = Count + PageCount2Doc;
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		String BatesNumber = prefixID + beginningBates + suffixID;
+		String BatesNumber1 = prefixID + Count + suffixID;
+		String BatesNumber2 = prefixID + LastDoc + suffixID;
+		
+		String []Bates= {BatesNumber,BatesNumber1,BatesNumber2};
+		String home = System.getProperty("user.home");
+		for(int i=0;i<Bates.length;i++) {
+		File fileName = new File(home + "/Downloads/VOL0001/PDF/0001/" + Bates[i] + ".pdf");
+		driver.waitForPageToBeReady();
+		System.out.println(Bates[i]);
+		base.waitTime(1);
+		if(fileName.exists()) {
+			base.passedStep(" Batesnumber is maintained in sequence order");
+		}else {
+			base.failedStep("Bates number is not maintained in sequence order");
+		}
+		}
+		page.pdfVerificationInDownloadedFile(BatesNumber,PageCount, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber1, PageCount2Doc, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, PlaceholderText);
+		loginPage.logout();
+	}
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49118
+	 * @Description:To verify that value of Redacted Documents on Production-Summary tab
+	 **/
+	@Test(description = "RPMXCON-49118", enabled = true, groups = { "regression" })
+	public void verifyingRedactDocOnSummaryTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		
+		base.stepInfo("RPMXCON-49118 -Production Component");
+		base.stepInfo("To verify that value of Redacted Documents on Production-Summary tab");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		String Foldername = "Fold" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(Foldername,Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.comments);
+		sessionSearch.bulkFolderExisting(Foldername);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		DocRedactions.doclistTable(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		DocRedactions.redactRectangleUsingOffset(10,10,60,60);
+		DocRedactions.selectingRedactionTag2(Redactiontag1);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		DocRedactions.doclistTable(3).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		DocRedactions.redactRectangleUsingOffset(10,10,70,70);
+		DocRedactions.selectingRedactionTag2(Redactiontag1);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.getClk_burnReductiontoggle().ScrollTo();
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.fillingBurnRedaction(Redactiontag1, "White with black font", false, null, null);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(Foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		
+		driver.waitForPageToBeReady();
+		String RedactDocCount=page.redactedDocCountInSummaryPage().getText();
+		System.out.println(RedactDocCount);
+		base.stepInfo("verifying Redacted Document count in summary tab");
+		base.digitCompareEquals(Integer.valueOf(RedactDocCount),2, "Redacted document count is displayed as expected","Redacted Doc count mismatch");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49117
+	 * @Description:To verify that the value of Privileged Documents on production summary tab
+	 **/
+	@Test(description = "RPMXCON-49117", enabled = true, groups = { "regression" })
+	public void verifyingPrivDocCountOnSummaryTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		
+		base.stepInfo("RPMXCON-49117 -Production Component");
+		base.stepInfo("To verify that the value of Privileged Documents on production summary tab");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String Foldername = "p" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(Foldername,Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(Foldername);
+		sessionSearch.ViewInDocListWithOutPureHit();
+
+		DocListPage doc = new DocListPage(driver);
+		int docCount=3;
+		doc.documentSelection(docCount);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionPrivDocs(tagname, tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(Foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		
+		driver.waitForPageToBeReady();
+		String PrivDocCount=page.getPrivDocCountInSummaryPage().getText().trim();
+		System.out.println(PrivDocCount);
+		base.stepInfo("verifying Priviledged Document count in summary tab");
+		base.digitCompareEquals(Integer.valueOf(PrivDocCount),docCount, "Priviledged document count is displayed as expected","Priviledged Doc count mismatch");
+		loginPage.logout();
+	}
 
 	/**
 	 * @author Brundha Testcase No:RPMXCON-47962

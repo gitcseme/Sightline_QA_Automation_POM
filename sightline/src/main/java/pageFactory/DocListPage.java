@@ -1438,6 +1438,64 @@ public class DocListPage {
 		return driver
 				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
+	public Element getTileView() {
+        return driver.FindElementByXPath("//*[@id='TileView']");
+    }
+    public Element getSelectAllCheckBox() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
+    }
+    public Element getSelectAllOk() {
+        return driver.FindElementByXPath("//*[@id='bot1-Msg1'][text()=' Ok']");
+    }
+    public Element getUnSelectAllCheckBox() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']//following-sibling::label//input");
+    }
+    public Element getFirstCheckBox() {
+        return driver.FindElementByXPath("//*[@id='chkDoc_1']");
+    }
+    public Element getTileViewSelectAll() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']");
+    }
+    public Element getTileViewUnSelectAll() {
+        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']");
+
+    }
+    public Element getThumbnailbar() {
+        return driver.FindElementByXPath("//*[@id='infos']/a/i");
+
+    }
+
+   
+	public Element getThumbnailsView() {
+		return driver.FindElementByXPath("//*[@id='docgrid']");
+	}
+
+	public Element getGridViewIcon() {
+		return driver.FindElementById("GridView");
+	}
+
+	public Element getDocListViewsInRow() {
+		return driver.FindElementByXPath(
+				"//a[@id='TileView']/preceding-sibling::a/../../../a[@id='btnSaveProfile']/preceding-sibling::a");
+  }
+    public ElementCollection getInfoBtn() {
+		return driver
+				.FindElementsById("infos");
+	}
+	public Element getThumbnailBoxValue() {
+		return driver
+				.FindElementByXPath("//*[text()='CustodianName: ']/..//following-sibling::td");
+	}
+	public Element getInfoBtnInThumbnailBoxes(int i) {
+		return driver
+				.FindElementByXPath("(//div[@id='infos'])["+i+"]");
+	}
+	public Element getDocIdTileView() {
+		return driver
+				.FindElementByXPath("//*[contains(text(),'DocID:')]/..//following-sibling::td");
+
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6380,5 +6438,67 @@ public class DocListPage {
 		getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
 		
 	}
+	/**
+	 * @author 
+	 * @Description: verify selectall doc is present to all check box
+	 *
+	 */
+	public void verifySelectAllInTileView() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTileView().Visible();
+			}
+		}), Input.wait60);
+	    getTileView().waitAndClick(5);
+	    base.waitForElement(getSelectAllCheckBox());
+	    if (getSelectAllCheckBox().isElementPresent()) {
+	    	base.waitForElement(getSelectAllCheckBox());
+			getSelectAllCheckBox().waitAndClick(5);	
+			base.passedStep("selectall checkbox is displayed in tileview");
+		}else {
+			base.failedStep("check box is not present");
+		}
+		base.waitForElement(getSelectAllOk());
+		getSelectAllOk().waitAndClick(5);		
+}
+
 	
+	/**
+	 * @author Vijaya.rani
+	 * @Description: verify select pageLength
+	 *
+	 */
+	public void selectPageLengthInDocList(String pageLength) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Selecting page length in doclist page");
+		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(pageLength);
+		base.waitTime(8);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getTableFooterDocListCount());
+		driver.waitForPageToBeReady();
+		String DocListCount = getTableFooterDocListCount().getText();
+		System.out.println(DocListCount);
+		String[] doccount = DocListCount.split(" ");
+		String Document = doccount[3];
+		System.out.println("doclist page document count is" + Document);
+		base.textCompareEquals(pageLength, Document, pageLength + " docs is displayed as expected",
+				pageLength + "docs is not displayed as expected");
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param CompareString
+	 * Description: verifying applied filter in tile view
+	 */
+	public void verifyingThumbnailBoxesValues(String CompareString ) {
+		for(int i=1;i<getInfoBtn().size();i++) {
+			driver.waitForPageToBeReady();
+			getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
+			String ActualString=getThumbnailBoxValue().getText();
+			base.compareTextViaContains(ActualString,CompareString, "Filter are applied for thumbnail boxes",
+					"Filters are not applied for thumbnail boxes");
+		}
+	}	
+
 }

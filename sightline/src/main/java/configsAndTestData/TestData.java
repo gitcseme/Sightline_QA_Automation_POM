@@ -316,6 +316,8 @@ public class TestData {
 	public String uncRelativeDat;
 	public String absoluteOverlayDat;
 	public String relativeOverlayDat;
+	public String uncAbsoluteText;
+	public String absoluteOverlayText;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

@@ -548,6 +548,11 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//*[@onclick='KeywordLeftShift();']");
 	}
 
+	// Added By jeevitha
+	public ElementCollection getSelectdFieldsList() {
+		return driver.FindElementsByXPath("//div[@id='fieldJSTree_Selected']//ul[@class='jstree-children']//a");
+	}
+
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -659,29 +664,29 @@ public class SecurityGroupsPage {
 		}
 	}
 
-
 	/**
-	 *  Modified by sowndarya.
+	 * Modified by sowndarya.
+	 * 
 	 * @Description: Method for creating security group
-	 * @param securityGroupName 
+	 * @param securityGroupName
 	 */
 	public void createSecurityGroups(String securityGroupName) {
-		
+
 		driver.Navigate().refresh();
-		
+
 		bc.waitForElement(clickManage());
 		clickManage().waitAndClick(10);
-		
+
 		bc.waitForElement(clickSecurityGroup());
 		clickSecurityGroup().waitAndClick(10);
-		
+
 		bc.waitForElement(securityGroupCreate());
 		securityGroupCreate().waitAndClick(10);
-		
+
 		bc.waitForElement(securityGroupText());
 		securityGroupText().waitAndClick(10);
 		securityGroupText().SendKeys(securityGroupName);
-		
+
 		bc.waitForElement(securityGroupSave());
 		securityGroupSave().waitAndClick(10);
 	}
@@ -834,7 +839,7 @@ public class SecurityGroupsPage {
 		getProjectLevelEmailCheckBox().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		getSG_AnnSaveButton().waitAndClick(10);
-		System.out.println("created "+tagName+"is added to "+securityGroupName);
+		System.out.println("created " + tagName + "is added to " + securityGroupName);
 		bc.waitForElement(bc.getSuccessMsg());
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 	}
