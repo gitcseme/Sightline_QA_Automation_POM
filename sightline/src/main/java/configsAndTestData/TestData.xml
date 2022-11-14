@@ -130,6 +130,10 @@
 	<absoluteOverlayDat>Overlay_Ingestion Path_DAT_AbsolutePath.dat</absoluteOverlayDat>
 	<relativeOverlayDat>Overlay_Ingestion Path_DAT_RelativePath.dat</relativeOverlayDat>
 
+	<uncAbsoluteText>Ingestion Path_Text_AbsolutePath.lst</uncAbsoluteText>
+	<absoluteOverlayText>Overlay_Ingestion Path_Text_AbsolutePath.lst</absoluteOverlayText>
+
+
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
 	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>

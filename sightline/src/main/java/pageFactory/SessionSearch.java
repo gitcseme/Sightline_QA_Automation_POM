@@ -10848,6 +10848,7 @@ public class SessionSearch {
 				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
+		base.waitTime(10);
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
 		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
 		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
@@ -13771,19 +13772,7 @@ public class SessionSearch {
 		base.waitForElement(getTagsAllRoot());
 		getTagsAllRoot().Click();
 
-		getContinueButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait60);
-		if (docCount != null) {
-			String actualCount_final = getFinalCount().getText();
-			base.textCompareEquals(actualCount_final, docCount,
-					"The Count matching with count in " + "Like Document Popup.",
-					"The Count not match with count in Like Document Popup.");
-		}
+		getContinueButton().waitAndClick(10);	
 
 	}
 
@@ -13856,18 +13845,6 @@ public class SessionSearch {
 		base.waitForElement(getFolderAllRoot());
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait60);
-		if (docCount != null) {
-			String actualCount_final = getFinalCount().getText();
-			base.textCompareEquals(actualCount_final, docCount,
-					"The Count matching with count in " + "Like Document Popup.",
-					"The Count not match with count in Like Document Popup.");
-		}
 
 	}
 

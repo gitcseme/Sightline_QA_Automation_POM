@@ -133,7 +133,37 @@ public class Production_Regression25 {
 				"Mp3 document count is displayed as expected", "Mp3 Doc count mismatched");
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49381
+	 * @Description:Verify 'Advanced Options' should be removed from the DAT
+	 *                     component section.
+	 **/
+	@Test(description = "RPMXCON-49381", enabled = true, groups = { "regression" })
+	public void verifyingDATSection() throws Exception {
+		UtilityLog.info(Input.prodPath);
 
+		base.stepInfo("RPMXCON-49381 -Production Component");
+		base.stepInfo("Verify 'Advanced Options' should be removed from the DAT component section.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		String productionname = "p" + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		base.waitForElement(page.getDATChkBox());
+		page.getDATChkBox().waitAndClick(10);
+
+		base.waitForElement(page.getDATTab());
+		page.getDATTab().waitAndClick(10);
+		if(!page.getAdvancedToggle().isDisplayed()) {
+			base.passedStep("Advanced option is removed from DAT section");
+		}else{
+			base.failedStep("Advanced option is not removed");
+		}
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

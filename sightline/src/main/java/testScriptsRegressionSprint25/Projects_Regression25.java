@@ -3,6 +3,8 @@ package testScriptsRegressionSprint25;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -746,5 +748,146 @@ public class Projects_Regression25 {
         loginPage.logout();
         
     }
-	
+    /**
+     * @author Brundha.T Testcase No:RPMXCON-47010
+     * @Description:Verify that Analytics section should be displayed on Add Project screen
+     **/
+    @Test(description = "RPMXCON-47010", enabled = true, groups = { "regression" })
+    public void verifyingAnalyticsSection() throws Exception {
+        ProjectPage project = new ProjectPage(driver);
+        base = new BaseClass(driver);
+        base.stepInfo("TestCase id: RPMXCON-47010");
+        base.stepInfo("Verify that Analytics section should be displayed on Add Project screen");
+        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("Logged in As " + Input.sa1userName);
+
+       base.stepInfo("Navigating to Project page");
+        project.navigateToProductionPage();
+        driver.waitForPageToBeReady();
+        
+        base.stepInfo("Selecting Add project button");
+        project.getAddProjectBtn().Click();
+        driver.scrollingToBottomofAPage();
+        
+        base.stepInfo("verifying Analytics Toggle is Enabled by default");
+       String AnalyticsToggle= project.getAnalyticsToggle().GetAttribute("class");
+       if(AnalyticsToggle.contains("activeC")) {
+    	   base.passedStep("Analytics Toggle is enabled by default");
+       }else {
+    	   base.failedStep("Analytics toggle is off");
+       }
+       
+       base.stepInfo("Verifying Analytics Section");
+       List<String>AnalyticsClassification=base.availableListofElements(project.getAnalyticsClassification());
+      System.out.println("AnalyticsClassification"+AnalyticsClassification);
+      base.waitTime(3);
+      String[] ComapreString= {"Components","Automation"};
+      if(AnalyticsClassification.equals(Arrays.asList(ComapreString))) {
+    	  System.out.println("ComapreString"+ComapreString);
+    	  base.passedStep("Analytics panel is with Automation and Component");
+      }else{
+    	  base.failedStep("Analytics panel is not with Automation and Component");
+      }
+      
+      base.stepInfo("verifying Component section checkbox");
+      driver.waitForPageToBeReady();
+      base.ValidateElement_Presence(project.getComponentCheckBox(), "Component Textual Analytics CheckBox");
+      
+      base.stepInfo("verifying Automation section checkbox");
+      int Size=project.getAutomationClassification().size();
+      base.ValidateElementCollection_Presence(project.getAutomationClassification(),"Kicoff Analytics and Incremental Analytics Checkbox");
+      System.out.println(Size);
+      if(Size==2) {
+    	  base.passedStep("KickOff Analytics and Incremental analytics moves under Automation");
+      }else {
+    	  base.failedStep("KickOff Analytics and Incremental analytics is not moves under Automation");
+      }
+    
+        loginPage.logout();
+    }
+    /**
+	 * @author Brundha.T Testcase No:RPMXCON-56185
+	 * @Description:Verify when editing a domain project, the whole section
+	 *                     'Processing Setting' will not present.
+	 **/
+	@Test(description = "RPMXCON-56185", enabled = true, groups = { "regression" })
+	public void verifyingGeneralTabInEditProject() throws Exception {
+
+		base.stepInfo("RPMXCON-56185");
+		base.stepInfo("Verify when editing a domain project, the whole section 'Processing Setting' will not present.");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as " + Input.sa1userName);
+
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		System.out.println(projectName);
+		String clientName = "Client " + Utility.dynamicNameAppender();
+		String shortName = "C" + Utility.randomCharacterAppender(4);
+
+		base.stepInfo("navigating to projects page");
+		projects.navigateToProductionPage();
+
+		if(!projects.getDomainEditBtn().isDisplayed()) {
+		
+		base.stepInfo("navigating to client page");
+		projects.navigateToClientFromHomePage();
+		
+		base.stepInfo("Adding new client");
+		projects.addNewClient(clientName, shortName, "Domain");
+
+		base.stepInfo("Creating new domain project");
+		projects.navigateToProductionPage();
+		projects.AddDomainProjectWithDefaultSetting(projectName, clientName);
+		projects.editProject(projectName);
+		}
+		else {
+			base.stepInfo("Edit existing domain project");
+			driver.waitForPageToBeReady();
+			projects.getDomainEditBtn().waitAndClick(10);
+		}
+		driver.waitForPageToBeReady();
+		if (!projects.getEngineTypeNUIXRadio().isDisplayed()) {
+			base.passedStep("Processing Settings section is not displayed on General tab when editing domain project");
+		} else {
+			base.failedStep("Proccessing settings section is displayed");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-56182
+	 * @Description:Verify when creating a domain project, the 'General' tab in
+	 *                     Create Project should not present the 'Processing
+	 *                     Settings' section.
+	 **/
+	@Test(description = "RPMXCON-56182", enabled = true, groups = { "regression" })
+	public void verifyingGeneralTabInCreateProject() throws Exception {
+
+		base.stepInfo("RPMXCON-56182");
+		base.stepInfo(
+				"Verify when creating a domain project, the 'General' tab in Create Project should not present the 'Processing Settings' section.");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as " + Input.sa1userName);
+
+		String projectname = "Project" + Utility.dynamicNameAppender();
+		System.out.println(projectname);
+
+		base.stepInfo("Creating new domain project");
+		projects.navigateToProductionPage();
+		projects.getAddProjectBtn().waitAndClick(5);
+		base.waitForElement(projects.getProjectName());
+		projects.getProjectName().SendKeys(projectname);
+		base.waitForElement(projects.getSelectEntityType());
+		projects.getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+		base.stepInfo("Client type is selected as Domain");
+
+		driver.waitForPageToBeReady();
+		if (!projects.getEngineTypeNUIXRadio().isDisplayed()) {
+			base.passedStep("Processing Settings is not displayed on General tab when creating domain project");
+		} else {
+			base.failedStep("Proccessing settings section is displayed");
+		}
+		loginPage.logout();
+	}
 }

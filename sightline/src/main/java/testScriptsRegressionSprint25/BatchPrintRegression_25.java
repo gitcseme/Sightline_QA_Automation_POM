@@ -25,6 +25,7 @@ import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -71,9 +72,7 @@ public class BatchPrintRegression_25 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = {
-				{ Input.pa1userName, Input.pa1password },
-				{ Input.rmu1userName, Input.rmu1password }, };
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
 
@@ -389,7 +388,7 @@ public class BatchPrintRegression_25 {
 		baseClass.stepInfo("Validate printing document with MEDIA file type");
 
 		// configure query & perform Bulk Tag
-		int purehit =session.basicMetaDataSearch(Input.docFileExt, null, "mpeg", null);
+		int purehit = session.basicMetaDataSearch(Input.docFileExt, null, "mpeg", null);
 		session.bulkTag(Tag);
 
 		boolean[] selectPdfRadio = { false, true };
@@ -417,7 +416,7 @@ public class BatchPrintRegression_25 {
 			// verify Media Files are SKIPPED
 			baseClass.waitForElement(batchPrint.getbackgroundDownLoadLink());
 			String status = batchPrint.getbackgroundDownLoadLink().getText();
-			
+
 			baseClass.compareTextViaContains(status, "Error Info", "Media files are Skipped as expected",
 					"Media files are not Skipped ");
 
@@ -673,6 +672,104 @@ public class BatchPrintRegression_25 {
 			
 		}
 	}
+/**
+	 * @Author Jeevitha
+	 * @Description : To verify that RMU can view the fields in 'Slip Sheets' if it
+	 *              is associated to the security group. [RPMXCON-47836]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47836", enabled = true, groups = { "regression" })
+	public void verifyFelidsInSlipsheet() throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47836 Batch Print");
+		baseClass.stepInfo(
+				"To verify that RMU can view the fields in 'Slip Sheets' if it is associated to the security group.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// fetch Fields associated with Security group
+		security.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
+		baseClass.waitForElementCollection(security.getSelectdFieldsList());
+		List<String> sgAssociatedFields = baseClass.availableListofElements(security.getSelectdFieldsList());
+
+		// logout
+		loginPage.logout();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure query and bulk folder
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolder(Folder);
+
+		// Select Folder & navigate to slipsheet tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// fetch avaialble fields in slipsheet tab
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElementCollection(batchPrint.getSlipsheetsFields());
+		List<String> slipsheetFields = baseClass.availableListofElements(batchPrint.getSlipsheetsFields());
+
+		// verify All the fields associated with Security group is displayed
+		baseClass.sortAndCompareList(sgAssociatedFields, slipsheetFields, true, "Ascending",
+				"Fields associated to the security group is Displayed",
+				"Fields associated to the security group is not Displayed");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify user can on/off the 'Include Applied Redactions' from
+	 *              Branding and Redactions tab [RPMXCON-47828]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47828", enabled = true, groups = { "regression" })
+	public void verifyUserCanOnAndOffRedactionToggle() throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47828 Batch Print");
+		baseClass.stepInfo("Verify user can on/off the 'Include Applied Redactions' from Branding and Redactions tab");
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure query and bulk folder
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolder(Folder);
+
+		// Select Folder & navigate to slipsheet tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+		// OFF Include Applied Redaction toggle
+		batchPrint.verifyBrandingAndReadctTab(false, false, null);
+
+		// ON Include Applied Redaction toggle & Configure the positions & verify
+		// location are fixed in selected position
+		batchPrint.verifyBrandingAndReadctTab(true, true, Input.searchString1);
+
+		// logout
+		loginPage.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

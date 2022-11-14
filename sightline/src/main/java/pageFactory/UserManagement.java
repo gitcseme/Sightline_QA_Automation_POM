@@ -1153,7 +1153,16 @@ public class UserManagement {
 	public Element getIsActiveCheckBox() {
 		return driver.FindElementByXPath("//input[@id='IsActiveCheckbox']//parent::label//i");
 	}
+	public Element getNextBtn() {
+		return driver.FindElementByXPath("//a[text()='Next']/..");
+	}
+	public Element getDomainProjectDropdown(int i) {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']//option["+i+"]");
+	}
 	
+	public Element getProjectDropdown() {
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1789,10 +1798,10 @@ public class UserManagement {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		if (getSavePassword().isElementAvailable(3)) {
-			getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
+		  if (getSavePassword().isElementAvailable(5)) {
+	            getSavePassword().waitAndClick(20);
+	            driver.waitForPageToBeReady();
+	        }
 	}
 
 	/**

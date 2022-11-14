@@ -139,6 +139,41 @@ public class DocExplorer_Regression25 {
 		}
 		loginPage.logout();
 	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-54653
+	 * @throws Exception
+	 * @Description Verify that each family should be displayed together with same color coding of the rows in list view of doc explorer
+	 */
+	@Test(description = "RPMXCON-54653", enabled = true, groups = { "regression" })
+	public void verifyFamilyDisplayedColorCodingRowsInListView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54653");
+		baseClass.stepInfo(
+				"Verify that each family should be displayed together with same color coding of the rows in list view of doc explorer");
+		String folderNumber="13";
+		String folderName="Enron Data (23)";
+		String folderName1="Amol (2)";
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		
+		// Login As Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		docexp.navigateToDocExplorerPage();
+		
+		baseClass.stepInfo("verifying the count of documents of folder in tree strecture");
+		docexp.verifyDOcExplorerFolderDocCount(folderNumber);
+		
+		String color = docexp.getfolderFromTreeByName(folderName).getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = docexp.getfolderFromTreeByName(folderName1).getWebElement().getCssValue("background-color");
+		System.out.println(ExpectedColor);
+		if (color.equals(ExpectedColor)) {
+			baseClass.passedStep("Each family is displayed together with same color coding of the rows in the list view of doc explorer as expected");
+		} else {
+			baseClass.failedStep("not displayed ");
+		}
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

@@ -436,6 +436,8 @@ public class Input {
 	public static String uncRelativeDat;
 	public static String absoluteOverlayDat;
 	public static String relativeOverlayDat;
+	public static String uncAbsoluteText;
+	public static String absoluteOverlayText;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1451,6 +1453,8 @@ public class Input {
 		uncRelativeDat = testData.getUncRelativeDat();
 		absoluteOverlayDat = testData.getAbsoluteOverlayDat();
 		relativeOverlayDat = testData.getRelativeOverlayDat();
+		uncAbsoluteText = testData.getUncAbsoluteText();
+		absoluteOverlayText = testData.getAbsoluteOverlayText();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
