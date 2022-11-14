@@ -1464,6 +1464,23 @@ public class DocListPage {
         return driver.FindElementByXPath("//*[@id='infos']/a/i");
 
     }
+    public ElementCollection getInfoBtn() {
+		return driver
+				.FindElementsById("infos");
+	}
+	public Element getThumbnailBoxValue() {
+		return driver
+				.FindElementByXPath("//*[text()='CustodianName: ']/..//following-sibling::td");
+	}
+	public Element getInfoBtnInThumbnailBoxes(int i) {
+		return driver
+				.FindElementByXPath("(//div[@id='infos'])["+i+"]");
+	}
+	public Element getDocIdTileView() {
+		return driver
+				.FindElementByXPath("//*[contains(text(),'DocID:')]/..//following-sibling::td");
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6429,5 +6446,18 @@ public class DocListPage {
 		base.waitForElement(getSelectAllOk());
 		getSelectAllOk().waitAndClick(5);		
 }
-	
+	/**
+	 * @author Brundha.T
+	 * @param CompareString
+	 * Description: verifying applied filter in tile view
+	 */
+	public void verifyingThumbnailBoxesValues(String CompareString ) {
+		for(int i=1;i<getInfoBtn().size();i++) {
+			driver.waitForPageToBeReady();
+			getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
+			String ActualString=getThumbnailBoxValue().getText();
+			base.compareTextViaContains(ActualString,CompareString, "Filter are applied for thumbnail boxes",
+					"Filters are not applied for thumbnail boxes");
+		}
+	}	
 }
