@@ -379,6 +379,9 @@ public class ProjectPage {
     public Element getComponentCheckBox() {
         return driver.FindElementByXPath("//label[contains(text(),'Textual Analytics')]/..//div//label[contains(@class,'checkbox')]");
     }
+    public Element getDomainEditBtn() {
+        return driver.FindElementByXPath("//td[text()='Yes']//following-sibling::td//a[text()='Edit']");
+    }
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
 

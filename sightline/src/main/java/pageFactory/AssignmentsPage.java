@@ -1386,6 +1386,10 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
+	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(int index) {
+		return driver.FindElementByXPath("(//table[@id='dt_basic']/tbody/tr/td[4])[" + index + "]");
+	}
+
 	public ElementCollection getListOfReviewersInRedistributePopUp() {
 		return driver.FindElementsByXPath("//tr[not(contains(@style,'display: none')) and @class='bg']/td[2]/label");
 	}
@@ -1657,7 +1661,8 @@ public class AssignmentsPage {
 	}
 
 	public Element getPopUpCloseBtn() {
-		return driver.FindElementByXPath("//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
+		return driver.FindElementByXPath(
+				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -11512,6 +11517,50 @@ public class AssignmentsPage {
 		assertion.assertEquals((boolean) getRedistributePopUpHeader().isElementAvailable(5), true);
 		assertion.assertAll();
 		bc.stepInfo("Redistribute Documents PopUp is Opened.");
+
+	}
+
+	/**
+	 * @Author
+	 * @Description : ReDistribute the docs to reviewer and verify All the documents
+	 *              from the Reviewer is reassign to another Reviewer.
+	 * @throws InterruptedException
+	 */
+	public void RedistributeDocInManageReviewerTab() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignment_ManageReviewersTab().Visible();
+			}
+		}), Input.wait60);
+		bc.waitTime(3);
+		getAssignment_ManageReviewersTab().Click();
+		bc.waitTime(4);
+		int TotalDocsCount = Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText())
+				+ Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText());
+		bc.waitForElement(getAssgn_ManageRev_selectrev());
+		getAssgn_ManageRev_selectrev().waitAndClick(10);
+
+		getAssgn_ManageRev_Action().waitAndClick(10);
+
+		Assert.assertTrue(getAssgn_ManageRev_Action_redistributedoc().isDisplayed());
+		getAssgn_ManageRev_Action_redistributedoc().waitAndClick(10);
+		bc.getYesBtn().waitAndClick(10);
+
+		getAssgn_Redistributepopup().waitAndClick(10);
+
+		getAssgn_Redistributepopup_save().waitAndClick(10);
+
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitTime(4);
+
+		assertion.assertEquals("0", getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText());
+		assertion.assertAll();
+		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText();
+		bc.textCompareEquals(actualDocsCount, Integer.toString(TotalDocsCount),
+				"actual Docs Count : '" + actualDocsCount + "' in Reviewers Tab match with the Expected Docs Count : '"
+						+ TotalDocsCount + "'",
+				"actual Docs Count in Reviewers Tab doesn't match with the Expected Docs Count");
 
 	}
 

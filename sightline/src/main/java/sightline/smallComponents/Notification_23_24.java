@@ -3,6 +3,7 @@ package sightline.smallComponents;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -29,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Notification_23 {
+public class Notification_23_24 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -97,6 +98,63 @@ public class Notification_23 {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-53776
+	 * @Description:To verify as an RMU user login, Start/End Date Sorting works correctly on My Background Tasks
+	 **/
+	@Test(description = "RPMXCON-53776", enabled = true, groups = { "regression" })
+	public void verifyRMUStartDateinBGPage() throws Exception {
+		base.stepInfo("RPMXCON - 53776");
+		base.stepInfo("To verify as an RMU user login, Start/End Date Sorting works correctly "
+				+ "on My Background Tasks");
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in As : " + Input.rmu1userName);
+		
+		base = new BaseClass(driver);
+		base.selectproject(Input.largeVolDataProject);
+		
+		base.waitForElement(sessionSearch.getBullHornIcon());
+        sessionSearch.getBullHornIcon().waitAndClick(20);
+        
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR",
+				Input.metaDataName, Input.searchStringStar, true);
+		sessionSearch.SearchBtnAction();
+		sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(20);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.advancedNewContentSearchNotPureHit("*");
+		sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(20);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.advancedNewContentSearchNotPureHit("*");
+	    sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(20);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.advancedNewContentSearchNotPureHit("*");
+		sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(20);
+		
+		base.waitForElement(sessionSearch.getBullHornIcon());
+		sessionSearch.getBullHornIcon().waitAndClick(20);
+		base.waitForElement(sessionSearch.getViewAllBtn());
+		sessionSearch.getViewAllBtn().waitAndClick(20);	
+		driver.waitForPageToBeReady();
+		base.stepInfo("Navigated to BG Page");
+		base.waitForElement(sessionSearch.getStartDateButton());
+		sessionSearch.getStartDateButton().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		List<String> startDate1 = base.availableListofElements(sessionSearch.getStartDatesInBG());
+		List<String> startDate2 = base.availableListofElements(sessionSearch.getStartDatesInBG());
+		base.verifyOriginalSortOrder(startDate1, startDate2, "Ascending", true);
+		base.passedStep("verified - as an RMU user login, Start/End Date Sorting works correctly on"
+				+ "My Background Tasks");
+	    loginPage.logout();
 	}
 
 	/**
