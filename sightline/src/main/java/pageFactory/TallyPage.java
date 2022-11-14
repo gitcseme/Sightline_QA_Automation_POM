@@ -2594,5 +2594,32 @@ public class TallyPage {
 		}
 	}
 
+	/**
+	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform tally and search for  metadata
+	 */
+	public void performTallyAndSearchForMetadata(String metadata) {
+		
+		List<String> values =verifyTallyChart();
+		HashMap<String, Integer> map = getDocsCountFortallyReport();
+		for(int i=0;i<values.size();i++) {
+			String value = values.get(i);
+			if(!(value.isEmpty())) {
+				int tallyResult = map.get(value);
+				base.stepInfo("tally result for "+ value + "-" + tallyResult);
+				base.stepInfo("perform search with field and verify purehit count with report");
+				SessionSearch search = new SessionSearch(driver);
+				int searchResult =search.MetaDataSearchInBasicSearch(metadata, value);
+				base.stepInfo("search result for "+value+"-" + searchResult);
+				if(tallyResult==searchResult ) {
+					base.passedStep("Counts matched for search result and tally report");
+					break;
+				}
+				else {
+					base.failedStep("Counts not matched for search result and tally report");
+				}
+			}
+		}
+	}
 
 }

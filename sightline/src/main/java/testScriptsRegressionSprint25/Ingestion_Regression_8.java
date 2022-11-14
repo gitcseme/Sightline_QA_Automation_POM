@@ -408,6 +408,112 @@ public class Ingestion_Regression_8 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 10/11/2022 TestCase Id:RPMXCON-60822
+	 * Description :Verify that Ingestion Overlay with text should be completed successfully 
+	 * if the text LST file contains the Absolute path.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60822",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathTextFileIngestionOverlay() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60822");
+		baseClass.stepInfo("verify the ingestion status of overlay with text file contain absolute path");
+		String ingestionName = null;
+		String searchName = "search"+ Utility.dynamicNameAppender();
+		docExplorer = new DocExplorerPage(driver);
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("select Lst for native");
+			ingestionPage.selectNativeSource(Input.uncAbsoluteNative, false);
+			baseClass.stepInfo("select Lst for text");
+			ingestionPage.selectTextSource(Input.uncAbsoluteText, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		//go to docexplorer and view in docview
+		baseClass.passedStep("Add only Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer and verify ");
+		docExplorer.navigateToDocExplorerPage();
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		//unpublish docs
+		baseClass.stepInfo("search and unpublish text files");
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.saveSearch(searchName);
+		ingestionPage.unpublish(searchName);
+		//perform overlay ingestion and verify
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.uncPathFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.absoluteOverlayDat, Input.documentKey);
+		baseClass.stepInfo("select lst only for text");
+		ingestionPage.selectTextSource(Input.absoluteOverlayText, false);
+		ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.passedStep("Overlay Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer.navigateToDocExplorerPage();
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/11/2022 TestCase Id:RPMXCON-48082
+	 * Description :To Verify ReviewExportID in Tally and Search.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48082",enabled = true, groups = { "regression" })
+	public void verifyTallyReportForReviewExportID() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48082");
+		baseClass.stepInfo("To Verify ReviewExportID in Tally and Search.");
+		String metadata ="ReviewExportID";
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		tally.navigateTo_Tallypage();
+		baseClass.stepInfo("verify tally report generation and search for metadata"+metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata);
+		tally.performTallyAndSearchForMetadata(metadata);
+		loginPage.logout();
+		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
