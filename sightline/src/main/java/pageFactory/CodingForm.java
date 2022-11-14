@@ -1649,6 +1649,25 @@ public class CodingForm {
 		public Element getCF_YesBtn() {
 			return driver.FindElementByXPath("(//button[@id='btnYes' and text()='Yes'])[last()]");
 		}
+		//added by arun
+		public Element getSGFormHelpIcon() {
+			return driver.FindElementByXPath("//th[contains(text(),'Security Group Form ')]//a");
+		}
+		public Element getToolTipMessageSGForm() {
+			return driver.FindElementByXPath("//div[@role='tooltip']//div[@role='button']");
+		}
+		public Element getSetAsDefaultToolTip() {
+			return driver.FindElementByXPath("//b[contains(text(),'Set As Default')]//following-sibling::div[@role='tooltip']//div//table//tbody//p");
+		}
+		public Element getSetAsDefaultHelpIcon() {
+			return driver.FindElementByXPath("//b[contains(text(),'Set As Default')]//following-sibling::a");
+		}
+		public ElementCollection getSetSGPresentBeforeShowBtn() {
+			return driver.FindElementsByXPath("//span[contains(text(),'Show')]//..//..//following-sibling::div//button[@id='btnSetSGCodingForms']");
+		}
+		
+	
+		
 	
 	
 	public CodingForm(Driver driver) {
@@ -5876,5 +5895,88 @@ public void DeleteMultipleCodingform(List<String> listOfCfName) throws Interrupt
 	    saveCodingForm();
 	    base.stepInfo("codingform was created like default coding form");
 	}
+	
+	/**
+	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the buttons present in manage coding form section
+	 */
+	public void verifyButtonPresentInManageCFPage() {
+		
+		if(getSetSGPresentBeforeShowBtn().isElementAvailable(10)) {
+			base.passedStep("set security group button available just before show/hide button");
+			if(getShowHide().Enabled() && 
+					getSetCodingFormToSG().Enabled() ) {
+				base.passedStep("both the buttons enabled");
+			}
+			else {
+				base.failedStep("buttons not enabled");
+			}
+		}
+		else {
+			base.failedStep("set security group button not available just before hide button");
+		}	
+	}
+	
+	/**
+	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the popup displayed after clicking set coding form option
+	 */
+	public void verifyAddOrRemoveCFpopup() {
+			
+		 base.waitForElement(getSetCFButton());
+		 getSetCFButton().waitAndClick(10);
+		 base.waitForElement(getStep1CfPopUp());
+		 boolean flagPopup=getStep1CfPopUp().isElementAvailable(5);
+		 softAssertion.assertTrue(flagPopup);
+		 base.passedStep("add/remove coding form popup displayed");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will get the tooltip message of security group form
+	 */
+	public void validateSGFormHelpIconAndMessage() {
+		
+		String expectedMsg="This column informs which coding forms are configured to be presented in DocView when documents are viewed "
+				          + "outside the context of an assignment. In addition, this also informs the default coding form to be presented "
+				          + "in DocView in this context.";
+		base.waitForElement(getSGFormHelpIcon());
+		getSGFormHelpIcon().waitAndClick(10);
+		if(getToolTipMessageSGForm().isElementAvailable(10)) {
+			String actualMessage =getToolTipMessageSGForm().getText();
+			base.passedStep("Message displayed-"+actualMessage);
+			if(expectedMsg.contains(actualMessage)) {
+				base.passedStep("Expected tool tip message displayed");
+			}
+			else {
+				base.failedStep("expected message not displayed");
+			}
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will get the help text tooltip message of set as default icon
+	 */
+	public void verifySetAsDefaultHelpIconMessage() {
+		
+		String expected = "WHEN CONFIGURING THE CODING FORMS, A DEFAULT CODING FORM MUST BE SPECIFIED. THE DEFAULT CODING FORM IS PRESENTED AS THE FIRST CODING FORM IN THE DOCVIEW AND CONTROLS THE CODE SAME AS LAST AND CODESYNC OPTIONS.";
+		base.waitForElement(getSetAsDefaultHelpIcon());
+		Actions action = new Actions(driver.getWebDriver());
+		Element ele = getSetAsDefaultHelpIcon();
+		action.moveToElement(ele.getWebElement()).build().perform();
+		if(getSetAsDefaultToolTip().isElementAvailable(10)) {
+			String actual =getSetAsDefaultToolTip().getText();
+			base.passedStep("set as default help text"+ actual);
+			if(actual.contains(expected)) {
+				base.passedStep("expected Tool tip message displayed for'set as default' option");
+			}
+			else {
+				base.failedStep("expected tool tip text message not displayed");
+			}
+		}
+	}
+		
+		
 }
 
