@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -263,6 +263,7 @@ public class Input {
 	public static String Tagging;
 	public static String ToDoDocs;
 	public static String Complete;
+	public static String BeginBates;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1263,6 +1264,7 @@ public class Input {
 		ReviewerProductivity = testData.getReviewerProductivity();
 		ToDoDocs = testData.getToDoDocs();
 		Complete = testData.getComplete();
+		BeginBates=testData.getBeginBates();
 
 		/**
 		 * @author Aathith.Senthilkumar

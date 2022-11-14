@@ -73,7 +73,28 @@ public class TimelineReportPage {
 		return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']");
 	}
 
+	public Element dynamicDocCountPOPUP() {
+		return driver.FindElementByXPath("//div[@class='tipsy-inner']");
+	}
+	public Element selectChart(int i) {
+		return driver.FindElementByCssSelector("div[id='level" + i +"timeline'] rect[height]");
+	}
 
+	public Element getSelectSourceTags() {
+		return driver.FindElementByXPath("//strong[text()='Tags']/parent::a");
+	}
+	public Element saveSelectedTag() {
+		return driver.FindElementByXPath("//button[@id='tag']");
+	}
+	public Element selectTags(String tag) {
+		return driver.FindElementByXPath("//div[@id='divTagGroupTree']//li//a[text()='"+tag+"']");
+	}
+	
+	
+	public Element selectedOptions(String options) {
+		return driver.FindElementByXPath("//ul[@id='bitlist-sources']//li[contains(text() , '" +options+ "')]");
+	}
+	
 	public TimelineReportPage(Driver driver) {
 
 		this.driver = driver;
@@ -213,5 +234,88 @@ public class TimelineReportPage {
 	    base.compareArraywithDataList(headerList, value, false, passMsg, failMsg);	
 	}
 	
+	/**
+	 * @Author : sowndarya
+	 * @Description : This method is to filling details in timegaps
+	 */
+	public void fillingDetailsinTimeGaps(String timeLine, String fromDate, String toDate) {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		navigateToTimelineAndGapsReport();
+		selectSource();
+		selectTimeline(timeLine);		
+		selectDateRange(fromDate, toDate);
+		applyChanges();
+	}
+	
+	/**
+	 * @Author : sowndarya
+	 * @Description : This method is to select bar chart
+	 */
+	public String selectBarChartandRtnDocCount(String timeline) throws InterruptedException {
 		
+		if(timeline.equalsIgnoreCase("Monthly")) {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(selectChart(2));
+			base.waitTillElemetToBeClickable(selectChart(2));
+			selectChart(2).ScrollTo();
+			selectChart(2).waitAndClick(10);
+		} else if(timeline.equalsIgnoreCase("Daily")) {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(selectChart(3));
+			base.waitTillElemetToBeClickable(selectChart(3));
+			selectChart(3).ScrollTo();
+			selectChart(3).waitAndClick(10);
+		} else {
+		    base.waitForElement(selectChart());
+		    base.waitTillElemetToBeClickable(selectChart());
+		    selectChart().ScrollTo();
+		    selectChart().waitAndClick(10);
+		}
+		
+		base.waitForElement(dynamicDocCountPOPUP());
+		String popText = dynamicDocCountPOPUP().getText();
+		String docCount = popText.substring(0, 2).trim();
+		System.out.println(popText);
+		base.stepInfo("Doc Count in Selected Bar is : " + docCount);
+		return docCount;
+	}
+	
+	/**
+	 * @Author : sowndarya
+	 * @Description : This method is to select tag in source
+	 */
+	public void selectTagsinSource(String[] tags) {
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getSelectSource());
+		getSelectSource().waitAndClick(5);
+		base.waitTillElemetToBeClickable(getSelectSourceTags());
+		getSelectSourceTags().waitAndClick(5);
+		for(int i = 0 ; i < tags.length ; i++) {
+		base.waitTillElemetToBeClickable(selectTags(tags[i]));
+		selectTags(tags[i]).ScrollTo();
+		selectTags(tags[i]).waitAndClick(5);
+		}
+		base.waitTillElemetToBeClickable(saveSelectedTag());
+		saveSelectedTag().waitAndClick(5);	
+	}
+	
+	/**
+	 * @Author : sowndarya
+	 * @Description : This method is to verify selected options in source criteria
+	 */
+	public void verifySelctedOptnsInSourceCriteria(String[] options) {
+		
+		driver.waitForPageToBeReady();
+		for (int i =0; i < options.length; i++) {
+			base.waitForElement(selectedOptions(options[i]));
+			if(selectedOptions(options[i]).isElementAvailable(5)) {
+				base.passedStep(options[i] + "Displaying Successfully in Source Selection Criteria");
+			} else {
+				base.failedStep(options[i] + "Not displaying in Source Selection Criteria");
+			}
+		}
+	}
 }

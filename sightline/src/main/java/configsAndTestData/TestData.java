@@ -184,7 +184,7 @@ public class TestData {
 	public String Tagging;
 	public String ToDoDocs;
 	public String Complete;
-	
+	public String BeginBates;
 	
 	
 
