@@ -1215,6 +1215,9 @@ public class ReportsPage {
 		}else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Search Term Report")) {
 			getThisLink("Search Term Report").waitAndClick(10);
 			base.verifyPageNavigation("DataAnalysisReport/SearchTermReport");
+		}else if(!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Advanced Batch Management Report")) {
+			getThisLink("Advanced Batch Management Report").waitAndClick(10);
+			base.verifyPageNavigation("Review/AdvancedBatchManagementReport");
 		}
 
 	}

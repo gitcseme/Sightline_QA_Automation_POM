@@ -254,6 +254,27 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getHeaderPositionBtn(int i) {
+		return driver.FindElementByXPath("(//div[@id='divbranding2']//button)[" + i + "]");
+	}
+
+	public ElementCollection getBrandingPositions() {
+		return driver.FindElementsByXPath("//div[@id='divbranding2']//button");
+	}
+
+	public Element getRedactionToggleStatus() {
+		return driver.FindElementByXPath("//input[@class='encryp-check activeC']");
+	}
+
+	public ElementCollection getSlipsheetsFields() {
+		return driver.FindElementsByXPath("//ul[@class='list-unstyled']//li//strong");
+	}
+
+	public ElementCollection getProductionList() {
+		return driver.FindElementsByXPath("//select[@id='ProductionDropDown']//option");
+	}
+
 	public ElementCollection getBackGroundPageHeader() {
 		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
 	}
@@ -2881,6 +2902,60 @@ public class BatchPrintPage {
 
 		return Integer.parseInt(count[4]);
 
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : filling and verifying branding and redaction tab
+	 * @param enableRedactToggle
+	 * @param configureAndverifyPosition
+	 * @param configureTxt
+	 */
+	public void verifyBrandingAndReadctTab(boolean enableRedactToggle, boolean configureAndverifyPosition,
+			String configureTxt) {
+		verifyCurrentTab("Branding and Redactions");
+		boolean flag = true;
+		driver.waitForPageToBeReady();
+		// ON/OFF Include Applied Redaction toggle
+		if (getRedactionToggleStatus().isElementAvailable(10)) {
+			base.stepInfo("Include Applied Redaction toggle is in Enabled State");
+			flag = true;
+		} else {
+			base.stepInfo("Include Applied Redaction toggle is in Disabled State");
+			flag = false;
+		}
+
+		if (flag && enableRedactToggle) {
+			base.passedStep("Include Applied Redaction toggle is Enabled");
+		} else if (!flag && enableRedactToggle) {
+			getToggleButton().waitAndClick(10);
+			base.ValidateElement_Presence(getRedactionToggleStatus(), "Redaction Toggle is Enabled");
+		} else if (flag && !enableRedactToggle) {
+			getToggleButton().waitAndClick(10);
+			base.ValidateElement_Absence(getRedactionToggleStatus(), "Redaction Toggle is Disabled");
+		} else if (!flag && !enableRedactToggle) {
+			base.stepInfo("Include Applied Redaction toggle is Disabled");
+		}
+
+		if (configureAndverifyPosition) {
+			List<String> positionss = base.availableListofElements(getBrandingPositions());
+			for (int i = 1; i <= positionss.size(); i++) {
+				// Configure the position to Left, Right, Center- topLeft, Right, Center- Bottom
+				// & verify Location are fixed as per selected position
+				base.waitForElement(getHeaderPositionBtn(i));
+				getHeaderPositionBtn(i).waitAndClick(10);
+				base.waitForElement(getBatchPrintEnterBranding());
+				getBatchPrintEnterBranding().waitAndClick(10);
+				getBatchPrintEnterBranding().SendKeys(configureTxt);
+				base.waitForElement(getInsertMetadataFieldOKButton());
+				getInsertMetadataFieldOKButton().waitAndClick(5);
+
+				String actualPosition = getHeaderPositionBtn(i).GetCssValue("z-index");
+				base.digitCompareEquals(Integer.parseInt(actualPosition), 2,
+						"Location are fixed as per selected position",
+						"Location are Not fixed as per selected position");
+			}
+		}
 	}
 
 }
