@@ -358,7 +358,7 @@ public class Ingestion_Regression_4 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile2,Input.nativeLoadFile2,Input.textLoadFile2);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile2,Input.nativeLoadFile2,Input.textLoadFile2);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
 		else {

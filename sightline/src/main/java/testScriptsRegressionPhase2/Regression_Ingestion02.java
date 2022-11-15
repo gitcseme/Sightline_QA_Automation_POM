@@ -287,7 +287,7 @@ public class Regression_Ingestion02 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile2,Input.nativeLoadFile2, 
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile2,Input.nativeLoadFile2, 
 					Input.textLoadFile2);
 			ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 			baseClass.passedStep("Ingestion published successfully with new email metadata");
