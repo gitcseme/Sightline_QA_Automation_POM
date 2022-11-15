@@ -62,7 +62,7 @@ public class DocExplorer_Regression25 {
 	}
 	
 	/**
-	 * @author Vijaya.Rani ModifyDate:03/11/2022 RPMXCON-54693
+	 * @author Vijaya.Rani ModifyDate:02/11/2022 RPMXCON-54693
 	 * @throws Exception
 	 * @Description Verify that “EmailRecipientNames” Filter with "Exclude"
 	 *              functionality is working correctly on Doc Explorer list.
@@ -82,22 +82,21 @@ public class DocExplorer_Regression25 {
 		String random = "Amit.Bandal@consilio.com";
 		String random1 = "Ajay.Tiwari@symphonyteleca.com";
 
-		driver.waitForPageToBeReady();
-		String Docs = docExplorer.getDocExp_DocID().getText();
 		baseClass.stepInfo("Perform exclude filter by EmailRecipientNames");
-		docExplorer.performExculdeEmailRecipientNamesFilter(random,null);
+		docExplorer.performExculdeEmailRecipientNamesFilter(random);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by EmailRecipientNames");
-		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames(Docs);
+		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames();
 
 		baseClass.stepInfo("Refresh page");
 		docExplorer.refreshPage();
 
 		baseClass.stepInfo("Perform exclude filter by EmailRecipientNames");
-		docExplorer.performExculdeEmailRecipientNamesFilter(random,random1);
+		docExplorer.performExculdeEmailRecipientNamesFilter(random);
+		docExplorer.performUpdateExculdeEmailFilter(random1);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by EmailRecipientNames");
-		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames(Docs);
+		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames();
 
 		loginPage.logout();
 

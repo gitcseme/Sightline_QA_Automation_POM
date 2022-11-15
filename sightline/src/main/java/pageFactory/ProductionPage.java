@@ -3287,7 +3287,7 @@ public class ProductionPage {
 	}
 
 	public Element getAdvancedToggle() {
-		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='advanced']");
+		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='Advanced']");
 	}
 
 	public Element getSourceFiledInDatSection() {
