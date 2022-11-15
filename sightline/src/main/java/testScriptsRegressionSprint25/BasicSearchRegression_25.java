@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint25;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -214,6 +215,46 @@ public class BasicSearchRegression_25 {
 		login.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:15/11/2022 RPMXCON-57116
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that application displays warning A message on Advanced
+	 *              Search if user enters "2009-09-20" without wrapper quotations.
+	 */
+	@Test(description = "RPMXCON-57116", enabled = true, groups = { "regression" })
+	public void verifyApplicationDisplayWarningMsg() throws InterruptedException, AWTException {
+
+		base.stepInfo("Test case Id: RPMXCON-57116");
+		base.stepInfo(
+				"Verify that application displays warning A message on Advanced Search if user enters \"2009-09-20\" without wrapper quotations.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String searchTerm = "2009-09-20";
+
+		// Login As PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		base.stepInfo("Go to Search page enter the Searchterm");
+		sessionSearch.getEnterSearchString().SendKeys(searchTerm);
+		// Click on Search button
+		sessionSearch.getSearchButton().waitAndClick(10);
+		String actualMsg = sessionSearch.getWarningMsg().getText();
+		System.out.println(actualMsg);
+		base.stepInfo(actualMsg);
+		String expectedMsg = "Your query contains an argument that may be intended to look for dates within any body content or metadata attribute. Please be advised that the search engine interprets dash - or slash / characters in non-fielded arguments as implied OR statement. For example, 1980/01/02 is treated by the search engine as 1980 OR 01 OR 02. The same is true of 1980-01-02. You can add quotation marks around a query to treat the dash or slash argument as a string. For example, \"1980/01/02\" is treated as is. The same is true of \"1980-01-02\".";
+		driver.waitForPageToBeReady();
+		if (actualMsg.contains(expectedMsg)) {
+			base.passedStep("Observe that application warning message displayed successfully");
+		} else {
+			base.failedStep("No such message display");
+		}
+
+		login.logout();
+	}
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
