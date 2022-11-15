@@ -58,47 +58,49 @@ public class CodingForm_Regression25 {
 		codingForm = new CodingForm(driver);
 
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 11/11/2022 TestCase Id:RPMXCON-65186
-	 * Description :Verify that proper message is displayed in "security group form" tool tip 
+	 * Author :Arunkumar date: 11/11/2022 TestCase Id:RPMXCON-65186 Description
+	 * :Verify that proper message is displayed in "security group form" tool tip
 	 * present in "Manage Coding Forms" page
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-65186",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-65186", enabled = true, groups = { "regression" })
 	public void verifyToolTipInManageCFPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-65186");
 		baseClass.stepInfo("To verify tool tip present in manage coding form page");
-		//Login as PA
+		// Login as PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Navigate to manage-coding form");
 		codingForm.navigateToCodingFormPage();
-		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page", 
+		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page",
 				"not in manage CF page");
 		baseClass.stepInfo("Click on security group form icon and verify tooltip message");
 		codingForm.validateSGFormHelpIconAndMessage();
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 11/11/2022 TestCase Id:RPMXCON-65185
-	 * Description :Verify that Check box is present at "CODING FORM NAME" column.
+	 * Author :Arunkumar date: 11/11/2022 TestCase Id:RPMXCON-65185 Description
+	 * :Verify that Check box is present at "CODING FORM NAME" column.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-65185",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-65185", enabled = true, groups = { "regression" })
 	public void verifyCheckboxPresentInCFColumn() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-65185");
 		baseClass.stepInfo("Verify that Check box is present at 'CODING FORM NAME' column.");
-		//Login as PA
+		// Login as PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Navigate to manage-coding form");
 		codingForm.navigateToCodingFormPage();
-		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page", 
+		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page",
 				"not in manage CF page");
 		baseClass.stepInfo("verify button present in manage coding form page");
 		codingForm.verifyButtonPresentInManageCFPage();
@@ -109,21 +111,23 @@ public class CodingForm_Regression25 {
 		baseClass.ValidateElement_Presence(codingForm.getPopUpCheckBox(), "Coding form name checkbox");
 		baseClass.passedStep("checkbox present at coding form name column");
 		loginPage.logout();
-	
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 14/11/2022 TestCase Id:RPMXCON-64908
-	 * Description :Verify that Help text icon is present at "	SET AS DEFAULT (REQUIRED) " column present 
-	 * in "Add/remove coding form in this security group" pop-up page (UI).
+	 * Author :Arunkumar date: 14/11/2022 TestCase Id:RPMXCON-64908 Description
+	 * :Verify that Help text icon is present at " SET AS DEFAULT (REQUIRED) "
+	 * column present in "Add/remove coding form in this security group" pop-up page
+	 * (UI).
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-64908",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-64908", enabled = true, groups = { "regression" })
 	public void verifyHelpTextIconPresentInPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-64908");
 		baseClass.stepInfo("Verify that Help text icon is present in add coding form popup");
-		//Login as PA
+		// Login as PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Navigate to manage-coding form");
@@ -133,27 +137,27 @@ public class CodingForm_Regression25 {
 		baseClass.stepInfo("click on set coding form button and validate popup");
 		codingForm.verifyAddOrRemoveCFpopup();
 		baseClass.waitForElement(codingForm.getSetAsDefaultHelpIcon());
-		if(codingForm.getSetAsDefaultHelpIcon().isDisplayed()) {
+		if (codingForm.getSetAsDefaultHelpIcon().isDisplayed()) {
 			baseClass.passedStep("help text icon for 'set as default' option displayed");
-		}
-		else {
+		} else {
 			baseClass.failedStep("help text icon for 'set as default' not displayed");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 14/11/2022 TestCase Id:RPMXCON-64909
-	 * Description :Verify that when user click on the "SET AS DEFAULT" Help text icon required text 
-	 * information should get displayed in pop-up.
+	 * Author :Arunkumar date: 14/11/2022 TestCase Id:RPMXCON-64909 Description
+	 * :Verify that when user click on the "SET AS DEFAULT" Help text icon required
+	 * text information should get displayed in pop-up.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-64909",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-64909", enabled = true, groups = { "regression" })
 	public void verifyTextInformationDisplayedInPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-64909");
 		baseClass.stepInfo("verify 'SET AS DEFAULT' Help text icon information displayed in popup");
-		//Login as PA
+		// Login as PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Navigate to manage-coding form");
@@ -166,8 +170,9 @@ public class CodingForm_Regression25 {
 		codingForm.verifySetAsDefaultHelpIconMessage();
 		loginPage.logout();
 	}
+
 	/**
-	 * @author  Date:NA ModifyDate:NA RPMXCON-64893
+	 * @author Date:NA ModifyDate:NA RPMXCON-64893
 	 * @throws Exception
 	 * @Description Verify that when none of the \"CODING FORM NAME\" is selected
 	 *              \"Next Stage Sort Order\" button is disabled(UI)
@@ -217,7 +222,7 @@ public class CodingForm_Regression25 {
 	}
 
 	/**
-	 * @author  Date:NA ModifyDate:NA RPMXCON-64907
+	 * @author Date:NA ModifyDate:NA RPMXCON-64907
 	 * @throws Exception
 	 * @Description Verify that when user UnCheck on the "CODING FORM NAME" check
 	 *              box from "Add/remove coding form in this security group" coding
@@ -279,10 +284,12 @@ public class CodingForm_Regression25 {
 		soft.assertAll();
 		loginPage.logout();
 	}
+
 	/**
-	 * @author  Date:NA ModifyDate:NA RPMXCON-65188
+	 * @author Date:NA ModifyDate:NA RPMXCON-65188
 	 * @throws Exception
-	 * @Description Verify that when default is not set to selected Coding form "Next Stage Sort Order" button is disabled(UI)
+	 * @Description Verify that when default is not set to selected Coding form
+	 *              "Next Stage Sort Order" button is disabled(UI)
 	 */
 	@Test(description = "RPMXCON-65188", enabled = true, groups = { "regression" })
 	public void verifyCfDefaultNotSelectedNextDisable() throws Exception {
@@ -339,10 +346,51 @@ public class CodingForm_Regression25 {
 		soft.assertAll();
 		loginPage.logout();
 	}
-	
-	
-	
-	
+
+	/**
+	 * @Author
+	 * @Description : Verify that when user try to delete default set coding form an
+	 *              error message occurred \"Error ! A coding form configured as
+	 *              default coding form for a security group or an assignment cannot
+	 *              be deleted\".
+	 */
+	@Test(description = "RPMXCON-65190", enabled = true, groups = { "regression" })
+	public void verifyUserTryDeleteDefaultSetCodingFormErrorMessageOccured() {
+		String codingform = "codingForm" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-65190 CodingForm");
+		baseClass.stepInfo(
+				"Verify that when user try to delete default set coding form an error message occurred \"Error ! A coding form configured as default coding form for a security group or an assignment cannot be deleted\". ");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// creating new coding Form
+		baseClass.stepInfo("creating new coding Form.");
+		codingForm.navigateToCodingFormPage();
+		codingForm.createCodingFormWithoutObjects(codingform);
+
+		// setting newly created coding Form as Default Coding Form
+		baseClass.stepInfo("setting newly created coding Form as Default Coding Form.");
+		codingForm.AssignCFstoSG(codingform);
+
+		// performing Delete action
+		baseClass.stepInfo(" performing Delete action on  default set coding form.");
+		codingForm.deleteCodingForm(codingform, codingform);
+
+		// Verify that an error message occurred
+		String expectedErrorMessage = "A coding form configured as default coding form for a security group or an assignment cannot be deleted.";
+		baseClass.VerifyErrorMessage(expectedErrorMessage);
+		baseClass
+				.passedStep("Verified that when user try to delete default set coding form an error message occurred.");
+
+		// deleting created coding form
+		codingForm.selectDefaultProjectCodingForm();
+		codingForm.deleteCodingForm(codingform, codingform);
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

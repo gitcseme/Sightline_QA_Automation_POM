@@ -254,6 +254,21 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getTitle_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetTitleName']");
+	}
+
+	public Element getFromRecipient_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetSenderName']");
+	}
+
+	public Element getToRecipient_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetRecipientName']");
+	}
+
+	public Element getCoverAndIntroToggle() {
+		return driver.FindElementByXPath("//input[@id='includeCoverdIntroCheckBox']//parent::label//i");
+	}
 
 	public Element getHeaderPositionBtn(int i) {
 		return driver.FindElementByXPath("(//div[@id='divbranding2']//button)[" + i + "]");
@@ -2955,6 +2970,25 @@ public class BatchPrintPage {
 						"Location are fixed as per selected position",
 						"Location are Not fixed as per selected position");
 			}
+		}
+	}
+
+	public void enableCoverToggleAnFillTheDetails(String toRecipient, String FromRecipient, String title) {
+		getCoverAndIntroToggle().waitAndClick(10);
+
+		if (getToRecipient_TXB().isDisplayed()) {
+			base.stepInfo("Cover & intro Page toggle is Enabled");
+			base.waitForElement(getToRecipient_TXB());
+			getToRecipient_TXB().waitAndClick(10);
+			getToRecipient_TXB().SendKeys(toRecipient);
+			driver.waitForPageToBeReady();
+			getFromRecipient_TXB().waitAndClick(10);
+			getFromRecipient_TXB().SendKeys(FromRecipient);
+			driver.waitForPageToBeReady();
+			getTitle_TXB().waitAndClick(10);
+			getTitle_TXB().SendKeys(title);
+		} else {
+			base.stepInfo("Cover & Intro Page Toggle is Disabled");
 		}
 	}
 
