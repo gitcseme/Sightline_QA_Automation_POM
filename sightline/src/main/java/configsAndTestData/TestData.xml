@@ -129,10 +129,8 @@
 	<uncRelativeDat>Ingestion Path_DAT_RelativePath.dat</uncRelativeDat>
 	<absoluteOverlayDat>Overlay_Ingestion Path_DAT_AbsolutePath.dat</absoluteOverlayDat>
 	<relativeOverlayDat>Overlay_Ingestion Path_DAT_RelativePath.dat</relativeOverlayDat>
-
 	<uncAbsoluteText>Ingestion Path_Text_AbsolutePath.lst</uncAbsoluteText>
 	<absoluteOverlayText>Overlay_Ingestion Path_Text_AbsolutePath.lst</absoluteOverlayText>
-
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -238,6 +236,7 @@
 	<ReviewerProductivity>Reviewer Productivity</ReviewerProductivity>
 	<ToDoDocs>ToDoDocs</ToDoDocs>
 	<Complete>Complete</Complete>
+	<BeginBates>Begin Bates</BeginBates>
 	
 
 	<!-- Added by Gopinath -->
