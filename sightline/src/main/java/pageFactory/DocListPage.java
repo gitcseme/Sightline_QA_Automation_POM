@@ -1445,7 +1445,7 @@ public class DocListPage {
         return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
     }
     public Element getSelectAllOk() {
-        return driver.FindElementByXPath("//*[@id='bot1-Msg1'][text()=' Ok']");
+        return driver.FindElementByXPath("//*[@id='bot1-Msg1']");
     }
     public Element getUnSelectAllCheckBox() {
         return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']//following-sibling::label//input");
