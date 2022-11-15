@@ -209,6 +209,8 @@ public class CodingForm_Regression25 {
 		} else {
 			base.failedStep("Next Stage Sort Order button is not disabled");
 		}
+		base.waitTillElemetToBeClickable(cf.getCfPopUpCancel());
+		cf.getCfPopUpCancel().waitAndClick(10);
 		soft.assertAll();
 
 		loginPage.logout();
@@ -272,6 +274,8 @@ public class CodingForm_Regression25 {
 		} else {
 			base.failedStep("Not unchecked from the column");
 		}
+		base.waitTillElemetToBeClickable(cf.getCfPopUpCancel());
+		cf.getCfPopUpCancel().waitAndClick(10);
 		soft.assertAll();
 		loginPage.logout();
 	}
@@ -330,6 +334,8 @@ public class CodingForm_Regression25 {
 		} else {
 			base.failedStep("button is not disabled");
 		}
+		base.waitTillElemetToBeClickable(cf.getCfPopUpCancel());
+		cf.getCfPopUpCancel().waitAndClick(10);
 		soft.assertAll();
 		loginPage.logout();
 	}
