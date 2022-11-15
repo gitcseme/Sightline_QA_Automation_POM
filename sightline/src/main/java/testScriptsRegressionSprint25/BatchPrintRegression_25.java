@@ -414,8 +414,14 @@ public class BatchPrintRegression_25 {
 			batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, radio);
 
 			// verify Media Files are SKIPPED
-			baseClass.waitForElement(batchPrint.getbackgroundDownLoadLink());
-			String status = batchPrint.getbackgroundDownLoadLink().getText();
+			String status = null;
+			if (batchPrint.getbackgroundDownLoadLink().isElementAvailable(10)) {
+				status = batchPrint.getbackgroundDownLoadLink().getText();
+			} else {
+				driver.Navigate().refresh();
+				baseClass.waitForElement(batchPrint.getbackgroundDownLoadLink());
+				status = batchPrint.getbackgroundDownLoadLink().getText();
+			}
 
 			baseClass.compareTextViaContains(status, "Error Info", "Media files are Skipped as expected",
 					"Media files are not Skipped ");
@@ -435,40 +441,42 @@ public class BatchPrintRegression_25 {
 	}
 
 	/**
-	 * @throws Exception 
+	 * @throws Exception
 	 * @Author sowndarya
-	 * @Description :Verify PDF file should be generated with branding for the documents from selected production set with Begin Bates as export file name
-	 *              [RPMXCON-47856]
+	 * @Description :Verify PDF file should be generated with branding for the
+	 *              documents from selected production set with Begin Bates as
+	 *              export file name [RPMXCON-47856]
 	 */
-	@Test(description = "RPMXCON-47856",dataProvider = "Users", enabled = true, groups = { "regression" })
-	public void verifyPDFWithBeginBates(String username, String password) throws Exception{
-		
+	@Test(description = "RPMXCON-47856", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyPDFWithBeginBates(String username, String password) throws Exception {
+
 		// Login As User
 		loginPage.loginToSightLine(username, password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47856 Batch Print");
-		baseClass.stepInfo("Verify PDF file should be generated with branding for the documents from selected production set with Begin Bates as export file name");
-		String tag="Tag"+ Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"Verify PDF file should be generated with branding for the documents from selected production set with Begin Bates as export file name");
+		String tag = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
-		
+
 		tagsAndFolderPage.CreateTagwithClassification(tag, Input.tagNamePrev);
-		
+
 		session.basicContentSearch(Input.testData1);
 		session.bulkTagExisting(tag);
-		
+
 		// Generate Production with TIFF
-		ProductionPage page=new ProductionPage(driver);
+		ProductionPage page = new ProductionPage(driver);
 		page.navigateToProductionPage();
-		String beginningBates =page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(2);
 		System.out.println(beginningBates);
 		System.out.println(productionname);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		page.fillingTIFFSectionWithBranding(tag,Input.searchString4, Input.tagNamePrev);
+		page.fillingTIFFSectionWithBranding(tag, Input.searchString4, Input.tagNamePrev);
 		page.slipSheetToggleEnable();
 		page.fillingSlipSheetInTiffSection(Input.docId);
 		page.navigateToNextSection();
@@ -481,7 +489,6 @@ public class BatchPrintRegression_25 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -498,7 +505,7 @@ public class BatchPrintRegression_25 {
 		if (!batchPrint.getSelectExportFileName().isElementAvailable(10)) {
 			batchPrint.navigateToNextPage(1);
 		}
-		
+
 		batchPrint.fillingExportFormatPage(Input.BeginBates, Input.documentKey, false, 20);
 
 		// Download Batch Print File
@@ -508,43 +515,47 @@ public class BatchPrintRegression_25 {
 		String extractedFile = batchPrint.extractFile(fileName);
 
 		// verify Downloaded File Count ,filename and Format
-		List<String> actualFileName = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
 		baseClass.compareTextViaContains(actualFileName.get(0), beginningBates, "pass", "Fail");
 		driver.waitForPageToBeReady();
 		baseClass.compareTextViaContains(actualFileName.get(0), Input.searchString3, "pass", "Fail");
-		baseClass.passedStep("Selected branding as per the location and Generated PDF file name as Begin Bates number is verified");;
+		baseClass.passedStep(
+				"Selected branding as per the location and Generated PDF file name as Begin Bates number is verified");
+		;
 	}
-	
-	
+
 	/**
-	 * @throws Exception 
+	 * @throws Exception
 	 * @Author sowndarya
-	 * @Description :Verify PDF file should be generated with the prior production slipsheets fields for the production set with Begin Bates as export file name
-	 *              [RPMXCON-47855]
+	 * @Description :Verify PDF file should be generated with the prior production
+	 *              slipsheets fields for the production set with Begin Bates as
+	 *              export file name [RPMXCON-47855]
 	 */
-	@Test(description = "RPMXCON-47855",dataProvider = "Users", enabled = true, groups = { "regression" })
-	public void verifySlipsheetFromPriorProduction(String username, String password) throws Exception{
-		
+	@Test(description = "RPMXCON-47855", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifySlipsheetFromPriorProduction(String username, String password) throws Exception {
+
 		// Login As User
 		loginPage.loginToSightLine(username, password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47855 Batch Print");
-		baseClass.stepInfo("Verify PDF file should be generated with the prior production slipsheets fields for the production set with Begin Bates as export file name");
-		String tag="Tag"+ Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"Verify PDF file should be generated with the prior production slipsheets fields for the production set with Begin Bates as export file name");
+		String tag = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
-		
+
 		tagsAndFolderPage.CreateTag(tag, Input.securityGroup);
-		
+
 		session.basicContentSearch(Input.testData1);
 		session.bulkTagExisting(tag);
-		
+
 		// Generate Production with TIFF
-		ProductionPage page=new ProductionPage(driver);
+		ProductionPage page = new ProductionPage(driver);
 		page.navigateToProductionPage();
-		String beginningBates =page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(2);
 		System.out.println(beginningBates);
 		System.out.println(productionname);
 		page.selectingDefaultSecurityGroup();
@@ -564,7 +575,6 @@ public class BatchPrintRegression_25 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -591,40 +601,43 @@ public class BatchPrintRegression_25 {
 		String extractedFile = batchPrint.extractFile(fileName);
 
 		// verify Downloaded File Count ,filename and Format
-		List<String> actualFileName = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
 		baseClass.compareTextViaContains(actualFileName.get(0), beginningBates, "pass", "Fail");
-		baseClass.passedStep(" Generated PDF file name as Begin Bates number is verified");;
+		baseClass.passedStep(" Generated PDF file name as Begin Bates number is verified");
+		;
 	}
-	
+
 	/**
-	 * @throws Exception 
+	 * @throws Exception
 	 * @Author sowndarya
-	 * @Description :To verify that 'Beg Bates' export file name displays only if production set is selected [RPMXCON-47827]
+	 * @Description :To verify that 'Beg Bates' export file name displays only if
+	 *              production set is selected [RPMXCON-47827]
 	 */
 	@Test(description = "RPMXCON-47827", enabled = true, groups = { "regression" })
-	public void verifyBeginBatesInExportFileName() throws Exception{
-		
+	public void verifyBeginBatesInExportFileName() throws Exception {
+
 		// Login As User
-		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47827 Batch Print");
 		baseClass.stepInfo("To verify that 'Beg Bates' export file name displays only if production set is selected");
-		String tag="Tag"+ Utility.dynamicNameAppender();
+		String tag = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
-		String expected="Begin Bates";
-		
+		String expected = "Begin Bates";
+
 		tagsAndFolderPage.CreateTag(tag, Input.securityGroup);
-		
+
 		session.basicContentSearch(Input.testData1);
 		session.bulkTagExisting(tag);
-		
+
 		// Generate Production with TIFF
-		ProductionPage page=new ProductionPage(driver);
+		ProductionPage page = new ProductionPage(driver);
 		page.navigateToProductionPage();
-		String beginningBates =page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(2);
 		System.out.println(beginningBates);
 		System.out.println(productionname);
 		page.selectingDefaultSecurityGroup();
@@ -644,7 +657,6 @@ public class BatchPrintRegression_25 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -666,13 +678,14 @@ public class BatchPrintRegression_25 {
 		baseClass.waitForElement(batchPrint.getSelectExportFileName());
 		String actual = batchPrint.getSelectExportFileName().getText();
 		System.out.println(actual);
-		
+
 		if (actual.contains(expected)) {
 			baseClass.passedStep("'Beg Bates' displayed in export file name drop down.");
-			
+
 		}
 	}
-/**
+
+	/**
 	 * @Author Jeevitha
 	 * @Description : To verify that RMU can view the fields in 'Slip Sheets' if it
 	 *              is associated to the security group. [RPMXCON-47836]
@@ -769,6 +782,7 @@ public class BatchPrintRegression_25 {
 		loginPage.logout();
 	}
 
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
