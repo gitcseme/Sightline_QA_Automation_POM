@@ -25,6 +25,8 @@ import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
+import pageFactory.TimelineReportPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -119,13 +121,13 @@ public class BulkActions_Regression25 {
 		search.savedSearch_Searchandclick(search1); 
         baseClass.waitForElement(search.getSavedSearchToBulkTag());
         search.getSavedSearchToBulkTag().waitAndClick(5);
-		sessionSearch.bulkTag_FluctuationVerify(folderTag, count);
+		sessionSearch.bulkTag_FluctuationVerification(folderTag, count);
 		
 		search.navigateToSavedSearchPage();
 		search.savedSearch_Searchandclick(search1);
 		baseClass.waitForElement(search.getSavedSearchToBulkFolder());
         search.getSavedSearchToBulkFolder().waitAndClick(5);
-		sessionSearch.bulkFolder_FluctuationVerify(folderTag, count);
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count);
 		
 		loginPage.logout();
 		
@@ -170,7 +172,7 @@ public class BulkActions_Regression25 {
 	    docList.getBulkActionButton().waitAndClick(5);
 	    baseClass.waitForElement(docList.getBulkTagAction());
 	    docList.getBulkTagAction().waitAndClick(5);
-	    sessionSearch.bulkTag_FluctuationVerify(folderTag, count);
+	    sessionSearch.bulkTag_FluctuationVerification(folderTag, count);
 	    
 	    driver.Navigate().refresh();
 	    driver.waitForPageToBeReady();
@@ -180,7 +182,7 @@ public class BulkActions_Regression25 {
 	    docList.getBulkActionButton().waitAndClick(5);
 	    baseClass.waitForElement(docList.getBulkFolderAction());
 	    docList.getBulkFolderAction().waitAndClick(5);
-	    sessionSearch.bulkFolder_FluctuationVerify(folderTag, count);  
+	    sessionSearch.bulkFolder_FluctuationVerification(folderTag, count);  
 	    loginPage.logout();
 	    
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -226,7 +228,7 @@ public class BulkActions_Regression25 {
 	    docView.getDocView_Mini_ActionButton().waitAndClick(5);
 	    baseClass.waitForElement(docView.getDocView_Mini_FolderAction());
 	    docView.getDocView_Mini_FolderAction().waitAndClick(5);
-	    sessionSearch.bulkFolder_FluctuationVerify(folder, count);  
+	    sessionSearch.bulkFolder_FluctuationVerification(folder, count);  
 	    
 	    baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in DocView");
 	    loginPage.logout();
@@ -260,7 +262,7 @@ public class BulkActions_Regression25 {
 		 srcTermReport.getActionButton().waitAndClick(20);
 		 baseClass.waitForElement(srcTermReport.getActionBulkTag());
 		 srcTermReport.getActionBulkTag().waitAndClick(20); 
-		 sessionSearch.bulkTag_FluctuationVerify(folderTag, count);
+		 sessionSearch.bulkTag_FluctuationVerification(folderTag, count);
 		 
 		 driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		 driver.waitForPageToBeReady();
@@ -269,7 +271,7 @@ public class BulkActions_Regression25 {
 		 srcTermReport.getActionButton().waitAndClick(20);
 		 baseClass.waitForElement(srcTermReport.getActionBulkFolder());
 		 srcTermReport.getActionBulkFolder().waitAndClick(20);
-		 sessionSearch.bulkFolder_FluctuationVerify(folderTag, count); 
+		 sessionSearch.bulkFolder_FluctuationVerification(folderTag, count); 
 		 
 		 loginPage.logout();
 		 
@@ -309,14 +311,14 @@ public class BulkActions_Regression25 {
         commExpl.clickReport();
         String count1 = commExpl.selectedDocsCount();       
         commExpl.clickActionBtn(true, false, false);
-        sessionSearch.bulkTag_FluctuationVerify(folderTag, count1);
+        sessionSearch.bulkTag_FluctuationVerification(folderTag, count1);
         
         commExpl.navigateToCommunicationExpPage();
         commExpl.generateReportusingDefaultSG();
         commExpl.clickReport();
         String count2 = commExpl.selectedDocsCount();
         commExpl.clickActionBtn(false, true, false);
-        sessionSearch.bulkFolder_FluctuationVerify(folderTag, count2);
+        sessionSearch.bulkFolder_FluctuationVerification(folderTag, count2);
         
         loginPage.logout();
         
@@ -356,7 +358,7 @@ public class BulkActions_Regression25 {
 		driver.waitForPageToBeReady();
 		String count1 = conExp.addMultipleTilesToCart(3);
 		conExp.performActions("Bulk Tag");
-		sessionSearch.bulkTag_FluctuationVerify(folderTag, count1);
+		sessionSearch.bulkTag_FluctuationVerification(folderTag, count1);
 		
 		conExp.navigateToConceptExplorerPage();
         conExp.clickSelectSources();
@@ -365,7 +367,7 @@ public class BulkActions_Regression25 {
 		driver.waitForPageToBeReady();
 		String count2 = conExp.addMultipleTilesToCart(3);
 		conExp.performActions("Bulk Folder");
-		sessionSearch.bulkFolder_FluctuationVerify(folderTag, count2);
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count2);
 		
 	    loginPage.logout();
 	        
@@ -383,5 +385,196 @@ public class BulkActions_Regression25 {
 		baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in Concept Explorer Report");
 	    loginPage.logout();
 		
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54483
+	 * @Description:To Verify the fluctuation of document count for all the bulk actions in Timeline and Gaps report
+	 **/
+	@Test(description = "RPMXCON-54483", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActTimeGapsReport() throws Exception {
+		TimelineReportPage timeGaps = new TimelineReportPage(driver);
+		
+		String timeLine = "MasterDate";
+		String fromDate =  "2019/01/01";
+		String toDate = timeGaps.getCurrentDate();
+		String folderTag = "folderTag" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("RPMXCON-54483");
+	    baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Timeline and Gaps report");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		String count1 = timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Tag","yearlyActions");
+		sessionSearch.bulkTag_FluctuationVerification(folderTag, count1);
+
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		String count2 = timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions(" Folder","yearlyActions");
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count2);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		String count3 = timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions("Tag","monthlyActions");
+		sessionSearch.bulkTag_FluctuationVerification(folderTag, count3);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		String count4 = timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions(" Folder","monthlyActions");
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count4);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions(" Daily Timeline","monthlyActions");
+		driver.waitForPageToBeReady();
+		String count5 = timeGaps.selectBarChartandRtnDocCount("daily");
+		timeGaps.selectActions("Tag","dailyActions");
+		sessionSearch.bulkTag_FluctuationVerification(folderTag, count5);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions(" Daily Timeline","monthlyActions");
+		driver.waitForPageToBeReady();
+		String count6 = timeGaps.selectBarChartandRtnDocCount("daily");
+		timeGaps.selectActions(" Folder","dailyActions");
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count6);
+		
+		loginPage.logout();
+        
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    baseClass.stepInfo("Logged in As : " + Input.rmu1FullName);
+	    
+	    timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		String count7 = timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Assign","yearlyActions");
+		sessionSearch.verifyDocsFluctuation_BulkAssign(count7);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		String count8 = timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions("Assign","monthlyActions");
+		sessionSearch.verifyDocsFluctuation_BulkAssign(count8);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
+		driver.waitForPageToBeReady();
+		timeGaps.selectBarChartandRtnDocCount("monthly");
+		timeGaps.selectActions(" Daily Timeline","monthlyActions");
+		driver.waitForPageToBeReady();
+		String count9 = timeGaps.selectBarChartandRtnDocCount("daily");
+		timeGaps.selectActions("Assign","dailyActions");
+		sessionSearch.verifyDocsFluctuation_BulkAssign(count9);
+		
+		baseClass.passedStep("Verified - the fluctuation of document count for all the bulk actions in Timeline and Gaps report");
+		loginPage.logout();
+	}
+	
+	
+	@Test(description = "RPMXCON-54481", enabled = true, groups = { "regression" })
+	public void VerifyTotalDocsFluctBulkActTallyReport() throws Exception {
+		TallyPage tally = new TallyPage(driver);
+		
+		String tag = "Tag" + Utility.dynamicNameAppender();
+		String tagRMU = "Tag" + Utility.dynamicNameAppender();
+		String tagFolder = "TagFolder" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Tally report");
+		baseClass.stepInfo("RPMXCON-54481");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As  : " + Input.pa1FullName);
+		String count = String.valueOf(sessionSearch.basicContentSearch(Input.TallySearch));
+		sessionSearch.bulkTag(tag);
+		
+		tally.navigateTo_Tallypage();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tag);
+		tally.tallyActions();
+		baseClass.waitForElement(tally.getBulkTagAction(1));
+		tally.getBulkTagAction(1).waitAndClick(5);
+		sessionSearch.bulkTag_FluctuationVerification(tagFolder, count);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tag);
+		tally.tallyActions();
+		baseClass.waitForElement(tally.getBulkFolderAction(1));
+		tally.getBulkFolderAction(1).waitAndClick(5);
+		sessionSearch.bulkFolder_FluctuationVerification(tagFolder, count);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tag);
+		tally.tallyActions();
+		tally.selectSubTallyFromActionDropDown();
+		tally.selectMetaData_SubTally("CustodianName", 1);
+		String count1 = String.valueOf(tally.getDocCountSubTally());
+		tally.subTallyActions();
+		baseClass.waitForElement(tally.getBulkTagAction(2));
+		tally.getBulkTagAction(2).waitAndClick(5);
+		sessionSearch.bulkTag_FluctuationVerification(tagFolder, count1);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tag);
+		tally.tallyActions();
+		tally.selectSubTallyFromActionDropDown();
+		tally.selectMetaData_SubTally("CustodianName", 1);
+		String count2 = String.valueOf(tally.getDocCountSubTally());
+		tally.subTallyActions();
+		baseClass.waitForElement(tally.getBulkFolderAction(2));
+		tally.getBulkFolderAction(2).waitAndClick(5);
+		sessionSearch.bulkFolder_FluctuationVerification(tagFolder, count2);
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
+		String countRMU = String.valueOf(sessionSearch.basicContentSearch(Input.TallySearch));
+		sessionSearch.bulkTag(tagRMU);
+		
+		tally.navigateTo_Tallypage();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tagRMU);
+		tally.tallyActions();
+		tally.bulkAssign(1);
+		sessionSearch.verifyDocsFluctuation_BulkAssign(countRMU);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tally.SelectSource_SecurityGroup(Input.securityGroup);
+		tally.selectTallyByTagName(tagRMU);
+		tally.tallyActions();
+		tally.selectSubTallyFromActionDropDown();
+		tally.selectMetaData_SubTally("CustodianName", 1);
+		String count3 = String.valueOf(tally.getDocCountSubTally());
+		tally.subTallyActions();
+		tally.bulkAssign(2);
+		sessionSearch.verifyDocsFluctuation_BulkAssign(count3);
+		baseClass.passedStep("Verifyied - that fluctuation of document count for all the bulk actions in Tally report");
+		loginPage.logout();
 	}
 }

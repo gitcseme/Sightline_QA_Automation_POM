@@ -263,6 +263,7 @@ public class Input {
 	public static String Tagging;
 	public static String ToDoDocs;
 	public static String Complete;
+	public static String BeginBates;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1265,6 +1266,7 @@ public class Input {
 		ReviewerProductivity = testData.getReviewerProductivity();
 		ToDoDocs = testData.getToDoDocs();
 		Complete = testData.getComplete();
+		BeginBates=testData.getBeginBates();
 
 		/**
 		 * @author Aathith.Senthilkumar

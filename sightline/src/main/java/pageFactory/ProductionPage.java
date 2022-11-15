@@ -21198,21 +21198,23 @@ public class ProductionPage {
 		getTIFFChkBox().waitAndClick(5);
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
+		getTIFFTab().waitAndClick(10);
 		driver.scrollPageToTop();
 		base.waitForElement(getTIFF_CenterHeaderBranding());
-		getTIFF_CenterHeaderBranding().Click();
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
 		getTIFF_EnterBranding().SendKeys(BrandingPlaceholder);
 		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		base.waitForElement(getPriveldge_SelectTagButton());
-		getPriveldge_SelectTagButton().Click();
+		getPriveldge_SelectTagButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+		base.waitForElement(getPriveldge_TagTree(tagname));
 		getPriveldge_TagTree(tagname).waitAndClick(10);
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
-		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		base.waitForElement(getPriveldge_TextArea());
+		getPriveldge_TextArea().waitAndClick(10);
 		getPriveldge_TextArea().SendKeys(PrivPlaceholder);
 
 	}
