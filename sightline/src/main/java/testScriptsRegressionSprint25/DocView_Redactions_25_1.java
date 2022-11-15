@@ -95,73 +95,68 @@ public class DocView_Redactions_25_1 {
 	}
 	
 	/**
-	 * Author : Krishna date: NA Modified date:NA Modified by: Test Case Id: 49074
-	 * Verify the Redaction and Highlighting is deleted successfully in DocView
-	 */
-	@Test(description = "RPMXCON-49074", enabled = true, alwaysRun = true, groups = { "regression" })
-	public void verifyRedactionHighlitingDeletedInDocView() throws Exception {
-		baseClass.stepInfo("Test case Id: RPMXCON-49074");
-		baseClass.stepInfo("Verify the Redaction and Highlighting is deleted successfully in DocView");
-		Actions actions = new Actions(driver.getWebDriver());
-		baseClass = new BaseClass(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		String RedactName = "newRedac" + Utility.dynamicNameAppender();
-		DocListPage doclist = new DocListPage(driver);
+     * Author : Krishna date: NA Modified date:NA Modified by: Test Case Id: 49074
+     * Verify the Redaction and Highlighting is deleted successfully in DocView
+     */
+    @Test(description = "RPMXCON-49074", enabled = true, alwaysRun = true, groups = { "regression" })
+    public void verifyRedactionHighlitingDeletedInDocView() throws Exception {
+        baseClass.stepInfo("Test case Id: RPMXCON-49074");
+        baseClass.stepInfo("Verify the Redaction and Highlighting is deleted successfully in DocView");
+        Actions actions = new Actions(driver.getWebDriver());
+        baseClass = new BaseClass(driver);
+        DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        SessionSearch sessionsearch = new SessionSearch(driver);
+        DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+        String RedactName = "newRedac" + Utility.dynamicNameAppender();
+        DocListPage doclist = new DocListPage(driver);
 
-		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
-		sessionsearch.basicContentSearch(Input.randomText);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Documents viewd in DocView");
-
-		baseClass.stepInfo("Clicked on reduction button ");
-		baseClass.waitForElement(doclist.getDocIDFromDocView(4));
-		doclist.getDocIDFromDocView(4).waitAndClick(5);
-		baseClass.waitForElement(docViewMetaDataPage.getRedactIcon());
-		driver.waitForPageToBeReady();
-		docViewMetaDataPage.getRedactIcon().waitAndClick(15);
-		driver.waitForPageToBeReady();
-		baseClass.waitTillElemetToBeClickable(docViewRedact.thisPageRedaction());
-		docViewRedact.thisPageRedaction().waitAndClick(5);
-		baseClass.stepInfo("Selected on this page add redaction");
-		driver.waitForPageToBeReady();
-		docViewRedact.verifySelectDefaultRedactionTag(Input.defaultRedactionTag, RedactName);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		baseClass.waitForElement(doclist.getDocIDFromDocView(4));
-		doclist.getDocIDFromDocView(4).waitAndClick(5);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
-		actions.build().perform();
-		if (docViewRedact.highliteDeleteBtn().Displayed() && docViewRedact.highliteDeleteBtn().Enabled()) {
-			assertTrue(true);
-			baseClass.passedStep("The page has been highlight and highlight has been saved after the page refresh");
-		} else {
-			assertTrue(false);
-		}
-		docViewRedact.highliteDeleteBtn().Click();
-		baseClass.passedStep("The highlight has been deleted successfully");
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		baseClass.stepInfo("Reload the document");
-		baseClass.waitForElement(doclist.getDocIDFromDocView(4));
-		doclist.getDocIDFromDocView(4).waitAndClick(5);
-		baseClass.waitTime(5);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
-		actions.build().perform();
-		if (docViewRedact.highliteDeleteBtn().isElementAvailable(5) == true) {
-			docViewRedact.highliteDeleteBtn().Click();
-			baseClass.failedStep("the highlight has not been deleted after refresh");
-		} else {
-			baseClass.passedStep("The highlight is not present on the page after deleting and refreshing");
-
-		}
-		loginPage.logout();
-
-	}
+       // Login as RMU
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+        sessionsearch.basicContentSearch(Input.randomText);
+        sessionsearch.ViewInDocView();
+        baseClass.stepInfo("Documents viewd in DocView");
+       baseClass.stepInfo("Clicked on reduction button ");
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        baseClass.waitForElement(docViewMetaDataPage.getRedactIcon());
+        driver.waitForPageToBeReady();
+        docViewMetaDataPage.getRedactIcon().waitAndClick(15);
+        driver.waitForPageToBeReady();
+        baseClass.waitTillElemetToBeClickable(docViewRedact.thisPageRedaction());
+        docViewRedact.thisPageRedaction().waitAndClick(5);
+        baseClass.stepInfo("Selected on this page add redaction");
+        driver.waitForPageToBeReady();
+        docViewRedact.verifySelectDefaultRedactionTag(Input.defaultRedactionTag, RedactName);
+        baseClass.waitTime(8);
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        driver.waitForPageToBeReady();
+        docViewRedact.getDocView_RedactHTextarea().waitAndClick(5);
+        driver.scrollPageToTop();
+        if (docViewRedact.highliteDeleteBtn().isElementAvailable(5)) {
+            docViewRedact.highliteDeleteBtn().waitAndClick(5);
+            baseClass.passedStep("The highlight has been deleted successfully");
+            baseClass.stepInfo("Redaction Removed successfully.");
+        } else {
+            System.out.println("This Page highlight not done at current doc");
+        }
+        driver.Navigate().refresh();
+        driver.waitForPageToBeReady();
+        baseClass.stepInfo("Reload the document");
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        baseClass.waitTime(5);
+        actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
+        actions.build().perform();
+        if (docViewRedact.highliteDeleteBtn().isElementAvailable(5) == true) {
+            docViewRedact.highliteDeleteBtn().Click();
+            baseClass.failedStep("the highlight has not been deleted after refresh");
+        } else {
+            baseClass.passedStep("The highlight is not present on the page after deleting and refreshing");
+       }
+        loginPage.logout();
+}
 
 	/**
 	 * 
