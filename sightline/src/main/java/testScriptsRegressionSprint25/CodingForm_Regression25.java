@@ -3,7 +3,9 @@ package testScriptsRegressionSprint25;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -162,6 +164,173 @@ public class CodingForm_Regression25 {
 		codingForm.verifyAddOrRemoveCFpopup();
 		baseClass.stepInfo("verify help icon message displayed in tool tip popup");
 		codingForm.verifySetAsDefaultHelpIconMessage();
+		loginPage.logout();
+	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64893
+	 * @throws Exception
+	 * @Description Verify that when none of the \"CODING FORM NAME\" is selected
+	 *              \"Next Stage Sort Order\" button is disabled(UI)
+	 */
+	@Test(description = "RPMXCON-64893", enabled = true, groups = { "regression" })
+	public void verifyCfSelectedNextButtonIsDisable() throws Exception {
+		BaseClass base = new BaseClass(driver);
+
+		base.stepInfo("Test case Id: RPMXCON-64893");
+		base.stepInfo(
+				"Verify that when none of the \"CODING FORM NAME\" is selected \"Next Stage Sort Order\" button is disabled(UI)");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		soft.assertTrue(cf.getSetCodingFormToSG().isElementPresent());
+		boolean showHide = cf.getShowHide().Enabled();
+		soft.assertTrue(showHide);
+		base.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
+		cf.getSetCodingFormToSG().waitAndClick(5);
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean flagPopup1 = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group popup is displayed successfully");
+		soft.assertTrue(flagPopup1);
+		int unCheck = cf.getCfUnChecBoxUsingSize().size();
+		for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element = cf.getCfUnChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.waitForElement(cf.sortOrderNxtDisableBtn());
+		if (cf.sortOrderNxtDisableBtn().isElementPresent()) {
+			base.passedStep(
+					"CODING FORM NAME is selected After Next Stage Sort Order button is disabled(UI) as expected");
+
+		} else {
+			base.failedStep("Next Stage Sort Order button is not disabled");
+		}
+		soft.assertAll();
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64907
+	 * @throws Exception
+	 * @Description Verify that when user UnCheck on the "CODING FORM NAME" check
+	 *              box from "Add/remove coding form in this security group" coding
+	 *              form pop-up all the present coding form should get Unchecked
+	 *              from the column.
+	 */
+	@Test(description = "RPMXCON-64907", enabled = true, groups = { "regression" })
+	public void verifyCfPopUpAllSelectedFromColumn() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64907");
+		base.stepInfo(
+				"Verify that when user UnCheck on the \"CODING FORM NAME\" check box from \"Add/remove coding form in this security group\" coding form pop-up all the present coding form should get Unchecked from the column.");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.checkingBelow15CFCheckboxForSG();
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		soft.assertTrue(cf.getSetCodingFormToSG().isElementPresent());
+		boolean showHide = cf.getShowHide().Enabled();
+		soft.assertTrue(showHide);
+		base.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
+		cf.getSetCodingFormToSG().waitAndClick(5);
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean flagPopup1 = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group popup is displayed successfully");
+		soft.assertTrue(flagPopup1);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		int Check = cf.getCfChecBoxUsingSize().size();
+		System.out.println(Check);
+		for (int i = 0; i < Check; i++) {
+			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		soft.assertTrue(cf.sortOrderNxtBtn().isElementPresent());
+		base.passedStep("all the present coding form has been get selected As expected");
+		int unCheck = cf.getCfChecBoxUsingSize().size();
+		System.out.println(unCheck);
+		for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.waitForElement(cf.sortOrderNxtDisableBtn());
+		if (cf.sortOrderNxtDisableBtn().isElementPresent()) {
+			base.passedStep(" All the present coding form has been get Unchecked from the column as expected.");
+
+		} else {
+			base.failedStep("Not unchecked from the column");
+		}
+		soft.assertAll();
+		loginPage.logout();
+	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-65188
+	 * @throws Exception
+	 * @Description Verify that when default is not set to selected Coding form "Next Stage Sort Order" button is disabled(UI)
+	 */
+	@Test(description = "RPMXCON-65188", enabled = true, groups = { "regression" })
+	public void verifyCfDefaultNotSelectedNextDisable() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-65188");
+		base.stepInfo(
+				"Verify that when default is not set to selected Coding form \"Next Stage Sort Order\" button is disabled(UI)");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.checkingBelow15CFCheckboxForSG();
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		soft.assertTrue(cf.getSetCodingFormToSG().isElementPresent());
+		boolean showHide = cf.getShowHide().Enabled();
+		soft.assertTrue(showHide);
+		base.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
+		cf.getSetCodingFormToSG().waitAndClick(5);
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean flagPopup1 = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group popup is displayed successfully");
+		soft.assertTrue(flagPopup1);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		int Check = cf.getCfChecBoxUsingSize().size();
+		System.out.println(Check);
+		for (int i = 0; i < Check; i++) {
+			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.passedStep("Selected less than 15 coding form  As expected");
+		int unCheck = cf.getCfUnChecBoxUsingSize().size();
+		System.out.println(unCheck);
+		for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element = cf.getCfUnChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.stepInfo(" Default is not set to selected Coding form");
+		base.waitForElement(cf.sortOrderNxtDisableBtn());
+		if (cf.sortOrderNxtDisableBtn().isElementPresent()) {
+			base.passedStep(" Next Stage Sort Order  button is disabled as expected.");
+
+		} else {
+			base.failedStep("button is not disabled");
+		}
+		soft.assertAll();
 		loginPage.logout();
 	}
 	

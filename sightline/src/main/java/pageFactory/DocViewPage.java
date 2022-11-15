@@ -28848,6 +28848,54 @@ public class DocViewPage {
 	getSaveAndNextButton().waitAndClick(10);
 	
 	}
+	/**
+	 * @author 
+	 * @throws InterruptedException
+	 * @Description: This method used to verify copy and paste text on doc comment
+	 *               box using offset
+	 * 
+	 */
+	public String verifyCopyAndPasteRedacTextOnCommentBoxOffSet(int offset1,int offset2,int offset3, int offset4) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPasteIcon().Displayed();
+			}
+		}), Input.wait120);
+		String status = getCopyPasteIconStatus().GetAttribute("class");
+		System.out.println(status);
+		if (status == "active") {
+			base.stepInfo("Copyandpaste icon is already clicked successfully");
+		} else {
+			getCopyPasteIcon().waitAndClick(5);
+			base.stepInfo("Copyandpaste icon is clicked successfully");
+		}
+		driver.waitForPageToBeReady();
+		Thread.sleep(1000);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(),offset1,offset2).clickAndHold()
+				.moveByOffset(offset3,offset4).release().build().perform();
+		driver.waitForPageToBeReady();
+		// copy the text
+		actions.keyDown(Keys.CONTROL);
+		actions.sendKeys("c");
+		actions.keyUp(Keys.CONTROL);
+		actions.build().perform();
+		base.stepInfo("text is copied");
+		driver.waitForPageToBeReady();
+		editCodingForm();
+		getAddComment1().Clear();
+		getAddComment1().waitAndClick(2);
+		// Paste the text
+		driver.waitForPageToBeReady();
+		actions.keyDown(Keys.CONTROL);
+		actions.sendKeys("v");
+		actions.keyUp(Keys.CONTROL);
+		actions.build().perform();
+		base.stepInfo("copied text is pasted on codingform comment box");
+		return status;
+	}
 }
 
 

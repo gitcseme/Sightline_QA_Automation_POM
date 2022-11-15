@@ -1665,6 +1665,9 @@ public class CodingForm {
 		public ElementCollection getSetSGPresentBeforeShowBtn() {
 			return driver.FindElementsByXPath("//span[contains(text(),'Show')]//..//..//following-sibling::div//button[@id='btnSetSGCodingForms']");
 		}
+		public Element sortOrderNxtDisableBtn() {
+	        return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
+	    }
 		
 	
 		
