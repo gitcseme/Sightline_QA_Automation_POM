@@ -87,7 +87,7 @@ public class DocView_Regression25 {
 	 * 
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description ="RPMXCON-63806",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTextRedacDocPerformCopyPasteInCodingForm() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-63806");
