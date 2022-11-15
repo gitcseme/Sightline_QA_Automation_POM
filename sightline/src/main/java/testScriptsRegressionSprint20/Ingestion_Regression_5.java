@@ -76,7 +76,7 @@ public class Ingestion_Regression_5 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -109,7 +109,7 @@ public class Ingestion_Regression_5 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -142,7 +142,7 @@ public class Ingestion_Regression_5 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -175,7 +175,7 @@ public class Ingestion_Regression_5 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}

@@ -9021,11 +9021,11 @@ public class IngestionPage_Indium {
 		}
 		
 		/**
-		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
+		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: 15/11/2022
 		 * @description: this method will perform ingestion for GD994NativeTextForProductionFolder
 		 */
-		public void performGD_994NativeFolderIngestion(String datFile,String nativeFile,String textFile) {
-			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		public void performGD_994NativeFolderIngestion(String sourceSystem,String datFile,String nativeFile,String textFile) {
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", sourceSystem, Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
 			base.waitForElement(getDATDelimitersNewLine());
 			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 			base.waitTime(2);
