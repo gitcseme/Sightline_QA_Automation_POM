@@ -406,6 +406,7 @@ public class DocViewAudio_Regression25 {
 		// Check Display persistant hit - notrepetative
 		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 5));
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
 		docview.getAudioPersistantHitEyeIcon().Click();
 		docview.verifyAudioPersistanHitNotDisplayed(Input.audioSearchString2);
