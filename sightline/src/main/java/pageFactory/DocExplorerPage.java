@@ -631,9 +631,20 @@ public class DocExplorerPage {
 	public ElementCollection getNumberOfDocsCount() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr");
 	}
+
 	public Element getListViewHeader(int i) {
-		return driver.FindElementByXPath("//table//thead//tr[1]//th["+i+"]");
+		return driver.FindElementByXPath("//table//thead//tr[1]//th[" + i + "]");
 	}
+
+	public Element getDocExp_CustodianNameSearchName(String custodianName) {
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + custodianName + "']");
+	}
+
+	public Element getCustodianNameValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[4]//div");
+	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -3837,7 +3848,7 @@ public class DocExplorerPage {
 
 		bc.waitForElement(getDocExplorerUnFolder());
 		getDocExplorerUnFolder().waitAndClick(5);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkFolderCheckBox(folderName).Visible();
@@ -3983,7 +3994,7 @@ public class DocExplorerPage {
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for EmailRecipientNames
 	 */
-	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient,String EmailRecipient1) {
+	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient, String EmailRecipient1) {
 		try {
 
 			driver.waitForPageToBeReady();
@@ -4001,7 +4012,7 @@ public class DocExplorerPage {
 			bc.waitForElement(getAddToFilter());
 			bc.waitTillElemetToBeClickable(getAddToFilter());
 			getAddToFilter().Click();
-			if(EmailRecipient1 != null) {
+			if (EmailRecipient1 != null) {
 				bc.waitForElement(getExcludeRadioBtn());
 				bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
 				getExcludeRadioBtn().Click();
@@ -4022,7 +4033,7 @@ public class DocExplorerPage {
 					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
@@ -4046,6 +4057,25 @@ public class DocExplorerPage {
 			bc.failedStep(
 					"Exception occcured while verifying documents after applying exclude functionality by EmailRecipientNames"
 							+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the CustodianName field values in doc
+	 *               exp list view
+	 */
+	public void verifyCustodianNameValuesInDocExp(String[] custodname) {
+
+		for (int j = 0; j < custodname.length; j++) {
+
+			bc.waitForElement(getDocExp_CustodianNameSearchName("CUSTODIANNAME"));
+			getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeys(custodname[j]);
+			getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getCustodianNameValues(), custodname[j]);
+			driver.Navigate().refresh();
 		}
 	}
 }
