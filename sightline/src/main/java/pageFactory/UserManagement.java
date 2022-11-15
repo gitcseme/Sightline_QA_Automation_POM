@@ -1163,6 +1163,13 @@ public class UserManagement {
 	public Element getProjectDropdown() {
 		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
 	}
+	public ElementCollection getProjectNameCol() {
+		return driver.FindElementsByXPath("//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1']");
+	}
+	
+	public Element getProjectNameColValue(int i) {
+		return driver.FindElementByXPath("(//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1'])["+i+"]");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
