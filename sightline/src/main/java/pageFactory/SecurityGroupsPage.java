@@ -552,6 +552,16 @@ public class SecurityGroupsPage {
 	public ElementCollection getSelectdFieldsList() {
 		return driver.FindElementsByXPath("//div[@id='fieldJSTree_Selected']//ul[@class='jstree-children']//a");
 	}
+	
+	public Element getSG_PopUp() {
+		return driver.FindElementByXPath("//*[@id='divSecurityGroup']");
+	}
+	public Element getSG_InvalidErrorMsg() {
+		return driver.FindElementByXPath("//*[@id='lblmsg']");
+	}
+	public Element getSG_NameCancelBtn() {
+		return driver.FindElementById("btnCancelSave");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
