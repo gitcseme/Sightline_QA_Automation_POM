@@ -230,7 +230,7 @@ public class Categorization {
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Proview/Proview");
+//		this.driver.getWebDriver().get(Input.url + "Proview/Proview");
 		base = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 
@@ -240,6 +240,7 @@ public class Categorization {
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
 	}
+	
 
 	public void selectTagInCat(String tagName) {
 		driver.WaitUntil((new Callable<Boolean>() {

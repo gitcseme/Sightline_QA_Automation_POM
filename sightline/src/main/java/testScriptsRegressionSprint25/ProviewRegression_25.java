@@ -1,10 +1,8 @@
 package testScriptsRegressionSprint25;
 
-import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.List;
 
 import org.testng.ITestResult;
@@ -17,11 +15,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
-import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.Categorization;
 import pageFactory.LoginPage;
-import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -53,6 +49,7 @@ public class ProviewRegression_25 {
 		return users;
 	}
 
+	
 	/**
 	 * @Author Jeevitha
 	 * @Description : To verify that project admin can view the save searched result
@@ -61,7 +58,6 @@ public class ProviewRegression_25 {
 	 */
 	@Test(description = "RPMXCON-54126", enabled = true, groups = { "regression" })
 	public void verifyAllTagDisplayed() throws Exception {
-		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
 
 		base.stepInfo("RPMXC0N-54126  Proview");
 		base.stepInfo("To verify that project admin can view the save searched result on proview page.");
@@ -74,7 +70,7 @@ public class ProviewRegression_25 {
 		session.navigateToAdvancedSearchPage();
 		session.switchToWorkproduct();
 		session.getSavedSearchResult().waitAndClick(10);
-		
+
 		base.waitForElementCollection(session.getTree());
 		List<String> searchlist = base.availableListofElements(session.getTree());
 
@@ -89,8 +85,13 @@ public class ProviewRegression_25 {
 		List<String> searchPresentInCategorize = base.availableListofElements(categorize.getAvailableSearches());
 
 		// Verify All existing Searches is Displayed
-		base.sortAndCompareList(searchlist, searchPresentInCategorize, true, "Ascending",
-				"All existing Searches are Displayed.", "All existing Searches is not Displayed.");
+
+		List<String> expectedSearchList = base.sortTheList(searchlist, true);
+		driver.waitForPageToBeReady();
+		List<String> actualSearchList = base.sortTheList(searchPresentInCategorize, true);
+		boolean flag = base.compareListViaContains(expectedSearchList, actualSearchList);
+		base.printResutInReport(flag, "All existing Searches are Displayed.", "All existing Searches is not Displayed.",
+				"Pass");
 
 		// Logout
 		login.logout();

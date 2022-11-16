@@ -48,6 +48,7 @@ public class ReportRegression_25 {
 		in = new Input();
 		in.loadEnvConfig();
 	}
+	
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -234,15 +235,19 @@ public class ReportRegression_25 {
 		searchterm.ValidateSearchTermreportSaveandImpact(columnName, false);
 
 		// Perform Export STR Report
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(searchterm.getExportIcon());
 		searchterm.getExportIcon().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Report save successfully");
 
 		// perform Sharing STR Report
+		driver.waitForPageToBeReady();
 		searchterm.performSharingAction(Input.rmu1FullName, Input.rmu1userName);
+		driver.waitForPageToBeReady();
 
 		// perform Schedule STR Report
 		reports.navigateToReportsPage("");
+		driver.waitForPageToBeReady();
 		searchterm.GenerateReportWithAnySearchOrTab(tabList, true);
 		searchterm.selectColumnFromSTRPage(columnName);
 		searchterm.performScheduleAction(Input.rmu1FullName, Input.rmu1userName);
@@ -354,27 +359,27 @@ public class ReportRegression_25 {
 		loginPage.logout();
 	}
 
-	
-	//QA
+	// QA
 	/**
 	 * @author NA Testcase No:RPMXCON-56549
-	 * @Description:To verify that export report should be work correctly if comment is upto 2MB
+	 * @Description:To verify that export report should be work correctly if comment
+	 *                 is upto 2MB
 	 **/
 	@Test(description = "RPMXCON-56549", enabled = true, groups = { "regression" })
 	public void verifyExportCorrectlyWith2MBCmtsdocs() throws Exception {
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
-		
+
 		String dataSet = "2MBCommentData";
 		String[] metaDataFields = { "CustodianName" };
 		String[] workProductFields = { dataSet };
 		String expValue = "CustodianName'''All Folders\\Datasets\\" + dataSet + "''";
-		
+
 		baseClass.stepInfo("RPMXCON-56549");
 		baseClass.stepInfo("To verify that export report should be work correctly if comment is upto 2MB");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in As : " + Input.pa1FullName);
 		baseClass.selectproject(Input.additionalDataProject);
-		
+
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		cddr.selectSource("Security Groups", Input.securityGroup);
@@ -386,42 +391,44 @@ public class ReportRegression_25 {
 		String actualValue = cddr.csvfileVerification("", fileName);
 		baseClass.stepInfo(actualValue);
 		System.out.println(actualValue);
-		if(actualValue.contains(expValue)) {
-			baseClass.passedStep("Export file open without any error/warning message. All data displaying As Expected.");
+		if (actualValue.contains(expValue)) {
+			baseClass
+					.passedStep("Export file open without any error/warning message. All data displaying As Expected.");
 		} else {
-			baseClass.failedStep("Export file open without any error/warning message but All data displaying Not As Expected.");
+			baseClass.failedStep(
+					"Export file open without any error/warning message but All data displaying Not As Expected.");
 		}
 		baseClass.passedStep("Verified - that export report should be work correctly if comment is upto 2MB");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * @author NA Testcase No:RPMXCON-56302
-	 * @Description:To verify that User is able to select multiple options in Source.
+	 * @Description:To verify that User is able to select multiple options in
+	 *                 Source.
 	 **/
 	@Test(description = "RPMXCON-56302", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
 	public void verifyMultipleOptnsinSource(String username, String password) throws Exception {
 		TagsAndFoldersPage tagFolder = new TagsAndFoldersPage(driver);
 		TimelineReportPage timeLine = new TimelineReportPage(driver);
-		
+
 		String tagName1 = "Tag" + Utility.dynamicNameAppender();
 		String tagName2 = "Tag" + Utility.dynamicNameAppender();
-		String [] tags = {tagName1, tagName2};
-		
+		String[] tags = { tagName1, tagName2 };
+
 		baseClass.stepInfo("RPMXCON - 56302");
 		baseClass.stepInfo("To verify that User is able to select multiple options in Source.");
 		loginPage.loginToSightLine(username, password);
 		tagFolder.navigateToTagsAndFolderPage();
 		driver.waitForPageToBeReady();
-		if(username.equals(Input.rmu1userName)) {
+		if (username.equals(Input.rmu1userName)) {
 			tagFolder.createNewTagwithClassificationInRMU(tagName1, Input.tagNamePrev);
 			tagFolder.createNewTagwithClassificationInRMU(tagName2, Input.tagNamePrev);
 		} else {
-		    tagFolder.createNewTagwithClassification(tagName1, Input.tagNamePrev);
-		    tagFolder.createNewTagwithClassification(tagName2, Input.tagNamePrev);
+			tagFolder.createNewTagwithClassification(tagName1, Input.tagNamePrev);
+			tagFolder.createNewTagwithClassification(tagName2, Input.tagNamePrev);
 		}
-		
+
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		timeLine.navigateToTimelineAndGapsReport();
@@ -431,34 +438,35 @@ public class ReportRegression_25 {
 
 		baseClass.passedStep("Verified -  that User is able to select multiple options in Source.");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * @author NA Testcase No:RPMXCON-56472
-	 * @Description:To verify that when Admin impersonated as RMU and created report. "
-				+ "Then that Custom Report must not be visible to Project Admin in Admin role.
+	 * @Description:To verify that when Admin impersonated as RMU and created
+	 *                 report. " + "Then that Custom Report must not be visible to
+	 *                 Project Admin in Admin role.
 	 **/
 	@Test(description = "RPMXCON-56472", enabled = true, groups = { "regression" })
 	public void verifyCretedReportAsImp() throws Exception {
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
 		SoftAssert asserts = new SoftAssert();
-		
+
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String[] metaDataFields = { "CustodianName" };
 		String[] workProductFields = { tagName };
 		String reportName = "Report" + Utility.dynamicNameAppender();
-		
+
 		baseClass.stepInfo("RPMXCON-56472");
 		baseClass.stepInfo("To verify that when Admin impersonated as RMU and created report. "
 				+ "Then that Custom Report must not be visible to Project Admin in Admin role.");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
-		
+
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTag(tagName);
-		
+
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		cddr.selectSource("Security Groups", Input.securityGroup);
@@ -469,10 +477,10 @@ public class ReportRegression_25 {
 		baseClass.waitForElement(cddr.getRunReport());
 		cddr.getRunReport().waitAndClick(5);
 		cddr.reportRunSuccessMsg();
-		
+
 		cddr.SaveReport(reportName);
 		baseClass.stepInfo("Saved the Custom report " + reportName);
-		
+
 		ReportsPage report = new ReportsPage(driver);
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
@@ -480,22 +488,22 @@ public class ReportRegression_25 {
 		asserts.assertTrue(report.getdeleteToolTip_CustomReport(reportName).isElementAvailable(5));
 		asserts.assertAll();
 		baseClass.stepInfo("On Report Landing page the custom report is displaying As Expected..");
-		
+
 		baseClass.rolesToImp("RMU", "PA");
-		
+
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 
 		asserts.assertFalse(report.getdeleteToolTip_CustomReport(reportName).isElementAvailable(5));
 		asserts.assertAll();
 		baseClass.stepInfo("On Report Landing page the custom report is Not displaying As Expected..");
-		
+
 		baseClass.passedStep("Verified - that when Admin impersonated as RMU and created report."
 				+ " Then that Custom Report must not be visible to Project Admin in Admin role.");
 		loginPage.logout();
-		
+
 	}
-	
+
 	@DataProvider(name = "PA & RMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };

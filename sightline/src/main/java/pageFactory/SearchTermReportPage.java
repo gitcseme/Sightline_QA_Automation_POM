@@ -1088,7 +1088,7 @@ public class SearchTermReportPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Dsecription  : perform Scharing action
+	 * @Dsecription : perform Scharing action
 	 */
 	public void performSharingAction(String username, String emailId) {
 		getShareIcon().waitAndClick(10);
@@ -1113,33 +1113,32 @@ public class SearchTermReportPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Dsecription  : perform schedule action
+	 * @Dsecription : perform schedule action
 	 */
 	public void performScheduleAction(String username, String emailId) throws ParseException {
+		SavedSearch savedSearch = new SavedSearch(driver);
 		bc.waitForElement(getScheduleIcon());
 		getScheduleIcon().waitAndClick(10);
 
-		SavedSearch savedSearch = new SavedSearch(driver);
 		bc.waitForElement(savedSearch.getSavedSearch_ScheduleTime());
+		savedSearch.getSavedSearch_ScheduleTime().SendKeys(savedSearch.schdulerTimePlus15Secs());
+		savedSearch.getSavedSearch_ScheduleTime().SendKeys(savedSearch.schdulerTimePlus15Secs());
 		savedSearch.getSavedSearch_ScheduleTime().SendKeys(savedSearch.schdulerTimePlus15Secs());
 
 		bc.waitForElement(getShareUserDDBtn());
 		getShareUserDDBtn().waitAndClick(10);
-		if (getUserDD(username).isElementAvailable(10)) {
+		if (getUserDD(username).isElementAvailable(3)) {
 			getUserDD(username).waitAndClick(10);
-		}else {
-			bc.waitForElement(getLastUser());
+		} else if (getLastUser().isElementAvailable(4)) {
 			getLastUser().waitAndClick(10);
 		}
 		getShareUserDDBtn().waitAndClick(10);
 		bc.waitForElement(getEmailtextarea());
 		getEmailtextarea().waitAndClick(10);
-		driver.waitForPageToBeReady();
 		getEmailtextarea().SendKeys(emailId);
 
 		bc.waitForElement(getScheduleSubmit());
 		getScheduleSubmit().waitAndClick(10);
 		bc.VerifySuccessMessage("Record scheduled successfully");
 	}
-
 }

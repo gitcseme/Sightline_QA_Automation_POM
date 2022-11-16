@@ -4693,4 +4693,25 @@ public class BaseClass {
 		textCompareEquals(currentUser, expectedRole, "Current Role is : " + expectedRole,
 				"Current role is not as expected");
 	}
+	
+	
+	/**
+     * @return
+     * @Author Jeevitha
+     * @Description : sort and compare two list via contains
+     */
+    public List<String> sortTheList(List<String> listOne, Boolean sortTypeAscending)
+            throws InterruptedException, AWTException {
+
+
+
+       if (sortTypeAscending) {
+            Collections.sort(listOne);
+            stepInfo("Sorted List in Ascending Order");
+        } else if (!sortTypeAscending) {
+            Collections.sort(listOne, Collections.reverseOrder());
+            stepInfo("Sorted List in Descending Order");
+        }
+        return listOne;
+    }
 }

@@ -36,7 +36,6 @@ public class Projects_Regression25 {
 	ProjectPage projects;
 	String projectName;
 	String clientName;
-	ProductionPage page;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -47,7 +46,7 @@ public class Projects_Regression25 {
 		input.loadEnvConfig();
 
 	}
-
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
@@ -59,9 +58,9 @@ public class Projects_Regression25 {
 		base = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 		projects = new ProjectPage(driver);
-		page = new ProductionPage(driver);
 
 	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

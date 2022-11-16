@@ -194,7 +194,7 @@ public class CustomDocumentDataReport {
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
 	}
-
+ 
 	public void selectSource(String sourceName, final String sourceValue) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -400,7 +400,7 @@ public class CustomDocumentDataReport {
 		for (int i = 0; i < Wfields.length; i++) {
 		bc.waitTime(2);
 		//getWorkProductField(Wfields[i]).ScrollTo();
-		getWorkProductField(Wfields[i]).Click();
+		getWorkProductField(Wfields[i]).waitAndClick(10);
 		}
 		getAddToSelectedBtn().waitAndClick(2);
 		driver.scrollPageToTop();
