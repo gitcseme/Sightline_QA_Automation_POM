@@ -114,6 +114,11 @@ public class DocView_Regression25 {
 		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
 		docexp.getDocExp_SelectAllDocs().Click();
 		driver.waitForPageToBeReady();
+        if (doclist.getYesAllPageDocs().isDisplayed()) {
+            doclist.getYesAllPageDocs().waitAndClick(5);
+            doclist.getPopUpOkBtn().waitAndClick(10);           
+        }
+        baseClass.waitTime(5);
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
