@@ -69,7 +69,7 @@ public class RedactionPage {
     public RedactionPage(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+//        this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
         driver.waitForPageToBeReady();
         bc = new BaseClass(driver);
        }

@@ -23,7 +23,7 @@ public class InstanceSettings {
     public InstanceSettings(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+ "Instance/InstanceSettings#");
+//        this.driver.getWebDriver().get(Input.url+ "Instance/InstanceSettings#");
     }
 
     public void enable2FA() {

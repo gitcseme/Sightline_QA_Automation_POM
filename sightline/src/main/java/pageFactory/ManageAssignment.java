@@ -101,7 +101,7 @@ public class ManageAssignment {
 
 		this.driver = driver;
 		base = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+//		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		docView = new DocViewMetaDataPage(driver);
 	}
 

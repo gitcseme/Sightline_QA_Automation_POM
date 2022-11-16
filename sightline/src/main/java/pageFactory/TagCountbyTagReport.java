@@ -143,7 +143,7 @@ public class TagCountbyTagReport {
 		this.driver = driver;
 		bc = new BaseClass(driver);
 		softAssertion = new SoftAssert();
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+//		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
 	}
 

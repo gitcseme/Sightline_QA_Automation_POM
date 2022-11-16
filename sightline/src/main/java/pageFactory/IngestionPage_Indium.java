@@ -1105,7 +1105,7 @@ public class IngestionPage_Indium {
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+//		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
 
