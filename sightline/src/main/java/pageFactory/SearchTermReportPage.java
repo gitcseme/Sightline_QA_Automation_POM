@@ -1141,5 +1141,4 @@ public class SearchTermReportPage {
 		getScheduleSubmit().waitAndClick(10);
 		bc.VerifySuccessMessage("Record scheduled successfully");
 	}
-
 }

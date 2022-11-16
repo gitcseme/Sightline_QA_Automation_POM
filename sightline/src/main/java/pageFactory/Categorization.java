@@ -240,6 +240,7 @@ public class Categorization {
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
 	}
+	
 
 	public void selectTagInCat(String tagName) {
 		driver.WaitUntil((new Callable<Boolean>() {

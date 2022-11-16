@@ -135,7 +135,7 @@ public class TagsAndFolders_Regression25 {
 		DocViewPage docview= new DocViewPage(driver);
 		base.waitForElement(docview.getDocView_MiniDocListIds(1));
 		docview.getDocView_MiniDocListIds(1).waitAndClick(10);
-		docview.saveAndNextNewCodingFormSelectingTags(tag);
+		docview.saveAndNextNewCodingFormSelectingTags();
 		base.passedStep("Document with same MD5Hash as of saved document is tag propagated successfully");
 		
 		driver.waitForPageToBeReady();

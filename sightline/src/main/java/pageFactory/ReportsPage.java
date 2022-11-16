@@ -312,6 +312,7 @@ public class ReportsPage {
 		softAssertion = new SoftAssert();
 		communicationExplorer = new CommunicationExplorerPage(driver);
 	}
+	
 
 	public void TallyReportButton() {
 		ReportsPage report = new ReportsPage(driver);

@@ -48,6 +48,7 @@ public class ReportRegression_25 {
 		in = new Input();
 		in.loadEnvConfig();
 	}
+	
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

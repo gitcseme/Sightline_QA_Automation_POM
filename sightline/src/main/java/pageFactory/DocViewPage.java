@@ -2204,8 +2204,9 @@ public class DocViewPage {
 
 	// added by sowndarya.velraj
 
-	public Element tagnameInDocview(String tag) {
-		return driver.FindElementByXPath("//span[contains(text(),'" + tag + "')]//..//..//input[@type='radio']");
+
+	public Element tagnameInDocview() {
+		return driver.FindElementByXPath("//span[@type='checkbox']");
 	}
 
 	public Element RevRemarkNotchinPlayer() {
@@ -28840,48 +28841,29 @@ public class DocViewPage {
 	 * @Author sowndarya
 	 * @Description To verify is Analytics panel present or not 'RPMXCON-51844'
 	 */
-	public void saveAndNextNewCodingFormSelectingTags(String tag) {
+	public void saveAndNextNewCodingFormSelectingTags() {
 
 		driver.waitForPageToBeReady();
-		if(tagnameInDocview(tag).isElementAvailable(5))
-		{
-			System.out.println("true");
-		}else
-		{
-			System.out.println("false");
-		}
-		
-		if(tagnameInDocview(tag).isDisplayed())
-		{
-			System.out.println("true");
-		}else
-		{
-			System.out.println("false");
-		}
-		try {
-			base.waitForElement(tagnameInDocview(tag));
-			tagnameInDocview(tag).waitAndClick(10);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		tagnameInDocview().waitAndClick(10);
 		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Applied coding saved successfully");
 		base.CloseSuccessMsgpopup();
 
 	}
+
 	/**
-	 * @author 
+	 * @author
 	 * @throws InterruptedException
 	 * @Description: This method used to verify copy and paste text on doc comment
 	 *               box using offset
 	 * 
 	 */
-	public String verifyCopyAndPasteRedacTextOnCommentBoxOffSet(int offset1,int offset2,int offset3, int offset4) throws InterruptedException {
+	public String verifyCopyAndPasteRedacTextOnCommentBoxOffSet(int offset1, int offset2, int offset3, int offset4)
+			throws InterruptedException {
 		driver.waitForPageToBeReady();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -28900,8 +28882,8 @@ public class DocViewPage {
 		}
 		driver.waitForPageToBeReady();
 		Thread.sleep(1000);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(),offset1,offset2).clickAndHold()
-				.moveByOffset(offset3,offset4).release().build().perform();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), offset1, offset2)
+				.clickAndHold().moveByOffset(offset3, offset4).release().build().perform();
 		driver.waitForPageToBeReady();
 		// copy the text
 		actions.keyDown(Keys.CONTROL);

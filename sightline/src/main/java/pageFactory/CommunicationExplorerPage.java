@@ -390,6 +390,7 @@ public class CommunicationExplorerPage {
 		base = new BaseClass(driver);
 //		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
+		
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 

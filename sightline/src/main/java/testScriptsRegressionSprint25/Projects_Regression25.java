@@ -46,7 +46,7 @@ public class Projects_Regression25 {
 		input.loadEnvConfig();
 
 	}
-
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
@@ -60,6 +60,7 @@ public class Projects_Regression25 {
 		projects = new ProjectPage(driver);
 
 	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
