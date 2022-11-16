@@ -121,8 +121,8 @@ public class DomainDashboard_Regression25 {
 
 		baseClass.stepInfo("Selecting the project");
 		dash.filterProject(FilterPrjt);
-		driver.waitForPageToBeReady();
 		
+		baseClass.waitTime(3);
 		baseClass.stepInfo("Verifying the presence of custodians for prject in beehive table");
 		List<WebElement> element = dash.getColumValue(baseClass.getIndex(dash.getTableHeader(), "CUSTODIANS (#)"))
 				.FindWebElements();
@@ -150,7 +150,8 @@ public class DomainDashboard_Regression25 {
 		baseClass.stepInfo("Test case Id: RPMXCON-53146");
 		baseClass.stepInfo("To verify if user customize the column list but does not save the changes,then previous list should be displayed when user login for the same domain");
 		userManage = new UserManagement(driver);
-
+		baseClass.selectproject(Input.domainName);
+		
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Logged in as " + Input.da1userName);
 
@@ -163,21 +164,26 @@ public class DomainDashboard_Regression25 {
 		dash.getSavebtn().waitAndClick(10);
 
 		baseClass.stepInfo("Removing the column without saving it");
+		driver.waitForPageToBeReady();
 		dash.AddOrRemoveColum(columns);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Relogin as " + Input.da1userName);
 		
+		baseClass.waitTime(3);
 		baseClass.stepInfo("Verifying the presence of selected column in beehive table");
 		List<String> tableheadervalues = dash.getColumValues(dash.getTableHeader());
 		System.out.println(tableheadervalues);
+		
+		driver.waitForPageToBeReady();
 		if(tableheadervalues.contains("SECURITY GROUPS (#)")&& tableheadervalues.contains("INGESTIONS (#)")) {
 			baseClass.passedStep("User is presented with previous existing column list");
 		}else {
 			baseClass.failedStep("User is not presented with previous existing column list");
 		}
 		
+		driver.waitForPageToBeReady();
 		dash.AddOrRemoveColum(columns);
 		dash.getSavebtn().waitAndClick(10);
 		
