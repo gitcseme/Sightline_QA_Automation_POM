@@ -90,7 +90,7 @@ public class AnnotationLayer {
 	public AnnotationLayer(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Annotations/Annotations");
+//		this.driver.getWebDriver().get(Input.url + "Annotations/Annotations");
 		base = new BaseClass(driver);
 	}
 

@@ -52,7 +52,7 @@ public class ReviewProgressByReviewerReportPage {
     public ReviewProgressByReviewerReportPage(Driver driver){
 
     	this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
+//        this.driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);

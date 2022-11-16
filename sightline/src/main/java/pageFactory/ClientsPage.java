@@ -165,7 +165,7 @@ public class ClientsPage {
 	public ClientsPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
+//		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
 		driver.waitForPageToBeReady();
 
 		bc = new BaseClass(driver);

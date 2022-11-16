@@ -221,7 +221,7 @@ public class ABMReportPage {
 
 		this.driver = driver;
 		bc = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+//		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
 	}
 

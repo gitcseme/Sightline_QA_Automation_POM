@@ -570,7 +570,7 @@ public class BatchRedactionPage {
 
 		this.driver = driver;
 
-		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
+//		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 		login = new LoginPage(driver);

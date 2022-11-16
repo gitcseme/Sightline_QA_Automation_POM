@@ -64,7 +64,7 @@ public class ManageIPRestrictions {
 	public ManageIPRestrictions(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Project/CreateIPRestriction");
+//		this.driver.getWebDriver().get(Input.url + "Project/CreateIPRestriction");
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
 

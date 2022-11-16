@@ -546,7 +546,7 @@ public class BatchPrintPage {
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "BatchPrint/");
+//		this.driver.getWebDriver().get(Input.url + "BatchPrint/");
 		base = new BaseClass(driver);
 	}
 

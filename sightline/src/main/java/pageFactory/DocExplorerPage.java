@@ -649,7 +649,7 @@ public class DocExplorerPage {
 
 		this.driver = driver;
 		bc = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+//		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		driver.waitForPageToBeReady();
 		assertion = new SoftAssert();
 		doclist = new DocListPage(driver);

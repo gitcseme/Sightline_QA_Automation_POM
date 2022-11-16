@@ -189,7 +189,7 @@ public class ProjectFieldsPage {
 	public ProjectFieldsPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "ProjectFields/ProjectFieldsList");
+//		this.driver.getWebDriver().get(Input.url + "ProjectFields/ProjectFieldsList");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}

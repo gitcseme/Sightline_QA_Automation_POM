@@ -153,7 +153,7 @@ public class KeywordPage {
 	public KeywordPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+//		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}

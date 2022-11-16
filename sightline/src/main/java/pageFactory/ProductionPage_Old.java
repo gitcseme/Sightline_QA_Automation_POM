@@ -130,7 +130,7 @@ public class ProductionPage_Old {
     public ProductionPage_Old(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Production/Home");
+//        this.driver.getWebDriver().get(Input.url+"Production/Home");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
     }
