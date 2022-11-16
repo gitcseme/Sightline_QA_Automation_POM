@@ -28896,6 +28896,20 @@ public class DocViewPage {
 		base.stepInfo("copied text is pasted on codingform comment box");
 		return status;
 	}
+	
+	/**
+	 * @author Mohan Venugopal Date: 11/15/22 Modified date:N/A Modified by: N/A
+	 * Description : To verify application latency is not more than 5 seconds. 
+	 */
+	public void loadingCountVerify(int waitTime, Element loadingElement) throws InterruptedException {
+		base.stepInfo("Verifying Application not hang or shows latency longer than 5 seconds.");
+		base.waitTime(waitTime); // In order to verify latency
+		if (loadingElement.isElementAvailable(1)) {
+			base.passedStep("Application not hang or shows latency of "+waitTime+" seconds.");
+		} else {
+			base.failedMessage("Continues Loading more than "+waitTime+" seconds.");
+		}
+	}
 }
 
 

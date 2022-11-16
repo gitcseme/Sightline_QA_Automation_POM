@@ -569,19 +569,33 @@ public class TallyPage {
 	public ElementCollection getSelectSourcedOptionsList() {
 		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
 	}
-	
-	//added by arun
+
+	// added by arun
 	public Element getMetaData(String field) {
-		return driver.FindElementByXPath("//select[@id='metadataselect']//option[contains(text(),'"+field+"')]");
+		return driver.FindElementByXPath("//select[@id='metadataselect']//option[contains(text(),'" + field + "')]");
 	}
+
 	public Element getToolTipCount() {
 		return driver.FindElementByXPath("//div[@class='tipsy-inner']");
 	}
+
 	public Element getValues(int i) {
-		return driver.FindElementByCssSelector("rect[class='selected'][y='"+i+"']");
+		return driver.FindElementByCssSelector("rect[class='selected'][y='" + i + "']");
 	}
+
 	public Element getExportButtonStatus() {
 		return driver.FindElementByXPath("//button[@id='btnExportTallyReportToExcel']");
+	}
+
+	// added by Mohan
+
+	public Element getTallyActionButton() {
+		return driver.FindElementByXPath("//button[@id='tallyactionbtn']");
+	}
+
+	public Element getTallyActionAndNavigateTo(String navigateTo) {
+		return driver.FindElementByXPath(
+				"//button[@id='tallyactionbtn']/following-sibling::ul//li//a[contains(.,'" + navigateTo + "')]");
 	}
 
 	public TallyPage(Driver driver) {
@@ -2451,58 +2465,56 @@ public class TallyPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 17/10/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check the field available un metadata list
 	 */
 	public void verifyMetaDataUnAvailabilityInTallyReport(String field) {
-		
+
 		navigateTo_Tallypage();
 		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
 		getTally_SelectaTallyFieldtoruntallyon().Click();
 		base.waitForElement(getTally_Metadataselect());
-		if(getMetaData(field).isElementAvailable(10)) {
-			base.failedStep(field+"is available in metadata list");
-		}
-		else {
-			base.passedStep(field+"is not available in metadata list");
+		if (getMetaData(field).isElementAvailable(10)) {
+			base.failedStep(field + "is available in metadata list");
+		} else {
+			base.passedStep(field + "is not available in metadata list");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 18/10/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will get the mapping in tally report
 	 */
-	
-	public HashMap<String,Integer> getDocsCountFortallyReport() {
-		
-		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		
-		List<String> meta =verifyTallyChart();
+
+	public HashMap<String, Integer> getDocsCountFortallyReport() {
+
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+		List<String> meta = verifyTallyChart();
 		List<Integer> count = new ArrayList<Integer>();
 		Actions action = new Actions(driver.getWebDriver());
-		int chartnumber =getrectValues().size();
+		int chartnumber = getrectValues().size();
 		System.out.println(chartnumber);
-		for(int i=0;i<30*chartnumber;i+=30) {
+		for (int i = 0; i < 30 * chartnumber; i += 30) {
 			Element ele = getValues(i);
 			action.moveToElement(ele.getWebElement()).build().perform();
-			String text =getToolTipCount().getText();
+			String text = getToolTipCount().getText();
 			String[] data = text.split(" ");
 			int docsCount = Integer.parseInt(data[0]);
 			count.add(docsCount);
 		}
-		for(int j=0;j<meta.size();j++) {
+		for (int j = 0; j < meta.size(); j++) {
 			map.put(meta.get(j), count.get(j));
 		}
-		base.passedStep("DocsCount mapping in tally report"+map);
+		base.passedStep("DocsCount mapping in tally report" + map);
 		return map;
-		
-		
-	}
-	
 
-	/* author- Vijaya.Rani
+	}
+
+	/*
+	 * author- Vijaya.Rani
 	 * 
 	 * 
 	 */
@@ -2530,7 +2542,7 @@ public class TallyPage {
 		UtilityLog.info("Navigated to Doclist page");
 
 		driver.waitForPageToBeReady();
-		DocListPage docList=new DocListPage(driver);
+		DocListPage docList = new DocListPage(driver);
 		base.waitForElement(docList.getTableFooterDocListCount());
 		base.waitTime(8);
 		String DocListCount = docList.getTableFooterDocListCount().getText();
@@ -2539,55 +2551,54 @@ public class TallyPage {
 		String[] doccount = DocListCount.split(" ");
 		String Document = doccount[5];
 		System.out.println(Document);
-		base.digitCompareEquals(Integer.valueOf(Document), count, "Documents are loaded Successfully", "Documents are not loaded");
-		
+		base.digitCompareEquals(Integer.valueOf(Document), count, "Documents are loaded Successfully",
+				"Documents are not loaded");
 
 	}
-	
-	
 
 	/**
 	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will check the generation of tally report for metadata
+	 * @description: this method will check the generation of tally report for
+	 *               metadata
 	 */
 	public void verifyTallyReportGenerationForMetadata(String metadata) {
-		
+
 		selectSourceByProject();
 		selectTallyByMetaDataField(metadata);
 		base.waitForElement(getTally_btnTallyAll());
 		getTally_btnTallyAll().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		String exportStatus = getExportButtonStatus().GetAttribute("disabled");
-		base.stepInfo("export button disabled status after searching with metadata-"+exportStatus);
-		if(getTallyChartRectbar().isDisplayed() && exportStatus==null) {
+		base.stepInfo("export button disabled status after searching with metadata-" + exportStatus);
+		if (getTallyChartRectbar().isDisplayed() && exportStatus == null) {
 			base.passedStep("Tally report generated for the field-" + metadata);
-		}
-		else {
-			base.failedStep("Tally report not generated and export option not available"+metadata);
+		} else {
+			base.failedStep("Tally report not generated and export option not available" + metadata);
 		}
 	}
+
 	/**
 	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will perform tally and search for allcustodians metadata
+	 * @description: this method will perform tally and search for allcustodians
+	 *               metadata
 	 */
 	public void performTallyAndSearchForAllCustodians() {
-		
-		List<String> custodians =verifyTallyChart();
+
+		List<String> custodians = verifyTallyChart();
 		HashMap<String, Integer> map = getDocsCountFortallyReport();
-		for(int i=0;i<custodians.size();i++) {
+		for (int i = 0; i < custodians.size(); i++) {
 			String custodian = custodians.get(i);
-			if(!(custodian.isEmpty())) {
+			if (!(custodian.isEmpty())) {
 				int tallyResult = map.get(custodian);
-				base.stepInfo("tally result for "+ custodian + "-" + tallyResult);
+				base.stepInfo("tally result for " + custodian + "-" + tallyResult);
 				base.stepInfo("perform search with field and verify purehit count with report");
 				SessionSearch search = new SessionSearch(driver);
-				int searchResult =search.MetaDataSearchInBasicSearch("AllCustodians", "\""+custodian+"\"");
-				base.stepInfo("search result for "+custodian+"-" + searchResult);
-				if(tallyResult==searchResult ) {
+				int searchResult = search.MetaDataSearchInBasicSearch("AllCustodians", "\"" + custodian + "\"");
+				base.stepInfo("search result for " + custodian + "-" + searchResult);
+				if (tallyResult == searchResult) {
 					base.passedStep("Counts matched for search result and tally report");
 					break;
-				}
-				else {
+				} else {
 					base.failedStep("Counts not matched for search result and tally report");
 				}
 			}
@@ -2596,30 +2607,54 @@ public class TallyPage {
 
 	/**
 	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will perform tally and search for  metadata
+	 * @description: this method will perform tally and search for metadata
 	 */
 	public void performTallyAndSearchForMetadata(String metadata) {
-		
-		List<String> values =verifyTallyChart();
+
+		List<String> values = verifyTallyChart();
 		HashMap<String, Integer> map = getDocsCountFortallyReport();
-		for(int i=0;i<values.size();i++) {
+		for (int i = 0; i < values.size(); i++) {
 			String value = values.get(i);
-			if(!(value.isEmpty())) {
+			if (!(value.isEmpty())) {
 				int tallyResult = map.get(value);
-				base.stepInfo("tally result for "+ value + "-" + tallyResult);
+				base.stepInfo("tally result for " + value + "-" + tallyResult);
 				base.stepInfo("perform search with field and verify purehit count with report");
 				SessionSearch search = new SessionSearch(driver);
-				int searchResult =search.MetaDataSearchInBasicSearch(metadata, value);
-				base.stepInfo("search result for "+value+"-" + searchResult);
-				if(tallyResult==searchResult ) {
+				int searchResult = search.MetaDataSearchInBasicSearch(metadata, value);
+				base.stepInfo("search result for " + value + "-" + searchResult);
+				if (tallyResult == searchResult) {
 					base.passedStep("Counts matched for search result and tally report");
 					break;
-				}
-				else {
+				} else {
 					base.failedStep("Counts not matched for search result and tally report");
 				}
 			}
 		}
 	}
 
+	/**
+	 * @author Mohan.Venugopal Date: 11/15/22
+	 * @description: To select first bar chart and navigate to any page
+	 * @param navigateTo
+	 */
+	public void selectBarChartAndNavigateTo(String navigateTo) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getTallyChartRectbar());
+			getTallyChartRectbar().waitAndClick(5);
+
+			base.waitForElement(getTallyActionButton());
+			getTallyActionButton().waitAndClick(5);
+
+			base.waitForElement(getTallyActionAndNavigateTo(navigateTo));
+			getTallyActionAndNavigateTo(navigateTo).waitAndClick(5);
+
+			base.stepInfo(navigateTo + " is clicked successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(navigateTo + " is not clicked under tally action field");
+		}
+
+	}
 }
