@@ -318,6 +318,8 @@ public class TestData {
 	public String relativeOverlayDat;
 	public String uncAbsoluteText;
 	public String absoluteOverlayText;
+	public String H13696smallSetFolder;
+	public String smallSetDat;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

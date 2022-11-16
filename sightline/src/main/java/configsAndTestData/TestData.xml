@@ -131,6 +131,8 @@
 	<relativeOverlayDat>Overlay_Ingestion Path_DAT_RelativePath.dat</relativeOverlayDat>
 	<uncAbsoluteText>Ingestion Path_Text_AbsolutePath.lst</uncAbsoluteText>
 	<absoluteOverlayText>Overlay_Ingestion Path_Text_AbsolutePath.lst</absoluteOverlayText>
+	<H13696smallSetFolder>0002_H13696_1_smallset_GD1</H13696smallSetFolder>
+	<smallSetDat>0036_loadfile.dat</smallSetDat>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

@@ -1098,6 +1098,9 @@ public class IngestionPage_Indium {
 	public Element getErrorPagination() {
 		return driver.FindElementById("myDataTable_paginate");
 	}
+	public Element getIngestionDetailPopupFromGrid(String dataset) {
+		return driver.FindElementByXPath("//td[contains(text(),'"+dataset+"')]//following-sibling::td//a");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -5834,7 +5837,8 @@ public class IngestionPage_Indium {
 	 */
 
 	public void ignoreErrorsAndCatlogging() {
-
+		
+		driver.waitForPageToBeReady();
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByFAILED());
@@ -11074,5 +11078,89 @@ public class IngestionPage_Indium {
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 		}
+		
+		/**
+		 * @author: Arun Created Date: 15/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of overlay ingestion till
+		 *               copying stage
+		 */
+		public void getSearchablePdfValueFromCopySection(String term,Boolean value) {
+			
+			base.waitTime(2);
+			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getRunIndexing());
+			base.waitForElement(getRunIndexing());
+			if (copyTableDataValue(term, 1).isDisplayed()) {
+				base.passedStep(term + "details displayed in the copying table column");
+			} else {
+				base.failedStep(term + "details not displayed in the copying table column");
+			}
+			int sourceCount=Integer.parseInt(copyTableDataValue(term, 1).getText());
+			base.passedStep("Searchable pdf source count present in copy section"+sourceCount);
+			int errorCount =Integer.parseInt(copyTableDataValue(term, 3).getText());
+			base.passedStep("Searchable pdf error count present in copy section"+errorCount);
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+			
+			if(value=false) {
+				if(sourceCount==0) {
+					base.passedStep("searchable pdf count is zero");
+				}
+				else {
+					base.failedStep("searchable pdf count is not zero");
+				}
+			}
+			else {
+				if(sourceCount>0 && errorCount>=0) {
+					base.passedStep("searchable pdf count displayed for source and error");
+				}
+				else {
+					base.failedStep("searchable pdf count not displayed for source and error");
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 15/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will select the ingestion details present in grid
+		 */
+		public void getIngestionDetailFromGrid(String dataset) {
+				
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			for(int i=0;i<=5;i++) {
+				if(getIngestionDetailPopupFromGrid(dataset).isElementAvailable(10)) {
+					getIngestionDetailPopupFromGrid(dataset).waitAndClick(10);
+					break;
+					}
+					else {
+						driver.scrollingToBottomofAPage();
+						base.waitForElement(getIngestionPaginationNextButton());
+						getIngestionPaginationNextButton().waitAndClick(5);
+						driver.waitForPageToBeReady();
+					}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 15/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform ingestion for GNonsearchablePDFLoadfileFolder
+		 */
+		public void performGNonSearchableFolderIngestion(String ingestionType,String sourceSystem,String datFile,String nativeFile,String textFile) {
+			
+			selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, Input.sourceLocation, Input.GNonsearchablePDFLoadfileFolder);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile, Input.sourceDocIdSearch);
+			base.stepInfo("Selecting Native file");
+			selectNativeSource(nativeFile, false);
+			base.stepInfo("Selecting Text file");
+			selectTextSource(textFile, false);
+			selectDateAndTimeFormat(Input.dateFormat);
+			clickOnNextButton();
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started successfully");	
+		}
+		
 
 }
