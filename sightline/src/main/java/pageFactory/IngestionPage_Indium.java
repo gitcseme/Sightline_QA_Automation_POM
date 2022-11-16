@@ -11162,5 +11162,16 @@ public class IngestionPage_Indium {
 			base.stepInfo("Ingestion started successfully");	
 		}
 		
+		/**
+		 * @author: Arun Created Date: 16/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will navigate to inegstion home page and verify current url
+		 */
+		public void navigateToIngestionHomePageAndVerifyUrl() {
+			
+			navigateToIngestionPage();
+			base.verifyUrlLanding(Input.url + "Ingestion/Home", "Navigated to Ingestion home page successfully", 
+					"not in ingestion home page");
+		}
+		
 
 }

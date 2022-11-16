@@ -62,6 +62,7 @@ public class Ingestion_Regression_8 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -72,16 +73,14 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47411",enabled = true, groups = { "regression" })
-	public void verifyPaginationOptionInErrorDetailPopup() throws InterruptedException {
+	public void TCA1verifyPaginationOptionInErrorDetailPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47411");
 		baseClass.stepInfo("To verify that pagination is provide to Error details pop");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
 				Input.sourceLocation, Input.HiddenPropertiesFolder);
@@ -116,7 +115,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60821",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathIngestionOverlay() throws InterruptedException {
+	public void TCA2verifyAbsolutePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60821");
 		baseClass.stepInfo("verify the ingestion status if DAT file contain the Absolute path.");
@@ -125,9 +124,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -189,7 +186,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60826",enabled = true, groups = { "regression" })
-	public void verifyAbsoluteRelativePathIngestionOverlay() throws InterruptedException {
+	public void TCA3verifyAbsoluteRelativePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60826");
 		baseClass.stepInfo("verify the ingestion status of overlay with Dat relative path");
@@ -198,9 +195,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -262,7 +257,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60825",enabled = true, groups = { "regression" })
-	public void verifyRelativeAbsolutePathIngestionOverlay() throws InterruptedException {
+	public void TCA4verifyRelativeAbsolutePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60825");
 		baseClass.stepInfo("verify the ingestion status of overlay with Dat absolute path");
@@ -271,9 +266,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -333,7 +326,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47390",enabled = true, groups = { "regression" })
-	public void verifyIngestionHomePageTiles() throws InterruptedException {
+	public void TCA5verifyIngestionHomePageTiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47390");
 		baseClass.stepInfo("verify that on Ingestion Home page displays default 10 tiles");
@@ -341,9 +334,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Select all filters");
 		ingestionPage.applyFilters();
 		//verify default tiles count
@@ -364,7 +355,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48078",enabled = true, groups = { "regression" })
-	public void verifyTallyReportForExceptionResolution() throws InterruptedException {
+	public void TCA6verifyTallyReportForExceptionResolution() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48078");
 		baseClass.stepInfo("verify Tally report should be generated with Metadata 'ExceptionResolution'");
@@ -388,7 +379,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48081",enabled = true, groups = { "regression" })
-	public void verifyTallyReportForAllCustodians() throws InterruptedException {
+	public void TCA7verifyTallyReportForAllCustodians() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48081");
 		baseClass.stepInfo("To Verify AllCustodians in Tally and Search");
@@ -415,7 +406,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60822",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathTextFileIngestionOverlay() throws InterruptedException {
+	public void TCB1verifyAbsolutePathTextFileIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60822");
 		baseClass.stepInfo("verify the ingestion status of overlay with text file contain absolute path");
@@ -425,9 +416,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -495,7 +484,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48082",enabled = true, groups = { "regression" })
-	public void verifyTallyReportForReviewExportID() throws InterruptedException {
+	public void TCA8verifyTallyReportForReviewExportID() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48082");
 		baseClass.stepInfo("To Verify ReviewExportID in Tally and Search.");
@@ -521,7 +510,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48270",enabled = true, groups = { "regression" })
-	public void verifyNuixCreatedDataIngestion() throws InterruptedException {
+	public void TCA9verifyNuixCreatedDataIngestion() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48270");
 		baseClass.stepInfo("verify that Ingestion should not failed In Approve stage");
@@ -530,9 +519,7 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.H13696smallSetFolder);
 		if (status == false) {
@@ -565,7 +552,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54550",enabled = true, groups = { "regression" })
-	public void verifySearchablePdfCountInCopyingStage() throws InterruptedException {
+	public void TCB2verifySearchablePdfCountInCopyingStage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54550");
 		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field is blank");
@@ -573,16 +560,15 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile4,
-					Input.nativeLoadFile3, Input.textLoadFile3);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile2,
+					Input.nativeLoadFile2, Input.textLoadFile2);
 			ingestionPage.verifyApprovedStatusForOverlayIngestion();
 			baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+			ingestionPage.getIngestionDetailPopup(1).waitAndClick(10);
 			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
 			ingestionPage.runFullAnalysisAndPublish();
 		}
@@ -602,7 +588,7 @@ public class Ingestion_Regression_8 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54549",enabled = true, groups = { "regression" })
-	public void verifyRequiredPdfGenerationWithFalse() throws InterruptedException {
+	public void TCB3verifyRequiredPdfGenerationWithFalse() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54549");
 		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field set to FALSE");
@@ -610,16 +596,15 @@ public class Ingestion_Regression_8 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-		ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile4,
-				Input.nativeLoadFile3, Input.textLoadFile3);
+		ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile2,
+				Input.nativeLoadFile2, Input.textLoadFile2);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+		ingestionPage.getIngestionDetailPopup(1).waitAndClick(10);
 		ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
 		ingestionPage.runFullAnalysisAndPublish();
 		}
