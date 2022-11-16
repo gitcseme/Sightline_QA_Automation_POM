@@ -255,14 +255,15 @@ public class AssignmentRegression_25 {
 	 * @Description :To verify the functionality of the ReDistribute Document for
 	 *              Uncompleted Document.RPMXCON-53699
 	 */
+
 	@Test(description = "RPMXCON-53699", enabled = true, groups = { "regression" })
 	public void verifyReDistributeDocumentForUncompletedDocument() throws InterruptedException {
 
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-53699 Assignments");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53699");
 		baseClass.stepInfo("To verify the functionality of the ReDistribute Document for Uncompleted Document.");
 
 		// creating Assignment
@@ -274,7 +275,10 @@ public class AssignmentRegression_25 {
 		// adding reviewers and distributing the documents to reviewers
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		assignment.add2ReviewerAndDistribute();
-		baseClass.waitTime(4);
+		baseClass.waitForElement(baseClass.getSuccessMsgHeader());
+		baseClass.waitTime(6);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
 		// select the Reviewer having uncomplete documents & Redistribute documents to
 		// another reviewer

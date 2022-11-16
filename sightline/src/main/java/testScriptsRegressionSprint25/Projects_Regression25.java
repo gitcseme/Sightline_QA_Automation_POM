@@ -36,7 +36,6 @@ public class Projects_Regression25 {
 	ProjectPage projects;
 	String projectName;
 	String clientName;
-	ProductionPage page;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -59,7 +58,6 @@ public class Projects_Regression25 {
 		base = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 		projects = new ProjectPage(driver);
-		page = new ProductionPage(driver);
 
 	}
 

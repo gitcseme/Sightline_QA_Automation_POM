@@ -114,15 +114,17 @@ public class TagsAndFolders_Regression25 {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.createNewTagNotSave(tag,Input.tagNamePrev);
 		base.waitForElement(tagsAndFolderPage.getPropTagExactDuplic());
-		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(5);
+		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(10);
 		base.waitForElement(tagsAndFolderPage.getSaveTag());
 		tagsAndFolderPage.getSaveTag().waitAndClick(10);
+		System.out.println(tag);
 		base.VerifySuccessMessage("Tag added successfully");
 		base.stepInfo("Tag : " + tag + " Created Successfully With Exact Duplicate (MD5Hash)");
 
 		CodingForm form =new CodingForm(driver);
 		form.navigateToCodingFormPage();
 		form.saveCodingFormWithRedioGroup(codingForm, tag);
+		driver.waitForPageToBeReady();
 		form.assignCodingFormToSG(codingForm);
 		
 		
@@ -136,6 +138,7 @@ public class TagsAndFolders_Regression25 {
 		docview.saveAndNextNewCodingFormSelectingTags(tag);
 		base.passedStep("Document with same MD5Hash as of saved document is tag propagated successfully");
 		
+		driver.waitForPageToBeReady();
 		form.navigateToCodingFormPage();
 		form.assignCodingFormToSG(Input.codingFormName);
 		loginPage.logout();
