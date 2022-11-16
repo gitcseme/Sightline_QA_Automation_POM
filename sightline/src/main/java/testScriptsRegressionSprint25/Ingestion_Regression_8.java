@@ -514,6 +514,124 @@ public class Ingestion_Regression_8 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 15/11/2022 TestCase Id:RPMXCON-48270
+	 * Description :To Verify NUIX created DATA, Ingestion should not failed In Approve for 
+	 * DAT Delimiters "New Line" ASCII 174
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48270",enabled = true, groups = { "regression" })
+	public void verifyNuixCreatedDataIngestion() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48270");
+		baseClass.stepInfo("verify that Ingestion should not failed In Approve stage");
+		String ingestionName = null;
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Add new ingestion details");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.H13696smallSetFolder);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix,
+					Input.sourceLocation, Input.H13696smallSetFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.smallSetDat, Input.sourceDocIdSearch);
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+			ingestionPage.runFullAnalysisAndPublish();
+			baseClass.stepInfo("Nuix data Ingestion Name :"+ingestionName);
+			baseClass.passedStep("Ingestion not failed in any stage and published successfully");
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.H13696smallSetFolder);
+			baseClass.failedMessage("Ingestion already present in the project-"+ingestionName);
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 15/11/2022 TestCase Id:RPMXCON-54550
+	 * Description :To verify that if docs have 'Require PDF Generation' field is blank then it will 
+	 * not be considered for OCRing and searchable PDF creation.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-54550",enabled = true, groups = { "regression" })
+	public void verifySearchablePdfCountInCopyingStage() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54550");
+		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field is blank");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Add new ingestion details");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		if (status == false) {
+			ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile4,
+					Input.nativeLoadFile3, Input.textLoadFile3);
+			ingestionPage.verifyApprovedStatusForOverlayIngestion();
+			baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			ingestionPage.getIngestionDetailFromGrid(Input.GD994NativeTextForProductionFolder);
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			baseClass.passedStep("searchable pdf not considered when field is blank");
+		}
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 15/11/2022 TestCase Id:RPMXCON-54549
+	 * Description :To verify that if docs have 'Require PDF Generation' field set to FALSE will not 
+	 * be considered for OCRing and searchable PDF creation.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-54549",enabled = true, groups = { "regression" })
+	public void verifyRequiredPdfGenerationWithFalse() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54549");
+		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field set to FALSE");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
+				"not in ingestion home page");
+		baseClass.stepInfo("Add new ingestion details");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		if (status == false) {
+		ingestionPage.performGD_994NativeFolderIngestion(Input.iceSourceSystem, Input.datLoadFile4,
+				Input.nativeLoadFile3, Input.textLoadFile3);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+		ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			//if add-only ingestion already present ,will get the data from ingestion grid
+			ingestionPage.getIngestionDetailFromGrid(Input.GD994NativeTextForProductionFolder);
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			baseClass.passedStep("searchable pdf not considered when field is false");
+		}
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

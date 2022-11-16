@@ -438,6 +438,8 @@ public class Input {
 	public static String relativeOverlayDat;
 	public static String uncAbsoluteText;
 	public static String absoluteOverlayText;
+	public static String H13696smallSetFolder;
+	public static String smallSetDat;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1455,6 +1457,8 @@ public class Input {
 		relativeOverlayDat = testData.getRelativeOverlayDat();
 		uncAbsoluteText = testData.getUncAbsoluteText();
 		absoluteOverlayText = testData.getAbsoluteOverlayText();
+		H13696smallSetFolder = testData.getH13696smallSetFolder();
+		smallSetDat = testData.getSmallSetDat();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
