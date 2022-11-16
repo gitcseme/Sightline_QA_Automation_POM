@@ -80,6 +80,7 @@ public class Ingestion_Regression {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 	}
 
 	/**
@@ -1008,7 +1009,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49521");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both TEXT and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it should displays default PDF file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
@@ -1054,7 +1055,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-50377");
 		baseClass.stepInfo("Verify that if PA ingested Native, PDF and TIFF's file and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's");
 		String ingestionType="Add Only";
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		DocViewPage docViewPage = new DocViewPage(driver);
 		boolean status = ingestionPage.verifyIngestionpublishWithAdditionalOptions(Input.PP_PDFGen_10Docs,"50");
 		System.out.println(status);
@@ -1097,7 +1098,7 @@ public class Ingestion_Regression {
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48195");
 		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		String ingestionType = "Add Only";
 		String familyMemberCount = "FamilyMemberCount";
@@ -1141,7 +1142,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
 		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it PDF should displays PDF in viewer");
 		String ingestionType="Overlay Only";
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, null,
 					null, "PDFs - 5Docs.lst", Input.ImagePPPDF10docs,"Select", null, null, null);
 		
@@ -1181,7 +1182,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49519");
 		baseClass.stepInfo("Verify that if PA ingested both Native and TIFF's file, the 'Generate Searchable PDFs' is true and TIFF is missing then searchable PDF's should be generated from the Natives.");
 		String ingestionType="Overlay Only";
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,"Select", null, null, null);
 		ingestionPage.navigateToIngestionPage();
@@ -1224,7 +1225,7 @@ public class Ingestion_Regression {
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49509");
 		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to false then it should display TIFF in default viewer");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		String ingestionType="Overlay Only";
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
