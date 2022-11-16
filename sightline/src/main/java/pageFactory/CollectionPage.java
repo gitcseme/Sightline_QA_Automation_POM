@@ -128,6 +128,10 @@ public class CollectionPage {
 	}
 
 	// Added by Mohan
+	public Element getLoadingFoldersIcon() {
+		return driver.FindElementByXPath("//span[contains(text(),'Loading folders')]");
+	}
+	
 	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
 		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]");
 	}
@@ -2885,5 +2889,32 @@ public class CollectionPage {
 
 		// return dataNmae created / used
 		return colllectionDataToReturn;
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify loading Icon on Dataset folder
+	 */
+	public void loadingIconOnDataSetPage() {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFolderabLabel());
+			getFolderabLabel().waitAndClick(5);
+			
+			// validation for Loading Icon
+			if (getLoadingFoldersIcon().isElementAvailable(3)) {
+				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
+			}else if (getRefreshButtonInSelectFolderField().isElementAvailable(2)) {
+				base.waitForElement(getRefreshButtonInSelectFolderField());
+				getRefreshButtonInSelectFolderField().waitAndClick(5);
+				getLoadingFoldersIcon().isElementAvailable(3);
+				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
+			}else {
+				base.failedStep("Failed to check processing Icon is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
