@@ -247,7 +247,7 @@ public class Domain_Management_Regression25 {
 		driver.waitForPageToBeReady();
 		user.getSelectRole().selectFromDropdown().selectByVisibleText(Input.ProjectAdministrator);
 		int Size = user.getProjectDropdown().selectFromDropdown().getOptions().size();
-		baseClass.waitTime(1);
+		baseClass.waitTime(2);
 		for (int i = 2; i <= Size; i++) {
 			String DropText = user.getDomainProjectDropdown(i).GetAttribute("title");
 			DropDownValues.add(DropText);
