@@ -149,12 +149,14 @@ public class DomainDashboard_Regression25 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-53146");
 		baseClass.stepInfo("To verify if user customize the column list but does not save the changes,then previous list should be displayed when user login for the same domain");
-		userManage = new UserManagement(driver);
-		baseClass.selectproject(Input.domainName);
+		
 		
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Logged in as " + Input.da1userName);
-
+		
+		baseClass.selectproject(Input.domainName);
+		userManage = new UserManagement(driver);
+		
 		DomainDashboard dash = new DomainDashboard(driver);
 		String[] columns = {"NoOfSecurityGroup","NoOfIngestion"};
 		driver.waitForPageToBeReady();
@@ -176,7 +178,7 @@ public class DomainDashboard_Regression25 {
 		List<String> tableheadervalues = dash.getColumValues(dash.getTableHeader());
 		System.out.println(tableheadervalues);
 		
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		if(tableheadervalues.contains("SECURITY GROUPS (#)")&& tableheadervalues.contains("INGESTIONS (#)")) {
 			baseClass.passedStep("User is presented with previous existing column list");
 		}else {
