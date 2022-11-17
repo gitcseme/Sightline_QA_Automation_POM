@@ -1674,4 +1674,99 @@ public class ProjectPage {
 			bc.verifyOriginalSortOrder(ColVal, Values, SortingOrder, true);
 	}
 
+	/**
+	 * @author sowndarya
+	 * @param projectname
+	 * @param clientName
+	 * @param hcode
+	 * @Description: verifying processing engine section
+	 */
+	public void verifyProcessingEngineSectionCtrProj(String projectname, String clientName, String hcode) {
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProjectBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddProjectBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectName().Visible();
+			}
+		}), Input.wait30);
+		getProjectName().SendKeys(projectname);
+
+		bc.waitForElement(getSelectEntityType());
+		getSelectEntityType().selectFromDropdown().selectByVisibleText("Not a Domain");
+
+		bc.waitForElement(getSelectClientName());
+		getSelectClientName().selectFromDropdown().selectByVisibleText(clientName);
+
+		bc.waitForElement(getHCode());
+		getHCode().SendKeys(hcode);
+
+		driver.scrollingToBottomofAPage();
+
+		bc.waitForElement(getProjectDBServerDropdown());
+		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+
+		bc.waitForElement(getProjServerPathinCreateProjPg());
+		getProjServerPathinCreateProjPg().waitAndClick(10);
+
+		bc.waitForElement(getIngestionserverpath());
+		getIngestionserverpath().waitAndClick(10);
+
+		bc.waitForElement(getProductionserverpath());
+		getProductionserverpath().waitAndClick(10);
+
+		getProjectFolder().Clear();
+		getProjectFolder().SendKeys("Automation");
+
+		getIngestionFolder().Clear();
+		getIngestionFolder().SendKeys("Automation");
+
+		getProductionFolder().Clear();
+		getProductionFolder().SendKeys("Automation");
+
+		driver.scrollPageToTop();
+		
+		bc.waitForElement(getEngineTypeNUIXRadio());
+		if (getEngineTypeNUIXRadio().isElementAvailable(5) && getEngineTypeICERadio().isElementAvailable(5)) {
+			bc.passedStep("'Processing Setting' section Enable As Expected..");
+		} else {
+			bc.failedStep("'Processing Setting' section Not Enable...");
+		}
+		
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().ScrollTo();
+		getAddProject_SettingsTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
+		getNoOfDocuments().SendKeys("20000");
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
 }

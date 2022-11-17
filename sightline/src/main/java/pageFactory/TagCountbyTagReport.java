@@ -139,6 +139,9 @@ public class TagCountbyTagReport {
 				+ "']/following-sibling::td)[" + i + "]");
 	}
 
+	public ElementCollection getTags() {
+		return driver.FindElementsByXPath("//div[@id='jstreeTagsGroup']//li//a");
+	}
 	public TagCountbyTagReport(Driver driver) {
 		this.driver = driver;
 		bc = new BaseClass(driver);
@@ -386,4 +389,21 @@ public class TagCountbyTagReport {
 		}
 		
 	}
+
+	/**
+	 * @author sowndarya
+	 */
+	public void navigateToTagCountByTagReportPage() {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getReport_TagCount());
+		getReport_TagCount().waitAndClick(5);
+		driver.waitForPageToBeReady();
+	}
+	
+
+
+
+
+
 }
