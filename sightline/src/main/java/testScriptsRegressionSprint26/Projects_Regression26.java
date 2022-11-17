@@ -3,6 +3,7 @@ package testScriptsRegressionSprint26;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -131,4 +132,98 @@ public class Projects_Regression26 {
 		base.passedStep("Verified - if Client Type is edited from Domain to Non-Domain then Processing Engine section does not displays");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 17/11/2022 TestCase Id:RPMXCON-55959
+	 * Description :Verify that default value appears in "Initial Size of Project Database"  field on Create Client page. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-55959",enabled = true, groups = { "regression" })
+	public void verifyInitialSizeFieldOnClientPage() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-55959");
+		base.stepInfo("Verify default value appears in 'Initial Size of Project Database' field on Create Client page");
+		
+		//Login as SA and verify
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as SA");
+		base.stepInfo("Navigate to manage-clients");
+		projects.navigateToClientFromHomePage();
+		base.stepInfo("click on add new client");
+		base.waitForElement(projects.getAddNewClient());
+		projects.getAddNewClient().waitAndClick(10);
+		base.stepInfo("select client type as 'domain'");
+		base.waitForElement(projects.getSelectEntity());
+		projects.getSelectEntity().selectFromDropdown().selectByVisibleText("Domain");
+		ClientsPage client = new ClientsPage(driver);
+		client.verifyDefaultSizeAndAvailableOptions("Medium");
+		base.passedStep("All the expected values available in project database field");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 17/11/2022 TestCase Id:RPMXCON-55591
+	 * Description :To verify that only Sys Admin can create a New Project_PA
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-55591",enabled = true, groups = { "regression" })
+	public void verifyProjectCreationAccessForPA() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-55591");
+		base.stepInfo("To verify that only Sys Admin can create a New Project_PA");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as PA");
+		base.stepInfo("verify add new project option as PA user");
+		projects.verifyNavigatingToProjectCreationPageAsPA();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 17/11/2022 TestCase Id:RPMXCON-56193
+	 * Description :Verify functionality if user cancel the Domain Project creation 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-56193",enabled = true, groups = { "regression" })
+	public void verifyIfUserCancelsProjectCreation() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-56193");
+		base.stepInfo("Verify functionality if user cancel the Domain Project creation");
+		String projectName="QaProject"+Utility.dynamicNameAppender();
+		
+		//Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as SA");
+		base.stepInfo("Navigate to manage-project section");
+		projects.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(Input.url + "Project/Project", "user on project page", "not on project page");
+		base.stepInfo("click add project button and enter details");
+		base.waitForElement(projects.getAddProjectBtn());
+		projects.getAddProjectBtn().waitAndClick(10);
+		base.waitForElement(projects.getProjectName());
+		projects.getProjectName().SendKeys(projectName);
+		base.waitForElement(projects.getSelectEntityType());
+		projects.getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+		base.waitForElement(projects.getSelectClientName());
+		projects.getSelectClientName().selectFromDropdown().selectByVisibleText(Input.domainName);
+		base.stepInfo("click on cancel button");
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(projects.getCancelButton());
+		projects.getCancelButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		//verify project creation and redirected url
+		base.verifyUrlLanding(Input.url + "Project/Project", "Redirected to project page", 
+				"not redirected to project page");
+		projects.filterTheProject(projectName);
+		if(!(projects.getEditProject(projectName).isElementAvailable(10))){
+			base.passedStep("Project not created after clicking cancel button");
+		}
+		else {
+			base.failedStep("project created even after clicking the cancel button");
+		}
+		loginPage.logout();
+	}
+
 }

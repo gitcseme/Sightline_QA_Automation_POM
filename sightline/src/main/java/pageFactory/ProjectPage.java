@@ -242,6 +242,11 @@ public class ProjectPage {
 	public Element getIncrementalAnalyticsCheckbox() {
 		return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']//following-sibling::i");
 	}
+	
+	public Element getManageProjectOption() {
+		return driver.FindElementByXPath("//a[@title='Manage']//following-sibling::ul//li//a[contains(text(),' Projects')]");
+	}
+	
 
 	// added by sowndarya
 
@@ -1769,4 +1774,22 @@ public class ProjectPage {
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
 	}
+	
+	/**
+	 * @author: Arun Created Date: 17/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the navigation to add new project page as PA
+	 */
+	
+	public void verifyNavigatingToProjectCreationPageAsPA() {
+		 
+		bc.waitForElement(getManageBtn());
+		getManageBtn().waitAndClick(10);
+		if(!(getManageProjectOption().isElementAvailable(10))) {
+			bc.passedStep("PA user have no access to navigate to add new project page");
+		}
+		else {
+			bc.failedStep("PA user have access to navigate to create new project page");
+		}
+	 }
+ 
 }
