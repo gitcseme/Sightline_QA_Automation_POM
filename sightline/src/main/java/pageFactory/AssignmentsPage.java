@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -11562,6 +11565,66 @@ public class AssignmentsPage {
 						+ TotalDocsCount + "'",
 				"actual Docs Count in Reviewers Tab doesn't match with the Expected Docs Count");
 
+	}
+
+	/**
+	 * @author sowndarya
+	 * @description This method used to select coding form in assignments page
+	 * 
+	 */
+	public void EditCodingformInSelectedAssignment(String CFName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectSortCodingForm_Tab());
+		getSelectSortCodingForm_Tab().waitAndClick(10);
+
+		bc.waitForElement(SelectCFPopUp_Step1());
+		SelectCFPopUp_Step1().isDisplayed();
+		bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+
+		bc.waitForElement(getSelectCF_CheckBox(CFName));
+		getSelectCF_CheckBox(CFName).ScrollTo();
+		getSelectCF_CheckBox(CFName).waitAndClick(5);
+		bc.waitTime(1);
+		getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
+		bc.waitTime(1);
+
+		sortOrderNxtBtn().ScrollTo();
+		sortOrderNxtBtn().waitAndClick(10);
+
+		if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+			sortCodeFormOrderSaveBtn().waitAndClick(5);
+			bc.waitTime(2);
+			bc.waitForElement(getSelectedCodeForminAssignPAge());
+		}
+		bc.stepInfo("changed 'set as default' option from one coding form to other");
+
+		if (getSelectedCodeForminAssignPAge().isDisplayed()) {
+			String acualCfName = getSelectedCodeForminAssignPAge().getText();
+
+			String passMSg = "Selected a coding form " + CFName + " and its reflected in manage assignments page";
+			String failMsg = "Selected  coding form " + CFName + "  is not reflected in manage assignments page";
+			bc.compareTextViaContains(acualCfName, CFName, passMSg, failMsg);
+			bc.stepInfo("set as default  displayed beside selected coding form");
+
+		}
+
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.VerifySuccessMessage("Assignment updated successfully");
+		bc.CloseSuccessMsgpopup();
+
+		bc.waitForElement(getSelectedCodeForminAssignPAge());
+		String actual = getSelectedCodeForminAssignPAge().getText();
+		System.out.println(actual);
+		String expected = CFName + " " + "(Set as Default), Default Project Coding Form";
+		System.out.println(expected);
+		SoftAssert soft = new SoftAssert();
+		soft.assertEquals(actual, expected);
+		soft.assertAll();
+		bc.stepInfo(
+				"All selected coding forms should be displayed with set as default for chosen coding form in brackets");
 	}
 
 }
