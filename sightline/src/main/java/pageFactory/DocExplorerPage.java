@@ -645,6 +645,16 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[4]//div");
 	}
 
+	public Element getDocExp_EmailAuthorSearchName(String emailAuthor) {
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailAuthor + "']");
+	}
+	
+	public Element getEmailAuthorValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[8]//div");
+
+	}
+	
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -4133,6 +4143,25 @@ public class DocExplorerPage {
 			bc.failedStep(
 					"Exception occcured while verifying documents after applying exclude functionality by EmailRecipientNames"
 							+ e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the EmailAuthor field values
+	 *               in doc exp list view
+	 */
+	public void verifyEmailAuthorValuesInDocExp(String[] emailAuthor) {
+
+		for (int j = 0; j < emailAuthor.length; j++) {
+
+			bc.waitForElement(getDocExp_EmailAuthorSearchName("EMAILAUTHOR"));
+			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeys(emailAuthor[j]);
+			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getEmailAuthorValues(), emailAuthor[j]);
+			driver.Navigate().refresh();
 		}
 	}
 }
