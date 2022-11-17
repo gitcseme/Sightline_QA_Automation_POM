@@ -81,9 +81,8 @@ public class Projects_Regression26 {
 	}
 	
 	/**
-	 * @author NA Testcase No:RPMXCON-53058
-	 * @Description:Verify Domain creation with long domain name(less than 255 char)
-	 *                     for Non domain client
+	 * @author NA Testcase No:RPMXCON-56177
+	 * @Description:Verify if Client Type is edited from Domain to Non-Domain then Processing Engine section does not displays
 	 **/
 	@Test(description = "RPMXCON-56177", enabled = true, groups = { "regression" })
 	public void verifyClientEditDomainToNonDomain() throws Exception {
