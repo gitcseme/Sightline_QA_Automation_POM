@@ -347,50 +347,6 @@ public class CodingForm_Regression25 {
 		loginPage.logout();
 	}
 
-	/**
-	 * @Author
-	 * @Description : Verify that when user try to delete default set coding form an
-	 *              error message occurred \"Error ! A coding form configured as
-	 *              default coding form for a security group or an assignment cannot
-	 *              be deleted\".
-	 */
-	@Test(description = "RPMXCON-65190", enabled = true, groups = { "regression" })
-	public void verifyUserTryDeleteDefaultSetCodingFormErrorMessageOccured() {
-		String codingform = "codingForm" + Utility.dynamicNameAppender();
-		baseClass.stepInfo("Test case Id: RPMXCON-65190 CodingForm");
-		baseClass.stepInfo(
-				"Verify that when user try to delete default set coding form an error message occurred \"Error ! A coding form configured as default coding form for a security group or an assignment cannot be deleted\". ");
-
-		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		// creating new coding Form
-		baseClass.stepInfo("creating new coding Form.");
-		codingForm.navigateToCodingFormPage();
-		codingForm.createCodingFormWithoutObjects(codingform);
-
-		// setting newly created coding Form as Default Coding Form
-		baseClass.stepInfo("setting newly created coding Form as Default Coding Form.");
-		codingForm.AssignCFstoSG(codingform);
-
-		// performing Delete action
-		baseClass.stepInfo(" performing Delete action on  default set coding form.");
-		codingForm.deleteCodingForm(codingform, codingform);
-
-		// Verify that an error message occurred
-		String expectedErrorMessage = "A coding form configured as default coding form for a security group or an assignment cannot be deleted.";
-		baseClass.VerifyErrorMessage(expectedErrorMessage);
-		baseClass
-				.passedStep("Verified that when user try to delete default set coding form an error message occurred.");
-
-		// deleting created coding form
-		codingForm.selectDefaultProjectCodingForm();
-		codingForm.deleteCodingForm(codingform, codingform);
-
-		// logOut
-		loginPage.logout();
-	}
-
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
