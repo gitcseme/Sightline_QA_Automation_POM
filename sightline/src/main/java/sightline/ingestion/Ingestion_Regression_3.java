@@ -38,9 +38,7 @@ public class Ingestion_Regression_3 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		ip = new Input();
-		ip.loadEnvConfig();
-
+	
 
 	}
 
@@ -53,6 +51,7 @@ public class Ingestion_Regression_3 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -70,7 +69,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Validate the columns available in grid view table");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on show all and grid view button");
 		ingestionPage.navigateToIngestionPage();
 		baseClass.waitForElement(ingestionPage.getShowAllCheckbox());
@@ -94,7 +93,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify that mandatory fields must be selected in mapping");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and click next button");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,
 				Input.datLoadFile1);
@@ -123,7 +122,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify that in 'Source & Overwrite Settings'section, the source selection is changed.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and verify available file option checkboxes");
 		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
 		ingestionPage.navigateToIngestionPage();
@@ -149,7 +148,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify that row population in the Configure Mapping section.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details and click on Next");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat);
@@ -179,7 +178,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify configure mapping warning message when mapping not matched");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and click next button");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
 		baseClass.stepInfo("Configure mapping and run ingestion");
@@ -213,7 +212,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify configure mapping warning message when mapping matched");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and click next button");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
 		baseClass.stepInfo("Configure mapping and run ingestion");
@@ -244,13 +243,17 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
 		baseClass.stepInfo("Add new ingestion and Perform Catalogging");
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
 		ingestionPage.performRollbackAndDeleteIngestion();
 		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
+		}
+		baseClass.passedStep("add only ingestion already present in this project");
 		loginPage.logout();
 	}
 	
@@ -266,7 +269,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify In Ingestion, Copy ,ASCII(59) should be default New Line delimiter.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with value ASCII(59)");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -313,7 +316,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName = null;
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with text files");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -360,7 +363,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Verify Ingestion rollback for Audio indexed & non Audio Indexed.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -399,7 +402,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify overlay ingestion of the same files, which are already ingested");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
@@ -429,7 +432,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
@@ -470,7 +473,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
@@ -511,7 +514,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
@@ -553,7 +556,7 @@ public class Ingestion_Regression_3 {
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with text files");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -595,7 +598,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName=null;
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion for dataset 1 - '"+Input.HiddenPropertiesFolder+"'");
 		boolean status1 = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status1 == false) {
@@ -661,7 +664,7 @@ public class Ingestion_Regression_3 {
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -708,7 +711,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Verify ingesting 500 documents and do analytics these documents.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
 		System.out.println(status);
@@ -733,7 +736,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("verify that selection of Close button redirects to Ingestion Home page");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Navigate to Ingestion home page");
 		ingestionPage.navigateToIngestionPage();
 		baseClass.waitForElement(ingestionPage.getFilterByButton());
@@ -759,7 +762,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Verify that if Ingestion failed in Cataloging, then user can export the error details successfully");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {

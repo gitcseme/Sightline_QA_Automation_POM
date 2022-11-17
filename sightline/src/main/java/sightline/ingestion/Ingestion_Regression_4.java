@@ -53,6 +53,7 @@ public class Ingestion_Regression_4 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -69,7 +70,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Single/Multiple DAT file is Available.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			baseClass.stepInfo("Add new ingestion with dat file");
@@ -93,7 +94,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Verify: No of Headers in DAT and No. of headers in Destination field in Configure mapping page.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details and click on Next");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat);
@@ -121,7 +122,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Verify the Preview of Ingestion display for first 50 records with valid inputs.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details and click on Next");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);
 		ingestionPage.verifySourceSectionStatusAfterClickingNextButton(); 
@@ -145,7 +146,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Verify repeated destination field error during overlay only.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform overlay ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, 
 				"RPMXCON-61759");
@@ -172,7 +173,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform overlay ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
@@ -199,7 +200,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Verify repeated destination field error during add only.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
@@ -225,7 +226,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted once it is in Draft mode");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 		baseClass.stepInfo("perform add only ingestion");
@@ -261,7 +262,7 @@ public class Ingestion_Regression_4 {
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status1 = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		ingestionPage.navigateToIngestionPage();
@@ -294,7 +295,7 @@ public class Ingestion_Regression_4 {
 		String[] values = {"ParentDocID","HeadOfHouseholdDocID","FamilyID"};
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
@@ -320,7 +321,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("Validate Add Only ingestion with DAT file in ASCII format.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
 			baseClass.stepInfo("Perform add only ingestion with dat file in ASCII format");
@@ -355,7 +356,7 @@ public class Ingestion_Regression_4 {
 				"EmailToAddresses","EmailToNames" , "EmailRecipientDomainCount"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
 			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile2,Input.nativeLoadFile2,Input.textLoadFile2);
@@ -402,7 +403,7 @@ public class Ingestion_Regression_4 {
 		String[] values = {"EmailDuplicateDocIDs", "EmailIsDuplicate"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
 		if (status == false) {
 			ingestionPage.performAutomationCollection1kIngestion(Input.sourceSystem,Input.DATFile2,Input.textFile1);
@@ -431,7 +432,7 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("verify user is not able to search the data if Ingestion is in Draft Mode.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
 				Input.sourceLocation, Input.HiddenPropertiesFolder);
@@ -466,7 +467,7 @@ public class Ingestion_Regression_4 {
 		String field = "HiddenProperties";
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			baseClass.stepInfo("perform add only ingestion for hiddenproperties");

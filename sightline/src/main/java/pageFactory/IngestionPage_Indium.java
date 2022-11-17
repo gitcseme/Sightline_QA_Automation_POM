@@ -9048,9 +9048,10 @@ public class IngestionPage_Indium {
 				}
 			}), Input.wait30);
 			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.documentKey);
-			performMapping(6,"EmailBCCNameAndBCCAddress",Input.email,"EmailBCCNamesAndAddresses");
-			performMapping(7,"EmailCCNamAndCCAddress",Input.email,"EmailCCNamesAndAddresses");
-			performMapping(8,"EmailToNameAndAddress",Input.email,Input.emailToNamesAndAddresses);
+			//there is a spelling difference in mapping section in pt and qa, will faill in pt
+			performMapping(6,"EmailBCCNamesAndAddresses",Input.email,"EmailBCCNamesAndAddresses");
+			performMapping(7,"EmailCCNamesAndAddresses",Input.email,"EmailCCNamesAndAddresses");
+			performMapping(8,"EmailToNamesAndAddresses",Input.email,Input.emailToNamesAndAddresses);
 			clickOnPreviewAndRunButton();
 			base.stepInfo("Ingestion started");
 			
@@ -11084,7 +11085,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will verify the status of overlay ingestion till
 		 *               copying stage
 		 */
-		public void getSearchablePdfValueFromCopySection(String term,Boolean value) {
+		public void getSearchablePdfValueFromCopySection(String term,String field) {
 			
 			base.waitTime(2);
 			base.waitForElement(getActionDropdownArrow());
@@ -11102,7 +11103,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getCloseButton());
 			getCloseButton().waitAndClick(10);
 			
-			if(value=false) {
+			if(field.equalsIgnoreCase("false")) {
 				if(sourceCount==0) {
 					base.passedStep("searchable pdf count is zero");
 				}
@@ -11110,7 +11111,7 @@ public class IngestionPage_Indium {
 					base.failedStep("searchable pdf count is not zero");
 				}
 			}
-			else {
+			else if(field.equalsIgnoreCase("true")){
 				if(sourceCount>0 && errorCount>=0) {
 					base.passedStep("searchable pdf count displayed for source and error");
 				}

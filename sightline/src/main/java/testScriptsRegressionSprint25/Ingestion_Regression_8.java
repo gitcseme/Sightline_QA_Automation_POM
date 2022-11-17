@@ -569,12 +569,12 @@ public class Ingestion_Regression_8 {
 			ingestionPage.verifyApprovedStatusForOverlayIngestion();
 			baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
 			ingestionPage.getIngestionDetailPopup(1).waitAndClick(10);
-			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, "false");
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		else {
 			ingestionPage.getIngestionDetailFromGrid(Input.GD994NativeTextForProductionFolder);
-			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, "false");
 			baseClass.passedStep("searchable pdf not considered when field is blank");
 		}
 		loginPage.logout();
@@ -605,13 +605,13 @@ public class Ingestion_Regression_8 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
 		ingestionPage.getIngestionDetailPopup(1).waitAndClick(10);
-		ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+		ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, "false");
 		ingestionPage.runFullAnalysisAndPublish();
 		}
 		else {
 			//if add-only ingestion already present ,will get the data from ingestion grid
 			ingestionPage.getIngestionDetailFromGrid(Input.GD994NativeTextForProductionFolder);
-			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, false);
+			ingestionPage.getSearchablePdfValueFromCopySection(Input.generateSearchablePDF, "false");
 			baseClass.passedStep("searchable pdf not considered when field is false");
 		}
 		loginPage.logout();
