@@ -57,6 +57,7 @@ public class Ingestion_Regression_6 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -81,7 +82,7 @@ public class Ingestion_Regression_6 {
 		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with type as 'Overlay'");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, 
 				Input.folder61759);
@@ -120,7 +121,7 @@ public class Ingestion_Regression_6 {
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.passedStep("perform add only ingestion without media indexing");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
@@ -174,7 +175,7 @@ public class Ingestion_Regression_6 {
 		baseClass.stepInfo("To verify that Overlay should work for  'SourceParentDocID' metadata");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.passedStep("perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.attachDocFolder);
 		if (status == false) {
@@ -214,7 +215,7 @@ public class Ingestion_Regression_6 {
 		String[] audioSearch = {Input.audioSearchString1,Input.audioSearchString2};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.passedStep("perform audio ingestion and publish docs");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
@@ -251,7 +252,7 @@ public class Ingestion_Regression_6 {
 		baseClass.stepInfo("To Verify Ingestion Overlays of DAT without unpublish.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
 		if (status == false) {
@@ -288,7 +289,7 @@ public class Ingestion_Regression_6 {
 		baseClass.stepInfo("Verify ingestion Dat file data having more than 400 chars.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with more than 400 char dat");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
 		if (status == false) {
@@ -325,7 +326,7 @@ public class Ingestion_Regression_6 {
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -379,7 +380,7 @@ public class Ingestion_Regression_6 {
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -450,7 +451,7 @@ public class Ingestion_Regression_6 {
 		loginPage.logout();
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with text files");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		if (status == false) {

@@ -47,8 +47,7 @@ public class Ingestion_Regression01 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		ip = new Input();
-		ip.loadEnvConfig();
+		
 
 	}
 
@@ -60,15 +59,16 @@ public class Ingestion_Regression01 {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 
 	}
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.projectName01 },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.projectName01 },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.projectName01 } };
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.projectName02 },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.projectName02 },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.projectName02 } };
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class Ingestion_Regression01 {
 
 		baseClass.stepInfo(
 				"Step 5 : Select all documents   Click on View in Doc List   Verify the Date fields from the metadata");
-		baseClass.selectproject(Input.projectName01);
+		baseClass.selectproject(Input.projectName02);
 		sessionSearch.basicContentSearch(fieldName);
 		sessionSearch.ViewInDocList();
 		DocListPage docListPage = new DocListPage(driver);
@@ -201,7 +201,7 @@ public class Ingestion_Regression01 {
 		baseClass.stepInfo(
 				"Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page");
 		baseClass.stepInfo("Step 2: Create an new Ingestion");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 
 		System.out.println(status);
@@ -235,7 +235,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -300,7 +300,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -348,7 +348,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -393,7 +393,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 
 		System.out.println(status);
@@ -451,7 +451,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 	
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 
@@ -495,7 +495,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 		
@@ -548,7 +548,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -615,7 +615,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -667,7 +667,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		String ingestionType="Add Only";	
 		System.out.println(status);
@@ -707,7 +707,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -750,7 +750,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		 boolean status=ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -814,7 +814,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -872,7 +872,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo(" addonly ingestion with mapping field selection");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
@@ -892,22 +892,31 @@ public class Ingestion_Regression01 {
 
 	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		loginPage = new LoginPage(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+			loginPage.logoutWithoutAssert();
 		}
 		try {
+//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
+			// LoginPage.clearBrowserCache();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		System.out.println("**Executed Advanced search Regression6**");
+	public void close2() {
+		try {
+			// LoginPage.clearBrowserCache();
+		} catch (Exception e) {
+			// no such session
+		}
+
 	}
 }

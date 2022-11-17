@@ -51,6 +51,7 @@ public class Regression_Ingestion02 {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -129,7 +130,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verify that in Ingestion Wizard page, in the TIFF section'Generate Searchable PDF for TIFFs' options should be displayed");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Verify Generate Searchable PDF option displayed in Tiff section");
 		ingestionPage.verifyGeneratePdfOptionInTiffSection();
 		loginPage.logout();
@@ -147,7 +148,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("To verify Document Count for Audio Docs in Indexing section");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion till indexing");
 		ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
 		ingestionPage.ingestionCatalogging();
@@ -192,7 +193,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("To Verify In Ingestions, for audio indexing, there should not be any error message.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -217,7 +218,7 @@ public class Regression_Ingestion02 {
 		sessionsearch = new SessionSearch(driver);
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion and start indexing");
 		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, Input.prodBeg);
 		ingestionPage.ignoreErrorsAndCatlogging();
@@ -248,7 +249,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is available");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Select dataset/source and move to mapping field section");
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.GD994NativeTextForProductionFolder,
 				Input.datLoadFile2, Input.documentKey);
@@ -283,7 +284,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verify Ingestion should published successfully with new Email metadata");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
@@ -310,7 +311,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiter");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with default new line delimiter");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
 				Input.sourceLocation, Input.HiddenPropertiesFolder);
@@ -345,7 +346,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("To Verify User is able to Ingest Transcript  along with native");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		baseClass.stepInfo("Ingest Transcript along with native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -374,7 +375,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verify progress bar and count data updated once ingestion process started");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Start new ingestion and verify status on tiles");
 		ingestionPage.IngestionOnlyForDatFile(Input.UniCodeFilesFolder,Input.datLoadFile1);
 		ingestionPage.verifyDetailsAfterStartedIngestion();
@@ -399,7 +400,7 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("To verify that user can Ingest the files which are in Draft Mode");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Map mandatory fields for ingestion and save");
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);

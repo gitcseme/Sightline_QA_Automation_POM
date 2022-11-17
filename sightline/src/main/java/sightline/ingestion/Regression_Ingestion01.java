@@ -53,7 +53,7 @@ public class Regression_Ingestion01 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-
+		ingestionPage = new IngestionPage_Indium(driver);
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -70,7 +70,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49549");
 		baseClass.stepInfo("Verify if Ingestion is saved as draft then on Ingestion page, it should retain the selected Date & Time format");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
 		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
@@ -89,8 +89,8 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49548");
 		baseClass.stepInfo("Verify if Ingestion is rollbacked and open in the wizard,On Ingestion page, it should display the default Date & Time format");
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst );
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -106,10 +106,10 @@ public class Regression_Ingestion01 {
 	 */
 	@Test(description ="RPMXCON-49702",enabled = true,  groups = {"regression" } )
 	public void verifyStitchedTiffTermUnderCopyColumn() throws InterruptedException  {
-		ingestionPage = new IngestionPage_Indium(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49702");
 		baseClass.stepInfo("Verify that if document has multipage TIFF then in Copying stage of Ingestion ,it should displays the 'Stitched TIFFs' under the Copy column");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
 		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 		ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
@@ -129,7 +129,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49537");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/MM/DD HH:MI:SS')");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -150,7 +150,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49518");
 		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/DD/MM' for ingestion which is same as in the DAT file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/DD/MM",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -171,7 +171,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49515");
 		baseClass.stepInfo("Verify when user selects date & time format 'MMDDYYYY' for ingestion which is same as in the DAT file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MMDDYYYY",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -191,7 +191,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49514");
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY' for ingestion which is same as in the DAT file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -211,7 +211,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49513");
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY' for ingestion which is same as in the DAT file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -231,7 +231,7 @@ public class Regression_Ingestion01 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49517");
 		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/MM/DD' for ingestion which is same as in the DAT file");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -253,7 +253,7 @@ public class Regression_Ingestion01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49506");
 		baseClass.stepInfo("Verify the 'Next' button enable/disable from 'Ingestion Wizard' screen when 'Date & Time Format' selected/not-selected");
 		baseClass.selectproject(Input.ingestDataProject);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.VerifyNextButtonStatusBasedOnDateTimeFormatSelection();
 		loginPage.logout();
 		
@@ -267,9 +267,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49733",enabled = true,  groups = {"regression" } )
 	public void verifyStitchedTiffCountUnderCopyColumn() throws InterruptedException   {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49733");
 		baseClass.stepInfo("Verify 'Missed Docs' count is display for 'Stitching TIFF' in Ingestion detail pop up");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
 		ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
 		ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
@@ -287,9 +287,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49522",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatMMDDYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49522");
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY HH:MI' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -308,9 +308,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49523",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatDDMMYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49523");
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -329,9 +329,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49525",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatDDMMYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49525");
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI:SS",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -350,9 +350,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49527",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforMMDDYYYYWithSlashFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49527");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -372,9 +372,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49528",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforDDMMYYYYWithSlashFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49528");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -393,9 +393,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49529",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforMMDDYYYYFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49529");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MMDDYYYY')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -414,9 +414,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49530",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforDDMMYYYYFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49530");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DDMMYYYY')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -435,9 +435,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49531",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforYYYYMMDDWithSlashFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49531");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/MM/DD')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -456,9 +456,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49532",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforYYYYDDMMWithSlashFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49532");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/DD/MM')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -477,9 +477,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49533",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforMMDDYYYYHHMIFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49533");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY HH:MI')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -499,9 +499,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49534",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforDDMMYYYYHHMIFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49534");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY HH:MI')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -520,9 +520,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49535",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforMMDDYYYYHHMISSFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49535");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY HH:MI:SS')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -541,9 +541,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49536",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorDisplayforDDMMYYYYHHMISSFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49536");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY HH:MI:SS')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -562,9 +562,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49516",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatDDMMYYYYInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49516");
 		baseClass.stepInfo("Verify when user selects date & time format 'DDMMYYYY' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DDMMYYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -582,9 +582,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49540",enabled = true,  groups = {"regression" } )
 	public void verifyCatalogingErrorForDiferentDateFormat() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49540");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -603,9 +603,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49541",enabled = true,  groups = {"regression" } )
 	public void verifyIgnoringCatalogingErrorAndContinueIngestion() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49541");
 		baseClass.stepInfo("Verify that Ingestion should be continued if cataloging date time error is displayed for few documents");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -626,9 +626,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47403",enabled = true,  groups = {"regression" } )
 	public void verifyHeadersDisplayOnMappingPage() throws Exception  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+
 		baseClass.stepInfo("Test case Id: RPMXCON-47403");
 		baseClass.stepInfo("To verify the headers display in Source field on mapping page.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
 		// verify header section count in popup matched with configure mapping section
@@ -643,9 +644,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-48176",enabled = true,  groups = {"regression" } )
 	public void verifyRollbackAfterCopyCompleted() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48176");
 		baseClass.stepInfo("To Verify Rollback in Ingestion after Copy is completed");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 		// Rollback
@@ -661,9 +662,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-48174",enabled = true,  groups = {"regression" } )
 	public void verifyIngestionDetailsAfterRollback() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48174");
 		baseClass.stepInfo("To Verify Ingestion details information after rollback");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
@@ -680,10 +681,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-46932",enabled = false,  groups = {"regression" } )
 	public void verifyAdminAbleToRollbackIngestion() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-46932");
 		baseClass.stepInfo("To verify that Admin is able to Rollback the ongoing Ingestion process.");
 		//Catalogging and rollback
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.rollBackIngestion();
@@ -711,9 +712,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47300",enabled = true,  groups = {"regression" } )
 	public void verifyMappingFieldsWithGoBackOption() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47300");
 		baseClass.stepInfo("If 'Add Only' option is selected,Verify Mapping and navigation upon selection of 'Go Back' option");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);	
 		ingestionPage.verifyMappingFiledPriorSelection(Input.docId,Input.dataSource,Input.custodian);
 		loginPage.logout();
@@ -728,10 +729,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47595",enabled = true,  groups = {"regression" } )
 	public void verifyIngestionStatusAfterRollback() throws InterruptedException   {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47595");
 		baseClass.stepInfo("After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.");
 		// verify ingestion Draft status after saving as draft
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// Verify ingestion Draft status after Catalogging
@@ -761,9 +762,9 @@ public class Regression_Ingestion01 {
 		
 		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49020");
 		baseClass.stepInfo("Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		// Perform catalog,copy and indexing for two ingestion
@@ -783,9 +784,9 @@ public class Regression_Ingestion01 {
 		
 		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49021");
 		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		// Perform Copying and indexing for two ingestion
@@ -802,10 +803,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-48861",enabled = true,  groups = {"regression" } )
 	public void verifyWarningMessageNotPromptedWhenRollingbackIngestion() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48861");
 		baseClass.stepInfo("Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)");
 		//Catalogging and rollback
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
@@ -830,10 +831,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47593",enabled = true,  groups = {"regression" } )
 	public void verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47593");
 		baseClass.stepInfo("As a project admin I will be able to rollback an ingestion - new approach");
 		// verify rollback option after saving ingestion as draft
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// Verify rollback option status after Catalogging stage
@@ -863,9 +864,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47258",enabled = true,  groups = {"regression" } )
 	public void verifyIngestionTileContentInHomePage() throws InterruptedException {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47258");
 		baseClass.stepInfo("To Verify Contents of Ingestion Tiles On Ingestions Home.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.verifyContentOnIngestionTiles();
@@ -882,9 +883,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47589",enabled = true,  groups = {"regression" } )
 	public void verifyIgnoreOptionInErrorList() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47589");
 		baseClass.stepInfo("Ingestion error list changes for  ignore fields in UI");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
@@ -903,9 +904,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49526",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49526");
 		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
@@ -928,10 +929,10 @@ public class Regression_Ingestion01 {
 		driver.Manage().window().setSize(dimension);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.ingestDataProject);
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50764");
 		baseClass.stepInfo("Verify that after resize browser Ingestion grid does not resize");
 		// verify size of the grid after resize browser
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.verifySizeOfIngestionGrid();
 		loginPage.logout();
 	}
@@ -943,9 +944,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49732",enabled = true,  groups = {"regression" } )
 	public void verifyStitchedTiffDocCountAfterRollback() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49732");
 		baseClass.stepInfo("Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -962,9 +963,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49497",enabled = true,  groups = {"regression" } )
 	public void verifyGeneratedSearchablePDFsErrorCountForTiff() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49497");
 		baseClass.stepInfo("Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -981,9 +982,10 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49496",enabled = true,  groups = {"regression" } )
 	public void verifyGeneratedSearchablePDFsDocumentCountForTiff() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+
 		baseClass.stepInfo("Test case Id: RPMXCON-49496");
 		baseClass.stepInfo("Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -1000,9 +1002,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-59385",enabled = true,  groups = {"regression" } )
 	public void verifyErrorStatusWhenPdfPathInDatOption() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-59385");
 		baseClass.stepInfo("Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.selectPdfInPathFileAndSaveAsDraft(Input.AK_NativeFolder,Input.DATFile1,Input.documentKey,Input.prodBeg);
 		loginPage.logout();
 	}
@@ -1014,9 +1016,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47296",enabled = true,  groups = {"regression" } )
 	public void verifyIngestionWithDraftMode() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47296");
 		baseClass.stepInfo("Ingestion with draft mode.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// verify options available for ingestion in draft state
@@ -1031,9 +1033,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47299",enabled = true,  groups = {"regression" } )
 	public void verifyIngestionDetailWithValidData() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47299");
 		baseClass.stepInfo("Verify Successful ingestion with ingestion details display with the help of Valid data and DAT file.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		// verify ingestion details after ingestion started
 		ingestionPage.verifyDetailsAfterStartedIngestion();
@@ -1048,9 +1050,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47406",enabled = true,  groups = {"regression" } )
 	public void verifyIndexingForTextFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47406");
 		baseClass.stepInfo("To verify indexing for the Text file from Ingestion details pop up.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
 		// verify copy,index and approve status during the ingestion in inprogress state
 		ingestionPage.verifyStatusDuringInProgress();
@@ -1069,9 +1071,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-49524",enabled = true,  groups = {"regression" } )
 	public void verifyDateFormatMMDDYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49524");
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI:SS",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
@@ -1090,9 +1092,9 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47590",enabled = true,  groups = {"regression" } )
 	public void verifyOptionsForErrorListedIngestion() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47590");
 		baseClass.stepInfo("Verify Back, Done and Save buttons along with ignore option for the error listed ingested records.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);	
 		//verify the options in error list ingestion details popup
@@ -1111,7 +1113,7 @@ public class Regression_Ingestion01 {
 	@Test(description ="RPMXCON-47590",enabled = true,  groups = {"regression" })
 	public void deleteMultipleIngestionAtDraftLevel() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("CleanUp Activity");
 		ingestionPage.deleteMultipleIngestion();
 		loginPage.logout();
