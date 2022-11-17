@@ -82,7 +82,7 @@
 	</systemPropertyVariables> 
 
 <suiteXmlFiles>
-            <suiteXmlFile>$suiteXmlFile=$using:suiteXmlFile</suiteXmlFile>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
      </suiteXmlFiles>    
 				</configuration>
 			</plugin>
