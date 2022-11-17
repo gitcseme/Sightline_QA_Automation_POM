@@ -3635,6 +3635,14 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']//a[contains(@onclick,'Txt')]");
 	}
 
+	public ElementCollection getselectDocsFromClockIcon() {
+		return driver.FindElementsByXPath("//*[@id='ulDocViewHistory']/li");
+	}
+
+	public Element getselectDocHistory(int no) {
+		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li)[" + no + "]");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -28918,4 +28926,24 @@ public class DocViewPage {
 			base.failedMessage("Continues Loading more than "+waitTime+" seconds.");
 		}
 	}
+	/**
+     * @author  Created Date: NA
+     * @description To verify copyandpaste is should be clicked
+     */
+   public void verifyCopyandPasteIconStatus() {
+        driver.waitForPageToBeReady();
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getCopyPasteIconStatus().Displayed();
+            }
+        }), Input.wait120);
+        String status = getCopyPasteIconStatus().GetAttribute("class");
+        System.out.println(status);
+        base.waitForElement(getCopyPasteIconStatus());
+        if (status.equals("active")) {
+            base.passedStep("Copy and paste icon is in enabled state");
+        } else {
+            base.failedStep("Copy and paste icon is in disabled state");
+        }
+   }
 }
