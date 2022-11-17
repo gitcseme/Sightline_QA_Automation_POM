@@ -254,6 +254,19 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getEnableSlipSheetToggle() {
+		return driver.FindElementByXPath("//input[@id='includeSlipSheetCheckBox']//parent::label//i");
+	}
+
+	public Element getSlipSheetOfProd_DDText() {
+		return driver.FindElementByXPath("//div[@id='slipSheetsDropdownDiv']//parent::div//label");
+	}
+
+	public Element getSlipSheetOfProd_DD() {
+		return driver.FindElementByXPath("//div[@id='slipSheetsDropdownDiv' and @class='disablePanel']");
+	}
+
 	public Element getTitle_TXB() {
 		return driver.FindElementByXPath("//input[@id='coverSheetTitleName']");
 	}
