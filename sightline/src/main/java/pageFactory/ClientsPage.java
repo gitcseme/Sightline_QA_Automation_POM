@@ -1,7 +1,9 @@
 package pageFactory;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -564,5 +566,37 @@ public class ClientsPage {
 	  	bc.stepInfo("save button was clicked");
 	  	softAssertion.assertAll();
 	  }
+	 
+
+		/**
+		 * @author: Arun Created Date: 17/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the default selected and available options
+		 * 				 for 'initial size of project database' field.
+		 */
+	 public void verifyDefaultSizeAndAvailableOptions(String expected) {
+		 
+		 String[] sizeOptions = {"Small (less than 1000 documents)","Medium (less than 25000 documents)",
+		 			"Big (more than 25000 documents)"};
+		 bc.waitForElement(getDBSizeOption());
+		 //verify default selection
+		 String defaultOption = getDBSizeOption().selectFromDropdown().getFirstSelectedOption().getText();
+		 if(defaultOption.contains(expected)) {
+			 bc.passedStep("By default the 'Initial Size of Project Database' field-"+defaultOption);
+		 }
+		 else {
+			 bc.failedStep("default selected option of project database is not expected");
+		 }
+		 //get available options
+		 List <WebElement> options = getDBSizeOption().selectFromDropdown().getOptions();
+		 int numberOfOptions = options.size();
+		 for(int i=0;i<numberOfOptions;i++) {
+			 String getOption = options.get(i).getText();
+			 bc.textCompareEquals(sizeOptions[i], getOption, "option available in project db field-"+getOption, 
+					 "option not available in project db field"+getOption);
+		 }
+		 //close the popup
+		 bc.waitForElement(getCancelBtn());
+		 getCancelBtn().waitAndClick(10);
+	 }
 
 }
