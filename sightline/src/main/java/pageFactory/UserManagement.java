@@ -1177,6 +1177,13 @@ public class UserManagement {
 	public Element getAlertMsgBox() {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
 	}
+	public Element getErrorMsgInProjectTab() {
+		return driver.FindElementByXPath("//*[@id='RightAssignErrorMessage']");
+	}
+	
+	public Element getErrorMsgInDomainTab() {
+		return driver.FindElementById("RightAssignErrorMessageForDomain");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
