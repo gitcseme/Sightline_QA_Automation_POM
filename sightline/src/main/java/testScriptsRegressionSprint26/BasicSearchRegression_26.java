@@ -51,7 +51,7 @@ public class BasicSearchRegression_26 {
 	@Test(description = "RPMXCON-61610", enabled = true, groups = { "regression" })
 	public void verifyApplicationNotDisplayingWarningMessageSubtractionMarkEmbeddedWithinRegularExpressionQuery() {
 
-		String searchString = "\"##U\\-C Tester\"";
+		String searchString = "\"##U-C Tester\"";
 		// login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-61610 Basic Search");
@@ -66,9 +66,16 @@ public class BasicSearchRegression_26 {
 		// Verify that Subtraction mark - is treating as whitespace and it returns pure
 		// hit count on Basic search screen.
 		base.stepInfo("Performing Search Action");
-		session.searchAndReturnPureHit_BS();
+		int purehit = session.searchAndReturnPureHit_BS();
 		base.passedStep(
 				"Verified that Subtraction mark - is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
 
 		// logOut
 		login.logout();
@@ -100,9 +107,16 @@ public class BasicSearchRegression_26 {
 		// Verify that asterisk mark * is treating as whitespace and it returns pure hit
 		// count on Basic search screen.
 		base.stepInfo("Performing Search Action");
-		session.searchAndReturnPureHit_BS();
+		int purehit = session.searchAndReturnPureHit_BS();
 		base.passedStep(
 				"Verified that asterisk mark * is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
 
 		// logOut
 		login.logout();
@@ -134,9 +148,16 @@ public class BasicSearchRegression_26 {
 		// Verify that dollar $ is treating as whitespace and it returns pure hit count
 		// on Basic search screen.
 		base.stepInfo("Performing Search Action");
-		session.searchAndReturnPureHit_BS();
+		int purehit = session.searchAndReturnPureHit_BS();
 		base.passedStep(
 				"Verified that dollar $ is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
 
 		// logOut
 		login.logout();
@@ -168,9 +189,16 @@ public class BasicSearchRegression_26 {
 		// Verify that Space is treating as whitespace and it returns pure hit count on
 		// Basic search screen.
 		base.stepInfo("Performing Search Action");
-		session.searchAndReturnPureHit_BS();
+		int purehit = session.searchAndReturnPureHit_BS();
 		base.passedStep(
 				"Verified that Space is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
 
 		// logOut
 		login.logout();
@@ -202,9 +230,16 @@ public class BasicSearchRegression_26 {
 		// Verify that colon mark : is treating as whitespace and it returns pure hit
 		// count on Basic search screen.
 		base.stepInfo("Performing Search Action");
-		session.searchAndReturnPureHit_BS();
+		int purehit = session.searchAndReturnPureHit_BS();
 		base.passedStep(
 				"Verified that colon mark : is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
 
 		// logOut
 		login.logout();
