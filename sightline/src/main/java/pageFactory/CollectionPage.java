@@ -9,9 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class CollectionPage {
@@ -131,7 +135,7 @@ public class CollectionPage {
 	public Element getLoadingFoldersIcon() {
 		return driver.FindElementByXPath("//span[contains(text(),'Loading folders')]");
 	}
-	
+
 	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
 		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]");
 	}
@@ -250,6 +254,10 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getDestinationPathLocation(String nameAtttribute) {
+		return driver.FindElementByXPath("//div[text()='" + nameAtttribute + "']//..//div[@class='popout text-wrap']");
+	}
+
 	public Element getPopUpStatusShowDetailsLink(String columnName, String status) {
 		return driver.FindElementByXPath("//td[contains(text(),'" + columnName
 				+ "')]//..//span[text()[normalize-space()='" + status + "']]//a[text()='Show Details']");
@@ -746,11 +754,12 @@ public class CollectionPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : verify Collection information Page after clciking speciifed
+	 * @Description : verify Collection information Page after clicking specified
 	 *              source location
 	 * @param expectedSrc
 	 * @param collectionName
 	 * @param Next
+	 * @modifiedIn : 11/18/22
 	 * @Modifiedby : Raghuram
 	 */
 	public HashMap<String, String> verifyCollectionInfoPage(String srceLocation, String collectionName, boolean Next) {
@@ -778,8 +787,13 @@ public class CollectionPage {
 			base.failedStep("Collection Name Field is Not displayed");
 		}
 
+		// Get Collection ID
 		String collectionID = getCollectionID().getText();
 		colllectionData.put(collectionName, collectionID);
+
+		// Get Destination Path - latest
+		String destinationPath = getDestinationPathLocation().getText();
+		colllectionData.put("DestinationPath", destinationPath);
 
 		if (Next) {
 			getNextBtn().waitAndClick(10);
@@ -796,9 +810,7 @@ public class CollectionPage {
 				}
 			}
 		}
-
 		return colllectionData;
-
 	}
 
 	/**
@@ -2890,7 +2902,7 @@ public class CollectionPage {
 		// return dataNmae created / used
 		return colllectionDataToReturn;
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To verify loading Icon on Dataset folder
@@ -2901,20 +2913,104 @@ public class CollectionPage {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getFolderabLabel());
 			getFolderabLabel().waitAndClick(5);
-			
+
 			// validation for Loading Icon
 			if (getLoadingFoldersIcon().isElementAvailable(3)) {
 				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
-			}else if (getRefreshButtonInSelectFolderField().isElementAvailable(2)) {
+			} else if (getRefreshButtonInSelectFolderField().isElementAvailable(2)) {
 				base.waitForElement(getRefreshButtonInSelectFolderField());
 				getRefreshButtonInSelectFolderField().waitAndClick(5);
 				getLoadingFoldersIcon().isElementAvailable(3);
 				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
-			}else {
+			} else {
 				base.failedStep("Failed to check processing Icon is not displayed");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param filename
+	 * @param rowNumToStart
+	 * @param headerName
+	 * @return
+	 */
+	public HashMap<String, String> testreadExcelData(String filename, int sheetNumber, int rowNumToStart,
+			String headerName, String additional1, Boolean additional2) {
+		try {
+			HashMap<String, String> colllectionData = new HashMap<>();
+			Boolean toBreak = false;
+			Boolean status = false;
+			Row xlRows = null;
+			int temp = 0;
+
+			// Get Sheet Object
+			Sheet xlSheet = base.sheetDataObject(filename, sheetNumber);
+
+			// Get total number of rows in the respective sheet
+			int numRows = xlSheet.getLastRowNum() + 1;
+			System.out.println("No of Rows : " + numRows);
+
+			// HeaderName - "Collection Summary"
+			for (int i = rowNumToStart; i < numRows; i++) {
+				// Dataset Summary
+				xlRows = xlSheet.getRow(i);
+				if (xlRows != null) {
+					String ab = xlRows.getCell(0).toString();
+					System.out.println(ab);
+					if (ab.equals(headerName)) {
+						status = true;
+						temp = i;
+						break;
+					}
+				}
+			}
+
+			// Fetch Column datas
+			int numCols = xlSheet.getRow(temp + 1).getLastCellNum();
+			System.out.println("NO of columns : " + numCols);
+
+			// Extract and Map Datas
+			if (status) {
+				String xlcell = "";
+				for (int k = temp + 1; k < numRows; k++) {
+					if (toBreak) {
+						break;
+					}
+					xlRows = xlSheet.getRow(k);
+					System.out.println(xlSheet.getRow(k).getLastCellNum());
+					for (int j = 0; j < xlSheet.getRow(k).getLastCellNum(); j++) {
+						if (xlRows.getCell(j) != null) {
+							int checkL = xlRows.getCell(j).toString().length();
+							if (checkL > 1) {
+								xlcell = xlRows.getCell(j).toString();
+								System.out.println(xlcell);
+								if (j == 0) {
+									colllectionData.put(xlcell, xlRows.getCell(j + 1).toString());
+								} else if (xlcell.contains("Phase")) {
+									if (xlRows.getCell(j + 1).toString().equals("Success")) {
+										colllectionData.put(xlcell, xlRows.getCell(j + 1).toString());
+									} else if (xlRows.getCell(j + 1).toString().equals("Failure")) {
+										colllectionData.put(xlcell, xlRows.getCell(j + 2).toString());
+									}
+								}
+							} else if (checkL < 1 && j == 0) {
+								toBreak = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			UtilityLog.info("Data from excel sheet retrieved successfully");
+			return colllectionData;
+		} catch (Exception E) {
+			E.printStackTrace();
+			UtilityLog.info(E.toString());
+			return null;
 		}
 	}
 }

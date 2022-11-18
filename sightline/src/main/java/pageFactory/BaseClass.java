@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Set;
@@ -235,7 +236,7 @@ public class BaseClass {
 	}
 
 	// Added by Jeevitha
-	
+
 	public Element getLeftNavigationMenu() {
 		return driver.FindElementByXPath("//nav[@id='LeftMenu']//li//ul");
 	}
@@ -4516,6 +4517,7 @@ public class BaseClass {
 	 *         Modified by: N/A
 	 */
 	public Boolean ValidateElement_AbsenceReturn(Element element) {
+
 		if (element.isElementAvailable(1)) {
 			return false;
 		} else {
@@ -4682,7 +4684,7 @@ public class BaseClass {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description  : verify current role
+	 * @Description : verify current role
 	 * @param expectedRole
 	 */
 	public void verifyCurrentRole(String expectedRole) {
@@ -4693,25 +4695,102 @@ public class BaseClass {
 		textCompareEquals(currentUser, expectedRole, "Current Role is : " + expectedRole,
 				"Current role is not as expected");
 	}
-	
-	
+
 	/**
-     * @return
-     * @Author Jeevitha
-     * @Description : sort and compare two list via contains
-     */
-    public List<String> sortTheList(List<String> listOne, Boolean sortTypeAscending)
-            throws InterruptedException, AWTException {
+	 * @return
+	 * @Author Jeevitha
+	 * @Description : sort and compare two list via contains
+	 */
+	public List<String> sortTheList(List<String> listOne, Boolean sortTypeAscending)
+			throws InterruptedException, AWTException {
 
+		if (sortTypeAscending) {
+			Collections.sort(listOne);
+			stepInfo("Sorted List in Ascending Order");
+		} else if (!sortTypeAscending) {
+			Collections.sort(listOne, Collections.reverseOrder());
+			stepInfo("Sorted List in Descending Order");
+		}
+		return listOne;
+	}
 
+	/**
+	 * @Author
+	 * @Description : Remove specific String From the list
+	 * @param baseList
+	 * @param removeItems
+	 * @return
+	 */
+	public List<String> removeItemsFromList(List<String> baseList, List<String> removeItems) {
 
-       if (sortTypeAscending) {
-            Collections.sort(listOne);
-            stepInfo("Sorted List in Ascending Order");
-        } else if (!sortTypeAscending) {
-            Collections.sort(listOne, Collections.reverseOrder());
-            stepInfo("Sorted List in Descending Order");
-        }
-        return listOne;
-    }
+		for (int i = 0; i < removeItems.size(); i++) {
+			baseList.remove(removeItems.get(i));
+		}
+
+		return baseList;
+	}
+
+	/**
+	 * @author
+	 * @param filename
+	 * @param sheetNumber
+	 * @return
+	 */
+	public static Sheet sheetDataObject(String filename, int sheetNumber) {
+		Sheet xlSheet = null;
+		try {
+			File file = new File(filename);
+			FileInputStream xlFile = new FileInputStream(file);
+			Workbook xlwb = new XSSFWorkbook(xlFile);
+			xlSheet = xlwb.getSheetAt(sheetNumber);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return xlSheet;
+	}
+
+	/**
+	 * @author
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param dataPair - hash map data to print
+	 */
+	public void printStringHashMapDetails(HashMap<String, String> dataPair) {
+		// Using For Each loop to print HashMap
+		stepInfo("--------------------------------");
+		for (String key : dataPair.keySet()) {
+			System.out.println(key + " = " + dataPair.get(key));
+			stepInfo(key + " = " + dataPair.get(key));
+		}
+		stepInfo("--------------------------------");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param collectionData
+	 * @param keyToCheck
+	 * @return
+	 */
+	public Boolean checkExpectedKeyisPresent(HashMap<String, String> collectionData, String keyToCheck) {
+
+		// Get the iterator over the HashMap
+		Iterator<Entry<String, String>> iterator = collectionData.entrySet().iterator();
+		boolean isKeyPresent = false;
+
+		// Iterate over the HashMap
+		while (iterator.hasNext()) {
+
+			// Get the entry at this iteration
+			Entry<String, String> entry = iterator.next();
+
+			// Check if this key is the required key
+			if (keyToCheck.equals(entry.getKey())) {
+				isKeyPresent = true;
+				break;
+			}
+		}
+		return isKeyPresent;
+	}
 }
