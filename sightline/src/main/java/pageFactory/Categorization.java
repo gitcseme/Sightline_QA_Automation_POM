@@ -226,6 +226,15 @@ public class Categorization {
 	public Element getDocCount() {
 		return driver.FindElementByXPath("//div[@class='proview-result']//div[@class='docs']");
 	}
+	
+
+	public Element getSelectedAnalyzedSub() {
+		return driver.FindElementByXPath("//*[@id='c-2-1']/div/div/span");
+	}
+	
+	public Element getSelectedAnalyzedXBtn() {
+		return driver.FindElementByXPath("//span[@data-role='remove']");
+	}
 
 	public Categorization(Driver driver) {
 
