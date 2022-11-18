@@ -121,6 +121,27 @@ public class TimelineReportPage {
 	public Element getSaveBtn() {
 		return driver.FindElementById("saveXML");
 	}
+	public Element getSelectSourceSelection(String value) {
+		return driver.FindElementByXPath("//strong[text()='"+value+"']/parent::a");
+	}
+	public Element selectSourceSelectionValues(String value) {
+		return driver.FindElementByXPath("//a[text()='"+value+"']");
+	}
+	public Element saveSelectedSearches() {
+		return driver.FindElementByXPath("//button[@id='search']");
+	}
+	public Element selectMonthChart() {
+		return driver.FindElementByCssSelector("div[id='level2timeline'] rect[y='0']");
+	}
+	public Element selectDayChart() {
+		return driver.FindElementByCssSelector("div[id='level3timeline'] rect[y='0']");
+	}
+	public Element getCustodiandropdown() {
+		return driver.FindElementByXPath("//span[text()='Custodians']/parent::strong/following-sibling::span");
+	}
+	public Element getSelectCustodianNames() {
+		return driver.FindElementByXPath("//span[text()='Custodians']/parent::strong/parent::div//ul[@class='select2-choices']//input");
+	}
 
 	public Element getSaveReportName() {
 		return driver.FindElementById("txtReportname");
@@ -392,5 +413,44 @@ public class TimelineReportPage {
 		base.VerifySuccessMessage("Report save successfully");
 		base.CloseSuccessMsgpopup();
 		base.waitForElementToBeGone(base.getCloseSucessmsg(), 30);
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description : This method selects the source
+	 */
+	public void selectSource(String value,String actions) {
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getSelectSource());
+		getSelectSource().waitAndClick(5);
+		base.waitTillElemetToBeClickable(getSelectSourceSelection(value));
+		getSelectSourceSelection(value).waitAndClick(5);
+		base.waitTillElemetToBeClickable(selectSourceSelectionValues(actions));
+		selectSourceSelectionValues(actions).waitAndClick(5);
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description : This method selects the bar chart in the report
+	 */
+	public void selectDayBarChart() {
+		base.waitTillElemetToBeClickable(selectDayChart());
+		selectDayChart().ScrollTo();
+		selectDayChart().waitAndClick(10);
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description : This method selects the bar chart in the report
+	 */
+	public void selectMonthBarChart() {
+		base.waitTillElemetToBeClickable(selectMonthChart());
+		selectMonthChart().ScrollTo();
+		selectMonthChart().waitAndClick(10);
+	}
+	public void selectCustodianName(String value) {
+		base.waitTillElemetToBeClickable(getCustodiandropdown());
+		getCustodiandropdown().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getSelectCustodianNames());
+		getSelectCustodianNames().SendKeys(value);
+		base.hitEnterKey(1);
+		
 	}
 }
