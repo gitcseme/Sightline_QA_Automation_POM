@@ -105,9 +105,10 @@ public class CodingForm {
 	public Element getCF_PreviewButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Preview')]");
 	}
+
 	public Element getCFHelpmsgTitleInCodingForm() {
-        return driver.FindElementByXPath("//td[@class='form-box']//span");
-    }
+		return driver.FindElementByXPath("//td[@class='form-box']//span");
+	}
 
 	public Element getCF_Preview_Ok() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
@@ -966,23 +967,23 @@ public class CodingForm {
 	}
 
 //    Added by baskar
-	
+
 	public Element getCF_PreviewFieldMandatoryFieldText() {
 		return driver.FindElementByXPath("//span[text()='*']");
 	}
-	
+
 	public Element getCF_PreviewCheckboxValue() {
 		return driver.FindElementByXPath("//*[@id='_checkgroup']");
 	}
-	
-	
+
 	public Element getCF_CheckGroup() {
 		return driver.FindElementById("TagChk_0");
 	}
-	
+
 	public Element getAddCodingFormCheckToSG(String fieldValue) {
 		return driver.FindElementByXPath(".//*[@id='CodingFormDataTable']//td[text()='" + fieldValue + "']//..//td//i");
 	}
+
 	public Element getSetCodingFormToSG() {
 		return driver.FindElementByXPath("//button[@id='btnSetSGCodingForms']");
 	}
@@ -1283,6 +1284,22 @@ public class CodingForm {
 		return driver.FindElementByXPath("(//span[text()='" + tagName + "'])[last()]");
 	}
 
+	// added by
+	public Element getCodingFormSecurityGroupFormColumnValue(String cfname) {
+		return driver
+				.FindElementByXPath(".//*[@id='CodingFormDataTable']/tbody/tr[contains(.,'" + cfname + "')]/td[5]");
+	}
+
+	public Element getDefaultSetCodingFormHamburgerIconsState(String codingForm) {
+		return driver.FindElementByXPath("//span[text()='" + codingForm
+				+ " (Set as Default)']/ancestor::li[@class='dd-item ddcf-item NonDraggable']");
+	}
+
+	public ElementCollection getCodingFormValue() {
+		return driver
+				.FindElementsByXPath("//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm']");
+	}
+
 	// projectfiledWithData
 	String expectedStaticText = "This is the default Coding Form for this project.  Please complete all fields.";
 	String expectedGroupText = "Responsive Group";
@@ -1411,32 +1428,43 @@ public class CodingForm {
 		return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']//tbody//tr");
 	}
 
-	//Added by shilpi for coding form changes
-	public Element getSetCFButton() {return driver.FindElementById("btnSetSGCodingForms");	}
-	public Element getSFFormCol(String cfname) {return driver.FindElementByXPath(
-			".//*[@id='CodingFormDataTable']//td[text()='"+cfname+"']/../td[text()='YES (Default)']");
+	// Added by shilpi for coding form changes
+	public Element getSetCFButton() {
+		return driver.FindElementById("btnSetSGCodingForms");
 	}
+
+	public Element getSFFormCol(String cfname) {
+		return driver.FindElementByXPath(
+				".//*[@id='CodingFormDataTable']//td[text()='" + cfname + "']/../td[text()='YES (Default)']");
+	}
+
 	public Element getValidationText() {
 		return driver.FindElementByXPath("(//div[contains(@class,'modal-body ui-dialog')])[last()]");
 	}
+
 	public Element getValidationButtonText() {
 		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset'])[last()]");
 	}
+
 	public Element getFullTagText() {
 		return driver.FindElementByXPath("//a[@data-toggle='collapse']");
 	}
+
 	public Element getValidationButtonYes() {
 		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[text()='Yes'])[last()]");
 	}
+
 	public ElementCollection getListOfNameInCfStructure() {
 		return driver.FindElementsByXPath("//a[@data-toggle='collapse']");
 	}
+
 	public Element getVerifyCfSavedName(String cfName) {
-		return driver.FindElementByXPath("//table[@id='CodingFormDataTable']/tbody//..//td[text()='"+cfName+"']");
+		return driver.FindElementByXPath("//table[@id='CodingFormDataTable']/tbody//..//td[text()='" + cfName + "']");
 	}
 
 	public ElementCollection getCfChecBoxUsingSize() {
-		return driver.FindElementsByXPath("//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm']//..//i");
+		return driver.FindElementsByXPath(
+				"//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm']//..//i");
 	}
 
 	public ElementCollection getCfUnChecBoxUsingSize() {
@@ -1456,7 +1484,7 @@ public class CodingForm {
 	public Element getStep2CfPopUp() {
 		return driver.FindElementByXPath("//span[text()='Step 02: Sort Coding Form Order']");
 	}
-	
+
 	public Element getCfPopUpCancel() {
 		return driver.FindElementById("btnCodingFormCancel");
 	}
@@ -1464,215 +1492,241 @@ public class CodingForm {
 	public ElementCollection sortOrderHamBurger() {
 		return driver.FindElementsByXPath("//ol[@id='sortedCodingformList']//span");
 	}
+
 	public Element getHamBurgerDrag(String drag) {
-		return driver.FindElementByXPath("//li[@value='"+drag+"']//div[@class='dd-handle ddcf-handle']");
+		return driver.FindElementByXPath("//li[@value='" + drag + "']//div[@class='dd-handle ddcf-handle']");
 	}
+
 	public Element getHamBurgerDrop(String drop) {
-		return driver.FindElementByXPath("//li[@value='"+drop+"']//..//div[@class='dd-placeholder'] ");
+		return driver.FindElementByXPath("//li[@value='" + drop + "']//..//div[@class='dd-placeholder'] ");
 	}
+
 	public Element getErrorMsgMore15CF() {
 		return driver.FindElementByXPath("//p[text()='You cannot add more than 15 coding forms.']");
 	}
+
 	public Element getPopUpCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkSelectAllCodingform']//..//i//ancestor::th/label");
 	}
+
 	public Element getVerifyRadioBtn(String CFName) {
 		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
 				+ "']/ancestor::td/following-sibling::td//span/label");
 	}
+
 	public Element getSetDefaultSG() {
 		return driver.FindElementByXPath("//th[@class='sorting_disabled']/b");
 	}
+
 	public Element getShowHide() {
 		return driver.FindElementByXPath("//button//span[text()='Show / Hide Columns']");
 	}
+
 	public Element sortOrderNxtBtn() {
 		return driver.FindElementById("btnSortOrderNext");
 	}
+
 	public Element getSelectCodeFormRadioBtn(String CFName) {
 		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
 				+ "']/ancestor::td/following-sibling::td//span/label/i");
 	}
+
 	public ElementCollection getCodingForm_ListName() {
 		return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td[1]");
 	}
-	
-	//add by Aathith
-		public ElementCollection getCodingFormTableHeaders() {
-			return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/thead/tr/th");
-		}
-		
-		public Element getCodingFormTableHeadColumn(int column) {
-			return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/thead/tr/th["+column+"]");
-		}
-		
-		public Element checkDefaultCodingFormIsSelected() {
-			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']");
-		}
-		
-		public Element checkDefaultCodingFormRadioBtnIsSelected() {
-			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../../following-sibling::td//input");
-		}
-		
-		public Element getDefaultCodingFormInputBox() {
-			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../i");
-		}
-		
-		public Element getDefaultCodingFormRadioBtn() {
-			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../../following-sibling::td//input/../i");
-		}
-		
-		public Element btnCodingFormSave() {
-			return driver.FindElementById("btnCodingFormSave");
-		}
-		
-		public Element getDefaultCodingFormTableValues(int i) {
-			return driver.FindElementByXPath("//td[text()='Default Project Coding Form']/..//td["+i+"]");
-		}
-		
-		public Element getCodingFormTableValues(int row, int column) {
-			return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/tbody/tr["+row+"]/td["+column+"]");
-		}
-		
-		public ElementCollection getCodingFormTableColumn(int column) {
-			return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/tbody/tr/td["+column+"]");
-		}
-		
-		public Element getCF_NthObjecttab(int i) {
-			return driver.FindElementByXPath("//*[@href='#c-"+i+"']");
-		}
 
-		public Element getHideShowBtn() {
-			return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']/span");
-		}
-		
-		public Element getColumnsHideShowCheckBox(String columnName) {
-			return driver.FindElementByXPath("//span[contains(text(),'"+columnName+"')]/../input");
-		}
-		
-		public Element getHideShowBackGroundBtn() {
-			return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
-		}
+	// add by Aathith
+	public ElementCollection getCodingFormTableHeaders() {
+		return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/thead/tr/th");
+	}
 
-		
-		public Element getPreviewComment() {
-			return driver.FindElementByXPath("//textarea[@name='COMMENT']");
-		}
-		
-		public Element getPreviewMetaData() {
-			return driver.FindElementByXPath("//input[@name='FIELD']");
-		}
-		
-		public Element getPreviewRadioBtn() {
-			return driver.FindElementByXPath("//input[@type='radio']");
-		}
-		
-		public Element getPrevError(int i) {
-			return driver.FindElementByXPath("(//span[@class='validationSpan'])["+i+"]");
-		}
-		
-		public Element getPreview1stRadioBtn() {
-			return driver.FindElementByXPath("//input[@name='radiogroup_2']");
-		}
-		
-		public Element getPreview2ndRadioBtn() {
-			return driver.FindElementByXPath("//input[@name='radiogroup_3']");
-		}
-		
-		public Element getPreviewCheckBox() {
-			return driver.FindElementByXPath("//input[contains(@id,'checkbox')]");
-		}
-		public Element getTagGroupValues(int objectNo) {
-			return driver.FindElementByXPath("//span[@id='l_it_" + objectNo + "']/parent::div/div");
+	public Element getCodingFormTableHeadColumn(int column) {
+		return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/thead/tr/th[" + column + "]");
+	}
 
-		}
-		
-		public Element getTag_Object(String tagName) {
-			return driver.FindElementByXPath("//span[@class='itemFriendlyName'][text()='"+tagName +"']");
+	public Element checkDefaultCodingFormIsSelected() {
+		return driver.FindElementByXPath("//input[@value='Default Project Coding Form']");
+	}
 
-		}
-		public Element getSaveWarningMsg() {
-			return driver.FindElementByXPath("//h3[text()='Wait - please make a decision before you leave this page']");
+	public Element checkDefaultCodingFormRadioBtnIsSelected() {
+		return driver
+				.FindElementByXPath("//input[@value='Default Project Coding Form']/../../following-sibling::td//input");
+	}
 
-		}
-		public Element getSaveConformMsg() {
-			return driver.FindElementByXPath("//h3[text()='Coding Form Save']");
+	public Element getDefaultCodingFormInputBox() {
+		return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../i");
+	}
 
-		}
-		public Element getCF_Preview_OkBtn() {
-			return driver.FindElementByXPath("(//button[@id='btnYes'])[last()]");
-		}
-		public Element getCF_Preview_Radio(String tagName) {
-			return driver.FindElementByXPath("//span[text()='"+tagName+"']//..//parent::div//input[@type='radio']");
-		}
-		public Element getCF_Preview_CheckBox(String tagName) {
-			return driver.FindElementByXPath("//span[text()='"+tagName+"']//..//parent::div//input[@type='checkbox']");
-		}
-		public Element getCF_Preview_TagLabel(String tagName,int i) {
-			return driver.FindElementByXPath("//span[text()='"+tagName+"']//ancestor::div[@id='item" + i + "']");
-		}
-		
-		public Element getRemoveLinkMsg_YNButton() {
-			return driver.FindElementByXPath("//p[text()='Are you sure?']");
+	public Element getDefaultCodingFormRadioBtn() {
+		return driver.FindElementByXPath(
+				"//input[@value='Default Project Coding Form']/../../following-sibling::td//input/../i");
+	}
 
-		}
-		public Element getRemoveLinkMsg_Delete() {
-			return driver.FindElementByXPath("//h2//span[text()='Delete']");
+	public Element btnCodingFormSave() {
+		return driver.FindElementById("btnCodingFormSave");
+	}
 
-		}
-		
-		public Element getCFHelpmsgTitle() {
-			return driver.FindElementByXPath("//td[@id='td_TAG_2']//span");
-		}
-	
-		//add by Aathith
-		public Element getCfObjectHeader(String objectName) {
-			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/..");
-		}
-		
-		public Element getCfObjectDefaultActionLabelDropDrown(String objectName, String label) {
-			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/../../..//label[text()='"+label+"']/..//select");
-		}
-		
-		public Element getCfObjectDefaultActionLabelInput(String objectName, String label) {
-			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/../../..//label[text()='"+label+"']/..//input");
-		}
-		
-		public Element getCfObjectFeildLogicDropDrownByIndex(String objectName, int index) {
-			return driver.FindElementByXPath("(//span[contains(text(),'"+objectName+"')]/../../..//label[text()='Field Logic']/..//select)["+index+"]");
-		}
-		
-		public Element getPopUpCloseBtn() {
-			return driver.FindElementByXPath("(//button[@class='ui-dialog-titlebar-close'])[last()]");
-		}
-		
-		public Element getCF_YesBtn() {
-			return driver.FindElementByXPath("(//button[@id='btnYes' and text()='Yes'])[last()]");
-		}
-		//added by arun
-		public Element getSGFormHelpIcon() {
-			return driver.FindElementByXPath("//th[contains(text(),'Security Group Form ')]//a");
-		}
-		public Element getToolTipMessageSGForm() {
-			return driver.FindElementByXPath("//div[@role='tooltip']//div[@role='button']");
-		}
-		public Element getSetAsDefaultToolTip() {
-			return driver.FindElementByXPath("//b[contains(text(),'Set As Default')]//following-sibling::div[@role='tooltip']//div//table//tbody//p");
-		}
-		public Element getSetAsDefaultHelpIcon() {
-			return driver.FindElementByXPath("//b[contains(text(),'Set As Default')]//following-sibling::a");
-		}
-		public ElementCollection getSetSGPresentBeforeShowBtn() {
-			return driver.FindElementsByXPath("//span[contains(text(),'Show')]//..//..//following-sibling::div//button[@id='btnSetSGCodingForms']");
-		}
-		public Element sortOrderNxtDisableBtn() {
-	        return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
-	    }
-		
-	
-		
-	
-	
+	public Element getDefaultCodingFormTableValues(int i) {
+		return driver.FindElementByXPath("//td[text()='Default Project Coding Form']/..//td[" + i + "]");
+	}
+
+	public Element getCodingFormTableValues(int row, int column) {
+		return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/tbody/tr[" + row + "]/td[" + column + "]");
+	}
+
+	public ElementCollection getCodingFormTableColumn(int column) {
+		return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/tbody/tr/td[" + column + "]");
+	}
+
+	public Element getCF_NthObjecttab(int i) {
+		return driver.FindElementByXPath("//*[@href='#c-" + i + "']");
+	}
+
+	public Element getHideShowBtn() {
+		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']/span");
+	}
+
+	public Element getColumnsHideShowCheckBox(String columnName) {
+		return driver.FindElementByXPath("//span[contains(text(),'" + columnName + "')]/../input");
+	}
+
+	public Element getHideShowBackGroundBtn() {
+		return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
+	}
+
+	public Element getPreviewComment() {
+		return driver.FindElementByXPath("//textarea[@name='COMMENT']");
+	}
+
+	public Element getPreviewMetaData() {
+		return driver.FindElementByXPath("//input[@name='FIELD']");
+	}
+
+	public Element getPreviewRadioBtn() {
+		return driver.FindElementByXPath("//input[@type='radio']");
+	}
+
+	public Element getPrevError(int i) {
+		return driver.FindElementByXPath("(//span[@class='validationSpan'])[" + i + "]");
+	}
+
+	public Element getPreview1stRadioBtn() {
+		return driver.FindElementByXPath("//input[@name='radiogroup_2']");
+	}
+
+	public Element getPreview2ndRadioBtn() {
+		return driver.FindElementByXPath("//input[@name='radiogroup_3']");
+	}
+
+	public Element getPreviewCheckBox() {
+		return driver.FindElementByXPath("//input[contains(@id,'checkbox')]");
+	}
+
+	public Element getTagGroupValues(int objectNo) {
+		return driver.FindElementByXPath("//span[@id='l_it_" + objectNo + "']/parent::div/div");
+
+	}
+
+	public Element getTag_Object(String tagName) {
+		return driver.FindElementByXPath("//span[@class='itemFriendlyName'][text()='" + tagName + "']");
+
+	}
+
+	public Element getSaveWarningMsg() {
+		return driver.FindElementByXPath("//h3[text()='Wait - please make a decision before you leave this page']");
+
+	}
+
+	public Element getSaveConformMsg() {
+		return driver.FindElementByXPath("//h3[text()='Coding Form Save']");
+
+	}
+
+	public Element getCF_Preview_OkBtn() {
+		return driver.FindElementByXPath("(//button[@id='btnYes'])[last()]");
+	}
+
+	public Element getCF_Preview_Radio(String tagName) {
+		return driver.FindElementByXPath("//span[text()='" + tagName + "']//..//parent::div//input[@type='radio']");
+	}
+
+	public Element getCF_Preview_CheckBox(String tagName) {
+		return driver.FindElementByXPath("//span[text()='" + tagName + "']//..//parent::div//input[@type='checkbox']");
+	}
+
+	public Element getCF_Preview_TagLabel(String tagName, int i) {
+		return driver.FindElementByXPath("//span[text()='" + tagName + "']//ancestor::div[@id='item" + i + "']");
+	}
+
+	public Element getRemoveLinkMsg_YNButton() {
+		return driver.FindElementByXPath("//p[text()='Are you sure?']");
+
+	}
+
+	public Element getRemoveLinkMsg_Delete() {
+		return driver.FindElementByXPath("//h2//span[text()='Delete']");
+
+	}
+
+	public Element getCFHelpmsgTitle() {
+		return driver.FindElementByXPath("//td[@id='td_TAG_2']//span");
+	}
+
+	// add by Aathith
+	public Element getCfObjectHeader(String objectName) {
+		return driver.FindElementByXPath("//span[contains(text(),'" + objectName + "')]/..");
+	}
+
+	public Element getCfObjectDefaultActionLabelDropDrown(String objectName, String label) {
+		return driver.FindElementByXPath(
+				"//span[contains(text(),'" + objectName + "')]/../../..//label[text()='" + label + "']/..//select");
+	}
+
+	public Element getCfObjectDefaultActionLabelInput(String objectName, String label) {
+		return driver.FindElementByXPath(
+				"//span[contains(text(),'" + objectName + "')]/../../..//label[text()='" + label + "']/..//input");
+	}
+
+	public Element getCfObjectFeildLogicDropDrownByIndex(String objectName, int index) {
+		return driver.FindElementByXPath("(//span[contains(text(),'" + objectName
+				+ "')]/../../..//label[text()='Field Logic']/..//select)[" + index + "]");
+	}
+
+	public Element getPopUpCloseBtn() {
+		return driver.FindElementByXPath("(//button[@class='ui-dialog-titlebar-close'])[last()]");
+	}
+
+	public Element getCF_YesBtn() {
+		return driver.FindElementByXPath("(//button[@id='btnYes' and text()='Yes'])[last()]");
+	}
+
+	// added by arun
+	public Element getSGFormHelpIcon() {
+		return driver.FindElementByXPath("//th[contains(text(),'Security Group Form ')]//a");
+	}
+
+	public Element getToolTipMessageSGForm() {
+		return driver.FindElementByXPath("//div[@role='tooltip']//div[@role='button']");
+	}
+
+	public Element getSetAsDefaultToolTip() {
+		return driver.FindElementByXPath(
+				"//b[contains(text(),'Set As Default')]//following-sibling::div[@role='tooltip']//div//table//tbody//p");
+	}
+
+	public Element getSetAsDefaultHelpIcon() {
+		return driver.FindElementByXPath("//b[contains(text(),'Set As Default')]//following-sibling::a");
+	}
+
+	public ElementCollection getSetSGPresentBeforeShowBtn() {
+		return driver.FindElementsByXPath(
+				"//span[contains(text(),'Show')]//..//..//following-sibling::div//button[@id='btnSetSGCodingForms']");
+	}
+
+	public Element sortOrderNxtDisableBtn() {
+		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
+	}
+
 	public CodingForm(Driver driver) {
 
 		this.driver = driver;
@@ -3047,7 +3101,7 @@ public class CodingForm {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		base.waitTillElemetToBeClickable(getSaveCFBtn());
@@ -3280,9 +3334,9 @@ public class CodingForm {
 		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
 			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
-			if((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3)==false) {
-			assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
-			assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
+			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == false) {
+				assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
+				assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
 			}
 			base.waitTime(1);
 			assgnpage.getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
@@ -3293,27 +3347,24 @@ public class CodingForm {
 			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
 				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
 				base.waitForElement(getManageCodingFormButton());
-				if(getManageCodingFormButton().Displayed()) {
+				if (getManageCodingFormButton().Displayed()) {
 					base.waitForElement(getCodingForm_Search());
 					getCodingForm_Search().SendKeys(cfName);
-				   System.out.println( getSFFormCol(cfName).getText());
-				softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
-				softAssertion.assertAll();
-				base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
-		       }
-		       else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
-		}
+					System.out.println(getSFFormCol(cfName).getText());
+					softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
+					softAssertion.assertAll();
+					base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+				} else {
+					base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+				}
+			} else {
+				base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 			}
-				else {
-			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
-		}
-		}else {
+		} else {
 			base.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-			
-		}
 
-	
+	}
 
 	/**
 	 * @author Indium-Baskar date: 24/09/2021 Modified date: NA
@@ -3722,12 +3773,12 @@ public class CodingForm {
 		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		getSaveCFBtn().waitAndClick(5);
-		if(getCF_YesBtn().isElementAvailable(10)) {
+		if (getCF_YesBtn().isElementAvailable(10)) {
 			getCF_YesBtn().waitAndClick(5); // updated xpath on 09/29/2022
 		}
 		base.VerifySuccessMessage("Coding Form Saved successfully");
 		base.CloseSuccessMsgpopup();
-	
+
 	}
 
 	/**
@@ -4074,7 +4125,7 @@ public class CodingForm {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormName());
 		getCodingFormName().SendKeys(cfName);
-		String name=getCodingFormName().GetAttribute("value");
+		String name = getCodingFormName().GetAttribute("value");
 		return name;
 	}
 
@@ -4258,7 +4309,7 @@ public class CodingForm {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @Description : this method used to verify the cf logic validations in parent
 	 *              and child window in doc view page
 	 */
@@ -4805,7 +4856,7 @@ public class CodingForm {
 		getCF_Object1(i).selectFromDropdown().selectByIndex(indexNum);
 		getCF_FieldLogicCondition(i).selectFromDropdown().selectByVisibleText(Condition);
 		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
-		base.stepInfo(Condition+" is selected in the role "+ rule);
+		base.stepInfo(Condition + " is selected in the role " + rule);
 	}
 
 	/**
@@ -4820,7 +4871,7 @@ public class CodingForm {
 		getCF_Object1(i).selectFromDropdown().selectByIndex(indexNum);
 		getCF_FieldLogicCondition(i).selectFromDropdown().selectByVisibleText(Condition);
 		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
-		base.stepInfo(Condition+" is selected in the role "+ rule);
+		base.stepInfo(Condition + " is selected in the role " + rule);
 	}
 
 	/**
@@ -5208,33 +5259,33 @@ public class CodingForm {
 	}
 
 	public void finalVerificationForCodingForm() {
-        driver.waitForPageToBeReady();
-        ElementCollection totalShowingCount = getCFTableTotalShowingCount();
-        int showingCountInCF = totalShowingCount.size();
-        System.out.println(showingCountInCF);
-        if (showingCountInCF<=3) {
-            base.passedStep("There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
+		driver.waitForPageToBeReady();
+		ElementCollection totalShowingCount = getCFTableTotalShowingCount();
+		int showingCountInCF = totalShowingCount.size();
+		System.out.println(showingCountInCF);
+		if (showingCountInCF <= 3) {
+			base.passedStep(
+					"There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
 
-        }else {
-            base.failedStep("There is no Coding Form list in this prj");
-        }
+		} else {
+			base.failedStep("There is no Coding Form list in this prj");
+		}
 
-    }
+	}
 
+	/**
+	 * @author Shilpi
+	 * @description This method used to assign coding form to security group
+	 * 
+	 */
+	public void AssignCFstoSG(String CFName) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitForElement(getSetCFButton());
 
-/**@author Shilpi
- * @description This method used to assign coding form to security group
- * 
- */
- public void AssignCFstoSG(String CFName) {
-	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	 base.waitForElement(getSetCFButton());
-	
-	
-	 getSetCFButton().ScrollTo();
-	 getSetCFButton().waitAndClick(10);
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
 
-	    assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
+		assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
 		base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
 		assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
@@ -5253,36 +5304,35 @@ public class CodingForm {
 			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 		}
 		base.waitForElement(getManageCodingFormButton());
-		if(getManageCodingFormButton().Displayed()) {
+		if (getManageCodingFormButton().Displayed()) {
 			base.waitForElement(getCodingForm_Search());
 			getCodingForm_Search().SendKeys(CFName);
-		   System.out.println( getSFFormCol(CFName).getText());
-		softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
-		softAssertion.assertAll();
-		base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
-       }
-       else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+			System.out.println(getSFFormCol(CFName).getText());
+			softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
+			softAssertion.assertAll();
+			base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+		} else {
+			base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
 		}
- 
- }
- 
 
-/**@author Shilpi
- * @description This method used to assign coding form to security group
- * 
- */
- public void AssigndefaultCFstoSG(String CFName) {
-	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	 base.waitForElement(getSetCFButton());
-	
-	
-	 getSetCFButton().ScrollTo();
-	 getSetCFButton().waitAndClick(10);
+	}
 
-	    assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
+	/**
+	 * @author Shilpi
+	 * @description This method used to assign coding form to security group
+	 * 
+	 */
+	public void AssigndefaultCFstoSG(String CFName) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitForElement(getSetCFButton());
+
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
+
+		assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
 		base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
-	
+
 		base.waitTime(1);
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
@@ -5296,65 +5346,62 @@ public class CodingForm {
 			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 		}
 		base.waitForElement(getManageCodingFormButton());
-		if(getManageCodingFormButton().Displayed()) {
+		if (getManageCodingFormButton().Displayed()) {
 			base.waitForElement(getCodingForm_Search());
 			getCodingForm_Search().SendKeys(CFName);
-		   System.out.println( getSFFormCol(CFName).getText());
-		softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
-		softAssertion.assertAll();
-		base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
-       }
-       else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+			System.out.println(getSFFormCol(CFName).getText());
+			softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
+			softAssertion.assertAll();
+			base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+		} else {
+			base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
 		}
- }
- 
- 
+	}
 
-/**
-* @author Malayala.Seenivasan
-* @description this method used to check 15 checkbox
-*/
-public List<String> checkingBelow15CFCheckboxForSG() {
-	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	 base.waitForElement(getSetCFButton());
-	 getSetCFButton().ScrollTo();
-	 getSetCFButton().waitAndClick(10);
-	 base.waitForElement(getStep1CfPopUp());
-	 boolean flagPopup1=getStep1CfPopUp().isElementAvailable(2);
-	 base.stepInfo("Add / Remove Coding Forms in this Security Group");
-	 softAssertion.assertTrue(flagPopup1);
-	 int unCheck=getCfUnChecBoxUsingSize().size();
-	 for (int i = 0; i < unCheck; i++) {
-			List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description this method used to check 15 checkbox
+	 */
+	public List<String> checkingBelow15CFCheckboxForSG() {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
+		base.waitForElement(getStep1CfPopUp());
+		boolean flagPopup1 = getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group");
+		softAssertion.assertTrue(flagPopup1);
+		int unCheck = getCfUnChecBoxUsingSize().size();
+		for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element = getCfUnChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
-	 }
-	 int count=getCfChecBoxUsingSize().size();
-	 for (int i = 0; i < count; i++) {
-		List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
-		element.get(i).click();
-		// if more than 15 we can able to configure to sg
-		if (i==14) {
-			break;
 		}
-	}
-	 List<String> name=new ArrayList<String>();
-	 List<WebElement> element=getAssignedCfName().FindWebElements();
-	 for (WebElement assignedName : element) {
-		 name.add(assignedName.getText().trim().toString());
-	}
-	 softAssertion.assertAll();
-	 return name;
-	
-	 
-}
+		int count = getCfChecBoxUsingSize().size();
+		for (int i = 0; i < count; i++) {
+			List<WebElement> element = getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+			// if more than 15 we can able to configure to sg
+			if (i == 14) {
+				break;
+			}
+		}
+		List<String> name = new ArrayList<String>();
+		List<WebElement> element = getAssignedCfName().FindWebElements();
+		for (WebElement assignedName : element) {
+			name.add(assignedName.getText().trim().toString());
+		}
+		softAssertion.assertAll();
+		return name;
 
-/**
-* @author Malayala.Seenivasan
-* @description this method used to default sg
-*/
+	}
 
-public void makingDefaultCfToSg(String CFName) {
-	    base.waitTime(1);
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description this method used to default sg
+	 */
+
+	public void makingDefaultCfToSg(String CFName) {
+		base.waitTime(1);
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
 		assgnpage.sortOrderNxtBtn().ScrollTo();
@@ -5368,67 +5415,68 @@ public void makingDefaultCfToSg(String CFName) {
 		} else {
 			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 		}
-}
+	}
 
-/**
-* @author Malayala.Seenivasan
-* @description this method used to validate the default from manage screen
-*/
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description this method used to validate the default from manage screen
+	 */
 
-public void validatingDefaultSgFromManageScreen(String CFName) {
-	 
+	public void validatingDefaultSgFromManageScreen(String CFName) {
+
 		base.waitForElement(getManageCodingFormButton());
 		if (getManageCodingFormButton().Displayed()) {
 			base.waitForElement(getCodingForm_Search());
 			getCodingForm_Search().SendKeys(CFName);
 			System.out.println(getSFFormCol(CFName).getText());
-			String expected=getSFFormCol(CFName).getText().trim();
-			String actual="YES (Default)";
+			String expected = getSFFormCol(CFName).getText().trim();
+			String actual = "YES (Default)";
 			System.out.println(expected);
 			System.out.println(actual);
-			softAssertion.assertEquals(actual.toLowerCase(),expected.toLowerCase());
+			softAssertion.assertEquals(actual.toLowerCase(), expected.toLowerCase());
 			softAssertion.assertAll();
 			base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
 		} else {
 			base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
 		}
-	 
-}
 
-/**
- * @author Arun
- * @Description : this method used for saving codingform
- */
-public void savingCodingForm() {
-	driver.scrollPageToTop();
-	base.waitForElement(getSaveCFBtn());
-	getSaveCFBtn().waitAndClick(5);
-	base.VerifySuccessMessage("Coding Form Saved successfully");
-	
-}
-/**
-* @author Malayala.Seenivasan
-* @description this method used to check 15 checkbox
-*/
-public List<String> configureBelow15Cf(String CFName) {
-	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	 base.waitForElement(getSetCFButton());
-	 getSetCFButton().ScrollTo();
-	 getSetCFButton().waitAndClick(10);
-	 base.waitForElement(getStep1CfPopUp());
-	 boolean flagPopup1=getStep1CfPopUp().isElementAvailable(2);
-	 base.stepInfo("Step 01 : Add / Remove Coding Forms in this Security Group");
-	 softAssertion.assertTrue(flagPopup1);
-	 int unCheck=getCfUnChecBoxUsingSize().size();
-	 for (int i = 0; i < unCheck; i++) {
-			List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
+	}
+
+	/**
+	 * @author Arun
+	 * @Description : this method used for saving codingform
+	 */
+	public void savingCodingForm() {
+		driver.scrollPageToTop();
+		base.waitForElement(getSaveCFBtn());
+		getSaveCFBtn().waitAndClick(5);
+		base.VerifySuccessMessage("Coding Form Saved successfully");
+
+	}
+
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description this method used to check 15 checkbox
+	 */
+	public List<String> configureBelow15Cf(String CFName) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
+		base.waitForElement(getStep1CfPopUp());
+		boolean flagPopup1 = getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Step 01 : Add / Remove Coding Forms in this Security Group");
+		softAssertion.assertTrue(flagPopup1);
+		int unCheck = getCfUnChecBoxUsingSize().size();
+		for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element = getCfUnChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
-	 }
-	 int count=getCfChecBoxUsingSize().size();
-	 for (int i = 0; i < count; i++) {
-		List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
-		element.get(i).click();
-	 }
+		}
+		int count = getCfChecBoxUsingSize().size();
+		for (int i = 0; i < count; i++) {
+			List<WebElement> element = getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
 		base.waitTime(1);
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
@@ -5439,404 +5487,398 @@ public List<String> configureBelow15Cf(String CFName) {
 		if (getErrorMsgMore15CF().isElementAvailable(3)) {
 			base.stepInfo("User can configure only 15 cf for security group");
 		}
-		 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-		 base.waitForElement(getSetCFButton());
-		 getSetCFButton().ScrollTo();
-		 getSetCFButton().waitAndClick(10);
-		 base.waitTime(2);
-		int reCheck=getCfUnChecBoxUsingSize().size();
-		 for (int i = 0; i < reCheck; i++) {
-				List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
-				element.get(i).click();
-		 }
-		 base.waitTime(2);
-		 int recount=getCfChecBoxUsingSize().size();
-		 for (int i = 0; i <=recount; i++) {
-			List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
+		base.waitTime(2);
+		int reCheck = getCfUnChecBoxUsingSize().size();
+		for (int i = 0; i < reCheck; i++) {
+			List<WebElement> element = getCfUnChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
-			if (i==14) {
+		}
+		base.waitTime(2);
+		int recount = getCfChecBoxUsingSize().size();
+		for (int i = 0; i <= recount; i++) {
+			List<WebElement> element = getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+			if (i == 14) {
 				break;
-				
+
 			}
-		 }
-	 List<String> name=new ArrayList<String>();
-	 List<WebElement> element=getAssignedCfName().FindWebElements();
-	 for (WebElement assignedName : element) {
-		 name.add(assignedName.getText().trim().toString());
-	}
-	 softAssertion.assertAll();
-	 return name;
-	
-	 
-	}
-/**
- * @author Aathith.Senthilkumar
- * @param codingForm
- * @return boolean
- * @Description search codingform and return coding form is present or not
- */
-public boolean searchCodingForm(String codingForm) {
-	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	driver.waitForPageToBeReady();
-	getCodingForm_Search().SendKeys(codingForm);
-	driver.waitForPageToBeReady();
-	if(base.text(codingForm).isElementAvailable(3)) {
-		base.stepInfo(codingForm+"coding form is available");
-		return true;
-	}
-	return false;
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @param cfName
- * @Description add codingform name and click save
- */
-public void addCodingFormNameOnly(String cfName) {
-	
-	driver.waitForPageToBeReady();
-	getAddNewCodingFormBtn().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	getCodingFormName().SendKeys(cfName);
-	getSaveCFBtn().waitAndClick(5);
-	base.stepInfo(cfName+" click save for this cofing form");
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @Description select default coding form
- */
-public void selectDefaultProjectCodingForm() {
-	
-	navigateToCodingFormPage();
-	driver.waitForPageToBeReady();
-	getSetCodingFormToSG().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	if(checkDefaultCodingFormIsSelected().GetAttribute("checked")==null) {
-	getDefaultCodingFormInputBox().waitAndClick(5);}
-	if(checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked")==null) {
-	getDefaultCodingFormRadioBtn().waitAndClick(5);}
-	sortOrderNxtBtn().waitAndClick(5);
-	btnCodingFormSave().waitAndClick(5);
-	base.stepInfo("default coding form was set as default");
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @param n
- * @Description open coding form nth object
- */
-public void openNthObject(int n) {
-	driver.waitForPageToBeReady();
-	getCF_NthObjecttab(n).waitAndClick(5);
-	base.stepInfo(n+" object was opened");
-	driver.waitForPageToBeReady();
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @param n
- * @Description remove nth codingform object
- */
-public void removeNthCodingForm(int n) {
-	openNthObject(n);
-	getCf_RemoveLink(n).waitAndClick(5);
-	base.getYesBtn().waitAndClick(5);
-	base.stepInfo(n+"th coding form was removed");
-	driver.waitForPageToBeReady();
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @Description update a existing codingform
- */
-public void updateCodingForm() {
-	driver.scrollPageToTop();
-	base.waitForElement(getSaveCFBtn());
-	getSaveCFBtn().waitAndClick(5);
-	if(getCodingForm_Validation_ButtonYes().isElementAvailable(10)) {
-		getCodingForm_Validation_ButtonYes().waitAndClick(5);
-	}
-	base.VerifySuccessMessage("Coding Form updated successfully");
-	base.CloseSuccessMsgpopup();
-
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @param columnName
- * @Description hide/show a column in coding from table
- */
-public void hideOrShowColum(String columnName) {
-	driver.waitForPageToBeReady();
-	getHideShowBtn().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	getColumnsHideShowCheckBox(columnName).waitAndClick(5);
-	getHideShowBackGroundBtn().waitAndClick(5);
-	base.stepInfo(columnName+" this column was hide/showned");
-	driver.waitForPageToBeReady();
-}
-
-
-
-
-/**
- * @author Mohan.Venugopal 
- * @description: To validate Specific tags and Orders In CodingForm
- * @param cfName
- * @param ObjectName
- * @param TagType
- * @param action
- * @throws InterruptedException
- */
-public void validateSpecificTagsAndOrdersInCodingForm(String cfName,String ObjectName, String TagType,String action ) throws InterruptedException {
-
-	
-	
-	getAddNewCodingFormBtn().waitAndClick(10);
-	driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() {
-			return getCodingFormName().Visible();
 		}
-	}), Input.wait30);
-	getCodingFormName().SendKeys(cfName);
-	switch (ObjectName) {
-	case "tag":
-		if (ObjectName.equalsIgnoreCase("tag"))
-			getCodingForm_FirstTag().waitAndClick(10);
-		base.stepInfo("First Tag is added from the CodingForm");
-	case "comment":
-		if (ObjectName.equalsIgnoreCase("comment")) {
-			getCodingForm_CommentTab().waitAndClick(10);
-			getCodingForm_FirstComment().waitAndClick(10);
-			base.stepInfo("First Comment is added from the CodingForm");
+		List<String> name = new ArrayList<String>();
+		List<WebElement> element = getAssignedCfName().FindWebElements();
+		for (WebElement assignedName : element) {
+			name.add(assignedName.getText().trim().toString());
 		}
-	case "metadata":
-		if (ObjectName.equalsIgnoreCase("metadata")) {
-			getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
-			getCodingForm_FirstMetadata().waitAndClick(10);
-			base.stepInfo("First MetaData is added from the CodingForm");
+		softAssertion.assertAll();
+		return name;
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param codingForm
+	 * @return boolean
+	 * @Description search codingform and return coding form is present or not
+	 */
+	public boolean searchCodingForm(String codingForm) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		getCodingForm_Search().SendKeys(codingForm);
+		driver.waitForPageToBeReady();
+		if (base.text(codingForm).isElementAvailable(3)) {
+			base.stepInfo(codingForm + "coding form is available");
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param cfName
+	 * @Description add codingform name and click save
+	 */
+	public void addCodingFormNameOnly(String cfName) {
+
+		driver.waitForPageToBeReady();
+		getAddNewCodingFormBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getCodingFormName().SendKeys(cfName);
+		getSaveCFBtn().waitAndClick(5);
+		base.stepInfo(cfName + " click save for this cofing form");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description select default coding form
+	 */
+	public void selectDefaultProjectCodingForm() {
+
+		navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		getSetCodingFormToSG().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+			getDefaultCodingFormInputBox().waitAndClick(5);
+		}
+		if (checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+			getDefaultCodingFormRadioBtn().waitAndClick(5);
+		}
+		sortOrderNxtBtn().waitAndClick(5);
+		btnCodingFormSave().waitAndClick(5);
+		base.stepInfo("default coding form was set as default");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param n
+	 * @Description open coding form nth object
+	 */
+	public void openNthObject(int n) {
+		driver.waitForPageToBeReady();
+		getCF_NthObjecttab(n).waitAndClick(5);
+		base.stepInfo(n + " object was opened");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param n
+	 * @Description remove nth codingform object
+	 */
+	public void removeNthCodingForm(int n) {
+		openNthObject(n);
+		getCf_RemoveLink(n).waitAndClick(5);
+		base.getYesBtn().waitAndClick(5);
+		base.stepInfo(n + "th coding form was removed");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description update a existing codingform
+	 */
+	public void updateCodingForm() {
+		driver.scrollPageToTop();
+		base.waitForElement(getSaveCFBtn());
+		getSaveCFBtn().waitAndClick(5);
+		if (getCodingForm_Validation_ButtonYes().isElementAvailable(10)) {
+			getCodingForm_Validation_ButtonYes().waitAndClick(5);
+		}
+		base.VerifySuccessMessage("Coding Form updated successfully");
+		base.CloseSuccessMsgpopup();
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param columnName
+	 * @Description hide/show a column in coding from table
+	 */
+	public void hideOrShowColum(String columnName) {
+		driver.waitForPageToBeReady();
+		getHideShowBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getColumnsHideShowCheckBox(columnName).waitAndClick(5);
+		getHideShowBackGroundBtn().waitAndClick(5);
+		base.stepInfo(columnName + " this column was hide/showned");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To validate Specific tags and Orders In CodingForm
+	 * @param cfName
+	 * @param ObjectName
+	 * @param TagType
+	 * @param action
+	 * @throws InterruptedException
+	 */
+	public void validateSpecificTagsAndOrdersInCodingForm(String cfName, String ObjectName, String TagType,
+			String action) throws InterruptedException {
+
+		getAddNewCodingFormBtn().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCodingFormName().Visible();
+			}
+		}), Input.wait30);
+		getCodingFormName().SendKeys(cfName);
+		switch (ObjectName) {
+		case "tag":
+			if (ObjectName.equalsIgnoreCase("tag"))
+				getCodingForm_FirstTag().waitAndClick(10);
+			base.stepInfo("First Tag is added from the CodingForm");
+		case "comment":
+			if (ObjectName.equalsIgnoreCase("comment")) {
+				getCodingForm_CommentTab().waitAndClick(10);
+				getCodingForm_FirstComment().waitAndClick(10);
+				base.stepInfo("First Comment is added from the CodingForm");
+			}
+		case "metadata":
+			if (ObjectName.equalsIgnoreCase("metadata")) {
+				getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+				getCodingForm_FirstMetadata().waitAndClick(10);
+				base.stepInfo("First MetaData is added from the CodingForm");
+			}
+		}
+		getCodingForm_AddToFormButton().waitAndClick(10);
+		base.stepInfo("CodingForm with the " + ObjectName + " is successfully added to the form");
+
+		base.waitTime(2);
+
+		base.waitForElement(getCF_CheckGrpObject());
+		getCF_CheckGrpObject().waitAndClick(10);
+
+		base.waitForElement(getCodingForm_AddToFormButton());
+		getCodingForm_AddToFormButton().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getRGDefaultAction());
+		getRGDefaultAction().selectFromDropdown().selectByVisibleText(action);
+
+		driver.scrollPageToTop();
+
+		if (ObjectName.equalsIgnoreCase("tag")) {
+			switch (TagType) {
+			case "check item":
+				if (TagType.equalsIgnoreCase("check item"))
+					getCF_TagTypes().selectFromDropdown().selectByVisibleText("Check Item");
+				getCF_CheckGroup().selectFromDropdown().selectByVisibleText("Check Group(checkgroup_1)");
+			case "radio item":
+				if (TagType.equalsIgnoreCase("radio item")) {
+					getCF_TagTypes().selectFromDropdown().selectByVisibleText("Radio Item");
+					getCF_RadioGrpObject().waitAndClick(10);
+					getCodingForm_AddToFormButton().waitAndClick(10);
+
+					base.waitTime(3);
+
+					getCF_RadioGroup().selectFromDropdown().selectByIndex(1);
+				}
+			}
+		}
+
+		driver.scrollPageToTop();
+
+		getCF_PreviewButton().waitAndClick(10);
+
+		if (ObjectName.equalsIgnoreCase("tag") && TagType.equalsIgnoreCase("check item")
+				&& action.equalsIgnoreCase("Make It Required")) {
+			System.out.println(getCF_PreviewCheckboxValue().GetAttribute("class"));
+			softAssertion.assertEquals(getCF_PreviewCheckboxValue().GetAttribute("class"), "check-group");
+			softAssertion.assertTrue(getCF_PreviewCheckboxValue().Displayed());
+			softAssertion.assertTrue(getCF_PreviewFieldMandatoryFieldText().Displayed());
+			softAssertion.assertAll();
+			base.passedStep("Coding Form is Previewed Successfully");
+		} else {
+			base.failedStep("Preview has some error");
 		}
 	}
-	getCodingForm_AddToFormButton().waitAndClick(10);
-	base.stepInfo("CodingForm with the "+ObjectName+" is successfully added to the form");
-	
-	base.waitTime(2);
-	
-	base.waitForElement(getCF_CheckGrpObject());
-	getCF_CheckGrpObject().waitAndClick(10);
-	
-	base.waitForElement(getCodingForm_AddToFormButton());
-	getCodingForm_AddToFormButton().waitAndClick(10);
-	
-	
-	driver.scrollingToBottomofAPage();
-	
-	base.waitForElement(getRGDefaultAction());
-	getRGDefaultAction().selectFromDropdown().selectByVisibleText(action);
-	
-	driver.scrollPageToTop();
-	
-	if (ObjectName.equalsIgnoreCase("tag")) {
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param TagType
+	 * @param nthTag
+	 * @param index
+	 * @Description selecting tag type in coding form
+	 */
+	public void selectTagType(String TagType, int nthTag, int index) {
 		switch (TagType) {
 		case "check item":
 			if (TagType.equalsIgnoreCase("check item"))
-				getCF_TagTypes().selectFromDropdown().selectByVisibleText("Check Item");
-				getCF_CheckGroup().selectFromDropdown().selectByVisibleText("Check Group(checkgroup_1)");
+				getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Check Item");
+			getCF_CheckGroup(nthTag).selectFromDropdown().selectByIndex(index);
 		case "radio item":
 			if (TagType.equalsIgnoreCase("radio item")) {
-				getCF_TagTypes().selectFromDropdown().selectByVisibleText("Radio Item");
-				getCF_RadioGrpObject().waitAndClick(10);
-				getCodingForm_AddToFormButton().waitAndClick(10);
-
-				base.waitTime(3);
-
-				getCF_RadioGroup().selectFromDropdown().selectByIndex(1);
+				getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Radio Item");
+				getCF_RadioGroup(nthTag).selectFromDropdown().selectByIndex(index);
 			}
 		}
 	}
-	
-	driver.scrollPageToTop();
 
-	getCF_PreviewButton().waitAndClick(10);
-	
-	
-	if (ObjectName.equalsIgnoreCase("tag") && TagType.equalsIgnoreCase("check item")
-			&& action.equalsIgnoreCase("Make It Required")) {
-		System.out.println(getCF_PreviewCheckboxValue().GetAttribute("class"));
-		softAssertion.assertEquals(getCF_PreviewCheckboxValue().GetAttribute("class"),"check-group");
-		softAssertion.assertTrue(getCF_PreviewCheckboxValue().Displayed());
-		softAssertion.assertTrue(getCF_PreviewFieldMandatoryFieldText().Displayed());
-		softAssertion.assertAll();
-		base.passedStep("Coding Form is Previewed Successfully");
-	}else {
-		base.failedStep("Preview has some error");
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param cfName
+	 * @Description add coding form name in input box
+	 */
+	public void addCodingFormName(String cfName) {
+		navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getAddNewCodingFormBtn());
+		getAddNewCodingFormBtn().waitAndClick(10);
+		base.waitForElement(getCodingFormName());
+		getCodingFormName().SendKeys(cfName);
+		base.stepInfo(cfName + " coding form name is added ");
 	}
-}
 
-/**
- * @author Aathith.Senthilkumar
- * @param TagType
- * @param nthTag
- * @param index
- * @Description selecting tag type in coding form
- */
-public void selectTagType(String TagType, int nthTag, int index) {
-	switch (TagType) {
-	case "check item":
-		if (TagType.equalsIgnoreCase("check item"))
-			getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Check Item");
-			getCF_CheckGroup(nthTag).selectFromDropdown().selectByIndex(index);
-	case "radio item":
-		if (TagType.equalsIgnoreCase("radio item")) {
-			getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Radio Item");
-			getCF_RadioGroup(nthTag).selectFromDropdown().selectByIndex(index);
-		}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description click preview button in coding form
+	 */
+	public void clickPreviewButon() {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getCF_PreviewButton());
+		getCF_PreviewButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.stepInfo("preview button was clicked");
 	}
-}
 
-/**
- * @author Aathith.Senthilkumar
- * @param cfName
- * @Description add coding form name in input box
- */
-public void addCodingFormName(String cfName) {
-	navigateToCodingFormPage();
-	 driver.waitForPageToBeReady();
-	 base.waitForElement(getAddNewCodingFormBtn());
-	 getAddNewCodingFormBtn().waitAndClick(10);
-	 base.waitForElement(getCodingFormName());
-	 getCodingFormName().SendKeys(cfName);
-	 base.stepInfo(cfName+" coding form name is added ");
-}
+	/**
+	 * @author Baskar
+	 * @Description copying the codingform
+	 */
 
-/**
- * @author Aathith.Senthilkumar
- * @Description click preview button in coding form 
- */
-public void clickPreviewButon() {
-	driver.waitForPageToBeReady();
-	driver.scrollPageToTop();
-	base.waitTillElemetToBeClickable(getCF_PreviewButton());
-	getCF_PreviewButton().waitAndClick(5);
-	driver.waitForPageToBeReady();
-	base.stepInfo("preview button was clicked");
-}
-
-
-/**
- * @author Baskar
- * @Description copying the codingform
- */
-
-public void copyCodingForm(String cfName) {
-	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	driver.waitForPageToBeReady();
-	base.waitForElement(getCodingForm_Search());
-	getCodingForm_Search().SendKeys(cfName);
-	driver.waitForPageToBeReady();
-	base.waitForElement(getCodingForm_CopyButton(cfName));
-	getCodingForm_CopyButton(cfName).waitAndClick(5);
-	driver.WaitUntil((new Callable<Boolean>() {
-		public Boolean call() {
-			return base.getYesBtn().Visible();
-		}
-	}), Input.wait60);
-	String msg = getCF_DeletePopup().getText();
-	System.out.println(msg);
-	Assert.assertEquals("Are you sure you want to copy?", msg);
-	base.getYesBtn().Click();
-
-	base.VerifySuccessMessage("Coding form copied successfully");
-	base.CloseSuccessMsgpopup();
-}
-
-
-/**
- * @author Baskar
- * @Description : this method used to remove all the object based on parameter
- */
-public void selectRemoveLinkWithValidation(int rowNo) {
-     String expectedYesNo="Are you sure?";
-     String expectedDel="Delete";
-	driver.waitForPageToBeReady();
-	getCodingForm_SelectRemoveLink(rowNo).ScrollTo();
-	base.waitForElement(getCodingForm_SelectRemoveLink(rowNo));
-	getCodingForm_SelectRemoveLink(rowNo).waitAndClick(5);
-	String actualYesNo=getRemoveLinkMsg_YNButton().getText();
-	softAssertion.assertEquals(expectedYesNo, actualYesNo);
-	String actualDel=getRemoveLinkMsg_Delete().getText();
-	softAssertion.assertEquals(actualDel, expectedDel);
-	base.passedStep("validation messsage as"+actualYesNo+" you want to "+actualDel+ "");
-	base.waitForElement(getCodingForm_SGValidation_ButtonYes());
-	getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
-	softAssertion.assertAll();
-
-}
-
-/**
- * @author Aathith.Senthilkumar
- * @Description validate coding form using validate button in coding form
- */
-public void validateCodingForm() {
-	driver.scrollPageToTop();
-	 getCFValidateBtn().waitAndClick(10);
-	 driver.waitForPageToBeReady();
-	 softAssertion.assertTrue(base.text("Coding Form Validation Successful.").isElementAvailable(3));
-	 getCodingForm_Validation_ButtonYes().waitAndClick(5);
-	 softAssertion.assertAll();
-	 base.passedStep("coding form validation validate successfully");
-}
-
-/**
- * @author
- * @param noOfCFRequired
- * @return
- */
-public List<String> createCodingformBasedOnCondition(int noOfCFRequired) {
-	List<String> listOfCodingForm = new ArrayList<String>();
-	navigateToCodingFormPage();
-	int noOfCodingForm = getCFTableTotalShowingCount().size();
-	if (noOfCodingForm < noOfCFRequired) {
-		for (int i = noOfCodingForm; i < noOfCFRequired; i++) {
-			String codingFormName = "codingFormName" + Utility.dynamicNameAppender();
-			addCodingFormNameOnly(codingFormName);
-			listOfCodingForm.add(codingFormName);
-			base.stepInfo("Coding Form Created : " + codingFormName);
-		}
-	}
-	return listOfCodingForm;
-}
-
-/**
- * @author
- * @param listOfCfName
- */
-public void DeleteMultipleCodingform(List<String> listOfCfName) throws InterruptedException {
-	if (listOfCfName.size() > 0) {
+	public void copyCodingForm(String cfName) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingForm_Search());
+		getCodingForm_Search().SendKeys(cfName);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingForm_CopyButton(cfName));
+		getCodingForm_CopyButton(cfName).waitAndClick(5);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getCodingForm_NumberToShow().Visible();
+				return base.getYesBtn().Visible();
 			}
 		}), Input.wait60);
-		getCodingForm_NumberToShow().selectFromDropdown().selectByVisibleText("100");
-		base.waitTime(3);
+		String msg = getCF_DeletePopup().getText();
+		System.out.println(msg);
+		Assert.assertEquals("Are you sure you want to copy?", msg);
+		base.getYesBtn().Click();
+
+		base.VerifySuccessMessage("Coding form copied successfully");
+		base.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author Baskar
+	 * @Description : this method used to remove all the object based on parameter
+	 */
+	public void selectRemoveLinkWithValidation(int rowNo) {
+		String expectedYesNo = "Are you sure?";
+		String expectedDel = "Delete";
 		driver.waitForPageToBeReady();
-		for (String codingForm : listOfCfName) {
-			getCodingForm_DeleteButton(codingForm).waitAndClick(10);
+		getCodingForm_SelectRemoveLink(rowNo).ScrollTo();
+		base.waitForElement(getCodingForm_SelectRemoveLink(rowNo));
+		getCodingForm_SelectRemoveLink(rowNo).waitAndClick(5);
+		String actualYesNo = getRemoveLinkMsg_YNButton().getText();
+		softAssertion.assertEquals(expectedYesNo, actualYesNo);
+		String actualDel = getRemoveLinkMsg_Delete().getText();
+		softAssertion.assertEquals(actualDel, expectedDel);
+		base.passedStep("validation messsage as" + actualYesNo + " you want to " + actualDel + "");
+		base.waitForElement(getCodingForm_SGValidation_ButtonYes());
+		getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
+		softAssertion.assertAll();
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description validate coding form using validate button in coding form
+	 */
+	public void validateCodingForm() {
+		driver.scrollPageToTop();
+		getCFValidateBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(base.text("Coding Form Validation Successful.").isElementAvailable(3));
+		getCodingForm_Validation_ButtonYes().waitAndClick(5);
+		softAssertion.assertAll();
+		base.passedStep("coding form validation validate successfully");
+	}
+
+	/**
+	 * @author
+	 * @param noOfCFRequired
+	 * @return
+	 */
+	public List<String> createCodingformBasedOnCondition(int noOfCFRequired) {
+		List<String> listOfCodingForm = new ArrayList<String>();
+		navigateToCodingFormPage();
+		int noOfCodingForm = getCFTableTotalShowingCount().size();
+		if (noOfCodingForm < noOfCFRequired) {
+			for (int i = noOfCodingForm; i < noOfCFRequired; i++) {
+				String codingFormName = "codingFormName" + Utility.dynamicNameAppender();
+				addCodingFormNameOnly(codingFormName);
+				listOfCodingForm.add(codingFormName);
+				base.stepInfo("Coding Form Created : " + codingFormName);
+			}
+		}
+		return listOfCodingForm;
+	}
+
+	/**
+	 * @author
+	 * @param listOfCfName
+	 */
+	public void DeleteMultipleCodingform(List<String> listOfCfName) throws InterruptedException {
+		if (listOfCfName.size() > 0) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
-					return base.getYesBtn().Visible();
+					return getCodingForm_NumberToShow().Visible();
 				}
 			}), Input.wait60);
-			base.getYesBtn().Click();
+			getCodingForm_NumberToShow().selectFromDropdown().selectByVisibleText("100");
+			base.waitTime(3);
+			driver.waitForPageToBeReady();
+			for (String codingForm : listOfCfName) {
+				getCodingForm_DeleteButton(codingForm).waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return base.getYesBtn().Visible();
+					}
+				}), Input.wait60);
+				base.getYesBtn().Click();
 
-			base.VerifySuccessMessage("Coding form deleted successfully");
-			base.CloseSuccessMsgpopup();
+				base.VerifySuccessMessage("Coding form deleted successfully");
+				base.CloseSuccessMsgpopup();
+			}
 		}
 	}
-}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param codingform
@@ -5844,142 +5886,227 @@ public void DeleteMultipleCodingform(List<String> listOfCfName) throws Interrupt
 	 * @Description create codingform like default codingform as per attachment
 	 */
 	public void createCodingFormLikeDefaultCodingForm(String codingform) throws InterruptedException {
-		
-		//add name
+
+		// add name
 		addCodingFormName(codingform);
-		
-		//add tags
-		CreateCodingFormWithParameter(codingform,"Responsive",null,null,"tag");
-	    addcodingFormAddButton();
-	    CreateCodingFormWithParameter(codingform,"Technical_Issue",null,null,"tag");	  
-	    addcodingFormAddButton();
-	    CreateCodingFormWithParameter(codingform,"Processing_Issue",null,null,"tag");
-	    addcodingFormAddButton();
-	    CreateCodingFormWithParameter(codingform,"Foreign_Language",null,null,"tag");
-	    addcodingFormAddButton();
-	    base.stepInfo("All tags are added to coding form");
-	    
-	    //add check items
-	    getCF_CheckGrpObject().waitAndClick(10);
-	    addcodingFormAddButton();
-	    selectTagTypeByIndex(Input.checkItem,1,0);
-	    selectTagTypeByIndex(Input.checkItem,1,1);
-	    
-	    //add radio item
-	    driver.scrollPageToTop();
-	    getCF_RadioGrpObject().waitAndClick(10);
-	    addcodingFormAddButton();
-	    selectTagTypeByIndex("radio item",1,2);
-	    selectTagTypeByIndex("radio item",1,3);	
-	    
-	    //add name to spl object
-	    enterObjectName(4, "Responsive Group");
-	    enterObjectName(5, "Tech Issue Group");
-	    selectDefaultActions(5, Input.hidden);	    
-	    base.stepInfo("Two check group and one radio group are added to coding form");
-	    
-	    //add help text msg
-	    enterErrorAndHelpMsg(1, "No",expectedTIHelpText,null);
-	    enterErrorAndHelpMsg(2, "No",expectedPIHelpText,null);
-	    enterErrorAndHelpMsg(3, "No",expectedFLHelpText,null);
-	    
-	    //add error msg
-	    base.waitForElement(getCodingForm_ErrorMsg(5));
-	    getCodingForm_ErrorMsg(5).SendKeys(expectedTIGErrorMsgText);
-	    
-	    //add spl obj help text
-	    enterErrorAndHelpMsg(4, "No","Responsiveness",null);
-	    
-	    //apply field action
-	    String expectedFirstObjectName = getCFObjectsLabel(1);
-	    selectFieldLogicValues(5,expectedFirstObjectName,"Selected",Input.thisRequired);
-	    
-	    //save cf
-	    saveCodingForm();
-	    base.stepInfo("codingform was created like default coding form");
+
+		// add tags
+		CreateCodingFormWithParameter(codingform, "Responsive", null, null, "tag");
+		addcodingFormAddButton();
+		CreateCodingFormWithParameter(codingform, "Technical_Issue", null, null, "tag");
+		addcodingFormAddButton();
+		CreateCodingFormWithParameter(codingform, "Processing_Issue", null, null, "tag");
+		addcodingFormAddButton();
+		CreateCodingFormWithParameter(codingform, "Foreign_Language", null, null, "tag");
+		addcodingFormAddButton();
+		base.stepInfo("All tags are added to coding form");
+
+		// add check items
+		getCF_CheckGrpObject().waitAndClick(10);
+		addcodingFormAddButton();
+		selectTagTypeByIndex(Input.checkItem, 1, 0);
+		selectTagTypeByIndex(Input.checkItem, 1, 1);
+
+		// add radio item
+		driver.scrollPageToTop();
+		getCF_RadioGrpObject().waitAndClick(10);
+		addcodingFormAddButton();
+		selectTagTypeByIndex("radio item", 1, 2);
+		selectTagTypeByIndex("radio item", 1, 3);
+
+		// add name to spl object
+		enterObjectName(4, "Responsive Group");
+		enterObjectName(5, "Tech Issue Group");
+		selectDefaultActions(5, Input.hidden);
+		base.stepInfo("Two check group and one radio group are added to coding form");
+
+		// add help text msg
+		enterErrorAndHelpMsg(1, "No", expectedTIHelpText, null);
+		enterErrorAndHelpMsg(2, "No", expectedPIHelpText, null);
+		enterErrorAndHelpMsg(3, "No", expectedFLHelpText, null);
+
+		// add error msg
+		base.waitForElement(getCodingForm_ErrorMsg(5));
+		getCodingForm_ErrorMsg(5).SendKeys(expectedTIGErrorMsgText);
+
+		// add spl obj help text
+		enterErrorAndHelpMsg(4, "No", "Responsiveness", null);
+
+		// apply field action
+		String expectedFirstObjectName = getCFObjectsLabel(1);
+		selectFieldLogicValues(5, expectedFirstObjectName, "Selected", Input.thisRequired);
+
+		// save cf
+		saveCodingForm();
+		base.stepInfo("codingform was created like default coding form");
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the buttons present in manage coding form section
+	 * @description: this method will verify the buttons present in manage coding
+	 *               form section
 	 */
 	public void verifyButtonPresentInManageCFPage() {
-		
-		if(getSetSGPresentBeforeShowBtn().isElementAvailable(10)) {
+
+		if (getSetSGPresentBeforeShowBtn().isElementAvailable(10)) {
 			base.passedStep("set security group button available just before show/hide button");
-			if(getShowHide().Enabled() && 
-					getSetCodingFormToSG().Enabled() ) {
+			if (getShowHide().Enabled() && getSetCodingFormToSG().Enabled()) {
 				base.passedStep("both the buttons enabled");
-			}
-			else {
+			} else {
 				base.failedStep("buttons not enabled");
 			}
-		}
-		else {
+		} else {
 			base.failedStep("set security group button not available just before hide button");
-		}	
+		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the popup displayed after clicking set coding form option
+	 * @description: this method will verify the popup displayed after clicking set
+	 *               coding form option
 	 */
 	public void verifyAddOrRemoveCFpopup() {
-			
-		 base.waitForElement(getSetCFButton());
-		 getSetCFButton().waitAndClick(10);
-		 base.waitForElement(getStep1CfPopUp());
-		 boolean flagPopup=getStep1CfPopUp().isElementAvailable(5);
-		 softAssertion.assertTrue(flagPopup);
-		 base.passedStep("add/remove coding form popup displayed");
+
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().waitAndClick(10);
+		base.waitForElement(getStep1CfPopUp());
+		boolean flagPopup = getStep1CfPopUp().isElementAvailable(5);
+		softAssertion.assertTrue(flagPopup);
+		base.passedStep("add/remove coding form popup displayed");
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will get the tooltip message of security group form
 	 */
 	public void validateSGFormHelpIconAndMessage() {
-		
-		String expectedMsg="This column informs which coding forms are configured to be presented in DocView when documents are viewed "
-				          + "outside the context of an assignment. In addition, this also informs the default coding form to be presented "
-				          + "in DocView in this context.";
+
+		String expectedMsg = "This column informs which coding forms are configured to be presented in DocView when documents are viewed "
+				+ "outside the context of an assignment. In addition, this also informs the default coding form to be presented "
+				+ "in DocView in this context.";
 		base.waitForElement(getSGFormHelpIcon());
 		getSGFormHelpIcon().waitAndClick(10);
-		if(getToolTipMessageSGForm().isElementAvailable(10)) {
-			String actualMessage =getToolTipMessageSGForm().getText();
-			base.passedStep("Message displayed-"+actualMessage);
-			if(expectedMsg.contains(actualMessage)) {
+		if (getToolTipMessageSGForm().isElementAvailable(10)) {
+			String actualMessage = getToolTipMessageSGForm().getText();
+			base.passedStep("Message displayed-" + actualMessage);
+			if (expectedMsg.contains(actualMessage)) {
 				base.passedStep("Expected tool tip message displayed");
-			}
-			else {
+			} else {
 				base.failedStep("expected message not displayed");
 			}
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 14/11/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will get the help text tooltip message of set as default icon
+	 * @description: this method will get the help text tooltip message of set as
+	 *               default icon
 	 */
 	public void verifySetAsDefaultHelpIconMessage() {
-		
+
 		String expected = "WHEN CONFIGURING THE CODING FORMS, A DEFAULT CODING FORM MUST BE SPECIFIED. THE DEFAULT CODING FORM IS PRESENTED AS THE FIRST CODING FORM IN THE DOCVIEW AND CONTROLS THE CODE SAME AS LAST AND CODESYNC OPTIONS.";
 		base.waitForElement(getSetAsDefaultHelpIcon());
 		Actions action = new Actions(driver.getWebDriver());
 		Element ele = getSetAsDefaultHelpIcon();
 		action.moveToElement(ele.getWebElement()).build().perform();
-		if(getSetAsDefaultToolTip().isElementAvailable(10)) {
-			String actual =getSetAsDefaultToolTip().getText();
-			base.passedStep("set as default help text"+ actual);
-			if(actual.contains(expected)) {
+		if (getSetAsDefaultToolTip().isElementAvailable(10)) {
+			String actual = getSetAsDefaultToolTip().getText();
+			base.passedStep("set as default help text" + actual);
+			if (actual.contains(expected)) {
 				base.passedStep("expected Tool tip message displayed for'set as default' option");
-			}
-			else {
+			} else {
 				base.failedStep("expected tool tip text message not displayed");
 			}
 		}
 	}
-		
-		
-}
 
+	public void verifyCFSecurityGroupFormColumnValue(List<String> listOfCodingForm,
+			String expectedSecurityGroupFormValue) {
+
+		for (int i = 0; i < listOfCodingForm.size(); i++) {
+			base.waitForElement(getCodingFormSecurityGroupFormColumnValue(listOfCodingForm.get(i)));
+			String actualSecurityGroupFormValue = getCodingFormSecurityGroupFormColumnValue(listOfCodingForm.get(i))
+					.getText();
+			if (expectedSecurityGroupFormValue.equalsIgnoreCase(actualSecurityGroupFormValue)) {
+				base.passedStep("Expected Security Group Form value : '" + expectedSecurityGroupFormValue
+						+ "' match with the Actual Security Group Form value : '" + actualSecurityGroupFormValue
+						+ "' for the CodingForm : '" + listOfCodingForm.get(i) + "'");
+			} else {
+				base.failedStep(
+						"Expected Security Group Form value doesn't match with the Actual Security Group Form value.");
+			}
+		}
+	}
+
+	public void selectGivenNoOfCodingForms(int noOfCF, String CFName, boolean save) {
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().ScrollTo();
+		getSetCFButton().waitAndClick(10);
+		base.passedStep("'Set Security Group Coding form' button is present in Manage Coding Form page.");
+
+		assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+		getPopUpCheckBox().waitAndClick(5);
+		getPopUpCheckBox().waitAndClick(5);
+
+		List<WebElement> listCFCheckBox = getCfChecBoxUsingSize().FindWebElements();
+		int listCFCheckBoxSize = listCFCheckBox.size();
+		List<WebElement> getCFValues = getCodingFormValue().FindWebElements();
+		List<String> listOfCFValue = new ArrayList<String>();
+		for (int i = 0; i < getCFValues.size(); i++) {
+			listOfCFValue.add(getCFValues.get(i).getAttribute("value"));
+		}
+
+		if (noOfCF > 15) {
+			base.failedStep("number of codingForm needed to select is greater than 15.");
+		} else if (noOfCF > listCFCheckBoxSize) {
+			base.failedStep(
+					"number of codingForm needed to select is greater than number of codingForm present in the security group list.");
+		}
+
+		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
+		assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
+		driver.waitForPageToBeReady();
+		assgnpage.getSelectCF_CheckBox(CFName).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		assgnpage.getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		int positionOfCF = listOfCFValue.indexOf(CFName) + 1;
+		if (positionOfCF > noOfCF) {
+			noOfCF--;
+		}
+		for (int i = 0; i < noOfCF; i++) {
+			if (!CFName.equalsIgnoreCase(listOfCFValue.get(i))) {
+				base.waitTime(2);
+				listCFCheckBox.get(i).click();
+			}
+
+		}
+
+		assgnpage.sortOrderNxtBtn().ScrollTo();
+		assgnpage.sortOrderNxtBtn().waitAndClick(5);
+
+		if (save) {
+			if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
+				base.waitTime(2);
+				base.passedStep("Coding Form applied successfully");
+			} else {
+				base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+			}
+			base.waitForElement(getManageCodingFormButton());
+			if (getManageCodingFormButton().Displayed()) {
+				base.waitForElement(getCodingForm_Search());
+				getCodingForm_Search().SendKeys(CFName);
+				System.out.println(getSFFormCol(CFName).getText());
+				softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
+				softAssertion.assertAll();
+				base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+			} else {
+				base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+			}
+		}
+	}
+
+}
