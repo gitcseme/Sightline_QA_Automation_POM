@@ -633,6 +633,8 @@ public class DocViewAudio_Regression25 {
 		assignmentPage.selectAssignmentToViewinDocView(assign);
 
 		// edit codingform and apply stamp
+		driver.waitForPageToBeReady();
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(Input.codingFormName);
 		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColours);
 		// play Audiofile
 		driver.waitForPageToBeReady();
