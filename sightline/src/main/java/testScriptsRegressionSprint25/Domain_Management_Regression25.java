@@ -208,6 +208,7 @@ public class Domain_Management_Regression25 {
 
 		baseClass.selectdomain(Input.domainName);
 
+		baseClass.waitTime(3);
 		ArrayList<String> Values = new ArrayList<>();
 		ArrayList<String> DropDownValues = new ArrayList<>();
 		ProjectPage projects = new ProjectPage(driver);
