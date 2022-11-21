@@ -5934,7 +5934,7 @@ public class IngestionPage_Indium {
 		getCloseButton().waitAndClick(10);
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < 400; i++) {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			if(!getStatus(1).isElementAvailable(5)) {
@@ -11172,6 +11172,33 @@ public class IngestionPage_Indium {
 			navigateToIngestionPage();
 			base.verifyUrlLanding(Input.url + "Ingestion/Home", "Navigated to Ingestion home page successfully", 
 					"not in ingestion home page");
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 21/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the value of searchable pdf which present in
+		 *               the copying table column
+		 */
+		public void verifyGenerateSearchablePdfValueInCopy(String term) {
+			
+			driver.waitForPageToBeReady();
+			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getRunIndexing());
+			base.waitForElement(getRunIndexing());
+			int sourceCount = Integer.parseInt(copyTableDataValue(term, 1).getText());
+			int copiedCount = Integer.parseInt(copyTableDataValue(term, 2).getText());
+			int errorCount = Integer.parseInt(copyTableDataValue(term, 3).getText());
+			int missedCount = Integer.parseInt(copyTableDataValue(term, 4).getText());
+			if(sourceCount>0 && copiedCount>=0 && errorCount>=0 && missedCount>=0) {
+				base.passedStep("Source count present for"+term +"-"+sourceCount);
+				base.passedStep("Copied count present for"+term +"-"+copiedCount);
+				base.passedStep("Error count present for"+term +"-"+errorCount);
+				base.passedStep("Missed count present for"+term +"-"+missedCount);
+			}
+			else {
+				base.failedStep(term+"values not present as expected in copy section");
+			}
+			getCloseButton().waitAndClick(10);
 		}
 		
 
