@@ -899,17 +899,18 @@ public class DomainDashboard {
 	/**
 	 * @author Krishna
 	 * @param projectName
-	 * Description: Verify searching project is listed in dasboard
+	 * Description: Verify searching project is listed in dashboard
 	 */
 	public void verifyFilterProjectIsListed(String ProjectName) {
 		driver.waitForPageToBeReady();
-		base.waitTime(8);
+		base.waitTime(10);
 		filterProject(ProjectName);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFirstHyperLink().Visible();
 			}
 		}), Input.wait120);
+		base.waitTime(10);
 		base.waitForElement(getFirstHyperLink());
 		String project = getFirstHyperLink().getText();
 		if (project.equals(ProjectName)) {
