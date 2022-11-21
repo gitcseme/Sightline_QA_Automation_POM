@@ -80,14 +80,14 @@ public class DocView_Regression25 {
 
 
 	/**
-	 * Author : date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-63806 Verify user can select the text from the redacted document
-	 * and perform Copy -Paste by using "Ctrl C" from viewer file and "Ctrl V" in to
-	 * coding form field
-	 * 
-	 * 
-	 */
-	@Test(description ="RPMXCON-63806",enabled = true, alwaysRun = true, groups = { "regression" })
+     * Author : date: NA Modified date: NA Modified by: NA Test Case
+     * Id:RPMXCON-63806 Verify user can select the text from the redacted document
+     * and perform Copy -Paste by using "Ctrl C" from viewer file and "Ctrl V" in to
+     * coding form field
+     *
+     *
+     */
+    @Test(description ="RPMXCON-63806",enabled = true, alwaysRun = true, groups = { "regression" })
     public void verifyTextRedacDocPerformCopyPasteInCodingForm() throws Exception {
         baseClass = new BaseClass(driver);
         baseClass.stepInfo("Test case Id: RPMXCON-63806");
@@ -113,7 +113,7 @@ public class DocView_Regression25 {
         driver.waitForPageToBeReady();
         if (doclist.getYesAllPageDocs().isDisplayed()) {
             doclist.getYesAllPageDocs().waitAndClick(5);
-            doclist.getPopUpOkBtn().waitAndClick(10);           
+            doclist.getPopUpOkBtn().waitAndClick(10);          
         }
         baseClass.waitTime(5);
         docexp.docExpViewInDocView();
@@ -137,17 +137,16 @@ public class DocView_Regression25 {
         docView.getCodeSameAsLast().waitAndClick(5);
         baseClass.stepInfo("Clicked codesameas last Document saved successfully with comments");
         docView.ScrollAndSelectDocument(docid);
+        docView.getDocView_CodingFormlist().waitAndClick(5);
+        docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
         driver.waitForPageToBeReady();
         String AfterText = docView.getAddComment1().getText();
         if(beforeText.contains(AfterText)) {
             baseClass.passedStep("The copied text is reflected as expected");
         }else {
-            baseClass.failedStep("The copied text is reflected as expected");   
+            baseClass.failedStep("The copied text is reflected as expected");  
         }
         baseClass.stepInfo("Document saved successfully with latest comments");
-        driver.Navigate().refresh();
-        driver.waitForPageToBeReady();
-        docView.ScrollAndSelectDocument(docid);
         docView.verifyCopyAndPasteRedacTextOnCommentBoxOffSet(0, 0, 40, 100);
         baseClass.stepInfo("Copied redacted text and paste into the Comments box");
         driver.waitForPageToBeReady();
@@ -160,4 +159,5 @@ public class DocView_Regression25 {
         docViewRedact.redactionSave().waitAndClick(5);
         baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
     }
+}
 }
