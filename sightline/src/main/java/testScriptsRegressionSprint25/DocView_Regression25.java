@@ -159,5 +159,5 @@ public class DocView_Regression25 {
         docViewRedact.redactionSave().waitAndClick(5);
         baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
     }
-}
+
 }
