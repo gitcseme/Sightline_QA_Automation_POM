@@ -1519,7 +1519,7 @@ public class CodingForm {
 	}
 
 	public Element getShowHide() {
-		return driver.FindElementByXPath("//button//span[text()='Show / Hide Columns']");
+		return driver.FindElementByXPath("//button//span[text()='Show / hide columns']");
 	}
 
 	public Element sortOrderNxtBtn() {
