@@ -238,6 +238,18 @@ public class DomainDashboard {
 		return driver.FindElementById("hdrEntityCreatedON");
 	}
 	
+	public Element projectStatusTab() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/thead/tr/th[2]");
+    }
+
+    public Element projectStatusFirstValue() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/tbody/tr[1]/td[2]");
+    }
+
+    public Element projectNameFirstValue() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/tbody/tr[1]/td[1]");
+    }
+	
 	public DomainDashboard(Driver driver) {
 
 		this.driver = driver;

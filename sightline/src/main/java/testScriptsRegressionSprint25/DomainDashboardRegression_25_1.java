@@ -65,33 +65,52 @@ public class DomainDashboardRegression_25_1 {
 	 * @Description :Validate Project filter
 	 */
 	@Test(description = "RPMXCON-53161", enabled = true, groups = { "regression" })
-	public void verifyingProjectFilter() throws Exception {
-
-		base.stepInfo("Test case Id: RPMXCON-53161");
-		base.stepInfo("Validate Project filter");
-		DomainDashboard domainDash = new DomainDashboard(driver);
-		String project ="Regression_AllDataset_Consilio_A";
-		
-		// login as DAU
-		login.loginToSightLine(Input.da1userName, Input.da1password);
-		base.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
-
-		base.stepInfo("Domain dashboard  is loaded by default as expected");
-		driver.waitForPageToBeReady();
-		domainDash.verifyFilterProjectIsListed(Input.projectName);
-		domainDash.clearProjectSearchFilter();
-		domainDash.verifyFilterProjectIsListed(project);
-		driver.Navigate().refresh();
-		base.waitTime(5);
-		domainDash.enableInActiveProject();
-		driver.waitForPageToBeReady();
-		domainDash.verifyFilterProjectIsListed(Input.projectName);
-		driver.waitForPageToBeReady();
-		domainDash.clearProjectSearchFilter();
-		driver.waitForPageToBeReady();
-		domainDash.verifyFilterProjectIsListed(project);
-
-	}
+    public void verifyingProjectFilter() throws Exception {
+ 
+        base.stepInfo("Test case Id: RPMXCON-53161");
+        base.stepInfo("Validate Project filter");
+        DomainDashboard domainDash = new DomainDashboard(driver);
+        // login as DAU
+        login.loginToSightLine(Input.da1userName, Input.da1password);
+        base.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
+        base.stepInfo("Domain dashboard  is loaded by default as expected");
+        driver.waitForPageToBeReady();
+        base.waitTime(5);
+        domainDash.filterProject(Input.projectName);
+        base.waitForElement(domainDash.projectStatusFirstValue());
+        String actualActiveStatus = domainDash.projectStatusFirstValue().getText();
+        if(actualActiveStatus.equalsIgnoreCase("active")) {
+            base.passedStep("The staus of active project is displayed ACTIVE as expected");
+        }else {
+            base.failedStep("The staus of active project is not displayed as ACTIVE");
+        }    
+        domainDash.clearProjectSearchFilter();
+        driver.scrollingToElementofAPage(domainDash.getInactiveProjectToggle());
+        domainDash.getInactiveProjectToggle().waitAndClick(10);
+        driver.waitForPageToBeReady();
+        domainDash.projectStatusTab().waitAndClick(10);
+        base.waitTime(5);
+        String status = domainDash.projectStatusFirstValue().getText();
+        System.out.println(status);
+        if (status.equalsIgnoreCase("inactive")) {
+            base.waitTime(5);
+            String projectname = domainDash.projectNameFirstValue().getText();
+            System.out.println(projectname);
+            base.waitTime(10);
+            domainDash.filterProject(projectname);
+            base.waitForElement(domainDash.projectStatusFirstValue());
+            base.waitTime(10);
+            String actualInActiveStatus = domainDash.projectStatusFirstValue().getText();
+            System.out.println(actualInActiveStatus);
+            if(actualInActiveStatus.equalsIgnoreCase("inactive")) {
+                base.passedStep("The staus of inactive project is displayed INACTIVE as expected");
+            }else {
+                base.failedStep("The staus of inactive project is not displayed as INACTIVE");
+            }    
+        } else {
+            base.passedStep("No inactive projects in Domain");
+        }
+    }
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

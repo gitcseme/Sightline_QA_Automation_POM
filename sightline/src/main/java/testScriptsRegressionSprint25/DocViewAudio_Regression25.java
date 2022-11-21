@@ -688,7 +688,7 @@ public class DocViewAudio_Regression25 {
 		sessionSearch.bulkAssign();
 		assignPage.assignmentCreation(Asssignment, Input.codingFormName);
 		System.out.println(Asssignment);
-		assignPage.add2ReviewerAndDistribute();
+		assignPage.assignmentDistributingToReviewerManager();
 		baseClass.impersonateRMUtoReviewer();
 		driver.waitForPageToBeReady();
 
