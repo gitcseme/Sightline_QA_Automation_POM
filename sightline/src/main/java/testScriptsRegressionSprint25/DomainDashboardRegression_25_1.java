@@ -70,6 +70,7 @@ public class DomainDashboardRegression_25_1 {
 		base.stepInfo("Test case Id: RPMXCON-53161");
 		base.stepInfo("Validate Project filter");
 		DomainDashboard domainDash = new DomainDashboard(driver);
+		String project ="Regression_AllDataset_Consilio_A";
 		
 		// login as DAU
 		login.loginToSightLine(Input.da1userName, Input.da1password);
@@ -79,7 +80,7 @@ public class DomainDashboardRegression_25_1 {
 		driver.waitForPageToBeReady();
 		domainDash.verifyFilterProjectIsListed(Input.projectName);
 		domainDash.clearProjectSearchFilter();
-		domainDash.verifyFilterProjectIsListed(Input.regressionRun);
+		domainDash.verifyFilterProjectIsListed(project);
 		driver.Navigate().refresh();
 		base.waitTime(5);
 		domainDash.enableInActiveProject();
@@ -88,7 +89,7 @@ public class DomainDashboardRegression_25_1 {
 		driver.waitForPageToBeReady();
 		domainDash.clearProjectSearchFilter();
 		driver.waitForPageToBeReady();
-		domainDash.verifyFilterProjectIsListed(Input.regressionRun);
+		domainDash.verifyFilterProjectIsListed(project);
 
 	}
 
