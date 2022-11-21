@@ -99,27 +99,34 @@ public class LoginPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getDaUsername() {
+		return driver.FindElementByXPath("//ul[@aria-expanded='true']//li[@class='username']");
+	}
+
 	public Element getUsername() {
 		return driver.FindElementByXPath("//span[@class='clsUserName']");
 	}
 
 	public Element getProjectLang() {
-		return driver.FindElementByXPath("//div[@class='project-context hidden-xs projclass']//span[text()='DE: Project:']");
-	
+		return driver
+				.FindElementByXPath("//div[@class='project-context hidden-xs projclass']//span[text()='DE: Project:']");
+
 	}
-	
-	//Added by arun
+
+	// Added by arun
 	public Element getFirstName() {
 		return driver.FindElementById("txtBxUserName");
 	}
+
 	public Element getLastName() {
 		return driver.FindElementById("txtBxUserLastName");
 	}
-	
+
 	public Element getLoginErrorMSG() {
 		return driver.FindElementByXPath("//div[@class='validation-summary-errors']//ul//li");
 	}
-	
+
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
@@ -202,7 +209,7 @@ public class LoginPage {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
 			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
 				bc.selectproject();
-			    bc.stepInfo(Input.projectName);
+			bc.stepInfo(Input.projectName);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -577,7 +584,8 @@ public class LoginPage {
 	}
 
 	/*
-	 * @created by Jeevitha.R 
+	 * @created by Jeevitha.R
+	 * 
 	 * @parameter: Edit profile language
 	 */
 	public void editProfile(String language) {
@@ -625,19 +633,19 @@ public class LoginPage {
 		getSignoutMenu().waitAndClick(10);
 		return username;
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : switch Language to English
 	 */
 	public void switchProjectToEnglish() {
-		if(getProjectLang().isElementAvailable(3)) {
-		editProfile("English - United States");
-		}else {
+		if (getProjectLang().isElementAvailable(3)) {
+			editProfile("English - United States");
+		} else {
 			System.out.println("Selected language : English");
 		}
 	}
-	
+
 	/**
 	 * @Author Baskar
 	 * @Description : verify locked user msg when login
@@ -693,4 +701,19 @@ public class LoginPage {
 		Reporter.log("user locked success!", true);
 
 	}
+
+	public String GetDaCurrentUserName() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		String username = getDaUsername().getText();
+		if (username.contains(Input.DomainAdministrator)) {
+			String[] userss = username.split(Input.DomainAdministrator);
+			username = userss[0].trim();
+		}
+		System.out.println("Logged In Username : " + username);
+		getSignoutMenu().waitAndClick(10);
+		return username;
+	}
+
 }
