@@ -1389,8 +1389,8 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
-	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(int index) {
-		return driver.FindElementByXPath("(//table[@id='dt_basic']/tbody/tr/td[4])[" + index + "]");
+	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(String userName) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + userName + "')]//following-sibling::td[2]");
 	}
 
 	public ElementCollection getListOfReviewersInRedistributePopUp() {
@@ -11529,7 +11529,7 @@ public class AssignmentsPage {
 	 *              from the Reviewer is reassign to another Reviewer.
 	 * @throws InterruptedException
 	 */
-	public void RedistributeDocInManageReviewerTab() throws InterruptedException {
+	public void RedistributeDocInManageReviewerTab(String reDistributeUser,String distributeduser) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11539,8 +11539,10 @@ public class AssignmentsPage {
 		bc.waitTime(3);
 		getAssignment_ManageReviewersTab().Click();
 		bc.waitTime(4);
-		int TotalDocsCount = Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText())
-				+ Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText());
+		int TotalDocsCount = Integer
+				.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser).getText())
+				+ Integer.parseInt(
+						getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText());
 		bc.waitForElement(getAssgn_ManageRev_selectrev());
 		getAssgn_ManageRev_selectrev().waitAndClick(10);
 
@@ -11557,14 +11559,14 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitTime(6);
 
-		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2));
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser));
 		driver.waitForPageToBeReady();
-		String actualdocs=getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText();
-		assertion.assertEquals("0",actualdocs );
+		String actualdocs = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser).getText();
+		assertion.assertEquals("0", actualdocs);
 		assertion.assertAll();
-		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2));
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser));
 		driver.waitForPageToBeReady();
-		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText();
+		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText();
 		bc.textCompareEquals(actualDocsCount, Integer.toString(TotalDocsCount),
 				"actual Docs Count : '" + actualDocsCount + "' in Reviewers Tab match with the Expected Docs Count : '"
 						+ TotalDocsCount + "'",
