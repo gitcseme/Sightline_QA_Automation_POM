@@ -11555,10 +11555,15 @@ public class AssignmentsPage {
 		getAssgn_Redistributepopup_save().waitAndClick(10);
 
 		bc.VerifySuccessMessage("Action saved successfully");
-		bc.waitTime(4);
+		bc.waitTime(6);
 
-		assertion.assertEquals("0", getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText());
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2));
+		driver.waitForPageToBeReady();
+		String actualdocs=getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText();
+		assertion.assertEquals("0",actualdocs );
 		assertion.assertAll();
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2));
+		driver.waitForPageToBeReady();
 		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText();
 		bc.textCompareEquals(actualDocsCount, Integer.toString(TotalDocsCount),
 				"actual Docs Count : '" + actualDocsCount + "' in Reviewers Tab match with the Expected Docs Count : '"
