@@ -201,6 +201,8 @@ public class DocView_Redaction25 {
 
 		RedactionPage redactionpage = new RedactionPage(driver);
 		baseClass.stepInfo("Creating a redaction tag");
+		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+		 driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag2);

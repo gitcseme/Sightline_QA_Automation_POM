@@ -10457,6 +10457,7 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void selectingDefaultSecurityGroup() {
+		navigatingToProductionHomePage();
 		base.waitForElement(getSecurityGroupDropDown());
 		getSecurityGroupDropDown().waitAndClick(10);
 		base.waitForElement(getDefaultSecurityGroup());
