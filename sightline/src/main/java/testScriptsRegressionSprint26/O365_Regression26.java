@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -23,6 +24,7 @@ import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
 import pageFactory.SourceLocationPage;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -394,6 +396,106 @@ public class O365_Regression26 {
 
 	}
 
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68767
+	 * @Description:Verify that error message display and application does NOT accepts - when "Folder" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68767", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgFolderAndFoldergroup() throws Exception {
+	base.stepInfo("RPMXCON-68768");
+	base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Folder\" Name entered with special characters < > & ‘");
+	login.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("Logged in As : " + Input.pa1userName);
+	String foldername="Folder&‘"+ Utility.dynamicRandomNumberAppender();
+
+	//tag
+	TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+	tags.navigateToTagsAndFolderPage();
+	tags.createNewFolderNotSave(foldername);
+	if (tags.getFolderrrorMsg().isDisplayed()) {
+		base.passedStep("Error message displayed when folder Name entered with special characters < > & ‘ ");
+	}
+	
+	else {
+		base.failedStep("Error message not displayed when folder Name entered with special characters < > & ‘");
+	}
+	
+	//tag group
+	String folderGroupName="Folder&'Group"+Utility.dynamicRandomNumberAppender();
+	tags.navigateToTagsAndFolderPage();
+	driver.Navigate().refresh();
+	base.waitForElement(tags.getFoldersTab());
+	tags.getFoldersTab().waitAndClick(5);
+	base.stepInfo("Tag Tab Clicked");
+	base.waitForElement(tags.getAllFolderRoot());
+	tags.getAllFolderRoot().waitAndClick(5);
+	base.waitForElement(tags.getFolderActionDropDownArrow());
+	tags.getFolderActionDropDownArrow().waitAndClick(5);
+	base.waitForElement(tags.getNewFOlderGroupAction());
+	tags.getNewFOlderGroupAction().waitAndClick(10);
+	base.waitForElement(tags.getNewFolderGroupInputTextBox());
+	tags.getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+	base.waitTime(2);
+	if (tags.getFolderGroupErrorMsg().isDisplayed()) {
+		base.passedStep("Error message displayed when folder group Name entered with special characters < > & ‘ ");
+	}
+	
+	else {
+		base.failedStep("Error message not displayed when folder group Name entered with special characters < > & ‘");
+	}
+	
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68768
+	 * @Description:Verify that error message display and application does NOT accepts - when "Tag" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68768", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgTagAndtaggroup() throws Exception {
+		
+		base.stepInfo("RPMXCON-68768");
+		base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Tag\" Name entered with special characters < > & ‘");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As : " + Input.pa1userName);
+		String tagname="Tag&‘"+ Utility.dynamicRandomNumberAppender();
+
+		//tag
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		tags.navigateToTagsAndFolderPage();
+		tags.createNewTagNotSave(tagname, Input.tagNamePrev);
+		if (tags.getErrorMsg().isDisplayed()) {
+			base.passedStep("Error message displayed when tag Name entered with special characters < > & ‘ ");
+		}
+		
+		else {
+			base.failedStep("Error message not displayed when tag Name entered with special characters < > & ‘");
+		}
+		
+		//tag group
+		String tagGroupName="Tag&'Group"+Utility.dynamicRandomNumberAppender();
+		tags.navigateToTagsAndFolderPage();
+		driver.Navigate().refresh();
+		base.waitForElement(tags.getTagsTab());
+		tags.getTagsTab().waitAndClick(5);
+		base.stepInfo("Tag Tab Clicked");
+		base.waitForElement(tags.getAllTagRoot());
+		tags.getAllTagRoot().waitAndClick(5);
+		tags.selectActionArrow("New Tag Group");
+		base.waitForElement(tags.getNewTagGroupInputTextBox());
+		tags.getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+		base.waitTime(2);
+		if (tags.getTagGroupErrorMsg().isDisplayed()) {
+			base.passedStep("Error message displayed when tag group Name entered with special characters < > & ‘ ");
+		}
+		
+		else {
+			base.failedStep("Error message not displayed when tag group Name entered with special characters < > & ‘");
+		}
+		
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
