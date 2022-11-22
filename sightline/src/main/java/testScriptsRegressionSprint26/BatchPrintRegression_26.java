@@ -75,7 +75,9 @@ public class BatchPrintRegression_26 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
+		Object[][] users = { { Input.pa1userName, Input.pa1password },
+//				{ Input.rmu1userName, Input.rmu1password }, 
+		};
 		return users;
 	}
 
@@ -373,6 +375,167 @@ public class BatchPrintRegression_26 {
 			// Verify Success Message, BackgroundTask page & downloaded link In this Method
 			// itself
 			batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, radio, 20);
+
+			// Download Batch Print File
+			String fileName = batchPrint.DownloadBatchPrintFile();
+
+			// extract zip file
+			String extractedFile = batchPrint.extractFile(fileName);
+
+			// verify Downloaded File Count ,filename and Format
+			List<String> actualFileName = batchPrint
+					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+			// verify DOCFILENAME & Sorting order
+			boolean flag = baseClass.compareListViaContains(actualFileName, docFileNameList);
+			baseClass.printResutInReport(flag, "Downloaded PDF Filenames & Sorting order is As Expected",
+					"Downloaded PDF Filenames & Sorting order is Not As Expected", "Pass");
+
+			// verify Documents Exported Correctly By selecting One PDF for Each & One PDF
+			// for All
+			if (!radio) {
+				softassert.assertNotEquals(actualFileName.size(), 1);
+				baseClass.passedStep("Document Successfully exported as 'One PDF For Each' By selecting ASC sort");
+			} else {
+				softassert.assertEquals(actualFileName.size(), 1);
+				baseClass.passedStep("Document Successfully exported as 'One PDF For ALL' By Selecting ASC sort");
+			}
+			softassert.assertAll();
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)'
+	 *              radio button is selected from 'Basis for
+	 *              Printing'[RPMXCON-47812]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47812", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void validateAnalysisTabWithProdSelection(String username, String password) throws Exception {
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+		String slipsheetDD = "Create new slip sheets";
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47812 Batch Print");
+		baseClass.stepInfo(
+				"Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)' radio button is selected from 'Basis for Printing'");
+
+		// create folder in Default SG
+		tagsAndFolderPage.CreateFolder(Folder, Input.securityGroup);
+
+		// configure query & view in doclist
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolderExisting(Folder);
+
+		session.addNewSearch();
+		session.multipleBasicContentSearch(Input.searchString4);
+		session.saveSearch(SearchName);
+
+		// Generate Production with TIFF
+		String productionname = page.preRequisiteGenerateProduction(Folder);
+
+		// Select Tag & Production
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search", SearchName, false);
+		batchPrint.fillingBasisForPrinting(false, true, productionname);
+
+		// verify Table Headers , Pagination & Radio Button for docs In the GRID
+		batchPrint.verifyTableHeader(true);
+
+		// verify Analysis for request Details
+		batchPrint.verifyAnalysisReportDetails();
+
+		// Enable Skip fodler toggle & verify tree folder structure
+		batchPrint.verifyFolderSkippedDoc(false, true);
+		driver.waitForPageToBeReady();
+
+		// Disable Skip folder toggle & verify tree folder structure
+		batchPrint.verifyFolderSkippedDoc(false, false);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @throws Exception
+	 * @Author Jeevitha
+	 * @Description : verify PDF file should be generated with the selected branding
+	 *              & redactions for the selected folder and with DocID as export
+	 *              file name [RPMXCON-49427]
+	 */
+	@Test(description = "RPMXCON-49427", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyPDFFileWithRedaction1(String username, String password) throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+		String slipsheetDD = "Create new slip sheets";
+
+		DocListPage doclist = new DocListPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49427 Batch Print");
+		baseClass.stepInfo(
+				"verify PDF file should be generated with the selected branding & redactions for the selected folder and with DocID as export file name");
+
+		// create folder in Default SG
+		tagsAndFolderPage.CreateFolderInRMU(Folder);
+
+		// configure query &
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolderExisting(Folder);
+		session.ViewInDocListWithOutPureHit();
+
+		// sort ascending
+		doclist.sortColumn(true, Input.documentKey, true);
+
+		// Expected Downloaded DOCID list ,ASC Order of DOCID
+		int index = baseClass.getIndex(doclist.getColumnHeader(), Input.documentKey);
+		baseClass.waitForElementCollection(doclist.GetColumnData(index));
+		List<String> actualdocNameList = doclist.availableListofElementsForDocList(doclist.GetColumnData(index));
+
+		// Remove not downloadable DOCID's from list
+		List<String> docFileNameList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocNameList);
+
+		boolean[] selectPdfRadio = { false, true };
+		for (int i = 0; i < 2; i++) {
+			boolean radio = selectPdfRadio[i];
+
+			// Select Folder from Source selection Tab
+			batchPrint.navigateToBatchPrintPage();
+			batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+
+			// select Native Viewable file variant
+			batchPrint.fillingBasisForPrinting(true, true, null);
+
+			// verify radio button & Select Any Option from Analysis tab
+			batchPrint.fillingAnalysisTab(true, false, false, false);
+			batchPrint.navigateToNextPage(1);
+
+			// Verify user will be on 'Exception File Types' tab & select any metadata
+			batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+			// filling SlipSheet With metadata & click Next
+			batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+			batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+			// ON the 'Include Applied Redactions' toggle and select Opaque/Transparent And
+			// select locations for Branding & verify Colour then click on 'Next'
+			batchPrint.verifyBrandingAndReadctTab(true, true, Input.searchString4, true);
+			batchPrint.navigateToNextPage(1);
+
+			// Keep All Default options As it is I.e.., Except Export by DOCFILENAME as
+			// DOCID, Sort BY DOCID
+			// , ASC Order
+
+			// Verify Success Message, BackgroundTask page & downloaded link In this Method
+			// itself
+			batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, radio, 20);
 
 			// Download Batch Print File
 			String fileName = batchPrint.DownloadBatchPrintFile();
