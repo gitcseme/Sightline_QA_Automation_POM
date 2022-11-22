@@ -446,7 +446,7 @@ public class BatchPrintRegression_26 {
 		batchPrint.fillingBasisForPrinting(false, true, productionname);
 
 		// verify Table Headers , Pagination & Radio Button for docs In the GRID
-		batchPrint.verifyTableHeader(true);
+		batchPrint.verifyTableGridInAnalysisTab(true);
 
 		// verify Analysis for request Details
 		batchPrint.verifyAnalysisReportDetails();
