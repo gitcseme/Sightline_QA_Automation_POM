@@ -75,6 +75,7 @@ public class DomainDashboardRegression_25_1 {
         base.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
         base.stepInfo("Domain dashboard  is loaded by default as expected");
         driver.waitForPageToBeReady();
+        base.selectdomain(Input.domainName);
         base.waitTime(5);
         domainDash.filterProject(Input.projectName);
         base.waitForElement(domainDash.projectStatusFirstValue());

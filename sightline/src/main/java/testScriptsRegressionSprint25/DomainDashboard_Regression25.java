@@ -154,7 +154,7 @@ public class DomainDashboard_Regression25 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Logged in as " + Input.da1userName);
 		
-		baseClass.selectproject(Input.domainName);
+		baseClass.selectdomain(Input.domainName);
 		userManage = new UserManagement(driver);
 		
 		DomainDashboard dash = new DomainDashboard(driver);
