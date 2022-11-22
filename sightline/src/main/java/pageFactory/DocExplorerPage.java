@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -653,6 +654,14 @@ public class DocExplorerPage {
 	public Element getEmailAuthorValues() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[8]//div");
 
+	}
+	
+	public ElementCollection getMasterDateAsc() {
+		return driver.FindElementsByXPath("//th[text()='MASTERDATE']/following::tr//td[7]/div");
+	}
+	
+	public Element getDocExMasterDate() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table/thead/tr[1]/th[7]");
 	}
 	
 	public DocExplorerPage(Driver driver) {
@@ -4162,6 +4171,45 @@ public class DocExplorerPage {
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailAuthorValues(), emailAuthor[j]);
 			driver.Navigate().refresh();
+		}
+	}
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description :suffling and verifying it in descending order
+	 */
+	public void verifyingDescendingOrderInColumn() {
+		try {
+			
+			driver.waitForPageToBeReady();
+			getDocExMasterDate().waitAndClick(5);
+			List<WebElement> RowCount = getMasterDateAsc().FindWebElements();
+			bc.waitTime(5);
+			List<String> Rowcounts = new ArrayList<String>();
+			List<String> sortValue = new ArrayList<String>();
+			bc.waitTime(3);
+			for (int j = 1; j <RowCount.size(); j++) {
+				driver.waitForPageToBeReady();
+				String row = RowCount.get(j).getText();
+				String nocounts[] = row.split("/");
+				bc.waitTime(2);
+				String output = nocounts[0];
+				Rowcounts.add(output);
+			}
+			bc.waitTime(5);
+			System.out.println("master date values" + Rowcounts);
+			Collections.sort(Rowcounts);
+			sortValue.addAll(Rowcounts);
+			System.out.println(sortValue);
+			
+			bc.waitTime(3);
+			if (Rowcounts.equals(sortValue)) {
+				bc.passedStep("" + Rowcounts + " and " + sortValue + "is in descending order as expected");
+			} else {
+				bc.failedStep("" + Rowcounts + "and " + sortValue + " is not in descending order as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

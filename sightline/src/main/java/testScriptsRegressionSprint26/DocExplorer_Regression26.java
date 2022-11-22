@@ -532,6 +532,279 @@ public class DocExplorer_Regression26 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:22/11/2022 RPMXCON-54989
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate and DocFileType
+	 *              filters and ticks the 'Select All' check-box and navigates
+	 *              Doc-Explorer to DocView then documents gets loaded on DocView
+	 *              screen.
+	 */
+	@Test(description = "RPMXCON-54989", enabled = true, groups = { "regression" })
+	public void verifyMasterDateDocFileTypeDocsLoadedInDocViewScreen() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54989");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate and DocFileType filters and ticks the 'Select All' check-box and navigates Doc-Explorer to DocView then documents gets loaded on DocView screen.");
+
+		DocViewPage docView = new DocViewPage(driver);
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		String FileType = "Spreadsheet";
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
+		docexp.getDocExp_DocFiletypeSearchName().SendKeys(FileType);
+		baseClass.waitForElement(docexp.getApplyFilter());
+		docexp.getApplyFilter().waitAndClick(10);
+		if (baseClass.text(FileType).isElementPresent()) {
+			baseClass.passedStep("DocFileType filters has been configured on Doc Explorer screen as expected. ");
+
+		} else {
+			baseClass.failedStep("DocFileType filters is Not configured");
+		}
+		driver.waitForPageToBeReady();
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		baseClass.stepInfo("Selected all checkboxes");
+		if (docList.getYesAllPageDocs().isDisplayed()) {
+			docList.getYesAllPageDocs().waitAndClick(5);
+			docList.getPopUpOkBtn().waitAndClick(5);
+		}
+		baseClass.waitTime(3);
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getMiniDocListTable());
+		baseClass.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		if (docView.getMiniDocListTable().isElementPresent()) {
+			baseClass.passedStep("navigated to Docview page is displayed without any runtime error as expected");
+
+		} else {
+			baseClass.failedStep("error displayed");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:22/11/2022 RPMXCON-54988
+	 * @throws Exception
+	 * @Description Verify that when a user configures MasterDate filter and selects
+	 *              check-boxes manually and navigates Doc-Explorer to DocView then
+	 *              documents gets loaded on DocView screenVerify that when a user
+	 *              configures MasterDate filter and ticks the 'Select All'
+	 *              check-box and navigates Doc-Explorer to DocView then documents
+	 *              gets loaded on DocView screen..
+	 */
+	@Test(description = "RPMXCON-54988", enabled = true, groups = { "regression" })
+	public void verifyMasterDateDocsLoadedInDocViewScreen() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54988");
+		baseClass.stepInfo(
+				"Verify that when a user configures MasterDate filter and selects check-boxes manually and navigates Doc-Explorer to DocView then documents gets loaded on DocView screenVerify that when a user configures MasterDate filter and ticks the 'Select All' check-box and navigates Doc-Explorer to DocView then documents gets loaded on DocView screen.");
+
+		DocViewPage docView = new DocViewPage(driver);
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		docexp.navigateToDocExplorerPage();
+		docList.dateFilter("after", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		driver.waitForPageToBeReady();
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		baseClass.stepInfo("Selected all checkboxes");
+		if (docList.getYesAllPageDocs().isDisplayed()) {
+			docList.getYesAllPageDocs().waitAndClick(5);
+			docList.getPopUpOkBtn().waitAndClick(5);
+		}
+		baseClass.waitTime(3);
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getMiniDocListTable());
+		baseClass.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page",
+				"Not on doc view page");
+		if (docView.getMiniDocListTable().isElementPresent()) {
+			baseClass.passedStep("navigated to Docview page is displayed without any runtime error as expected");
+
+		} else {
+			baseClass.failedStep("error displayed");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 22/11/2022 TestCase Id:RPMXCON-54982 Description
+	 * :Doc List: Verify that results should be displayed if filtering columns
+	 * (metadata) value contain special characters (angular brackets < > and also
+	 * other special character).
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54982", enabled = true, groups = { "regression" })
+	public void verifyDisplayFiltersInDocListWithSpecialChars() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54982");
+		baseClass.stepInfo(
+				"Doc List: Verify that results should be displayed if filtering columns (metadata) value contain special characters (angular brackets < > and also other special character).");
+
+		sessionSearch = new SessionSearch(driver);
+		docList = new DocListPage(driver);
+		docExplorer = new DocExplorerPage(driver);
+		String domain1 = "(#NOS OCRM FKNMS-ALL);";
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		// EmailAuthorName Include
+		baseClass.stepInfo("EmailAuthorName Include");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailAuthNameFilter());
+		docList.getEmailAuthNameFilter().waitAndClick(5);
+		docList.include(domain1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(domain1).isDisplayed()) {
+			baseClass.passedStep(
+					"EmailAuthorName Include result is displayed if filtering value contain special characters ");
+		} else {
+			baseClass.failedStep("No record found");
+		}
+
+		docExplorer.refreshPage();
+		// EmailAuthorName Exclude
+		baseClass.stepInfo("EmailAuthorName Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailAuthNameFilter());
+		docList.getEmailAuthNameFilter().waitAndClick(5);
+		docList.excludeDoclist(domain1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(domain1).isDisplayed()) {
+			baseClass.passedStep(
+					"EmailAuthorName Exclude result is displayed if filtering value contain special characters ");
+		} else {
+			baseClass.failedStep("No record found");
+		}
+		docExplorer.refreshPage();
+		// EmailRecipientnames Include
+		baseClass.stepInfo("EmailRecipientnames Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailAuthNameFilter());
+		docList.getEmailAuthNameFilter().waitAndClick(5);
+		docList.exclude(domain1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(domain1).isDisplayed()) {
+			baseClass.passedStep(
+					"EmailRecipientnames Exclude result is displayed if filtering value contain special characters ");
+		} else {
+			baseClass.failedStep("No record found");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:22/11/2022 RPMXCON-54726
+	 * @throws Exception
+	 * @Description Verify that list view should sort by Master Date (ASC or DESC)
+	 *              after applying multiple Filters (CustodianName and DocFileType)
+	 *              with "Exclude" functionality.
+	 */
+	@Test(description = "RPMXCON-54726", enabled = true, groups = { "regression" })
+	public void verifyExcludeInCustodianAndDocFiletypeAfterAscDesc() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54726");
+		baseClass.stepInfo(
+				"Verify that list view should sort by Master Date (ASC or DESC) after applying multiple Filters (CustodianName and DocFileType) with \"Exclude\" functionality.");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		docList = new DocListPage(driver);
+		String random = Input.betweenTagName + Utility.dynamicNameAppender();
+		TagsAndFoldersPage tagAndFol = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Create a new tag contains word between");
+		tagAndFol.CreateTag(random, Input.securityGroup);
+
+		docExplorer.navigateToDocExplorerPage();
+		docExplorer.selectDocumentsAndBulkTag(3, random);
+
+		// MasterDate Filter
+		docList.dateFilter("before", "2009/09/20", null);
+		baseClass.passedStep("master date filter added");
+		// Tag Excliude filter
+		docExplorer.performExculdeTagFilter(random);
+		// sort in Descending Order
+		baseClass.waitTime(3);
+		docExplorer.verifyingDescendingOrderInColumn();
+
+		tagAndFol.navigateToTagsAndFolderPage();
+		tagAndFol.DeleteTag(random, Input.securityGroup);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:22/11/2022 RPMXCON-54725
+	 * @throws Exception
+	 * @Description Verify that list view should sort by Master Date (ASC or DESC)
+	 *              after applying multiple Filters (CustodianName and DocFileType)
+	 *              with "Exclude" functionality
+	 */
+	@Test(description = "RPMXCON-54725", enabled = true, groups = { "regression" })
+	public void verifyExcludeAndMasterDateAfterAscDesc() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54725");
+		baseClass.stepInfo(
+				"Verify that list view should sort by Master Date (ASC or DESC) after applying multiple Filters (CustodianName and DocFileType) with \"Exclude\" functionality.");
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		docList = new DocListPage(driver);
+		String domain1 = "Amit";
+		String domain = "Document";
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		// CustodianName Exclude
+		baseClass.stepInfo("CustodianName Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getCustodianNameFilter());
+		docList.getCustodianNameFilter().waitAndClick(5);
+		docList.excludeDoclist(domain1);
+		docList.getAddtoFilter().waitAndClick(5);
+		docList.getApplyFilter().waitAndClick(5);
+
+		// DocFileType Exclude
+		baseClass.stepInfo("DocFileType Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getGetDocFIleTypeFilter());
+		docList.getGetDocFIleTypeFilter().waitAndClick(5);
+		docList.excludeDoclist(domain);
+		docList.getAddtoFilter().waitAndClick(5);
+		docList.getApplyFilter().waitAndClick(5);
+		// sort in Descending Order
+		baseClass.waitTime(3);
+		docExplorer.verifyingDescendingOrderInColumn();
+
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
