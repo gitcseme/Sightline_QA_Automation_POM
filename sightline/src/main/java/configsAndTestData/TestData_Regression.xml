@@ -877,6 +877,7 @@
 	<PII>PII</PII>
 	<PRIV>PRIV</PRIV>
 	<Harassment>Harassment</Harassment>
+	<TheftOfCustomerInfo>Theft of Customer Info</TheftOfCustomerInfo>
 	
 	 <!-- Added By Aathith , Client Page Details -->
     <FilterByType>Filter By Type</FilterByType>

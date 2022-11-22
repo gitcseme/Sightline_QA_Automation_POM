@@ -958,6 +958,7 @@ public class Input {
 	public static String PRIV;
 	public static String reteriveDSErr;
  	public static String completedWithErr;
+ 	public static String TheftOfCustomerInfo;
 
 
 	// Added by Aathith ,Client Page details
@@ -1998,6 +1999,7 @@ public class Input {
 		PII = testData.getPII();
 		PRIV = testData.getPRIV();
         NR_Detection = testData.getNR_Detection();
+        TheftOfCustomerInfo = testData.getTheftOfCustomerInfo();
 		
 		// Added by Aathith ,Client Page details
 		FilterByType = testData.getFilterByType();
