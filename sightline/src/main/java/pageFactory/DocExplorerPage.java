@@ -654,7 +654,15 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[8]//div");
 
 	}
-	
+	public ElementCollection getFolderName() {
+		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li//a");
+	}
+	public Element getFolderNameToolTip(int i) {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]//following-sibling::div//div[@class='popover-content']");
+	}	
+	public Element getFolderNameText(int i) {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
+	}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
