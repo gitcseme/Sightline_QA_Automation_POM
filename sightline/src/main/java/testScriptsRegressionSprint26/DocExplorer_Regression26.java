@@ -526,13 +526,13 @@ public class DocExplorer_Regression26 {
 				"Not on doc view page");
 		if (docView.getMiniDocListTable().isElementPresent()) {
 			baseClass.passedStep("navigated to Docview page is displayed without any runtime error as expected");
-      
 
 		} else {
 			baseClass.failedStep("error displayed");
 		}
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Brundha.T Date:22/11/2022 RPMXCON-54597
 	 * @throws Exception
@@ -541,44 +541,43 @@ public class DocExplorer_Regression26 {
 	 */
 	@Test(description = "RPMXCON-54597", enabled = true, groups = { "regression" })
 	public void verifyingMouseHoverInFolderName() throws Exception {
-    
-    baseClass.stepInfo("Test case Id: RPMXCON-54597");
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54597");
 		baseClass.stepInfo("Verify that on mouse hover of the folder, should display full name of the folder");
-    	// Login As PA
+		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
-    	DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
 
 		baseClass.stepInfo("Navigating to DocExplorer page");
 		docExplorer.navigateToDocExplorerPage();
-		
+
 		baseClass.stepInfo("Mouse hover the folder name");
-		int Count=docExplorer.getFolderName().size();
+		int Count = docExplorer.getFolderName().size();
 		System.out.println(Count);
-		for(int i=Count;i>1;i--) {
-			String fol=docExplorer.getFolderNameText(i).getText();
-			System.out.println("fol value"+fol);
-			int SizeOfString=fol.length();
+		for (int i = Count; i > 1; i--) {
+			String fol = docExplorer.getFolderNameText(i).getText();
+			System.out.println("fol value" + fol);
+			int SizeOfString = fol.length();
 			System.out.println(SizeOfString);
-			if(SizeOfString>28) {
+			if (SizeOfString > 28) {
 				Actions actions = new Actions(driver.getWebDriver());
 				actions.moveToElement(docExplorer.getFolderNameText(i).getWebElement()).click().build().perform();
 				baseClass.waitTime(3);
-				String ToolTipText=docExplorer.getFolderNameToolTip(i).getText().trim();
-				System.out.println("MouseHoverText"+ToolTipText);
-				if(ToolTipText.equals(fol)) {
+				String ToolTipText = docExplorer.getFolderNameToolTip(i).getText().trim();
+				System.out.println("MouseHoverText" + ToolTipText);
+				if (ToolTipText.equals(fol)) {
 					baseClass.passedStep("Mouseover text of foldername is displayed with fullname");
-				}else {
+				} else {
 					baseClass.failedStep("Mouseover text of foldername  is not displayed as expected");
 				}
 				break;
-			}else {
+			} else {
 				driver.waitForPageToBeReady();
 			}
 		}
 		loginPage.logout();
-  }
-
+	}
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:22/11/2022 RPMXCON-54989
@@ -848,8 +847,8 @@ public class DocExplorer_Regression26 {
 
 		loginPage.logout();
 
-  }
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
