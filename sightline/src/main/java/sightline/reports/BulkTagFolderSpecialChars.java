@@ -92,7 +92,7 @@ public class BulkTagFolderSpecialChars {
 		tally.validateTally();
 		tally.tallyActions();
 		tally.bulkFolderSpecialChars(bulkName,1);
-		
+	
 		
 	}
 	

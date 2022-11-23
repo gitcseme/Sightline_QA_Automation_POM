@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -24,7 +23,6 @@ public class TallyPage {
 	Driver driver;
 	BaseClass base;
 	final DocListPage dp;
-	Element element;
 
 	public Element getAutoSelectedSearchSource() {
 		return driver.FindElementByXPath("//li[contains(text(),'Documents: Selected Documents from Search')]");
@@ -666,7 +664,11 @@ public class TallyPage {
 		}), Input.wait30);
 		getTally_btnTallyApply().Click();
 
-	
+		BaseClass bc = new BaseClass(driver);
+		// pop up may appear multiple times depends on app response
+		bc.yesPopUp();
+		bc.yesPopUp();
+
 	}
 
 	public void tallyActions() {
@@ -738,15 +740,42 @@ public class TallyPage {
 		}), Input.wait60);
 		getContinueButton().Click();
 
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
 
-	}
-	public void bulkTagSpecialChars(String TagName, final int tally1subtally2) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getBulkTagAction(tally1subtally2).Visible();
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		}), Input.wait30);
-		getBulkTagAction(tally1subtally2).Click();
+		}), Input.wait60);
+		getFinalizeButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkTagConfirmationButton().Visible();
+			}
+		}), Input.wait60);
+		getBulkTagConfirmationButton().Click();
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk Tag is done, Tag is : " + TagName);
+
+	}
+	public void bulkTagSpecialChars(String folderName, final int tally1subtally2) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction(tally1subtally2).Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction(tally1subtally2).waitAndClick(20);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -758,27 +787,85 @@ public class TallyPage {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getEnterTagName().Visible();
+				return getEnterFolderName().Visible();
 			}
 		}), Input.wait60);
-		getEnterTagName().SendKeys(TagName);
+		getEnterFolderName().SendKeys(folderName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getTagsAllRoot().Visible();
+				return getFolderAllRoot().Visible();
 			}
 		}), Input.wait60);
-		getTagsAllRoot().Click();
-		
+		getFolderAllRoot().Click();
+ 
 		getContinueButton().waitAndClick(30);
 		
-		String errorMsg=getTagNameWithSpecialChars().getText();
+		String errorMsg=getFolderNameWithSpecialChars().getText();
 		System.out.println("errorMsg"+errorMsg);
 		  Assert.assertEquals(errorMsg,"Special characters are not allowed.");
-
-		
+	
 	}
 
+	public void bulkFolder(String folderName, final int tally1subtally2) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction(tally1subtally2).Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction(tally1subtally2).waitAndClick(20);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkNewTab().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkNewTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterFolderName().Visible();
+			}
+		}), Input.wait60);
+		getEnterFolderName().SendKeys(folderName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderAllRoot().Visible();
+			}
+		}), Input.wait60);
+		getFolderAllRoot().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().Click();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().Click();
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk folder is done, folder is : " + folderName);
+
+	}
 	public void bulkFolderSpecialChars(String folderName, final int tally1subtally2) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -820,38 +907,6 @@ public class TallyPage {
 		
 		
 	}
-	public void bulkFolder(String folderName, final int tally1subtally2) {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBulkFolderAction(tally1subtally2).Visible();
-			}
-		}), Input.wait60);
-
-		getBulkFolderAction(tally1subtally2).waitAndClick(20);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBulkNewTab().Visible();
-			}
-		}), Input.wait60);
-
-		getBulkNewTab().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getEnterFolderName().Visible();
-			}
-		}), Input.wait60);
-		getEnterFolderName().SendKeys(folderName);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFolderAllRoot().Visible();
-			}
-		}), Input.wait60);
-		getFolderAllRoot().Click();
-	}
 	public void validateSubTally() throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -888,7 +943,7 @@ public class TallyPage {
 		base.yesPopUp();
 
 	}
-
+	
 	public void subTallyActions() {
 		getTally_btnSubTallyAll().waitAndClick(30);
 
