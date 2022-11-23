@@ -301,7 +301,15 @@ public class TagsAndFoldersPage {
 	}
 
 	// added by sowndariya
-
+	public Element getFolderrrorMsg() {
+		return driver.FindElementById("folderErrorMsg");
+	}
+	public Element getFolderGroupErrorMsg() {
+		return driver.FindElementById("folderGroupErrorMsg");
+	}
+	public Element getTagGroupErrorMsg() {
+		return driver.FindElementById("tagGroupErrorMsg");
+	}
 	public Element getPropFolderToHelpBtn() {
 		return driver.FindElementByXPath(
 				"//label[text()='Propagate Folder To: ']//a[@class='helptip fa fa-question-circle']");
