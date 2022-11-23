@@ -533,7 +533,257 @@ public class Domain_Management26 {
 		}
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53066
+	 * @Description:To verify user rights from Edit User > Functionality tab when
+	 *                 Sys Admin changes role of Reviewer[assigned to single
+	 *                 domain/non-domain project] user to Domain Admin
+	 **/
+	@Test(description = "RPMXCON-53066", enabled = true, groups = { "regression" })
+	public void verifyingFunctionalityTabFromRevToDA() throws Exception {
 
+		baseClass.stepInfo("TestCase id : RPMXCON-53066");
+		baseClass.stepInfo(
+				"To verify user rights from Edit User > Functionality tab when Sys Admin changes role of Reviewer[assigned to single domain/non-domain project] user to Domain Admin");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As " + Input.sa1userName);
+
+		UserManagement user = new UserManagement(driver);
+		String CompareString = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
+
+		baseClass.stepInfo("Applying filter for reviewer user");
+		user.passingUserName(Input.rev1userName);
+		user.applyFilter();
+
+		baseClass.stepInfo("Edit the applied filter");
+		user.editLoginUser();
+		driver.waitForPageToBeReady();
+		user.getSelctRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+
+		baseClass.stepInfo("Verifying the Alert message");
+		baseClass.waitForElement(user.getAlertMsgBox());
+		String ActualString = user.getAlertMsgBox().getText();
+		System.out.println("The actual string is" + ActualString);
+		baseClass.textCompareEquals(ActualString, CompareString, "Alert Message is displayed as expected",
+				"Alert message not displayed");
+		baseClass.getNOBtn().waitAndClick(5);
+
+		driver.Navigate().refresh();
+		baseClass.waitTime(2);
+		user.passingUserName(Input.rev1userName);
+		user.applyFilter();
+		String Role = user.getTableData("ROLE", 1);
+		System.out.println(Role);
+		baseClass.textCompareEquals(Role, Input.Reviewer, "User role remains same when selecting Cancel button",
+				"user role not remains same");
+
+		baseClass.stepInfo("selecting OK button and verifying the functionality tab changed as per the role");
+		user.editLoginUser();
+		driver.waitForPageToBeReady();
+		user.getSelctRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.waitForElement(user.getFunctionalityButton());
+		user.getFunctionalityButton().waitAndClick(5);
+
+		if (user.getEditUserProduction().Enabled() && user.getEditUserIngestion().Enabled()) {
+			baseClass.passedStep("User role is changed into Selected role in functionality tab");
+		} else {
+			baseClass.failedStep("User role is not changed");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53065
+	 * @Description:To verify user rights from Edit User > Functionality tab when
+	 *                 Sys Admin changes role of RMU[assigned to single
+	 *                 domain/non-domain project] user to Domain Admin
+	 **/
+	@Test(description = "RPMXCON-53065", enabled = true, groups = { "regression" })
+	public void verifyingFunctionalityTabFromRMUToDA() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53065");
+		baseClass.stepInfo(
+				"To verify user rights from Edit User > Functionality tab when Sys Admin changes role of RMU[assigned to single domain/non-domain project] user to Domain Admin");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As " + Input.sa1userName);
+
+		UserManagement user = new UserManagement(driver);
+
+		String CompareString = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
+
+		baseClass.stepInfo("Applying filter for RMU user");
+		user.passingUserName(Input.rmu1userName);
+		user.applyFilter();
+
+		baseClass.stepInfo("Edit the applied filter");
+		user.editLoginUser();
+		driver.waitForPageToBeReady();
+		user.getSelctRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+
+		baseClass.stepInfo("Verifying the Alert message");
+		baseClass.waitForElement(user.getAlertMsgBox());
+		String ActualString = user.getAlertMsgBox().getText();
+		System.out.println("The actual string is" + ActualString);
+		baseClass.textCompareEquals(ActualString, CompareString, "Alert Message is displayed as expected",
+				"Alert message not displayed");
+		baseClass.getNOBtn().waitAndClick(5);
+		driver.Navigate().refresh();
+		baseClass.waitTime(2);
+		user.passingUserName(Input.rmu1userName);
+		user.applyFilter();
+		String Role = user.getTableData("ROLE", 1);
+		System.out.println(Role);
+		baseClass.textCompareEquals(Role, Input.ReviewManager, "User role remains same when selecting Cancel button",
+				"user role not remains same");
+
+		baseClass.stepInfo("selecting Ok button and verifying the functionality tab changed as per the role");
+		user.editLoginUser();
+		driver.waitForPageToBeReady();
+		user.getSelctRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.waitForElement(user.getFunctionalityButton());
+		user.getFunctionalityButton().waitAndClick(5);
+
+		if (user.getEditUserIngestion().Enabled()) {
+			baseClass.passedStep("User role is changed into Selected role in functionality tab");
+		} else {
+			baseClass.failedStep("User role is not changed");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53068
+	 * @Description:Verify domain admin can change domains from drop down after
+	 *                     saving data on assign user pop up
+	 **/
+	@Test(description = "RPMXCON-53068", enabled = true, groups = { "regression" })
+	public void verifyAssigningUserAndSwitchDomain() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53068");
+		baseClass.stepInfo(
+				"Verify domain admin can change domains from drop down after saving data on assign user pop up");
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in As " + Input.da1userName);
+
+		baseClass.stepInfo("selecting domain");
+		baseClass.selectdomain(Input.domainName);
+
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		user.passingUserName(Input.pa1userName);
+		user.applyFilter();
+		baseClass.waitTime(2);
+		String firstName = user.getTableData("FIRST NAME", 1);
+		String lastName = user.getTableData("LAST NAME", 1);
+		String userName = firstName + " " + lastName;
+
+		baseClass.stepInfo("Assigning the user and save");
+		baseClass.waitForElement(user.getAssignUserButton());
+		user.getAssignUserButton().waitAndClick(2);
+		user.goToProjectTabInAssignUser();
+		user.selectProjectInAssignUser(Input.projectName);
+		user.selectRoleInAssignUser(Input.ProjectAdministrator);
+		baseClass.waitTillElemetToBeClickable(user.getCheckingAssignedUserSG(userName));
+		driver.scrollingToElementofAPage(user.getCheckingAssignedUserSG(userName));
+		user.getCheckingAssignedUserSG(userName).waitAndClick(2);
+		user.getLeftArrowForProject().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(user.getUnAssignedDomainUser());
+		user.getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(userName);
+		user.getDomainUserRightArrow().waitAndClick(10);
+		baseClass.waitForElement(user.getsavedomainuser());
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+
+		baseClass.stepInfo("Switching to another domain apart from current domain");
+		baseClass.switchDomain();
+		baseClass.waitTime(1);
+		
+		baseClass.stepInfo("verifying whether the domain is switched to another domain");
+		String CurrentDomain = baseClass.getProjectNames().getText();
+		baseClass.textCompareNotEquals(CurrentDomain, Input.domainName,
+				"User can able to change any domain from drop down", "Not switched to another domain");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53031
+	 * @Description:To verify that the Domain Admin should be able to unassign users
+	 *                 from projects in the domain
+	 **/
+	@Test(description = "RPMXCON-53031", enabled = true, groups = { "regression" })
+	public void verifyDAUserCanUnassignedUsers() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53031");
+		baseClass.stepInfo(
+				"To verify that the Domain Admin should be able to unassign users from projects in the domain");
+
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in As " + Input.da1userName);
+
+		baseClass.selectdomain(Input.domainName);
+		
+		UserManagement user = new UserManagement(driver);
+		String FirstName = "QA";
+		String LastName = "automation";
+		String MailID = "test" +Utility.dynamicNameAppender()+ "@consilio.com";
+		String UserName=FirstName+" "+LastName;
+		
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Creating new project Administrator user");
+		user.createUser(FirstName, LastName, Input.ProjectAdministrator, MailID, null,Input.projectName);
+		
+		baseClass.stepInfo("Assigning project to user");
+		user.openAssignUser();
+		user.goToProjectTabInAssignUser();
+		String Project=user.getProjectDropdownList(2).getText();
+		System.out.println(Project);
+		if(!Project.equals(Input.projectName)) {
+		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(2);
+		}else {
+			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(3);
+		}
+		driver.waitForPageToBeReady();
+		user.selectRoleInAssignUser(Input.ProjectAdministrator);
+		driver.scrollingToElementofAPage(user.getUnAssignedDomainUser());
+		user.getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(UserName);
+		user.getDomainUserRightArrow().waitAndClick(10);
+		baseClass.waitForElement(user.getsavedomainuser());
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+		
+		
+		baseClass.stepInfo("verifying Domain Admin able to unassign users from projects in the domain");
+		baseClass.waitForElement(user.getAssignUserButton());
+		user.getAssignUserButton().waitAndClick(2);
+		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(2);
+		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(3)) {
+			baseClass.passedStep("User is unassigned from the selected project");
+		}else {
+			baseClass.failedStep("user is not unassigned from the selected project");
+		}
+		user.getPopUpCloseBtn().waitAndClick(10);
+		
+		
+		// delete the created user
+		user.filterTodayCreatedUser();
+		user.filterByName(MailID);
+		user.deleteUser();
+
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

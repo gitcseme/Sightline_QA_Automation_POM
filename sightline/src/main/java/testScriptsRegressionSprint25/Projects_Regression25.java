@@ -581,6 +581,8 @@ public class Projects_Regression25 {
 		}
 		base.passedStep("Verify that for DA - while editing 'Initial Size of Project Database'"
 				+ " field appears in database section on Create Project page.");
+		
+		base.selectdomain(Input.domainName);
 		loginPage.logout();
 	}
 

@@ -1184,6 +1184,9 @@ public class UserManagement {
 	public Element getErrorMsgInDomainTab() {
 		return driver.FindElementById("RightAssignErrorMessageForDomain");
 	}
+	public Element getEditUserIngestion() {
+		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanIngestions']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
