@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -17,6 +19,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -30,7 +33,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Redactions_22_24 {
+public class DocView_Redactions_22_24_25 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -85,6 +88,434 @@ public class DocView_Redactions_22_24 {
 			loginPage.quitBrowser();
 		}
 	}
+	
+	/**
+     * Author : Krishna date: NA Modified date:NA Modified by: Test Case Id: 49074
+     * Verify the Redaction and Highlighting is deleted successfully in DocView
+     */
+    @Test(description = "RPMXCON-49074", enabled = true, alwaysRun = true, groups = { "regression" })
+    public void verifyRedactionHighlitingDeletedInDocView() throws Exception {
+        baseClass.stepInfo("Test case Id: RPMXCON-49074");
+        baseClass.stepInfo("Verify the Redaction and Highlighting is deleted successfully in DocView");
+        Actions actions = new Actions(driver.getWebDriver());
+        baseClass = new BaseClass(driver);
+        DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        SessionSearch sessionsearch = new SessionSearch(driver);
+        DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+        String RedactName = "newRedac" + Utility.dynamicNameAppender();
+        DocListPage doclist = new DocListPage(driver);
+
+       // Login as RMU
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+        sessionsearch.basicContentSearch(Input.randomText);
+        sessionsearch.ViewInDocView();
+        baseClass.stepInfo("Documents viewd in DocView");
+       baseClass.stepInfo("Clicked on reduction button ");
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        baseClass.waitForElement(docViewMetaDataPage.getRedactIcon());
+        driver.waitForPageToBeReady();
+        docViewMetaDataPage.getRedactIcon().waitAndClick(15);
+        driver.waitForPageToBeReady();
+        baseClass.waitTillElemetToBeClickable(docViewRedact.thisPageRedaction());
+        docViewRedact.thisPageRedaction().waitAndClick(5);
+        baseClass.stepInfo("Selected on this page add redaction");
+        driver.waitForPageToBeReady();
+        docViewRedact.verifySelectDefaultRedactionTag(Input.defaultRedactionTag, RedactName);
+        baseClass.waitTime(8);
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        driver.waitForPageToBeReady();
+        docViewRedact.getDocView_RedactHTextarea().waitAndClick(5);
+        driver.scrollPageToTop();
+        if (docViewRedact.highliteDeleteBtn().isElementAvailable(5)) {
+            docViewRedact.highliteDeleteBtn().waitAndClick(5);
+            baseClass.passedStep("The highlight has been deleted successfully");
+            baseClass.stepInfo("Redaction Removed successfully.");
+        } else {
+            System.out.println("This Page highlight not done at current doc");
+        }
+        driver.Navigate().refresh();
+        driver.waitForPageToBeReady();
+        baseClass.stepInfo("Reload the document");
+        baseClass.waitForElement(doclist.getDocIDFromDocView(4));
+        doclist.getDocIDFromDocView(4).waitAndClick(5);
+        baseClass.waitTime(5);
+        actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
+        actions.build().perform();
+        if (docViewRedact.highliteDeleteBtn().isElementAvailable(5) == true) {
+            docViewRedact.highliteDeleteBtn().Click();
+            baseClass.failedStep("the highlight has not been deleted after refresh");
+        } else {
+            baseClass.passedStep("The highlight is not present on the page after deleting and refreshing");
+       }
+        loginPage.logout();
+}
+
+	/**
+	 * 
+	 * @author Krishna Date:NA Modified date:N/A Modified by::N/A Test
+	 *         caseID:47923 Description :Verify after impersonation user can not see
+	 *         the multi page and all page options from highlighting
+	 */
+
+	@Test(description = "RPMXCON-47923", enabled = true, groups = { "regression" })
+
+	public void verifyAfterImpersonationCannotSeeMultiAndAllPage() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-47923");
+		baseClass.stepInfo(
+				"Verify after impersonation user can not see the multi page and all page options from highlighting");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewRedactions redact = new DocViewRedactions(driver);
+		String multipage = "multi page";
+		String allpage = "all page";
+
+		// Login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage SAU as with " + Input.sa1userName + "");
+		baseClass.impersonateSAtoRMU();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+		baseClass.waitTime(5);
+		driver.waitForPageToBeReady();
+		redact.clickingHighlitingIcon();
+		baseClass.stepInfo("Sub menus is displayed for highlighting on clicked icons as expected ");
+		redact.verifyMultiPageandAllpageHighlight(multipage, allpage);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage SAU as with " + Input.sa1userName + "");
+		baseClass.impersonateSAtoReviewer();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		redact.clickingHighlitingIcon();
+		baseClass.stepInfo("Sub menus is displayed for highlighting on clicked icons as expected ");
+		redact.verifyMultiPageandAllpageHighlight(multipage, allpage);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PAU as with " + Input.pa1userName + "");
+		baseClass.impersonatePAtoRMU();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		redact.clickingHighlitingIcon();
+		baseClass.stepInfo("Sub menus is displayed for highlighting on clicked icons as expected ");
+		redact.verifyMultiPageandAllpageHighlight(multipage, allpage);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage PAU as with " + Input.pa1userName + "");
+		baseClass.impersonatePAtoReviewer();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		redact.clickingHighlitingIcon();
+		baseClass.stepInfo("Sub menus is displayed for highlighting on clicked icons as expected ");
+		redact.verifyMultiPageandAllpageHighlight(multipage, allpage);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+		baseClass.impersonateRMUtoReviewer();
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		redact.clickingHighlitingIcon();
+		baseClass.stepInfo("Sub menus is displayed for highlighting on clicked icons as expected ");
+		redact.verifyMultiPageandAllpageHighlight(multipage, allpage);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Krishna date: NA Modified date:NA Modified by: Test Case Id: 47909
+	 * Verify Redactions menu is selected from doc view and then navigates to
+	 * another document then selected panels/menus previously selected should
+	 * remain.
+	 */
+	@Test(description = "RPMXCON-47909", enabled = true, dataProvider = "userDetails", groups = { "regression" })
+	
+	public void verifyRedactionMenuNavigatesMenusRemain(String fullName, String userName, String password) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-47909");
+		baseClass.stepInfo(
+				"Verify Redactions menu is selected from doc view and then navigates to another document then selected panels/menus previously selected should remain.");
+		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+
+		// login as
+	    loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Documents viewd in DocView");
+
+		baseClass.stepInfo("Clicked on reduction button ");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewMetaDataPage.getRedactIcon());
+		docViewMetaDataPage.getRedactIcon().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		baseClass.waitForElement(doclist.getDocIDFromDocView(2));
+		doclist.getDocIDFromDocView(2).waitAndClick(5);
+		baseClass.stepInfo("navigate to another document in minidoclist");
+		docViewRedact.verifyRedactionIconRemain();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		docview.clickGearIconOpenMiniDocList();
+		docview.switchToNewWindow(2);
+		baseClass.waitForElement(doclist.getDocIDFromDocView(2));
+		doclist.getDocIDFromDocView(2).waitAndClick(5);
+		baseClass.stepInfo("navigate to another document in minidoclist childwindow");
+		docview.closeWindow(1);
+		docview.switchToNewWindow(1);
+		baseClass.waitTime(5);
+		docViewRedact.verifyRedactionIconRemain();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		baseClass.waitForElement(docview.getDocView_Next());
+		docview.getDocView_Next().waitAndClick(5);
+		baseClass.stepInfo("navigate to another document in navigation options-> , >");
+		docViewRedact.verifyRedactionIconRemain();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		baseClass.waitForElement(docview.getDocView_NumTextBox());
+		docview.getDocView_NumTextBox().waitAndClick(10);
+		docview.getDocView_NumTextBox().SendKeys("5");
+		docview.getDocView_NumTextBox().Enter();
+		baseClass.stepInfo("Navigate to document on entering the document number");
+		docViewRedact.verifyRedactionIconRemain();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		docview.clickClockIconMiniDocList();
+		baseClass.stepInfo("Selected the document from history drop down");
+		docViewRedact.verifyRedactionIconRemain();
+		baseClass.ValidateElementCollection_Presence(docview.getDocView_BatchRedaction(),
+				"Batch Redaction panel displayed in redaction panel");
+		loginPage.logout();
+
+	}
+
+	
+	/**
+	 * @author Brundha.T date: 2/11/2022 TestCase Id:RPMXCON-47880 Description When
+	 *         the user closes the redaction or highlight control in the ribbon, all
+	 *         states must revert to "off"
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47880", enabled = true, groups = { "regression" })
+	public void validatingaRevertOnAndOff() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47880");
+		baseClass.stepInfo(
+				"When the user closes the redaction or highlight control in the ribbon, all states must revert to 'off'");
+
+		String[] UserName = { Input.rmu1userName, Input.rev1userName };
+		String[] Password = { Input.rmu1password, Input.rev1password };
+
+		for (int i = 0; i < UserName.length; i++) {
+
+			loginPage.loginToSightLine(UserName[i], Password[i]);
+			baseClass.stepInfo("Logged in as " + UserName[i]);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.ViewInDocView();
+
+			DocViewRedactions DocRedact = new DocViewRedactions(driver);
+			baseClass.waitTillElemetToBeClickable(DocRedact.redactionIcon());
+			DocRedact.redactionIcon().waitAndClick(5);
+			baseClass.waitTime(2);
+
+			baseClass.stepInfo("verifying revert on and off state in Redaction icon");
+			String DefaultReactionTabClr = DocRedact
+					.verifyingRevertOffAndOn(DocRedact.getRectangleRedactionIconColor());
+
+			DocRedact.rectangleClick().waitAndClick(10);
+			String RevertOnColor = DocRedact.verifyingRevertOffAndOn(DocRedact.getRectangleRedactionIconColor());
+			baseClass.textCompareNotEquals(DefaultReactionTabClr, RevertOnColor,
+					"Rectangle icon in changed to red color and revert is on", "Rectangle icon is revert off");
+			driver.waitForPageToBeReady();
+			DocRedact.doubleClickRedactionBtn();
+			String RevertDefaultOff = DocRedact.verifyingRevertOffAndOn(DocRedact.getRectangleRedactionIconColor());
+			baseClass.textCompareEquals(DefaultReactionTabClr, RevertDefaultOff, "After panel reopening revert is off",
+					"After panel reopening revert is on");
+
+			baseClass.stepInfo("verifying revert on and off state in Highlighter icon");
+			DocRedact.doubleclickingHighlitingIcon(false, false);
+			String DefaultHighlighterColor = DocRedact
+					.verifyingRevertOffAndOn(DocRedact.getHighlightedPageRedactionIconColor());
+
+			DocRedact.thisPageHighlite().waitAndClick(10);
+			String HighlightOn = DocRedact.verifyingRevertOffAndOn(DocRedact.getHighlightedPageRedactionIconColor());
+			baseClass.textCompareNotEquals(HighlightOn, DefaultHighlighterColor, "Revert is on in Highlighter panel",
+					"Revert is off in Highlighter panel");
+
+			DocRedact.doubleclickingHighlitingIcon(false, true);
+			String HighlightOff = DocRedact.verifyingRevertOffAndOn(DocRedact.getHighlightedPageRedactionIconColor());
+			baseClass.textCompareEquals(HighlightOff, DefaultHighlighterColor, "Revert is off in Highlighter panel",
+					"Revert is on in Highlighter panel");
+			loginPage.logout();
+		}
+	}
+
+	/**
+	 * @author Brundha.T date: 2/11/2022 TestCase Id:RPMXCON-47879 Description To
+	 *         verify that when redaction control in red "on" state, if the icon is
+	 *         clicked again by the user, it must revert to an "off" state
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47879", enabled = true, groups = { "regression" })
+	public void validatingaRevertOffStateInSubMenu() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47879");
+		baseClass.stepInfo(
+				"To verify that when redaction control in red 'on' state, if the icon is clicked again by the user, it must revert to an \"off\" state");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
+
+		String[] SubMenu = { "Rectangle", "This Page", "Text Redaction", "Multipage" };
+		String ComapreString = "#727272";
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		DocViewRedactions DocRedact = new DocViewRedactions(driver);
+		baseClass.waitTillElemetToBeClickable(DocRedact.redactionIcon());
+		DocRedact.redactionIcon().waitAndClick(5);
+		baseClass.waitTime(2);
+
+		for (int i = 0; i < SubMenu.length; i++) {
+			String RedactionSubMenuOff = DocRedact.verifyingRevertOffAndOn(baseClass.text(SubMenu[i]));
+			baseClass.textCompareEquals(RedactionSubMenuOff, ComapreString, "Sub menu is in grey color by default",
+					"Sub menu is not in grey color by default");
+		}
+
+		for (int i = 1; i <= 2; i++) {
+			driver.waitForPageToBeReady();
+			DocRedact.rectangleClick().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String SubMenuOnColor = DocRedact.verifyingRevertOffAndOn(DocRedact.getRectangleRedactionIconColor());
+			if (i == 1) {
+				baseClass.textCompareNotEquals(ComapreString, SubMenuOnColor, "Rectangle icon is revert on ",
+						"Rectangle icon is revert off");
+			} else {
+				baseClass.textCompareEquals(ComapreString, SubMenuOnColor, "Sub Menu revert to off state ",
+						"Sub Menu not revert to off state");
+			}
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 *
+	 * @Author : Brundha @Testcase id : 49989 
+	 * Verify that after deletion of the last saved redaction tag,
+	 *         'Default Redaction Tag' should be selected automatically from
+	 *         redaction pop up
+	 */
+	@Test(description = "RPMXCON-49989", enabled = true, groups = { "regression" })
+	public void verifyRedactionTagInPopUpDropDown() throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-49989 from Docview/redaction Component");
+		baseClass.stepInfo(
+				"Verify that after deletion of the last saved redaction tag, 'Default Redaction Tag' should be selected automatically from redaction pop up");
+
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		String Redactiontag2 = "SecondRedactionTag" + Utility.dynamicNameAppender();
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+		baseClass.stepInfo("Creating a redaction tag");
+		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+		 driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag2);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic meta data search");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Navigate to doc view page");
+		sessionSearch.ViewInDocView();
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 40, 40);
+		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+		driver.scrollPageToTop();
+		docViewRedactions.selectDoc1();
+
+		baseClass.waitTime(1);
+		driver.scrollPageToTop();
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 20, 20);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag1);
+		baseClass.waitTime(1);
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 80, 80);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag2);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		redactionpage = new RedactionPage(driver);
+		baseClass.stepInfo("Deleting Redaction tag");
+		redactionpage.DeleteRedaction(Redactiontag2);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocView();
+
+		docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.selectFirstDoc().isElementAvailable(10);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 30, 30);
+		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
+		Select select = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
+		String option = select.getFirstSelectedOption().getText();
+		System.out.println("the value is " + option);
+		baseClass.textCompareEquals(option,Redactiontag1,"Last saved redaction tag is selected automatically","Last saved redaction tag is not selected automatically");
+		
+		
+		redactionpage = new RedactionPage(driver);
+		baseClass.stepInfo("Deleting Redaction tag");
+		redactionpage.DeleteRedaction(Redactiontag1);
+		
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		docViewRedactions.selectFirstDoc().isElementAvailable(10);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 30, 30);
+		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
+		Select OptionInDrop = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
+		String DefaultTag = OptionInDrop.getFirstSelectedOption().getText();
+		baseClass.textCompareEquals(DefaultTag, Input.defaultRedactionTag, "after deletion of the last saved redaction tag, 'Default Redaction Tag' is selected automatically","Default tag is not displayed" );
+		
+		
+		loginPage.logout();
+
+	}
+
 	
 	/**
 	 * 
