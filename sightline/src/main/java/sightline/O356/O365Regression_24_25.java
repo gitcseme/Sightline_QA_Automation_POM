@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
@@ -26,7 +27,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class O365Regression_24 {
+public class O365Regression_24_25 {
 
 	Driver driver;
 	LoginPage login;
@@ -69,6 +70,62 @@ public class O365Regression_24 {
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
+	
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that Application does not open left Navigation Menu
+	 *              automatically after User login [RPMXCON-68966]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-68966", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyLeftNavigationMenu(String username, String password) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-68966 - O365");
+		base.stepInfo("Verify that Application does not open left Navigation Menu automatically after User login");
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		//verify left navigation menu is not automatically opened
+		boolean action = base.getLeftNavigationMenu().isDisplayed();
+		base.printResutInReport(action, "left Navigation Menu is not opened Automatically",
+				"left Navigation Menu is opened Automatically", "Fail");
+
+		// Logout
+		login.logout();
+	}
+
+
+	/**
+	 * @author sowndarya Date:09/11/2022 RPMXCON-68855
+	 * @throws Exception
+	 * @Description Verify that error message does not display and "Static Text Object" inside Coding Form accept with special characters < > & ‘
+	 */
+	@Test(description = "RPMXCON-68855", enabled = true, groups = { "regression" })
+	public void verifyStaticTextObjWithSplChar() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-68855");
+		base.stepInfo("Verify the list of fields from the list view should be displayed in capital");
+
+		// Login As PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.rmu1userName + "");
+
+		base.stepInfo("RPMXCON-54597");
+		base.stepInfo("Verify that error message does not display and \"Static Text Object\" inside Coding Form accept with special characters < > & ‘");
+		String staticText = "Test&Test";
+		String cfName = "CfStatic" + Utility.dynamicNameAppender();
+		
+		CodingForm form= new CodingForm(driver);
+		form.navigateToCodingFormPage();
+		form.creationOfStaticText(staticText, cfName);
+		base.VerifySuccessMessage("Coding Form Saved successfully");
+		
+		login.logout();
+		
+	}
+	
+	
 
 	/**
 	 * @author

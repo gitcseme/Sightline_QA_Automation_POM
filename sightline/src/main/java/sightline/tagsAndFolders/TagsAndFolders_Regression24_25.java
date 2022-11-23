@@ -17,9 +17,11 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DataSets;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
@@ -31,7 +33,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class TagsAndFolders_Regression24 {
+public class TagsAndFolders_Regression24_25 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -107,6 +109,57 @@ public class TagsAndFolders_Regression24 {
 				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-53448
+	 * @Description:Verify that Tag propagation must be based on the ingested MD5Hash field when Tag is saved from doc view coding form
+	 **/
+	@Test(description = "RPMXCON-53448",enabled = true, groups = { "regression" })
+	public void verifyTagProgationInCodingForm() throws Exception {
+
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+
+		base.stepInfo("Verify that Tag propagation must be based on the ingested MD5Hash field when Tag is saved from doc view coding form");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in As " + Input.rmu1FullName);
+		base.selectproject(Input.additionalDataProject);
+		String tag="Tag"+ Utility.dynamicNameAppender();
+		String codingForm="CF"+ Utility.dynamicNameAppender();
+		String MD5Hashdocument="H136960011001001.txt";
+		
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.createNewTagNotSave(tag,Input.tagNamePrev);
+		base.waitForElement(tagsAndFolderPage.getPropTagExactDuplic());
+		tagsAndFolderPage.getPropTagExactDuplic().waitAndClick(10);
+		base.waitForElement(tagsAndFolderPage.getSaveTag());
+		tagsAndFolderPage.getSaveTag().waitAndClick(10);
+		System.out.println(tag);
+		base.VerifySuccessMessage("Tag added successfully");
+		base.stepInfo("Tag : " + tag + " Created Successfully With Exact Duplicate (MD5Hash)");
+
+		CodingForm form =new CodingForm(driver);
+		form.navigateToCodingFormPage();
+		form.saveCodingFormWithRedioGroup(codingForm, tag);
+		driver.waitForPageToBeReady();
+		form.assignCodingFormToSG(codingForm);
+		
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.docFileName,MD5Hashdocument);
+		sessionSearch.ViewInDocView();
+		
+		DocViewPage docview= new DocViewPage(driver);
+		base.waitForElement(docview.getDocView_MiniDocListIds(1));
+		docview.getDocView_MiniDocListIds(1).waitAndClick(10);
+		docview.saveAndNextNewCodingFormSelectingTags();
+		base.passedStep("Document with same MD5Hash as of saved document is tag propagated successfully");
+		
+		driver.waitForPageToBeReady();
+		form.navigateToCodingFormPage();
+		form.assignCodingFormToSG(Input.codingFormName);
+		loginPage.logout();
 	}
 
 	/**
