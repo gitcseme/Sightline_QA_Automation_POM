@@ -76,7 +76,7 @@ public class BatchPrintRegression_26 {
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password },
-//				{ Input.rmu1userName, Input.rmu1password }, 
+				{ Input.rmu1userName, Input.rmu1password }, 
 		};
 		return users;
 	}
