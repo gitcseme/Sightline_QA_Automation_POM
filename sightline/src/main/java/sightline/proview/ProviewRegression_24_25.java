@@ -27,7 +27,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ProviewRegression_24 {
+public class ProviewRegression_24_25 {
 	Driver driver;
 	LoginPage login;
 	SessionSearch session;
@@ -51,6 +51,53 @@ public class ProviewRegression_24 {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that project admin can view the save searched result
+	 *              on proview page. [RPMXCON-54126]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54126", enabled = true, groups = { "regression" })
+	public void verifyAllTagDisplayed2() throws Exception {
+
+		base.stepInfo("RPMXC0N-54126  Proview");
+		base.stepInfo("To verify that project admin can view the save searched result on proview page.");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in as RMU User");
+
+		// fetch All Available Searches in project
+		session.navigateToAdvancedSearchPage();
+		session.switchToWorkproduct();
+		session.getSavedSearchResult().waitAndClick(10);
+
+		base.waitForElementCollection(session.getTree());
+		List<String> searchlist = base.availableListofElements(session.getTree());
+
+		// navigate to categorize page
+		categorize.navigateToCategorizePage();
+
+		// Fetch displayed Searches in Categorization page
+		categorize.selectTrainingSet("Identify by Saved Search");
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElementCollection(categorize.getAvailableSearches());
+		List<String> searchPresentInCategorize = base.availableListofElements(categorize.getAvailableSearches());
+
+		// Verify All existing Searches is Displayed
+
+		List<String> expectedSearchList = base.sortTheList(searchlist, true);
+		driver.waitForPageToBeReady();
+		List<String> actualSearchList = base.sortTheList(searchPresentInCategorize, true);
+		boolean flag = base.compareListViaContains(expectedSearchList, actualSearchList);
+		base.printResutInReport(flag, "All existing Searches are Displayed.", "All existing Searches is not Displayed.",
+				"Pass");
+
+		// Logout
+		login.logout();
 	}
 
 	/**

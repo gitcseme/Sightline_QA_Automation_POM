@@ -26,7 +26,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Export_Regression22_24 {
+public class Export_Regression22_24_25 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -93,6 +93,111 @@ public class Export_Regression22_24 {
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
+	}
+	
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-50648
+	 * @Description: Verify that after Post Generation is completed, it will
+	 *               displays status on Export Progress bar Tile View as 'Completed'
+	 **/
+	@Test(description = "RPMXCON-50648", enabled = true, groups = { "regression" })
+	public void verifyCompletedStatusInTileView() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-50648");
+		base.stepInfo(
+				"Verify that after Post Generation is completed, it will displays status on Export Progress bar Tile View as 'Completed'");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String FolderName = "FolderName" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = "Export" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(FolderName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(FolderName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(exportName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.clickOnGenerateButton();
+		page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		page.getbtnContinueGenerate().isElementAvailable(3);
+		if (page.getbtnContinueGenerate().isDisplayed()) {
+			page.getbtnContinueGenerate().waitAndClick(2);
+		}
+
+		page.navigateToProductionPage();
+		page.selectDefaultExport();
+		base.stepInfo("verifying Completed status in Tile view");
+		page.verifyingProductionStatusInHomePage("Post-Gen QC Checks In Progress", exportName);
+		page.verifyingProductionStatusInHomePage("Completed", exportName);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-50647
+	 * @Description: Verify that after Post Generation is completed, it will
+	 *               displays status on Export generation page as 'Completed'
+	 **/
+	@Test(description = "RPMXCON-50647", enabled = true, groups = { "regression" })
+	public void verifyCompletedStatusInGenPage() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-50647");
+		base.stepInfo(
+				"Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String FolderName = "FolderName" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = "Export" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(FolderName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(FolderName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(exportName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		driver.waitForPageToBeReady();
+		page.getBackButton().waitAndClick(5);
+		base.stepInfo("verifying Completed status in Generate Page");
+		page.verifyProductionStatusInGenPage("Completed");
+		loginPage.logout();
+
 	}
 	
 	/**

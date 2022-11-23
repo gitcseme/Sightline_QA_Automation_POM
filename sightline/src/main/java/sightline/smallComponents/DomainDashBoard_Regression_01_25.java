@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -33,7 +34,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DomainDashBoard_Regression_01 {
+public class DomainDashBoard_Regression_01_25 {
 	
 	Driver driver;
 	LoginPage loginPage;
@@ -73,6 +74,188 @@ public class DomainDashBoard_Regression_01 {
 		driver = new Driver();
 		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+	}
+	
+	/**
+	 * @author Brundha.T date: 2/11/2022 TestCase Id:RPMXCON-53118 Description
+	 *         Verify Active users widget should not be visible for RMU/Reviewer
+	 *         user
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53118", enabled = true, groups = { "regression" })
+	public void verifyAddingExistingUserUnderSameProject() throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53118");
+		baseClass.stepInfo("Verify Active users widget should not be visible for RMU/Reviewer user");
+		userManage = new UserManagement(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as " + Input.rmu1userName);
+
+		DomainDashboard dash = new DomainDashboard(driver);
+
+		driver.waitForPageToBeReady();
+		dash.getEditIcon().waitAndClick(5);
+		baseClass.waitForElement(dash.getSelectAddWidget());
+		dash.getSelectAddWidget().waitAndClick(5);
+		
+		baseClass.stepInfo("verifying Active user invisiblity in Widget");
+		if (!dash.getWidget().isElementAvailable(2)) {
+			baseClass.passedStep(
+					"Active user widget is not visible in " + Input.rmu1userName + " dashboard as expected");
+		} else {
+			baseClass.failedStep("Active user widget is  visible in " + Input.rmu1userName + " dashboard as expected");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T date: 2/11/2022 TestCase Id:RPMXCON-53481 Description
+	 *         Validate CustodianNames value
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53481", enabled = true, groups = { "regression" })
+	public void validatingCustodiansNamesValue() throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53481");
+		baseClass.stepInfo("Validate CustodianNames value");
+		userManage = new UserManagement(driver);
+
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in as " + Input.da1userName);
+		baseClass.selectproject(Input.domainName);
+		
+		DomainDashboard dash = new DomainDashboard(driver);
+		String FilterPrjt= Input.projectName;
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Selecting the project");
+		dash.filterProject(FilterPrjt);
+		
+		baseClass.waitTime(3);
+		baseClass.stepInfo("Verifying the presence of custodians for prject in beehive table");
+		List<WebElement> element = dash.getColumValue(baseClass.getIndex(dash.getTableHeader(), "CUSTODIANS (#)"))
+				.FindWebElements();
+		String Custodians = element.get(0).getText().trim();
+		System.out.println(Custodians);
+		if (Integer.valueOf(Custodians)>=1 && Integer.valueOf(Custodians) != null) {
+			baseClass.passedStep("custodians is displayed for selected project");
+		} else {
+			baseClass.failedStep("custodians is not displayed for selected project");
+		}
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Sakthivel RPMXCON-53161
+	 * @Description :Validate Project filter
+	 */
+	@Test(description = "RPMXCON-53161", enabled = true, groups = { "regression" })
+    public void verifyingProjectFilter() throws Exception {
+ 
+        base.stepInfo("Test case Id: RPMXCON-53161");
+        base.stepInfo("Validate Project filter");
+        DomainDashboard domainDash = new DomainDashboard(driver);
+        // login as DAU
+        loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+        base.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
+        base.stepInfo("Domain dashboard  is loaded by default as expected");
+        driver.waitForPageToBeReady();
+        base.selectdomain(Input.domainName);
+        base.waitTime(5);
+        domainDash.filterProject(Input.projectName);
+        base.waitForElement(domainDash.projectStatusFirstValue());
+        String actualActiveStatus = domainDash.projectStatusFirstValue().getText();
+        if(actualActiveStatus.equalsIgnoreCase("active")) {
+            base.passedStep("The staus of active project is displayed ACTIVE as expected");
+        }else {
+            base.failedStep("The staus of active project is not displayed as ACTIVE");
+        }    
+        domainDash.clearProjectSearchFilter();
+        driver.scrollingToElementofAPage(domainDash.getInactiveProjectToggle());
+        domainDash.getInactiveProjectToggle().waitAndClick(10);
+        driver.waitForPageToBeReady();
+        domainDash.projectStatusTab().waitAndClick(10);
+        base.waitTime(5);
+        String status = domainDash.projectStatusFirstValue().getText();
+        System.out.println(status);
+        if (status.equalsIgnoreCase("inactive")) {
+            base.waitTime(5);
+            String projectname = domainDash.projectNameFirstValue().getText();
+            System.out.println(projectname);
+            base.waitTime(10);
+            domainDash.filterProject(projectname);
+            base.waitForElement(domainDash.projectStatusFirstValue());
+            base.waitTime(10);
+            String actualInActiveStatus = domainDash.projectStatusFirstValue().getText();
+            System.out.println(actualInActiveStatus);
+            if(actualInActiveStatus.equalsIgnoreCase("inactive")) {
+                base.passedStep("The staus of inactive project is displayed INACTIVE as expected");
+            }else {
+                base.failedStep("The staus of inactive project is not displayed as INACTIVE");
+            }    
+        } else {
+            base.passedStep("No inactive projects in Domain");
+        }
+    }
+
+	/**
+	 * @author Brundha.T date: 2/11/2022 TestCase Id:RPMXCON-53146 
+	 * Description To verify if user customize the column list but does
+	 *  not save the changes,then previous list should be displayed when 
+	 *  user login for the same domain
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53146", enabled = true, groups = { "regression" })
+	public void validatingProjectFilter() throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53146");
+		baseClass.stepInfo("To verify if user customize the column list but does not save the changes,then previous list should be displayed when user login for the same domain");
+		
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in as " + Input.da1userName);
+		
+		baseClass.selectdomain(Input.domainName);
+		userManage = new UserManagement(driver);
+		
+		DomainDashboard dash = new DomainDashboard(driver);
+		String[] columns = {"NoOfSecurityGroup","NoOfIngestion"};
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("adding the columns in beehive table and save");
+		dash.AddOrRemoveColum(columns);
+		dash.getSavebtn().waitAndClick(10);
+
+		baseClass.stepInfo("Removing the column without saving it");
+		driver.waitForPageToBeReady();
+		dash.AddOrRemoveColum(columns);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Relogin as " + Input.da1userName);
+		
+		baseClass.waitTime(3);
+		baseClass.stepInfo("Verifying the presence of selected column in beehive table");
+		List<String> tableheadervalues = dash.getColumValues(dash.getTableHeader());
+		System.out.println(tableheadervalues);
+		
+		baseClass.waitTime(2);
+		if(tableheadervalues.contains("SECURITY GROUPS (#)")&& tableheadervalues.contains("INGESTIONS (#)")) {
+			baseClass.passedStep("User is presented with previous existing column list");
+		}else {
+			baseClass.failedStep("User is not presented with previous existing column list");
+		}
+		
+		driver.waitForPageToBeReady();
+		dash.AddOrRemoveColum(columns);
+		dash.getSavebtn().waitAndClick(10);
+		
+		loginPage.logout();
+
 	}
 	
 	/**
