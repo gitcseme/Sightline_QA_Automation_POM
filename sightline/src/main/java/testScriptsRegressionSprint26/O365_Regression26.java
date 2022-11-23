@@ -395,8 +395,7 @@ public class O365_Regression26 {
 		login.logout();
 
 	}
-
-	/**
+/**
 	 * @author sowndarya Testcase No:RPMXCON-68767
 	 * @Description:Verify that error message display and application does NOT accepts - when "Folder" Name entered with special characters < > & ‘
 	 **/
@@ -407,19 +406,15 @@ public class O365_Regression26 {
 	login.loginToSightLine(Input.pa1userName, Input.pa1password);
 	base.stepInfo("Logged in As : " + Input.pa1userName);
 	String foldername="Folder&‘"+ Utility.dynamicRandomNumberAppender();
-
+	String expected ="Special characters are not allowed.";
 	//tag
 	TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
 	tags.navigateToTagsAndFolderPage();
 	tags.createNewFolderNotSave(foldername);
-	if (tags.getFolderrrorMsg().isDisplayed()) {
-		base.passedStep("Error message displayed when folder Name entered with special characters < > & ‘ ");
-	}
-	
-	else {
-		base.failedStep("Error message not displayed when folder Name entered with special characters < > & ‘");
-	}
-	
+	String folderError = tags.getFolderrrorMsg().getText();
+	System.out.println(folderError);
+	base.textCompareEquals(folderError, expected, "Error message displayed when folder Name entered with special characters < > & ‘", "Error message not displayed when folder Name entered with special characters < > & ‘");
+
 	//tag group
 	String folderGroupName="Folder&'Group"+Utility.dynamicRandomNumberAppender();
 	tags.navigateToTagsAndFolderPage();
@@ -436,13 +431,9 @@ public class O365_Regression26 {
 	base.waitForElement(tags.getNewFolderGroupInputTextBox());
 	tags.getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
 	base.waitTime(2);
-	if (tags.getFolderGroupErrorMsg().isDisplayed()) {
-		base.passedStep("Error message displayed when folder group Name entered with special characters < > & ‘ ");
-	}
-	
-	else {
-		base.failedStep("Error message not displayed when folder group Name entered with special characters < > & ‘");
-	}
+	String folderTagError = tags.getFolderGroupErrorMsg().getText();
+	System.out.println(folderTagError);
+	base.textCompareEquals(folderTagError, expected, "Error message displayed when folder group Name entered with special characters < > & ‘", "Error message not displayed when foldergroup  Name entered with special characters < > & ‘");
 	
 	}
 	
@@ -458,18 +449,14 @@ public class O365_Regression26 {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in As : " + Input.pa1userName);
 		String tagname="Tag&‘"+ Utility.dynamicRandomNumberAppender();
-
+		String expected="Special characters are not allowed."; 
 		//tag
 		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
 		tags.navigateToTagsAndFolderPage();
 		tags.createNewTagNotSave(tagname, Input.tagNamePrev);
-		if (tags.getErrorMsg().isDisplayed()) {
-			base.passedStep("Error message displayed when tag Name entered with special characters < > & ‘ ");
-		}
-		
-		else {
-			base.failedStep("Error message not displayed when tag Name entered with special characters < > & ‘");
-		}
+		String tagError = tags.getErrorMsg().getText();
+		System.out.println(tagError);
+		base.textCompareEquals(tagError, expected, "Error message displayed when tag Name entered with special characters < > & ‘", "Error message not displayed when tag Name entered with special characters < > & ‘");
 		
 		//tag group
 		String tagGroupName="Tag&'Group"+Utility.dynamicRandomNumberAppender();
@@ -484,16 +471,11 @@ public class O365_Regression26 {
 		base.waitForElement(tags.getNewTagGroupInputTextBox());
 		tags.getNewTagGroupInputTextBox().SendKeys(tagGroupName);
 		base.waitTime(2);
-		if (tags.getTagGroupErrorMsg().isDisplayed()) {
-			base.passedStep("Error message displayed when tag group Name entered with special characters < > & ‘ ");
-		}
-		
-		else {
-			base.failedStep("Error message not displayed when tag group Name entered with special characters < > & ‘");
-		}
-		
-	}
+		String tagGroupError = tags.getTagGroupErrorMsg().getText();
+		System.out.println(tagGroupError);
+		base.textCompareEquals(tagGroupError, expected, "Error message displayed when tag group Name entered with special characters < > & ‘", "Error message not displayed when tag group Name entered with special characters < > & ‘");
 	
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
