@@ -16,11 +16,14 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
 import pageFactory.ConceptExplorerPage;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
+import pageFactory.ReviewerCountsReportPage;
 import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
@@ -92,7 +95,9 @@ public class ReportsRegression26 {
 
 	@DataProvider(name = "PA & RMU")
 	public Object[][] PA_RMU() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		Object[][] users = { { Input.pa1userName, Input.pa1password }
+		 ,{ Input.rmu1userName, Input.rmu1password }
+		};
 		return users;
 	}
 	
@@ -213,6 +218,129 @@ public class ReportsRegression26 {
 		baseClass.passedStep("Verified - that Timeline and Gaps Report option is displayed on Report menu.");
 		loginPage.logout();
 		   
+	}
+
+	/**
+	 * @Author NA
+	 * @Description : verify that Users are able to view the saved Custom Report Using style as CSV and multiple/all Workproduct. [RPMXCON-56404]
+	 */
+	@Test(description = "RPMXCON-56404", enabled = true, dataProvider = "PA & RMU", groups = { "regression" })
+	public void verifySavedCustomReprtCSVandMultipleWP(String username, String password) throws Exception {
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		ReportsPage report =new ReportsPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		
+		String tagName1 = "Tag" + Utility.dynamicNameAppender();
+		String tagName2 = "Tag" + Utility.dynamicNameAppender();
+		String tagName3 = "Tag" + Utility.dynamicNameAppender();	
+		String reportName = "Report" + Utility.dynamicNameAppender();
+		
+		String[] workProductFields = { tagName1, tagName2, tagName3 };
+		String expExportStyle = "CSV";
+	
+		baseClass.stepInfo("RPMXCON-56404");
+		baseClass.stepInfo("To verify that Users are able to view the saved Custom Report"
+				+ " Using style as CSV and multiple/all Workproduct.");
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in As : " + username);
+		
+		if (username.equals(Input.rmu1userName)) {
+			tags.createNewTagwithClassificationInRMU(tagName1, Input.tagNamePrev);
+			tags.createNewTagwithClassificationInRMU(tagName2, Input.tagNamePrev);
+			tags.createNewTagwithClassificationInRMU(tagName3, Input.tagNamePrev);
+		} else {
+			tags.createNewTagwithClassification(tagName1, Input.tagNamePrev);
+			tags.createNewTagwithClassification(tagName2, Input.tagNamePrev);
+			tags.createNewTagwithClassification(tagName3, Input.tagNamePrev);
+		}
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName1);
+		sessionSearch.bulkTagExisting(tagName2);
+		sessionSearch.bulkTagExisting(tagName3);
+
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
+		cddr.selectSource("Security Groups", Input.securityGroup);
+		cddr.selectExportStyle("CSV");
+		cddr.selectWorkProductFields(workProductFields);
+		driver.waitForPageToBeReady();
+		
+		baseClass.waitForElement(cddr.getRunReport());
+		cddr.getRunReport().waitAndClick(10);
+		cddr.reportRunSuccessMsg();
+		cddr.SaveReport(reportName);
+		baseClass.stepInfo("Saved the Custom report " + reportName);
+		
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getSavedCustomReport(reportName));
+		report.getSavedCustomReport(reportName).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		cddr.validateSelectedExports(workProductFields);
+		baseClass.waitForElement(cddr.getExportStyleDD());
+		String actStyle = cddr.getExportStyleDD().selectFromDropdown().getFirstSelectedOption().getText();
+		if(actStyle.equals(expExportStyle)) {
+			baseClass.passedStep("Style As Expected");
+		} else {
+			baseClass.failedStep("Style Not As Expected");
+		}
+		baseClass.passedStep("Verified - that Users are able to view the saved Custom Report"
+		 + "Using style as CSV and multiple/all Workproduct.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author NA
+	 * @Description: verify that Reviewer Count report is displayed in Report menu [RPMXCON-56253]
+	 */
+	@Test(description = "RPMXCON-56253", enabled = true, dataProvider = "PA & RMU", groups = { "regression" })
+	public void verifyRevCountReportinReportMenu(String username, String password) throws Exception {
+		AssignmentsPage agmt = new AssignmentsPage(driver);
+		String assignment = "Assignment" + Utility.dynamicNameAppender();
+		String report = "RevCountReport" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("RPMXCON - 56253");
+		baseClass.stepInfo("To verify that Reviewer Count report is displayed in Report menu");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.verifyPureHitsCount();
+		sessionSearch.bulkAssign();
+		agmt.assignmentCreation(assignment, Input.codeFormName);		
+		agmt.editAssignmentUsingPaginationConcept(assignment);
+		driver.waitForPageToBeReady();
+		agmt.addReviewerAndDistributeDocs();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(username, password);
+		ReviewerCountsReportPage countReport = new ReviewerCountsReportPage(driver);
+		countReport.navigateTOReviewerCountsReportPage();
+		driver.waitForPageToBeReady();
+		countReport.generateReport(assignment);	
+		baseClass.waitForElementCollection(countReport.getTableHeaders());
+		baseClass.waitForElement(countReport.getSaveReportBtn());
+		countReport.getSaveReportBtn().waitAndClick(5);
+		baseClass.waitForElement(countReport.getSaveReportName());
+		countReport.getSaveReportName().SendKeys(report);
+		baseClass.waitForElement(countReport.getSaveBtn());
+		countReport.getSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Report save successfully");
+		
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(countReport.getCustomReport(report));
+		baseClass.mouseHoverOnElement(countReport.getCustomReport(report));
+		if(countReport.getCustomReport(report).Visible()) {
+			System.out.println("Reviewer Count Report option is displayed in Report Menu As Expected");
+		} else {
+			System.out.println("Reviewer Count Report option is displayed in Report Menu Not As Expected");
+		}
+		baseClass.passedStep("Verified - that Reviewer Count report is displayed in Report menu");
+		loginPage.logout();
 	}
 	
 }
