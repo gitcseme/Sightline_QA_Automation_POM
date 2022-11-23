@@ -1101,6 +1101,30 @@ public class IngestionPage_Indium {
 	public Element getIngestionDetailPopupFromGrid(String dataset) {
 		return driver.FindElementByXPath("//td[contains(text(),'"+dataset+"')]//following-sibling::td//a");
 	}
+	public ElementCollection getAvailablePaginateButtons() {
+		return driver.FindElementsByXPath("//li[@class='paginate_button ']//a");
+	}
+	public ElementCollection getErrorDetailsCount() {
+		return driver.FindElementsByXPath("//table[@id='myDataTable']//tbody//tr");
+	}
+	public Element getErrorPage(int pageno) {
+		return driver.FindElementByXPath("//div[@id='myDataTable_paginate']//li//a[contains(text(),'"+pageno+"')]");
+	}
+	public Element getCurrentPage() {
+		return driver.FindElementByXPath("//li[@class='paginate_button active']//a");
+	}
+	public Element getErrorPaginatePreviousBtn() {
+		return driver.FindElementByXPath("//li[@class='paginate_button previous']//a");
+	}
+	public Element getErrorPaginateNextBtn() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next']//a");
+	}
+	public Element getErrorPaginatePreviousBtnStatus() {
+		return driver.FindElementById("myDataTable_previous");
+	}
+	public Element getErrorPaginateNextBtnStatus() {
+		return driver.FindElementById("myDataTable_next");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -11201,5 +11225,4 @@ public class IngestionPage_Indium {
 			getCloseButton().waitAndClick(10);
 		}
 		
-
 }

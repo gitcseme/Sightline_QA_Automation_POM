@@ -189,6 +189,161 @@ public class Ingestion_Regression_9 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60815
+	 * Description :Verify that if the Absolute path is present in the PDF LST, then Ingestion 
+	 * should be successful.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60815",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInPdf() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60815");
+		baseClass.stepInfo("To verify that if the Absolute path is present in the PDF LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with PDF");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting Pdf file");
+			ingestionPage.selectPDFSource(Input.uncAbsolutePdf, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60814
+	 * Description :Verify that if the Absolute path is present in the Native LST, then Ingestion
+	 * should be successful.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60814",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInNative() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60814");
+		baseClass.stepInfo("To verify that if the Absolute path is present in the Native LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with Native");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting Native file");
+			ingestionPage.selectNativeSource(Input.uncAbsoluteNative, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60820
+	 * Description :Verify that Ingestion should be successful if the PDF LST contains the Absolute 
+	 * path and the Native LST contains the Relative path. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60820",enabled = true, groups = { "regression" })
+	public void verifyAbsoluteAndRelativePathFile() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60820");
+		baseClass.stepInfo("To verify that if the Absolute path in Native and Relative in Native LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with Pdf and Native");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting relative Native file");
+			ingestionPage.selectNativeSource(Input.uncRelativeNative, false);
+			baseClass.stepInfo("Selecting absolute Pdf file");
+			ingestionPage.selectPDFSource(Input.uncAbsolutePdf, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

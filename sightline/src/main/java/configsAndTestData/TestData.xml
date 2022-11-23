@@ -133,6 +133,9 @@
 	<absoluteOverlayText>Overlay_Ingestion Path_Text_AbsolutePath.lst</absoluteOverlayText>
 	<H13696smallSetFolder>0002_H13696_1_smallset_GD1</H13696smallSetFolder>
 	<smallSetDat>0036_loadfile.dat</smallSetDat>
+	<uncAbsolutePdf>Ingestion Path_PDF_AbsolutePath.lst</uncAbsolutePdf>
+	<uncRelativeNative>Ingestion Path_Native_RelativePath.lst</uncRelativeNative>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -569,8 +572,7 @@
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 	<JanMultiPTIFF>16JanMultiPTIFF</JanMultiPTIFF>
-	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file
-	</GNon_searchable_PDF_Load_file>
+	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
 	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>

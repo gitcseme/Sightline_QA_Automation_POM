@@ -320,6 +320,8 @@ public class TestData {
 	public String absoluteOverlayText;
 	public String H13696smallSetFolder;
 	public String smallSetDat;
+	public String uncAbsolutePdf;
+	public String uncRelativeNative;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22
