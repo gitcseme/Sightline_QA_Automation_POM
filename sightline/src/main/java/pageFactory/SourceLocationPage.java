@@ -15,6 +15,7 @@ public class SourceLocationPage {
 	Driver driver;
 	BaseClass base;
 	SoftAssert softassert;
+	CollectionPage collection;
 
 	public Element getSrcDeleteBtn(String srceLoc) {
 		return driver.FindElementByXPath("//td[text()='" + srceLoc + "']//parent::tr//a[text()='Delete']");
@@ -65,6 +66,10 @@ public class SourceLocationPage {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
 	
+	public Element getSetUpASourceLocationEditYesButton() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+	
 	public Element getDataSourceName(String sourceName) {
 		return driver.FindElementByXPath("//table[@id='dtSourceList']//tr//td[text()='"+sourceName+"']");
 	}
@@ -74,11 +79,15 @@ public class SourceLocationPage {
 	}
 
 	public Element getSrcActionBtn(String srceLoc, String actionType) {
-		return driver.FindElementByXPath("//td[text()='" + srceLoc + "']//parent::tr//a[text()='" + actionType + "']");
+		return driver.FindElementByXPath("//td[text()=\""+srceLoc+"\"]//parent::tr//a[text()='"+actionType+"']");
 	}
 	
 	public Element getSourceLocationPopUp() {
 		return driver.FindElementByXPath("//div[@class='ui-widget-overlay ui-front']");
+	}
+	
+	public Element getEditSourceLocationPopUp() {
+		return driver.FindElementByXPath("/html/body/div[7]/div[1]");
 	}
 
 	public Element getSrceLocPopup_SaveBtn() {
@@ -86,6 +95,16 @@ public class SourceLocationPage {
 				"//div[@class='ui-widget-overlay ui-front']//preceding::input[@id='btnSaveSourceLocation']");
 	}
 	
+	public Element getSourceLocationPageFirstCollectionSelect() {
+		return driver.FindElementByXPath("(//table[@id='dtSourceList']//tr//td[5]//a[1])[1]");
+	}
+	
+	public Element getSourceLocationPageFirstdataSourceSelect() {
+		return driver.FindElementByXPath("(//*[@id='dtSourceList']/tbody/tr[1]/td[2])[1]");
+	}
+	public Element getNewSrcLocationBtn() {
+		return driver.FindElementByXPath("//input[@id='btnAddSourceLocaiton']");
+	}
 	
 	
 	
@@ -94,6 +113,7 @@ public class SourceLocationPage {
 		this.driver = driver;
 		base = new BaseClass(driver);
 		softassert = new SoftAssert();
+		collection=new CollectionPage(driver);
 	}
 
 	/**
@@ -259,5 +279,78 @@ public class SourceLocationPage {
 			}
 		}
 	}
+	
+	public void performEditSource(String srceTyp, String srceName, String tentID, String appID, String secrtKey) {
+		SourceLocationPage source = new SourceLocationPage(driver);
+
+		if (source.getEditSourceLocationPopUp().isElementAvailable(10)) {
+			base.passedStep("Add New Source location Popup is opened");
+
+			// data source type
+			base.waitForElement(collection.getDataSrcType());
+			String actualType = collection.getDataSrcType().getText();
+			String expectedType = "Microsoft 365";
+			base.textCompareEquals(actualType, expectedType, "Data Source type : " + actualType,
+					"Data Source type is not as expected");
+
+			// data source Name
+			collection.getDataSourceName().waitAndClick(5);
+			collection.getDataSourceName().SendKeys(srceName);
+			base.stepInfo("Entered Data source Name : " + srceName);
+			// tenant ID
+			collection.getTenantID().waitAndClick(5);
+			collection.getTenantID().Clear();
+			collection.getTenantID().SendKeys(tentID);
+			base.stepInfo("Entered Tentant ID : " + tentID);
+			// Application ID
+			collection.getApplicationID().waitAndClick(5);
+			collection.getApplicationID().SendKeys(appID);
+			base.stepInfo("Entered Application ID : " + appID);
+			// Application secret key
+			collection.getAppSecretKey().waitAndClick(5);
+			collection.getAppSecretKey().Clear();
+			collection.getAppSecretKey().SendKeys(secrtKey);
+			base.stepInfo("Entered Secret Key : " + secrtKey);
+
+		} else {
+			base.failedStep("Add New Source Location Popup is Not Present");
+		}
+
+		base.waitTillElemetToBeClickable(collection.getAddNewPopup_SaveBtn());
+		collection.getAddNewPopup_SaveBtn().waitAndClick(10);
+		base.stepInfo("Clicked Save Button");
+		System.out.println("srceName :-"+srceName);
+
+		if (srceName.equals("") && tentID.equals("") && appID.equals("") && secrtKey.equals("")) {
+
+			for (int i = 1; i < 5; i++) {
+				base.waitForElement(collection.getErrroMsg(i));
+				String errorMsg = collection.getErrroMsg(i).getText();
+				if (errorMsg.equals("")) {
+					base.failedStep("Expected Error Message is Not Displayed");
+				} else {
+					System.out.println("Error : " + errorMsg);
+					base.passedStep("Dispalyed Error Msg : " + errorMsg);
+				}
+			}
+		}else if(srceName.matches("[\\w+&<'>]*")) {
+				for (int i = 1; i < 2; i++) {
+					base.waitForElement(collection.getErrroMsg(i));
+					String errorMsg = collection.getErrroMsg(i).getText();
+					if (errorMsg.equals("")) {
+						base.passedStep("Expected Error Message is Not Displayed");
+					} else {
+						System.out.println("Error : " + errorMsg);
+						base.failedStep("Dispalyed Error Msg : " + errorMsg);
+					}
+				}
+			}
+		
+		
+			base.VerifySuccessMessage("Source Location updated successfully");
+			base.CloseSuccessMsgpopup();
+		
+	}
+
 
 }
