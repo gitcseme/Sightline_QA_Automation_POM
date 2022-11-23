@@ -666,7 +666,7 @@ public class TallyPage {
 		}), Input.wait30);
 		getTally_btnTallyApply().Click();
 
-		
+	
 	}
 
 	public void tallyActions() {
