@@ -2743,41 +2743,4 @@ public class TallyPage {
 
 	}
 	
-	public void validateBulkFolderWithSpecialChars() throws InterruptedException {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_SourceSubTally().Visible();
-			}
-		}), Input.wait30);
-		Thread.sleep(3000);
-		getTally_SourceSubTally().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_subMetadata().Visible();
-			}
-		}), Input.wait30);
-		getTally_subMetadata().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_submetadataselect().Visible();
-			}
-		}), Input.wait30);
-		getTally_submetadataselect().selectFromDropdown().selectByVisibleText("DocFileName");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_btnSubTallyApply().Visible();
-			}
-		}), Input.wait30);
-		getTally_btnSubTallyApply().Click();
-
-		// pop up may appear multiple times depends on app response
-		base.yesPopUp();
-		base.yesPopUp();
-
-	}
-	
 	}
