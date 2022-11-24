@@ -3552,6 +3552,10 @@ public class ProductionPage {
 	public Element getBlankPageRemovalMsg() {
 		return driver.FindElementByXPath("//a[contains(@data-content,'Blnk Page')]/../following-sibling::td");
 	}
+	
+	public ElementCollection getProductionItem() {
+		return driver.FindElementsByXPath("//div//*[@class='prod-Title']");
+	}
 
 	public ProductionPage(Driver driver) {
 

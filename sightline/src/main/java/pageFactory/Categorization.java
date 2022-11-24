@@ -235,6 +235,14 @@ public class Categorization {
 	public Element getSelectedAnalyzedXBtn() {
 		return driver.FindElementByXPath("//span[@data-role='remove']");
 	}
+	
+	public Element getProductionSelectionPopUp() {
+		return driver.FindElementByXPath("//button[@id='btnProduction']");
+	}
+	
+	public ElementCollection getProductionSets() {
+		return driver.FindElementsByXPath("//a[contains(text(),'DefaultProductionSet')]//..//li");
+	}
 
 	public Categorization(Driver driver) {
 
