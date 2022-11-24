@@ -235,12 +235,32 @@ public class Categorization {
 	public Element getSelectedAnalyzedXBtn() {
 		return driver.FindElementByXPath("//span[@data-role='remove']");
 	}
+
 	public Element getAssignedName(String AssignedName) {
 		return driver.FindElementByXPath("//div//span[text()='"+AssignedName+"']");
 	}
 	public Element getResultCount() {
 		return driver.FindElementByXPath("//div[@class='cohesion']");
 	}
+
+	
+	public Element getProductionSelectionPopUp() {
+		return driver.FindElementByXPath("//button[@id='btnProduction']");
+	}
+	
+	public ElementCollection getProductionSets() {
+		return driver.FindElementsByXPath("//a[contains(text(),'DefaultProductionSet')]//..//li");
+	}
+	
+	public Element getAnalyzeSelectBtnDisabled(String btn) {
+		return driver.FindElementByXPath("//button[@id='"+btn+"'][@disabled='disabled']");
+	}
+	
+	public Element getRunBtnDisabled() {
+		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
+	}
+
+
 	public Categorization(Driver driver) {
 
 		this.driver = driver;

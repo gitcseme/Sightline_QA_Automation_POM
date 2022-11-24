@@ -584,6 +584,14 @@ public class BatchPrintPage {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//td[@class='sorting_1'][" + i + "]");
 	}
 
+	public Element getRequestedDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Analysis')]//..//..//div//p");
+	}
+	
+	public Element getDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//p//span[last()]");
+	}
+	
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
