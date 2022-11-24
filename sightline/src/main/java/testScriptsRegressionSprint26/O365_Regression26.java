@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -38,6 +39,7 @@ public class O365_Regression26 {
 	DataSets dataSets;
 	CollectionPage collection;
 	SourceLocationPage source;
+	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -396,6 +398,91 @@ public class O365_Regression26 {
 
 	}
 
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68767
+	 * @Description:Verify that error message display and application does NOT accepts - when "Folder" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68767", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgFolderAndFoldergroup() throws Exception {
+	base.stepInfo("RPMXCON-68768");
+	base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Folder\" Name entered with special characters < > & ‘");
+	login.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("Logged in As : " + Input.pa1userName);
+	String foldername="Folder&‘"+ Utility.dynamicRandomNumberAppender();
+	String expected="Special characters are not allowed.";
+	
+	//folder
+	TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+	tags.navigateToTagsAndFolderPage();
+	tags.createNewFolderNotSave(foldername);
+	String folderError = tags.getFolderrrorMsg().getText();
+	System.out.println(folderError);
+	softassert = new SoftAssert();
+	softassert.assertEquals(folderError, expected);
+	
+	//folder group
+	String folderGroupName="Folder&'Group"+Utility.dynamicRandomNumberAppender();
+	tags.navigateToTagsAndFolderPage();
+	driver.Navigate().refresh();
+	base.waitForElement(tags.getFoldersTab());
+	tags.getFoldersTab().waitAndClick(5);
+	base.stepInfo("Tag Tab Clicked");
+	base.waitForElement(tags.getAllFolderRoot());
+	tags.getAllFolderRoot().waitAndClick(5);
+	base.waitForElement(tags.getFolderActionDropDownArrow());
+	tags.getFolderActionDropDownArrow().waitAndClick(5);
+	base.waitForElement(tags.getNewFOlderGroupAction());
+	tags.getNewFOlderGroupAction().waitAndClick(10);
+	base.waitForElement(tags.getNewFolderGroupInputTextBox());
+	tags.getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+	base.waitTime(2);
+	String folderGroupError = tags.getFolderGroupErrorMsg().getText();
+	System.out.println(folderGroupError);
+	softassert.assertEquals(folderGroupError, expected);
+
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68768
+	 * @Description:Verify that error message display and application does NOT accepts - when "Tag" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68768", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgTagAndtaggroup() throws Exception {
+		
+		base.stepInfo("RPMXCON-68768");
+		base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Tag\" Name entered with special characters < > & ‘");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As : " + Input.pa1userName);
+		String tagname="Tag&‘"+ Utility.dynamicRandomNumberAppender();
+		String expected="Special characters are not allowed.";
+
+		//tag
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		tags.navigateToTagsAndFolderPage();
+		tags.createNewTagNotSave(tagname, Input.tagNamePrev);
+		String tagserror = tags.getErrorMsg().getText();
+		System.out.println(tagserror);
+		softassert = new SoftAssert();
+		softassert.assertEquals(tagserror, expected);
+
+		//tag group
+		String tagGroupName="Tag&'Group"+Utility.dynamicRandomNumberAppender();
+		tags.navigateToTagsAndFolderPage();
+		driver.Navigate().refresh();
+		base.waitForElement(tags.getTagsTab());
+		tags.getTagsTab().waitAndClick(5);
+		base.stepInfo("Tag Tab Clicked");
+		base.waitForElement(tags.getAllTagRoot());
+		tags.getAllTagRoot().waitAndClick(5);
+		tags.selectActionArrow("New Tag Group");
+		base.waitForElement(tags.getNewTagGroupInputTextBox());
+		tags.getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+		base.waitTime(2);
+		String tagGrouperror = tags.getTagGroupErrorMsg().getText();
+		System.out.println(tagGrouperror);
+		softassert.assertEquals(tagGrouperror, expected);
+		
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
