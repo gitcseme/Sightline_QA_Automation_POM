@@ -127,7 +127,7 @@ public class BatchPrint_Regression26 {
 				"Verify after impersonation native should be printed as per selected option from analysis tab");
 	
 		String slipsheetDD = "Create new slip sheets";
-		int count = 6;
+		int count = 7;
 		
 		// Login via User
 		loginPage.loginToSightLine(username, password);
@@ -213,7 +213,7 @@ public class BatchPrint_Regression26 {
 				"Verify native should be printed when 'Ignore these documents from print request.' is selected from analysis tab");
 	
 		String slipsheetDD = "Create new slip sheets";
-		int count = 6;
+		int count = 7;
 		
 		// Login via User
 		loginPage.loginToSightLine(username, password);
