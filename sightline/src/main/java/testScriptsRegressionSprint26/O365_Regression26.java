@@ -485,6 +485,124 @@ public class O365_Regression26 {
 		
 	}
 	
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that when editing a collection in draft mode,
+	 *              collection wizard should be able to use a connection to the
+	 *              source location should be able to save the collection in draft
+	 *              [RPMXCON-61374 ]
+	 */
+	@Test(description = "RPMXCON-61374",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyEditingDraftMode(String username,String password,String userRole) throws Exception {
+		String selectedFolder = "Inbox";
+		String[][] userRolesData = { { username, userRole, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61374 - O365");
+		base.stepInfo(
+				"Verify that when editing a collection in draft mode, collection wizard should be able to use a connection to the source location should be able to save the collection in draft");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password,
+				userRole, "SA", Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+
+		// Edit The Draft collection
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Verify whether it is selecting already configured source location
+		collection.verifyCurrentTab("Collection Information");
+		base.passedStep(
+				"Navigated to Collection Information page Directly by selecting Already configured source location is used for the collection");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that when editing a collection in draft mode, should be
+	 *              able to save the collection in draft without making any
+	 *              changes[RPMXCON-61375 ]
+	 */
+	@Test(description = "RPMXCON-61375",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyEditingWithoutMakingChanges(String username,String password,String userRole) throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[][] userRolesData = { { username, userRole, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61375 - O365");
+		base.stepInfo(
+				"Verify that when editing a collection in draft mode, should be able to save the collection in draft without making any changes");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password,
+				userRole, "SA", Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Edit The collection which is in Draft
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Verify whether it is selecting already configured source location &
+		// navigating directly to collection information page
+		collection.verifyCurrentTab("Collection Information");
+		base.passedStep(
+				"Navigated to Collection Information page Directly by selecting Already configured source location is used for the collection");
+
+		// verify Back button is Disabled & validate collection id is not editable
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionId, "Collection id is retained ",
+				"Collection id not retained");
+		String actualTag = collection.getCollectionID().TagName();
+		base.textCompareNotEquals(actualTag, "input", "collection id is not editable", "collection id is not editable");
+
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// Do not edit Collection name, Datasets Click on 'Save as Draft' button from
+		// 'Summary and Start Collection' tab
+		collection.getNextBtn().waitAndClick(10);
+		collection.clickNextBtnOnDatasetTab();
+		driver.waitForPageToBeReady();
+		collection.verifyCurrentTab("Summary and Start Collection");
+		collection.collectionSaveAsDraft();
+
+		// Verify same collection saved with Collection Status as draft
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName, "Draft", true, false,
+				"");
+		base.passedStep("same collection is saved with Collection Status as 'Draft' : " + collectionName);
+
+		// Logout
+		login.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
