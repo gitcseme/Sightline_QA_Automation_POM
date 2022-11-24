@@ -784,6 +784,74 @@ public class Domain_Management26 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53041
+	 * @Description:Verify that logged in user with Project Admin role should be
+	 *                     displayed on user list page under non domain project
+	 **/
+	@Test(description = "RPMXCON-53041", enabled = true, groups = { "regression" })
+	public void verifyPARoleUnderNonDomanPrjt() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53041");
+		baseClass.stepInfo(
+				"Verify that logged in user with Project Admin role should be displayed on user list page under non domain project");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As " + Input.pa1userName);
+		
+		baseClass.stepInfo("Selecting non domain project");
+		baseClass.selectproject(Input.NonDomainProject);
+		
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		
+		baseClass.stepInfo("Applying filter for logged in PA user");
+		user.passingUserName(Input.pa1userName);
+		user.applyFilter();
+		driver.waitForPageToBeReady();
+		String getRole = user.getTableData("ROLE", 1);
+		
+		if(getRole.equals(Input.ProjectAdministrator)) {
+			baseClass.passedStep(" Project Admin role is displayed on user list page under non domain project");
+		}else {
+			baseClass.failedStep(" Project Admin role is not displayed on user list page under non domain project");
+			
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53040
+	 * @Description:Verify that logged in user with Project Admin role should be
+	 *                     displayed on user list page under domain project
+	 **/
+	@Test(description = "RPMXCON-53040", enabled = true, groups = { "regression" })
+	public void verifyPARoleUnderDomanPrjt() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53040");
+		baseClass.stepInfo(
+				"Verify that logged in user with Project Admin role should be displayed on user list page under domain project");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As " + Input.pa1userName);
+		
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Applying filter for logged in PA user");
+		user.passingUserName(Input.pa1userName);
+		user.applyFilter();
+		
+		driver.waitForPageToBeReady();
+		String getRole = user.getTableData("ROLE", 1);
+		if(getRole.equals(Input.ProjectAdministrator)) {
+			baseClass.passedStep(" Project Admin role is displayed on user list page under domain project");
+		}else {
+			baseClass.failedStep(" Project Admin role is not displayed on user list page under domain project");
+			
+		}
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

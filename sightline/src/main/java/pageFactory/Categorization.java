@@ -235,7 +235,12 @@ public class Categorization {
 	public Element getSelectedAnalyzedXBtn() {
 		return driver.FindElementByXPath("//span[@data-role='remove']");
 	}
-
+	public Element getAssignedName(String AssignedName) {
+		return driver.FindElementByXPath("//div//span[text()='"+AssignedName+"']");
+	}
+	public Element getResultCount() {
+		return driver.FindElementByXPath("//div[@class='cohesion']");
+	}
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
