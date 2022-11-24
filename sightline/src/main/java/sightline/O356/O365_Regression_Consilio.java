@@ -108,10 +108,14 @@ public class O365_Regression_Consilio {
 		base.waitForElement(source.getSetUpASourceLocationEditYesButton());
 		source.getSetUpASourceLocationEditYesButton().waitAndClick(10);	
 		
-		String EditSourcelocation=dataSourceName+"<&'>";
-		source.performEditSource(null, EditSourcelocation, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);		
+		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
+		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
+		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
+		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
+		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
 		
 	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
