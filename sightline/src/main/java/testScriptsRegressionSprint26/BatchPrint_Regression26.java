@@ -194,9 +194,10 @@ public class BatchPrint_Regression26 {
 		int downloadedDocCount = list.size();
 		System.out.println(downloadedDocCount);
 
-		// verifying translation documents and downloaded documents are having same count
-		baseClass.digitCompareEquals(Integer.parseInt(translationDocCount), downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
-
+	   // verifying translation documents are excluded
+		int translationExcludedDoc =docToPrint-Integer.parseInt(translationDocCount);
+		baseClass.digitCompareEquals(translationExcludedDoc, downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
+	
 		loginPage.logout();
 	}
 	
@@ -277,9 +278,10 @@ public class BatchPrint_Regression26 {
 		int downloadedDocCount = list.size();
 		System.out.println(downloadedDocCount);
 
-		// verifying translation documents and downloaded documents are having same count
-		baseClass.digitCompareEquals(Integer.parseInt(translationDocCount), downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
-
+		// verifying translation documents excluded
+		int translationExcludedDoc =docToPrint-Integer.parseInt(translationDocCount);
+		baseClass.digitCompareEquals(translationExcludedDoc, downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
+	
 		loginPage.logout();
 	}
 
