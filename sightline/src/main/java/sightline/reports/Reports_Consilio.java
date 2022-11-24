@@ -20,7 +20,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BulkTagFolderSpecialChars {
+public class Reports_Consilio {
 	Driver driver;
 	LoginPage lp;
 	HomePage home;
@@ -58,7 +58,7 @@ public class BulkTagFolderSpecialChars {
 		}
 	     }	   
 	
-	@Test(dataProvider = "SpecialChars",groups={"smoke","regression"})
+	@Test(description ="RPMXCON-69059",dataProvider = "SpecialChars",groups={"regression"})
 	public void BulkTagWithSpecialChars(String bulkName) throws InterruptedException {
 		
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -76,7 +76,7 @@ public class BulkTagFolderSpecialChars {
 		
 	
 	}
-	@Test(dataProvider = "SpecialChars",groups={"smoke","regression"})
+	@Test(description ="RPMXCON-69056",dataProvider = "SpecialChars",groups={"regression"})
 	public void BulkFolderWithSpecialChars(String bulkName) throws InterruptedException {
 		
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
