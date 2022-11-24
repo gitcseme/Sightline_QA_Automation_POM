@@ -71,6 +71,23 @@ public class ReviewerCountsReportPage {
 		return driver.FindElementByXPath("//div[@id='rvlist']//following::span[text()='" + revFullName + "']//parent::label//child::i");
 	}
 
+	//added by sowndarya
+	public Element getSaveReportBtn() {
+		return driver.FindElementById("saveReport");
+	}
+
+	public Element getSaveBtn() {
+		return driver.FindElementById("saveXML");
+	}
+
+	public Element getSaveReportName() {
+		return driver.FindElementById("txtReportname");
+	}
+	
+	public Element getCustomReport(String report) {
+		return driver.FindElementByXPath("//tbody//tr//td//a[text()='" + report +"']");
+	}
+	
 	public ReviewerCountsReportPage(Driver driver) {
 		this.driver = driver;
 		bc = new BaseClass(driver);
