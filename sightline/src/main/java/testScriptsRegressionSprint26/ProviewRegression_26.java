@@ -226,6 +226,90 @@ public class ProviewRegression_26 {
 		user.getUserSelectedFunctionalyTabIsUncheck(username, Input.projectName, categorizetab);
 		login.logout();
 	}
+	
+	/**
+	 * @Author  Date:NA ModifyDate:NA RPMXCON-54135
+	 * @Description : To verify that “Select Docs to be Analyzed“ frame enabled once
+	 *              any data selected “Identify the Training Set” frame.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54135", enabled = true, groups = { "regression" })
+	public void verifySelectDoxAnalyzedFrameEnabled() throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54135  Proview");
+		base.stepInfo(
+				"To verify that “Select Docs to be Analyzed“ frame  enabled once any data selected “Identify the Training Set” frame.");
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		Categorization categorize = new Categorization(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softassert = new SoftAssert();
+		String assign = "btnAssign";
+		String prod = "btnProduction";
+		String folder = "btnFolder";
+		String savedsearch = "btnSavedSearch";
+
+		// Login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Folder
+		sessionSearch.bulkFolder(folderName);
+		categorize.navigateToCategorizePage();
+		categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+		driver.waitForPageToBeReady();
+
+		// select corpus to analyzed sets
+		base.waitTime(5);
+		categorize.getAnalyzeSelectFolders().waitAndClick(5);
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(folder).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Assignments");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(assign).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Production Sets");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(prod).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Saved Search Results Sets");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(savedsearch).isElementAvailable(5));
+		softassert.assertFalse(categorize.getRunBtnDisabled().isElementAvailable(5));
+		base.passedStep("Selected Docs to be Analyzed frame has been enabled as expected");
+		softassert.assertAll();
+
+	}
+	
+	
+	/**
+	 * @Author  Date:NA ModifyDate:NA RPMXCON-54131
+	 * @Description : To verify that 'Doc to be analyzed' should be display warning
+	 *              message if training set is not selected.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54131", enabled = true, groups = { "regression" })
+	public void verifyDocsToBeAnalyzedWarningMsg() throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54131  Proview");
+		base.stepInfo(
+				"To verify that 'Doc to be analyzed' should be display warning message if training set is not selected.");
+		Categorization categorize = new Categorization(driver);
+
+		// Login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		categorize.navigateToCategorizePage();
+
+		driver.scrollingToBottomofAPage();
+		categorize.getGotoStep2().waitAndClick(5);
+		base.stepInfo("To be analyzed is clicked as expected");
+		boolean warningStatus = base.getWarningsMsgHeader().isElementAvailable(3);
+		System.out.println(warningStatus);
+		if (warningStatus == true) {
+			base.VerifyWarningMessage("Please select a training set");
+			base.passedStep("Warning message is displayed successfully");
+			
+		} else {
+			base.failedStep("warning msg is not displayed");
+		}
+	}
 
 
 	@BeforeMethod

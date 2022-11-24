@@ -243,6 +243,14 @@ public class Categorization {
 	public ElementCollection getProductionSets() {
 		return driver.FindElementsByXPath("//a[contains(text(),'DefaultProductionSet')]//..//li");
 	}
+	
+	public Element getAnalyzeSelectBtnDisabled(String btn) {
+		return driver.FindElementByXPath("//button[@id='"+btn+"'][@disabled='disabled']");
+	}
+	
+	public Element getRunBtnDisabled() {
+		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
+	}
 
 	public Categorization(Driver driver) {
 
