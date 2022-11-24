@@ -22822,4 +22822,41 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("production location Page section is filled");
 	}
+	/**
+	 * @author Brundha.T
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @Description:verifying text in Downloaded pdf file
+	 */
+	public   String verifyingTextInPDFFile(String fileName) throws IOException {
+        PDDocument document = PDDocument.load(new File(fileName));
+            PDFTextStripper stripper = new PDFTextStripper();
+            String ActualPdfText = stripper.getText(document);
+            int count = document.getNumberOfPages();
+            System.out.println(count);
+            System.out.println("Text:" + ActualPdfText);
+        document.close();
+        return ActualPdfText;
+    }
+	
+	/**
+	 * @author Brundha.T
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 *  @Description:verifying pdf file text in url
+	 */
+	public static String getPdfContent(String url) throws IOException {
+
+	       URL pdfURL = new URL(url);
+	        InputStream is = pdfURL.openStream();
+	        BufferedInputStream bis = new BufferedInputStream(is);
+	        PDDocument doc = PDDocument.load(bis);
+	        PDFTextStripper strip = new PDFTextStripper();
+	        String stripText = strip.getText(doc);
+	        System.out.println(stripText);
+	        doc.close();
+	        return stripText;
+	    }
 }

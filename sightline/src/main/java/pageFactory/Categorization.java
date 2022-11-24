@@ -235,6 +235,14 @@ public class Categorization {
 	public Element getSelectedAnalyzedXBtn() {
 		return driver.FindElementByXPath("//span[@data-role='remove']");
 	}
+
+	public Element getAssignedName(String AssignedName) {
+		return driver.FindElementByXPath("//div//span[text()='"+AssignedName+"']");
+	}
+	public Element getResultCount() {
+		return driver.FindElementByXPath("//div[@class='cohesion']");
+	}
+
 	
 	public Element getProductionSelectionPopUp() {
 		return driver.FindElementByXPath("//button[@id='btnProduction']");
@@ -251,6 +259,7 @@ public class Categorization {
 	public Element getRunBtnDisabled() {
 		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
 	}
+
 
 	public Categorization(Driver driver) {
 

@@ -334,6 +334,12 @@ public class BaseClass {
 	public Element getLoginedUserRole() {
 		return driver.FindElementByXPath("//span[@class='badge bg-color-greenLight']");
 	}
+	public ElementCollection getAllTags() {
+		return driver.FindElementsByXPath("//a[text()='All Tags']/../..//ul//li//a");
+	}
+	public Element getDefaultTag() {
+		return driver.FindElementByXPath("//a[text()='Default Tags']//preceding-sibling::i");
+	}
 
 	public BaseClass(Driver driver) {
 
