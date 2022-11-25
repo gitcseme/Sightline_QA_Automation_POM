@@ -17,6 +17,7 @@
 <class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression03" />
 <class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_Regression" />
 <class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanelEmailThreadMap" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalytics_Regression1_23" />
 
 </classes>
 </test>

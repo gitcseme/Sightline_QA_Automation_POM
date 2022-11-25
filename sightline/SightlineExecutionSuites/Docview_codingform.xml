@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Jenkins-Assignment-CodingForm-Audio" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Docview_CodingFormandCodingform">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.docviewCodingForms.DocView_CodingForm_IndiumRegression2" />
+<class name= "sightline.docviewCodingForms.DocView_CodingForm_Regression" />
+<class name= "sightline.docviewCodingForms.DocviewCodingForm_Regression" />
+<class name= "sightline.codingForms.CodingForm_IndiumRegression" />
+<class name= "sightline.codingForms.CodingForm_IndiumRegression2" />
+<class name= "sightline.codingForms.CodingForm_IndiumRegressionPhase2" />
+<class name= "sightline.codingForms.CodingForm_Regression_20" />
+<class name= "sightline.codingForms.CodingForm_Regression_21_2" />
+<class name= "sightline.codingForms.CodingForm_Regression_21" />
+<class name= "sightline.codingForms.CodingForm_Regression_Sprint19" />
+<class name= "sightline.codingForms.CodingForm_Regression" />
+<class name= "sightline.codingForms.CodingForm_Regression25" />
+<class name= "sightline.codingForms.CodingForm_Regrression_22_24" />
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+
