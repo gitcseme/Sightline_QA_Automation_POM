@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sightline-Jenkins-Docview-MiniDoclist" preserve-order="true">
+<suite name="Sightline-Jenkins-Docview" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>	
     
 <!-- *********************************************DocView Component************************************ -->     
-<test name="Sightline-Jenkins-Docview-MiniDoclist">
+<test name="Docview_Suite">
 <classes>
 <class name="testScriptsSmoke.Input"></class>
 <class name="sightline.docview.DocView_ProductionFlow_Regression"></class>
+<class name="sightline.docview.DocView_Regression_21"></class>
+<class name="sightline.docview.DocView_Regression1_23"></class>
 <class name="sightline.docview.DocView_Regression1"></class>
 <class name="sightline.docview.DocView_Regression2"></class>
 <class name="sightline.docview.DocView_Regression3_2"></class>
@@ -21,9 +23,6 @@
 <class name="sightline.docview.DocView_Regression8"></class>
 <class name="sightline.docview.DocView_Sprint2_Regression"></class>
 <class name="sightline.docview.DocviewAnnotation"></class>	
-<class name= "sightline.docviewMiniDocList.DocView_MiniDocList_DataProvider" />
-<class name= "sightline.docviewMiniDocList.DocView_MiniDocList_Regression" />
-<class name= "sightline.docviewMiniDocList.DocViewMiniDocList_Regression_2_1" />
 
 </classes>
 </test>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline.SmallComponents" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *******************************************Projects Component********************************** -->
+<test name="CloningProject_Suite">
+<classes>
+ <class name="testScriptsSmoke.Input" />
+<class name= "sightline.cloningProject.CloningProject_Regression01_Sprint19" />
+<class name= "sightline.cloningProject.CloningProject_Regression01" />
+<class name= "sightline.cloningProject.CloningProject_Regression1" />
+<class name= "sightline.cloningProject.CloningProject_Regression2" />
+<class name= "sightline.cloningProject.CloningProject_Regression3_2" />
+<class name= "sightline.cloningProject.CloningProject_Regression3" />
+
+</classes>
+</test>
+</suite>
+

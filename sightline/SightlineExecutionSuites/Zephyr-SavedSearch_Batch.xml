@@ -6,7 +6,7 @@
 	</listeners>
 <!-- *******************************************SavedSearch Component********************************** -->
 	
-	<test name="Sightline-Jenkins-SavedSearch">
+	<test name="SavedSearch_Suite">
 		<classes>
 		    <class name="testScriptsSmoke.Input"></class>			
 			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_02"></class>
@@ -16,6 +16,7 @@
 			<class name="sightline.savedSearch.SavedSearch_Regression1"></class>
 			<class name="sightline.savedSearch.SavedSearchAudio_Regresssion"></class>
 			<class name="sightline.savedSearch.SavedSearchRegression_01"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_2_20"></class>
 			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_01"></class>
 			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_02"></class>
 			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_03"></class>
