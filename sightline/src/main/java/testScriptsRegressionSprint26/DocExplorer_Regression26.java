@@ -572,7 +572,9 @@ public class DocExplorer_Regression26 {
 					baseClass.failedStep("Mouseover text of foldername  is not displayed as expected");
 				}
 				break;
-			} else {
+			} else if(i==1) {
+				baseClass.failedStep("large foldername name is not displayed");
+			}else {
 				driver.waitForPageToBeReady();
 			}
 		}
