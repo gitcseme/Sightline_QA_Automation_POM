@@ -130,6 +130,9 @@ public class TimelineReportPage {
 	public Element saveSelectedSearches() {
 		return driver.FindElementByXPath("//button[@id='search']");
 	}
+	public Element saveSelectedProjects() {
+		return driver.FindElementByXPath("//button[@id='project']");
+	}
 	public Element selectMonthChart() {
 		return driver.FindElementByCssSelector("div[id='level2timeline'] rect[y='0']");
 	}
@@ -141,6 +144,9 @@ public class TimelineReportPage {
 	}
 	public Element getSelectCustodianNames() {
 		return driver.FindElementByXPath("//span[text()='Custodians']/parent::strong/parent::div//ul[@class='select2-choices']//input");
+	}
+	public Element getProjectName(String projectName) {
+		return driver.FindElementByXPath("//label[text()='"+projectName+"']");
 	}
 
 	public Element getSaveReportName() {
