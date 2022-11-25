@@ -181,6 +181,16 @@ public class DocList_Regression26 {
 		driver.waitForPageToBeReady();
 		docList.getDocList_PlusIcon().waitAndClick(5);
 		softAssert.assertTrue(docList.getDocListChildWindow().Displayed());
+		List<WebElement> lastPage = docList.getChildDocumentRowCount().FindWebElements();
+		for (int j = 1; j <= lastPage.size(); j++) {
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docList.getChildDocumentCheckBox(j));
+			baseClass.waitTillElemetToBeClickable(docList.getChildDocumentCheckBox(j));
+			if (!docList.getChildDocumentCheckBox(j).isDisplayed()) {
+				baseClass.failedStep("The child documents in the doclist page is not displayed under parent document");
+			}
+		}
+		baseClass.passedStep("The child documents in the doclist page is displayed under parent document");
 		baseClass.passedStep("Child document is presented in the filter criteria then the child will be presented"
 				+ "as a main row in the grid as well as presented as a child of the parent expanded.");
 		softAssert.assertAll();
@@ -217,7 +227,10 @@ public class DocList_Regression26 {
 		baseClass.stepInfo("DocList Page is get displayed");
 
 		driver.waitForPageToBeReady();
-		softAssert.assertTrue(docList.getDocListViewsInRow().isDisplayed());
+		softAssert.assertTrue(docList.getTileView().isDisplayed());
+		softAssert.assertTrue(docList.getGridViewIcon().isDisplayed());
+		softAssert.assertTrue(docList.SelectColumnBtn().isDisplayed());
+		softAssert.assertTrue(docList.getSaveToProfileBtn().isDisplayed());
 		baseClass.passedStep(
 				" \"List View\" and \"Tile View\" icon is displayed the same row of \"Select Column\" , \"Save to Profile\" button.");
 		softAssert.assertAll();

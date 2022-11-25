@@ -1513,6 +1513,9 @@ public class DocListPage {
 		return driver.FindElementByXPath("//td//Strong[contains(text(),'EmailAuthorName')]");
 	}
 	
+	public Element getSaveToProfileBtn() {
+		return driver.FindElementById("btnSaveProfile");
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4802,6 +4805,7 @@ public class DocListPage {
 		return arList;
 	}
 
+	
 	/**
 	 * @author Gopinath
 	 * @Description: method to verify sequence of parent and child docs
