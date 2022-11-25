@@ -71,7 +71,6 @@ public class Domain_Management26 {
 		String LastName = "consilio";
 		String MailID = "testing" + "@consilio.com";
 		UserManagement user = new UserManagement(driver);
-		baseClass.selectdomain(Input.domainName);
 		String[] usertoActivate = { FirstName, LastName, MailID };
 		user.navigateToUsersPAge();
 

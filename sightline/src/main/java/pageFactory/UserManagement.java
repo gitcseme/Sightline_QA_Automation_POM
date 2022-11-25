@@ -1187,6 +1187,9 @@ public class UserManagement {
 	public Element getEditUserIngestion() {
 		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanIngestions']");
 	}
+	public Element getSelectProjectFromDropdown(String ProjectName) {
+		return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='"+ProjectName+"']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1306,7 +1309,9 @@ public class UserManagement {
 				}
 			}), Input.wait30);
 			// getSelectDomain().SendKeys(domain);
-			getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			//getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			driver.waitForPageToBeReady();
+			getSelectProjectFromDropdown(project).waitAndClick(10);
 		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
