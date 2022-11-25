@@ -6109,4 +6109,13 @@ public class CodingForm {
 		}
 	}
 
+	public boolean verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar() { 
+		driver.waitForPageToBeReady();
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean flag = (boolean) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollHeight>"
+				+ "document.querySelector('.dataTables_scrollBody').clientHeight;");
+		System.out.println(flag);
+
+		return flag;
+	}
 }
