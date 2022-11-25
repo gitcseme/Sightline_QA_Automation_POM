@@ -290,6 +290,48 @@ public class CodingFormRegression_26 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Description :Verify that when we have more than 10 coding form scroll bar should be
+	 *  present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).RPMXCON-64910
+	 */
+	
+	@Test(description = "RPMXCON-64910",enabled = true, groups = { "regression" })
+	public void verifyMoreThanTenCodingFormScrollBarPresentInTableOfAddOrRemoveCFSecurityGroupPopUp() throws InterruptedException {
+		
+		softAssert = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-64910 CodingForm");
+		baseClass.stepInfo("Verify that when we have more than 10 coding form scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).");
+		
+		//login as RMU
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		 
+		 // create CodingForm Based On Condition
+		codingForm.navigateToCodingFormPage();
+		List<String> listOfCodingFormCreated = codingForm.createCodingformBasedOnCondition(11);
+		baseClass.stepInfo("creating more than 10 coding form.");
+		
+		// Clicking on  "Set Security Group Coding form" button.
+		codingForm.navigateToCodingFormPage();
+		baseClass.waitForElement(codingForm.getSetCFButton());
+		codingForm.getSetCFButton().waitAndClick(10);
+		baseClass.stepInfo(" \"Set Security Group Coding form\" button is present in \"Manage Coding Form\" page.");
+		
+		// Verify that when we have more than 10 coding form the scroll bar should be present in the table of "Add/remove coding form in this security group" pop-up page
+		boolean verifyScrollBar = codingForm.verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar();
+		softAssert.assertEquals(verifyScrollBar,true);
+		softAssert.assertAll();
+		baseClass.passedStep("Verified that when we have more than 10 coding form the scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page.");
+		
+		// delete created codingForms
+		driver.Navigate().refresh();
+		codingForm.DeleteMultipleCodingform(listOfCodingFormCreated);
+
+		// logOut
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
