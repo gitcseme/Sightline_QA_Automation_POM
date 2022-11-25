@@ -852,6 +852,55 @@ public class Domain_Management26 {
 		
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Vijaya.rani date: 24/11/2022 TestCase Id:RPMXCON-53051 Description
+	 * :Verify that as a SA one should be able to assign DA of one domain to other domains as well.
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-53051", enabled = true, groups = { "regression" })
+	public void verifySAAbleToAssignDADomains() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53051");
+		baseClass.stepInfo(
+				"Verify that as a SA one should be able to assign DA of one domain to other domains as well.");
+
+		UserManagement user = new UserManagement(driver);
+		String FirstName = "DA";
+		String LastName = "automation";
+		String MailID = "test" + Utility.dynamicNameAppender() + "@consilio.com";
+		String UserName = FirstName + " " + LastName;
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.sa1userName + "");
+
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Creating new project Administrator user");
+		user.createUser(FirstName, LastName, Input.DomainAdministrator, MailID, null, null);
+
+		baseClass.stepInfo("Assigning project to user");
+		user.openAssignUser();
+		user.getDomaintab().waitAndClick(5);
+		baseClass.waitForElement(user.getSelectDomainname());
+		user.getSelectDomainname().selectFromDropdown().selectByIndex(1);
+		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		baseClass.waitForElement(user.getrightBtndomainuser());
+		user.getrightBtndomainuser().waitAndClick(5);
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+		baseClass.stepInfo("Domain user Assiged succesfully");
+		baseClass.passedStep("Success message is displayed.");
+
+		// delete the created user
+		user.filterTodayCreatedUser();
+		user.filterByName(MailID);
+		user.deleteUser();
+
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
