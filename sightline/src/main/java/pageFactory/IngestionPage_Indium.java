@@ -11225,4 +11225,58 @@ public class IngestionPage_Indium {
 			getCloseButton().waitAndClick(10);
 		}
 		
+		/**
+		 * @author: Arun Created Date: 24/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of source and mapping section
+		 */
+
+		public void verifySourceAndMappingSectionStatus() {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNextButton());
+			String mappingSection = getPreviewRun().GetAttribute("disabled");
+			base.stepInfo("Mapping section disabled status-"+mappingSection);
+			String sourceSection = getNextButton().GetAttribute("disabled");
+			base.stepInfo("source section disabled status-"+sourceSection);
+			//verify sections available in ingestion wizard
+			if(getPreviewRun().isElementAvailable(10) && getNextButton().isElementAvailable(10)) {
+				base.passedStep("Both source and mapping section available in ingestion wizard");
+			}
+			else {
+				base.failedStep("Source and mapping section not displayed as expected");
+			}
+			//verify status of source and mapping section by default
+			if (sourceSection==null && mappingSection.equalsIgnoreCase("true")) {
+				base.passedStep("Source section is enabled and mapping section is in disabled state");
+			} else {
+				base.failedStep("source section disabled and mapping section enabled");
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 25/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the dat fields available in mapping
+		 */
+		public void verifyDatFieldsAvailableInMappingSection() {
+			
+			String[] ExpectedDatFields={"DocID","RecBegAttach","RecEndAttach","ProdBeg","ProdEnd","ProdBegAttach","ProdEndAttach","AttachCount","DocPages","Custodian","Date",
+					"MasterDate","Author","AuthorAddress","RecipientName","RecipientAddress","CCName","CCAddress","BCCName","BCCAddress","Subject","Container","DataSet","Datasource",
+					"FullPath","NativeLink","FileType","FileName","FileExt","FileSize","M_Duration","ReceivedDate","ApptSTDate","ApptEndDate","MessageID","MessageType","CreateDate",
+					"LastAccDate","LastEditDate","LastSaveDate","LastPrintedDate","MD5Hash","Title","Comments","Company","Keywords","Manager","Category","RevNumber",
+					"EmailCCNameAndAddress","EmailBCCNameAndAddress","EmailAuthorNameandAddress","DocumentSubject","EmailConversationIndex","EmailFamilyConversationIndex",
+					"EmailToNameAndAddress","Native Path","Extracted Text","FamilyVirusStatus","ProcessingPlaceholders","ZzrecipientsID","ZzsenderID"};
+			
+			base.waitForElement(getMappingSourceField(2));
+			for(int i=2;i<ExpectedDatFields.length;i++) {
+				getMappingSourceField(i).selectFromDropdown().selectByVisibleText(ExpectedDatFields[i]);
+				String field =getMappingSourceField(i).selectFromDropdown().getFirstSelectedOption().getText();
+				if(field.equalsIgnoreCase(ExpectedDatFields[i])) {
+					base.passedStep("Dat field available :"+ExpectedDatFields[i]);
+				}
+				else {
+					base.failedStep("Dat field not available"+ExpectedDatFields[i]);
+				}
+			}
+		}
+		
 }
