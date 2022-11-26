@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -15,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -23,6 +25,7 @@ import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
 import pageFactory.SourceLocationPage;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -36,6 +39,7 @@ public class O365_Regression26 {
 	DataSets dataSets;
 	CollectionPage collection;
 	SourceLocationPage source;
+	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -394,6 +398,212 @@ public class O365_Regression26 {
 
 	}
 
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68767
+	 * @Description:Verify that error message display and application does NOT accepts - when "Folder" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68767", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgFolderAndFoldergroup() throws Exception {
+	base.stepInfo("RPMXCON-68768");
+	base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Folder\" Name entered with special characters < > & ‘");
+	login.loginToSightLine(Input.pa1userName, Input.pa1password);
+	base.stepInfo("Logged in As : " + Input.pa1userName);
+	String foldername="Folder&‘"+ Utility.dynamicRandomNumberAppender();
+	String expected="Special characters are not allowed.";
+	
+	
+	//folder
+	TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+	tags.navigateToTagsAndFolderPage();
+	tags.createNewFolderNotSave(foldername);
+	String folderError = tags.getFolderrrorMsg().getText();
+	System.out.println(folderError);
+	softassert = new SoftAssert();
+	softassert.assertEquals(folderError, expected);
+	
+	//folder group
+	String folderGroupName="Folder&'Group"+Utility.dynamicRandomNumberAppender();
+	tags.navigateToTagsAndFolderPage();
+	driver.Navigate().refresh();
+	base.waitForElement(tags.getFoldersTab());
+	tags.getFoldersTab().waitAndClick(5);
+	base.stepInfo("Tag Tab Clicked");
+	base.waitForElement(tags.getAllFolderRoot());
+	tags.getAllFolderRoot().waitAndClick(5);
+	base.waitForElement(tags.getFolderActionDropDownArrow());
+	tags.getFolderActionDropDownArrow().waitAndClick(5);
+	base.waitForElement(tags.getNewFOlderGroupAction());
+	tags.getNewFOlderGroupAction().waitAndClick(10);
+	base.waitForElement(tags.getNewFolderGroupInputTextBox());
+	tags.getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+	base.waitTime(2);
+	String folderGroupError = tags.getFolderGroupErrorMsg().getText();
+	System.out.println(folderGroupError);
+	softassert.assertEquals(folderGroupError, expected);
+
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68768
+	 * @Description:Verify that error message display and application does NOT accepts - when "Tag" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68768", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgTagAndtaggroup() throws Exception {
+		
+		base.stepInfo("RPMXCON-68768");
+		base.stepInfo("To Verify that error message display and application does NOT accepts - when \"Tag\" Name entered with special characters < > & ‘");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As : " + Input.pa1userName);
+		String tagname="Tag&‘"+ Utility.dynamicRandomNumberAppender();
+		String expected="Special characters are not allowed.";
+
+		//tag
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		tags.navigateToTagsAndFolderPage();
+		tags.createNewTagNotSave(tagname, Input.tagNamePrev);
+		String tagserror = tags.getErrorMsg().getText();
+		System.out.println(tagserror);
+		softassert = new SoftAssert();
+		softassert.assertEquals(tagserror, expected);
+
+		//tag group
+		String tagGroupName="Tag&'Group"+Utility.dynamicRandomNumberAppender();
+		tags.navigateToTagsAndFolderPage();
+		driver.Navigate().refresh();
+		base.waitForElement(tags.getTagsTab());
+		tags.getTagsTab().waitAndClick(5);
+		base.stepInfo("Tag Tab Clicked");
+		base.waitForElement(tags.getAllTagRoot());
+		tags.getAllTagRoot().waitAndClick(5);
+		tags.selectActionArrow("New Tag Group");
+		base.waitForElement(tags.getNewTagGroupInputTextBox());
+		tags.getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+		base.waitTime(2);
+		String tagGrouperror = tags.getTagGroupErrorMsg().getText();
+		System.out.println(tagGrouperror);
+		softassert.assertEquals(tagGrouperror, expected);
+		
+	}
+	
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that when editing a collection in draft mode,
+	 *              collection wizard should be able to use a connection to the
+	 *              source location should be able to save the collection in draft
+	 *              [RPMXCON-61374 ]
+	 */
+	@Test(description = "RPMXCON-61374",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyEditingDraftMode(String username,String password,String userRole) throws Exception {
+		String selectedFolder = "Inbox";
+		String[][] userRolesData = { { username, userRole, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61374 - O365");
+		base.stepInfo(
+				"Verify that when editing a collection in draft mode, collection wizard should be able to use a connection to the source location should be able to save the collection in draft");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password,
+				userRole, "SA", Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+
+		// Edit The Draft collection
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Verify whether it is selecting already configured source location
+		collection.verifyCurrentTab("Collection Information");
+		base.passedStep(
+				"Navigated to Collection Information page Directly by selecting Already configured source location is used for the collection");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that when editing a collection in draft mode, should be
+	 *              able to save the collection in draft without making any
+	 *              changes[RPMXCON-61375 ]
+	 */
+	@Test(description = "RPMXCON-61375",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyEditingWithoutMakingChanges(String username,String password,String userRole) throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[][] userRolesData = { { username, userRole, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61375 - O365");
+		base.stepInfo(
+				"Verify that when editing a collection in draft mode, should be able to save the collection in draft without making any changes");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password,
+				userRole, "SA", Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Edit The collection which is in Draft
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Verify whether it is selecting already configured source location &
+		// navigating directly to collection information page
+		collection.verifyCurrentTab("Collection Information");
+		base.passedStep(
+				"Navigated to Collection Information page Directly by selecting Already configured source location is used for the collection");
+
+		// verify Back button is Disabled & validate collection id is not editable
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionId, "Collection id is retained ",
+				"Collection id not retained");
+		String actualTag = collection.getCollectionID().TagName();
+		base.textCompareNotEquals(actualTag, "input", "collection id is not editable", "collection id is not editable");
+
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// Do not edit Collection name, Datasets Click on 'Save as Draft' button from
+		// 'Summary and Start Collection' tab
+		collection.getNextBtn().waitAndClick(10);
+		collection.clickNextBtnOnDatasetTab();
+		driver.waitForPageToBeReady();
+		collection.verifyCurrentTab("Summary and Start Collection");
+		collection.collectionSaveAsDraft();
+
+		// Verify same collection saved with Collection Status as draft
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName, "Draft", true, false,
+				"");
+		base.passedStep("same collection is saved with Collection Status as 'Draft' : " + collectionName);
+
+		// Logout
+		login.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

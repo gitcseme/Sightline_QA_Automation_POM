@@ -772,11 +772,11 @@ public class BatchPrintRegression_25 {
 		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
 
 		// OFF Include Applied Redaction toggle
-		batchPrint.verifyBrandingAndReadctTab(false, false, null);
+		batchPrint.verifyBrandingAndReadctTab(false, false, null, false);
 
 		// ON Include Applied Redaction toggle & Configure the positions & verify
 		// location are fixed in selected position
-		batchPrint.verifyBrandingAndReadctTab(true, true, Input.searchString1);
+		batchPrint.verifyBrandingAndReadctTab(true, true, Input.searchString1, false);
 
 		// logout
 		loginPage.logout();

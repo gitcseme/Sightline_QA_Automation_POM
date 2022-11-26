@@ -71,7 +71,6 @@ public class Domain_Management26 {
 		String LastName = "consilio";
 		String MailID = "testing" + "@consilio.com";
 		UserManagement user = new UserManagement(driver);
-		baseClass.selectdomain(Input.domainName);
 		String[] usertoActivate = { FirstName, LastName, MailID };
 		user.navigateToUsersPAge();
 
@@ -784,6 +783,123 @@ public class Domain_Management26 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53041
+	 * @Description:Verify that logged in user with Project Admin role should be
+	 *                     displayed on user list page under non domain project
+	 **/
+	@Test(description = "RPMXCON-53041", enabled = true, groups = { "regression" })
+	public void verifyPARoleUnderNonDomanPrjt() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53041");
+		baseClass.stepInfo(
+				"Verify that logged in user with Project Admin role should be displayed on user list page under non domain project");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As " + Input.pa1userName);
+		
+		baseClass.stepInfo("Selecting non domain project");
+		baseClass.selectproject(Input.NonDomainProject);
+		
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		
+		baseClass.stepInfo("Applying filter for logged in PA user");
+		user.passingUserName(Input.pa1userName);
+		user.applyFilter();
+		driver.waitForPageToBeReady();
+		String getRole = user.getTableData("ROLE", 1);
+		
+		if(getRole.equals(Input.ProjectAdministrator)) {
+			baseClass.passedStep(" Project Admin role is displayed on user list page under non domain project");
+		}else {
+			baseClass.failedStep(" Project Admin role is not displayed on user list page under non domain project");
+			
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-53040
+	 * @Description:Verify that logged in user with Project Admin role should be
+	 *                     displayed on user list page under domain project
+	 **/
+	@Test(description = "RPMXCON-53040", enabled = true, groups = { "regression" })
+	public void verifyPARoleUnderDomanPrjt() throws Exception {
+
+		baseClass.stepInfo("TestCase id : RPMXCON-53040");
+		baseClass.stepInfo(
+				"Verify that logged in user with Project Admin role should be displayed on user list page under domain project");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As " + Input.pa1userName);
+		
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Applying filter for logged in PA user");
+		user.passingUserName(Input.pa1userName);
+		user.applyFilter();
+		
+		driver.waitForPageToBeReady();
+		String getRole = user.getTableData("ROLE", 1);
+		if(getRole.equals(Input.ProjectAdministrator)) {
+			baseClass.passedStep(" Project Admin role is displayed on user list page under domain project");
+		}else {
+			baseClass.failedStep(" Project Admin role is not displayed on user list page under domain project");
+			
+		}
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Vijaya.rani date: 24/11/2022 TestCase Id:RPMXCON-53051 Description
+	 * :Verify that as a SA one should be able to assign DA of one domain to other domains as well.
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-53051", enabled = true, groups = { "regression" })
+	public void verifySAAbleToAssignDADomains() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53051");
+		baseClass.stepInfo(
+				"Verify that as a SA one should be able to assign DA of one domain to other domains as well.");
+
+		UserManagement user = new UserManagement(driver);
+		String FirstName = "DA";
+		String LastName = "automation";
+		String MailID = "test" + Utility.dynamicNameAppender() + "@consilio.com";
+		String UserName = FirstName + " " + LastName;
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.sa1userName + "");
+
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Creating new project Administrator user");
+		user.createUser(FirstName, LastName, Input.DomainAdministrator, MailID, null, null);
+
+		baseClass.stepInfo("Assigning project to user");
+		user.openAssignUser();
+		user.getDomaintab().waitAndClick(5);
+		baseClass.waitForElement(user.getSelectDomainname());
+		user.getSelectDomainname().selectFromDropdown().selectByIndex(1);
+		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		baseClass.waitForElement(user.getrightBtndomainuser());
+		user.getrightBtndomainuser().waitAndClick(5);
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+		baseClass.stepInfo("Domain user Assiged succesfully");
+		baseClass.passedStep("Success message is displayed.");
+
+		// delete the created user
+		user.filterTodayCreatedUser();
+		user.filterByName(MailID);
+		user.deleteUser();
+
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

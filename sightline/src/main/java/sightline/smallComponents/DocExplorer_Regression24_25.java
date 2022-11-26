@@ -34,7 +34,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocExplorer_Regression24 {
+public class DocExplorer_Regression24_25 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -68,6 +68,217 @@ public class DocExplorer_Regression24 {
 		softAssert = new SoftAssert();
 		docExplorer = new DocExplorerPage(driver);
 
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:02/11/2022 RPMXCON-54693
+	 * @throws Exception
+	 * @Description Verify that “EmailRecipientNames” Filter with "Exclude"
+	 *              functionality is working correctly on Doc Explorer list.
+	 */
+	@Test(description = "RPMXCON-54693", enabled = true, groups = { "regression" })
+	public void verifyEmailRecipientNamesWithExcludeInDocExplorerList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54693");
+		baseClass.stepInfo(
+				"Verify that “EmailRecipientNames” Filter with \"Exclude\" functionality is working correctly on Doc Explorer list.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		String random = "Amit.Bandal@consilio.com";
+		String random1 = "Ajay.Tiwari@symphonyteleca.com";
+
+		baseClass.stepInfo("Perform exclude filter by EmailRecipientNames");
+		docExplorer.performExculdeEmailRecipientNamesFilter(random);
+
+		baseClass.stepInfo("Verify documents after applying exclude functionality by EmailRecipientNames");
+		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames();
+
+		baseClass.stepInfo("Refresh page");
+		docExplorer.refreshPage();
+
+		baseClass.stepInfo("Perform exclude filter by EmailRecipientNames");
+		docExplorer.performExculdeEmailRecipientNamesFilter(random);
+		docExplorer.performUpdateExculdeEmailFilter(random1);
+
+		baseClass.stepInfo("Verify documents after applying exclude functionality by EmailRecipientNames");
+		docExplorer.verifyExcludeFunctionlityForEmailRecipientNames();
+
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Brundha.T Date:04/11/2022 RPMXCON-54646
+	 * @throws Exception
+	 * @Description Verify the list of fields from the list view should be displayed
+	 *              in capital
+	 */
+	@Test(description = "RPMXCON-54646", enabled = true, groups = { "regression" })
+	public void verifyingCapitalInListView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54646");
+		baseClass.stepInfo("Verify the list of fields from the list view should be displayed in capital");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+
+		docExplorer.navigateToDocExplorerPage();
+		for(int i=2;i<=9;i++) {
+			driver.waitForPageToBeReady();
+			String ColValue=docExplorer.getListViewHeader(i).getText();
+			System.out.println(ColValue);
+			
+			baseClass.stepInfo("The list view field is:"+ColValue);
+			String CompareString=ColValue.toLowerCase();
+			System.out.println(CompareString);
+			
+			baseClass.stepInfo("The list view field Compare value:"+CompareString);
+			if(!ColValue.equals(CompareString)) {
+				baseClass.passedStep("The list of fields from the list view is displayed in capital");
+			}
+			else {
+				baseClass.failedStep("The list of fields from the list view is not displayed in capital");
+			}
+		}
+		loginPage.logout();
+	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-54653
+	 * @throws Exception
+	 * @Description Verify that each family should be displayed together with same color coding of the rows in list view of doc explorer
+	 */
+	@Test(description = "RPMXCON-54653", enabled = true, groups = { "regression" })
+	public void verifyFamilyDisplayedColorCodingRowsInListView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54653");
+		baseClass.stepInfo(
+				"Verify that each family should be displayed together with same color coding of the rows in list view of doc explorer");
+		String folderNumber="13";
+		String folderName="Enron Data (23)";
+		String folderName1="Amol (2)";
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		
+		// Login As Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		docexp.navigateToDocExplorerPage();
+		
+		baseClass.stepInfo("verifying the count of documents of folder in tree strecture");
+		docexp.verifyDOcExplorerFolderDocCount(folderNumber);
+		
+		String color = docexp.getfolderFromTreeByName(folderName).getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = docexp.getfolderFromTreeByName(folderName1).getWebElement().getCssValue("background-color");
+		System.out.println(ExpectedColor);
+		if (color.equals(ExpectedColor)) {
+			baseClass.passedStep("Each family is displayed together with same color coding of the rows in the list view of doc explorer as expected");
+		} else {
+			baseClass.failedStep("not displayed ");
+		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:15/11/2022 RPMXCON-54733
+	 * @throws Exception
+	 * @Description Verify that “CustodianName” Column header Filter with CJK characters is working correctly on Doc Explorer list.
+	 */
+	@Test(description = "RPMXCON-54733", enabled = true, groups = { "regression" })
+	public void verifyCustodianNameColumnHeaderFilterWithCJKChars() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54733");
+		baseClass.stepInfo(
+				"Verify that “CustodianName” Column header Filter with CJK characters is working correctly on Doc Explorer list.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		String[] custoName = {"新","华","社","记","者","吴","晶"};
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		baseClass.selectproject(Input.projectName01);
+
+		// verify EmailRecipient names in CJK Chars
+		docexp.verifyCustodianNameValuesInDocExp(custoName);
+		baseClass.passedStep(
+				"Verify that “CustodianName” Column header Filter with CJK characters is working Successfully on Doc Explorer list");
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:15/11/2022 RPMXCON-54730
+	 * @throws Exception
+	 * @Description Verify that “EmailReceipients” Column header Filter with special characters is working correctly on Doc Explorer list.
+	 */
+	@Test(description = "RPMXCON-54730", enabled = true, groups = { "regression" })
+	public void verifyEmailReceipientsColumnHeaderFilterWithSpecialChars() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54730");
+		baseClass.stepInfo(
+				"Verify that “EmailReceipients” Column header Filter with special characters is working correctly on Doc Explorer list.");
+
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+		String[] specialChars = {"`","@","&",".",":","(", ")","-","'",",","/","_",};
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		baseClass.selectproject(Input.projectName01);
+
+		// verify EmailRecipient names in CJK Chars
+		docexp.verifyEmailRecipientValuesInDocExp(specialChars);
+		baseClass.passedStep(
+				"Verify that “EmailReceipients” Column header Filter with special characters is working Successfully on Doc Explorer list");
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Vijaya.Rani  date: 15/11/2022 TestCase Id:RPMXCON-54949 
+	 * Description:Verify that Exclude filter functionality works properly when Folder name contains word between on Doc Explorer screen.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54949", enabled = true, groups = { "regression" })
+	public void verifyFoldersExcludeFunctionalityWorkingDocExplorer() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54949");
+		baseClass.stepInfo(
+				"Verify that Exclude filter functionality works properly when Folder name contains word between on Doc Explorer screen.");
+
+		String random = Input.betweenTagName + Utility.dynamicNameAppender();
+		TagsAndFoldersPage tagAndFolder = new TagsAndFoldersPage(driver);
+		DocExplorerPage docexp = new DocExplorerPage(driver);
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Create a new folder contains word between");
+		tagAndFolder.CreateFolder(random, Input.securityGroup);
+
+		baseClass.stepInfo("Select some documets from doc explorer table and bulk folder selected documents");
+		driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+		driver.waitForPageToBeReady();
+		String Docs = docexp.getDocExp_DocID().getText();
+
+		baseClass.stepInfo("Perform Exclude filter by folder");
+		driver.waitForPageToBeReady();
+		docexp.performExculdeFolderFilter(random);
+
+		baseClass.stepInfo("Verify documents after applying Exclude functionality by folder");
+		driver.waitForPageToBeReady();
+		docexp.verifyIncludeFunctionlityForDocFileType(Docs);
+		baseClass.passedStep("Exclude filter functionality is work properly and Records is filtered according to earlier steps on Doc Explorer screen");
+
+		loginPage.logout();
 	}
 
 	/**

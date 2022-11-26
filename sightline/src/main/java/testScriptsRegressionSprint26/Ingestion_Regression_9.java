@@ -189,6 +189,327 @@ public class Ingestion_Regression_9 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60815
+	 * Description :Verify that if the Absolute path is present in the PDF LST, then Ingestion 
+	 * should be successful.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60815",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInPdf() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60815");
+		baseClass.stepInfo("To verify that if the Absolute path is present in the PDF LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with PDF");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting Pdf file");
+			ingestionPage.selectPDFSource(Input.uncAbsolutePdf, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60814
+	 * Description :Verify that if the Absolute path is present in the Native LST, then Ingestion
+	 * should be successful.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60814",enabled = true, groups = { "regression" })
+	public void verifyAbsolutePathInNative() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60814");
+		baseClass.stepInfo("To verify that if the Absolute path is present in the Native LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with Native");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting Native file");
+			ingestionPage.selectNativeSource(Input.uncAbsoluteNative, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 23/11/2022 TestCase Id:RPMXCON-60820
+	 * Description :Verify that Ingestion should be successful if the PDF LST contains the Absolute 
+	 * path and the Native LST contains the Relative path. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60820",enabled = true, groups = { "regression" })
+	public void verifyAbsoluteAndRelativePathFile() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-60820");
+		baseClass.stepInfo("To verify that if the Absolute path in Native and Relative in Native LST.");
+		String ingestionName = null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with Pdf and Native");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.uncPathFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.uncAbsoluteDat, Input.documentKey);
+			baseClass.stepInfo("Selecting relative Native file");
+			ingestionPage.selectNativeSource(Input.uncRelativeNative, false);
+			baseClass.stepInfo("Selecting absolute Pdf file");
+			ingestionPage.selectPDFSource(Input.uncAbsolutePdf, false);
+			ingestionPage.unCheckLoadFile(ingestionPage.getTIFFLST(), ingestionPage.getTIFFCheckBox());
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.uncPathFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.uncPath);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		baseClass.stepInfo("go to doc explorer");
+		docExplorer = new DocExplorerPage(driver);
+		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
+				"not on docexplorer page");
+		//verify selecting docs and navigate to docview
+		docExplorer.docExpToDocViewWithIngestion(ingestionName,"no");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-49553
+	 * Description :Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49553",enabled = true, groups = { "regression" })
+	public void verifyEmailAuthorMetadataAvailability() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49553");
+		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available");
+		String data ="EmailAuthorNameAndAddress";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//add dataset details and click next
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Adding ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		//Verify destination field 'EmailAuthorNameAndAddresses' metadata
+		baseClass.stepInfo("Select 'EMAIL' in field category");
+		baseClass.waitForElement(ingestionPage.getMappingCategoryField(5));
+		ingestionPage.getMappingCategoryField(5).selectFromDropdown().selectByVisibleText(Input.email);
+		baseClass.stepInfo("verify metadata");
+		ingestionPage.verifyMetadataAvailability(ingestionPage.getMappingDestinationField(5), data);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-47427
+	 * Description :To Verify Add New Ingestion in Ingestion Wizard.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47427",enabled = true, groups = { "regression" })
+	public void verifySectionAvailableInIngestionWizard() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47427");
+		baseClass.stepInfo("To Verify Add New Ingestion in Ingestion Wizard.");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Click on add new ingestion in home page");
+		ingestionPage.ClickOnAddNewIngestionLink();
+		ingestionPage.verifySourceAndMappingSectionStatus();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-49505
+	 * Description :Verify the default value for the 'Date & Time Format' field
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49505",enabled = true, groups = { "regression" })
+	public void verifyDefaultSelectionForDateFormat() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49505");
+		baseClass.stepInfo("Verify the default value for the 'Date & Time Format' field");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		//verify default selection value for date-time format
+		ingestionPage.verifyDateFormatDropDownValidations();
+		baseClass.passedStep("No specific date format selected in date and time format field");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-63250
+	 * Description :Validate whether user do not get any error message during "Add only" ingestion 
+	 * type when similar source dat field are mapped twice with different destination dat field.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63250",enabled = true, groups = { "regression" })
+	public void verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63250");
+		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, Input.folder61759);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform similar mapping on source field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("sourceField");
+		baseClass.passedStep("User able to save ingestion successfully as draft when mapping similar source field");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/11/2022 TestCase Id:RPMXCON-63245
+	 * Description :Validate whether all the DAT fields from DAT File selected during "Add only" ingestion 
+	 * is displayed under Source DAT fields in Configure Field Mapping of Ingestion Wizard Page.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63245",enabled = true, groups = { "regression" })
+	public void verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-63245");
+		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion with type as 'add only'");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, Input.folder61759);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile6, Input.prodBeg);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify dat fields available in source field mapping in configuring page" );
+		ingestionPage.verifyDatFieldsAvailableInMappingSection();
+		baseClass.passedStep("All the DAT fields available in configure mapping page");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/11/2022 TestCase Id:RPMXCON-63249
+	 * Description :Validate whether user gets error message during ingestion when similar Destination 
+	 * field is mapped twice with different source dat field 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63249",enabled = true, groups = { "regression" })
+	public void verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63249");
+		baseClass.stepInfo("Verify error message when similar destination field mapped twice.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, "RPMXCON-61759");
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform similar mapping on destination field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
+		baseClass.passedStep("User gets the error message when mapping similar destination field for Add only ingestion");
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

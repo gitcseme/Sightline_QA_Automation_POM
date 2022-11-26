@@ -237,7 +237,101 @@ public class CodingFormRegression_26 {
 		// logOut
 		loginPage.logout();
 	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64894
+	 * @throws Exception
+	 * @Description Verify that when user check on the "CODING FORM NAME" check box
+	 *              from "Add/remove coding form in this security group" coding form
+	 *              pop-up all the present coding form should get selected from the
+	 *              column.
+	 */
+	@Test(description = "RPMXCON-64894", enabled = true, groups = { "regression" })
+	public void verifyPopUpAllGetSelectedFromColumn() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64894");
+		base.stepInfo(
+				"Verify that when user check on the \"CODING FORM NAME\" check box from \"Add/remove coding form in this security group\" coding form pop-up all the present coding form should get selected from the column.");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
 
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.checkingBelow15CFCheckboxForSG();
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		soft.assertTrue(cf.getSetCodingFormToSG().isElementPresent());
+		boolean showHide = cf.getShowHide().Enabled();
+		soft.assertTrue(showHide);
+		base.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
+		cf.getSetCodingFormToSG().waitAndClick(5);
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean flagPopup1 = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group popup is displayed successfully");
+		soft.assertTrue(flagPopup1);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.stepInfo("Codeform name check box is clicked to select all the codingforms");
+		driver.waitForPageToBeReady();
+		int Check = cf.getCfChecBoxUsingSize().size();
+		System.out.println(Check);
+		for (int i = 0; i < Check; i++) {
+			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.stepInfo("Unchecked all the codingforms");
+		soft.assertTrue(cf.sortOrderNxtDisableBtn().isElementPresent());
+		soft.assertAll();
+		base.stepInfo("Next button is disabled as expected");
+		base.passedStep("All the present coding form has been get selected As expected when we checked code form names");
+		cf.getCfPopUpCancel().waitAndClick(10);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description :Verify that when we have more than 10 coding form scroll bar should be
+	 *  present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).RPMXCON-64910
+	 */
+	
+	@Test(description = "RPMXCON-64910",enabled = true, groups = { "regression" })
+	public void verifyMoreThanTenCodingFormScrollBarPresentInTableOfAddOrRemoveCFSecurityGroupPopUp() throws InterruptedException {
+		
+		softAssert = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-64910 CodingForm");
+		baseClass.stepInfo("Verify that when we have more than 10 coding form scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).");
+		
+		//login as RMU
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		 
+		 // create CodingForm Based On Condition
+		codingForm.navigateToCodingFormPage();
+		List<String> listOfCodingFormCreated = codingForm.createCodingformBasedOnCondition(11);
+		baseClass.stepInfo("creating more than 10 coding form.");
+		
+		// Clicking on  "Set Security Group Coding form" button.
+		codingForm.navigateToCodingFormPage();
+		baseClass.waitForElement(codingForm.getSetCFButton());
+		codingForm.getSetCFButton().waitAndClick(10);
+		baseClass.stepInfo(" \"Set Security Group Coding form\" button is present in \"Manage Coding Form\" page.");
+		
+		// Verify that when we have more than 10 coding form the scroll bar should be present in the table of "Add/remove coding form in this security group" pop-up page
+		boolean verifyScrollBar = codingForm.verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar();
+		softAssert.assertEquals(verifyScrollBar,true);
+		softAssert.assertAll();
+		baseClass.passedStep("Verified that when we have more than 10 coding form the scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page.");
+		
+		// delete created codingForms
+		driver.Navigate().refresh();
+		codingForm.DeleteMultipleCodingform(listOfCodingFormCreated);
+
+		// logOut
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

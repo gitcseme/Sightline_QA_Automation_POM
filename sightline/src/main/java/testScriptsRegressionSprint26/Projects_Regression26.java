@@ -18,6 +18,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.ClientsPage;
+import pageFactory.DataSets;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.Utility;
@@ -223,6 +224,134 @@ public class Projects_Regression26 {
 		else {
 			base.failedStep("project created even after clicking the cancel button");
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Vijaya.rani date: 24/11/2022 TestCase Id:RPMXCON-55590
+	 * Description :To verify when Sys Admin checks the 'Deduping' checkbox from Settings tab while editing existing project. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-55590",enabled = true, groups = { "regression" })
+	public void verifySADedupingCheckBoxInSettingsTabExistingProject() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-55590");
+		base.stepInfo("To verify when Sys Admin checks the 'Deduping' checkbox from Settings tab while editing existing project.");
+		ProjectPage projectPage = new ProjectPage(driver);
+		DataSets data = new DataSets(driver);
+		String projectName="ExistingProject"+Utility.dynamicNameAppender();
+		
+		//Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage as with " + Input.sa1userName + "");
+		
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"1");
+		data.getNotificationMessage(0,projectName);
+		
+		//check the Deduping checkbox
+		driver.waitForPageToBeReady();
+		projectPage.filterTheProject(projectName);
+		base.waitForElement(projectPage.getEditProject(projectName));
+		projectPage.getEditProject(projectName).Click();
+		driver.waitForPageToBeReady();
+		projectPage.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(projectPage.getDedupingCheckbox());
+		projectPage.getDedupingCheckbox().waitAndClick(10);
+		if (projectPage.getInstanceLevelRadioBtn().Selected()) {
+			base.passedStep("Deduping Checkbox is selected");
+		} else {
+			base.failedStep("Deduping Checkbox is not selected");
+		}
+		driver.scrollingToBottomofAPage();
+		projectPage.getButtonSaveProject().Click();
+		base.VerifySuccessMessage("Project updated successfully");
+		base.passedStep("Deduping checkbox on for the project.  Make sure that project is saved.");
+		
+		//Do not Check Deduping checkbox
+		projectPage.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		projectPage.filterTheProject(projectName);
+		base.waitForElement(projectPage.getEditProject(projectName));
+		projectPage.getEditProject(projectName).Click();
+		driver.waitForPageToBeReady();
+		projectPage.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(projectPage.getDedupingCheckbox());
+		projectPage.getDedupingCheckbox().waitAndClick(10);
+		if (!projectPage.getInstanceLevelRadioBtn().Selected()) {
+			base.passedStep("Deduping Checkbox is not selected");
+		} else {
+			base.failedStep("Deduping Checkbox is selected");
+		}
+		driver.scrollingToBottomofAPage();
+		projectPage.getButtonSaveProject().Click();
+		base.VerifySuccessMessage("Project updated successfully");
+		base.passedStep("Deduping checkbox off for the project.  Make sure that project is saved.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Vijaya.rani date: 24/11/2022 TestCase Id:RPMXCON-55589
+	 * Description :To verify when Sys Admin checks the 'Deduping' checkbox from Settings tab while creating new project. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-55589",enabled = true, groups = { "regression" })
+	public void verifySADedupingCheckBoxInSettingsTabNewProject() throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-55589");
+		base.stepInfo("To verify when Sys Admin checks the 'Deduping' checkbox from Settings tab while creating new project.");
+		ProjectPage projectPage = new ProjectPage(driver);
+		String projectName="NewProject"+Utility.dynamicNameAppender();
+		String domainName="Domain";
+		
+		//Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage as with " + Input.sa1userName + "");
+		
+		projectPage.navigateToProductionPage();
+		projectPage.getAddProjectBtn().Click();
+		projectPage.getProjectName().SendKeys(projectName);
+		projectPage.getSelectEntityType().selectFromDropdown().selectByVisibleText(domainName);
+		projectPage.getSelectEntity().selectFromDropdown().selectByVisibleText(Input.domainName);
+		projectPage.getCopyProjectName().selectFromDropdown().selectByVisibleText(Input.projectName);		
+		//check the Deduping checkbox
+		driver.waitForPageToBeReady();
+		projectPage.getAddProject_SettingsTab().waitAndClick(5);
+		projectPage.getNoOfDocuments().SendKeys("999");
+		base.waitForElement(projectPage.getDedupingCheckbox());
+		projectPage.getDedupingCheckbox().waitAndClick(10);
+		if (projectPage.getInstanceLevelRadioBtn().Selected()) {
+			base.passedStep("Deduping Checkbox is selected");
+		} else {
+			base.failedStep("Deduping Checkbox is not selected");
+		}
+		driver.scrollingToBottomofAPage();
+		projectPage.getButtonSaveProject().Click();
+		base.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+		base.passedStep("Deduping checkbox on for the project.  Make sure that project is saved.");
+		
+		//Do not Check Deduping checkbox
+		projectPage.navigateToProductionPage();
+		projectPage.getAddProjectBtn().Click();
+		projectPage.getProjectName().SendKeys(projectName);
+		projectPage.getSelectEntityType().selectFromDropdown().selectByVisibleText(domainName);
+		projectPage.getSelectEntity().selectFromDropdown().selectByVisibleText(Input.domainName);
+		projectPage.getCopyProjectName().selectFromDropdown().selectByVisibleText(Input.projectName);		
+		//check the Deduping checkbox
+		driver.waitForPageToBeReady();
+		projectPage.getAddProject_SettingsTab().waitAndClick(5);
+		projectPage.getNoOfDocuments().SendKeys("999");
+		if (!projectPage.getInstanceLevelRadioBtn().Selected()) {
+			base.passedStep("Deduping Checkbox is not selected");
+		} else {
+			base.failedStep("Deduping Checkbox is selected");
+		}
+		driver.scrollingToBottomofAPage();
+		projectPage.getButtonSaveProject().Click();
+		base.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+		base.passedStep("Deduping checkbox off for the project.  Make sure that project is saved.");
 		loginPage.logout();
 	}
 

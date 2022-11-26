@@ -14089,6 +14089,43 @@ public class SessionSearch {
 		getQuerySearchBtn().Click();
 	}
 	
-	
+	/**
+	 * @author sowndarya
+	 */
+	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator, String metaData1,
+			String metaDataValue1) {
+		
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		driver.waitForPageToBeReady();
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByValue(metaData);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(metaDataValue);
+
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(10);
+		
+		selectOperatorInBasicSearch(Operator);
+		
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		driver.waitForPageToBeReady();
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByValue(metaData1);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(metaDataValue1);
+
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(10);
+	}
 
 }
