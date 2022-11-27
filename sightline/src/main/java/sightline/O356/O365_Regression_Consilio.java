@@ -69,56 +69,55 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
-//	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
-//		
-//		String[][] userRolesData = { { userName, role, "SA" } };
-//		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
-//		
-//		// Login and Pre-requesties
-//		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
-//		login.loginToSightLine(userName, password);
-//		base.stepInfo("User Role : " + role);
-//		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
-//
-//		// Pre-requesties - Access verification
-//		base.stepInfo("**Step-3 Go to Datasets > Collections page **");
-//		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-//		
-//		// navigate to source location page
-//		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
-//		
-//		//check for existing source location to edit
-//		
-//		if (!(source.getSourceLocationPageFirstCollectionSelect().isElementAvailable(5))) {
-//			driver.waitForPageToBeReady();
-//			base.waitForElement(source.getNewSrcLocationBtn());
-//			source.getNewSrcLocationBtn().waitAndClick(10);
-//			base.stepInfo("Clicked create new source location button");
-//			collection.performAddNewSource(null, dataSourceName, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
-//		}
-//		
-//		//edit source location for special chars
-//			
-//		dataSourceName=source.getSourceLocationPageFirstdataSourceSelect().getText();
-//		System.out.println("dataSourceName :-"+dataSourceName);
-//		base.waitForElement(source.getSrcActionBtn(dataSourceName, "Edit"));
-//		(source.getSrcActionBtn(dataSourceName, "Edit"
-//				)).waitAndClick(10);
-//		base.waitForElement(source.getSetUpASourceLocationEditYesButton());
-//		source.getSetUpASourceLocationEditYesButton().waitAndClick(10);	
-//		
-//		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
-//		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
-//		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
-//		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
-//		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
-//		
-//	}
 	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
+		
+		String[][] userRolesData = { { userName, role, "SA" } };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		
+		// Login and Pre-requesties
+		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+		login.loginToSightLine(userName, password);
+		base.stepInfo("User Role : " + role);
+		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
+
+		// Pre-requesties - Access verification
+		base.stepInfo("**Step-3 Go to Datasets > Collections page **");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+		
+		// navigate to source location page
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		
+		//check for existing source location to edit
+		
+		if (!(source.getSourceLocationPageFirstCollectionSelect().isElementAvailable(5))) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(source.getNewSrcLocationBtn());
+			source.getNewSrcLocationBtn().waitAndClick(10);
+			base.stepInfo("Clicked create new source location button");
+			collection.performAddNewSource(null, dataSourceName, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+		}
+		
+		//edit source location for special chars
+			
+		dataSourceName=source.getSourceLocationPageFirstdataSourceSelect().getText();
+		System.out.println("dataSourceName :-"+dataSourceName);
+		base.waitForElement(source.getSrcActionBtn(dataSourceName, "Edit"));
+		(source.getSrcActionBtn(dataSourceName, "Edit"
+				)).waitAndClick(10);
+		base.waitForElement(source.getSetUpASourceLocationEditYesButton());
+		source.getSetUpASourceLocationEditYesButton().waitAndClick(10);	
+		
+		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
+		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
+		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
+		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
+		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
+		
+	}
+	@Test(description = "RPMXCON-69186",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifyCollectionIsSuccessfulWithDirectoryNameWhiteSpaces(String userName, String password, String role) throws Exception {
 		
-		HashMap<String, String> colllectionData = new HashMap<>();
 		String[][] userRolesData = { { userName, role, "SA" } };
 		String collectionEmailId = "jbush@consiliodeveloper.onmicrosoft.com";
 		String firstName = "Jeb";
@@ -137,6 +136,7 @@ public class O365_Regression_Consilio {
 		String TenantID="9440f0a4-3c93-44be-a379-740f10731bf6";
 		String ApplicationID="6d76a630-be97-4493-9f7a-edf318c03c18";
 		String ApplicationKey="dlh7Q~fNgOWVJ3sTtQvA8KsA0lV2bqRtZAIaK";
+		
 		// Login and Pre-requesties
 				login.loginToSightLine(userName, password);
 				base.stepInfo("User Role : " + role);
@@ -151,7 +151,7 @@ public class O365_Regression_Consilio {
 				// Click create New Collection
 				collection.performCreateNewCollection();
 
-				// create Jeb Bush source
+				// create Jeb Bush source as per Test data
 				collection.performAddNewSource(null, dataSourceName, TenantID, ApplicationID, ApplicationKey);
 
 				// click created source location and verify navigated page
@@ -162,8 +162,8 @@ public class O365_Regression_Consilio {
 				
 				// Initiate collection process
 				collection.selectInitiateCollectionOrClickNext(true, true, true);
-
-				// DataSet creation
+ 
+				// DataSet creation with selected subFolder as per Test data
 				collection.fillinDS(CollectionName, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
 						selectedFolder, headerListDS, "Button", 3, false, "Save", true, subFolderName);
 
@@ -180,8 +180,7 @@ public class O365_Regression_Consilio {
 				collection.verifyStatusUsingContainsTypeII(headerListDataSets, CollectionName, statusList, 10);
 				driver.waitForPageToBeReady();
 
-				// Initial Notification count
-				int Bgcount = base.initialBgCount();
+				
 		
 	}
 	

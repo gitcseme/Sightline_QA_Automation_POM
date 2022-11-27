@@ -937,7 +937,7 @@ public class CollectionPage {
 		base.waitTime(2);
 		getCustodianIDInputTextField().SendKeys(inputString);
 		base.waitTime(2); // To handle abnormal waits
-System.out.println("inputEmailId :-"+inputEmailId);
+
 		// Get Auto suggesstions list size
 		int size = getIndexOfAutoSuggestion(inputEmailId);
 		System.out.println(size);
@@ -958,7 +958,7 @@ System.out.println("inputEmailId :-"+inputEmailId);
 		base.waitTime(2);
 		String retrivedData = getDataSetNameTextFIeld().GetAttribute("value");
 		base.stepInfo("Actual populated dataset name : " + retrivedData);
-		System.out.println("Actual populated dataset name : " + retrivedData);
+		
 		return retrivedData;
 	}
 
@@ -1072,7 +1072,7 @@ System.out.println("inputEmailId :-"+inputEmailId);
 	/**
 	 * @author Hema MJ
 	 * @createdDate : 11/25/22
-	 * @param folderName with additional parameters
+	 * @param Select Sub folderName
 	 * @param subFolder
 	 * @param subFolderName
 	 */
@@ -1080,7 +1080,7 @@ System.out.println("inputEmailId :-"+inputEmailId);
 		if (toExpand) {
 			getFolderabLabel().waitAndClick(5);
 		}
-		// Respective folder to select
+		// Respective folder to select if you want to select subFolder or not
 		if(SubFolder) {
 			
 			driver.waitForPageToBeReady();
