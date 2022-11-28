@@ -69,7 +69,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
@@ -181,6 +181,40 @@ public class O365_Regression_Consilio {
 				driver.waitForPageToBeReady();
 
 				
+		
+	}
+	@Test(description = "RPMXCON-69052",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+	public void verifySplCharsWhileEnteringSourceLocName(String userName, String password, String role) throws Exception {
+		
+		String[][] userRolesData = { { userName, role, "SA" } };
+		
+		// Login and Pre-requesties
+		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+		login.loginToSightLine(userName, password);
+		base.stepInfo("User Role : " + role);
+		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
+
+		// Pre-requesties - Access verification
+		base.stepInfo("**Step-3 Go to Datasets > Collections page **");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+		
+		// navigate to source location page
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		
+		//check for special chars in source location while entering new source name
+		
+		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
+		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
+		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
+		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
+		
+		if (!(source.getSourceLocationPageFirstCollectionSelect().isElementAvailable(5))) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(source.getNewSrcLocationBtn());
+			source.getNewSrcLocationBtn().waitAndClick(10);
+			base.stepInfo("Clicked create new source location button");
+			collection.performAddNewSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);
+		}
 		
 	}
 	
