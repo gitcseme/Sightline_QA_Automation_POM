@@ -1502,7 +1502,7 @@ public class DocListPage {
 	
 	public Element getDocListDocFileSizeValue() {
 		return driver.FindElementByXPath(
-				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[8]");
+				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[7]");
 	}
 
 	public Element getDocListChildWindow() {

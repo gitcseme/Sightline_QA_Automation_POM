@@ -166,11 +166,11 @@ public class DocList_Regression26 {
 		baseClass.stepInfo("DocList Page is get displayed");
 
 		driver.waitForPageToBeReady();
-		docList.removeColumn();
 		docList.addDocFileSizeColumn();
 		baseClass.waitTime(3);
 		docList.Selectpagelength(Input.pageLength);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docList.getDocListDocFileSizeValue().ScrollTo();
 		String docFileSize = docList.getDocListDocFileSizeValue().getText();
 		System.out.println(docFileSize);
@@ -179,8 +179,8 @@ public class DocList_Regression26 {
 		docList.docFileSizeFilter("at", docFileSize, null);
 		baseClass.stepInfo("docfilesize filter successfully");
 		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getDocList_PlusIcon());
 		docList.getDocList_PlusIcon().waitAndClick(5);
-		softAssert.assertTrue(docList.getDocListChildWindow().Displayed());
 		List<WebElement> lastPage = docList.getChildDocumentRowCount().FindWebElements();
 		for (int j = 1; j <= lastPage.size(); j++) {
 			driver.waitForPageToBeReady();
@@ -242,6 +242,7 @@ public class DocList_Regression26 {
 		for (int i = 1; i < docList.getInfoBtn().size(); i++) {
 			driver.waitForPageToBeReady();
 			docList.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
+			baseClass.waitForElement(docList.getMetaDataAuthorName());
 			if (docList.getMetaDataAuthorName().isDisplayed()) {
 				baseClass.passedStep("Thumbnails View is seen for this view in Metadata hover box");
 			} else {

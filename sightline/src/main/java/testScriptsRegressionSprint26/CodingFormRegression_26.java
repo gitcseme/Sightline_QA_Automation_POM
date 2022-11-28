@@ -282,7 +282,8 @@ public class CodingFormRegression_26 {
 			element.get(i).click();
 		}
 		base.stepInfo("Unchecked all the codingforms");
-		soft.assertTrue(cf.sortOrderNxtDisableBtn().isElementPresent());
+		base.waitTime(5);
+		soft.assertFalse(cf.sortOrderNxtDisableBtn().isElementAvailable(5));
 		soft.assertAll();
 		base.stepInfo("Next button is disabled as expected");
 		base.passedStep("All the present coding form has been get selected As expected when we checked code form names");
