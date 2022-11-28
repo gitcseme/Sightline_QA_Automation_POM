@@ -2107,6 +2107,16 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 
 	}
+	public Element getContentMetaDataBtnDisabled() {
+		return driver.FindElementByXPath(
+				"//*[@id='insertMetaPop']//button[@class='btn text-center btn-default addblock disabled'][@id='contentmetadata']");
+	}
+	public Element getSelectAllSecurityGroupBtn() {
+		return driver.FindElementByXPath("//*[@id='SelectAll']/following-sibling::i");
+	}
+	public Element getEnterSearchBox() {
+		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -294,6 +295,113 @@ public class AdvancedSearchRegression_26 {
 
 		// logOut
 		loginPage.logout();
+	}
+	/**
+	 * @author: 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that all Search options get displayed inside "Content &
+	 *              Metadata" block on "Advanced Search" screen.RPMXCON-57236
+	 */
+
+	@Test(description = "RPMXCON-57037", enabled = true, groups = { "regression" })
+	public void verifySearchOptionsDisplayedContentMetaDataBlock() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57037 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that all  Search options get displayed inside \"Content & Metadata\" block on \"Advanced Search\" screen");
+		SoftAssert softassert = new SoftAssert();
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("configure and perform MasterDate metadata search query in Advanced Search page");
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.getAdvancedSearchLink().waitAndClick(5);
+		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
+		sessionSearch.getContentAndMetaDatabtn().waitAndClick(5);
+		baseClass.stepInfo("Content & Metadata block is clicked as expected");
+
+		// content metadata options displayed
+		baseClass.waitForElement(sessionSearch.getNewSearch_MetadataBtn());
+		softassert.assertTrue(sessionSearch.getNewSearch_MetadataBtn().Displayed());
+		baseClass.passedStep("Metadata option is displayed successfully");
+		baseClass.waitForElement(sessionSearch.getCommentsFieldAndRemarksSec());
+		softassert.assertTrue(sessionSearch.getCommentsFieldAndRemarksSec().Displayed());
+		baseClass.passedStep("Comments/Remarks option is displayed successfully");
+		baseClass.waitForElement(sessionSearch.getOperatorDD());
+		softassert.assertTrue(sessionSearch.getOperatorDD().Displayed());
+		sessionSearch.getOperatorDD().waitAndClick(5);
+		baseClass.passedStep("operator option is displayed successfully");
+
+		baseClass.waitForElement(sessionSearch.getOperatorAND());
+		softassert.assertTrue(sessionSearch.getOperatorAND().Displayed());
+		baseClass.passedStep("AND operator option is displayed successfully");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionSearch.getOperatorOR());
+		softassert.assertTrue(sessionSearch.getOperatorOR().Displayed());
+		baseClass.passedStep("OR operator option is displayed successfully");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionSearch.getOperatorNOT());
+		softassert.assertTrue(sessionSearch.getOperatorNOT().Displayed());
+		baseClass.waitForElement(sessionSearch.getOperatorNOT());
+		baseClass.passedStep("NOT operator option is displayed successfully");
+		softassert.assertTrue(sessionSearch.getContentMetaDataBtnDisabled().isElementPresent());
+		baseClass.passedStep("Content & Metadata block has been disabled as expected");
+		softassert.assertAll();
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author: 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify an an PA user login, I will be able to select all the
+	 *              Security Groups from Security Group column under Work Product
+	 *              tab & set that as a search criteria for advanced
+	 *              search.RPMXCON-57047
+	 */
+
+	@Test(description = "RPMXCON-57047", enabled = true, groups = { "regression" })
+	public void verifySgWpTabSearchCriteriaAdvancedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57047 Advanced Search");
+		// login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		baseClass.stepInfo(
+				"To verify an an PA user login, I will be able to select all the Security Groups from Security Group column under Work Product tab & set that as a search criteria for advanced search");
+		sessionSearch.switchToWorkproduct();
+		baseClass.waitForElement(sessionSearch.getSecurityGrpBtn());
+		sessionSearch.getSecurityGrpBtn().waitAndClick(5);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getSelectAllSecurityGroupBtn());
+		sessionSearch.getSelectAllSecurityGroupBtn().waitAndClick(5);
+		baseClass.stepInfo("All Security Groups is selected from Security Group list as expected");
+		driver.waitForPageToBeReady();
+		List<String> Securitygroups = baseClass.availableListofElements(sessionSearch.getSecurityNamesTree());
+		baseClass.stepInfo(Securitygroups + "  Present in workproduct SG list");
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+		baseClass.stepInfo("Insert Into Query is Clicked");
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		String Searchbox = sessionSearch.getEnterSearchBox().getText();
+		for (int i = 0; i < Securitygroups.size(); i++) {
+			if (Searchbox.contains(Securitygroups.get(i))) {
+				baseClass.passedStep(Securitygroups.get(i)
+						+ "Selected Security Group has been  inserted in search criteria for advanced search  as expected");
+			} else {
+				baseClass.failedStep(
+						"Selected Security Group is did not inserted in search criteria for advanced search ");
+			}
+		}
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
