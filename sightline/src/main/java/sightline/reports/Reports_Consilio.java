@@ -76,7 +76,7 @@ public class Reports_Consilio {
 		
 	
 	}
-	@Test(description ="RPMXCON-69056",dataProvider = "SpecialChars",groups={"regression"})
+	@Test(description ="RPMXCON-69056",groups={"regression"})
 	public void BulkFolderWithSpecialChars() throws InterruptedException {
 		String bulkName="<sample&name'>";
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
