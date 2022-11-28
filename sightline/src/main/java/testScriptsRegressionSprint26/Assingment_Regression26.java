@@ -141,13 +141,15 @@ public class Assingment_Regression26 {
 				+ "In Doc view context of an Assignment we can save document without completing it");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+	
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
 	    driver.waitForPageToBeReady();
-		assignmentsPage.assignmentCreation(assignmentName, codingForm);
-		assignmentsPage.toggleEnableSaveWithoutCompletion();
+	    assignmentsPage.createAssignmentWithAllowUserToSave(assignmentName, codingForm);
+	        
+	    assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
+	    driver.waitForPageToBeReady();
 		assignmentsPage.addReviewerAndDistributeDocs();
-		driver.waitForPageToBeReady();
 		loginPage.logout();
 		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -167,6 +169,7 @@ public class Assingment_Regression26 {
 		loginPage.logout();
 		
 	}
+
 
 
 	/**
