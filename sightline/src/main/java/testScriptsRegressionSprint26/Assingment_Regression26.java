@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint26;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -166,4 +167,117 @@ public class Assingment_Regression26 {
 		loginPage.logout();
 		
 	}
+
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/11/2022 RPMXCON-54216
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Draw from pool - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' option is enabled in Assignment with draw from pool (i.e 20) is equal to the total docs assigned (i.e. 20).
+	 */
+	@Test(description = "RPMXCON-54216", enabled = true, groups = { "regression" })
+	public void verifyDrawFromPoolIsNotDisplayedInReviewerPage() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54216");
+		baseClass.stepInfo(
+				"Draw from pool - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' option is enabled in Assignment with draw from pool (i.e 20) is equal to the total docs assigned (i.e. 20).");
+
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a Assignment " + assignmentName + " with draw pool toggle disabled");
+
+		// Edit Assignment
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		// Draw pool Toggle Enable and making draw limit as 20
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+		// distributing docs
+		agnmt.distributeTheGivenDocCountToReviewer("20");
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		
+		this.driver.getWebDriver().get(Input.url + "/Dashboard/Dashboard");
+		if (!agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementAvailable(3)) {
+			baseClass.passedStep("Draw pool link is Not displayed");
+		} else {
+			baseClass.failedStep("Draw pool link is displayed");
+		}
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/11/2022 RPMXCON-54217
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Draw from pool - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' option is enabled in Assignment with draw from pool (i.e 20) is less than the total docs assigned (i.e. 40)
+	 */
+	@Test(description = "RPMXCON-54217", enabled = true, groups = { "regression" })
+	public void verifyDrawFromPoolIsNotDisplayedInReviewerPageFromAsssignPage() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54217");
+		baseClass.stepInfo(
+				"Draw from pool - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' option is enabled in Assignment with draw from pool (i.e 20) is less than the total docs assigned (i.e. 40)");
+
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		agnmt.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		agnmt.getAssignmentActionDropdown().waitAndClick(10);
+		agnmt.getAssignmentAction_NewAssignment().waitAndClick(10);
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a Assignment " + assignmentName + " with draw pool toggle disabled");
+
+		// Edit Assignment
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		// Draw pool Toggle Enable and making draw limit as 20
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+		// distributing docs
+		agnmt.distributeTheGivenDocCountToReviewer("20");
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		
+		this.driver.getWebDriver().get(Input.url + "/Dashboard/Dashboard");
+		if (!agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementAvailable(3)) {
+			baseClass.passedStep("Draw pool link is Not displayed");
+		} else {
+			baseClass.failedStep("Draw pool link is displayed");
+		}
+		loginPage.logout();
+	}
+	
 }
