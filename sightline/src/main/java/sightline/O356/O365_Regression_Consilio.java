@@ -208,13 +208,11 @@ public class O365_Regression_Consilio {
 		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
 		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
 		
-		if (!(source.getSourceLocationPageFirstCollectionSelect().isElementAvailable(5))) {
-			driver.waitForPageToBeReady();
-			base.waitForElement(source.getNewSrcLocationBtn());
-			source.getNewSrcLocationBtn().waitAndClick(10);
-			base.stepInfo("Clicked create new source location button");
-			collection.performAddNewSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);
-		}
+		driver.waitForPageToBeReady();
+		base.waitForElement(source.getNewSrcLocationBtn());
+		source.getNewSrcLocationBtn().waitAndClick(10);
+		base.stepInfo("Clicked create new source location button");
+		collection.performAddNewSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);
 		
 	}
 	
