@@ -202,6 +202,7 @@ public class ReportsRegression26 {
 		baseClass.stepInfo("Logged In As : " + username);
 
 		timeLineGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		baseClass.waitForElement(timeLineGaps.selectChart());
 		timeLineGaps.selectBarChartandRtnDocCount("yearly");
 		timeLineGaps.SaveReport(reportName);
 		
