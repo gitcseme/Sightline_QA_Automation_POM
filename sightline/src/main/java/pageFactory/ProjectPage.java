@@ -1792,4 +1792,30 @@ public class ProjectPage {
 		}
 	 }
  
+	/**
+	 * @author:sowndarya
+	 * @description:To save a project
+	 */
+	public void saveProjectAndVerify() {
+		
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait90);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
 }

@@ -2082,6 +2082,21 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
+	
+	public ElementCollection getIDNames() {
+		return driver
+				.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
+	}
+	
+	public Element getPageNum(int num) {
+		return driver.FindElementByXPath(
+				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" +num+ "']");
+	}
+	public Element getLastPagenum() {
+		return driver.FindElementByXPath(
+				"(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	
 	public ElementCollection getStartDatesInBG() {
 		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
 	}
@@ -14089,6 +14104,25 @@ public class SessionSearch {
 		getQuerySearchBtn().Click();
 	}
 	
+	
+	
+
+	public List<String> getAllIDFromBGPage() {
+		List<String> allIDinBG = new ArrayList<String>();
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getIDNames());	
+		allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+		if(getLastPagenum().isElementAvailable(4)) {
+		for(int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
+			driver.scrollingToBottomofAPage();
+			if(getPageNum(i).isElementAvailable(4)) {
+				getPageNum(i).waitAndClick(4);
+				base.waitTime(1);	
+				allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+			}}}
+		return allIDinBG;
+		}
+	
 	/**
 	 * @author sowndarya
 	 */
@@ -14127,5 +14161,6 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
 	}
+
 
 }
