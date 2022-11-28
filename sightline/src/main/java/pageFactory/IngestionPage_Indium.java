@@ -27,6 +27,8 @@ public class IngestionPage_Indium {
 	BaseClass base;
 	SoftAssert softAssertion;
 	DocListPage docList;
+	DocViewMetaDataPage docViewMeta;
+	DocViewPage docView;
 	
 	// ID's
 	public Element getSpecifySourceSystem() {
@@ -6588,7 +6590,7 @@ public class IngestionPage_Indium {
 		base.waitTime(5);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
-		base.waitTime(3);
+		base.waitTime(5);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
@@ -11277,6 +11279,157 @@ public class IngestionPage_Indium {
 					base.failedStep("Dat field not available"+ExpectedDatFields[i]);
 				}
 			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the value of doclanguages metdata
+		 */
+		public void verifyDocLanguagesMetadata(String page,int count) {
+			String[] values = {"DocLanguages"};
+			docList = new DocListPage(driver);
+			docViewMeta= new DocViewMetaDataPage(driver);
+			
+			// doclist verification
+			if(page.equalsIgnoreCase("doclist")) {
+				base.verifyUrlLanding(Input.url + "en-us/Document/DocList", 
+						"Navigated to doclist page", "Not on doclist page");
+				docList.SelectColumnDisplayByRemovingAddNewValues(values);
+				base.waitForElement(docList.getDocList_SelectLenthtobeshown());
+				docList.getDocList_SelectLenthtobeshown().selectFromDropdown().
+						selectByVisibleText("500");
+				for(int i=1;i<=count;i++) {
+					driver.scrollingToElementofAPage(docList.getDataInDoclist(i,4));
+					driver.waitForPageToBeReady();
+					String data =docList.getDataInDoclist(i,4).getText();
+					base.waitForElement(docList.getNextButtonStatus());
+					String buttonstatus =docList.getNextButtonStatus().GetAttribute("Class");
+					if(docList.getDataInDoclist(i,4).isDisplayed() && !data.isEmpty()) {
+						base.stepInfo("field value displayed :"+ data);
+						base.passedStep("values displayed in selected column");
+						break ;
+					}
+					else if(i==count && data.isEmpty() && !buttonstatus.contains("disable") ) {
+						base.waitForElement(docList.getNextButton());
+						docList.getNextButton().waitAndClick(5);
+						i=1;
+					}	
+				}	
+			}
+			//docview verification
+			else if(page.equalsIgnoreCase("docview")) {
+				base.waitForElement(docViewMeta.selectDocument(1));
+				base.waitTime(5);
+				driver.waitForPageToBeReady();
+				
+				for(int i=0;i<count;i++) {
+					driver.scrollPageToTop();
+					base.waitForElement(docViewMeta.selectDocument(i));
+					docViewMeta.selectDocument(i).waitAndClick(5);
+					driver.waitForPageToBeReady();
+					String doclang =docViewMeta.getDocLanguageMetadataValue().getText();
+					if(!(doclang.isEmpty())) {
+						base.passedStep("Doclanguage present in docview metadata- "+doclang);
+						break;
+					}
+					else {
+						System.out.println("selecting next doc");
+					}	
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the error navigation control present in ingestion
+		 * 				 detail popup
+		 */
+		public void verifybrowseErrorNavigationControl() {
+			
+			
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			if(errorCountCatalogingStage().isElementAvailable(10)) {
+				base.passedStep("Errors present in catalog stage");
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitForElement(ignoreAllButton());
+				if(getAvailablePaginateButtons().isElementAvailable(10)) {
+					//verify number of errors displayed per page is 10
+					base.stepInfo("verify number of errors displayed per page is 10");
+					int errorCount = getErrorDetailsCount().size();
+					base.digitCompareEquals(errorCount, 10, "10 errors displayed per page",
+							"10 errors not displayed per page");
+					//click on any paginate and verify navigation
+					base.stepInfo("Navigating to any error page and verify navigation");
+					int pageno =2;
+					base.waitForElement(getErrorPage(pageno));
+					for(int k=0;k<3;k++) {
+					getErrorPage(pageno).waitAndClick(5);
+					driver.waitForPageToBeReady();
+					}
+					int activePage = Integer.parseInt(getCurrentPage().getText());
+					base.digitCompareEquals(activePage, pageno, "page navigation moved as expected",
+							"page navigation not moved");
+					//click on previous button and verify navigation
+					base.stepInfo("click on previous button and verify navigation");
+					int currentPage = Integer.parseInt(getCurrentPage().getText());
+					getErrorPaginatePreviousBtn().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					int afternavigation =Integer.parseInt(getCurrentPage().getText());
+					if(afternavigation<currentPage) {
+						base.passedStep("Previous navigation button navigates to previous page");
+					}
+					else {
+						base.failedStep("previous navigation button not worked");
+					}
+					//click on next button and verify navigation
+					base.stepInfo("click on next button and verify navigation");
+					currentPage = Integer.parseInt(getCurrentPage().getText());
+					getErrorPaginateNextBtn().waitAndClick(10);
+					driver.waitForPageToBeReady();
+					afternavigation =Integer.parseInt(getCurrentPage().getText());
+					if(afternavigation>currentPage) {
+						base.passedStep("Next navigation button navigates to next page");
+					}
+					else {
+						base.failedStep("Next navigation button not worked");
+					}	
+					//previous button status verification
+					base.stepInfo("go to first error page and verify previous button status");
+					base.waitForElement(getErrorPage(1));
+					getErrorPage(1).waitAndClick(10);
+					driver.waitForPageToBeReady();
+					String prevBtnStatus = getErrorPaginatePreviousBtnStatus().GetAttribute("class");
+					base.stepInfo("previous button status-"+ prevBtnStatus);
+					if(prevBtnStatus.contains("disabled")) {
+						base.passedStep("previous button disabled when navigated to first page");
+					}
+					else {
+						base.failedStep("previous button not disabled");
+					}
+					//next button status verification
+					base.stepInfo("go to last error page and verify next button status");
+					int page = getAvailablePaginateButtons().size();
+					base.waitForElement(getErrorPage(page+1));
+					getErrorPage(page+1).waitAndClick(10);
+					driver.waitForPageToBeReady();
+					String nextBtnStatus = getErrorPaginateNextBtnStatus().GetAttribute("class");
+					base.stepInfo("next button status-"+ nextBtnStatus);
+					if(prevBtnStatus.contains("disabled")) {
+						base.passedStep("Next button disabled when navigated to last page");
+					}
+					else {
+						base.failedStep("Next button not disabled");
+					}
+				}
+				else {
+					base.failedMessage("errors present in only one page,unable to navigate");
+				}	
+			}
+			else {
+				base.failedMessage("No errors present for this ingestion at catalog stage");
+			}	
 		}
 		
 }

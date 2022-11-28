@@ -587,6 +587,14 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath(
 				"//table[@id='dtDocumentAllHistory']//td[text()='" + remark + "']//..//td[" + index + "]");
 	}
+	//added by arun
+	public Element  getDocLanguageMetadataValue() {
+		return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[contains(text(),'DocLanguages')]//following-sibling::td");
+	}
+	public Element selectDocument(int row) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr['"+row+"']");
+	}
+	
 
 	public DocViewMetaDataPage(Driver driver) {
 
