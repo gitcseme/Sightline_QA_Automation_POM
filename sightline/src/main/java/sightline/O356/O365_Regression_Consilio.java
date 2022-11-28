@@ -69,7 +69,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
@@ -113,6 +113,74 @@ public class O365_Regression_Consilio {
 		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
 		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
 		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
+		
+	}
+	@Test(description = "RPMXCON-69186",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+	public void verifyCollectionIsSuccessfulWithDirectoryNameWhiteSpaces(String userName, String password, String role) throws Exception {
+		
+		String[][] userRolesData = { { userName, role, "SA" } };
+		String collectionEmailId = Input.collectionJebEmailId;
+		String firstName = "Jeb";
+		String lastName = "Bush";
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "05 May 2002 Public.pst";
+		String subFolderName="QA Space folder";
+		String headerListDS[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader5, Input.collectionDataHeader4, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		String CollectionName = "Collection" + Utility.dynamicNameAppender();
+		String TenantID=Input.TenantIDJeb;
+		String ApplicationID=Input.ApplicationIDJeb;
+		String ApplicationKey=Input.ApplicationKeyJeb;
+		
+		// Login and Pre-requesties
+				login.loginToSightLine(userName, password);
+				base.stepInfo("User Role : " + role);
+
+				// Pre-requesties - Access verification
+				base.stepInfo("Collection Access Verification");
+				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+				// navigate to Collection page
+				dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+				// Click create New Collection
+				collection.performCreateNewCollection();
+
+				// create Jeb Bush source as per Test data
+				collection.performAddNewSource(null, dataSourceName, TenantID, ApplicationID, ApplicationKey);
+
+				// click created source location and verify navigated page
+				HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(dataSourceName, CollectionName,
+						false);
+				System.out.println("collectionInfoPage:-"+collectionInfoPage);
+
+				
+				// Initiate collection process
+				collection.selectInitiateCollectionOrClickNext(true, true, true);
+ 
+				// DataSet creation with selected subFolder as per Test data
+				collection.fillinDS(CollectionName, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
+						selectedFolder, headerListDS, "Button", 3, false, "Save", true, subFolderName);
+
+				// Start A Collection
+				collection.clickOnNextAndStartAnCollection();
+				dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+				driver.waitForPageToBeReady();
+
+				// Verify Collection presence with expected Status
+				collection.verifyExpectedCollectionStatus(false, headerListDataSets, CollectionName, statusListToVerify, 10,
+						true, false, "", "");
+
+				// Completed status check
+				collection.verifyStatusUsingContainsTypeII(headerListDataSets, CollectionName, statusList, 10);
+				driver.waitForPageToBeReady();
+
+				
 		
 	}
 	
