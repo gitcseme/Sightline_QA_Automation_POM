@@ -1271,6 +1271,7 @@ public class CollectionPage {
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
 
 		// Check collection presence
+		driver.waitForPageToBeReady();
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
@@ -1625,12 +1626,14 @@ public class CollectionPage {
 	}
 
 	/**
+	 * @return 
 	 * @Author Jeevitha
 	 * @Description : click edit and verify added Dataset and can modify any field
 	 */
-	public void editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
+	public String editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
 			String firstName, String collection2ndEmailId, boolean editFolder, boolean validateFolder,
 			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter) {
+		String actualValue = "";
 		if (clickEdit) {
 			driver.waitForPageToBeReady();
 			getEditBtnDataSelection(collectionEmailId).waitAndClick(10);
@@ -1644,7 +1647,7 @@ public class CollectionPage {
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
 
-				String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
+				actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
 						"");
 			}
 
@@ -1670,6 +1673,7 @@ public class CollectionPage {
 		} else {
 			base.failedStep("Dataset Popup is not displayed");
 		}
+		return actualValue;
 	}
 
 	/**
@@ -1713,6 +1717,7 @@ public class CollectionPage {
 		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
 
 		getActionBtn("Save").waitAndClick(5);
+		driver.waitForPageToBeReady();
 		if (getFolderSelectionConfirmation().isElementAvailable(5)) {
 			String actualTxt = getPopupMsg().getText();
 			String passMsg = "Displayed Popup Msg : " + actualTxt;
@@ -2947,6 +2952,7 @@ public class CollectionPage {
 		colllectionDataToReturn.put(collectionID, dataName);
 
 		// Verify Collection presence
+		driver.waitForPageToBeReady();
 		verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus, true, false,
 				"");
 		base.passedStep("Pre-requestied created colleciton Name :" + dataName);
