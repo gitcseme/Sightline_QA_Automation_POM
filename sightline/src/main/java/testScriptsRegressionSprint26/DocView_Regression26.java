@@ -83,90 +83,97 @@ public class DocView_Regression26 {
 		String docid = "ID00000152";
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Login as Rmu");
-		docexp = new DocExplorerPage(driver);
-		DocListPage doclist = new DocListPage(driver);
-
-		// DocExploer to viewindocView Page
-		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
-		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
-		doclist.getApplyFilter().waitAndClick(10);
-		baseClass.waitTime(3);
-		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
-		docexp.getDocExp_SelectAllDocs().Click();
-		driver.waitForPageToBeReady();
-		docexp.docExpViewInDocView();
-		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
-		driver.Navigate().refresh();
-		docView.ScrollAndSelectDocument(docid);
-		docView.getDocView_CodingFormlist().waitAndClick(5);
-		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
-		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		docView.getCodingFormSaveThisForm().waitAndClick(2);
-		baseClass.stepInfo("Document saved successfully");
-
-		// verify select icon is loaded
-		baseClass.waitForElement(docView.getDocView_Next());
-		docView.getDocView_Next().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		String docId1 = docView.getDocView_CurrentDocId().getText();
-		String nextDoc = docView.getDocView_Next().GetAttribute("value");
-		System.out.println(nextDoc);
-		baseClass.stepInfo("Navigated to next document is loaded in viewer ");
-		docView.verifyCopyandPasteIconStatus();
-		baseClass.waitForElement(docView.getDocView_Last());
-		docView.getDocView_Last().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		String docId2 = docView.getDocView_CurrentDocId().getText();
-		String lastDoc = docView.getDocView_Next().GetAttribute("value");
-		softassertion.assertEquals(lastDoc, "14");
-		baseClass.stepInfo("Navigated to last document is loaded in viewer ");
-		docView.verifyCopyandPasteIconStatus();
-		baseClass.waitForElement(docView.getDocView_Previous());
-		docView.getDocView_Previous().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		String docId3 = docView.getDocView_CurrentDocId().getText();
-		String previousDoc = docView.getDocView_NumTextBox().GetAttribute("value");
-		softassertion.assertEquals(previousDoc, "13");
-		baseClass.stepInfo("Navigated to previous document is loaded in viewer");
-		driver.waitForPageToBeReady();
-		docView.verifyCopyandPasteIconStatus();
-		baseClass.waitForElement(docView.getDocView_First());
-		docView.getDocView_First().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		String docId4 = docView.getDocView_CurrentDocId().getText();
-		String FirstDoc = docView.getDocView_NumTextBox().GetAttribute("value");
-		softassertion.assertEquals(FirstDoc, "1");
-		baseClass.stepInfo("Navigated to first document is loaded in viewer ");
-		docView.verifyCopyandPasteIconStatus();
-
-		// Verify Select docs in History button
-		String[] docids = { docId1, docId2, docId3, docId4 };
-		baseClass.waitForElement(docView.getDocView_HistoryButton());
-		docView.getDocView_HistoryButton().waitAndClick(5);
-		baseClass.passedStep("User clicked clock icon in minidoclist");
-		int count = docView.getselectDocsFromClockIcon().size();
-		ArrayList<String> dataList = new ArrayList<String>();
-		for (int i = 1; i <= count; i++) {
-			String docs = docView.getselectDocHistory(i).getText();
-			System.out.println(docs);
-			dataList.add(docs);
-		}
-		System.out.println(dataList);
-		for (int j = 0; j < docids.length; j++) {
-			baseClass.compareListWithOnlyOneString(dataList, docids[j], docids[j] + "is present in the history",
-					docids[j]+" is not present in the history");
-		}
-
-		baseClass.waitForElement(docView.getselectDocFromClckIcon());
-		docView.getselectDocFromClckIcon().waitAndClick(5);
-		baseClass.passedStep("User selected the document from history drop down as expected");
-		docView.verifyCopyandPasteIconStatus();
-		softassertion.assertAll();
-
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("Login as Rmu");
+        docexp = new DocExplorerPage(driver);
+        DocListPage doclist = new DocListPage(driver);
+ 
+        // DocExploer to viewindocView Page
+        baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+        this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+        baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
+        docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
+        doclist.getApplyFilter().waitAndClick(10);
+        baseClass.waitTime(3);
+        docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+        docexp.getDocExp_SelectAllDocs().Click();
+        driver.waitForPageToBeReady();
+        docexp.docExpViewInDocView();
+        driver.waitForPageToBeReady();
+        docView.selectSourceDocIdInAvailableField("SourceDocID");
+        driver.Navigate().refresh();
+        docView.ScrollAndSelectDocument(docid);
+        docView.getDocView_CodingFormlist().waitAndClick(5);
+        docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+        docView.verifyCopyAndPasteRedacTextOnCommentBox();
+        docView.getCodingFormSaveThisForm().waitAndClick(2);
+        baseClass.stepInfo("Document saved successfully");
+ 
+        // verify select icon is loaded
+        baseClass.waitForElement(docView.getDocView_Next());
+        docView.getDocView_Next().waitAndClick(5);
+        driver.waitForPageToBeReady();
+        String docId1 = docView.getDocView_CurrentDocId().getText();
+        String nextDoc = docView.getDocView_Next().GetAttribute("value");
+        System.out.println(nextDoc);
+        baseClass.stepInfo("Navigated to next document is loaded in viewer ");
+        baseClass.waitTime(5);
+        docView.verifyCopyandPasteIconStatus();
+        baseClass.waitForElement(docView.getDocView_Last());
+        docView.getDocView_Last().waitAndClick(5);
+        baseClass.waitTime(5);
+        String docId2 = docView.getDocView_CurrentDocId().getText();
+        System.out.println(docId2);
+        String lastDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+        System.out.println(lastDoc);
+        softassertion.assertEquals(lastDoc, "14");
+        baseClass.stepInfo("Navigated to last document is loaded in viewer ");
+        baseClass.waitTime(5);
+        docView.verifyCopyandPasteIconStatus();
+        baseClass.waitForElement(docView.getDocView_Previous());
+        docView.getDocView_Previous().waitAndClick(5);
+        driver.waitForPageToBeReady();
+        String docId3 = docView.getDocView_CurrentDocId().getText();
+        String previousDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+        softassertion.assertEquals(previousDoc, "13");
+        baseClass.stepInfo("Navigated to previous document is loaded in viewer");
+        baseClass.waitTime(5);
+        docView.verifyCopyandPasteIconStatus();
+        baseClass.waitForElement(docView.getDocView_First());
+        docView.getDocView_First().waitAndClick(5);
+        driver.waitForPageToBeReady();
+        String docId4 = docView.getDocView_CurrentDocId().getText();
+        String FirstDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+        softassertion.assertEquals(FirstDoc, "1");
+        baseClass.stepInfo("Navigated to first document is loaded in viewer ");
+        baseClass.waitTime(5);
+        docView.verifyCopyandPasteIconStatus();
+ 
+        // Verify Select docs in History button
+        baseClass.waitTime(5);
+        String[] docids = { docId1, docId2, docId3, docId4 };
+        baseClass.waitForElement(docView.getDocView_HistoryButton());
+        docView.getDocView_HistoryButton().waitAndClick(5);
+        baseClass.passedStep("User clicked clock icon in minidoclist");
+        baseClass.waitTime(5);
+        int count = docView.getselectDocsFromClockIcon().size();
+        ArrayList<String> dataList = new ArrayList<String>();
+        for (int i = 1; i <= count; i++) {
+            String docs = docView.getselectDocHistory(i).getText();
+            System.out.println(docs);
+            dataList.add(docs);
+        }
+        System.out.println(dataList);
+        for (int j = 0; j < docids.length; j++) {
+            baseClass.compareListWithOnlyOneString(dataList, docids[j], docids[j] + "is present in the history",
+                    docids[j]+" is not present in the history");
+        }
+ 
+        baseClass.waitForElement(docView.getselectDocFromClckIcon());
+        docView.getselectDocFromClckIcon().waitAndClick(5);
+        baseClass.passedStep("User selected the document from history drop down as expected");
+        baseClass.waitTime(5);
+        docView.verifyCopyandPasteIconStatus();
+        softassertion.assertAll();
 	}
 }

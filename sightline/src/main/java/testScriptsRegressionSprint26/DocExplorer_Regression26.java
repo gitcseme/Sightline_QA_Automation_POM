@@ -240,7 +240,7 @@ public class DocExplorer_Regression26 {
 				"Verify that “EmailAuthor” Column header Filter with special characters is working correctly on Doc Explorer list.");
 
 		DocExplorerPage docexp = new DocExplorerPage(driver);
-		String[] specialChars = { "@", ".", ";", "(", ")", "-", "'", ",", "!", "#", "&" };
+		String[] specialChars = { "@", ".", "(", ")", "-", "'", "," };
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -572,9 +572,9 @@ public class DocExplorer_Regression26 {
 					baseClass.failedStep("Mouseover text of foldername  is not displayed as expected");
 				}
 				break;
-			} else if(i==1) {
+			} else if (i == 1) {
 				baseClass.failedStep("large foldername name is not displayed");
-			}else {
+			} else {
 				driver.waitForPageToBeReady();
 			}
 		}
@@ -661,6 +661,10 @@ public class DocExplorer_Regression26 {
 		DocViewPage docView = new DocViewPage(driver);
 		DocExplorerPage docexp = new DocExplorerPage(driver);
 		DocListPage docList = new DocListPage(driver);
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 
 		docexp.navigateToDocExplorerPage();
 		docList.dateFilter("after", "2009/09/20", null);

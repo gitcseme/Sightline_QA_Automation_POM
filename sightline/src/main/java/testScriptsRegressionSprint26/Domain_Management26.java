@@ -893,7 +893,9 @@ public class Domain_Management26 {
 		baseClass.passedStep("Success message is displayed.");
 
 		// delete the created user
+		driver.waitForPageToBeReady();
 		user.filterTodayCreatedUser();
+		driver.waitForPageToBeReady();
 		user.filterByName(MailID);
 		user.deleteUser();
 
