@@ -48,7 +48,7 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getTally_SelectSecurityGroup(String value) {
-		return driver.FindElementByXPath(".//*[@id='secgroup']/li[contains(.,'" + value + "')]/label");
+		return driver.FindElementByXPath("//label[@class='checkbox']//span[contains(text(),'"+value+"')]//..//i");
 	}
 
 	public Element getTally_SaveSelections() {

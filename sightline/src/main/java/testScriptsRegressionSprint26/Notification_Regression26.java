@@ -3,6 +3,8 @@ package testScriptsRegressionSprint26;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -18,10 +20,13 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
+import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TimelineReportPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -203,5 +208,158 @@ public class Notification_Regression26 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author NA Testcase No:RPMXCON-54446
+	 * @Description:Verify that correct status \"InProgress\" appears on My BackGround screen when user performed Batch Print with 100+ documents from Search Group
+	 **/
+	@Test(description = "RPMXCON-54446", enabled = true, groups = { "regression" })
+	public void verifyInProgressBatchPrintWithSG() throws Exception {
+		SavedSearch search =new SavedSearch(driver);
+		BaseClass base = new BaseClass(driver);
+		
+		base.stepInfo("RPMXCON-54446");
+		base.stepInfo("Verify that correct status \"InProgress\" appears on My BackGround screen "
+				+ "when user performed Batch Print with 100+ documents from Search Group");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
+		//create a tag
+		search.navigateToSavedSearchPage();
+		String searchGroup = search.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		
+		// configure query & view in doclist
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchInNewNode(searchName, searchGroup);
+		
+		// Select TAG & Native
+		BatchPrintPage batchPrint= new BatchPrintPage(driver);
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTag(Input.mySavedSearch, searchGroup, searchName);
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+		driver.waitForPageToBeReady();
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+		driver.waitForPageToBeReady();
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		// Filling Export File Name as 'DocID', select Sort by 'DocFileName' In
+		batchPrint.selectSortingFromExportPage("DESC");
+		driver.waitForPageToBeReady();
+		batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, true);
+		driver.waitForPageToBeReady();
+		
+		base.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+		
+		String idValue=batchPrint.getBatchId(1).getText();
+		System.out.println("Id : "+ idValue);
+		
+		driver.waitForPageToBeReady();
+		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
+		System.out.println("status is : "+status);
+
+		String passMsg="Batch Print status of Id : "+idValue +"is : "+status;
+		String failedMsg="Batch print status is not displayed as expected";
+	
+		base.textCompareEquals(status, "INPROGRESS", passMsg, failedMsg);
+		driver.waitForPageToBeReady();
+		List<String> id = sessionSearch.getAllIDFromBGPage();
+		System.out.println(id);
+		System.out.println(id.size());
+		int occurence = Collections.frequency(id, idValue);
+		System.out.println(occurence);
+		if(occurence == 1) {
+			base.passedStep("Same ID not appear multiple times on BackGround Screen.");
+		} else {
+			base.failedStep("Same ID  appear multiple times on BackGround Screen.");
+		}
+		base.passedStep("Verify that correct status \"InProgress\" appears on My BackGround screen "
+				+ "when user performed Batch Print with 100+ documents from Search Group");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-54450
+	 * @Description:Verify that correct status \"InProgress\" appears on My BackGround screen when user performed Batch Print with 100+ documents from PA/Security Group Shared Group
+	 **/
+	@Test(description = "RPMXCON-54450", enabled = true, groups = { "regression" })
+	public void verifyInProgressBatchPrintWithPASG() throws Exception {
+		SavedSearch search =new SavedSearch(driver);
+		BaseClass base = new BaseClass(driver);
+		
+		base.stepInfo("RPMXCON-54450");
+		base.stepInfo("Verify that correct status \"InProgress\" appears on My BackGround screen "
+				+ "when user performed Batch Print with 100+ documents from PA/Security Group Shared Group");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	
+		search.navigateToSavedSearchPage();
+		String searchGroup = search.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		
+		// configure query & view in doclist
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchInNewNode(searchName, searchGroup);
+		
+		search.navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		search.selectNode1(searchGroup);
+		search.shareSavedNodeWithDesiredGroup(searchGroup, Input.shareSearchPA);
+		
+		// Select TAG & Native
+		BatchPrintPage batchPrint= new BatchPrintPage(driver);
+		batchPrint.navigateToBatchPrintPage();
+		driver.waitForPageToBeReady();
+		batchPrint.fillingSourceSelectionTag(Input.shareSearchPA, searchGroup, searchName);
+		driver.waitForPageToBeReady();
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+		driver.waitForPageToBeReady();
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+		driver.waitForPageToBeReady();
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		// Filling Export File Name as 'DocID', select Sort by 'DocFileName' In
+		batchPrint.selectSortingFromExportPage("DESC");
+		driver.waitForPageToBeReady();
+		batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, true);
+		driver.waitForPageToBeReady();
+		base.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+		driver.waitForPageToBeReady();
+		String idValue=batchPrint.getBatchId(1).getText();
+		System.out.println("Id : "+ idValue);
+		driver.waitForPageToBeReady();
+		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
+		System.out.println("status is : "+status);
+
+		String passMsg="Batch Print status of Id : "+idValue +"is : "+status;
+		String failedMsg="Batch print status is not displayed as expected";
+	
+		base.textCompareEquals(status, "INPROGRESS", passMsg, failedMsg);
+		driver.waitForPageToBeReady();
+		List<String> id = sessionSearch.getAllIDFromBGPage();
+		System.out.println(id);
+		System.out.println(id.size());
+		int occurence = Collections.frequency(id, idValue);
+		System.out.println(occurence);
+		if(occurence == 1) {
+			base.passedStep("Same ID not appear multiple times on BackGround Screen.");
+		} else {
+			base.failedStep("Same ID appear multiple times on BackGround Screen.");
+		}
+		base.passedStep("Verify that correct status \"InProgress\" appears on My BackGround screen "
+				+ "when user performed Batch Print with 100+ documents from PA/Security Group Shared Group");
+		loginPage.logout();
+	
+	}
+	
 }

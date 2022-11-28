@@ -354,5 +354,39 @@ public class Projects_Regression26 {
 		base.passedStep("Deduping checkbox off for the project.  Make sure that project is saved.");
 		loginPage.logout();
 	}
-
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-53060
+	 * @Description: Verify Project creation with domain which is having more than 20 char for Non domain client
+	 **/
+	@Test(description = "RPMXCON-53060",  enabled = true, groups = { "regression" })
+	public void VerifyProjCreation20CharNonDomain() throws Exception {
+        String client = "" + Utility.randomCharacterAppender(20);
+        String shrt = "" + Utility.randomCharacterAppender(4);
+        String projectName = "Project" + Utility.dynamicNameAppender();
+        String engineType = "ICE";
+		ProjectPage project = new ProjectPage(driver);
+		
+		base.stepInfo("RPMXCON-53060");
+		base.stepInfo("Verify Project creation with domain which is having more than 20 char for Non domain client");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		project.navigateToClientFromHomePage();
+		driver.waitForPageToBeReady();
+		project.addNewClient_NonDomainProject(client, shrt, "Not a Domain");
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddNonDomainProjWithEngineType(projectName, client, shrt, engineType);
+		driver.waitForPageToBeReady();
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.filterTheProject(projectName);
+		base.waitForElement(project.getEditProject(projectName));
+		if(project.getEditProject(projectName).isElementAvailable(5)) {
+			base.passedStep("Project Created Successfully");
+		}else {
+			base.failedStep("Project Not Created");
+		}
+		base.passedStep("Verified - Project creation with domain which is having more than 20 char for Non domain client");
+		loginPage.logout();
+	}
 }
