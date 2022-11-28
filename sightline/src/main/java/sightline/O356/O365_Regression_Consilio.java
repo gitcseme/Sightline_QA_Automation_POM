@@ -109,7 +109,7 @@ public class O365_Regression_Consilio {
 		source.getSetUpASourceLocationEditYesButton().waitAndClick(10);	
 		
 		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
-		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
+		String TenantIDWithSplChars= Input.TenantID+"<&'>";
 		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
 		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
 		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
@@ -204,7 +204,7 @@ public class O365_Regression_Consilio {
 		//check for special chars in source location while entering new source name
 		
 		String SourcelocationWithSplChars="dataSourceName<&'>"+Utility.dynamicNameAppender();
-		String TenantIDWithSplChars= Input.ApplicationID+"<&'>";
+		String TenantIDWithSplChars= Input.TenantID+"<&'>";
 		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
 		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
 		
