@@ -58,9 +58,9 @@ public class Reports_Consilio {
 		}
 	     }	   
 	
-	@Test(description ="RPMXCON-69059",dataProvider = "SpecialChars",groups={"regression"})
-	public void BulkTagWithSpecialChars(String bulkName) throws InterruptedException {
-		
+	@Test(description ="RPMXCON-69059",groups={"regression"})
+	public void BulkTagWithSpecialChars() throws InterruptedException {
+		String bulkName="<sample&name'>";
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("RPMXCON-69059-Verify that error message display and application does NOT accepts - when "
 				+ "user does Bulk Folder from tally and enter Folder name with special characters < > & ‘ ");
@@ -77,8 +77,8 @@ public class Reports_Consilio {
 	
 	}
 	@Test(description ="RPMXCON-69056",dataProvider = "SpecialChars",groups={"regression"})
-	public void BulkFolderWithSpecialChars(String bulkName) throws InterruptedException {
-		
+	public void BulkFolderWithSpecialChars() throws InterruptedException {
+		String bulkName="<sample&name'>";
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("RPMXCON-69056-Verify that error message display and application does NOT accept - when "
 				+ "user does Bulk Tag from tally and enter tag name with special characters < > & ‘ ");
@@ -96,16 +96,6 @@ public class Reports_Consilio {
 		
 	}
 	
-	@DataProvider(name = "SpecialChars")
-	public Object[][] BulkfolderAndTagSpecialChars() {
-		return new Object[][] { 
-			{ "<samplename>"}, 
-			{ "@samplename" },
-			{ "samplename?"},
-			{"samplename&sample"},
-			{"sample'"}
-
-		};
-	}
+		
 
 }
