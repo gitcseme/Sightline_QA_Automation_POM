@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -552,6 +552,11 @@ public class Input {
 	public static String collsecondlastName;
 	public static String totalRetrievedCount;
     public static String collectionFailedStatus;
+    
+    public static String TenantIDJeb;
+    public static String ApplicationIDJeb;
+    public static String ApplicationKeyJeb;
+    public static String collectionJebEmailId;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -1597,7 +1602,12 @@ public class Input {
 		nearDupeDocIdForReviewer03 = testData.getNearDupeDocIdForReviewer03();
 		threadMapDocId01 = testData.getThreadMapDocId01();
 		threadMapWithNonEmailAttachment = testData.getThreadMapWithNonEmailAttachment();
-
+		collectionJebEmailId=testData.getCollectionJebEmailId();
+		TenantIDJeb=testData.getTenantIDJeb();
+		ApplicationIDJeb=testData.getApplicationIDJeb();
+		ApplicationKeyJeb=testData.getApplicationKeyJeb();
+		
+		
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.

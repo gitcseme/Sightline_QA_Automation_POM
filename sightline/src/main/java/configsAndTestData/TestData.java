@@ -415,6 +415,10 @@ public class TestData {
     public String collsecondlastName;
     public String totalRetrievedCount;
     public String collectionFailedStatus;
+    public String TenantIDJeb;
+    public String ApplicationIDJeb;
+    public String ApplicationKeyJeb;
+    public String collectionJebEmailId;
 
     /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified

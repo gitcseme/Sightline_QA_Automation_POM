@@ -69,7 +69,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
@@ -119,7 +119,7 @@ public class O365_Regression_Consilio {
 	public void verifyCollectionIsSuccessfulWithDirectoryNameWhiteSpaces(String userName, String password, String role) throws Exception {
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
-		String collectionEmailId = "jbush@consiliodeveloper.onmicrosoft.com";
+		String collectionEmailId = Input.collectionJebEmailId;
 		String firstName = "Jeb";
 		String lastName = "Bush";
 		String selectedApp = Input.collectionDataselectedApp;
@@ -133,9 +133,9 @@ public class O365_Regression_Consilio {
 		String[] statusList = { "Completed" };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String CollectionName = "Collection" + Utility.dynamicNameAppender();
-		String TenantID="9440f0a4-3c93-44be-a379-740f10731bf6";
-		String ApplicationID="6d76a630-be97-4493-9f7a-edf318c03c18";
-		String ApplicationKey="dlh7Q~fNgOWVJ3sTtQvA8KsA0lV2bqRtZAIaK";
+		String TenantID=Input.TenantIDJeb;
+		String ApplicationID=Input.ApplicationIDJeb;
+		String ApplicationKey=Input.ApplicationKeyJeb;
 		
 		// Login and Pre-requesties
 				login.loginToSightLine(userName, password);
