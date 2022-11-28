@@ -505,4 +505,63 @@ public class Projects_Regression26 {
 				+ "Deduping Performed in Processing: \r\n"
 				+ "Analytics Engine: ");
 	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-55917
+	 * @Description:Validate minimum length value while creating a Non-Domain Project
+	 **/
+	@Test(description ="RPMXCON-55917",enabled = true, groups = { "regression" })
+	public void validateMinLengthValue() throws Exception {		
+		ProjectPage project = new ProjectPage(driver);
+		String minLengthWithSP = "@#$%&";
+		String minLengAlphaNum = "ABCDE";
+		String minLenMorethan12 = "100";
+		String minLength = "10";
+		String expMsg = "The specified minimum length cannot be greater than 12.";
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		
+		base.stepInfo("RPMXCON-55917");
+		base.stepInfo("To Validate minimum length value while creating a Non-Domain Project");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As : " + Input.sa1userName);
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.AddDomainProjectDetailsWithoutSave(projectName, Input.domainName);
+		driver.scrollPageToTop();
+		base.waitForElement(project.getAddProject_SettingsTab());
+		project.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLengthWithSP);
+		base.waitForElement(project.getMinLengthValue());
+		String value1 = project.getMinLengthValue().Value();
+		base.textCompareEquals(value1, "", "Appropriate not allowed to enter special characters", "Appropriate allowed to enter special characters");
+	    
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLengAlphaNum);
+		base.waitForElement(project.getMinLengthValue());
+		String value2 = project.getMinLengthValue().Value();
+		base.textCompareEquals(value2, "", "Appropriate not allowed to enter AlphaNum characters", "Appropriate allowed to enter AlphaNum characters");
+	    
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLenMorethan12);
+		base.waitForElement(project.getButtonSaveProject());
+		project.getButtonSaveProject().waitAndClick(10);
+		base.waitForElement(base.getSuccessMsgHeader());
+		base.VerifyErrorMessage(expMsg);
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+	
+		project.AddDomainProjectDetailsWithoutSave(projectName, Input.domainName);
+		driver.scrollPageToTop();
+		base.waitForElement(project.getAddProject_SettingsTab());
+		project.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(project.getNoOfDocuments());
+		project.getNoOfDocuments().SendKeys("10000");
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLength);
+		project.saveProjectAndVerify();
+		base.passedStep("Validated - minimum length value while creating a Non-Domain Project");
+		loginPage.logout();
+	}
 }

@@ -6118,4 +6118,29 @@ public class CodingForm {
 
 		return flag;
 	}
+	
+	
+	/**
+	 * @author:sowndarya
+	 * @description:To save a coding form with group associate
+	 */
+	public void saveCodingForm2TagsWithGrpAssociat(String cfName, String tagname1, String tagname2) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();		
+		addTwoCheckBox("tag", tagname1, tagname2);
+		specialObjectsBox("radio");	
+		addcodingFormAddButton();
+		passingCodingFormName(cfName);
+		selectTagTypeByIndex("radio item", 1, 0);
+		selectTagTypeByIndex("radio item", 1, 1);
+        driver.waitForPageToBeReady();
+		saveCodingForm();
+	}
+
+
+
+
 }
+
+

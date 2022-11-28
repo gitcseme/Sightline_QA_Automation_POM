@@ -2083,6 +2083,22 @@ public class SessionSearch {
 	}
 	// added by sowndarya
 	
+	public Element getReportTotalCount() {
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
+	}
+	public Element getReportMetadat() {
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text'])[last()]");
+	}
+	public Element getGoToTallyReport() {
+		return driver.FindElementByXPath("//button[@id='bot3-Msg1']");
+	}
+	public Element getPopupHeader() {
+		return driver.FindElementByXPath("//span[@class='MsgTitle']");
+	}
+	public Element getPopupText() {
+		return driver.FindElementByXPath("//div[@id='tallyWrapperDiv']//p[contains(@style, 'margin-top')]");
+	}
+	
 	public ElementCollection getIDNames() {
 		return driver
 				.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
@@ -14172,5 +14188,30 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(10);
 	}
 
+	/**
+	 * @author:sowndarya
+	 * @description:To bulk tag and not save
+	 */
+	public void bulkTagNotComplete(String tagName) {
+		base.waitForElement(getExistingTagSelectionCheckBox(tagName));
+		getExistingTagSelectionCheckBox(tagName).waitAndClick(5);
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getContinueButton());
+		getContinueButton().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(5);
+
+
+	}
 }
