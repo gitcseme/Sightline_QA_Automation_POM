@@ -3642,6 +3642,9 @@ public class DocViewPage {
 	public Element getselectDocHistory(int no) {
 		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li)[" + no + "]");
 	}
+	public Element getAttorney_ClientCheckBox() {
+		return driver.FindElementByXPath("//*[@id='l_it_0']/span");
+	}
 
 	public DocViewPage(Driver driver) {
 
