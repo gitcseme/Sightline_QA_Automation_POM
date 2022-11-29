@@ -2642,13 +2642,18 @@ public class TallyPage {
 	}
 
 	/**
-	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: 29/11/2022
 	 * @description: this method will check the generation of tally report for
 	 *               metadata
 	 */
-	public void verifyTallyReportGenerationForMetadata(String metadata) {
+	public void verifyTallyReportGenerationForMetadata(String metadata,String filter) {
 
-		selectSourceByProject();
+		if(filter.equalsIgnoreCase("project")) {
+			selectSourceByProject();
+		}
+		else if(filter.equalsIgnoreCase("security group")) {
+			SelectSource_SecurityGroup(Input.securityGroup);
+		}
 		selectTallyByMetaDataField(metadata);
 		base.waitForElement(getTally_btnTallyAll());
 		getTally_btnTallyAll().waitAndClick(10);
@@ -2741,6 +2746,23 @@ public class TallyPage {
 			base.failedStep(navigateTo + " is not clicked under tally action field");
 		}
 
+	}
+	
+	/**
+	 * @author: Arun Created Date: 29/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the field available in metadata list
+	 */
+	public void verifyMetaDataAvailabilityInTallyReport(String field) {
+
+		navigateTo_Tallypage();
+		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+		getTally_SelectaTallyFieldtoruntallyon().Click();
+		base.waitForElement(getTally_Metadataselect());
+		if (getMetaData(field).isElementAvailable(10)) {
+			base.passedStep(field + "is available in metadata list");
+		} else {
+			base.failedStep(field + "is not available in metadata list");
+		}
 	}
 	
 	}
