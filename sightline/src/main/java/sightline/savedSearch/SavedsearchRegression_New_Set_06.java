@@ -112,7 +112,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-63580", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
+	@Test(description ="RPMXCON-63580",enabled = true, dataProvider = "AllTheUsers", groups = { "regression" } )
 	public void verifyingPrecisionSensitivityValueWhileConfiguringWithrecisionSensitivityValueWhileEditing(
 			String username, String password, String fullName) throws Exception {
 
@@ -163,7 +163,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              [RPMXCON-47154]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-47154", enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" })
+	@Test(description ="RPMXCON-47154",enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" } )
 	public void validateEditingOrExecutingNonaudioSearches(String username, String password, String fullname,
 			String rootGroup) throws Exception {
 		String search1 = "Search" + Utility.dynamicNameAppender();
@@ -224,7 +224,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              against My saved searches in PAU role [RPMXCON-57405]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57405", enabled = true, dataProvider = "SwitchUsers", groups = { "regression" })
+	@Test(description ="RPMXCON-57405",enabled = true, dataProvider = "SwitchUsers", groups = { "regression" } )
 	public void verifyTAllyReportForSearch(String username, String password, String role) throws InterruptedException {
 		String search1PA = "Search" + Utility.dynamicNameAppender();
 		String search2PA = "Search" + Utility.dynamicNameAppender();
@@ -300,10 +300,10 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @Description : TC05_Verify that When PAU runs a RMU created search
 	 *              (WorkProduct(Tags/Folder/Assignment)) in PAU role then search
 	 *              returns documents Under \"Count of Results\" column on \"Saved
-	 *              Search Screen\" [RPMXCON-49836]
+	 *              Search Screen\" [RPMXCON-49836] 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-49836", enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-49836",enabled = true, groups = { "regression" } )
 	public void verifySearchDocOfRmu() throws Exception {
 		String folderName = "Folder" + Utility.dynamicNameAppender();
 		String tagName = "TagName" + Utility.dynamicNameAppender();
@@ -396,7 +396,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-49264", enabled = true, groups = { "regression" }, dataProvider = "AllTheUsers")
+	@Test(description ="RPMXCON-49264",enabled = true,groups = { "regression" }, dataProvider = "AllTheUsers")
 	public void batchUploadAndVerifyConceptCount(String UserName, String PassWord, String fullName)
 			throws InterruptedException {
 
@@ -414,7 +414,7 @@ public class SavedsearchRegression_New_Set_06 {
 
 		// performing batch upload functionality using attached excel file
 		saveSearch.navigateToSSPage();
-		saveSearch.uploadWPBatchFile_New(file, Input.SearchBatchFile);
+		saveSearch.uploadWPBatchFile_New(file,Input.SearchBatchFile);
 		base.stepInfo("Successfully uploaded the BAtch file");
 
 		// collecting list of search name from SavedSearch DataTable
@@ -435,54 +435,6 @@ public class SavedsearchRegression_New_Set_06 {
 				conceptuallySimilarCountList);
 
 		login.logout();
-	}
-
-	@Test(description = "RPMXCON-69128", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
-			"regression" })
-	public void verifyExpectedSearchTermsInTheftOfCustomerInfo(String username, String password, String fullname)
-			throws InterruptedException {
-		String searchName = "Search" + Utility.dynamicNameAppender();
-
-		base.stepInfo("Test case Id: RPMXCON-69128 - Saved Search");
-		base.stepInfo(
-				"Verify that PBM module Theft of Customer Info terms has expected query present under Outside Help");
-
-		// Login as RMU user
-		base.stepInfo("Login to sightline and Select Project**");
-		login.loginToSightLine(username, password);
-
-		// configure query
-		session.basicContentSearch(Input.searchString5);
-		session.saveSearchInPreBuiltModels(searchName, Input.TheftOfCustomerInfo, Input.DEPIPTheft,
-				Input.shareSearchDefaultSG, true, true);
-
-		// Navigate to Saved Search page and select default SG Tab
-		saveSearch.navigateToSavedSearchPage();
-		saveSearch.selectSearchGroupTab(Input.preBuilt, Input.shareSearchDefaultSG);
-
-		// validate Pre-Built model Search group
-		base.ValidateElement_Presence(saveSearch.getSavedSearchGroupName(Input.preBuilt), Input.preBuilt);
-		saveSearch.rootGroupExpansion();
-
-		// Select DEPIPTheft
-		saveSearch.selectSearchGroupTab(Input.DEPIPTheft, Input.preBuilt);
-
-		// Validate DEPIPTheft
-		base.ValidateElement_Presence(saveSearch.getSavedSearchGroupName(Input.DEPIPTheft), Input.DEPIPTheft);
-
-		saveSearch.rootGroupExpansion();
-
-		// Select TheftOfCustomerInfo
-		saveSearch.selectSearchGroupTab(Input.TheftOfCustomerInfo, Input.DEPIPTheft);
-
-		saveSearch.savedSearch_Searchandclick(searchName);
-		if (saveSearch.getSearchName(searchName).isElementPresent()) {
-			base.passedStep("Saved search query is displayed as expected");
-		} else {
-			base.failedStep("Saved search query is not  displayed as expected");
-
-		}
-
 	}
 
 	@AfterMethod(alwaysRun = true)
