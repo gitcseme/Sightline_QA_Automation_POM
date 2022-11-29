@@ -1190,6 +1190,9 @@ public class UserManagement {
 	public Element getSelectProjectFromDropdown(String ProjectName) {
 		return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='"+ProjectName+"']");
 	}
+	public Element EditUserClosePopupBtn() {
+		return driver.FindElementByXPath("//*[text()='Edit User']/..//button[@class='ui-dialog-titlebar-close']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;

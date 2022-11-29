@@ -1847,4 +1847,48 @@ public class ProjectPage {
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
 	}
+	/**
+	 * @author Brundha.T
+	 * @param projectname
+	 * @Description: Method to create project in DA User
+	 */
+		public void  CreatProjectInDA(String projectname ){
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddProjectBtn().Visible();
+				}
+			}), Input.wait30);
+			getAddProjectBtn().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProjectName().Visible();
+				}
+			}), Input.wait30);
+			getProjectName().SendKeys(projectname);
+			
+			
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+			System.out.println(Bgcount);
+			UtilityLog.info(Bgcount);
+
+			
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getButtonSaveProject());
+			getButtonSaveProject().waitAndClick(10);
+
+			bc.VerifySuccessMessage(
+					"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait120 + Input.wait60);
+			System.out.println(bc.initialBgCount());
+			UtilityLog.info(bc.initialBgCount());
+
+			
+		}
 }
