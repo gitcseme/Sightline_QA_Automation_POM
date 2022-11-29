@@ -76,7 +76,7 @@ public class SecurityGroup_Consilio {
 	
 	SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 	String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
-	String Sgnameedit="<Renamed Security Group_>" + UtilityLog.dynamicNameAppender();
+	String Sgnameedit="<Renamed Security Group_>&'" + UtilityLog.dynamicNameAppender();
 
 	// Login as PA
 	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
