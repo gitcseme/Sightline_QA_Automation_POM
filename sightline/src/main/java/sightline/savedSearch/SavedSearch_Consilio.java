@@ -70,8 +70,8 @@ public class SavedSearch_Consilio {
 		softAssertion = new SoftAssert();
 	}
 
-	//@Test(description = "RPMXCON-69128", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
-			//"regression" })
+	@Test(description = "RPMXCON-69128", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void verifyExpectedSearchTermsInTheftOfCustomerInfo(String username, String password, String fullname)
 			throws InterruptedException {
 		String searchName = "Outside Help";
