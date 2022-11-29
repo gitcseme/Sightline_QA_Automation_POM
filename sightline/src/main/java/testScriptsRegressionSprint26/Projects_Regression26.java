@@ -402,107 +402,61 @@ public class Projects_Regression26 {
 	}
 
 	/**
-	 * @author sowndarya Testcase No:RPMXCON-55872
-	 * @Description:Verify After click on "Production Folder" option for production
-	 *                     a text box prompting for path label , actual path
+	 * @author NA Testcase No:RPMXCON-55917
+	 * @Description:Validate minimum length value while creating a Non-Domain Project
 	 **/
-	@Test(description = "RPMXCON-55872", enabled = true, groups = { "regression" })
-	public void verifyProdFolderPath() throws Exception {
-		base.stepInfo("RPMXCON-55872");
-		base.stepInfo(
-				"Verify After click on Production Folder option for production a text box prompting for path label , actual path");
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		base.stepInfo("Logged in As : " + Input.sa1userName);
-
+	@Test(description ="RPMXCON-55917",enabled = true, groups = { "regression" })
+	public void validateMinLengthValue() throws Exception {		
+		ProjectPage project = new ProjectPage(driver);
+		String minLengthWithSP = "@#$%&";
+		String minLengAlphaNum = "ABCDE";
+		String minLenMorethan12 = "100";
+		String minLength = "10";
+		String expMsg = "The specified minimum length cannot be greater than 12.";
 		String projectName = "Project" + Utility.dynamicNameAppender();
-		System.out.println(projectName);
-		String clientName = "Client " + Utility.dynamicNameAppender();
-		String shortName = "C" + Utility.randomCharacterAppender(4);
-
-		base.stepInfo("navigating to projects page");
-		projects.navigateToProductionPage();
-
-		base.stepInfo("navigating to client page");
-		projects.navigateToClientFromHomePage();
-
-		base.stepInfo("Adding new client");
-		projects.addNewClient(clientName, shortName, "Domain");
-
-		base.stepInfo("Creating new domain project");
-		projects.navigateToProductionPage();
-		projects.AddDomainProjectWithDefaultSetting(projectName, clientName);
-		projects.editProject(projectName);
-
-		driver.scrollingToBottomofAPage();
-		base.waitForElement(projects.getProductionFolder());
-		String actual = projects.getProductionFolder().GetAttribute("value");
-		System.out.println(actual);
-		String expected = clientName + "\\" + projectName;
-		softAssertion.assertEquals(actual, expected);
-		softAssertion.assertAll();
 		
-		projects.getProductionFolder().Clear();
-		projects.getProductionFolder().SendKeys("Automation");
-
-		String editedPath = projects.getProductionFolder().getText();
-		System.out.println(editedPath);
-
-		projects.getButtonSaveProject().waitAndClick(10);
-		base.VerifySuccessMessage("Project updated successfully");
-	}
-	
-	
-	/**
-	 * @author sowndarya Testcase No:RPMXCON-55575
-	 * @Description:To verify the Project-Setting TAB details.
-	 **/
-	@Test(description = "RPMXCON-55575", enabled = true, groups = { "regression" })
-	public void verifyProjectSettingTab() throws Exception {
-		base.stepInfo("RPMXCON-55872");
-		base.stepInfo("To verify the Project-Setting TAB details.");
+		base.stepInfo("RPMXCON-55917");
+		base.stepInfo("To Validate minimum length value while creating a Non-Domain Project");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("Logged in As : " + Input.sa1userName);
-
-		String projectName = "Project" + Utility.dynamicNameAppender();
-		System.out.println(projectName);
-		String clientName = "Client " + Utility.dynamicNameAppender();
-		String shortName = "C" + Utility.randomCharacterAppender(4);
-
-		base.stepInfo("navigating to projects page");
-		projects.navigateToProductionPage();
-
-		if (!projects.getDomainEditBtn().isDisplayed()) {
-
-			base.stepInfo("navigating to client page");
-			projects.navigateToClientFromHomePage();
-
-			base.stepInfo("Adding new client");
-			projects.addNewClient(clientName, shortName, "Domain");
-
-			base.stepInfo("Creating new domain project");
-			projects.navigateToProductionPage();
-			projects.AddDomainProjectWithDefaultSetting(projectName, clientName);
-			projects.editProject(projectName);
-		} else {
-			base.stepInfo("Edit existing domain project");
-			driver.waitForPageToBeReady();
-			projects.getDomainEditBtn().waitAndClick(10);
-		}
+		project.navigateToProductionPage();
 		driver.waitForPageToBeReady();
-		base.waitForElement(projects.getAddProject_SettingsTab());
-		projects.getAddProject_SettingsTab().waitAndClick(10);
-		
-		base.stepInfo("verify Setting tab.");
-		projects.getNoOfDocuments().isDisplayed();
-		projects.getDocIdPrefix().isDisplayed();
-		projects.getDocIdSuffi().isDisplayed();
-		projects.getMinLengthValue().isDisplayed();
-		projects.getTxtDedupinglevel().isDisplayed();
-		projects.getTxtAnalyticsEngine().isDisplayed();
-		base.passedStep("Following details are displayed->\r\n"
-				+ "Max. Number of Documents in Project: * \r\n"
-				+ "DocID Format: \r\n"
-				+ "Deduping Performed in Processing: \r\n"
-				+ "Analytics Engine: ");
+		project.AddDomainProjectDetailsWithoutSave(projectName, Input.domainName);
+		driver.scrollPageToTop();
+		base.waitForElement(project.getAddProject_SettingsTab());
+		project.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLengthWithSP);
+		base.waitForElement(project.getMinLengthValue());
+		String value1 = project.getMinLengthValue().Value();
+		base.textCompareEquals(value1, "", "Appropriate not allowed to enter special characters", "Appropriate allowed to enter special characters");
+	    
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLengAlphaNum);
+		base.waitForElement(project.getMinLengthValue());
+		String value2 = project.getMinLengthValue().Value();
+		base.textCompareEquals(value2, "", "Appropriate not allowed to enter AlphaNum characters", "Appropriate allowed to enter AlphaNum characters");
+	    
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLenMorethan12);
+		base.waitForElement(project.getButtonSaveProject());
+		project.getButtonSaveProject().waitAndClick(10);
+		base.waitForElement(base.getSuccessMsgHeader());
+		base.VerifyErrorMessage(expMsg);
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+	
+		project.AddDomainProjectDetailsWithoutSave(projectName, Input.domainName);
+		driver.scrollPageToTop();
+		base.waitForElement(project.getAddProject_SettingsTab());
+		project.getAddProject_SettingsTab().waitAndClick(5);
+		base.waitForElement(project.getNoOfDocuments());
+		project.getNoOfDocuments().SendKeys("10000");
+		base.waitForElement(project.getMinLengthValue());
+		project.getMinLengthValue().SendKeys(minLength);
+		project.saveProjectAndVerify();
+		base.passedStep("Validated - minimum length value while creating a Non-Domain Project");
+		loginPage.logout();
 	}
 }
