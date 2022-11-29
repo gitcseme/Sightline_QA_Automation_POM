@@ -20,6 +20,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -42,6 +43,7 @@ public class Ingestion_Regression_9 {
 	TallyPage tally;
 	DocExplorerPage docExplorer;
 	DocViewPage docView;
+	ProjectFieldsPage projectFieldPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -510,6 +512,150 @@ public class Ingestion_Regression_9 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48169
+	 * Description :Verify the type for the "AudioPlayerReady" is of Bit (values 1 or 0) and field is 
+	 * Active by default, and IsSet and IsSearchable are enabled by default
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48169",enabled = true, groups = { "regression" })
+	public void verifyAudioPlayerReadyField() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48169");
+		baseClass.stepInfo("Verify 'AudioPlayerReady' field default status.");
+		String field = "AudioPlayerReady";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		
+		baseClass.stepInfo("Navigate to manage-project fields");
+		projectFieldPage = new ProjectFieldsPage(driver);
+		projectFieldPage.navigateToProjectFieldsPage();
+		baseClass.stepInfo("check the default value for 'AudioPlayerReady'");
+		projectFieldPage.applyFilterByFilterName(field);
+		projectFieldPage.verifyFieldDataType(field, "Bit");
+		projectFieldPage.verifyExpectedFieldStatus(field,"true","true","active");
+		baseClass.passedStep(field+"is tallyable and is searchable by default");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48930
+	 * Description :Validate new metadata field DocLanguages on DocList  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48930",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnDoclist() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48930");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on DocList");
+		docExplorer = new DocExplorerPage(driver);
+		String ingestionName = null;
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to doclist and verify");
+		docExplorer.navigateToDocExplorerPage();
+		int docsCount=docExplorer.docExpToDocViewOrListWithIngestion(ingestionName, "yes", "doclist");
+		ingestionPage.verifyDocLanguagesMetadata("doclist",docsCount);
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to doclist and verify");
+		int count =sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		ingestionPage.verifyDocLanguagesMetadata("doclist",count);
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48929
+	 * Description :Validate new metadata field DocLanguages on DocView  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48929",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnDocview() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48929");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on DocView");
+		docExplorer = new DocExplorerPage(driver);
+		String ingestionName = null;
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to docview and verify");
+		docExplorer.navigateToDocExplorerPage();
+		int docsCount = docExplorer.docExpToDocViewOrListWithIngestion(ingestionName, "yes", "docview");
+		ingestionPage.verifyDocLanguagesMetadata("docview",docsCount);
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to docview and verify");
+		int count =sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocView();
+		ingestionPage.verifyDocLanguagesMetadata("docview",count);
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-47412
+	 * Description :To verify that Admin is able to browser all the Errors using navigation control
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47412",enabled = true, groups = { "regression" })
+	public void verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47412");
+		baseClass.stepInfo("To verify that Admin is able to browser all the Errors using navigation control");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.attachDocFolder, Input.datFile7);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.verifybrowseErrorNavigationControl();
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

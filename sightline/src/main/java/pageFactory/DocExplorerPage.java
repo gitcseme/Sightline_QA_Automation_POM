@@ -4224,4 +4224,48 @@ public class DocExplorerPage {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform action as view in doclist
+	 */
+	public void docExpViewInDocList() {
+
+		bc.waitForElement(getDocExp_actionButton());
+		getDocExp_actionButton().waitAndClick(10);
+		if (getView().isElementAvailable(10)) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			bc.failedStep("view element not available");
+		}
+		bc.waitForElement(getDocListAction());
+		getDocListAction().waitAndClick(10);
+	}
+	
+	/**
+	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select all return documents and perform action
+	 *               as docview/doclist
+	 */
+
+	public int docExpToDocViewOrListWithIngestion(String ingestionName, String value,String action) {
+
+		applyIngestionNameFilter("include", ingestionName);
+		driver.waitForPageToBeReady();
+		int count = getDocumentCountFromListView();
+		// select all docs
+		SelectingAllDocuments(value);
+		if(action.equalsIgnoreCase("doclist")) {
+			docExpViewInDocList();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(doclist.SelectColumnBtn());
+		}
+		else if(action.equalsIgnoreCase("docview")) {
+			docExpViewInDocView();
+			driver.waitForPageToBeReady();
+		}
+		return count;
+	}
 }
