@@ -1941,7 +1941,7 @@ public class SessionSearch {
 	public Element getAdvScrnSearchLabel(String i) {
 		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
 	}
-
+	
 	public Element getConceptualTileHit(int i) {
 		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()=" + i + "]");
 	}
@@ -2107,6 +2107,13 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 
 	}
+	public Element getAdvancedLabel() {
+		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
+	}
+	public Element getDraftQuery() {
+		return driver.FindElementByXPath("//span[@class='badge']");
+	}
+	
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -14089,6 +14096,19 @@ public class SessionSearch {
 		getQuerySearchBtn().Click();
 	}
 	
-	
+	public void verifyDraftedQueryPresentInSearchbox(String query) {
+		String ExpectedMessage = query;
+		System.out.println("expected" + ExpectedMessage);
+		System.out.println("expected" + getDraftQuery().getText());
+		if (ExpectedMessage.equalsIgnoreCase(getDraftQuery().getText())) {
+			base.passedStep(
+					"Relevant message appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+		} else {
+			base.failedStep(
+					"Relevant message does not appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+		}
 
+	}
+	
+	
 }

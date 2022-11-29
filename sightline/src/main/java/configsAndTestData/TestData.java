@@ -858,6 +858,10 @@ public class TestData {
 	public String collectionProgressH;
 	public String collectionStatusH;
 	public String collectionErrColorCodeOrange;
+	public String TheftOfCustomerInfo;
+	public String Involvedoutsiders;
+	public String OutsideHelp;
+	public String SalaryMatch;
 	    
     //Added by Aathith ,Client Page details
   	public String FilterByType;
