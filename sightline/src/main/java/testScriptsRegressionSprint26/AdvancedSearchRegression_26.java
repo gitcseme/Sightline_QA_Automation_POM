@@ -623,7 +623,8 @@ public class AdvancedSearchRegression_26 {
 		baseClass.stepInfo(
 				"Configure  MetaData Query in Advanced Search with MetaData as 'MasterDate' and Operator as 'IS'.");
 
-		// Configure MetaData Query in Advanced Search with MetaData as 'MasterDate' & 'CraeteDate'
+		// Configure MetaData Query in Advanced Search with MetaData as 'MasterDate' &
+		// 'CraeteDate'
 		// and Operator as 'IS'
 		for (int i = 0; i < metaDataField.length; i++) {
 
@@ -646,6 +647,88 @@ public class AdvancedSearchRegression_26 {
 			baseClass.passedStep(
 					"Verified that Configured query with Metadata should get inserted properly into Advanced Search Query builder screen.");
 		}
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description : Verify that Advanced Search works properly for MasterDate
+	 *              field with \"Is\" operator and NOT having time
+	 *              components.[RPMXCON-49169]
+	 */
+
+	@Test(description = "RPMXCON-49169", enabled = true, groups = { "regression" })
+	public void verifiedAdancedSearchWorkProperlyForMasterDatewithISOperatorAndNotHavingTimeComponents() {
+
+		String metaDataField = "MasterDate";
+		String operator = "IS";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49169 Advanced Search.");
+		baseClass.stepInfo(
+				"Verify that Advanced  Search works properly for 'MasterDate' field with \"Is\" operator and NOT having time components.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configuring MetaData Search Query with metaData as MasterDate and Operator as
+		// 'IS'.
+		baseClass.stepInfo("configuring MetaData Search Query with metaData as MasterDate and Operator as 'IS'.");
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, dateFormat.format(date), null);
+
+		// Click on Search and Verify that "MasterDate" field search result return
+		// documents which satisfied above configured query.
+		baseClass.stepInfo("Click on 'Search' button");
+		sessionSearch.serarchWP();
+		baseClass.passedStep(
+				"Verified that \"MasterDate\" field search result return documents which satisfied above configured query.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description : verify that Proximity Queries along with Regular Expression
+	 *              search in Korean should return the result correctly in Advanced
+	 *              Search.[RPMXCON-62495]
+	 */
+
+	@Test(description = "RPMXCON-62495", enabled = true, groups = { "regression" })
+	public void verifyProximityQueriesWithRegularExpressionSearchInKoreanReturnResultCorrectlyInAdvancedSearch()
+			throws InterruptedException {
+
+		String searchString = "\"(\"##[0-9]{4}\") 월\"~4";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-62495 Advanced Search.");
+		baseClass.stepInfo(
+				"verify that Proximity Queries along with Regular Expression search in Korean should return the result correctly in Advanced Search.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button and Verify that correct result appears when combine
+		// Proximity Queries and Regular Expression in Advanced Search Query Screen.
+		sessionSearch.tallyContinue(5);
+		sessionSearch.returnPurehitCount();
+		baseClass.passedStep(
+				"verified that correct result appears when combine Proximity Queries and Regular Expression in Advanced Search Query Screen.");
 
 		// logOut
 		loginPage.logout();

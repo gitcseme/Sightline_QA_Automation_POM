@@ -362,11 +362,12 @@ public class CollectionPage {
 	public Element getFolderNameToSelect(String type) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']");
 	}
-	
-	public Element getSubFolderNameToSelect(String Parentfolder,String Childfolder) {
-		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + Parentfolder +"']/following-sibling::ul/li/a[contains(.,'" + Childfolder + "')]");
+
+	public Element getSubFolderNameToSelect(String Parentfolder, String Childfolder) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + Parentfolder
+				+ "']/following-sibling::ul/li/a[contains(.,'" + Childfolder + "')]");
 	}
-	
+
 	public Element getFolderTree(String type) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']/preceding-sibling::i");
 	}
@@ -435,6 +436,10 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+
+	public Element getDatasetPopupCloseBtn() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
 
 	public Element getPopupRanByDetail() {
 		return driver.FindElementByXPath("//p[text()='Collection Ran By:']//parent::div//following-sibling::div//p");
@@ -958,7 +963,7 @@ public class CollectionPage {
 		base.waitTime(2);
 		String retrivedData = getDataSetNameTextFIeld().GetAttribute("value");
 		base.stepInfo("Actual populated dataset name : " + retrivedData);
-		
+
 		return retrivedData;
 	}
 
@@ -1069,35 +1074,36 @@ public class CollectionPage {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * @author Hema MJ
 	 * @createdDate : 11/25/22
-	 * @param Select Sub folderName
+	 * @param Select        Sub folderName
 	 * @param subFolder
 	 * @param subFolderName
 	 */
-	public void folderToSelect(String folderName, Boolean toExpand, Boolean SubFolder,String SubFolderName) {
+	public void folderToSelect(String folderName, Boolean toExpand, Boolean SubFolder, String SubFolderName) {
 		if (toExpand) {
 			getFolderabLabel().waitAndClick(5);
 		}
 		// Respective folder to select if you want to select subFolder or not
-		if(SubFolder) {
-			
+		if (SubFolder) {
+
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
 			getFolderTree(folderName).waitAndClick(10);
-			getSubFolderNameToSelect(folderName,SubFolderName).waitAndClick(10);
-			
-		}else {
-		try {
-			driver.waitForPageToBeReady();
-			base.waitTime(3);
-			getFolderNameToSelect(folderName).waitAndClick(10);
-		} catch (Exception e) {
-			e.printStackTrace();
+			getSubFolderNameToSelect(folderName, SubFolderName).waitAndClick(10);
+
+		} else {
+			try {
+				driver.waitForPageToBeReady();
+				base.waitTime(3);
+				getFolderNameToSelect(folderName).waitAndClick(10);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		}
-		
+
 	}
 
 	/**
@@ -1117,7 +1123,6 @@ public class CollectionPage {
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retry) {
 
-		
 		String actualValue = null;
 		Boolean status = false;
 		for (int i = 1; i <= retry; i++) {
@@ -1185,16 +1190,16 @@ public class CollectionPage {
 				expValue = collectionEmailId;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader4)) {
 				expValue = dataSetNameGenerated;
-			} else if (subFolderFlag==true && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+			} else if (subFolderFlag == true && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
 				expValue = subFolderName;
-			} else if (subFolderFlag==false && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+			} else if (subFolderFlag == false && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
 				expValue = selectedFolder;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader6)) {
 				expValue = DateOrKeyword;
 			}
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
-			
+
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");
@@ -1626,7 +1631,7 @@ public class CollectionPage {
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 * @Author Jeevitha
 	 * @Description : click edit and verify added Dataset and can modify any field
 	 */
@@ -1647,8 +1652,7 @@ public class CollectionPage {
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
 
-				actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
-						"");
+				actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false, "");
 			}
 
 			if (editFolder) {
@@ -2122,9 +2126,11 @@ public class CollectionPage {
 		}
 
 		// Collection Header details
+		driver.waitForPageToBeReady();
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
 
 		// Get collection Id
+		driver.waitForPageToBeReady();
 		String collId = getDataSetDetails(collectionName, colllectionDataHeadersIndex.get(Input.collectionIdHeader))
 				.getText();
 		base.stepInfo("Collection Id : " + collId);
@@ -2766,15 +2772,14 @@ public class CollectionPage {
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
 				selectedApp, colllectionData, dataName, retryAttempt);
-		
-		System.out.println("dataSetNameGenerated"+dataSetNameGenerated);
+
+		System.out.println("dataSetNameGenerated" + dataSetNameGenerated);
 
 		// Folder Selection
-		if(subFolderFlag) {
-			folderToSelect(selectedFolder, true, true,subFolderName);
-			
-		}
-		else {
+		if (subFolderFlag) {
+			folderToSelect(selectedFolder, true, true, subFolderName);
+
+		} else {
 			folderToSelect(selectedFolder, true, false);
 		}
 		applyAction("Save", "Confirm", "Dataset added successfully.");
@@ -2905,6 +2910,9 @@ public class CollectionPage {
 					&& confirmationAction.equalsIgnoreCase("Yes")) {
 				base.VerifySuccessMessage(
 						"The application has initiated the action to ignore the errors and continue the collection from where it was paused.");
+			} else if (actionType.equalsIgnoreCase("Continue Successful Datasets")
+					&& confirmationAction.equalsIgnoreCase("Yes")) {
+				base.VerifySuccessMessage("Your collection has been resumed from the stage where it was paused.");
 			}
 		}
 	}

@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -767,7 +769,7 @@ public class O365_Regression26 {
 		collection.clickNextBtnOnDatasetTab();
 		driver.waitForPageToBeReady();
 
-		// Click on 'Save as Draft' button from 'Summary and Start Collection' tab 
+		// Click on 'Save as Draft' button from 'Summary and Start Collection' tab
 		collection.verifyCurrentTab("Summary and Start Collection");
 		collection.collectionSaveAsDraft();
 		base.passedStep("Edited collection is saved with Collection Status as 'Draft' : " + renamedCollectionName);
@@ -782,6 +784,335 @@ public class O365_Regression26 {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, renamedCollectionName, statusListToVerify, 15);
 		base.passedStep("Collection execution started successfully for : " + renamedCollectionName);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify that when collection gets failed then it displays in
+	 *              Red colour coded on "Manage Collections" screen.[RPMXCON-61208 ]
+	 */
+	@Test(description = "RPMXCON-61208", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyColourOfFailedStatus(String username, String password, String userRole) throws Exception {
+		String selectedFolder = "Archive";
+		String collectionName = "";
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
+		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, "Error Status",
+				Input.progressBarHeader, Input.actionColumnName };
+		String[] statusList = { "failed" };
+		String[][] userRolesData = { { username, userRole, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61208 - O365");
+		base.stepInfo(
+				"Verify that when collection gets failed then it displays in Red colour coded on \"Manage Collections\" screen.");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Collection Draft creation
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password, userRole, "SA",
+				Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Start The collection which is in Draft
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		driver.waitForPageToBeReady();
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Start Collection").waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// verify Failed status is displayed
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+
+		// verify colour of failed status is red
+		int index = base.getIndex(collection.getCollectionListHeaderFields(), Input.collectionStatusHeader);
+		String Colour = collection.getCollectionStatsDiv(collectionName, index).GetCssValue("color");
+		String actualColour = base.rgbTohexaConvertor(Colour);
+		base.textCompareEquals(actualColour, Input.colorCodeOfRed, "Failed status is displayed in red colour",
+				"Failed status colour is not as expected");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that deleted source location should not be displayed
+	 *              when adding new collection [RPMXCON-61205]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61205", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyDeletedSourceLocation(String username, String password, String fullname) throws Exception {
+		String deletedSourceLoc = "AAutomation" + Utility.dynamicNameAppender();
+		String headerName = "Data Source Name";
+		List<String> SrcLocInSrcPage = new ArrayList<String>();
+
+		base.stepInfo("Test case Id: RPMXCON-61205 - O365");
+		base.stepInfo("Verify that deleted source location should not be displayed when adding new collection");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// navigate to Source page
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+
+		// Add new source location on Source Page
+		collection.performAddNewSource(null, deletedSourceLoc, Input.TenantID, Input.ApplicationID,
+				Input.ApplicationKey);
+
+		// delete created source location
+		driver.waitForPageToBeReady();
+		source.deleteSourceLocation(deletedSourceLoc, false);
+
+		// get the list of Existing source location after deleting created source
+		// location
+		driver.waitForPageToBeReady();
+		SrcLocInSrcPage = source.getListFromTable(headerName, true);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// verify Exisiting source locations in project is displayed on source selection
+		// tab
+		collection.verifyAddedSourceLocation(null, SrcLocInSrcPage);
+
+		// verify deleted source location is not available
+		base.ValidateElement_Absence(collection.getSourceLocation(deletedSourceLoc),
+				deletedSourceLoc + " : deleted source location is not displayed in source location tab");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Description : Verify 'Cancel Collection' action when Collection is in
+	 *              'Copied with Errors' status. RPMXCON-61156
+	 */
+	@Test(description = "RPMXCON-61156", enabled = true, groups = { "regression" })
+	public void verifyIgnoreErrorsActionInRetrievedDSErr() throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.clientCollectionEmail01;
+		String firstName = Input.clientcollectionFirstName01;
+		String lastName = Input.clientcollectionSecondName01;
+		String collectionEmailId2 = Input.clientCollectionEmail02;
+		String firstName2 = Input.clientcollectionFirstName02;
+		String lastName2 = Input.clientcollectionSecondName02;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Collection Progress", "Error Status" };
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { Input.copyDSwithErr };
+		String[] statusListAfterIG = { "Cancel in progress", "Draft" };
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+		String rootFolderToSelect = Input.clientcollectionFirstName01 + " " + Input.clientcollectionSecondName01 + " ("
+				+ Input.clientCollectionEmail01 + ")";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo(
+				"As per Client's advice have added 2 testing emails ppatil@consiliotest.com and Gouri.Dhavalikar@consiliotest.com - before triggering make sure expected testdatas are available in their respective folders as mentioned in RPMXCON-61159");
+		base.stepInfo("Test case Id: RPMXCON-61156 - O365");
+		base.stepInfo("Verify 'Cancel Collection' action when Collection is in 'Copied with Errors' status");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collectionName = base.returnKey(collectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, rootFolderToSelect, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Fill in DS user 2
+		collection.fillingDatasetSelection("Button", firstName2, lastName2, collectionEmailId2, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 25,
+				true, false, "", "");
+
+		// Completed status check
+		base.stepInfo("Verify Collection is in 'Copied with Errors'");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 25);
+		driver.waitForPageToBeReady();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+
+		// Verify Collection progress bar presence
+		collection.verifyCollectionPausedStatus(collectionName, colllectionDataHeadersIndex, "", false);
+
+		// Cancel Collection
+		base.stepInfo("Select action as 'Cancel' from the Action ");
+		collection.collectionAction(collectionName, "Cancel Collection", false, "Yes", false, "");
+		collection.confirmationAction("Yes", Input.cancelCollectionNotification, false);
+		base.stepInfo("Clicked Cancel Collection and confirmed");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 20);
+		driver.waitForPageToBeReady();
+
+		// Delete Collection
+		base.stepInfo("Initiating Delete Collection");
+		collection.deleteUsingCollectionName(collectionName, true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Description : Verify 'Continue Successful Datasets' action when Collection
+	 *              is in 'Copied datasets with errors' status. RPMXCON-61159
+	 */
+	@Test(description = "RPMXCON-61159", enabled = true, groups = { "regression" })
+	public void verifyContinueSuccessfullCopiedDSErr() throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.clientCollectionEmail01;
+		String firstName = Input.clientcollectionFirstName01;
+		String lastName = Input.clientcollectionSecondName01;
+		String collectionEmailId2 = Input.clientCollectionEmail02;
+		String firstName2 = Input.clientcollectionFirstName02;
+		String lastName2 = Input.clientcollectionSecondName02;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Collection Progress", "Error Status" };
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { Input.copyDSwithErr };
+		String[] statusListAfterIG = { Input.completedWithErr };
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+		String rootFolderToSelect = Input.clientcollectionFirstName01 + " " + Input.clientcollectionSecondName01 + " ("
+				+ Input.clientCollectionEmail01 + ")";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo(
+				"As per Client's advice have added 2 testing emails ppatil@consiliotest.com and Gouri.Dhavalikar@consiliotest.com - before triggering make sure expected testdatas are available in their respective folders as mentioned in RPMXCON-61159");
+		base.stepInfo("Test case Id: RPMXCON-61159 - O365");
+		base.stepInfo(
+				"Verify 'Continue Successful Datasets' action when Collection is in 'Copied datasets with errors' status");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, false, null, false);
+		collectionName = base.returnKey(collectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, rootFolderToSelect, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Fill in DS user 2
+		collection.fillingDatasetSelection("Button", firstName2, lastName2, collectionEmailId2, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 25,
+				true, false, "", "");
+
+		// Completed status check
+		base.stepInfo("Verify Collection is in 'Copied with Errors'");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 25);
+		driver.waitForPageToBeReady();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+
+		// Verify Collection progress bar presence
+		collection.verifyCollectionPausedStatus(collectionName, colllectionDataHeadersIndex, "", false);
+
+		// Continue Successful Datasets - Yes
+		base.stepInfo("Click on Yes\r\n" + "Collection should get \"completed with error\"");
+		collection.collectionAction(collectionName, "Continue Successful Datasets", true, "Yes", false, "");
+		driver.waitForPageToBeReady();
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 15);
+		driver.waitForPageToBeReady();
 
 		// Logout
 		login.logout();
