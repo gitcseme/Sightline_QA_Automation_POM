@@ -287,7 +287,7 @@ public class DocList_Regression26 {
 	 * @Description Validate onpage filter for EmailAuthorName with any special
 	 *              charatcers (,/"/-/_ /) on DocList page.
 	 */
-	@Test(description = "RPMXCON-53853", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54519", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterForEmailAuthorNameWithAnySpecialCharatersInDocList(String username, String password, String role)
 			throws Exception {
 
