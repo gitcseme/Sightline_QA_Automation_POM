@@ -218,7 +218,7 @@ public class DataSets {
 		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']/li/span[2]/a/strong)[1]");
 	}
 	
-	public Element getYesOpenInCurrentTab() {
+	public Element getNoOpenInCurrentTab() {
 		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
 	}
 	public Element geteditProjectPwds() {
@@ -878,10 +878,8 @@ public class DataSets {
 		}
 		else {
 			try{
-				base.waitForElement(getYesOpenInCurrentTab());
-
-		 		getYesOpenInCurrentTab().waitAndClick(10);	
-//				base.waitForElement(getdraganddroppage());
+				base.waitForElement(getNoOpenInCurrentTab());
+		 		getNoOpenInCurrentTab().waitAndClick(10);	
 			}catch(Exception e){
 				base.failedStep("dataset failed to create");
 				}
@@ -891,11 +889,6 @@ public class DataSets {
 	}
    public void updateDatasetDetails(String dname,String dcustodian,String ddisc)
    {
-//   		base.waitForElement(geteditFirstDataSetElement());
-//   		geteditFirstDataSetElement().Click();
-//   		
-//   		base.waitForElement(getYesOpenInCurrentTab());
-//   		getYesOpenInCurrentTab().waitAndClick(10);
    		base.waitForElement(geteditDatasetDetails());
    		
    		geteditDatasetDetails().Click();
@@ -943,14 +936,11 @@ public class DataSets {
 			
 		}
 		else {
-			try{
-				base.waitForElement(getdraganddroppage());
-			}catch(Exception e){
-				base.failedStep("dataset failed to create");
-				}
-			base.passedStep("Creation of new uploaded set is completed.");
-			System.out.println("********Creation of new uploaded set is completed.********");
-		}
+				base.VerifySuccessMessage("Upload dataset updated successfully");
+			}
+			base.passedStep("Updating of existing uploaded set is completed.");
+			System.out.println("********Updating of existing uploaded set is completed.********");
+		
    		
    }
    public void updateProjectPwds(String projectPwd) throws InterruptedException
@@ -964,6 +954,7 @@ public class DataSets {
 	   getSaveProjectPwdsText().Click();
 	   Thread.sleep(2000);
 	   base.VerifySuccessMessage("Passwords saved successfully.");
+	   
 	   
    }
    

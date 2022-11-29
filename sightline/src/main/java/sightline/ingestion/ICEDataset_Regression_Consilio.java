@@ -87,12 +87,9 @@ public class ICEDataset_Regression_Consilio {
 		String CreateCustodian= "CreateCust"+Utility.dynamicNameAppender();
 		String CreateDescription= "CreateDescription"+Utility.dynamicNameAppender();
 		
-		//create dataset with special characters
+		//create dataset 
  		dataSets.setdatasetdetails(CreateDataset,CreateCustodian, CreateDescription);
- 		
- 		
- 		
- 		
+ 			
  		//update dataset with special characters
  		dataSets.updateDatasetDetails(dataset,dcustodian, ddisc);
  		bc.passedStep("update dataset details failed for special chars");
