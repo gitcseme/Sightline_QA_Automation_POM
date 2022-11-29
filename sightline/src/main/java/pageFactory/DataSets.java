@@ -3,6 +3,8 @@ package pageFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -133,6 +135,8 @@ public class DataSets {
 	public Element getDatasetTile(int index) {
 		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']//li)[" + index + "]");
 	}
+	
+	
 
 	public ElementCollection getTotalDataset() {
 		return driver
@@ -188,7 +192,45 @@ public class DataSets {
 	public Element getDataSetNameViaViewDS() {
 		return driver.FindElementByXPath("//a[@class='tileTooltipText']//strong");
 	}
-
+	public Element getdatasetleftmenuBtn() {return driver.FindElementByName("DataSets");}
+	public Element getdatasetleftsubmenuBtn() {return driver.FindElementByName("Datasets1");}
+	public Element getCreateNewUploadSetLink(){return driver.FindElementByCssSelector("#createSet");}
+	public Element getDatasetNameTxtBox() {return driver.FindElementById("txtDatasetName");}
+	public Element getCustodianNameTxtBox() {return driver.FindElementById("txtCustodianName");}
+	public Element getDescriptionTxtBox() {return driver.FindElementById("txtDatasetDescription");}
+	public Element getCreateBtn() {return driver.FindElementById("CreateUploadSet");}
+	public Element getNOBtn() {
+		return driver.FindElementById("bot2-Msg1");
+	}
+	public Element getdraganddroppage() { return driver.FindElementById("mydropzone"); }
+	public Element getdataSetErrorMsg() { return driver.FindElementByXPath("//span[@id='txtDatasetName-error']"); }
+	public Element getCreateUploadDatasetPopUpClose() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
+	public Element geteditDatasetDetails() {
+		return driver.FindElementByXPath("(//a[@id='editUploadSet'])[1]");
+	}
+	public Element getSaveDatasetDetails() {
+		return driver.FindElementByXPath("//button[@id='EditUploadSet']");
+	}
+	
+	public Element geteditFirstDataSetElement() {
+		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']/li/span[2]/a/strong)[1]");
+	}
+	
+	public Element getYesOpenInCurrentTab() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+	public Element geteditProjectPwds() {
+		return driver.FindElementByXPath("//a[@id='editProjectPwd']");
+	}
+	public Element getProjectPwdsText() {
+		return driver.FindElementByXPath("//textArea[@id='txtProjectPwds']");
+	}
+	public Element getSaveProjectPwdsText() {
+		return driver.FindElementByXPath("//button[@id='SaveProjectPwd']");
+	}
+	
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -785,5 +827,147 @@ public class DataSets {
 		}
 
 	}
+	
+    
+	/**
+	 * @Author Hema MJ
+	 * @Description : create & set dataset details
+	 * @param dname
+	 * @param ddcustodianit
+	 * @param ddisc
+	 */
+   public void setdatasetdetails(String dname,String dcustodian,String ddisc){
+		System.out.println("********Started to create new uploaded set.********");
+		getCreateNewUploadSetLink().WaitUntilPresent().Click();
+		base.waitForElement(getDatasetNameTxtBox());
+		getDatasetNameTxtBox().SendKeys(dname);
+		getCustodianNameTxtBox().SendKeys(dcustodian);	
+		getDescriptionTxtBox().SendKeys(ddisc);
+		getCreateBtn().WaitUntilPresent().Click();
+		
+		//checking for special characters
+		Pattern p = Pattern.compile("[<'>&]", Pattern.CASE_INSENSITIVE);
+	       // Creating matcher for above pattern on our string
+	        Matcher m1 = p.matcher(dname);
+	        Matcher m2 = p.matcher(dcustodian);
+	        Matcher m3 = p.matcher(ddisc);
+	        // Now finding the matches for which let us set a boolean flag and imposing find() method
+	        boolean dnameflag = m1.find();
+	        boolean dcustodianflag = m2.find();
+	        boolean ddiscflag = m3.find();
+		if(dnameflag||ddiscflag||dcustodianflag) {
+		
+			if(dnameflag) {
+				base.waitForElement(getdataSetErrorMsg());
+				String ErrorMsg=getdataSetErrorMsg().getText();
+				if (ErrorMsg.equals("")) {
+				base.failedStep("Expected Error Message is Not Displayed");
+				} else {
+				System.out.println("Error : " + ErrorMsg);
+				base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+				}
+			}
+			if(ddiscflag || dcustodianflag) {
+				String ErrorMsg="Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
+				base.VerifyErrorMessage(ErrorMsg);
+				base.passedStep("dataset failed to create");
+			}
+			base.waitForElement(getCreateUploadDatasetPopUpClose());
+			getCreateUploadDatasetPopUpClose().waitAndClick(5);
+			
+		}
+		else {
+			try{
+				base.waitForElement(getYesOpenInCurrentTab());
+
+		 		getYesOpenInCurrentTab().waitAndClick(10);	
+//				base.waitForElement(getdraganddroppage());
+			}catch(Exception e){
+				base.failedStep("dataset failed to create");
+				}
+			base.passedStep("Creation of new uploaded set is completed.");
+			System.out.println("********Creation of new uploaded set is completed.********");
+		}
+	}
+   public void updateDatasetDetails(String dname,String dcustodian,String ddisc)
+   {
+//   		base.waitForElement(geteditFirstDataSetElement());
+//   		geteditFirstDataSetElement().Click();
+//   		
+//   		base.waitForElement(getYesOpenInCurrentTab());
+//   		getYesOpenInCurrentTab().waitAndClick(10);
+   		base.waitForElement(geteditDatasetDetails());
+   		
+   		geteditDatasetDetails().Click();
+   		
+   		base.waitForElement(getDatasetNameTxtBox());
+   		
+   		getDatasetNameTxtBox().Clear();
+		getDatasetNameTxtBox().SendKeys(dname);
+		getCustodianNameTxtBox().Clear();
+		getCustodianNameTxtBox().SendKeys(dcustodian);	
+		getDescriptionTxtBox().Clear();
+		getDescriptionTxtBox().SendKeys(ddisc);
+		getSaveDatasetDetails().WaitUntilPresent().Click();
+		
+		//checking for special characters
+		Pattern p = Pattern.compile("[<'>&]", Pattern.CASE_INSENSITIVE);
+	       // Creating matcher for above pattern on our string
+	        Matcher m1 = p.matcher(dname);
+	        Matcher m2 = p.matcher(dcustodian);
+	        Matcher m3 = p.matcher(ddisc);
+	        // Now finding the matches for which let us set a boolean flag and imposing find() method
+	        boolean dnameflag = m1.find();
+	        boolean dcustodianflag = m2.find();
+	        boolean ddiscflag = m3.find();
+		if(dnameflag||ddiscflag||dcustodianflag) {
+		
+			if(dnameflag) {
+				base.waitForElement(getdataSetErrorMsg());
+				String ErrorMsg=getdataSetErrorMsg().getText();
+				if (ErrorMsg.equals("")) {
+				base.failedStep("Expected Error Message is Not Displayed");
+				} else {
+				System.out.println("Error : " + ErrorMsg);
+				base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+				}
+			}
+			if(ddiscflag || dcustodianflag) {
+				String ErrorMsg="Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
+				base.VerifyErrorMessage(ErrorMsg);
+				base.CloseSuccessMsgpopup();
+				base.passedStep("dataset failed to create");
+			}
+			base.waitForElement(getCreateUploadDatasetPopUpClose());
+			getCreateUploadDatasetPopUpClose().waitAndClick(5);
+			
+		}
+		else {
+			try{
+				base.waitForElement(getdraganddroppage());
+			}catch(Exception e){
+				base.failedStep("dataset failed to create");
+				}
+			base.passedStep("Creation of new uploaded set is completed.");
+			System.out.println("********Creation of new uploaded set is completed.********");
+		}
+   		
+   }
+   public void updateProjectPwds(String projectPwd) throws InterruptedException
+   {
+	   base.waitForElement(geteditProjectPwds());
+	   geteditProjectPwds().Click();
+	   base.waitForElement(getProjectPwdsText());
+	   getProjectPwdsText().Clear();
+	   getProjectPwdsText().SendKeys(projectPwd);
+	   base.waitForElement(getSaveProjectPwdsText());
+	   getSaveProjectPwdsText().Click();
+	   Thread.sleep(2000);
+	   base.VerifySuccessMessage("Passwords saved successfully.");
+	   
+   }
+   
+	
+		
 
 }
