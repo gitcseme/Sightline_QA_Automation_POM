@@ -281,6 +281,66 @@ public class DocList_Regression26 {
 		driver.waitForPageToBeReady();
 		docList.EmailAuthorNameInExcludeVerificationInDoc();
 	}
+	/**
+	 * @author Vijaya.Rani ModifyDate:21/10/2022 RPMXCON-54519
+	 * @throws Exception
+	 * @Description Validate onpage filter for EmailAuthorName with any special
+	 *              charatcers (,/"/-/_ /) on DocList page.
+	 */
+	@Test(description = "RPMXCON-53853", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterForEmailAuthorNameWithAnySpecialCharatersInDocList(String username, String password, String role)
+			throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54519");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailAuthorName with any special charatcers (,/\"/-/_ /) on DocList page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		String domain1 = "(#NOS OCRM FKNMS-ALL);";
+		String domain2 = "Amol.Gawande/,@consilio.com";
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// Search String and save the content
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		// EmailRecipientnames Include
+		baseClass.stepInfo("EmailAuthorName Include");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailAuthNameFilter());
+		docList.getEmailAuthNameFilter().waitAndClick(5);
+		docList.include(domain1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(domain1).isDisplayed()) {
+			baseClass.passedStep("Documents containing only the selected email IDs only filtered");
+		} else {
+			baseClass.failedStep("Documents containing selected email IDs not filtered");
+		}
+
+		docList.getClearAllBtn().waitAndClick(5);
+		baseClass.stepInfo("ClearAll Button Is clicked");
+		// EmailRecipientnames Exclude
+		baseClass.stepInfo("EmailAuthorName Exclude");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docList.getEmailAuthNameFilter());
+		docList.getEmailAuthNameFilter().waitAndClick(5);
+		docList.excludeDoclist(domain2);
+		softAssertion.assertTrue(docList.getEmailAuthorNameNoRestultData().isDisplayed());
+		baseClass.passedStep("Documents containing the selected email IDs should not be filtered");
+		softAssertion.assertAll();
+
+		loginPage.logout();
+	}
+	@DataProvider(name = "Users_PARMU")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA" } };
+		return users;
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
