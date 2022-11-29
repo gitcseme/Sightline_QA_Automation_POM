@@ -202,6 +202,7 @@ public class ReportsRegression26 {
 		baseClass.stepInfo("Logged In As : " + username);
 
 		timeLineGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		baseClass.waitForElement(timeLineGaps.selectChart());
 		timeLineGaps.selectBarChartandRtnDocCount("yearly");
 		timeLineGaps.SaveReport(reportName);
 		
@@ -343,5 +344,106 @@ public class ReportsRegression26 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author NA Testcase No:RPMXCON-58560
+	 * @Description: Timeline and Gaps report: saved Document Data Export Report should work
+	 **/
+	@Test(description = "RPMXCON-58560",  enabled = true, groups = { "regression" })
+	public void verifySavedDocExportRep() throws Exception {
+		TimelineReportPage timeGaps = new TimelineReportPage(driver);
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		CustomDocumentDataReport custom = new CustomDocumentDataReport(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		ReportsPage report = new ReportsPage(driver);
+		
+		String text1 = "039";
+		String field1 = "039";
+		String text2 = "034";
+		String field2 = "034";
+		String tagname1 = "Tag1" + Utility.dynamicNameAppender();
+		String tagname2 = "Tag2" + Utility.dynamicNameAppender();
+		String[] metadata = {"CustodianName"};
+		String[] workProduct = {tagname1};
+		String[] metadata1 = {"DocID"};
+		String[] workProduct1 = {tagname2};
+		
+		String report1 = "Report1" + Utility.dynamicNameAppender();
+		String report2 = "Report2" + Utility.dynamicNameAppender();
+		String timeLine = "MasterDate";
+		String fromDate =  "2019/01/01";
+		String toDate = timeGaps.getCurrentDate();
+		
+		baseClass.stepInfo("RPMXCON - 58560");
+		baseClass.stepInfo("Timeline and Gaps report: saved Document Data Export Report should work");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tags.navigateToTagsAndFolderPage();
+		tags.createNewTagwithClassificationInRMU(tagname1, Input.tagNamePrev);
+		tags.createNewTagwithClassificationInRMU(tagname2, Input.tagNamePrev);
+
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname1);
+		sessionSearch.bulkTagExisting(tagname2);
+		
+		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
+		timeGaps.selectBarChartandRtnDocCount("yearly");
+		timeGaps.selectActions(" Export Data","yearlyActions");
+		
+		driver.waitForPageToBeReady();
+		baseClass.verifyPageNavigation("Report/ExportData");
+		custom.selectExportTextFormat(text1);
+		custom.selectExportFieldFormat(field1);
+		custom.selectMetaDataFields(metadata);
+		custom.selectWorkProductFields(workProduct);
+		custom.SaveReport(report1);
+		custom.validateSelectedExports(metadata);
+		custom.validateSelectedExports(workProduct);
+		baseClass.waitForElement(custom.getRunReport());
+		custom.getRunReport().waitAndClick(5);
+		custom.reportRunSuccessMsg();
+		
+		driver.waitForPageToBeReady();
+		custom.selectExportTextFormat(text2);
+		custom.selectExportFieldFormat(field2);
+		baseClass.waitForElement(custom.getSaveReportBtn());
+		custom.getSaveReportBtn().waitAndClick(5);
+		baseClass.waitForElement(custom.getSaveReportName());
+		custom.getSaveReportName().waitAndClick(5);
+		custom.getSaveReportName().SendKeys(report2);
+		custom.getSaveBtn().waitAndClick(5);
+		custom.validateSelectedExports(metadata);
+		custom.validateSelectedExports(workProduct);
+		
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getSavedCustomReport(report1));
+		report.getSavedCustomReport(report1).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		custom.selectSources("Security Groups", Input.securityGroup);
+		baseClass.waitForElement(custom.getRunReport());
+		custom.getRunReport().waitAndClick(5);
+		custom.reportRunSuccessMsg();
+		
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(report.getSavedCustomReport(report2));
+		report.getSavedCustomReport(report2).waitAndClick(5);
+		custom.selectSources("Security Groups", Input.securityGroup);
+		custom.selectMetaDataFields(metadata1);
+		custom.selectWorkProductFields(workProduct1);
+		String fileName = custom.runReportandVerifyFileDownloaded();
+		String actualValue = custom.csvfileVerification("", fileName);
+		baseClass.stepInfo(actualValue);
+		System.out.println(actualValue);
+		SoftAssert assets = new SoftAssert();
+		assets.assertTrue(actualValue.contains(tagname1));
+		assets.assertTrue(actualValue.contains(tagname2));
+		assets.assertTrue(actualValue.contains("CustodianName"));
+		assets.assertTrue(actualValue.contains("DocID"));
+		assets.assertAll();
+		baseClass.passedStep("Timeline and Gaps report: saved Document Data Export Report should work");
+		loginPage.logout();
+	}
 }
 

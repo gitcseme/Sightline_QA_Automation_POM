@@ -47,7 +47,7 @@ public class TimelineReportPage {
 	}
 
 	public Element selectSecurityGrp() {
-		return driver.FindElementByXPath("//label[text()='Default Security Group']/preceding-sibling::input");
+		return driver.FindElementByXPath("//label[contains(text(),'Default  Security Group')]");
 	}
 
 	public Element saveSelectedSecurityGrp() {

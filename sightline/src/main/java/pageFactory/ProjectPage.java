@@ -250,6 +250,24 @@ public class ProjectPage {
 
 	// added by sowndarya
 
+	public Element getDocIdPrefix() {
+		return driver.FindElementById("docIDPrefix");
+	}
+	
+	public Element getDocIdSuffi() {
+		return driver.FindElementById("docIDSuffix");
+	}
+	
+	public Element getTxtDedupinglevel() {
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Deduping')]");
+	}
+
+	public Element getTxtAnalyticsEngine() {
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Analytics Engine')]");
+	}
+	
 	public Element getEngineTypeNUIXRadio() {
 		return driver
 				.FindElementByXPath("//div[@class='col-md-4']//input[@id='rdbNUIX']//following::label[text()='NUIX']");
@@ -855,6 +873,7 @@ public class ProjectPage {
 	}
 
 	/**
+	 * Modified on 28/11/22
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
 	 * @Description filter the project using project name
@@ -864,15 +883,30 @@ public class ProjectPage {
 
 		bc.waitForElement(getSearchProjectName());
 		getSearchProjectName().SendKeys(projectName);
-
 		bc.waitForElement(getProjectFilterButton());
 		bc.waitTillElemetToBeClickable(getProjectFilterButton());
 		getProjectFilterButton().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		bc.stepInfo(projectName + " was filtered");
-
+		
+		if(getEditProject(projectName).isElementAvailable(5)) {
+			driver.waitForPageToBeReady();
+			bc.stepInfo(projectName + " was filtered");
+		} else {
+			try {
+				bc.wait(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getSearchProjectName());
+			getSearchProjectName().SendKeys(projectName);
+			bc.waitForElement(getProjectFilterButton());
+			bc.waitTillElemetToBeClickable(getProjectFilterButton());
+			getProjectFilterButton().waitAndClick(10);
+			bc.stepInfo(projectName + " was filtered");
+			
+		}
 	}
-
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -1792,4 +1826,30 @@ public class ProjectPage {
 		}
 	 }
  
+	/**
+	 * @author:sowndarya
+	 * @description:To save a project
+	 */
+	public void saveProjectAndVerify() {
+		
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait90);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
 }

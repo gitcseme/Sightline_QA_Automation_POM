@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
@@ -360,6 +361,14 @@ public class CollectionPage {
 
 	public Element getFolderNameToSelect(String type) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']");
+	}
+	
+	public Element getSubFolderNameToSelect(String Parentfolder,String Childfolder) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + Parentfolder +"']/following-sibling::ul/li/a[contains(.,'" + Childfolder + "')]");
+	}
+	
+	public Element getFolderTree(String type) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']/preceding-sibling::i");
 	}
 
 	public Element getActionBtn(String type) {
@@ -946,9 +955,10 @@ public class CollectionPage {
 		driver.waitForPageToBeReady();
 
 		// Custodian Retived data
+		base.waitTime(2);
 		String retrivedData = getDataSetNameTextFIeld().GetAttribute("value");
 		base.stepInfo("Actual populated dataset name : " + retrivedData);
-
+		
 		return retrivedData;
 	}
 
@@ -1059,6 +1069,36 @@ public class CollectionPage {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @author Hema MJ
+	 * @createdDate : 11/25/22
+	 * @param Select Sub folderName
+	 * @param subFolder
+	 * @param subFolderName
+	 */
+	public void folderToSelect(String folderName, Boolean toExpand, Boolean SubFolder,String SubFolderName) {
+		if (toExpand) {
+			getFolderabLabel().waitAndClick(5);
+		}
+		// Respective folder to select if you want to select subFolder or not
+		if(SubFolder) {
+			
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getFolderTree(folderName).waitAndClick(10);
+			getSubFolderNameToSelect(folderName,SubFolderName).waitAndClick(10);
+			
+		}else {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getFolderNameToSelect(folderName).waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
+		
+	}
 
 	/**
 	 * @author Raghuram.A
@@ -1077,6 +1117,7 @@ public class CollectionPage {
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retry) {
 
+		
 		String actualValue = null;
 		Boolean status = false;
 		for (int i = 1; i <= retry; i++) {
@@ -1122,7 +1163,7 @@ public class CollectionPage {
 	 */
 	public void verifyDataSetContents(String[] headerList, String firstName, String lastName, String selectedApp,
 			String collectionEmailId, String dataSetNameGenerated, String selectedFolder, String DateOrKeyword,
-			String additional2, Boolean additional3, int additional4) {
+			String subFolderName, Boolean subFolderFlag, int additional4) {
 
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
 
@@ -1144,13 +1185,16 @@ public class CollectionPage {
 				expValue = collectionEmailId;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader4)) {
 				expValue = dataSetNameGenerated;
-			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+			} else if (subFolderFlag==true && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+				expValue = subFolderName;
+			} else if (subFolderFlag==false && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
 				expValue = selectedFolder;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader6)) {
 				expValue = DateOrKeyword;
 			}
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
+			
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");
@@ -1227,6 +1271,7 @@ public class CollectionPage {
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
 
 		// Check collection presence
+		driver.waitForPageToBeReady();
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
@@ -1581,12 +1626,14 @@ public class CollectionPage {
 	}
 
 	/**
+	 * @return 
 	 * @Author Jeevitha
 	 * @Description : click edit and verify added Dataset and can modify any field
 	 */
-	public void editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
+	public String editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
 			String firstName, String collection2ndEmailId, boolean editFolder, boolean validateFolder,
 			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter) {
+		String actualValue = "";
 		if (clickEdit) {
 			driver.waitForPageToBeReady();
 			getEditBtnDataSelection(collectionEmailId).waitAndClick(10);
@@ -1600,7 +1647,7 @@ public class CollectionPage {
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
 
-				String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
+				actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
 						"");
 			}
 
@@ -1626,6 +1673,7 @@ public class CollectionPage {
 		} else {
 			base.failedStep("Dataset Popup is not displayed");
 		}
+		return actualValue;
 	}
 
 	/**
@@ -1669,6 +1717,7 @@ public class CollectionPage {
 		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
 
 		getActionBtn("Save").waitAndClick(5);
+		driver.waitForPageToBeReady();
 		if (getFolderSelectionConfirmation().isElementAvailable(5)) {
 			String actualTxt = getPopupMsg().getText();
 			String passMsg = "Displayed Popup Msg : " + actualTxt;
@@ -2712,20 +2761,28 @@ public class CollectionPage {
 	public HashMap<String, String> fillinDS(String dataName, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String creationType, int retryAttempt, Boolean AutoInitiate,
-			String saveAction, Boolean additional1, String additional2) {
+			String saveAction, Boolean subFolderFlag, String subFolderName) {
 
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
 				selectedApp, colllectionData, dataName, retryAttempt);
+		
+		System.out.println("dataSetNameGenerated"+dataSetNameGenerated);
 
 		// Folder Selection
-		folderToSelect(selectedFolder, true, false);
+		if(subFolderFlag) {
+			folderToSelect(selectedFolder, true, true,subFolderName);
+			
+		}
+		else {
+			folderToSelect(selectedFolder, true, false);
+		}
 		applyAction("Save", "Confirm", "Dataset added successfully.");
 		driver.waitForPageToBeReady();
 
 		// verify DataSet Contents
 		verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
-				selectedFolder, "-", "", false, 0);
+				selectedFolder, "-", subFolderName, subFolderFlag, 0);
 
 		return colllectionData;
 
@@ -2895,6 +2952,7 @@ public class CollectionPage {
 		colllectionDataToReturn.put(collectionID, dataName);
 
 		// Verify Collection presence
+		driver.waitForPageToBeReady();
 		verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus, true, false,
 				"");
 		base.passedStep("Pre-requestied created colleciton Name :" + dataName);

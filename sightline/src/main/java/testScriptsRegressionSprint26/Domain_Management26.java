@@ -67,9 +67,9 @@ public class Domain_Management26 {
 
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in As " + Input.sa1userName);
-		String FirstName = "QA";
+		String FirstName = "QA"+Utility.dynamicNameAppender();
 		String LastName = "consilio";
-		String MailID = "testing" + "@consilio.com";
+		String MailID = "testing"+Utility.dynamicNameAppender() + "@consilio.com";
 		UserManagement user = new UserManagement(driver);
 		String[] usertoActivate = { FirstName, LastName, MailID };
 		user.navigateToUsersPAge();
@@ -282,7 +282,7 @@ public class Domain_Management26 {
 
 		String FirstName = "QA1" + Utility.dynamicNameAppender();
 		String LastName = "Framework";
-		String MailID = "testing" + "@consilio.com";
+		String MailID = "testing"+Utility.dynamicNameAppender() + "@consilio.com";
 
 		UserManagement user = new UserManagement(driver);
 
@@ -340,7 +340,7 @@ public class Domain_Management26 {
 
 		String FirstName = "QA1" + Utility.dynamicNameAppender();
 		String LastName = "Framework";
-		String MailID = "testing" + "@consilio.com";
+		String MailID = "testing"+Utility.dynamicNameAppender() + "@consilio.com";
 
 		UserManagement user = new UserManagement(driver);
 		String[] Users = { Input.DomainAdministrator, Input.ProjectAdministrator, Input.ReviewManager, Input.Reviewer };
@@ -731,7 +731,7 @@ public class Domain_Management26 {
 		baseClass.selectdomain(Input.domainName);
 		
 		UserManagement user = new UserManagement(driver);
-		String FirstName = "QA";
+		String FirstName = "QA"+Utility.dynamicNameAppender();
 		String LastName = "automation";
 		String MailID = "test" +Utility.dynamicNameAppender()+ "@consilio.com";
 		String UserName=FirstName+" "+LastName;
@@ -893,7 +893,9 @@ public class Domain_Management26 {
 		baseClass.passedStep("Success message is displayed.");
 
 		// delete the created user
+		driver.waitForPageToBeReady();
 		user.filterTodayCreatedUser();
+		driver.waitForPageToBeReady();
 		user.filterByName(MailID);
 		user.deleteUser();
 
