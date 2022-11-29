@@ -1,5 +1,7 @@
 package pageFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -5284,7 +5286,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: 29/11/2022
 	 * @description: this method will verify the contents present in the ingestion
 	 *               tiles
 	 */
@@ -5294,23 +5296,43 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(5);
 		base.waitTime(2);
 
-		if (getIngestionDetailPopup(1).isElementAvailable(5)) {
+		if (getIngestionDetailPopup(1).isElementAvailable(10)) {
 			int sourceCount = Integer.parseInt(getSourceCount().getText());
 			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
 			int errorCount = Integer.parseInt(errorCountStatus().getText());
 			String status = getStatus(1).getText().trim();
+			//verify source,ingested and error count in tiles
 			if (sourceCount > 0 && ingestedCount >= 0 && errorCount >= 0) {
 				base.passedStep("Source , Ingested and Error count details displayed");
 			} else {
 				base.failedStep("Source,Ingested and Error count details not displayed");
 			}
+			//verify status of ingestion 
 			if (status.contains("Cataloged") || status.contains("Failed")) {
 				base.passedStep("Ingestion Status details are displayed");
 			} else {
 				base.failedStep("Ingestion Status details are not displayed");
 			}
+			//verify latest modified user,time stamp and progress bar status
 			if (ingestionCompletedDate().isDisplayed() && ingestionProgressBar().isDisplayed()
 					&& ingestionModifiedUser().isDisplayed()) {
+				
+				    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+				    Date date = new Date(); 
+				    String latestTime = ingestionCompletedDate().getText();
+				    String timeStamp =formatter.format(date);
+				    String latestUser = ingestionModifiedUser().getText();
+				    LoginPage login = new LoginPage(driver);
+				    String getUser = login.getCurrentUserName();
+				    base.stepInfo("modified user"+latestUser);
+				    base.stepInfo("latest time stamp present in tile-"+latestTime);
+				    if(latestTime.contains(timeStamp) && latestUser.contains(getUser)) {
+				    	base.passedStep("Latest time stamp and modified user displayed on tiles");
+				    }
+				    else {
+				    	base.failedStep("latest time stamp not displayed");
+				    }
+				    
 				base.passedStep("Latest time stamp.modified admin name and progress bar present");
 			} else {
 				base.failedStep("Latest time stamp.modified admin name  and progress bar not present");
