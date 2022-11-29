@@ -42,15 +42,7 @@ public class SecurityGroupsPage {
 	public Element getSecurityGroupSaveButton() {
 		return driver.FindElementById("btnSaveSecurityGroup");
 	}
-	public Element getSecurityGroupUpdateButton() {
-		return driver.FindElementById("btnUpdateSecurityGroup");
-	}
-	
-	public Element getSecurityGroupNameUpdate() {
-		return driver.FindElementById("txtSecurityGroupNameUpdate");
-	}
-	
-	
+
 	public Element getSG_AnnLayerbutton() {
 		return driver.FindElementByXPath("//*[@id='myTab1']//a[contains(text(),'Annotation Layers')]");
 	}
@@ -74,7 +66,19 @@ public class SecurityGroupsPage {
 	public Element clickSecurityGroup() {
 		return driver.FindElementByXPath("//*[@class='a-menu' and @name='Security']");
 	}
-
+	
+	public Element getSecurityGroupUpdateButton() {
+		return driver.FindElementById("btnUpdateSecurityGroup");
+	}
+	
+	public Element getEditMsg() {
+		return driver.FindElementById("lblEditmsg");
+	}
+	
+	public Element getSecurityGroupNameUpdate() {
+		return driver.FindElementById("txtSecurityGroupNameUpdate");
+	}
+	
 	public Element securityGroupCreate() {
 		return driver.FindElementById("btnNewSecurityGroup");
 	}
@@ -569,10 +573,6 @@ public class SecurityGroupsPage {
 	}
 	public Element getSG_NameCancelBtn() {
 		return driver.FindElementById("btnCancelSave");
-	}
-	
-	public Element getEditMsg() {
-		return driver.FindElementById("lblEditmsg");
 	}
 	
 	// Added by arun
