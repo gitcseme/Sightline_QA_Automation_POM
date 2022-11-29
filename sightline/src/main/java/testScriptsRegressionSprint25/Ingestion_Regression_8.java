@@ -368,7 +368,7 @@ public class Ingestion_Regression_8 {
 		tally = new TallyPage(driver);
 		tally.navigateTo_Tallypage();
 		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
-		tally.verifyTallyReportGenerationForMetadata(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
 		loginPage.logout();
 		
 	}
@@ -392,7 +392,7 @@ public class Ingestion_Regression_8 {
 		tally = new TallyPage(driver);
 		tally.navigateTo_Tallypage();
 		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
-		tally.verifyTallyReportGenerationForMetadata(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
 		baseClass.stepInfo("perform tally and search for 'AllCustodians' metadata");
 		tally.performTallyAndSearchForAllCustodians();
 		loginPage.logout();
@@ -497,7 +497,7 @@ public class Ingestion_Regression_8 {
 		tally = new TallyPage(driver);
 		tally.navigateTo_Tallypage();
 		baseClass.stepInfo("verify tally report generation and search for metadata"+metadata);
-		tally.verifyTallyReportGenerationForMetadata(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
 		tally.performTallyAndSearchForMetadata(metadata);
 		loginPage.logout();
 		

@@ -887,15 +887,10 @@ public class ProjectPage {
 		bc.waitTillElemetToBeClickable(getProjectFilterButton());
 		getProjectFilterButton().waitAndClick(10);
 		
-		if(getEditProject(projectName).isElementAvailable(5)) {
+		if(getEditProject(projectName).isElementAvailable(10)) {
 			driver.waitForPageToBeReady();
 			bc.stepInfo(projectName + " was filtered");
 		} else {
-			try {
-				bc.wait(5);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getSearchProjectName());

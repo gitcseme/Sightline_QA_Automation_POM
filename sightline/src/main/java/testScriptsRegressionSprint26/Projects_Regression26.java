@@ -222,6 +222,7 @@ public class Projects_Regression26 {
 		base.verifyUrlLanding(Input.url + "Project/Project", "Redirected to project page",
 				"not redirected to project page");
 		projects.filterTheProject(projectName);
+		driver.waitForPageToBeReady();
 		if (!(projects.getEditProject(projectName).isElementAvailable(10))) {
 			base.passedStep("Project not created after clicking cancel button");
 		} else {
