@@ -3,6 +3,8 @@ package testScriptsRegressionSprint26;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -1008,6 +1010,178 @@ public class Domain_Management26 {
         loginPage.logout();
     }
 
+    /**
+     * @author Brundha.T Testcase No:RPMXCON-53039
+     * @Description:Verify that users with RMU/Reviewer role should be displayed on
+     *                     user list page for non-domain project
+     **/
+    @Test(description = "RPMXCON-53039", enabled = true, groups = { "regression" })
+    public void verifyRMUAndREVRoleUnderNonDomanPrjt() throws Exception {
+
+       baseClass.stepInfo("TestCase id : RPMXCON-53039");
+        baseClass.stepInfo(
+                "Verify that users with RMU/Reviewer role should be displayed on user list page for non-domain project");
+
+       loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        baseClass.stepInfo("Logged in As " + Input.pa1userName);
+
+       baseClass.stepInfo("Selecting non domain project");
+        baseClass.selectproject(Input.NonDomainProject);
+        
+        UserManagement user = new UserManagement(driver);
+        user.navigateToUsersPAge();
+        
+        baseClass.stepInfo("getting the users in the non-domain project");
+        ArrayList<String> Values = new ArrayList<>();
+        
+        for (int i = 0; i <50; i++) {
+            baseClass.waitTime(2);
+            List<String>Role=user.getTableCoumnValue("ROLE");
+            Values.addAll(Role);
+            System.out.println("the values inside user list"+Values);
+            
+            String NextBtn = user.getNextBtn().GetAttribute("Class");
+            if (NextBtn.contains("disabled")) {
+                break;
+            } else {
+                driver.waitForPageToBeReady();
+                user.getUserListNextButton().waitAndClick(5);
+            }
+        }
+        baseClass.stepInfo("verifying RMU/Reviewer assigned to the project is listed on manage users page");
+        
+            int ReviewManager=Collections.frequency(Values,Input.ReviewManager);
+            System.out.println(" ReviewManager count"+ReviewManager);
+            if(ReviewManager>1) {
+                baseClass.passedStep("Review manager assigned to the project is listed on manage users page");
+            }else {
+                baseClass.failedStep("Review manager users are not displayed in list");
+            }
+            int Reviewer=Collections.frequency(Values,Input.Reviewer);
+            System.out.println("Reviewer count"+Reviewer);
+        
+            if(Reviewer>1) {
+                baseClass.passedStep("Reviewer assigned to the project is listed on manage users page");
+            }else {
+                baseClass.failedStep("Reviewer users are not displayed in list");
+            }
+        loginPage.logout();
+    }
+    
+    /**
+	 * @author Brundha.T TestCase Id:RPMXCON-53052 Description :Verify Domain
+	 *         Admin's functionalites in newly assigned domain
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53052", enabled = true, groups = { "regression" })
+	public void verifyingFunctionalityInNewDomain() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53052");
+		baseClass.stepInfo("Verify Domain Admin's functionalites in newly assigned domain");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As" + Input.sa1userName + "");
+
+		String FirstName = "QA" + Utility.dynamicNameAppender();
+		String LastName = "automation";
+		String Email = "testing" + Utility.dynamicNameAppender() + "@consilio.com";
+
+		UserManagement user = new UserManagement(driver);
+		BaseClass base = new BaseClass(driver);
+		ProjectPage project = new ProjectPage(driver);
+
+		String[] usertoActivate = { FirstName, LastName, Email };
+		String clientName = "C" + Utility.dynamicNameAppender();
+		String ProjectName = "P" + Utility.dynamicNameAppender();
+		String shortName = "D" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Navigated to client/Domain Page");
+		project.navigateToClientFromHomePage();
+
+		base.stepInfo("Creating new domain");
+		project.addNewClient(clientName, shortName, "Domain");
+		base.waitTime(2);
+
+		user.navigateToUsersPAge();
+		user.passingUserName(Input.da1userName);
+		user.applyFilter();
+
+		String firstName = user.getTableData("FIRST NAME", 1);
+		String lastName = user.getTableData("LAST NAME", 1);
+		String userName = firstName + " " + lastName;
+
+		baseClass.stepInfo("Assigning newly created  Domain to  DA user");
+		user.openAssignUser();
+		user.getDomaintab().waitAndClick(5);
+		baseClass.waitForElement(user.getSelectDomainname());
+		user.getSelectDomainname().selectFromDropdown().selectByVisibleText(clientName);
+		driver.waitForPageToBeReady();
+		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(userName);
+		baseClass.waitForElement(user.getrightBtndomainuser());
+		user.getrightBtndomainuser().waitAndClick(5);
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in As " + Input.da1userName + "");
+
+		baseClass.stepInfo("Creating new project");
+		project.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		project.CreatProjectInDA(ProjectName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		project.filterTheProject(ProjectName);
+		project.editProject(ProjectName);
+		base.stepInfo("created Domain project is filtered and opened");
+
+		project.getCorpClientTextBox().SendKeys(Input.searchString1);
+		driver.scrollingToBottomofAPage();
+		project.getButtonSaveProject().waitAndClick(10);
+
+		base.waitTime(2);
+		base.stepInfo("Edit the created Project");
+		project.editProject(ProjectName);
+		String EditedText = project.getCorpClientTextBox().GetAttribute("value");
+		base.textCompareEquals(EditedText, Input.searchString1, "project value is edited successfully",
+				"Project value is not edited");
+
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Creating new user");
+		user.createUser(FirstName, LastName, Input.ReviewManager, Email, " ", ProjectName);
+
+		baseClass.stepInfo("Verifying new user created");
+		user.verifyUserDetailsOnUserNotLoggedInPopup(usertoActivate, Email);
+
+		baseClass.stepInfo("Editing new user created");
+		user.passingUserName(Email);
+		user.applyFilter();
+		user.editLoginUser();
+		driver.waitForPageToBeReady();
+		user.getSelctRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.waitForElement(user.getFunctionalityButton());
+		user.getFunctionalityButton().waitAndClick(5);
+
+		if (user.getEditUserIngestion().Enabled()) {
+			baseClass.passedStep("User role is changed into Selected role in functionality tab");
+		} else {
+			baseClass.failedStep("User role is not changed");
+		}
+
+		base.waitForElement(user.EditUserClosePopupBtn());
+		user.EditUserClosePopupBtn().waitAndClick(10);
+
+		// delete the created user
+		user.filterTodayCreatedUser();
+		user.filterByName(Email);
+		user.deleteUser();
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
