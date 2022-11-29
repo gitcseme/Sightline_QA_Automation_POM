@@ -58,6 +58,8 @@ public class Assignment_Regression_Consilio {
 	
 	@Test(description = "RPMXCON-69084",dataProvider="AssignmentSplChars", groups = { "regression" })
 	public void verifyCreateNEditAssignmentGrpWithSplChars(String AssignmentGrpNameSplChars) throws InterruptedException {
+			bc.stepInfo("Verify that error message display and application does NOT accepts - when user add & Edits Assignment group with special characters < > & ‘");
+			bc.stepInfo("Test case Id:RPMXCON-69084");	
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			String AssignmentGrpName="AssignmentGrp"+ Utility.dynamicNameAppender();
 			this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -65,33 +67,40 @@ public class Assignment_Regression_Consilio {
 			
 			agnmt.createAssgnGroup(AssignmentGrpName);
 			
-			//create Assignment group with special characters
+			//create Assignment group name with special characters
 
 			agnmt.createAssgnGroupWithSplChars(AssignmentGrpNameSplChars);	
 			
-			//edit assignment name with special chars
+			bc.passedStep("creating of Assignment group failed for special chars");
 			
-
+			//edit assignment group name with special chars
+			
 			agnmt.EditAssgnGroupSplChars(AssignmentGrpName);
+			
+			bc.passedStep("editing of Assignment group failed for special chars");
 			
 	}
 	
 	@Test(description = "RPMXCON-69085",dataProvider="AssignmentSplChars", groups = { "regression" })
 	public void verifyCreateNEditAssignmentNameWithSplChars(String AssignmentNameSplChars) throws InterruptedException {
+			bc.stepInfo("Verify that error message display and application does NOT accepts - when user add & Edits Assignment name with special characters < > & ‘ ");
+			bc.stepInfo("Test case Id:RPMXCON-69085");	
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			String AssignmentName="AssignmentName"+ Utility.dynamicNameAppender();
-			
+			String AssignmentName="AssignmentName"+ Utility.dynamicNameAppender();	
 			
 			agnmt.createAssignment(AssignmentName, Input.codingFormName);
 			
-			//create Assignment group with special characters
+			//create Assignment name with special characters
 			
 			agnmt.createAssignmentWithSplChars(AssignmentNameSplChars);
 			
-			//edit assignment name with special chars
+			bc.passedStep("creating of Assignment name failed for special chars");
 			
+			//edit assignment name with special characterss		
 		
 			agnmt.editAssignmentWithSplChars(AssignmentName);
+			
+			bc.passedStep("editing of Assignment name failed for special chars");
 			
 	}
 	
