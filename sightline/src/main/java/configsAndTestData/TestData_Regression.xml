@@ -397,6 +397,13 @@
    <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
    <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
+   <clientCollectionEmail01>ppatil@consiliotest.com</clientCollectionEmail01>
+   <clientcollectionFirstName01>Paresh</clientcollectionFirstName01>
+   <clientcollectionSecondName01>Patil</clientcollectionSecondName01>
+   <clientCollectionEmail02>Gouri.Dhavalikar@consiliotest.com</clientCollectionEmail02>
+   <clientcollectionFirstName02>Gouri</clientcollectionFirstName02>
+   <clientcollectionSecondName02>Dhavalikar</clientcollectionSecondName02>
+   <copyDSwithErr>Copied datasets with errors</copyDSwithErr>
     
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

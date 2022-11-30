@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = false;
+	public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -516,6 +516,13 @@ public class Input {
     public static String collectionErrColorCodeOrange;
     public static String retreivingDSCountH;
     public static String dateKeywordHeaderC;
+    public static String clientCollectionEmail01;
+    public static String clientcollectionFirstName01;
+    public static String clientcollectionSecondName01;
+    public static String clientCollectionEmail02;
+    public static String clientcollectionFirstName02;
+    public static String clientcollectionSecondName02;
+    public static String copyDSwithErr;
     
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1542,9 +1549,16 @@ public class Input {
         collectionErrColorCodeOrange = testData.getCollectionErrColorCodeOrange();
         retreivingDSCountH = testData.getRetreivingDSCountH();
         dateKeywordHeaderC = testData.getDateKeywordHeaderC();	
-      reteriveDSErr = testData.getReteriveDSErr();
-            completedWithErr  = testData.getCompletedWithErr();
-
+         reteriveDSErr = testData.getReteriveDSErr();
+         completedWithErr  = testData.getCompletedWithErr();
+		clientCollectionEmail01 = testData.getClientCollectionEmail01();
+		clientcollectionFirstName01 = testData.getClientcollectionFirstName01();
+		clientcollectionSecondName01 = testData.getClientcollectionSecondName01();
+		clientCollectionEmail02 = testData.getClientCollectionEmail02();
+		clientcollectionFirstName02 = testData.getClientcollectionFirstName02();
+		clientcollectionSecondName02 = testData.getClientcollectionSecondName02();
+		copyDSwithErr = testData.getCopyDSwithErr();
+            
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
