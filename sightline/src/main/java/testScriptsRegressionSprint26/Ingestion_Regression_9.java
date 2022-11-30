@@ -657,6 +657,73 @@ public class Ingestion_Regression_9 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 29/11/2022 TestCase Id:RPMXCON-48927
+	 * Description :Validate new metadata field DocLanguages on Tally report  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48927",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnTally() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48927");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on Tally report");
+		String metadata="DocLanguages";
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyMetaDataAvailabilityInTallyReport(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyMetaDataAvailabilityInTallyReport(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"security Group");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 29/11/2022 TestCase Id:RPMXCON-47306
+	 * Description :To verify that Counts displayed on Tiles on Ingestion home page are correct.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47306",enabled = true, groups = { "regression" })
+	public void verifyCountsDisplayedOnTiles() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47306");
+		baseClass.stepInfo("verify Counts displayed on Tiles on Ingestion home page are correct.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("add new ingestion details");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		baseClass.stepInfo("verify details present in ingestion tile");
+		ingestionPage.verifyContentOnIngestionTiles();  
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
