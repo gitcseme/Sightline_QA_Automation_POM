@@ -282,7 +282,14 @@ public class CodingFormRegression_26 {
 			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
 		}
-		base.stepInfo("Unchecked all the codingforms");
+		base.waitTime(3);
+        if (cf.checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+            cf.getDefaultCodingFormInputBox().waitAndClick(5);
+        }
+        if (cf.checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+            cf.getDefaultCodingFormRadioBtn().waitAndClick(5);
+        }
+		base.stepInfo("checked all the codingforms");
 		base.waitTime(5);
 		soft.assertFalse(cf.sortOrderNxtDisableBtn().isElementAvailable(10));
 		soft.assertAll();
