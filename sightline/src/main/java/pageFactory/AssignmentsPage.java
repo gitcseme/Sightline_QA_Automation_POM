@@ -1722,6 +1722,24 @@ public class AssignmentsPage {
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 
 	}
+	
+	public void createAssignmentWithSplChars(String assignmentName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignmentActionDropdown().Visible();
+			}
+		}), Input.wait60);
+		Thread.sleep(2000);
+		getAssignmentActionDropdown().waitAndClick(10);
+
+		getAssignmentAction_NewAssignment().WaitUntilPresent();
+		Thread.sleep(2000);
+		getAssignmentAction_NewAssignment().waitAndClick(20);
+		Assgnwithspecialchars(assignmentName);
+
+	}
 
 	public void createAssignmentDisplayAnalyticsPanelEnabled(String assignmentName, String codingForm)
 			throws InterruptedException {
@@ -1911,6 +1929,78 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 
 	}
+	
+	public void editAssignmentWithSplChars(final String assignmentName) throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumberOfAssignmentsToBeShown().Visible();
+			}
+		}), Input.wait60);
+
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+		Boolean assignmentVisibility = false;
+		try {
+			assignmentVisibility = getSelectAssignment(assignmentName).isDisplayed();
+		} catch (Exception e) {
+			System.err.println("Error" + e);
+		}
+		if (assignmentVisibility) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectAssignment(assignmentName).Visible();
+				}
+			}), Input.wait60);
+
+		} else {
+			bc.waitForElement(getAssgn_Pagination());
+			String nextbutton = getAssgn_Pagination().GetAttribute("class").trim();
+			do {
+				getAssgn_Pagination().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				try {
+					assignmentVisibility = getSelectAssignment(assignmentName).isDisplayed();
+				} catch (Exception e) {
+					System.err.println("Error" + e);
+				}
+				nextbutton = getAssgn_Pagination().GetAttribute("class").trim();
+				if (nextbutton.equals("paginate_button next disabled")) {
+					break;
+				}
+			} while (!assignmentVisibility);
+		}
+
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectAssignment(assignmentName).Visible();
+			}
+		}), Input.wait60);
+		driver.scrollingToBottomofAPage();
+
+		if (!getSelectAssignmentHighlightCheck(assignmentName).isDisplayed()) {
+			getSelectAssignment(assignmentName).waitAndClick(5);
+		}
+
+		driver.scrollPageToTop();
+
+		getAssignmentActionDropdown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignmentAction_EditAssignment().Visible();
+			}
+		}), Input.wait60);
+		bc.waitTime(2);
+		getAssignmentAction_EditAssignment().isElementAvailable(10);
+		getAssignmentAction_EditAssignment().waitAndClick(3);
+		Assgnwithspecialchars(assignmentName+"<'>&");
+		
+
+	}
+	
 
 	public void addReviewerAndDistributeDocs(String assignmentName, int docCount) throws InterruptedException {
 
@@ -2368,6 +2458,25 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(10);
 
 	}
+		
+
+	
+	public void createAssgnGroupWithSplChars(String assgngrpName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		SoftAssert sa=new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgGrptionDropdown().Visible();
+			}
+		}), Input.wait60);
+		getAssgGrptionDropdown().waitAndClick(10);
+
+		bc.waitForElement(getAssgnGrp_Create());
+		getAssgnGrp_Create().waitAndClick(20);
+		
+		Assgnwithspecialchars(assgngrpName);
+
+	}
 
 	public void EditAssgnGroup(String assgngrpName) throws InterruptedException {
 
@@ -2410,6 +2519,29 @@ public class AssignmentsPage {
 		}
 
 		getAssignmentSaveButton().waitAndClick(5);
+
+	}
+	
+	public void EditAssgnGroupSplChars(String assgngrpName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		SoftAssert sa=new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgGrptionDropdown().Visible();
+			}
+		}), Input.wait30);
+
+		getAssgnGrp_Select(assgngrpName).waitAndClick(10);
+
+		Thread.sleep(2000);
+		getAssgGrptionDropdown().waitAndClick(10);
+
+		getAssgnGrp_Edit().WaitUntilPresent();
+		Thread.sleep(2000);
+
+		getAssgnGrp_Edit().waitAndClick(20);
+
+		Assgnwithspecialchars(assgngrpName+"<'>&");
 
 	}
 

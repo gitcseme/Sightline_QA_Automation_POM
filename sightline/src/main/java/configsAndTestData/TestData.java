@@ -396,7 +396,14 @@ public class TestData {
 	public String dateKeywordHeaderC;
 	public String reteriveDSErr;
 	public String completedWithErr;
-
+	public String clientCollectionEmail01;
+    public String clientcollectionFirstName01;
+    public String clientcollectionSecondName01;
+    public String clientCollectionEmail02;
+    public String clientcollectionFirstName02;
+    public String clientcollectionSecondName02;
+    public String copyDSwithErr;
+    
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
@@ -417,6 +424,10 @@ public class TestData {
     public String collsecondlastName;
     public String totalRetrievedCount;
     public String collectionFailedStatus;
+    public String TenantIDJeb;
+    public String ApplicationIDJeb;
+    public String ApplicationKeyJeb;
+    public String collectionJebEmailId;
 
     /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified

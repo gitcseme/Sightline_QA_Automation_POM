@@ -47,9 +47,10 @@ public class TimelineReportPage {
 	}
 
 	public Element selectSecurityGrp() {
-		return driver.FindElementByXPath("//label[text()='Default Security Group']/preceding-sibling::input");
+		return driver.FindElementByXPath("//label[contains(text(),'Default Security Group')]");
 	}
 
+	
 	public Element saveSelectedSecurityGrp() {
 		return driver.FindElementByXPath("//button[@id='secgroup']");
 	}
@@ -130,6 +131,9 @@ public class TimelineReportPage {
 	public Element saveSelectedSearches() {
 		return driver.FindElementByXPath("//button[@id='search']");
 	}
+	public Element saveSelectedProjects() {
+		return driver.FindElementByXPath("//button[@id='project']");
+	}
 	public Element selectMonthChart() {
 		return driver.FindElementByCssSelector("div[id='level2timeline'] rect[y='0']");
 	}
@@ -141,6 +145,9 @@ public class TimelineReportPage {
 	}
 	public Element getSelectCustodianNames() {
 		return driver.FindElementByXPath("//span[text()='Custodians']/parent::strong/parent::div//ul[@class='select2-choices']//input");
+	}
+	public Element getProjectName(String projectName) {
+		return driver.FindElementByXPath("//label[text()='"+projectName+"']");
 	}
 
 	public Element getSaveReportName() {
@@ -198,13 +205,14 @@ public class TimelineReportPage {
 	public void selectSource() {
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(getSelectSource());
-		getSelectSource().waitAndClick(5);
+		getSelectSource().waitAndClick(10);
 		base.waitTillElemetToBeClickable(getSelectSourceSecurityGroup());
-		getSelectSourceSecurityGroup().waitAndClick(5);
-		base.waitTillElemetToBeClickable(selectSecurityGrp());
-		selectSecurityGrp().waitAndClick(5);
+		getSelectSourceSecurityGroup().waitAndClick(10);
+//		base.waitTillElemetToBeClickable(selectSecurityGrp());
+		base.waitForElement(selectSecurityGrp());
+		selectSecurityGrp().waitAndClick(10);
 		base.waitTillElemetToBeClickable(saveSelectedSecurityGrp());
-		saveSelectedSecurityGrp().waitAndClick(5);
+		saveSelectedSecurityGrp().waitAndClick(10);
 	}
 
 	/**
@@ -345,6 +353,8 @@ public class TimelineReportPage {
 			selectChart(3).ScrollTo();
 			selectChart(3).waitAndClick(10);
 		} else {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
 			base.waitForElement(selectChart());
 			base.waitTillElemetToBeClickable(selectChart());
 			selectChart().ScrollTo();

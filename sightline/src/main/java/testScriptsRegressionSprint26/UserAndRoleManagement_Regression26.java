@@ -80,6 +80,7 @@ public class UserAndRoleManagement_Regression26 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52522");
 		baseClass.stepInfo("To verify the access of functionality for RMU role after login");
 
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.rmu1userName);
 		userManage.selectEditUserUsingPagination(Input.projectName, null, null);

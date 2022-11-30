@@ -21,6 +21,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -237,7 +238,220 @@ public class CodingFormRegression_26 {
 		// logOut
 		loginPage.logout();
 	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64894
+	 * @throws Exception
+	 * @Description Verify that when user check on the "CODING FORM NAME" check box
+	 *              from "Add/remove coding form in this security group" coding form
+	 *              pop-up all the present coding form should get selected from the
+	 *              column.
+	 */
+	@Test(description = "RPMXCON-64894", enabled = true, groups = { "regression" })
+	public void verifyPopUpAllGetSelectedFromColumn() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64894");
+		base.stepInfo(
+				"Verify that when user check on the \"CODING FORM NAME\" check box from \"Add/remove coding form in this security group\" coding form pop-up all the present coding form should get selected from the column.");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
 
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.checkingBelow15CFCheckboxForSG();
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		soft.assertTrue(cf.getSetCodingFormToSG().isElementPresent());
+		boolean showHide = cf.getShowHide().Enabled();
+		soft.assertTrue(showHide);
+		base.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
+		cf.getSetCodingFormToSG().waitAndClick(5);
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean flagPopup1 = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.stepInfo("Add / Remove Coding Forms in this Security Group popup is displayed successfully");
+		soft.assertTrue(flagPopup1);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.waitForElement(cf.getPopUpCheckBox());
+		cf.getPopUpCheckBox().waitAndClick(5);
+		base.stepInfo("Codeform name check box is clicked to select all the codingforms");
+		driver.waitForPageToBeReady();
+		int Check = cf.getCfChecBoxUsingSize().size();
+		System.out.println(Check);
+		for (int i = 0; i < Check; i++) {
+			List<WebElement> element = cf.getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+		}
+		base.waitTime(3);
+        if (cf.checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+            cf.getDefaultCodingFormInputBox().waitAndClick(5);
+        }
+        if (cf.checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+            cf.getDefaultCodingFormRadioBtn().waitAndClick(5);
+        }
+		base.stepInfo("checked all the codingforms");
+		base.waitTime(5);
+		soft.assertFalse(cf.sortOrderNxtDisableBtn().isElementAvailable(10));
+		soft.assertAll();
+		base.stepInfo("Next button is disabled as expected");
+		base.passedStep("All the present coding form has been get selected As expected when we checked code form names");
+		cf.getCfPopUpCancel().waitAndClick(10);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description :Verify that when we have more than 10 coding form scroll bar should be
+	 *  present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).RPMXCON-64910
+	 */
+	
+	@Test(description = "RPMXCON-64910",enabled = true, groups = { "regression" })
+	public void verifyMoreThanTenCodingFormScrollBarPresentInTableOfAddOrRemoveCFSecurityGroupPopUp() throws InterruptedException {
+		
+		softAssert = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-64910 CodingForm");
+		baseClass.stepInfo("Verify that when we have more than 10 coding form scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page (UI).");
+		
+		//login as RMU
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		 
+		 // create CodingForm Based On Condition
+		codingForm.navigateToCodingFormPage();
+		List<String> listOfCodingFormCreated = codingForm.createCodingformBasedOnCondition(11);
+		baseClass.stepInfo("creating more than 10 coding form.");
+		
+		// Clicking on  "Set Security Group Coding form" button.
+		codingForm.navigateToCodingFormPage();
+		baseClass.waitForElement(codingForm.getSetCFButton());
+		codingForm.getSetCFButton().waitAndClick(10);
+		baseClass.stepInfo(" \"Set Security Group Coding form\" button is present in \"Manage Coding Form\" page.");
+		
+		// Verify that when we have more than 10 coding form the scroll bar should be present in the table of "Add/remove coding form in this security group" pop-up page
+		boolean verifyScrollBar = codingForm.verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar();
+		softAssert.assertEquals(verifyScrollBar,true);
+		softAssert.assertAll();
+		baseClass.passedStep("Verified that when we have more than 10 coding form the scroll bar should be present in the table of \"Add/remove coding form in this security group\" pop-up page.");
+		
+		// delete created codingForms
+		driver.Navigate().refresh();
+		codingForm.DeleteMultipleCodingform(listOfCodingFormCreated);
+
+		// logOut
+		loginPage.logout();
+	}
+
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-50967
+	 * @throws Exception
+	 * @Description Verify when user navigates from Basic Search/Saved search/Doc
+	 *              List and coding form is assigned to security group, custom
+	 *              coding form is editable
+	 */
+	@Test(description = "RPMXCON-50967", enabled = true, groups = { "regression" })
+	public void verifyCustomCfIsEditable() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-50967");
+		base.stepInfo(
+				"Verify when user navigates from Basic Search/Saved search/Doc List and coding form is assigned to security group, custom coding form is editable");
+		CodingForm cf = new CodingForm(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert soft = new SoftAssert();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+
+		// Creating Coding Form
+		cf.createCodingform(cfName);
+		// setting newly created coding Form as Default Coding Form
+		baseClass.stepInfo("setting newly created coding Form as Default Coding Form.");
+		driver.waitForPageToBeReady();
+		cf.assignCodingFormToSG(cfName);
+
+		// Searching Content document go to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.viewInDocView();
+
+		// custom CF is editable
+		driver.waitForPageToBeReady();
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> CFInDocView = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		baseClass.compareListWithOnlyOneString(CFInDocView, cfName,
+				cfName + "  custom coding forms is displayed on doc view page ",
+				"creating coding forms is not displayed on doc view page");
+		driver.waitForPageToBeReady();
+		base.waitForElement(docView.getDocument_AddComment());
+		soft.assertTrue(docView.getDocument_AddComment().isElementPresent());
+		Boolean commentbox = docView.getDocument_AddComment().Enabled();
+		if (commentbox == true) {
+			base.waitForElement(docView.getDocument_AddComment());
+			docView.getDocument_AddComment().Click();
+			docView.getDocument_AddComment().SendKeys("comment");
+			base.passedStep("Custom CF comment box is Editable on selected document as expected");
+		} else {
+			base.failedStep("custom CF comment box is not Editable");
+		}
+		soft.assertTrue(docView.getAttorney_ClientCheckBox().isElementPresent());
+		Boolean checkbox = docView.getAttorney_ClientCheckBox().Enabled();
+		if (checkbox == true) {
+			base.waitForElement(docView.getAttorney_ClientCheckBox());
+			docView.getAttorney_ClientCheckBox().waitAndClick(5);
+			base.passedStep("Custom CF checkbox box is Editable on selected document as expected");
+		} else {
+			base.failedStep("Custom CF check box is not Editable");
+		}
+		base.passedStep(cfName + "   Custom coding form has been editable for the document successfully");
+		soft.assertAll();
+		loginPage.logout();
+
+		// login as Rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Successfully login as Reviewer '" + Input.rev1userName + "'");
+		// Searching Content document go to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		// custom CF is editable
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> CFInDocView1 = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		baseClass.compareListWithOnlyOneString(CFInDocView1, cfName,
+				cfName + "  Custom coding forms is displayed on doc view page ",
+				"Custom coding forms is not displayed on doc view page");
+		driver.waitForPageToBeReady();
+		base.waitForElement(docView.getDocument_AddComment());
+		soft.assertTrue(docView.getDocument_AddComment().isElementPresent());
+		Boolean commentbox1 = docView.getDocument_AddComment().Enabled();
+		if (commentbox1 == true) {
+			base.waitForElement(docView.getDocument_AddComment());
+			docView.getDocument_AddComment().Click();
+			docView.getDocument_AddComment().SendKeys("comment");
+			base.passedStep("Custom CF comment box is Editable on selected document as expected");
+		} else {
+			base.failedStep("Custom CF comment box is not Editable");
+		}
+		soft.assertTrue(docView.getAttorney_ClientCheckBox().isElementPresent());
+		Boolean checkbox1 = docView.getAttorney_ClientCheckBox().Enabled();
+		if (checkbox1 == true) {
+			base.waitForElement(docView.getAttorney_ClientCheckBox());
+			docView.getAttorney_ClientCheckBox().waitAndClick(5);
+			base.passedStep("Custom CF checkbox box is Editable on selected document as expected");
+		} else {
+			base.failedStep("Custom CF check box is not Editable");
+		}
+		base.passedStep(cfName + "   Custom coding form has been editable for the document successfully");
+		soft.assertAll();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		cf.assignCodingFormToSG(Input.codeFormName);
+		loginPage.logout();
+
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

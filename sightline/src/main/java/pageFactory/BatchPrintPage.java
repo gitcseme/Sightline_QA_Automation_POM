@@ -580,10 +580,25 @@ public class BatchPrintPage {
 
 	// added by sowndarya
 
+	public Element getSearchNodeExpand(String gropuName) {
+		return driver.FindElementByXPath("//div[@id='searchTree']//a[text()='" + gropuName + "']//preceding-sibling::i[@class='jstree-icon jstree-ocl']");
+	}
+	public Element getSelectSearch(String searchname) {
+		return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li//a[contains(text(),'" + searchname + "')]");
+	}
+	
 	public Element getBatchId(int i) {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//td[@class='sorting_1'][" + i + "]");
 	}
 
+	public Element getRequestedDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Analysis')]//..//..//div//p");
+	}
+	
+	public Element getDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//p//span[last()]");
+	}
+	
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -3151,4 +3166,43 @@ public class BatchPrintPage {
 
 	}
 
+	public void selectSearch(String grpName, String nodeName, String SearchName) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSearchNodeExpand(grpName));
+		getSearchNodeExpand(grpName).waitAndClick(5);
+		base.waitForElement(getSearchNodeExpand(nodeName));
+		getSearchNodeExpand(nodeName).waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		if (getSelectSearch(SearchName).isElementAvailable(10)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectSearch(SearchName).Visible();
+				}
+			}), Input.wait120);
+			getSelectSearch(SearchName).waitAndClick(20);
+			System.out.println(SearchName + " is Selected");
+			base.stepInfo(SearchName + " is Selected");
+
+			driver.scrollPageToTop();
+			getbtnNext().waitAndClick(20);
+			UtilityLog.info("Saved search with  name  " + SearchName);
+
+			
+		} else {
+			base.stepInfo(SearchName + " is Not Displayed");
+
+	}
+	}
+	
+	public void fillingSourceSelectionTag(String grpName, String nodeName, String SearchName) {
+		driver.waitForPageToBeReady();
+		if (getSelectRadioButton().isElementAvailable(3) && getTagBatchPrint().isElementAvailable(3)
+				&& getFolderBatchPrint().isElementAvailable(3)) {
+			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
+			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
+		}
+	
+		selectSearch(grpName, nodeName, SearchName);
+		navigateToNextPage(1);
+		}
 }

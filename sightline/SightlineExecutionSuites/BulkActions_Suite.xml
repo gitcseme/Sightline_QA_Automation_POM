@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Jenkins-BulkActions_suite" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="BulkActions_suite">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.bulkActions.BulkAction_IndiumRegressionPhase2" />
+<class name= "sightline.bulkActions.BulkAction_IndiumRegression2" />
+<class name= "sightline.bulkActions.BulkActions_Regression" />
+<class name= "sightline.bulkActions.BulkActions_Regression25" />
+<class name= "sightline.bulkActions.BulkActions_sprint21_22_23_24" />
+
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

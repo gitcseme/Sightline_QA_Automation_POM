@@ -863,6 +863,10 @@ public class DocViewPage {
 	public Element getDocument_CommentsTextBox() {
 		return driver.FindElementByXPath("//textarea[@id='1_textarea']");
 	}
+	
+	public Element getDocument_AddComment() {
+        return driver.FindElementByXPath("//*[@id='item1']//label//textarea");
+    }
 
 	public Element getReadOnlyTextBox(String projectFieldName) {
 		return driver.FindElementByXPath("//input[@name='FIELD'][@projectfieldname='" + projectFieldName + "']");
@@ -3641,6 +3645,9 @@ public class DocViewPage {
 
 	public Element getselectDocHistory(int no) {
 		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li)[" + no + "]");
+	}
+	public Element getAttorney_ClientCheckBox() {
+		return driver.FindElementByXPath("//*[@id='l_it_0']/span");
 	}
 
 	public DocViewPage(Driver driver) {

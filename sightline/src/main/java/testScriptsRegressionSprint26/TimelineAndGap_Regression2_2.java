@@ -145,6 +145,54 @@ public class TimelineAndGap_Regression2_2 {
 		sa.assertAll();		
 		lp.logout();
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws ParseException 
+	 * @throws InterruptedException 
+	 * @description: To verify that as per the User role there will different values of Sources for TimeLine and Gaps Report
+	 */
+	@Test(description = "RPMXCON-56300", dataProvider = "userDetails", groups = { "regression" }, enabled = true)
+	public void verifyTimeLineGapsReportUsingDiffrentSources(String username, String password, String role) throws ParseException, InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56300");
+		bc.stepInfo("Verify and generate Timeline And Gaps Report with source as Search");
+		SoftAssert sa = new SoftAssert();
+		search = new SessionSearch(driver);
+		lp.loginToSightLine(username, password);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		timelineRpt.navigateToTimelineAndGapsReport();
+		if (role == "PA") {
+			driver.waitForPageToBeReady();
+			bc.waitTillElemetToBeClickable(timelineRpt.getSelectSource());
+			timelineRpt.getSelectSource().waitAndClick(5);
+			bc.waitTillElemetToBeClickable(timelineRpt.getSelectSourceSelection("Projects"));
+			timelineRpt.getSelectSourceSelection("Projects").waitAndClick(5);
+			timelineRpt.getProjectName(Input.projectName).waitAndClick(5);
+			bc.waitTillElemetToBeClickable(timelineRpt.saveSelectedProjects());
+			timelineRpt.saveSelectedProjects().waitAndClick(10);
+			bc.stepInfo("Projects is selected as source selection successfully");
+		} else {
+			timelineRpt.selectSource();
+			bc.stepInfo("Default security group is selected as source selection successfully");
+		}
+		timelineRpt.selectTimeline("MasterDate");
+		String toDate = timelineRpt.getCurrentDate();
+		timelineRpt.selectDateRange(fromDate, toDate);
+		timelineRpt.applyChanges();
+		timelineRpt.selectBarChart();
+		timelineRpt.selectActions("Tag", "yearlyActions");
+		bc.waitForElement(timelineRpt.totalDocsInTag());
+		String actualsDocs = timelineRpt.totalDocsInTag().getText();
+		sa.assertNotEquals(actualsDocs, "0");
+		sa.assertAll();
+		bc.passedStep("Report generated sucessfully with diffrent source selections");
+		lp.logout();
+	}
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { {  Input.rmu1userName, Input.rmu1password,"RMU" },
+				{  Input.pa1userName, Input.pa1password,"PA" } };
+	}
 	
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

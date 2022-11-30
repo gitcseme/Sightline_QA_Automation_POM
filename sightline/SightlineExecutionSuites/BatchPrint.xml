@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Jenkins-Basicsearch-Tags-Batchreadaction_Batch" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="BatchPrint_Suite">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.batchPrint.BatchPrint_Regression1" />
+<class name= "sightline.batchPrint.BatchPrintRegression" />
+<class name= "sightline.batchPrint.BatchPrintRegression2" />
+<class name= "sightline.batchPrint.BatchPrintRegression_25" />
+<class name= "sightline.batchPrint.BatchPrintRegression_20_21_22_24" />
+
+
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

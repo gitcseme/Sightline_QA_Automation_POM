@@ -1519,7 +1519,7 @@ public class CodingForm {
 	}
 
 	public Element getShowHide() {
-		return driver.FindElementByXPath("//button//span[text()='Show / hide columns']");
+		return driver.FindElementByXPath("//button//span[text()='Show / Hide Columns']");
 	}
 
 	public Element sortOrderNxtBtn() {
@@ -6109,4 +6109,38 @@ public class CodingForm {
 		}
 	}
 
+	public boolean verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar() { 
+		driver.waitForPageToBeReady();
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean flag = (boolean) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollHeight>"
+				+ "document.querySelector('.dataTables_scrollBody').clientHeight;");
+		System.out.println(flag);
+
+		return flag;
+	}
+	
+	
+	/**
+	 * @author:sowndarya
+	 * @description:To save a coding form with group associate
+	 */
+	public void saveCodingForm2TagsWithGrpAssociat(String cfName, String tagname1, String tagname2) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();		
+		addTwoCheckBox("tag", tagname1, tagname2);
+		specialObjectsBox("radio");	
+		addcodingFormAddButton();
+		passingCodingFormName(cfName);
+		selectTagTypeByIndex("radio item", 1, 0);
+		selectTagTypeByIndex("radio item", 1, 1);
+        driver.waitForPageToBeReady();
+		saveCodingForm();
+	}
+
+
+
+
 }
+
+

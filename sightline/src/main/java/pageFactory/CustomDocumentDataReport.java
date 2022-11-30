@@ -47,8 +47,8 @@ public class CustomDocumentDataReport {
 		return driver.FindElementByXPath("//strong[contains(.,'Security Groups')]");
 	}
 
-	public Element getTally_SelectSecurityGroup(String value) {
-		return driver.FindElementByXPath(".//*[@id='secgroup']/li[contains(.,'" + value + "')]/label");
+	public Element getTally_SelectSecurityGroup(String sourceValue) {
+		return driver.FindElementByXPath("//label[@class='checkbox']//span[contains(text(),'"+sourceValue+"')]//..//i");
 	}
 
 	public Element getTally_SaveSelections() {
@@ -90,7 +90,7 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getWorkProductField(String workProductField) {
-		return driver.FindElementByXPath("//*[@id='tab2-export']/div//*[contains(text(),'" + workProductField + "')]");
+		return driver.FindElementByXPath("//*[@class='tab-pane left-panel active']/div//a[contains(text(),'"+workProductField+"')]");
 	}
 
 	public Element getExportFieldBtn() {
@@ -171,7 +171,8 @@ public class CustomDocumentDataReport {
 		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
 	}
 
-	// added by sowndary
+	// added by sowndarya
+
 	public Element getExportNewLineBtn() {
 		return driver.FindElementById("newLineSelect");
 	}
@@ -206,6 +207,7 @@ public class CustomDocumentDataReport {
 				return getCustomDocumentDataReport().Visible();
 			}
 		}), Input.wait30);
+
 		getCustomDocumentDataReport().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -344,6 +346,7 @@ public class CustomDocumentDataReport {
 		for (int i = 0; i < value.length; i++) {
 			driver.scrollPageToTop();
 			if (getSelectedExports(value[i]).isDisplayed()) {
+				driver.waitForPageToBeReady();
 				softAssertion.assertTrue(true);
 				bc.passedStep("Selected metadata fields and work products " + value[i]
 						+ "  added under 'Selected for Export' section");
@@ -408,13 +411,15 @@ public class CustomDocumentDataReport {
 		getWorkProductTab().waitAndClick(10);
 		bc.waitTime(2);
 		for (int i = 0; i < Wfields.length; i++) {
-			bc.waitTime(2);
-			// getWorkProductField(Wfields[i]).ScrollTo();
 			bc.waitForElement(getWorkProductField(Wfields[i]));
+			bc.waitTime(2);
+			driver.waitForPageToBeReady();
+			getWorkProductField(Wfields[i]).ScrollTo();
+//			bc.waitTillElemetToBeClickable(getWorkProductField(Wfields[i]));
 			getWorkProductField(Wfields[i]).waitAndClick(10);
 		}
 		bc.waitForElement(getAddToSelectedBtn());
-		getAddToSelectedBtn().waitAndClick(2);
+		getAddToSelectedBtn().waitAndClick(5);
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 	}

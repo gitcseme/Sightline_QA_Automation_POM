@@ -31,7 +31,13 @@ public class TallyPage {
 	public Element getTally_SelectSource() {
 		return driver.FindElementById("select-source");
 	}
-
+	public Element getTagNameWithSpecialChars() {
+		return driver.FindElementById("tagErrorMsg"); 
+	}
+	
+	public Element getFolderNameWithSpecialChars() {
+		return driver.FindElementById("folderErrorMsg"); 
+	}
 	public Element getTally_SecurityGroupsButton() {
 		return driver.FindElementByXPath("//strong[contains(.,'Security Groups')]");
 	}
@@ -761,6 +767,45 @@ public class TallyPage {
 		System.out.println("Bulk Tag is done, Tag is : " + TagName);
 
 	}
+	public void bulkTagSpecialChars(String folderName, final int tally1subtally2) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction(tally1subtally2).Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction(tally1subtally2).waitAndClick(20);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkNewTab().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkNewTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterFolderName().Visible();
+			}
+		}), Input.wait60);
+		getEnterFolderName().SendKeys(folderName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderAllRoot().Visible();
+			}
+		}), Input.wait60);
+		getFolderAllRoot().Click();
+ 
+		getContinueButton().waitAndClick(30);
+		
+		String errorMsg=getFolderNameWithSpecialChars().getText();
+		System.out.println("errorMsg"+errorMsg);
+		  Assert.assertEquals(errorMsg,"Special characters are not allowed.");
+	
+	}
 
 	public void bulkFolder(String folderName, final int tally1subtally2) {
 
@@ -821,7 +866,47 @@ public class TallyPage {
 		System.out.println("Bulk folder is done, folder is : " + folderName);
 
 	}
+	public void bulkFolderSpecialChars(String folderName, final int tally1subtally2) throws InterruptedException {
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction(tally1subtally2).Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction(tally1subtally2).waitAndClick(20);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkNewTab().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkNewTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterFolderName().Visible();
+			}
+		}), Input.wait60);
+		getEnterFolderName().SendKeys(folderName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderAllRoot().Visible();
+			}
+		}), Input.wait60);
+		getFolderAllRoot().Click();
+ 
+		getContinueButton().waitAndClick(30);
+		
+		String errorMsg=getFolderNameWithSpecialChars().getText();
+		System.out.println("errorMsg"+errorMsg);
+		  Assert.assertEquals(errorMsg,"Special characters are not allowed.");
+
+		
+		
+	}
 	public void validateSubTally() throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -858,7 +943,7 @@ public class TallyPage {
 		base.yesPopUp();
 
 	}
-
+	
 	public void subTallyActions() {
 		getTally_btnSubTallyAll().waitAndClick(30);
 
@@ -2557,13 +2642,18 @@ public class TallyPage {
 	}
 
 	/**
-	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 09/11/2022 Modified by: NA Modified Date: 29/11/2022
 	 * @description: this method will check the generation of tally report for
 	 *               metadata
 	 */
-	public void verifyTallyReportGenerationForMetadata(String metadata) {
+	public void verifyTallyReportGenerationForMetadata(String metadata,String filter) {
 
-		selectSourceByProject();
+		if(filter.equalsIgnoreCase("project")) {
+			selectSourceByProject();
+		}
+		else if(filter.equalsIgnoreCase("security group")) {
+			SelectSource_SecurityGroup(Input.securityGroup);
+		}
 		selectTallyByMetaDataField(metadata);
 		base.waitForElement(getTally_btnTallyAll());
 		getTally_btnTallyAll().waitAndClick(10);
@@ -2657,4 +2747,22 @@ public class TallyPage {
 		}
 
 	}
-}
+	
+	/**
+	 * @author: Arun Created Date: 29/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the field available in metadata list
+	 */
+	public void verifyMetaDataAvailabilityInTallyReport(String field) {
+
+		navigateTo_Tallypage();
+		base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+		getTally_SelectaTallyFieldtoruntallyon().Click();
+		base.waitForElement(getTally_Metadataselect());
+		if (getMetaData(field).isElementAvailable(10)) {
+			base.passedStep(field + "is available in metadata list");
+		} else {
+			base.failedStep(field + "is not available in metadata list");
+		}
+	}
+	
+	}

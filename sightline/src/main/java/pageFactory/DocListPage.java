@@ -1496,6 +1496,26 @@ public class DocListPage {
 
 	}
 	
+	public Element getSeleColumDocFileSize() {
+		return driver.FindElementByXPath("//label//strong[text()='DocFileSize']");
+	}
+	
+	public Element getDocListDocFileSizeValue() {
+		return driver.FindElementByXPath(
+				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[7]");
+	}
+
+	public Element getDocListChildWindow() {
+		return driver.FindElementById("childlist_80_dtDocList_wrapper");
+	}
+
+	public Element getMetaDataAuthorName() {
+		return driver.FindElementByXPath("//td//Strong[contains(text(),'EmailAuthorName')]");
+	}
+	
+	public Element getSaveToProfileBtn() {
+		return driver.FindElementById("btnSaveProfile");
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4785,6 +4805,7 @@ public class DocListPage {
 		return arList;
 	}
 
+	
 	/**
 	 * @author Gopinath
 	 * @Description: method to verify sequence of parent and child docs
@@ -6499,6 +6520,24 @@ public class DocListPage {
 			base.compareTextViaContains(ActualString,CompareString, "Filter are applied for thumbnail boxes",
 					"Filters are not applied for thumbnail boxes");
 		}
-	}	
+	}
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description :addding docfilesize column in doclist page.
+	 * 
+	 */
+	public void addDocFileSizeColumn() {
+
+		base.waitForElement(SelectColumnBtn());
+		SelectColumnBtn().waitAndClick(10);
+		base.waitForElement(getSeleColumDocFileSize());
+		getSeleColumDocFileSize().ScrollTo();
+		getSeleColumDocFileSize().Click();
+		base.waitForElement(getAddToSelect());
+		getAddToSelect().Click();
+		base.waitForElement(getUpdateColumnBtn());
+		getUpdateColumnBtn().Click();
+	}
 
 }

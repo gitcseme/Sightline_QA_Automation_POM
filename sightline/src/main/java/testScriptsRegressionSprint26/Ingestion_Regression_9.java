@@ -20,6 +20,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -42,6 +43,7 @@ public class Ingestion_Regression_9 {
 	TallyPage tally;
 	DocExplorerPage docExplorer;
 	DocViewPage docView;
+	ProjectFieldsPage projectFieldPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -344,6 +346,383 @@ public class Ingestion_Regression_9 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-49553
+	 * Description :Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49553",enabled = true, groups = { "regression" })
+	public void verifyEmailAuthorMetadataAvailability() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49553");
+		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available");
+		String data ="EmailAuthorNameAndAddress";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//add dataset details and click next
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Adding ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.datLoadFile4, Input.documentKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		baseClass.stepInfo("click on next button");
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		//Verify destination field 'EmailAuthorNameAndAddresses' metadata
+		baseClass.stepInfo("Select 'EMAIL' in field category");
+		baseClass.waitForElement(ingestionPage.getMappingCategoryField(5));
+		ingestionPage.getMappingCategoryField(5).selectFromDropdown().selectByVisibleText(Input.email);
+		baseClass.stepInfo("verify metadata");
+		ingestionPage.verifyMetadataAvailability(ingestionPage.getMappingDestinationField(5), data);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-47427
+	 * Description :To Verify Add New Ingestion in Ingestion Wizard.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47427",enabled = true, groups = { "regression" })
+	public void verifySectionAvailableInIngestionWizard() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47427");
+		baseClass.stepInfo("To Verify Add New Ingestion in Ingestion Wizard.");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Click on add new ingestion in home page");
+		ingestionPage.ClickOnAddNewIngestionLink();
+		ingestionPage.verifySourceAndMappingSectionStatus();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-49505
+	 * Description :Verify the default value for the 'Date & Time Format' field
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49505",enabled = true, groups = { "regression" })
+	public void verifyDefaultSelectionForDateFormat() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49505");
+		baseClass.stepInfo("Verify the default value for the 'Date & Time Format' field");
+	
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion details");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		//verify default selection value for date-time format
+		ingestionPage.verifyDateFormatDropDownValidations();
+		baseClass.passedStep("No specific date format selected in date and time format field");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/11/2022 TestCase Id:RPMXCON-63250
+	 * Description :Validate whether user do not get any error message during "Add only" ingestion 
+	 * type when similar source dat field are mapped twice with different destination dat field.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63250",enabled = true, groups = { "regression" })
+	public void verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63250");
+		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, Input.folder61759);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform similar mapping on source field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("sourceField");
+		baseClass.passedStep("User able to save ingestion successfully as draft when mapping similar source field");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/11/2022 TestCase Id:RPMXCON-63245
+	 * Description :Validate whether all the DAT fields from DAT File selected during "Add only" ingestion 
+	 * is displayed under Source DAT fields in Configure Field Mapping of Ingestion Wizard Page.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63245",enabled = true, groups = { "regression" })
+	public void verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-63245");
+		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion with type as 'add only'");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, Input.folder61759);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile6, Input.prodBeg);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify dat fields available in source field mapping in configuring page" );
+		ingestionPage.verifyDatFieldsAvailableInMappingSection();
+		baseClass.passedStep("All the DAT fields available in configure mapping page");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/11/2022 TestCase Id:RPMXCON-63249
+	 * Description :Validate whether user gets error message during ingestion when similar Destination 
+	 * field is mapped twice with different source dat field 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63249",enabled = true, groups = { "regression" })
+	public void verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63249");
+		baseClass.stepInfo("Verify error message when similar destination field mapped twice.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
+				Input.sourceLocation, "RPMXCON-61759");
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform similar mapping on destination field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
+		baseClass.passedStep("User gets the error message when mapping similar destination field for Add only ingestion");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48169
+	 * Description :Verify the type for the "AudioPlayerReady" is of Bit (values 1 or 0) and field is 
+	 * Active by default, and IsSet and IsSearchable are enabled by default
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48169",enabled = true, groups = { "regression" })
+	public void verifyAudioPlayerReadyField() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48169");
+		baseClass.stepInfo("Verify 'AudioPlayerReady' field default status.");
+		String field = "AudioPlayerReady";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		
+		baseClass.stepInfo("Navigate to manage-project fields");
+		projectFieldPage = new ProjectFieldsPage(driver);
+		projectFieldPage.navigateToProjectFieldsPage();
+		baseClass.stepInfo("check the default value for 'AudioPlayerReady'");
+		projectFieldPage.applyFilterByFilterName(field);
+		projectFieldPage.verifyFieldDataType(field, "Bit");
+		projectFieldPage.verifyExpectedFieldStatus(field,"true","true","active");
+		baseClass.passedStep(field+"is tallyable and is searchable by default");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48930
+	 * Description :Validate new metadata field DocLanguages on DocList  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48930",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnDoclist() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48930");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on DocList");
+		docExplorer = new DocExplorerPage(driver);
+		String ingestionName = null;
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to doclist and verify");
+		docExplorer.navigateToDocExplorerPage();
+		int docsCount=docExplorer.docExpToDocViewOrListWithIngestion(ingestionName, "yes", "doclist");
+		ingestionPage.verifyDocLanguagesMetadata("doclist",docsCount);
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to doclist and verify");
+		int count =sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		ingestionPage.verifyDocLanguagesMetadata("doclist",count);
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-48929
+	 * Description :Validate new metadata field DocLanguages on DocView  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48929",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnDocview() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48929");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on DocView");
+		docExplorer = new DocExplorerPage(driver);
+		String ingestionName = null;
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to docview and verify");
+		docExplorer.navigateToDocExplorerPage();
+		int docsCount = docExplorer.docExpToDocViewOrListWithIngestion(ingestionName, "yes", "docview");
+		ingestionPage.verifyDocLanguagesMetadata("docview",docsCount);
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Navigate to docview and verify");
+		int count =sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocView();
+		ingestionPage.verifyDocLanguagesMetadata("docview",count);
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 28/11/2022 TestCase Id:RPMXCON-47412
+	 * Description :To verify that Admin is able to browser all the Errors using navigation control
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47412",enabled = true, groups = { "regression" })
+	public void verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47412");
+		baseClass.stepInfo("To verify that Admin is able to browser all the Errors using navigation control");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.attachDocFolder, Input.datFile7);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.verifybrowseErrorNavigationControl();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 29/11/2022 TestCase Id:RPMXCON-48927
+	 * Description :Validate new metadata field DocLanguages on Tally report  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48927",enabled = true, groups = { "regression" })
+	public void validateDocLanguagesFieldOnTally() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48927");
+		baseClass.stepInfo("Validate new metadata field DocLanguages on Tally report");
+		String metadata="DocLanguages";
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		//publishing docs as pre-requisite
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem,Input.DATFile1, 
+					Input.prodBeg);
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		//login as PA and verify
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyMetaDataAvailabilityInTallyReport(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
+		loginPage.logout();
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyMetaDataAvailabilityInTallyReport(metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"security Group");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 29/11/2022 TestCase Id:RPMXCON-47306
+	 * Description :To verify that Counts displayed on Tiles on Ingestion home page are correct.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47306",enabled = true, groups = { "regression" })
+	public void verifyCountsDisplayedOnTiles() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47306");
+		baseClass.stepInfo("verify Counts displayed on Tiles on Ingestion home page are correct.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("add new ingestion details");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		baseClass.stepInfo("verify details present in ingestion tile");
+		ingestionPage.verifyContentOnIngestionTiles();  
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

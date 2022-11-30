@@ -302,6 +302,13 @@ public class ReportsPage {
 		return driver.FindElementByXPath("//a[@name='Reports']//i");
 	}
 
+	//added by sowndarya
+	
+	public Element getSavedCustomReport(String reportName) {
+		return driver.FindElementByXPath("//a[text()='" + reportName +"']");
+	}
+	
+	
 	public ReportsPage(Driver driver) {
 
 		this.driver = driver;

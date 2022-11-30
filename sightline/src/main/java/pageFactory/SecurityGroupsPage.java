@@ -66,7 +66,19 @@ public class SecurityGroupsPage {
 	public Element clickSecurityGroup() {
 		return driver.FindElementByXPath("//*[@class='a-menu' and @name='Security']");
 	}
-
+	
+	public Element getSecurityGroupUpdateButton() {
+		return driver.FindElementById("btnUpdateSecurityGroup");
+	}
+	
+	public Element getEditMsg() {
+		return driver.FindElementById("lblEditmsg");
+	}
+	
+	public Element getSecurityGroupNameUpdate() {
+		return driver.FindElementById("txtSecurityGroupNameUpdate");
+	}
+	
 	public Element securityGroupCreate() {
 		return driver.FindElementById("btnNewSecurityGroup");
 	}
