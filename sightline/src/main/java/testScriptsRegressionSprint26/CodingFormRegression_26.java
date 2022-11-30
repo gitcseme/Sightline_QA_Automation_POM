@@ -284,7 +284,7 @@ public class CodingFormRegression_26 {
 		}
 		base.stepInfo("Unchecked all the codingforms");
 		base.waitTime(5);
-		soft.assertFalse(cf.sortOrderNxtDisableBtn().isElementAvailable(5));
+		soft.assertFalse(cf.sortOrderNxtDisableBtn().isElementAvailable(10));
 		soft.assertAll();
 		base.stepInfo("Next button is disabled as expected");
 		base.passedStep("All the present coding form has been get selected As expected when we checked code form names");
@@ -378,13 +378,13 @@ public class CodingFormRegression_26 {
 				cfName + "  custom coding forms is displayed on doc view page ",
 				"creating coding forms is not displayed on doc view page");
 		driver.waitForPageToBeReady();
-		base.waitForElement(docView.getDocument_CommentsTextBox());
-		soft.assertTrue(docView.getDocument_CommentsTextBox().isElementPresent());
-		Boolean commentbox = docView.getDocument_CommentsTextBox().Enabled();
+		base.waitForElement(docView.getDocument_AddComment());
+		soft.assertTrue(docView.getDocument_AddComment().isElementPresent());
+		Boolean commentbox = docView.getDocument_AddComment().Enabled();
 		if (commentbox == true) {
-			base.waitForElement(docView.getDocument_CommentsTextBox());
-			docView.getDocument_CommentsTextBox().Clear();
-			docView.getDocument_CommentsTextBox().SendKeys("comment");
+			base.waitForElement(docView.getDocument_AddComment());
+			docView.getDocument_AddComment().Click();
+			docView.getDocument_AddComment().SendKeys("comment");
 			base.passedStep("Custom CF comment box is Editable on selected document as expected");
 		} else {
 			base.failedStep("custom CF comment box is not Editable");
@@ -416,13 +416,13 @@ public class CodingFormRegression_26 {
 				cfName + "  Custom coding forms is displayed on doc view page ",
 				"Custom coding forms is not displayed on doc view page");
 		driver.waitForPageToBeReady();
-		base.waitForElement(docView.getDocument_CommentsTextBox());
-		soft.assertTrue(docView.getDocument_CommentsTextBox().isElementPresent());
-		Boolean commentbox1 = docView.getDocument_CommentsTextBox().Enabled();
+		base.waitForElement(docView.getDocument_AddComment());
+		soft.assertTrue(docView.getDocument_AddComment().isElementPresent());
+		Boolean commentbox1 = docView.getDocument_AddComment().Enabled();
 		if (commentbox1 == true) {
-			base.waitForElement(docView.getDocument_CommentsTextBox());
-			docView.getDocument_CommentsTextBox().Clear();
-			docView.getDocument_CommentsTextBox().SendKeys("comment");
+			base.waitForElement(docView.getDocument_AddComment());
+			docView.getDocument_AddComment().Click();
+			docView.getDocument_AddComment().SendKeys("comment");
 			base.passedStep("Custom CF comment box is Editable on selected document as expected");
 		} else {
 			base.failedStep("Custom CF comment box is not Editable");
