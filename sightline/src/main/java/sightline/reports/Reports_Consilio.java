@@ -62,8 +62,8 @@ public class Reports_Consilio {
 	public void BulkTagWithSpecialChars() throws InterruptedException {
 		String bulkName="<sample&name'>";
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo("RPMXCON-69059-Verify that error message display and application does NOT accepts - when "
-				+ "user does Bulk Folder from tally and enter Folder name with special characters < > & ‘ ");
+		bc.stepInfo("RPMXCON-69056-Verify that error message display and application does NOT accept - when "
+					+ "user does Bulk Tag from tally and enter tag name with special characters < > & ‘"); 
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		report.TallyReportButton();
 		
@@ -80,8 +80,8 @@ public class Reports_Consilio {
 	public void BulkFolderWithSpecialChars() throws InterruptedException {
 		String bulkName="<sample&name'>";
      lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.stepInfo("RPMXCON-69056-Verify that error message display and application does NOT accept - when "
-				+ "user does Bulk Tag from tally and enter tag name with special characters < > & ‘ ");
+		bc.stepInfo("RPMXCON-69059-Verify that error message display and application does NOT accepts - when "
+				+ "user does Bulk Folder from tally and enter Folder name with special characters < > & ‘ ");
 
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		report.TallyReportButton();
