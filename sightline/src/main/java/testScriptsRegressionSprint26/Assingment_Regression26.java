@@ -62,6 +62,7 @@ public class Assingment_Regression26 {
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
 		softAssert = new SoftAssert();
+		
 
 	}
 
@@ -281,6 +282,226 @@ public class Assingment_Regression26 {
 			baseClass.failedStep("Draw pool link is displayed");
 		}
 		loginPage.logout();
+	}
+	/**
+	 * @author 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description Validate editing Keywords associated to security group by PAU
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54757", enabled = true, groups = { "regression" })
+	public void verifyEditKeyWordAssociateToSg() throws Exception {
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String keywordname = "AAkeyword" + Utility.dynamicNameAppender();
+		String Modifywordkeyname = "AAkeyword" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		KeywordPage keyword = new KeywordPage(driver);
+		baseClass.stepInfo("Validate editing Keywords associated to security group by PAU");
+		baseClass.stepInfo("Test case Id: RPMXCON-54757");
+
+		// Login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as PAU");
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithSG(Input.securityGroup, keywordname, color);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU" + Input.rmu1userName);
+		driver.waitForPageToBeReady();
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), keywordname);
+		baseClass.stepInfo(keywordname + " created keyword is present in assignmant page as expected");
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as PAU" + Input.pa1userName);
+		keyword.navigateToKeywordPage();
+		keyword.editExistigKeyword(keywordname, Modifywordkeyname);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU" + Input.rmu1userName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), Modifywordkeyname);
+		baseClass.stepInfo(Modifywordkeyname + " modified keyword is present in assignmant page as expected");
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		keyword.deleteKeywordByName(Modifywordkeyname);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description Validate editing Keywords created within security group by RMU
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54758", enabled = true, groups = { "regression" })
+	public void verifyEditKeyWordSgByRmu() throws Exception {
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String keywordname = "AAkeyword" + Utility.dynamicNameAppender();
+		String Modifywordkeyname = "AAModifiedkeyword" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		KeywordPage keyword = new KeywordPage(driver);
+		baseClass.stepInfo("Validate editing Keywords created within security group by RMU");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU " + Input.rmu1userName);
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithSG(Input.securityGroup, keywordname, color);
+		driver.waitForPageToBeReady();
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), keywordname);
+		baseClass.stepInfo(keywordname + " created keyword is present in assignmant page as expected");
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		keyword.navigateToKeywordPage();
+		keyword.editExistigKeyword(keywordname, Modifywordkeyname);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), Modifywordkeyname);
+		baseClass.stepInfo(Modifywordkeyname + " modified keyword is present in assignmant page as expected");
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		keyword.deleteKeywordByName(Modifywordkeyname);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description Delete Keyword - Validate deleting Keywords associated to
+	 *              security group
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54759", enabled = true, groups = { "regression" })
+	public void verifyDeletingKeyWordAssociateToSg() throws Exception {
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String keywordName = "AAkeyword" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		KeywordPage keyword = new KeywordPage(driver);
+		baseClass.stepInfo("Delete Keyword - Validate deleting Keywords associated to security group");
+		baseClass.stepInfo("Test case Id: RPMXCON-54759");
+
+		// Login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithSG(Input.securityGroup, keywordName, color);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		baseClass.stepInfo("Validate editing Keywords associated to security group by PAU");
+		driver.waitForPageToBeReady();
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), keywordName);
+		baseClass.stepInfo(keywordName + " created keyword is present in assignmant page as expected");
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as PAU");
+		keyword.navigateToKeywordPage();
+		keyword.deleteKeywordByName(keywordName);
+		baseClass.stepInfo(keywordName + "Key word deleted sucessfully.");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as " + Input.rmu1userName);
+		List<String> KeywordsListInKEywordPageAfterdelete = new ArrayList<String>();
+		KeywordsListInKEywordPageAfterdelete = baseClass.getAvailableListofElements(keyword.getKeywordsList());
+		baseClass.stepInfo("Checking for the Keyword Abscence After deleting the keyword as expected.");
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.verifyKeywordsBeforeAndAfterDelete(keywordName, KeywordsListInKEywordPageAfterdelete, false);
+		agnmt.getKeywordPopUpCancelBtn().waitAndClick(5);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description Validate removing and adding new keywords by PAU or RMU
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54760", enabled = true, groups = { "regression" })
+	public void verifyRemovingAndAddingNewKeyWords() throws Exception {
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String keywordNamePA = "AAkeyword" + Utility.dynamicNameAppender();
+		String keywordName1PA = "AAkeyword" + Utility.dynamicNameAppender();
+		String ModifiedkeywordNamePA = "AAModifiedkeyword" + Utility.dynamicNameAppender();
+		String keywordNameRMU = "AAkeyword" + Utility.dynamicNameAppender();
+		String keywordName1RMU = "AAkeyword" + Utility.dynamicNameAppender();
+		String ModifiedkeywordNameRMU = "AAModifiedkeyword" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		KeywordPage keyword = new KeywordPage(driver);
+		baseClass.stepInfo("Validate removing and adding new keywords by PAU or RMU");
+
+		// Login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		baseClass.stepInfo("Test case Id: RPMXCON-54760");
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithSG(Input.securityGroup, keywordNamePA, color);
+		baseClass.stepInfo(keywordNamePA + "Keyword added");
+		keyword.addKeywordWithSG(Input.securityGroup, keywordName1PA, color);
+		keyword.editExistigKeyword(keywordName1PA, ModifiedkeywordNamePA);
+		baseClass.stepInfo(ModifiedkeywordNamePA + "Modified Keyword added");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Validate editing Keywords created within security group by RMU");
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithSG(Input.securityGroup, keywordNameRMU, color);
+		baseClass.stepInfo(keywordNameRMU + "Keyword added");
+		keyword.addKeywordWithSG(Input.securityGroup, keywordName1RMU, color);
+		keyword.editExistigKeyword(keywordName1RMU, ModifiedkeywordNameRMU);
+		baseClass.stepInfo(ModifiedkeywordNameRMU + "Modified Keyword added");
+		driver.waitForPageToBeReady();
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		agnmt.verifyKeywordPopUp();
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), keywordNameRMU);
+		baseClass.stepInfo(keywordNameRMU + " Added Rmu keyword is present in assignmant page as expected");
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), keywordNamePA);
+		baseClass.stepInfo(keywordNameRMU + " Added PA keyword is present in assignmant page as expected");
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), ModifiedkeywordNamePA);
+		baseClass.stepInfo(
+				ModifiedkeywordNamePA + " Added Modified Rmu keyword is present in assignmant page as expected");
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_Keywordspopup(), ModifiedkeywordNamePA);
+		baseClass.stepInfo(
+				ModifiedkeywordNamePA + " Added Modified PA keyword is present in assignmant page as expected");
+		driver.waitForPageToBeReady();
+		keyword.deleteKeywordByName(keywordNameRMU);
+		keyword.deleteKeywordByName(keywordNamePA);
 	}
 	
 }
