@@ -236,13 +236,16 @@ public class DocList_Regression26 {
 		softAssert.assertAll();
 		docList.getTileView().waitAndClick(5);
 		baseClass.stepInfo("Verify that thumbnail generation is attempted and Viewed");
+		driver.waitForPageToBeReady();
 		docList.SelectColumnDisplay(docList.getSelectEmailAuthorName());
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docList.getTileView().waitAndClick(5);
 		for (int i = 1; i < docList.getInfoBtn().size(); i++) {
 			driver.waitForPageToBeReady();
 			docList.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
 			baseClass.waitForElement(docList.getMetaDataAuthorName());
+			driver.waitForPageToBeReady();
 			if (docList.getMetaDataAuthorName().isDisplayed()) {
 				baseClass.passedStep("Thumbnails View is seen for this view in Metadata hover box");
 			} else {

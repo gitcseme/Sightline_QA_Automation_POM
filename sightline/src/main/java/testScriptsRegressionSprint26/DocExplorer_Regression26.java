@@ -802,7 +802,9 @@ public class DocExplorer_Regression26 {
 		baseClass.waitTime(3);
 		docExplorer.verifyingDescendingOrderInColumn();
 
+		driver.waitForPageToBeReady();
 		tagAndFol.navigateToTagsAndFolderPage();
+		driver.waitForPageToBeReady();
 		tagAndFol.DeleteTag(random, Input.securityGroup);
 		loginPage.logout();
 
