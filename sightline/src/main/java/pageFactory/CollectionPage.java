@@ -1571,7 +1571,7 @@ public class CollectionPage {
 	 */
 	public void verifyAddedDataSetFrmPopup(String custodianMailId, String collectionName,
 			List<String> expectedCustodianDetaisl, String expectedFolderType, boolean ApplyFilter,
-			String expectedFilterStatus) {
+			String expectedFilterStatus,boolean verifyCustodianAndDataset) {
 		List<String> custodianDetails = new ArrayList<>();
 
 		String headerList[] = { "Select Custodian", "Select Folders to Collect", "Apply Filter" };
@@ -1603,19 +1603,21 @@ public class CollectionPage {
 			base.printResutInReport(status, passMsg, failMsg, "Pass");
 
 			// verify Custodian Details
-			getCustodianLabel().waitAndClick(10);
+			if (verifyCustodianAndDataset) {
+				getCustodianLabel().waitAndClick(10);
 
-			base.waitForElement(getCustodianIDInputTextField());
-			String actualName = getCustodianIDInputTextField().GetAttribute("value");
-			base.waitForElement(getDataSetNameTextFIeld());
-			String actualDatasetName = getDataSetNameTextFIeld().GetAttribute("value");
-			custodianDetails.add(actualName);
-			custodianDetails.add(actualDatasetName);
+				base.waitForElement(getCustodianIDInputTextField());
+				String actualName = getCustodianIDInputTextField().GetAttribute("value");
+				base.waitForElement(getDataSetNameTextFIeld());
+				String actualDatasetName = getDataSetNameTextFIeld().GetAttribute("value");
+				custodianDetails.add(actualName);
+				custodianDetails.add(actualDatasetName);
 
-			String passMsg2 = "Custodian Name & Dataset Name is Retained As expected : " + custodianDetails;
-			String failMsg2 = "Custodian Name & Dataset Name is not Retained";
-			base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
-
+				String passMsg2 = "Custodian Name & Dataset Name is Retained As expected : " + custodianDetails;
+				String failMsg2 = "Custodian Name & Dataset Name is not Retained";
+				base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
+			}
+			
 			// verify Selected folder
 			getFolderabLabel().waitAndClick(10);
 			driver.waitForPageToBeReady();
