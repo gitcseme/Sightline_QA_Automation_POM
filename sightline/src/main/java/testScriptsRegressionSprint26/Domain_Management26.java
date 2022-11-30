@@ -881,14 +881,22 @@ public class Domain_Management26 {
 		baseClass.stepInfo("Creating new project Administrator user");
 		user.createUser(FirstName, LastName, Input.DomainAdministrator, MailID, null, null);
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Assigning project to user");
 		user.openAssignUser();
+		driver.waitForPageToBeReady();
 		user.getDomaintab().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(user.getSelectDomainname());
+		driver.waitForPageToBeReady();
 		user.getSelectDomainname().selectFromDropdown().selectByIndex(1);
+		driver.waitForPageToBeReady();
 		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(user.getrightBtndomainuser());
+		driver.waitForPageToBeReady();
 		user.getrightBtndomainuser().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		user.getsavedomainuser().waitAndClick(5);
 		baseClass.VerifySuccessMessage("User Mapping Successful");
 		baseClass.stepInfo("Domain user Assiged succesfully");
