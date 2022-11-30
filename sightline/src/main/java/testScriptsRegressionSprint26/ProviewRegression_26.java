@@ -180,11 +180,13 @@ public class ProviewRegression_26 {
 		List<String> folderPresentInCategorize = base.availableListofElements(categorize.getProductionSets());
 		base.stepInfo(folderPresentInCategorize+"  production docs in analyze section");
 
-		for (int i = 0; i < folderPresentInCategorize.size(); i++) {
-			base.compareListWithOnlyOneString(actualprodPresent, folderPresentInCategorize.get(i),
-					folderPresentInCategorize.get(i) + "All existing production is displayed in Analyze section.", "Not present");
-
-		}
+		base.waitTime(5);
+        for (int i = 0; i <=10; i++) {
+            base.compareListWithOnlyOneString(folderPresentInCategorize, actualprodPresent.get(i),
+                    actualprodPresent.get(i) + "All existing production is displayed in Analyze section.",
+                    actualprodPresent.get(i)+"Not present");
+ 
+        }
 
 
 	}
