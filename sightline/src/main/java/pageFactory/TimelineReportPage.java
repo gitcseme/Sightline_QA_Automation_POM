@@ -47,9 +47,10 @@ public class TimelineReportPage {
 	}
 
 	public Element selectSecurityGrp() {
-		return driver.FindElementByXPath("//label[contains(text(),'Default  Security Group')]");
+		return driver.FindElementByXPath("//label[contains(text(),'Default Security Group')]");
 	}
 
+	
 	public Element saveSelectedSecurityGrp() {
 		return driver.FindElementByXPath("//button[@id='secgroup']");
 	}
@@ -204,13 +205,14 @@ public class TimelineReportPage {
 	public void selectSource() {
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(getSelectSource());
-		getSelectSource().waitAndClick(5);
+		getSelectSource().waitAndClick(10);
 		base.waitTillElemetToBeClickable(getSelectSourceSecurityGroup());
-		getSelectSourceSecurityGroup().waitAndClick(5);
-		base.waitTillElemetToBeClickable(selectSecurityGrp());
-		selectSecurityGrp().waitAndClick(5);
+		getSelectSourceSecurityGroup().waitAndClick(10);
+//		base.waitTillElemetToBeClickable(selectSecurityGrp());
+		base.waitForElement(selectSecurityGrp());
+		selectSecurityGrp().waitAndClick(10);
 		base.waitTillElemetToBeClickable(saveSelectedSecurityGrp());
-		saveSelectedSecurityGrp().waitAndClick(5);
+		saveSelectedSecurityGrp().waitAndClick(10);
 	}
 
 	/**
@@ -351,6 +353,8 @@ public class TimelineReportPage {
 			selectChart(3).ScrollTo();
 			selectChart(3).waitAndClick(10);
 		} else {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
 			base.waitForElement(selectChart());
 			base.waitTillElemetToBeClickable(selectChart());
 			selectChart().ScrollTo();

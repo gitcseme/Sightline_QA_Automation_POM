@@ -868,7 +868,7 @@ public class Domain_Management26 {
 				"Verify that as a SA one should be able to assign DA of one domain to other domains as well.");
 
 		UserManagement user = new UserManagement(driver);
-		String FirstName = "DA";
+		String FirstName = "DAuser" + Utility.dynamicNameAppender();
 		String LastName = "automation";
 		String MailID = "test" + Utility.dynamicNameAppender() + "@consilio.com";
 		String UserName = FirstName + " " + LastName;
@@ -889,8 +889,8 @@ public class Domain_Management26 {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(user.getSelectDomainname());
 		driver.waitForPageToBeReady();
-		user.getSelectDomainname().selectFromDropdown().selectByIndex(1);
-		driver.waitForPageToBeReady();
+		user.getSelectDomainname().selectFromDropdown().selectByIndex(3);
+     	driver.waitForPageToBeReady();
 		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(user.getrightBtndomainuser());
