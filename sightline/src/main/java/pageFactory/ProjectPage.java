@@ -880,28 +880,20 @@ public class ProjectPage {
 	 */
 	public void filterTheProject(String projectName) {
 		this.driver.getWebDriver().get(Input.url + "Project/Project");
-
-		bc.waitForElement(getSearchProjectName());
-		getSearchProjectName().SendKeys(projectName);
-		bc.waitForElement(getProjectFilterButton());
-		bc.waitTillElemetToBeClickable(getProjectFilterButton());
-		getProjectFilterButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+			do {
+				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getSearchProjectName());
+				getSearchProjectName().SendKeys(projectName);
+				bc.waitForElement(getProjectFilterButton());
+				bc.waitTillElemetToBeClickable(getProjectFilterButton());
+				getProjectFilterButton().waitAndClick(10);
+				
+			} while(!getEditProject(projectName).isElementAvailable(10));
+			  bc.stepInfo(projectName + " was filtered");
+		}	
 		
-		if(getEditProject(projectName).isElementAvailable(10)) {
-			driver.waitForPageToBeReady();
-			bc.stepInfo(projectName + " was filtered");
-		} else {
-			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getSearchProjectName());
-			getSearchProjectName().SendKeys(projectName);
-			bc.waitForElement(getProjectFilterButton());
-			bc.waitTillElemetToBeClickable(getProjectFilterButton());
-			getProjectFilterButton().waitAndClick(10);
-			bc.stepInfo(projectName + " was filtered");
-			
-		}
-	}
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -1133,6 +1125,7 @@ public class ProjectPage {
 	public void editProject(String project) {
 		driver.waitForPageToBeReady();
 		filterTheProject(project);
+		driver.waitForPageToBeReady();
 		bc.waitForElement(getEditProject(project));
 		getEditProject(project).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -1395,7 +1388,7 @@ public class ProjectPage {
 		driver.waitForPageToBeReady();
 
 		if (getSelectEntity().getText().contains("Domain")) {
-			String domainName = "D" + Utility.dynamicRandomNumberAppender();
+			String domainName = "D" + Utility.randomCharacterAppender(2);
 			bc.waitForElement(getDomainName());
 			getDomainName().SendKeys(domainName);
 			driver.scrollingToBottomofAPage();
