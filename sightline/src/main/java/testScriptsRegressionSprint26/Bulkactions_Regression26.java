@@ -123,8 +123,6 @@ public class Bulkactions_Regression26 {
 		loginPage.logout();
 	}
 	
-	
-	
 	/**
 	 * @author NA Testcase No:RPMXCON-65743
 	 * @Description: Verify Warning message to validate for conflicts during bulk tagging from Saved search
@@ -141,7 +139,6 @@ public class Bulkactions_Regression26 {
 		
 		String tagname1 = "ATag1" + Utility.dynamicNameAppender();
 		String tagname2 = "ATag1" + Utility.dynamicNameAppender();
-		
 		String cfName = "Coding" + Utility.dynamicNameAppender();
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String expLongText = "Warning: Bulk tagging/untagging may violate coding logic and create coding conflicts";
@@ -149,7 +146,6 @@ public class Bulkactions_Regression26 {
 				              + "by the tags each document presently carries in the coding form(s). In this report you can see where coding "
 				              + "conflicts may arise. Please confirm that no coding conflicts exist with the set of documents you are about to bulk tag/untag.";
 		
-
 		baseClass.stepInfo("RPMXCON - 65743");
 		baseClass.stepInfo("Verify Warning message to validate for conflicts during bulk tagging from Saved search");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -233,14 +229,17 @@ public class Bulkactions_Regression26 {
 		} else {
 			baseClass.failedStep("Not as Expected");
 		}
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(sessionSearch.getReportTotalCount());		
 		String expTotalCount = sessionSearch.getReportTotalCount().getText();
+		baseClass.waitForElement(sessionSearch.getReportMetadat());
 		String expMetadata = sessionSearch.getReportMetadat().getText();
 		baseClass.waitForElement(sessionSearch.getGoToTallyReport());
 		sessionSearch.getGoToTallyReport().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(tally.getTallyCount());
 		String actTotalCount = tally.getTallyCount().getText();
+		baseClass.waitForElement(sessionSearch.getReportMetadat());
 		String actMetadata = sessionSearch.getReportMetadat().getText();	
 		asserts.assertEquals(expTotalCount, actTotalCount);
 		asserts.assertEquals(expMetadata, actMetadata);

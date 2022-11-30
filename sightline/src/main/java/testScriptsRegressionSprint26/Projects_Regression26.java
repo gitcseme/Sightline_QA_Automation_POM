@@ -123,8 +123,9 @@ public class Projects_Regression26 {
 		project.navigateToProductionPage();
 		driver.waitForPageToBeReady();
 		project.filterTheProject(projectName);
+		driver.waitForPageToBeReady();
 		base.waitForElement(project.getEditProject(projectName));
-		if(project.getEditProject(projectName).isElementAvailable(5)){
+		if(project.getEditProject(projectName).isElementAvailable(10)){
 			base.passedStep("Project Created Successfully As Expected ");
 		} else {
 			base.failedStep("Project Not Created Successfully");
@@ -392,11 +393,12 @@ public class Projects_Regression26 {
 		driver.waitForPageToBeReady();
 		project.filterTheProject(projectName);
 		base.waitForElement(project.getEditProject(projectName));
-		if (project.getEditProject(projectName).isElementAvailable(5)) {
-			base.passedStep("Project Created Successfully");
-		} else {
-			base.failedStep("Project Not Created");
-		}
+		driver.waitForPageToBeReady();
+        if (project.getEditProject(projectName).isElementAvailable(10)) {
+            base.passedStep("Project Created Successfully");
+        } else {
+            base.failedStep("Project Not Created");
+        }
 		base.passedStep(
 				"Verified - Project creation with domain which is having more than 20 char for Non domain client");
 		loginPage.logout();
