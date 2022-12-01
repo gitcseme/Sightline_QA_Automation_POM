@@ -1726,6 +1726,21 @@ public class CodingForm {
 	public Element sortOrderNxtDisableBtn() {
 		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
 	}
+	
+	public Element FromnameErrormsg() {
+		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
+	}
+
+	public void CFnameErrormsg(String errormsg)throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return FromnameErrormsg().Visible();
+			}
+		}), Input.wait30);
+		String errorMsg=FromnameErrormsg().getText();
+		System.out.println("errorMsg"+errorMsg);
+		  Assert.assertEquals(errorMsg,errormsg);
+	}
 
 	public CodingForm(Driver driver) {
 
