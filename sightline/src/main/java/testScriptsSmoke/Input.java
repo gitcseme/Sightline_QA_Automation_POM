@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -997,6 +997,10 @@ public class Input {
     public static String filterDataInput3; 
 	public static String transcriptId;
 	public static String env;
+	
+	public static String Involvedoutsiders;
+    public static String OutsideHelp;
+    public static String SalaryMatch;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -2040,6 +2044,10 @@ public class Input {
 		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
+		
+		 Involvedoutsiders = testData.getInvolvedoutsiders();
+	        OutsideHelp = testData.getOutsideHelp();
+	        SalaryMatch =testData.getSalaryMatch();
 		// createproject if configured
 		projectCreationAndUserAssignment();
 
