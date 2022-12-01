@@ -7588,7 +7588,7 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(5);
 		String ingestionName=getIngestionNameFromPopup();
 		String statusOfIngestion = getStatus(1).getText().trim();
-		for (int i = 0; i < 120; i++) {
+		for (int i = 0; i < 250; i++) {
 			base.waitTime(5);
 			getRefreshButton().waitAndClick(5);
 			base.waitTime(2);
@@ -10458,7 +10458,7 @@ public class IngestionPage_Indium {
 		public void getElementStatus(Element element) {
 			
 			String buttonStatus = element.GetAttribute("class");
-			for(int i=1;i<=10;i++) {
+			for(int i=1;i<=20;i++) {
 				if(buttonStatus.contains("disable")) {
 					base.waitTime(1);
 				}
@@ -10530,7 +10530,7 @@ public class IngestionPage_Indium {
 			getCloseButton().waitAndClick(10);
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
-			for (int i = 0; i < 70; i++) {
+			for (int i = 0; i < 200; i++) {
 				base.waitTime(1);
 				base.waitForElement(getIngestionDetailPopup(1));
 				String status = getStatus(1).getText().trim();
@@ -11314,8 +11314,7 @@ public class IngestionPage_Indium {
 			
 			// doclist verification
 			if(page.equalsIgnoreCase("doclist")) {
-				base.verifyUrlLanding(Input.url + "en-us/Document/DocList", 
-						"Navigated to doclist page", "Not on doclist page");
+				base.waitTime(2);
 				docList.SelectColumnDisplayByRemovingAddNewValues(values);
 				base.waitForElement(docList.getDocList_SelectLenthtobeshown());
 				docList.getDocList_SelectLenthtobeshown().selectFromDropdown().

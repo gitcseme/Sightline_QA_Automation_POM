@@ -3930,6 +3930,7 @@ public class DocExplorerPage {
 		// select all docs and view in docview
 		SelectingAllDocuments(value);
 		docExpViewInDocView();
+		bc.waitTime(5);
 		driver.waitForPageToBeReady();
 		bc.waitForElementCollection(getNumberOfDocsCount());
 		bc.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page", "Not on doc view page");
