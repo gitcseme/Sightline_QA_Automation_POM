@@ -76,7 +76,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48633",enabled = true, groups = { "regression" })
-	public void verifyRerunAnalyticsAtSecurityGroup() throws InterruptedException {
+	public void TCB1verifyRerunAnalyticsAtSecurityGroup() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48633");
 		baseClass.stepInfo("verify that after text overlay PA can rerun the analytics at security group successfully");
@@ -125,7 +125,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54551",enabled = true, groups = { "regression" })
-	public void verifyErrorDisplayedOnCopyingStage() throws InterruptedException {
+	public void TCB2verifyErrorDisplayedOnCopyingStage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54551");
 		baseClass.stepInfo("verify error if document is set to TRUE for ‘Require PDF Generation’.");
@@ -160,7 +160,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54560",enabled = true, groups = { "regression" })
-	public void verifyRollbackOnceCopyCompleted() throws InterruptedException {
+	public void TCB3verifyRollbackOnceCopyCompleted() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54560");
 		baseClass.stepInfo("To verify that PA can Rollback the Ingestion once copy is completed");
@@ -198,7 +198,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60815",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathInPdf() throws InterruptedException {
+	public void TCB5verifyAbsolutePathInPdf() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60815");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the PDF LST.");
@@ -234,6 +234,7 @@ public class Ingestion_Regression_9 {
 		baseClass.passedStep("Ingestion Name :"+ingestionName);
 		baseClass.stepInfo("go to doc explorer");
 		docExplorer = new DocExplorerPage(driver);
+		docExplorer.navigateToDocExplorerPage();
 		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
 				"not on docexplorer page");
 		//verify selecting docs and navigate to docview
@@ -249,7 +250,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60814",enabled = true, groups = { "regression" })
-	public void verifyAbsolutePathInNative() throws InterruptedException {
+	public void TCB4verifyAbsolutePathInNative() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60814");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the Native LST.");
@@ -285,6 +286,7 @@ public class Ingestion_Regression_9 {
 		baseClass.passedStep("Ingestion Name :"+ingestionName);
 		baseClass.stepInfo("go to doc explorer");
 		docExplorer = new DocExplorerPage(driver);
+		docExplorer.navigateToDocExplorerPage();
 		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
 				"not on docexplorer page");
 		//verify selecting docs and navigate to docview
@@ -300,7 +302,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60820",enabled = true, groups = { "regression" })
-	public void verifyAbsoluteAndRelativePathFile() throws InterruptedException {
+	public void TCB6verifyAbsoluteAndRelativePathFile() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60820");
 		baseClass.stepInfo("To verify that if the Absolute path in Native and Relative in Native LST.");
@@ -338,6 +340,7 @@ public class Ingestion_Regression_9 {
 		baseClass.passedStep("Ingestion Name :"+ingestionName);
 		baseClass.stepInfo("go to doc explorer");
 		docExplorer = new DocExplorerPage(driver);
+		docExplorer.navigateToDocExplorerPage();
 		baseClass.verifyUrlLanding(Input.url + "DocExplorer/Explorer", "navigated to docexplorer page", 
 				"not on docexplorer page");
 		//verify selecting docs and navigate to docview
@@ -352,7 +355,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49553",enabled = true, groups = { "regression" })
-	public void verifyEmailAuthorMetadataAvailability() throws InterruptedException {
+	public void TCA5verifyEmailAuthorMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49553");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available");
@@ -388,7 +391,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47427",enabled = true, groups = { "regression" })
-	public void verifySectionAvailableInIngestionWizard() throws InterruptedException {
+	public void TCA6verifySectionAvailableInIngestionWizard() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47427");
 		baseClass.stepInfo("To Verify Add New Ingestion in Ingestion Wizard.");
@@ -409,7 +412,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49505",enabled = true, groups = { "regression" })
-	public void verifyDefaultSelectionForDateFormat() throws InterruptedException {
+	public void TCA7verifyDefaultSelectionForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49505");
 		baseClass.stepInfo("Verify the default value for the 'Date & Time Format' field");
@@ -435,7 +438,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63250",enabled = true, groups = { "regression" })
-	public void verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
+	public void TCA8verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-63250");
 		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
@@ -446,7 +449,7 @@ public class Ingestion_Regression_9 {
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
 				Input.sourceLocation, Input.folder61759);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
-		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDATSource("AllFieldsMapping_DAT_SourceDocID.dat", Input.sourceDocIdSearch);
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Perform similar mapping on source field and verify");
@@ -463,7 +466,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63245",enabled = true, groups = { "regression" })
-	public void verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
+	public void TCA1verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-63245");
 		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
@@ -474,7 +477,7 @@ public class Ingestion_Regression_9 {
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
 				Input.sourceLocation, Input.folder61759);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
-		ingestionPage.selectDATSource(Input.datFile6, Input.prodBeg);
+		ingestionPage.selectDATSource("AllFieldsMapping_DAT_ProdBeg.dat", Input.prodBeg);
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		driver.waitForPageToBeReady();
@@ -491,7 +494,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63249",enabled = true, groups = { "regression" })
-	public void verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
+	public void TCA2verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-63249");
 		baseClass.stepInfo("Verify error message when similar destination field mapped twice.");
@@ -502,7 +505,7 @@ public class Ingestion_Regression_9 {
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
 				Input.sourceLocation, "RPMXCON-61759");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
-		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDATSource("AllFieldsMapping_DAT_SourceDocID.dat", Input.sourceDocIdSearch);
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Perform similar mapping on destination field and verify");
@@ -519,7 +522,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48169",enabled = true, groups = { "regression" })
-	public void verifyAudioPlayerReadyField() throws InterruptedException {
+	public void TCA3verifyAudioPlayerReadyField() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48169");
 		baseClass.stepInfo("Verify 'AudioPlayerReady' field default status.");
@@ -545,7 +548,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48930",enabled = true, groups = { "regression" })
-	public void validateDocLanguagesFieldOnDoclist() throws InterruptedException {
+	public void TCB7validateDocLanguagesFieldOnDoclist() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48930");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on DocList");
@@ -593,7 +596,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48929",enabled = true, groups = { "regression" })
-	public void validateDocLanguagesFieldOnDocview() throws InterruptedException {
+	public void TCB8validateDocLanguagesFieldOnDocview() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48929");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on DocView");
@@ -641,7 +644,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47412",enabled = true, groups = { "regression" })
-	public void verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
+	public void TCA9verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47412");
 		baseClass.stepInfo("To verify that Admin is able to browser all the Errors using navigation control");
@@ -663,7 +666,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48927",enabled = true, groups = { "regression" })
-	public void validateDocLanguagesFieldOnTally() throws InterruptedException {
+	public void TCB9validateDocLanguagesFieldOnTally() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48927");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on Tally report");
@@ -706,7 +709,7 @@ public class Ingestion_Regression_9 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47306",enabled = true, groups = { "regression" })
-	public void verifyCountsDisplayedOnTiles() throws InterruptedException {
+	public void TCA4verifyCountsDisplayedOnTiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47306");
 		baseClass.stepInfo("verify Counts displayed on Tiles on Ingestion home page are correct.");
