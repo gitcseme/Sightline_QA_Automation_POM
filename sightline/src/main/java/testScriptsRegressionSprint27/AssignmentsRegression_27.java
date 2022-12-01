@@ -62,8 +62,6 @@ public class AssignmentsRegression_27 {
 
 	}
 
-	
-	
 	/**
 	 * @author
 	 * @Modified date:N/A
@@ -72,7 +70,8 @@ public class AssignmentsRegression_27 {
 	 *              security group should be selected for the assignment.
 	 *              RPMXCON-54752
 	 */
-	//@Test(description = "RPMXCON-54752", enabled = true, groups = { "regression" })
+	// @Test(description = "RPMXCON-54752", enabled = true, groups = { "regression"
+	// })
 	public void verifyNewAssignmentKeywordsCreatedByPAUandRMUPartOfSecurityGrpSelectedForAssignment()
 			throws AWTException, InterruptedException {
 		keyPage = new KeywordPage(driver);
@@ -161,7 +160,116 @@ public class AssignmentsRegression_27 {
 		loginPage.logout();
 	}
 
-	
+	/**
+	 * @author NA Testcase No:RPMXCON-54340
+	 * @Description: To Verify that if the Assignment name is long, the last three visible characters are an ellipsis
+	 **/
+	@Test(description = "RPMXCON-54340", enabled = true, groups = { "regression" })
+	public void verifyAssignmentNameLong() throws Exception {
+		AssignmentsPage assign = new AssignmentsPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		String assignmentName = "Assignment" + Utility.randomCharacterAppender(18);
+		String expStatus = "ellipsis";
+
+		baseClass.stepInfo("RPMXCON-54340");
+		baseClass.stepInfo(
+				"To Verify that if the Assignment name is long, the last three visible characters are an ellipsis");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		assign.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assign.createAssignment(assignmentName, Input.codingFormName);
+		driver.waitForPageToBeReady();
+
+		session.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		session.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+
+		session.bulkAssign();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(session.getBulkAssignAssignDocumentsButton());
+		session.getBulkAssignAssignDocumentsButton().waitAndClick(5);
+		baseClass.waitForElement(session.getSelectAssignmentExisting(assignmentName));
+		String actStatusAssignDoc = session.getSelectAssignmentExisting(assignmentName).GetCssValue("text-overflow")
+				.trim();
+		System.out.println(actStatusAssignDoc);
+
+		baseClass.waitForElement(session.getUnAssignRadioBtn());
+		session.getUnAssignRadioBtn().waitAndClick(5);
+		baseClass.waitForElement(session.getExistingAssignmentToUnAssign(assignmentName));
+		String actStatusUnAssignDoc = session.getExistingAssignmentToUnAssign(assignmentName)
+				.GetCssValue("text-overflow").trim();
+		System.out.println(actStatusAssignDoc);
+
+		if (expStatus.equalsIgnoreCase(actStatusAssignDoc) && expStatus.equalsIgnoreCase(actStatusUnAssignDoc)) {
+			baseClass.passedStep("For long Assignment name, last three visible characters displayed as an ellipsis");
+		} else {
+			baseClass
+					.failedStep("For long Assignment name, last three visible characters Not displayed as an ellipsis");
+		}
+		baseClass.passedStep(
+				"Verified - that if the Assignment name is long, the last three visible characters are an ellipsis");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-54324
+	 * @Description: To Verify that if the Assignment name is long, the last three visible characters are an ellipsis
+	 **/
+	@Test(description = "RPMXCON-54324", enabled = true, groups = { "regression" })
+	public void verifyAssignmentNameLongDocs() throws Exception {
+		AssignmentsPage assign = new AssignmentsPage(driver);
+		SessionSearch session = new SessionSearch(driver);
+
+		String assignmentName = "Assignment" + Utility.randomCharacterAppender(18);
+		String expStatus = "ellipsis";
+
+		baseClass.stepInfo("RPMXCON-54324");
+		baseClass.stepInfo(
+				"To Verify that if the Assignment name is long, the last three visible characters are an ellipsis");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		assign.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+
+		assign.createAssignment(assignmentName, Input.codingFormName);
+		driver.waitForPageToBeReady();
+
+		session.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		session.basicContentSearch(Input.testData1);
+		driver.waitForPageToBeReady();
+		session.bulkAssignExisting(assignmentName);
+		driver.waitForPageToBeReady();
+
+		session.bulkAssign();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(session.getBulkAssignAssignDocumentsButton());
+		session.getBulkAssignAssignDocumentsButton().waitAndClick(5);
+		baseClass.waitForElement(session.getSelectAssignmentExisting(assignmentName));
+		String actStatusAssignDoc = session.getSelectAssignmentExisting(assignmentName).GetCssValue("text-overflow")
+				.trim();
+		System.out.println(actStatusAssignDoc);
+
+		baseClass.waitForElement(session.getUnAssignRadioBtn());
+		session.getUnAssignRadioBtn().waitAndClick(5);
+		baseClass.waitForElement(session.getExistingAssignmentToUnAssign(assignmentName));
+		String actStatusUnAssignDoc = session.getExistingAssignmentToUnAssign(assignmentName)
+				.GetCssValue("text-overflow").trim();
+		System.out.println(actStatusAssignDoc);
+
+		if (expStatus.equalsIgnoreCase(actStatusAssignDoc) && expStatus.equalsIgnoreCase(actStatusUnAssignDoc)) {
+			baseClass.passedStep("For long Assignment name, last three visible characters displayed as an ellipsis");
+		} else {
+			baseClass
+					.failedStep("For long Assignment name, last three visible characters Not displayed as an ellipsis");
+		}
+		baseClass.passedStep(
+				"Verified - that if the Assignment name is long, the last three visible characters are an ellipsis");
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

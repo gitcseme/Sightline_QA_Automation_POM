@@ -173,6 +173,14 @@ public class CustomDocumentDataReport {
 
 	// added by sowndarya
 
+	public Element getScrubLink() {
+		return driver.FindElementById("btnScrubExportSpecialChar");
+	}
+		
+	public Element getRedXIcon() {
+		return driver.FindElementByXPath("//tr[@id='tablerow1']//i");
+	}
+	
 	public Element getExportNewLineBtn() {
 		return driver.FindElementById("newLineSelect");
 	}
