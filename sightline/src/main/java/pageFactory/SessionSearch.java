@@ -2157,7 +2157,9 @@ public class SessionSearch {
 	public Element getEnterSearchBox() {
 		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
 	}
-
+	public Element getSelectQueryText(String Text) {
+		return driver.FindElementByXPath("//td//span[contains(text(),'"+Text+"')]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

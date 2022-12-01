@@ -162,7 +162,12 @@ public class ClientsPage {
 	public Element getColumnValueinDomainClient(int i) {
 		return driver.FindElementByXPath("//table[@id='EntityDataTable']//tbody//td[" + i + "]");
 	}
-
+	public ElementCollection ClientDetailsTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='EntityDataTable']//thead/tr/th");
+	}
+	public Element getClientPopUp() {
+		return driver.FindElementByXPath("//*[@class='ui-dialog-title']");
+	}
 	// Annotation Layer added successfully
 	public ClientsPage(Driver driver) {
 
@@ -598,5 +603,17 @@ public class ClientsPage {
 		 bc.waitForElement(getCancelBtn());
 		 getCancelBtn().waitAndClick(10);
 	 }
-
+	 /**
+		 * @author Brundha.T
+		 * @param ColumName
+		 * @param row
+		 * @return
+		 * @Description get data from Client grid View
+		 */
+		public String getTableData(String ColumName, int row) {
+			driver.waitForPageToBeReady();
+			int colum = bc.getIndex(ClientDetailsTableHeader(), ColumName);
+			String data = getClientTableValue(row, colum).getText().trim();
+			return data;
+		}
 }

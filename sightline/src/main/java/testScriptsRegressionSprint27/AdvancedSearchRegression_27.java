@@ -25,6 +25,7 @@ import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -161,6 +162,49 @@ public class AdvancedSearchRegression_27 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Brundha.T Test Case id:RPMXCON-48939
+	 * @Description :Verify Work Product selection is working for Edge and Chrome
+	 *              browsers
+	 */
+
+	@Test(description = "RPMXCON-48939", enabled = true, groups = { "regression" })
+	public void verifySearchQueryInWorkProduct() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48939 Advanced Search");
+		baseClass.stepInfo("Verify Work Product selection is working for Edge and Chrome browsers");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in As:" + Input.pa1userName);
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		tf.createNewTagwithClassification(TagName, "Select Tag Classification");
+
+		SessionSearch search = new SessionSearch(driver);
+	    search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		loginPage.logout();
+
+		String[] UserName = { Input.pa1userName, Input.rmu1userName, Input.rev1userName };
+		String[] Password = { Input.pa1password, Input.rmu1password, Input.rev1password };
+		for (int i = 0; i < UserName.length; i++) {
+			loginPage.loginToSightLine(UserName[i], Password[i]);
+			baseClass.stepInfo("Logged in As:" + UserName[i]);
+
+			baseClass.stepInfo("Switching to work product");
+			search.switchToWorkproduct();
+			search.selectTagInASwp(TagName);
+			search.serarchWP();
+			
+			baseClass.stepInfo("verifying Selected Search query is displayed");
+			baseClass.ValidateElement_Presence(search.getSelectQueryText(TagName),"Search Query");
+
+			loginPage.logout();
+		}
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
