@@ -404,6 +404,25 @@ public class ProjectPage {
     }
     public Element getDomainEditBtn() {
         return driver.FindElementByXPath("//td[text()='Yes']//following-sibling::td//a[text()='Edit']");
+        
+    }
+    public Element getHCodeError() {
+        return driver.FindElementByXPath("//*[@id='txtHcode-error']");
+    }
+    public Element getClientTypeDisableCheck() {
+        return driver.FindElementByXPath("//select[@id='ddlDomainType' and @disabled='disabled']");
+    }
+    public Element getClientNameDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlEntityTypeList' and @disabled='disabled']");
+    }
+    public Element getDBServerDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlProjDBServer' and @disabled='disabled']");
+    }
+    public Element sizeOfProjectDataBaseDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlProjDBSizeCode' and @disabled='disabled']");
+    }
+    public Element getHcodeValue() {
+        return driver.FindElementByXPath("//*[@id='txtHcode']//following-sibling::input");
     }
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -1883,5 +1902,87 @@ public class ProjectPage {
 			UtilityLog.info(bc.initialBgCount());
 
 			
+		}
+		/**
+		 * @author Brundha.T
+		 * @param projectname
+		 * @param hcode
+		 * Description: method to create new non-doman project
+		 */
+		public void CreateNewNonDomainProject(String projectname, String hcode) {
+			bc.waitForElement(getAddProjectBtn());
+			getAddProjectBtn().Click();
+			bc.waitForElement(getProjectName());
+			getProjectName().SendKeys(projectname);
+			bc.waitForElement(getSelectEntity());
+			getSelectEntity().selectFromDropdown().selectByIndex(1);
+			getHCode().SendKeys(hcode);
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getProjectDBServerDropdown());
+			getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+			bc.waitForElement(getProjServerPathinCreateProjPg());
+			getProjServerPathinCreateProjPg().waitAndClick(10);
+			bc.waitForElement(getIngestionserverpath());
+			getIngestionserverpath().waitAndClick(10);
+
+			bc.waitForElement(getProductionserverpath());
+			getProductionserverpath().waitAndClick(10);
+
+			getProjectFolder().Clear();
+			getProjectFolder().SendKeys("Automation");
+			getIngestionFolder().Clear();
+			getIngestionFolder().SendKeys("Automation");
+			getProductionFolder().Clear();
+			getProductionFolder().SendKeys("Automation");
+			driver.scrollPageToTop();
+			bc.waitForElement(getAddProject_SettingsTab());
+			getAddProject_SettingsTab().waitAndClick(10);
+
+			bc.waitForElement(getNoOfDocuments());
+			getNoOfDocuments().waitAndClick(10);
+			getNoOfDocuments().SendKeys("20000");
+
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+			System.out.println(Bgcount);
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getButtonSaveProject());
+			getButtonSaveProject().waitAndClick(10);
+
+			bc.waitTime(2);
+			bc.VerifySuccessMessage(
+					"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait120 + Input.wait60);
+			System.out.println(bc.initialBgCount());
+			UtilityLog.info(bc.initialBgCount());
+			bc.checkNotificationCount(Bgcount,1);
+			SavedSearch saveSearch=new SavedSearch(driver);
+			saveSearch.verifyExecuteAndReleaseNotify(Bgcount, 1);
+		}
+		
+		/**
+		 * @author Brundha.T
+		 * @param ElementName
+		 * Description:method to verify slash in the foldername
+		 * @return
+		 */
+		public String verifyingFolderName(Element ElementName) {
+			
+			String Foldername = ElementName.GetAttribute("value");
+			System.out.println(Foldername);
+			String Slash="\\";
+					
+			if (!Foldername.contains(Slash)) {
+				bc.failedStep("" + Foldername + " is with slash");
+			} else {
+				bc.passedStep("" + Foldername + " is not with slash");
+			}
+			return Foldername;
 		}
 }
