@@ -383,6 +383,10 @@ public class CommunicationExplorerPage {
 	public Element getApplyBtn() {
         return driver.FindElementById("btnAppyFilter");
     }
+	
+	public Element getAnalyzeTally() {
+		return driver.FindElementByXPath("//a[text()='Analyze in Tally']");
+	}
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -1350,4 +1354,15 @@ public class CommunicationExplorerPage {
 		}
 		
 	}
+	
+	
+	public void analyzeInTallyAction() {
+		driver.scrollPageToTop();
+		base.waitForElement(getActionBtn());
+		getActionBtn().ScrollTo();
+		getActionBtn().waitAndClick(10);
+		base.waitForElement(getAnalyzeTally());
+		getAnalyzeTally().waitAndClick(5);
+	}
+
 }

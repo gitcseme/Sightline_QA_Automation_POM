@@ -603,6 +603,13 @@ public class TallyPage {
 		return driver.FindElementByXPath(
 				"//button[@id='tallyactionbtn']/following-sibling::ul//li//a[contains(.,'" + navigateTo + "')]");
 	}
+	
+	public ElementCollection getAllValueinCustNameFilter() {
+		return driver.FindElementsByXPath("//ul[@id='select2-CustodianName-results']//li");
+	}
+	public ElementCollection getAllValueinEmailAuthorFilter() {
+		return driver.FindElementsByXPath("//ul[@id='select2-EmailAuthorName-results']//li");
+	}
 
 	public TallyPage(Driver driver) {
 
