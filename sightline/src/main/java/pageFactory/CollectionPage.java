@@ -436,6 +436,9 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+	public Element getNoCustodianErrorMsg() {
+		return driver.FindElementByXPath("//span[@id='spanNoCustodianResult']");
+	}
 
 	public Element getDatasetPopupCloseBtn() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
@@ -1571,7 +1574,7 @@ public class CollectionPage {
 	 */
 	public void verifyAddedDataSetFrmPopup(String custodianMailId, String collectionName,
 			List<String> expectedCustodianDetaisl, String expectedFolderType, boolean ApplyFilter,
-			String expectedFilterStatus,boolean verifyCustodianAndDataset) {
+			String expectedFilterStatus, boolean verifyCustodianAndDataset) {
 		List<String> custodianDetails = new ArrayList<>();
 
 		String headerList[] = { "Select Custodian", "Select Folders to Collect", "Apply Filter" };
@@ -1617,7 +1620,7 @@ public class CollectionPage {
 				String failMsg2 = "Custodian Name & Dataset Name is not Retained";
 				base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
 			}
-			
+
 			// verify Selected folder
 			getFolderabLabel().waitAndClick(10);
 			driver.waitForPageToBeReady();
@@ -3080,5 +3083,37 @@ public class CollectionPage {
 			UtilityLog.info(E.toString());
 			return null;
 		}
+	}
+
+	public void verifyNoCustodianErrorMsg(boolean enterCustodian, String[][] emailAddresses) {
+		for (int i = 0; i < emailAddresses.length; i++) {
+			int j = 0;
+
+			if (enterCustodian) {
+				// Enter Email Address
+				driver.waitForPageToBeReady();
+				base.waitTillElemetToBeClickable(getCustodianIDInputTextField());
+				getCustodianIDInputTextField().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				getCustodianIDInputTextField().SendKeys(emailAddresses[i][j]);
+				base.waitTime(2);
+				base.waitTillElemetToBeClickable(getDataSetNameTextFIeld());
+				getDataSetNameTextFIeld().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.stepInfo("Entered Custodian Name is  : " + emailAddresses[i][j]);
+			}
+
+			// verify Inline Error Message Displayed
+			j++;
+			driver.waitForPageToBeReady();
+			base.ValidateElement_Presence(getNoCustodianErrorMsg(),
+					"Inline message is displayed for " + emailAddresses[i][j]);
+			String expectedError = "No Custodians found for the given search pattern.";
+			base.waitForElement(getNoCustodianErrorMsg());
+			String actualError = getNoCustodianErrorMsg().getText();
+			base.textCompareEquals(actualError, expectedError, actualError,
+					"Error Message displayed is not as expected");
+		}
+
 	}
 }
