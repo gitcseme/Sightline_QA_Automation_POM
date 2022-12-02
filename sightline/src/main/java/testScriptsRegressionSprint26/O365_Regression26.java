@@ -107,6 +107,8 @@ public class O365_Regression26 {
 
 		// Login As PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
 		// Login as User and verify Module Access
@@ -165,7 +167,8 @@ public class O365_Regression26 {
 		// Login and Pre-requesties
 		login.loginToSightLine(userName, password);
 		base.stepInfo("User Role : " + role);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -289,6 +292,8 @@ public class O365_Regression26 {
 		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
 		login.loginToSightLine(userName, password);
 		base.stepInfo("User Role : " + role);
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
 
 		// Pre-requesties - Access verification
@@ -413,6 +418,8 @@ public class O365_Regression26 {
 				"To Verify that error message display and application does NOT accepts - when \"Folder\" Name entered with special characters < > & ‘");
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in As : " + Input.pa1userName);
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		String foldername = "Folder&‘" + Utility.dynamicRandomNumberAppender();
 		String expected = "Special characters are not allowed.";
 
@@ -461,6 +468,8 @@ public class O365_Regression26 {
 				"To Verify that error message display and application does NOT accepts - when \"Tag\" Name entered with special characters < > & ‘");
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in As : " + Input.pa1userName);
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		String tagname = "Tag&‘" + Utility.dynamicRandomNumberAppender();
 		String expected = "Special characters are not allowed.";
 
@@ -514,7 +523,8 @@ public class O365_Regression26 {
 
 		// Login and Pre-requesties
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -563,7 +573,8 @@ public class O365_Regression26 {
 
 		// Login and Pre-requesties
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -637,7 +648,8 @@ public class O365_Regression26 {
 
 		// Login and Pre-requesties
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -725,7 +737,8 @@ public class O365_Regression26 {
 
 		// Login and Pre-requesties
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -814,7 +827,8 @@ public class O365_Regression26 {
 
 		// Login and Pre-requesties
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -869,7 +883,8 @@ public class O365_Regression26 {
 
 		// Login as User
 		login.loginToSightLine(username, password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -946,7 +961,8 @@ public class O365_Regression26 {
 
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Login as User and verify Module Access
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 
@@ -1054,10 +1070,11 @@ public class O365_Regression26 {
 
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		//selecting project
+		base.selectproject(Input.ingestDataProject);
 		// Login as User and verify Module Access
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
-
+		
 		// Navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 
