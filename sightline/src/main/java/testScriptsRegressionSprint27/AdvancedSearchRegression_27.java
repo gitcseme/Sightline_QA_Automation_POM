@@ -235,6 +235,12 @@ public class AdvancedSearchRegression_27 {
 		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, inputData, null);
 
+		//configured Query
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionSearch.getModifiableSavedSearchQueryAS());
+		String configuredQuery = sessionSearch.getModifiableSavedSearchQueryAS().getText();
+		baseClass.stepInfo("Configure Query in \"Search Edit box\" : " + configuredQuery);
+		
 		// Click on Search and Verify that "EmailSentDate" field search result return
 		// documents which satisfied above configured query.
 		baseClass.stepInfo("Click on 'Search' button");
