@@ -162,7 +162,7 @@ public class AdvancedSearchRegression_27 {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Brundha.T Test Case id:RPMXCON-48939
 	 * @Description :Verify Work Product selection is working for Edge and Chrome
@@ -182,7 +182,7 @@ public class AdvancedSearchRegression_27 {
 		tf.createNewTagwithClassification(TagName, "Select Tag Classification");
 
 		SessionSearch search = new SessionSearch(driver);
-	    search.basicContentSearch(Input.testData1);
+		search.basicContentSearch(Input.testData1);
 		search.bulkTagExisting(TagName);
 		loginPage.logout();
 
@@ -196,15 +196,114 @@ public class AdvancedSearchRegression_27 {
 			search.switchToWorkproduct();
 			search.selectTagInASwp(TagName);
 			search.serarchWP();
-			
+
 			baseClass.stepInfo("verifying Selected Search query is displayed");
-			baseClass.ValidateElement_Presence(search.getSelectQueryText(TagName),"Search Query");
+			baseClass.ValidateElement_Presence(search.getSelectQueryText(TagName), "Search Query");
 
 			loginPage.logout();
 		}
 
 	}
 
+	/**
+	 * @author
+	 * @Description : Verify that Advanced Search works properly for EmailSentDate
+	 *              field with "Is" operator and NOT having time components.
+	 *              RPMXCON-49173
+	 */
+
+	@Test(description = "RPMXCON-49173", enabled = true, groups = { "regression" })
+	public void verifiedAdancedSearchWorkProperlyForEmailSentDateWithISOperatorAndNotHavingTimeComponents() {
+
+		String metaDataField = "EmailSentDate";
+		String operator = "IS";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49173 Advanced Search.");
+		baseClass.stepInfo(
+				"Verify that Advanced Search works properly for EmailSentDate field with \"Is\" operator and NOT having time components.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configuring EmailSentDate Search Query with metaData as MasterDate and
+		// Operator as 'IS'.
+		baseClass.stepInfo("configuring EmailSentDate Search Query with metaData as MasterDate and Operator as 'IS'.");
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, dateFormat.format(date), null);
+
+		// Click on Search and Verify that "EmailSentDate" field search result return
+		// documents which satisfied above configured query.
+		baseClass.stepInfo("Click on 'Search' button");
+		sessionSearch.serarchWP();
+		baseClass.passedStep(
+				"Verified that \"EmailSentDate\" field search result return documents which satisfied above configured query.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "proximityQueryHavingWildCard")
+	public Object[][] proximityQueryHavingWildCard() {
+		return new Object[][] { { "\"fin* (\"develo* requir*\"~4)\"~6" }, { "\"financia? (\"develo* requir*\"~4)\"~6" },
+				{ "“fin* (“develo* require*”~4)”~6" } };
+	}
+
+	/**
+	 * @author
+	 * @Description : Verify that result appears for query when User configured
+	 *              proximity within proximity query having wild card in Advanced
+	 *              Search Query Screen.RPMXCON-57340
+	 */
+
+	@Test(description = "RPMXCON-57340", dataProvider = "proximityQueryHavingWildCard", enabled = true, groups = {
+			"regression" })
+	public void verifyResultAppearsForQueryUserConfiguredProximityWithinProximityQueryHavingWildCardInAdvanceSearch(
+			String searchString) {
+
+		String exampleSearchString = "\"fin* (\"develo* requir*\"~4)\"~6";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57340 Advanced Search.");
+		baseClass.stepInfo(
+				"Verify that result appears for query when User configured proximity within proximity query having wild card in  Advanced Search Query Screen.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button
+		sessionSearch.tallyContinue(5);
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// performing search for given example search query.
+		baseClass.stepInfo("performing search for given example search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// Verify that Result should appear for proximity within proximity having wild
+		// card in Advanced Search Query Screen. example "fin* ("develo* requir*"~4)"~6
+		// fin* within 6 words of instances where develo* is within 4 words of requir*
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"verified that Result appear for proximity within proximity  having wild card in Advanced Search Query Screen. example \"fin* (\"develo* requir*\"~4)\"~6  fin* within 6 words of instances where develo* is within 4 words of requir*");
+
+		// logOut
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
