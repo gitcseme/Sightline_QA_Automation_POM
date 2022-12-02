@@ -51,7 +51,7 @@ public class ManageUsersPage {
     public ManageUsersPage(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"User/UserListView");
+//        this.driver.getWebDriver().get(Input.url+"User/UserListView");
         driver.waitForPageToBeReady();
 
     }

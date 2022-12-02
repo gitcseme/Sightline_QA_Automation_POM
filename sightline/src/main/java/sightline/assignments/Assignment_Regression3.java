@@ -187,15 +187,9 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo(
 				"Verify if distribute all documents to Reviewer in assignment, then 'DISTRIBUTED to User' count "
 						+ "displays correct count on Manage Reviewers tab");
-		SessionSearch sessionsearch = new SessionSearch(driver);
+
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
-		sessionsearch.basicContentSearch(Input.testData1);
-		ActualCount = sessionsearch.verifyPureHitsCount();
-		sessionsearch.bulkAssign();
-		agnmt.FinalizeAssignmentAfterBulkAssign();
-		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
-		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		baseClass.stepInfo("Created a assignment " + assignmentName1);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName1);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(assignmentName1 + " assignment opened in edit mode");
@@ -236,8 +230,14 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Test case Id:RPMXCON-54434");
 		baseClass.stepInfo("Verify document count should be displayed correctly on doc view when navigating "
 				+ "to doc view in context of an assignment");
+		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
-		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		sessionsearch.basicContentSearch(Input.testData1);
+		ActualCount = sessionsearch.verifyPureHitsCount();
+		sessionsearch.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
 		agnmt.Checkclickedstatus(assignmentName1);
 		agnmt.assgnViewInAllDocView();

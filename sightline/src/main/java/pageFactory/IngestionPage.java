@@ -165,7 +165,7 @@ public class IngestionPage {
     public IngestionPage(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Ingestion/Home");
+//        this.driver.getWebDriver().get(Input.url+"Ingestion/Home");
         base = new BaseClass(driver);
         driver.waitForPageToBeReady();
 

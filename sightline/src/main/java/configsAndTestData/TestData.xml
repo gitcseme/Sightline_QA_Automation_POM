@@ -131,6 +131,11 @@
 	<relativeOverlayDat>Overlay_Ingestion Path_DAT_RelativePath.dat</relativeOverlayDat>
 	<uncAbsoluteText>Ingestion Path_Text_AbsolutePath.lst</uncAbsoluteText>
 	<absoluteOverlayText>Overlay_Ingestion Path_Text_AbsolutePath.lst</absoluteOverlayText>
+	<H13696smallSetFolder>0002_H13696_1_smallset_GD1</H13696smallSetFolder>
+	<smallSetDat>0036_loadfile.dat</smallSetDat>
+	<uncAbsolutePdf>Ingestion Path_PDF_AbsolutePath.lst</uncAbsolutePdf>
+	<uncRelativeNative>Ingestion Path_Native_RelativePath.lst</uncRelativeNative>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -236,6 +241,7 @@
 	<ReviewerProductivity>Reviewer Productivity</ReviewerProductivity>
 	<ToDoDocs>ToDoDocs</ToDoDocs>
 	<Complete>Complete</Complete>
+	<BeginBates>Begin Bates</BeginBates>
 	
 
 	<!-- Added by Gopinath -->
@@ -391,6 +397,13 @@
    <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
    <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
+   <clientCollectionEmail01>ppatil@consiliotest.com</clientCollectionEmail01>
+   <clientcollectionFirstName01>Paresh</clientcollectionFirstName01>
+   <clientcollectionSecondName01>Patil</clientcollectionSecondName01>
+   <clientCollectionEmail02>Gouri.Dhavalikar@consiliotest.com</clientCollectionEmail02>
+   <clientcollectionFirstName02>Gouri</clientcollectionFirstName02>
+   <clientcollectionSecondName02>Dhavalikar</clientcollectionSecondName02>
+   <copyDSwithErr>Copied datasets with errors</copyDSwithErr>
     
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
@@ -428,6 +441,12 @@
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
     <collectionFailedStatus>Retrieve of datasets failed</collectionFailedStatus>
+    
+    <!-- Added By Hema [Collection] -->
+     <TenantIDJeb>9440f0a4-3c93-44be-a379-740f10731bf6</TenantIDJeb>
+    <ApplicationIDJeb>6d76a630-be97-4493-9f7a-edf318c03c18</ApplicationIDJeb>
+    <ApplicationKeyJeb>dlh7Q~fNgOWVJ3sTtQvA8KsA0lV2bqRtZAIaK</ApplicationKeyJeb>
+    <collectionJebEmailId>jbush@consiliodeveloper.onmicrosoft.com</collectionJebEmailId>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -566,8 +585,7 @@
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 	<JanMultiPTIFF>16JanMultiPTIFF</JanMultiPTIFF>
-	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file
-	</GNon_searchable_PDF_Load_file>
+	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
 	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
@@ -866,13 +884,15 @@
 	<!-- Added By Raghuram -->
 	<preBuilt>Pre-Built Models</preBuilt>
 	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
-	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
+	<DEPIPTheft>DEP/IP Theft</DEPIPTheft>
 	<Discrimination>Discrimination</Discrimination>
 	<FCPA>FCPA</FCPA>
 	<NR_Detection>NR Detection</NR_Detection>
 	<PII>PII</PII>
 	<PRIV>PRIV</PRIV>
 	<Harassment>Harassment</Harassment>
+	<TheftOfCustomerInfo>Theft of Customer Info</TheftOfCustomerInfo>
+	<Involvedoutsiders>Involved Outsiders</Involvedoutsiders>
 	
 	 <!-- Added By Aathith , Client Page Details -->
     <FilterByType>Filter By Type</FilterByType>
@@ -924,5 +944,6 @@
 	<Datasets>Datasets</Datasets>
 	<ManageDomainProjects>Manage Domain Projects</ManageDomainProjects>
 	<Ingestions>Ingestions</Ingestions>
-    
+	<OutsideHelp>Yes. The problem is we're behind on the project. Can you help us get caught up? > You're right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</OutsideHelp>
+    <SalaryMatch>You are right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</SalaryMatch>
 </TestData>

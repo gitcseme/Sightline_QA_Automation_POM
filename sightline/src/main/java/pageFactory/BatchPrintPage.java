@@ -15,7 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
-
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -254,6 +254,62 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getReportAnalysisDetails() {
+		return driver.FindElementByXPath("//div[@id='noIssuesDocDiv']");
+	}
+
+	public Element getAnalysisRequestDetails() {
+		return driver.FindElementByXPath("//span[@id='noIssuesDocSpan']//parent::p");
+	}
+
+	public ElementCollection getGridValues(int i) {
+		return driver.FindElementsByXPath("//div[@id='issueDocGrid']//td[" + i + "]//label");
+	}
+
+	public Element getPaginationOfProbTablegrid() {
+		return driver.FindElementByXPath("//div[@id='issueDocGrid']//ul[@class='pagination']");
+	}
+
+	public ElementCollection getAnalysisProdTableHeader() {
+		return driver.FindElementsByXPath("//div[@id='issueDocGrid']//th");
+	}
+
+	public Element getFolderTreeStructure() {
+		return driver.FindElementById("folderTree");
+	}
+
+	public Element getSkipFoldToggleStatus() {
+		return driver.FindElementById("includeFolderSkippedDocuments");
+	}
+
+	public Element getEnableSlipSheetToggle() {
+		return driver.FindElementByXPath("//input[@id='includeSlipSheetCheckBox']//parent::label//i");
+	}
+
+	public Element getSlipSheetOfProd_DDText() {
+		return driver.FindElementByXPath("//div[@id='slipSheetsDropdownDiv']//parent::div//label");
+	}
+
+	public Element getSlipSheetOfProd_DD() {
+		return driver.FindElementByXPath("//div[@id='slipSheetsDropdownDiv' and @class='disablePanel']");
+	}
+
+	public Element getTitle_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetTitleName']");
+	}
+
+	public Element getFromRecipient_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetSenderName']");
+	}
+
+	public Element getToRecipient_TXB() {
+		return driver.FindElementByXPath("//input[@id='coverSheetRecipientName']");
+	}
+
+	public Element getCoverAndIntroToggle() {
+		return driver.FindElementByXPath("//input[@id='includeCoverdIntroCheckBox']//parent::label//i");
+	}
 
 	public Element getHeaderPositionBtn(int i) {
 		return driver.FindElementByXPath("(//div[@id='divbranding2']//button)[" + i + "]");
@@ -524,14 +580,29 @@ public class BatchPrintPage {
 
 	// added by sowndarya
 
+	public Element getSearchNodeExpand(String gropuName) {
+		return driver.FindElementByXPath("//div[@id='searchTree']//a[text()='" + gropuName + "']//preceding-sibling::i[@class='jstree-icon jstree-ocl']");
+	}
+	public Element getSelectSearch(String searchname) {
+		return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li//a[contains(text(),'" + searchname + "')]");
+	}
+	
 	public Element getBatchId(int i) {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//td[@class='sorting_1'][" + i + "]");
 	}
 
+	public Element getRequestedDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Analysis')]//..//..//div//p");
+	}
+	
+	public Element getDocCountInAnalysisPage() {
+		return driver.FindElementByXPath("//p//span[last()]");
+	}
+	
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "BatchPrint/");
+//		this.driver.getWebDriver().get(Input.url + "BatchPrint/");
 		base = new BaseClass(driver);
 	}
 
@@ -2912,7 +2983,7 @@ public class BatchPrintPage {
 	 * @param configureTxt
 	 */
 	public void verifyBrandingAndReadctTab(boolean enableRedactToggle, boolean configureAndverifyPosition,
-			String configureTxt) {
+			String configureTxt, boolean verifyColour) {
 		verifyCurrentTab("Branding and Redactions");
 		boolean flag = true;
 		driver.waitForPageToBeReady();
@@ -2946,6 +3017,7 @@ public class BatchPrintPage {
 				getHeaderPositionBtn(i).waitAndClick(10);
 				base.waitForElement(getBatchPrintEnterBranding());
 				getBatchPrintEnterBranding().waitAndClick(10);
+				base.waitTime(2);
 				getBatchPrintEnterBranding().SendKeys(configureTxt);
 				base.waitForElement(getInsertMetadataFieldOKButton());
 				getInsertMetadataFieldOKButton().waitAndClick(5);
@@ -2954,8 +3026,183 @@ public class BatchPrintPage {
 				base.digitCompareEquals(Integer.parseInt(actualPosition), 2,
 						"Location are fixed as per selected position",
 						"Location are Not fixed as per selected position");
+
+				if (verifyColour) {
+					base.waitTime(3);
+					String color = getHeaderPositionBtn(i).GetCssValue("background-color");
+					String actualColour = base.rgbTohexaConvertor(color);
+					base.textCompareEquals(actualColour, "#739E73", "Metadata selected to add is in green color ",
+							"Metadata selected to add is Not in green color ");
+				}
 			}
 		}
 	}
 
+	public void enableCoverToggleAnFillTheDetails(String toRecipient, String FromRecipient, String title) {
+		getCoverAndIntroToggle().waitAndClick(10);
+
+		if (getToRecipient_TXB().isDisplayed()) {
+			base.stepInfo("Cover & intro Page toggle is Enabled");
+			base.waitForElement(getToRecipient_TXB());
+			getToRecipient_TXB().waitAndClick(10);
+			getToRecipient_TXB().SendKeys(toRecipient);
+			driver.waitForPageToBeReady();
+			getFromRecipient_TXB().waitAndClick(10);
+			getFromRecipient_TXB().SendKeys(FromRecipient);
+			driver.waitForPageToBeReady();
+			getTitle_TXB().waitAndClick(10);
+			getTitle_TXB().SendKeys(title);
+		} else {
+			base.stepInfo("Cover & Intro Page Toggle is Disabled");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : enable/disable fodler skipped documents toggle & verify folder tree structure is displayed
+	 */
+	public void verifyFolderSkippedDoc(Boolean clickSkipFold, Boolean enableFolderSkip) {
+		if (clickSkipFold) {
+			getSkippedFolderButton().waitAndClick(10);
+		}
+
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		String toggleStatus = getSkipFoldToggleStatus().GetAttribute("class");
+		if (enableFolderSkip)
+			if (toggleStatus.contains("activeC") && enableFolderSkip) {
+				base.stepInfo("Folder skipped document toggle is Enabled");
+				driver.waitForPageToBeReady();
+				base.ValidateElement_Presence(getFolderTreeStructure(), "Folder Tree Structure is displayed");
+			} else {
+				getSkippedFolderButton().waitAndClick(10);
+				base.stepInfo("Folder skipped document toggle is Enabled Now");
+				driver.waitForPageToBeReady();
+				base.ValidateElement_Presence(getFolderTreeStructure(), "Folder Tree Structure is displayed");
+			}
+
+		if (!enableFolderSkip) {
+			if (!toggleStatus.contains("activeC") && !enableFolderSkip) {
+				base.stepInfo("Folder skipped document toggle is Disabled");
+				driver.waitForPageToBeReady();
+				boolean flag = getFolderTreeStructure().isDisplayed();
+				base.printResutInReport(flag, "Folder Tree Structure is not displayed",
+						"Folder Tree Structure is not as expected", "Fail");
+			} else {
+				getSkippedFolderButton().waitAndClick(10);
+				base.stepInfo("Folder skipped document toggle is Disabled Now");
+				driver.waitForPageToBeReady();
+				boolean flag = getFolderTreeStructure().isDisplayed();
+				base.printResutInReport(flag, "Folder Tree Structure is not displayed",
+						"Folder Tree Structure is not as expected", "Fail");
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify grid in analysis tab . verifies pagination , Header &
+	 *              Radio Button Displayed for all docid
+	 * @param verifyPagination
+	 */
+	public void verifyTableGridInAnalysisTab(boolean verifyPagination) {
+		String[] expectedTableHeader = { "DOC ID", "SKIP PRINTING", "NOT IN ANY PRODUCTION" };
+		base.waitForElementCollection(getAnalysisProdTableHeader());
+		List<String> headercompleteteList = base.availableListofElements(getAnalysisProdTableHeader());
+		List<String> actualList = new ArrayList<>();
+
+		for (int i = 0; i < headercompleteteList.size(); i++) {
+			if (headercompleteteList.get(i).equals("")) {
+				System.out.println("Ignore");
+			} else {
+				actualList.add(headercompleteteList.get(i));
+			}
+		}
+
+		base.compareArraywithDataList(expectedTableHeader, actualList, true,
+				actualList + " Headers is displayed as expected", "headers are not as expected");
+
+		if (verifyPagination) {
+			driver.waitForPageToBeReady();
+			base.ValidateElement_Presence(getPaginationOfProbTablegrid(), "Grid Pagination");
+		}
+		int radioBtnIndex = base.getIndex(getAnalysisProdTableHeader(), "SKIP PRINTING");
+		System.out.println(radioBtnIndex);
+		base.waitForElementCollection(getGridValues(radioBtnIndex));
+		List<WebElement> ActualElement = getGridValues(radioBtnIndex).FindWebElements();
+		for (int i = 1; i < getGridValues(radioBtnIndex).size(); i++) {
+			String actualType = ActualElement.get(i).getAttribute("class");
+			if (actualType.equals("radio")) {
+				System.out.println("Radio Button is  Available");
+			} else {
+				base.failedStep("Radio Button is not Available");
+			}
+		}
+		base.passedStep("Radio button is visible for all The Documents");
+	}
+
+	/**
+	 * @Authro Jeevitha
+	 * @Description : verify analysis request details displayed in analysis tab
+	 */
+	public void verifyAnalysisReportDetails() {
+		String details1 = getAnalysisRequestDetails().getText();
+		String actualMsg1 = "You requested to print";
+		base.compareTextViaContains(details1, actualMsg1, actualMsg1, "Analysis Request is not as expected");
+		String actualMsg2 = "There is no issues with";
+		base.compareTextViaContains(details1, actualMsg2, actualMsg2, "Analysis Request is not as expected");
+		base.passedStep(details1);
+
+		String details2 = getReportAnalysisDetails().getText();
+		String actualMsg3 = "documents that need your decision below. Of these";
+		base.compareTextViaContains(details2, actualMsg3, actualMsg3, "Analysis Request is not as expected");
+
+		String actualMsg4 = "are not in any of your specified productions";
+		base.compareTextViaContains(details2, actualMsg4, actualMsg4, "Analysis Request is not as expected");
+
+		String actualMsg5 = "are in more than one production";
+		base.compareTextViaContains(details2, actualMsg5, actualMsg5, "Analysis Request is not as expected");
+		base.passedStep(details2);
+
+	}
+
+	public void selectSearch(String grpName, String nodeName, String SearchName) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSearchNodeExpand(grpName));
+		getSearchNodeExpand(grpName).waitAndClick(5);
+		base.waitForElement(getSearchNodeExpand(nodeName));
+		getSearchNodeExpand(nodeName).waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		if (getSelectSearch(SearchName).isElementAvailable(10)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectSearch(SearchName).Visible();
+				}
+			}), Input.wait120);
+			getSelectSearch(SearchName).waitAndClick(20);
+			System.out.println(SearchName + " is Selected");
+			base.stepInfo(SearchName + " is Selected");
+
+			driver.scrollPageToTop();
+			getbtnNext().waitAndClick(20);
+			UtilityLog.info("Saved search with  name  " + SearchName);
+
+			
+		} else {
+			base.stepInfo(SearchName + " is Not Displayed");
+
+	}
+	}
+	
+	public void fillingSourceSelectionTag(String grpName, String nodeName, String SearchName) {
+		driver.waitForPageToBeReady();
+		if (getSelectRadioButton().isElementAvailable(3) && getTagBatchPrint().isElementAvailable(3)
+				&& getFolderBatchPrint().isElementAvailable(3)) {
+			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
+			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
+		}
+	
+		selectSearch(grpName, nodeName, SearchName);
+		navigateToNextPage(1);
+		}
 }

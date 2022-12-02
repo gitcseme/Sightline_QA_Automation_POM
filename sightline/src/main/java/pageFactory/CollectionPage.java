@@ -9,9 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class CollectionPage {
@@ -128,6 +133,10 @@ public class CollectionPage {
 	}
 
 	// Added by Mohan
+	public Element getLoadingFoldersIcon() {
+		return driver.FindElementByXPath("//span[contains(text(),'Loading folders')]");
+	}
+
 	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
 		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]");
 	}
@@ -246,6 +255,10 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getDestinationPathLocation(String nameAtttribute) {
+		return driver.FindElementByXPath("//div[text()='" + nameAtttribute + "']//..//div[@class='popout text-wrap']");
+	}
+
 	public Element getPopUpStatusShowDetailsLink(String columnName, String status) {
 		return driver.FindElementByXPath("//td[contains(text(),'" + columnName
 				+ "')]//..//span[text()[normalize-space()='" + status + "']]//a[text()='Show Details']");
@@ -350,6 +363,15 @@ public class CollectionPage {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']");
 	}
 
+	public Element getSubFolderNameToSelect(String Parentfolder, String Childfolder) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + Parentfolder
+				+ "']/following-sibling::ul/li/a[contains(.,'" + Childfolder + "')]");
+	}
+
+	public Element getFolderTree(String type) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']/preceding-sibling::i");
+	}
+
 	public Element getActionBtn(String type) {
 		return driver.FindElementByXPath("//input[@value='" + type + "']");
 	}
@@ -414,6 +436,10 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+
+	public Element getDatasetPopupCloseBtn() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
 
 	public Element getPopupRanByDetail() {
 		return driver.FindElementByXPath("//p[text()='Collection Ran By:']//parent::div//following-sibling::div//p");
@@ -742,11 +768,12 @@ public class CollectionPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : verify Collection information Page after clciking speciifed
+	 * @Description : verify Collection information Page after clicking specified
 	 *              source location
 	 * @param expectedSrc
 	 * @param collectionName
 	 * @param Next
+	 * @modifiedIn : 11/18/22
 	 * @Modifiedby : Raghuram
 	 */
 	public HashMap<String, String> verifyCollectionInfoPage(String srceLocation, String collectionName, boolean Next) {
@@ -774,8 +801,13 @@ public class CollectionPage {
 			base.failedStep("Collection Name Field is Not displayed");
 		}
 
+		// Get Collection ID
 		String collectionID = getCollectionID().getText();
 		colllectionData.put(collectionName, collectionID);
+
+		// Get Destination Path - latest
+		String destinationPath = getDestinationPathLocation().getText();
+		colllectionData.put("DestinationPath", destinationPath);
 
 		if (Next) {
 			getNextBtn().waitAndClick(10);
@@ -792,9 +824,7 @@ public class CollectionPage {
 				}
 			}
 		}
-
 		return colllectionData;
-
 	}
 
 	/**
@@ -930,6 +960,7 @@ public class CollectionPage {
 		driver.waitForPageToBeReady();
 
 		// Custodian Retived data
+		base.waitTime(2);
 		String retrivedData = getDataSetNameTextFIeld().GetAttribute("value");
 		base.stepInfo("Actual populated dataset name : " + retrivedData);
 
@@ -1045,6 +1076,37 @@ public class CollectionPage {
 	}
 
 	/**
+	 * @author Hema MJ
+	 * @createdDate : 11/25/22
+	 * @param Select        Sub folderName
+	 * @param subFolder
+	 * @param subFolderName
+	 */
+	public void folderToSelect(String folderName, Boolean toExpand, Boolean SubFolder, String SubFolderName) {
+		if (toExpand) {
+			getFolderabLabel().waitAndClick(5);
+		}
+		// Respective folder to select if you want to select subFolder or not
+		if (SubFolder) {
+
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getFolderTree(folderName).waitAndClick(10);
+			getSubFolderNameToSelect(folderName, SubFolderName).waitAndClick(10);
+
+		} else {
+			try {
+				driver.waitForPageToBeReady();
+				base.waitTime(3);
+				getFolderNameToSelect(folderName).waitAndClick(10);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	/**
 	 * @author Raghuram.A
 	 * @createdDate : 7/27/22
 	 * @param addNewDataSetType
@@ -1106,7 +1168,7 @@ public class CollectionPage {
 	 */
 	public void verifyDataSetContents(String[] headerList, String firstName, String lastName, String selectedApp,
 			String collectionEmailId, String dataSetNameGenerated, String selectedFolder, String DateOrKeyword,
-			String additional2, Boolean additional3, int additional4) {
+			String subFolderName, Boolean subFolderFlag, int additional4) {
 
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
 
@@ -1128,13 +1190,16 @@ public class CollectionPage {
 				expValue = collectionEmailId;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader4)) {
 				expValue = dataSetNameGenerated;
-			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+			} else if (subFolderFlag == true && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
+				expValue = subFolderName;
+			} else if (subFolderFlag == false && headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
 				expValue = selectedFolder;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader6)) {
 				expValue = DateOrKeyword;
 			}
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
+
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");
@@ -1211,6 +1276,7 @@ public class CollectionPage {
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
 
 		// Check collection presence
+		driver.waitForPageToBeReady();
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
@@ -1505,7 +1571,7 @@ public class CollectionPage {
 	 */
 	public void verifyAddedDataSetFrmPopup(String custodianMailId, String collectionName,
 			List<String> expectedCustodianDetaisl, String expectedFolderType, boolean ApplyFilter,
-			String expectedFilterStatus) {
+			String expectedFilterStatus,boolean verifyCustodianAndDataset) {
 		List<String> custodianDetails = new ArrayList<>();
 
 		String headerList[] = { "Select Custodian", "Select Folders to Collect", "Apply Filter" };
@@ -1537,19 +1603,21 @@ public class CollectionPage {
 			base.printResutInReport(status, passMsg, failMsg, "Pass");
 
 			// verify Custodian Details
-			getCustodianLabel().waitAndClick(10);
+			if (verifyCustodianAndDataset) {
+				getCustodianLabel().waitAndClick(10);
 
-			base.waitForElement(getCustodianIDInputTextField());
-			String actualName = getCustodianIDInputTextField().GetAttribute("value");
-			base.waitForElement(getDataSetNameTextFIeld());
-			String actualDatasetName = getDataSetNameTextFIeld().GetAttribute("value");
-			custodianDetails.add(actualName);
-			custodianDetails.add(actualDatasetName);
+				base.waitForElement(getCustodianIDInputTextField());
+				String actualName = getCustodianIDInputTextField().GetAttribute("value");
+				base.waitForElement(getDataSetNameTextFIeld());
+				String actualDatasetName = getDataSetNameTextFIeld().GetAttribute("value");
+				custodianDetails.add(actualName);
+				custodianDetails.add(actualDatasetName);
 
-			String passMsg2 = "Custodian Name & Dataset Name is Retained As expected : " + custodianDetails;
-			String failMsg2 = "Custodian Name & Dataset Name is not Retained";
-			base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
-
+				String passMsg2 = "Custodian Name & Dataset Name is Retained As expected : " + custodianDetails;
+				String failMsg2 = "Custodian Name & Dataset Name is not Retained";
+				base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
+			}
+			
 			// verify Selected folder
 			getFolderabLabel().waitAndClick(10);
 			driver.waitForPageToBeReady();
@@ -1565,12 +1633,14 @@ public class CollectionPage {
 	}
 
 	/**
+	 * @return
 	 * @Author Jeevitha
 	 * @Description : click edit and verify added Dataset and can modify any field
 	 */
-	public void editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
+	public String editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
 			String firstName, String collection2ndEmailId, boolean editFolder, boolean validateFolder,
 			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter) {
+		String actualValue = "";
 		if (clickEdit) {
 			driver.waitForPageToBeReady();
 			getEditBtnDataSelection(collectionEmailId).waitAndClick(10);
@@ -1584,8 +1654,7 @@ public class CollectionPage {
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
 
-				String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
-						"");
+				actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false, "");
 			}
 
 			if (editFolder) {
@@ -1610,6 +1679,7 @@ public class CollectionPage {
 		} else {
 			base.failedStep("Dataset Popup is not displayed");
 		}
+		return actualValue;
 	}
 
 	/**
@@ -1653,6 +1723,7 @@ public class CollectionPage {
 		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
 
 		getActionBtn("Save").waitAndClick(5);
+		driver.waitForPageToBeReady();
 		if (getFolderSelectionConfirmation().isElementAvailable(5)) {
 			String actualTxt = getPopupMsg().getText();
 			String passMsg = "Displayed Popup Msg : " + actualTxt;
@@ -2057,9 +2128,11 @@ public class CollectionPage {
 		}
 
 		// Collection Header details
+		driver.waitForPageToBeReady();
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
 
 		// Get collection Id
+		driver.waitForPageToBeReady();
 		String collId = getDataSetDetails(collectionName, colllectionDataHeadersIndex.get(Input.collectionIdHeader))
 				.getText();
 		base.stepInfo("Collection Id : " + collId);
@@ -2696,20 +2769,27 @@ public class CollectionPage {
 	public HashMap<String, String> fillinDS(String dataName, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String creationType, int retryAttempt, Boolean AutoInitiate,
-			String saveAction, Boolean additional1, String additional2) {
+			String saveAction, Boolean subFolderFlag, String subFolderName) {
 
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
 				selectedApp, colllectionData, dataName, retryAttempt);
 
+		System.out.println("dataSetNameGenerated" + dataSetNameGenerated);
+
 		// Folder Selection
-		folderToSelect(selectedFolder, true, false);
+		if (subFolderFlag) {
+			folderToSelect(selectedFolder, true, true, subFolderName);
+
+		} else {
+			folderToSelect(selectedFolder, true, false);
+		}
 		applyAction("Save", "Confirm", "Dataset added successfully.");
 		driver.waitForPageToBeReady();
 
 		// verify DataSet Contents
 		verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
-				selectedFolder, "-", "", false, 0);
+				selectedFolder, "-", subFolderName, subFolderFlag, 0);
 
 		return colllectionData;
 
@@ -2832,6 +2912,9 @@ public class CollectionPage {
 					&& confirmationAction.equalsIgnoreCase("Yes")) {
 				base.VerifySuccessMessage(
 						"The application has initiated the action to ignore the errors and continue the collection from where it was paused.");
+			} else if (actionType.equalsIgnoreCase("Continue Successful Datasets")
+					&& confirmationAction.equalsIgnoreCase("Yes")) {
+				base.VerifySuccessMessage("Your collection has been resumed from the stage where it was paused.");
 			}
 		}
 	}
@@ -2879,11 +2962,123 @@ public class CollectionPage {
 		colllectionDataToReturn.put(collectionID, dataName);
 
 		// Verify Collection presence
+		driver.waitForPageToBeReady();
 		verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus, true, false,
 				"");
 		base.passedStep("Pre-requestied created colleciton Name :" + dataName);
 
 		// return dataNmae created / used
 		return colllectionDataToReturn;
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify loading Icon on Dataset folder
+	 */
+	public void loadingIconOnDataSetPage() {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFolderabLabel());
+			getFolderabLabel().waitAndClick(5);
+
+			// validation for Loading Icon
+			if (getLoadingFoldersIcon().isElementAvailable(3)) {
+				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
+			} else if (getRefreshButtonInSelectFolderField().isElementAvailable(2)) {
+				base.waitForElement(getRefreshButtonInSelectFolderField());
+				getRefreshButtonInSelectFolderField().waitAndClick(5);
+				getLoadingFoldersIcon().isElementAvailable(3);
+				base.passedStep("Processing icon is displayed for Node select/unselect on folder tree successfully");
+			} else {
+				base.failedStep("Failed to check processing Icon is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param filename
+	 * @param rowNumToStart
+	 * @param headerName
+	 * @return
+	 */
+	public HashMap<String, String> testreadExcelData(String filename, int sheetNumber, int rowNumToStart,
+			String headerName, String additional1, Boolean additional2) {
+		try {
+			HashMap<String, String> colllectionData = new HashMap<>();
+			Boolean toBreak = false;
+			Boolean status = false;
+			Row xlRows = null;
+			int temp = 0;
+
+			// Get Sheet Object
+			Sheet xlSheet = base.sheetDataObject(filename, sheetNumber);
+
+			// Get total number of rows in the respective sheet
+			int numRows = xlSheet.getLastRowNum() + 1;
+			System.out.println("No of Rows : " + numRows);
+
+			// HeaderName - "Collection Summary"
+			for (int i = rowNumToStart; i < numRows; i++) {
+				// Dataset Summary
+				xlRows = xlSheet.getRow(i);
+				if (xlRows != null) {
+					String ab = xlRows.getCell(0).toString();
+					System.out.println(ab);
+					if (ab.equals(headerName)) {
+						status = true;
+						temp = i;
+						break;
+					}
+				}
+			}
+
+			// Fetch Column datas
+			int numCols = xlSheet.getRow(temp + 1).getLastCellNum();
+			System.out.println("NO of columns : " + numCols);
+
+			// Extract and Map Datas
+			if (status) {
+				String xlcell = "";
+				for (int k = temp + 1; k < numRows; k++) {
+					if (toBreak) {
+						break;
+					}
+					xlRows = xlSheet.getRow(k);
+					System.out.println(xlSheet.getRow(k).getLastCellNum());
+					for (int j = 0; j < xlSheet.getRow(k).getLastCellNum(); j++) {
+						if (xlRows.getCell(j) != null) {
+							int checkL = xlRows.getCell(j).toString().length();
+							if (checkL > 1) {
+								xlcell = xlRows.getCell(j).toString();
+								System.out.println(xlcell);
+								if (j == 0) {
+									colllectionData.put(xlcell, xlRows.getCell(j + 1).toString());
+								} else if (xlcell.contains("Phase")) {
+									if (xlRows.getCell(j + 1).toString().equals("Success")) {
+										colllectionData.put(xlcell, xlRows.getCell(j + 1).toString());
+									} else if (xlRows.getCell(j + 1).toString().equals("Failure")) {
+										colllectionData.put(xlcell, xlRows.getCell(j + 2).toString());
+									}
+								}
+							} else if (checkL < 1 && j == 0) {
+								toBreak = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			UtilityLog.info("Data from excel sheet retrieved successfully");
+			return colllectionData;
+		} catch (Exception E) {
+			E.printStackTrace();
+			UtilityLog.info(E.toString());
+			return null;
+		}
 	}
 }

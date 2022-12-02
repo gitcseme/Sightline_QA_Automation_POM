@@ -148,12 +148,17 @@ public class KeywordPage {
 	public ElementCollection getNoOfPagesInKeywordTable() {
 		return driver.FindElementsByXPath("//li[@aria-controls='KeywordsDatatable']/a");
 	}
+	public Element getKeywordTableEditKeyword(String keyword) {
+		return driver.FindElementByXPath(
+				"//*[@id='KeywordsDatatable']/tbody/tr//td[@class='width_blankSpaces sorting_1'][text()='" + keyword
+						+ "']//following::a[text()='Edit']");
+	}
 	
 	// Annotation Layer added successfully
 	public KeywordPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+//		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}
@@ -779,5 +784,62 @@ public class KeywordPage {
 			}
 		}
 	}
+	/**
+	 * @author 
+	 * @description: Add keyword with security group
+	 * @param securitygroup,keywordName,color
+	 */
+
+	public void addKeywordWithSG(String securitygroup, String keywordname, String color) throws AWTException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getKeywordSecurityGroupList());
+		if (getKeywordSecurityGroupList().Enabled()) {
+			getKeywordSecurityGroupList().selectFromDropdown().selectByVisibleText(securitygroup);
+			base.stepInfo(securitygroup + "  is selected");
+
+		}
+		base.waitForElement(getNewKeywordButton());
+		getNewKeywordButton().waitAndClick(5);
+		base.waitForElement(getKeywordName());
+		getKeywordName().SendKeys(keywordname);
+		base.waitForElement(getDescription());
+		getDescription().SendKeys(keywordname);
+		base.waitForElement(getKeywords());
+		getKeywords().SendKeys(keywordname);
+		getSelectColor().selectFromDropdown().selectByVisibleText(color);
+		base.waitForElement(getSaveBtn());
+		getSaveBtn().waitAndClick(5);
+		base.waitForElement(getYesButton());
+		getYesButton().waitAndClick(5);
+		base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
+		base.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author 
+	 * @description: Edit existing keyword
+	 * @param keywordName,editkeywordName
+	 */
+	public void editExistigKeyword(String keywordName, String editkeywordName) {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getKeywordTableEditKeyword(keywordName));
+		getKeywordTableEditKeyword(keywordName).waitAndClick(5);
+		base.waitForElement(getKeywordTableEditFields());
+		getKeywordTableEditFields().waitAndClick(5);
+
+		base.waitForElement(getDescription());
+		getDescription().Clear();
+		getDescription().SendKeys(editkeywordName);
+
+		base.waitForElement(getSaveBtn());
+		getSaveBtn().waitAndClick(5);
+		base.waitForElement(getYesButton());
+		getYesButton().waitAndClick(5);
+
+		base.VerifySuccessMessage("Keyword Highlighting Group successfully updated");
+
+	}
+	
 
 }

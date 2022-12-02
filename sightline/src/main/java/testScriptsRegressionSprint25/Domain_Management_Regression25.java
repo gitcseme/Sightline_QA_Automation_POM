@@ -208,6 +208,7 @@ public class Domain_Management_Regression25 {
 
 		baseClass.selectdomain(Input.domainName);
 
+		baseClass.waitTime(3);
 		ArrayList<String> Values = new ArrayList<>();
 		ArrayList<String> DropDownValues = new ArrayList<>();
 		ProjectPage projects = new ProjectPage(driver);
@@ -223,13 +224,12 @@ public class Domain_Management_Regression25 {
 		System.out.println(TotalCount);
 
 		for (int i = 0; i <= TotalCount; i++) {
-
-			baseClass.waitTime(2);
-			int n = baseClass.getIndex(projects.getProjectTableHeader(), "NAME");
-			List<String> ColVal = baseClass.availableListofElements(projects.getColumValues(n));
-			System.out.println(n);
-			for (String a : ColVal) {
-				Values.add(a);
+			baseClass.waitTime(1);
+			int size = user.getProjectNameCol().size();
+			for (int j = 1; j <=size; j++) {
+				driver.waitForPageToBeReady();
+				String PrjtName = user.getProjectNameColValue(j).getText();
+				Values.add(PrjtName);
 			}
 			System.out.println(Values);
 			driver.waitForPageToBeReady();
@@ -248,8 +248,8 @@ public class Domain_Management_Regression25 {
 		driver.waitForPageToBeReady();
 		user.getSelectRole().selectFromDropdown().selectByVisibleText(Input.ProjectAdministrator);
 		int Size = user.getProjectDropdown().selectFromDropdown().getOptions().size();
+		baseClass.waitTime(2);
 		for (int i = 2; i <= Size; i++) {
-			driver.waitForPageToBeReady();
 			String DropText = user.getDomainProjectDropdown(i).GetAttribute("title");
 			DropDownValues.add(DropText);
 		}
@@ -261,7 +261,7 @@ public class Domain_Management_Regression25 {
 		}
 		loginPage.logout();
 	}
-
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

@@ -51,6 +51,7 @@ public class Ingestion_Regression_2 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -68,7 +69,7 @@ public class Ingestion_Regression_2 {
 		dataSets = new DataSets(driver);
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion and navigate to doclist");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
@@ -93,7 +94,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("To verify that option 'ICE' is available in the Source System dropdown in Ingestion");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("verify option 'ICE' available under source system");
 		ingestionPage.verifyOptionAvailableInSourceSystem();
 		loginPage.logout();
@@ -112,7 +113,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify that Delete button is available on Tile.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add new ingestion and save as draft");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat);
@@ -139,7 +140,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify Back button functionality for ingestion wizard");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and Enter mandatory field values");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat);
@@ -163,7 +164,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify the mandatory field validations in Ingestion Wizard");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add ingestion and verify mandatory field warning message");
 		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
 		baseClass.stepInfo("Verify source and mapping section status after filling mandatory field");
@@ -193,7 +194,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify the Source Selection in Ingestion Wizard Page.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Check the file types availability under source selection");
 		ingestionPage.verifyDifferentFileTypesAvailability();
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, Input.sourceLocation, Input.UniCodeFilesFolder);
@@ -218,7 +219,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion and click on next button");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
 		baseClass.stepInfo("verify source and mapping section status after clicking Next button");
@@ -244,7 +245,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("verify mandatory field validation for mapping fields before Preview&Run.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add ingestion and click on next");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
 		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
@@ -265,7 +266,7 @@ public class Ingestion_Regression_2 {
 		baseClass.stepInfo("Verify selected audio and transcript file types are retained on opening of Draft Ingestion in Wizard.");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with dat,mp3 and transcript");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, 
 				Input.sourceLocation, Input.AK_NativeFolder);

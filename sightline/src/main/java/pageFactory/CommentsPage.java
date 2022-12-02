@@ -96,7 +96,7 @@ public class CommentsPage {
 
 		this.driver = driver;
 		base = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
+//		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
 	}
 
 	public void AddComments(String ComentName) {

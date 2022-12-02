@@ -242,9 +242,32 @@ public class ProjectPage {
 	public Element getIncrementalAnalyticsCheckbox() {
 		return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']//following-sibling::i");
 	}
+	
+	public Element getManageProjectOption() {
+		return driver.FindElementByXPath("//a[@title='Manage']//following-sibling::ul//li//a[contains(text(),' Projects')]");
+	}
+	
 
 	// added by sowndarya
 
+	public Element getDocIdPrefix() {
+		return driver.FindElementById("docIDPrefix");
+	}
+	
+	public Element getDocIdSuffi() {
+		return driver.FindElementById("docIDSuffix");
+	}
+	
+	public Element getTxtDedupinglevel() {
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Deduping')]");
+	}
+
+	public Element getTxtAnalyticsEngine() {
+		return driver
+				.FindElementByXPath("//label[contains(text(),'Analytics Engine')]");
+	}
+	
 	public Element getEngineTypeNUIXRadio() {
 		return driver
 				.FindElementByXPath("//div[@class='col-md-4']//input[@id='rdbNUIX']//following::label[text()='NUIX']");
@@ -381,6 +404,25 @@ public class ProjectPage {
     }
     public Element getDomainEditBtn() {
         return driver.FindElementByXPath("//td[text()='Yes']//following-sibling::td//a[text()='Edit']");
+        
+    }
+    public Element getHCodeError() {
+        return driver.FindElementByXPath("//*[@id='txtHcode-error']");
+    }
+    public Element getClientTypeDisableCheck() {
+        return driver.FindElementByXPath("//select[@id='ddlDomainType' and @disabled='disabled']");
+    }
+    public Element getClientNameDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlEntityTypeList' and @disabled='disabled']");
+    }
+    public Element getDBServerDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlProjDBServer' and @disabled='disabled']");
+    }
+    public Element sizeOfProjectDataBaseDisable() {
+        return driver.FindElementByXPath("//select[@id='ddlProjDBSizeCode' and @disabled='disabled']");
+    }
+    public Element getHcodeValue() {
+        return driver.FindElementByXPath("//*[@id='txtHcode']//following-sibling::input");
     }
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -850,24 +892,27 @@ public class ProjectPage {
 	}
 
 	/**
+	 * Modified on 28/11/22
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
 	 * @Description filter the project using project name
 	 */
 	public void filterTheProject(String projectName) {
 		this.driver.getWebDriver().get(Input.url + "Project/Project");
-
-		bc.waitForElement(getSearchProjectName());
-		getSearchProjectName().SendKeys(projectName);
-
-		bc.waitForElement(getProjectFilterButton());
-		bc.waitTillElemetToBeClickable(getProjectFilterButton());
-		getProjectFilterButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		bc.stepInfo(projectName + " was filtered");
-
-	}
-
+			do {
+				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getSearchProjectName());
+				getSearchProjectName().SendKeys(projectName);
+				bc.waitForElement(getProjectFilterButton());
+				bc.waitTillElemetToBeClickable(getProjectFilterButton());
+				getProjectFilterButton().waitAndClick(10);
+				
+			} while(!getEditProject(projectName).isElementAvailable(10));
+			  bc.stepInfo(projectName + " was filtered");
+		}	
+		
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -1099,6 +1144,7 @@ public class ProjectPage {
 	public void editProject(String project) {
 		driver.waitForPageToBeReady();
 		filterTheProject(project);
+		driver.waitForPageToBeReady();
 		bc.waitForElement(getEditProject(project));
 		getEditProject(project).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -1361,7 +1407,7 @@ public class ProjectPage {
 		driver.waitForPageToBeReady();
 
 		if (getSelectEntity().getText().contains("Domain")) {
-			String domainName = "D" + Utility.dynamicRandomNumberAppender();
+			String domainName = "D" + Utility.randomCharacterAppender(2);
 			bc.waitForElement(getDomainName());
 			getDomainName().SendKeys(domainName);
 			driver.scrollingToBottomofAPage();
@@ -1674,4 +1720,269 @@ public class ProjectPage {
 			bc.verifyOriginalSortOrder(ColVal, Values, SortingOrder, true);
 	}
 
+	/**
+	 * @author sowndarya
+	 * @param projectname
+	 * @param clientName
+	 * @param hcode
+	 * @Description: verifying processing engine section
+	 */
+	public void verifyProcessingEngineSectionCtrProj(String projectname, String clientName, String hcode) {
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProjectBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddProjectBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectName().Visible();
+			}
+		}), Input.wait30);
+		getProjectName().SendKeys(projectname);
+
+		bc.waitForElement(getSelectEntityType());
+		getSelectEntityType().selectFromDropdown().selectByVisibleText("Not a Domain");
+
+		bc.waitForElement(getSelectClientName());
+		getSelectClientName().selectFromDropdown().selectByVisibleText(clientName);
+
+		bc.waitForElement(getHCode());
+		getHCode().SendKeys(hcode);
+
+		driver.scrollingToBottomofAPage();
+
+		bc.waitForElement(getProjectDBServerDropdown());
+		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+
+		bc.waitForElement(getProjServerPathinCreateProjPg());
+		getProjServerPathinCreateProjPg().waitAndClick(10);
+
+		bc.waitForElement(getIngestionserverpath());
+		getIngestionserverpath().waitAndClick(10);
+
+		bc.waitForElement(getProductionserverpath());
+		getProductionserverpath().waitAndClick(10);
+
+		getProjectFolder().Clear();
+		getProjectFolder().SendKeys("Automation");
+
+		getIngestionFolder().Clear();
+		getIngestionFolder().SendKeys("Automation");
+
+		getProductionFolder().Clear();
+		getProductionFolder().SendKeys("Automation");
+
+		driver.scrollPageToTop();
+		
+		bc.waitForElement(getEngineTypeNUIXRadio());
+		if (getEngineTypeNUIXRadio().isElementAvailable(5) && getEngineTypeICERadio().isElementAvailable(5)) {
+			bc.passedStep("'Processing Setting' section Enable As Expected..");
+		} else {
+			bc.failedStep("'Processing Setting' section Not Enable...");
+		}
+		
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().ScrollTo();
+		getAddProject_SettingsTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
+		getNoOfDocuments().SendKeys("20000");
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
+	
+	/**
+	 * @author: Arun Created Date: 17/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the navigation to add new project page as PA
+	 */
+	
+	public void verifyNavigatingToProjectCreationPageAsPA() {
+		 
+		bc.waitForElement(getManageBtn());
+		getManageBtn().waitAndClick(10);
+		if(!(getManageProjectOption().isElementAvailable(10))) {
+			bc.passedStep("PA user have no access to navigate to add new project page");
+		}
+		else {
+			bc.failedStep("PA user have access to navigate to create new project page");
+		}
+	 }
+ 
+	/**
+	 * @author:sowndarya
+	 * @description:To save a project
+	 */
+	public void saveProjectAndVerify() {
+		
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait90);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+	}
+	/**
+	 * @author Brundha.T
+	 * @param projectname
+	 * @Description: Method to create project in DA User
+	 */
+		public void  CreatProjectInDA(String projectname ){
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddProjectBtn().Visible();
+				}
+			}), Input.wait30);
+			getAddProjectBtn().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProjectName().Visible();
+				}
+			}), Input.wait30);
+			getProjectName().SendKeys(projectname);
+			
+			
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+			System.out.println(Bgcount);
+			UtilityLog.info(Bgcount);
+
+			
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getButtonSaveProject());
+			getButtonSaveProject().waitAndClick(10);
+
+			bc.VerifySuccessMessage(
+					"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait120 + Input.wait60);
+			System.out.println(bc.initialBgCount());
+			UtilityLog.info(bc.initialBgCount());
+
+			
+		}
+		/**
+		 * @author Brundha.T
+		 * @param projectname
+		 * @param hcode
+		 * Description: method to create new non-doman project
+		 */
+		public void CreateNewNonDomainProject(String projectname, String hcode) {
+			bc.waitForElement(getAddProjectBtn());
+			getAddProjectBtn().Click();
+			bc.waitForElement(getProjectName());
+			getProjectName().SendKeys(projectname);
+			bc.waitForElement(getSelectEntity());
+			getSelectEntity().selectFromDropdown().selectByIndex(1);
+			getHCode().SendKeys(hcode);
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getProjectDBServerDropdown());
+			getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+			bc.waitForElement(getProjServerPathinCreateProjPg());
+			getProjServerPathinCreateProjPg().waitAndClick(10);
+			bc.waitForElement(getIngestionserverpath());
+			getIngestionserverpath().waitAndClick(10);
+
+			bc.waitForElement(getProductionserverpath());
+			getProductionserverpath().waitAndClick(10);
+
+			getProjectFolder().Clear();
+			getProjectFolder().SendKeys("Automation");
+			getIngestionFolder().Clear();
+			getIngestionFolder().SendKeys("Automation");
+			getProductionFolder().Clear();
+			getProductionFolder().SendKeys("Automation");
+			driver.scrollPageToTop();
+			bc.waitForElement(getAddProject_SettingsTab());
+			getAddProject_SettingsTab().waitAndClick(10);
+
+			bc.waitForElement(getNoOfDocuments());
+			getNoOfDocuments().waitAndClick(10);
+			getNoOfDocuments().SendKeys("20000");
+
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+			System.out.println(Bgcount);
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getButtonSaveProject());
+			getButtonSaveProject().waitAndClick(10);
+
+			bc.waitTime(2);
+			bc.VerifySuccessMessage(
+					"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait120 + Input.wait60);
+			System.out.println(bc.initialBgCount());
+			UtilityLog.info(bc.initialBgCount());
+			bc.checkNotificationCount(Bgcount,1);
+			SavedSearch saveSearch=new SavedSearch(driver);
+			saveSearch.verifyExecuteAndReleaseNotify(Bgcount, 1);
+		}
+		
+		/**
+		 * @author Brundha.T
+		 * @param ElementName
+		 * Description:method to verify slash in the foldername
+		 * @return
+		 */
+		public String verifyingFolderName(Element ElementName) {
+			
+			String Foldername = ElementName.GetAttribute("value");
+			System.out.println(Foldername);
+			String Slash="\\";
+					
+			if (!Foldername.contains(Slash)) {
+				bc.failedStep("" + Foldername + " is with slash");
+			} else {
+				bc.passedStep("" + Foldername + " is not with slash");
+			}
+			return Foldername;
+		}
 }

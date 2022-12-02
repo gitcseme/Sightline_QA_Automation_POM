@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Jenkins-Assignment" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Assignments_Suite">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.assignments.Assignment_Regression1" />
+<class name= "sightline.assignments.Assignment_Regression2" />
+<class name= "sightline.assignments.Assignment_Regression3" />
+<class name= "sightline.assignments.ClientsPage_Regression" />
+<class name= "sightline.assignments.Assignments_Regression_2_1" />
+<class name= "sightline.assignments.Assignments_Regression_2_2" />
+<class name= "sightline.assignments.Assignments_Regression2_3" />
+<class name= "sightline.assignments.Assignments_Regression2_4" />
+<class name= "sightline.assignments.Assignments_Regression_2_5" />
+<class name= "sightline.assignments.Assignment_Regression22_23_24_25" />
+
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

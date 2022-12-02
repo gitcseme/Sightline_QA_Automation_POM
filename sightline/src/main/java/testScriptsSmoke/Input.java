@@ -263,6 +263,7 @@ public class Input {
 	public static String Tagging;
 	public static String ToDoDocs;
 	public static String Complete;
+	public static String BeginBates;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -437,6 +438,10 @@ public class Input {
 	public static String relativeOverlayDat;
 	public static String uncAbsoluteText;
 	public static String absoluteOverlayText;
+	public static String H13696smallSetFolder;
+	public static String smallSetDat;
+	public static String uncAbsolutePdf;
+	public static String uncRelativeNative;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -511,6 +516,13 @@ public class Input {
     public static String collectionErrColorCodeOrange;
     public static String retreivingDSCountH;
     public static String dateKeywordHeaderC;
+    public static String clientCollectionEmail01;
+    public static String clientcollectionFirstName01;
+    public static String clientcollectionSecondName01;
+    public static String clientCollectionEmail02;
+    public static String clientcollectionFirstName02;
+    public static String clientcollectionSecondName02;
+    public static String copyDSwithErr;
     
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -549,6 +561,11 @@ public class Input {
 	public static String collsecondlastName;
 	public static String totalRetrievedCount;
     public static String collectionFailedStatus;
+    
+    public static String TenantIDJeb;
+    public static String ApplicationIDJeb;
+    public static String ApplicationKeyJeb;
+    public static String collectionJebEmailId;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -955,6 +972,7 @@ public class Input {
 	public static String PRIV;
 	public static String reteriveDSErr;
  	public static String completedWithErr;
+ 	public static String TheftOfCustomerInfo;
 
 
 	// Added by Aathith ,Client Page details
@@ -992,6 +1010,10 @@ public class Input {
     public static String filterDataInput3; 
 	public static String transcriptId;
 	public static String env;
+	
+	public static String Involvedoutsiders;
+    public static String OutsideHelp;
+    public static String SalaryMatch;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1265,6 +1287,7 @@ public class Input {
 		ReviewerProductivity = testData.getReviewerProductivity();
 		ToDoDocs = testData.getToDoDocs();
 		Complete = testData.getComplete();
+		BeginBates=testData.getBeginBates();
 
 		/**
 		 * @author Aathith.Senthilkumar
@@ -1453,6 +1476,10 @@ public class Input {
 		relativeOverlayDat = testData.getRelativeOverlayDat();
 		uncAbsoluteText = testData.getUncAbsoluteText();
 		absoluteOverlayText = testData.getAbsoluteOverlayText();
+		H13696smallSetFolder = testData.getH13696smallSetFolder();
+		smallSetDat = testData.getSmallSetDat();
+		uncAbsolutePdf = testData.getUncAbsolutePdf();
+		uncRelativeNative = testData.getUncRelativeNative();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
@@ -1527,9 +1554,16 @@ public class Input {
         collectionErrColorCodeOrange = testData.getCollectionErrColorCodeOrange();
         retreivingDSCountH = testData.getRetreivingDSCountH();
         dateKeywordHeaderC = testData.getDateKeywordHeaderC();	
-      reteriveDSErr = testData.getReteriveDSErr();
-            completedWithErr  = testData.getCompletedWithErr();
-
+         reteriveDSErr = testData.getReteriveDSErr();
+         completedWithErr  = testData.getCompletedWithErr();
+		clientCollectionEmail01 = testData.getClientCollectionEmail01();
+		clientcollectionFirstName01 = testData.getClientcollectionFirstName01();
+		clientcollectionSecondName01 = testData.getClientcollectionSecondName01();
+		clientCollectionEmail02 = testData.getClientCollectionEmail02();
+		clientcollectionFirstName02 = testData.getClientcollectionFirstName02();
+		clientcollectionSecondName02 = testData.getClientcollectionSecondName02();
+		copyDSwithErr = testData.getCopyDSwithErr();
+            
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
@@ -1591,7 +1625,12 @@ public class Input {
 		nearDupeDocIdForReviewer03 = testData.getNearDupeDocIdForReviewer03();
 		threadMapDocId01 = testData.getThreadMapDocId01();
 		threadMapWithNonEmailAttachment = testData.getThreadMapWithNonEmailAttachment();
-
+		collectionJebEmailId=testData.getCollectionJebEmailId();
+		TenantIDJeb=testData.getTenantIDJeb();
+		ApplicationIDJeb=testData.getApplicationIDJeb();
+		ApplicationKeyJeb=testData.getApplicationKeyJeb();
+		
+		
 		/**
 		 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 		 *         by:Gopinath.
@@ -1992,6 +2031,7 @@ public class Input {
 		PII = testData.getPII();
 		PRIV = testData.getPRIV();
         NR_Detection = testData.getNR_Detection();
+        TheftOfCustomerInfo = testData.getTheftOfCustomerInfo();
 		
 		// Added by Aathith ,Client Page details
 		FilterByType = testData.getFilterByType();
@@ -2030,6 +2070,10 @@ public class Input {
 		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
+		
+		 Involvedoutsiders = testData.getInvolvedoutsiders();
+	        OutsideHelp = testData.getOutsideHelp();
+	        SalaryMatch =testData.getSalaryMatch();
 		// createproject if configured
 		projectCreationAndUserAssignment();
 

@@ -342,7 +342,7 @@ public class O365Regression_19 {
 
 		// click Edit and verify The selected Details Are Retained
 		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetails, selectedFolder, true,
-				"Enabled");
+				"Enabled",true);
 
 		// Edit folder name and verify Dataset Selection Table
 		collection.editDatasetAndVerify(false, null, false, null, null, true, false, selectedFolder, "Archive", null,

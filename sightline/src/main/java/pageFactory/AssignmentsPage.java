@@ -19,6 +19,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -1386,8 +1389,8 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
-	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(int index) {
-		return driver.FindElementByXPath("(//table[@id='dt_basic']/tbody/tr/td[4])[" + index + "]");
+	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(String userName) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + userName + "')]//following-sibling::td[2]");
 	}
 
 	public ElementCollection getListOfReviewersInRedistributePopUp() {
@@ -1719,6 +1722,24 @@ public class AssignmentsPage {
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 
 	}
+	
+	public void createAssignmentWithSplChars(String assignmentName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignmentActionDropdown().Visible();
+			}
+		}), Input.wait60);
+		Thread.sleep(2000);
+		getAssignmentActionDropdown().waitAndClick(10);
+
+		getAssignmentAction_NewAssignment().WaitUntilPresent();
+		Thread.sleep(2000);
+		getAssignmentAction_NewAssignment().waitAndClick(20);
+		Assgnwithspecialchars(assignmentName);
+
+	}
 
 	public void createAssignmentDisplayAnalyticsPanelEnabled(String assignmentName, String codingForm)
 			throws InterruptedException {
@@ -1908,6 +1929,78 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 
 	}
+	
+	public void editAssignmentWithSplChars(final String assignmentName) throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumberOfAssignmentsToBeShown().Visible();
+			}
+		}), Input.wait60);
+
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+		Boolean assignmentVisibility = false;
+		try {
+			assignmentVisibility = getSelectAssignment(assignmentName).isDisplayed();
+		} catch (Exception e) {
+			System.err.println("Error" + e);
+		}
+		if (assignmentVisibility) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectAssignment(assignmentName).Visible();
+				}
+			}), Input.wait60);
+
+		} else {
+			bc.waitForElement(getAssgn_Pagination());
+			String nextbutton = getAssgn_Pagination().GetAttribute("class").trim();
+			do {
+				getAssgn_Pagination().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				try {
+					assignmentVisibility = getSelectAssignment(assignmentName).isDisplayed();
+				} catch (Exception e) {
+					System.err.println("Error" + e);
+				}
+				nextbutton = getAssgn_Pagination().GetAttribute("class").trim();
+				if (nextbutton.equals("paginate_button next disabled")) {
+					break;
+				}
+			} while (!assignmentVisibility);
+		}
+
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectAssignment(assignmentName).Visible();
+			}
+		}), Input.wait60);
+		driver.scrollingToBottomofAPage();
+
+		if (!getSelectAssignmentHighlightCheck(assignmentName).isDisplayed()) {
+			getSelectAssignment(assignmentName).waitAndClick(5);
+		}
+
+		driver.scrollPageToTop();
+
+		getAssignmentActionDropdown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignmentAction_EditAssignment().Visible();
+			}
+		}), Input.wait60);
+		bc.waitTime(2);
+		getAssignmentAction_EditAssignment().isElementAvailable(10);
+		getAssignmentAction_EditAssignment().waitAndClick(3);
+		Assgnwithspecialchars(assignmentName+"<'>&");
+		
+
+	}
+	
 
 	public void addReviewerAndDistributeDocs(String assignmentName, int docCount) throws InterruptedException {
 
@@ -2365,6 +2458,25 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(10);
 
 	}
+		
+
+	
+	public void createAssgnGroupWithSplChars(String assgngrpName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		SoftAssert sa=new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgGrptionDropdown().Visible();
+			}
+		}), Input.wait60);
+		getAssgGrptionDropdown().waitAndClick(10);
+
+		bc.waitForElement(getAssgnGrp_Create());
+		getAssgnGrp_Create().waitAndClick(20);
+		
+		Assgnwithspecialchars(assgngrpName);
+
+	}
 
 	public void EditAssgnGroup(String assgngrpName) throws InterruptedException {
 
@@ -2407,6 +2519,29 @@ public class AssignmentsPage {
 		}
 
 		getAssignmentSaveButton().waitAndClick(5);
+
+	}
+	
+	public void EditAssgnGroupSplChars(String assgngrpName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		SoftAssert sa=new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgGrptionDropdown().Visible();
+			}
+		}), Input.wait30);
+
+		getAssgnGrp_Select(assgngrpName).waitAndClick(10);
+
+		Thread.sleep(2000);
+		getAssgGrptionDropdown().waitAndClick(10);
+
+		getAssgnGrp_Edit().WaitUntilPresent();
+		Thread.sleep(2000);
+
+		getAssgnGrp_Edit().waitAndClick(20);
+
+		Assgnwithspecialchars(assgngrpName+"<'>&");
 
 	}
 
@@ -11526,7 +11661,7 @@ public class AssignmentsPage {
 	 *              from the Reviewer is reassign to another Reviewer.
 	 * @throws InterruptedException
 	 */
-	public void RedistributeDocInManageReviewerTab() throws InterruptedException {
+	public void RedistributeDocInManageReviewerTab(String reDistributeUser,String distributeduser) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11536,8 +11671,10 @@ public class AssignmentsPage {
 		bc.waitTime(3);
 		getAssignment_ManageReviewersTab().Click();
 		bc.waitTime(4);
-		int TotalDocsCount = Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText())
-				+ Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText());
+		int TotalDocsCount = Integer
+				.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser).getText())
+				+ Integer.parseInt(
+						getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText());
 		bc.waitForElement(getAssgn_ManageRev_selectrev());
 		getAssgn_ManageRev_selectrev().waitAndClick(10);
 
@@ -11552,16 +11689,81 @@ public class AssignmentsPage {
 		getAssgn_Redistributepopup_save().waitAndClick(10);
 
 		bc.VerifySuccessMessage("Action saved successfully");
-		bc.waitTime(4);
+		bc.waitTime(6);
 
-		assertion.assertEquals("0", getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(1).getText());
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser));
+		driver.waitForPageToBeReady();
+		String actualdocs = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser).getText();
+		assertion.assertEquals("0", actualdocs);
 		assertion.assertAll();
-		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(2).getText();
+		bc.waitForElement(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser));
+		driver.waitForPageToBeReady();
+		String actualDocsCount = getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText();
 		bc.textCompareEquals(actualDocsCount, Integer.toString(TotalDocsCount),
 				"actual Docs Count : '" + actualDocsCount + "' in Reviewers Tab match with the Expected Docs Count : '"
 						+ TotalDocsCount + "'",
 				"actual Docs Count in Reviewers Tab doesn't match with the Expected Docs Count");
 
+	}
+
+	/**
+	 * @author sowndarya
+	 * @description This method used to select coding form in assignments page
+	 * 
+	 */
+	public void EditCodingformInSelectedAssignment(String CFName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectSortCodingForm_Tab());
+		getSelectSortCodingForm_Tab().waitAndClick(10);
+
+		bc.waitForElement(SelectCFPopUp_Step1());
+		SelectCFPopUp_Step1().isDisplayed();
+		bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+
+		bc.waitForElement(getSelectCF_CheckBox(CFName));
+		getSelectCF_CheckBox(CFName).ScrollTo();
+		getSelectCF_CheckBox(CFName).waitAndClick(5);
+		bc.waitTime(1);
+		getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
+		bc.waitTime(1);
+
+		sortOrderNxtBtn().ScrollTo();
+		sortOrderNxtBtn().waitAndClick(10);
+
+		if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+			sortCodeFormOrderSaveBtn().waitAndClick(5);
+			bc.waitTime(2);
+			bc.waitForElement(getSelectedCodeForminAssignPAge());
+		}
+		bc.stepInfo("changed 'set as default' option from one coding form to other");
+
+		if (getSelectedCodeForminAssignPAge().isDisplayed()) {
+			String acualCfName = getSelectedCodeForminAssignPAge().getText();
+
+			String passMSg = "Selected a coding form " + CFName + " and its reflected in manage assignments page";
+			String failMsg = "Selected  coding form " + CFName + "  is not reflected in manage assignments page";
+			bc.compareTextViaContains(acualCfName, CFName, passMSg, failMsg);
+			bc.stepInfo("set as default  displayed beside selected coding form");
+
+		}
+
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.VerifySuccessMessage("Assignment updated successfully");
+		bc.CloseSuccessMsgpopup();
+
+		bc.waitForElement(getSelectedCodeForminAssignPAge());
+		String actual = getSelectedCodeForminAssignPAge().getText();
+		System.out.println(actual);
+		String expected = CFName + " " + "(Set as Default), Default Project Coding Form";
+		System.out.println(expected);
+		SoftAssert soft = new SoftAssert();
+		soft.assertEquals(actual, expected);
+		soft.assertAll();
+		bc.stepInfo(
+				"All selected coding forms should be displayed with set as default for chosen coding form in brackets");
 	}
 
 }

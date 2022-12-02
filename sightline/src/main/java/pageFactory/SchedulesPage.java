@@ -103,7 +103,7 @@ public class SchedulesPage {
 	public SchedulesPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Scheduler/ManageScheduler");
+//		this.driver.getWebDriver().get(Input.url + "Scheduler/ManageScheduler");
 		driver.waitForPageToBeReady();
 		softAssertion = new SoftAssert();
 		 bc = new BaseClass(driver);

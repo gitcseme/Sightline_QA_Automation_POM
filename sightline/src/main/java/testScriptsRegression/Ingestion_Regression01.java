@@ -59,6 +59,7 @@ public class Ingestion_Regression01 {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 
 	}
@@ -200,7 +201,7 @@ public class Ingestion_Regression01 {
 		baseClass.stepInfo(
 				"Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page");
 		baseClass.stepInfo("Step 2: Create an new Ingestion");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 
 		System.out.println(status);
@@ -234,7 +235,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -299,7 +300,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -347,7 +348,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -392,7 +393,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 
 		System.out.println(status);
@@ -450,7 +451,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 	
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 
@@ -494,7 +495,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 		
@@ -547,7 +548,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -614,7 +615,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -666,7 +667,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		String ingestionType="Add Only";	
 		System.out.println(status);
@@ -706,7 +707,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -749,7 +750,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		 boolean status=ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -813,7 +814,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -871,7 +872,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo(" addonly ingestion with mapping field selection");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);

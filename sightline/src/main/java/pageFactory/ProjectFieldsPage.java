@@ -189,7 +189,7 @@ public class ProjectFieldsPage {
 	public ProjectFieldsPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "ProjectFields/ProjectFieldsList");
+//		this.driver.getWebDriver().get(Input.url + "ProjectFields/ProjectFieldsList");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}
@@ -754,6 +754,24 @@ public class ProjectFieldsPage {
 			}
 			else {
 				base.failedStep("Field status not displayed as expected");
+			}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check data type of field
+	 */
+	public void verifyFieldDataType(String field,String dataType) {
+		
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFieldStatus(field,1));
+			String actualDataType =getFieldStatus(field,1).getText().trim();
+			base.stepInfo(field+"field data type- "+ actualDataType);
+			if(actualDataType.equalsIgnoreCase(dataType)) {
+				base.passedStep("Field data type displayed as expected");
+			}
+			else {
+				base.failedStep("Field data type not displayed as expected");
 			}
 	}
 }

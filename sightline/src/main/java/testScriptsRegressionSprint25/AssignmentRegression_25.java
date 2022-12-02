@@ -71,6 +71,15 @@ public class AssignmentRegression_25 {
 	 *              up. RPMXCON-54401
 	 */
 
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify the typing in the reviewers name acts as a \"live
+	 *              filter\" of the grid in Redistribute To Other Reviewer close pop
+	 *              up. RPMXCON-54401
+	 */
+
 	@Test(description = "RPMXCON-54401", enabled = true, groups = { "regression" })
 	public void verifyTypingReviewersNameActsAsLiveFilterOfGridInRedistributePopUp() throws InterruptedException {
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
@@ -91,8 +100,9 @@ public class AssignmentRegression_25 {
 		// add reviewers to assignment and Distribute Documents
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		assignment.add4ReviewerAndDistribute();
+		baseClass.waitTime(6);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
 
 		// Verify the typing in the reviewers name acts as a "live filter" of the grid
 		// in Redistribute To Other Reviewer close pop up.
@@ -265,12 +275,16 @@ public class AssignmentRegression_25 {
 		// adding reviewers and distributing the documents to reviewers
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		assignment.add2ReviewerAndDistribute();
-		baseClass.waitTime(4);
+		baseClass.waitForElement(baseClass.getSuccessMsgHeader());
+		baseClass.waitTime(6);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
-		//select the Reviewer having uncomplete documents  & Redistribute documents to another reviewer
-		//verify All the documents from the Reviewer is reassign to another Reviewer.
+		// select the Reviewer having uncomplete documents & Redistribute documents to
+		// another reviewer
+		// verify All the documents from the Reviewer is reassign to another Reviewer.
 		baseClass.stepInfo("perform ReDistribute Documents in Reviewers Tab.");
-		assignment.RedistributeDocInManageReviewerTab();
+		assignment.RedistributeDocInManageReviewerTab(Input.rev1userName, Input.rmu1userName);
 		baseClass.passedStep("Verified that documents of Reviewer are reassigned to another Reviewer");
 
 		// logout

@@ -3287,7 +3287,7 @@ public class ProductionPage {
 	}
 
 	public Element getAdvancedToggle() {
-		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='advanced']");
+		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='Advanced']");
 	}
 
 	public Element getSourceFiledInDatSection() {
@@ -3552,11 +3552,15 @@ public class ProductionPage {
 	public Element getBlankPageRemovalMsg() {
 		return driver.FindElementByXPath("//a[contains(@data-content,'Blnk Page')]/../following-sibling::td");
 	}
+	
+	public ElementCollection getProductionItem() {
+		return driver.FindElementsByXPath("//div//*[@class='prod-Title']");
+	}
 
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+//		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}
@@ -10457,6 +10461,7 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void selectingDefaultSecurityGroup() {
+		navigatingToProductionHomePage();
 		base.waitForElement(getSecurityGroupDropDown());
 		getSecurityGroupDropDown().waitAndClick(10);
 		base.waitForElement(getDefaultSecurityGroup());
@@ -21198,21 +21203,23 @@ public class ProductionPage {
 		getTIFFChkBox().waitAndClick(5);
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
+		getTIFFTab().waitAndClick(10);
 		driver.scrollPageToTop();
 		base.waitForElement(getTIFF_CenterHeaderBranding());
-		getTIFF_CenterHeaderBranding().Click();
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
 		getTIFF_EnterBranding().SendKeys(BrandingPlaceholder);
 		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		base.waitForElement(getPriveldge_SelectTagButton());
-		getPriveldge_SelectTagButton().Click();
+		getPriveldge_SelectTagButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+		base.waitForElement(getPriveldge_TagTree(tagname));
 		getPriveldge_TagTree(tagname).waitAndClick(10);
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
-		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		base.waitForElement(getPriveldge_TextArea());
+		getPriveldge_TextArea().waitAndClick(10);
 		getPriveldge_TextArea().SendKeys(PrivPlaceholder);
 
 	}
@@ -22815,4 +22822,41 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("production location Page section is filled");
 	}
+	/**
+	 * @author Brundha.T
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 * @Description:verifying text in Downloaded pdf file
+	 */
+	public   String verifyingTextInPDFFile(String fileName) throws IOException {
+        PDDocument document = PDDocument.load(new File(fileName));
+            PDFTextStripper stripper = new PDFTextStripper();
+            String ActualPdfText = stripper.getText(document);
+            int count = document.getNumberOfPages();
+            System.out.println(count);
+            System.out.println("Text:" + ActualPdfText);
+        document.close();
+        return ActualPdfText;
+    }
+	
+	/**
+	 * @author Brundha.T
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 *  @Description:verifying pdf file text in url
+	 */
+	public static String getPdfContent(String url) throws IOException {
+
+	       URL pdfURL = new URL(url);
+	        InputStream is = pdfURL.openStream();
+	        BufferedInputStream bis = new BufferedInputStream(is);
+	        PDDocument doc = PDDocument.load(bis);
+	        PDFTextStripper strip = new PDFTextStripper();
+	        String stripText = strip.getText(doc);
+	        System.out.println(stripText);
+	        doc.close();
+	        return stripText;
+	    }
 }

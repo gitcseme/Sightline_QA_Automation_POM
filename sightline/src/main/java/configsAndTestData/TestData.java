@@ -184,7 +184,7 @@ public class TestData {
 	public String Tagging;
 	public String ToDoDocs;
 	public String Complete;
-	
+	public String BeginBates;
 	
 	
 
@@ -318,6 +318,10 @@ public class TestData {
 	public String relativeOverlayDat;
 	public String uncAbsoluteText;
 	public String absoluteOverlayText;
+	public String H13696smallSetFolder;
+	public String smallSetDat;
+	public String uncAbsolutePdf;
+	public String uncRelativeNative;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22
@@ -392,7 +396,14 @@ public class TestData {
 	public String dateKeywordHeaderC;
 	public String reteriveDSErr;
 	public String completedWithErr;
-
+	public String clientCollectionEmail01;
+    public String clientcollectionFirstName01;
+    public String clientcollectionSecondName01;
+    public String clientCollectionEmail02;
+    public String clientcollectionFirstName02;
+    public String clientcollectionSecondName02;
+    public String copyDSwithErr;
+    
 	// Added by jeevitha
 	public String colorCodeOfRed;
 	public String crammerdocumentID;
@@ -413,6 +424,10 @@ public class TestData {
     public String collsecondlastName;
     public String totalRetrievedCount;
     public String collectionFailedStatus;
+    public String TenantIDJeb;
+    public String ApplicationIDJeb;
+    public String ApplicationKeyJeb;
+    public String collectionJebEmailId;
 
     /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
@@ -854,6 +869,10 @@ public class TestData {
 	public String collectionProgressH;
 	public String collectionStatusH;
 	public String collectionErrColorCodeOrange;
+	public String TheftOfCustomerInfo;
+	public String Involvedoutsiders;
+	public String OutsideHelp;
+	public String SalaryMatch;
 	    
     //Added by Aathith ,Client Page details
   	public String FilterByType;

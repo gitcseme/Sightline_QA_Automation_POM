@@ -302,16 +302,24 @@ public class ReportsPage {
 		return driver.FindElementByXPath("//a[@name='Reports']//i");
 	}
 
+	//added by sowndarya
+	
+	public Element getSavedCustomReport(String reportName) {
+		return driver.FindElementByXPath("//a[text()='" + reportName +"']");
+	}
+	
+	
 	public ReportsPage(Driver driver) {
 
 		this.driver = driver;
 		base = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+//		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 		softAssertion = new SoftAssert();
 		communicationExplorer = new CommunicationExplorerPage(driver);
 	}
+	
 
 	public void TallyReportButton() {
 		ReportsPage report = new ReportsPage(driver);

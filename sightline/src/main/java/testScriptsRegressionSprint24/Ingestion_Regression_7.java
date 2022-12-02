@@ -67,6 +67,7 @@ public class Ingestion_Regression_7 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -120,7 +121,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
@@ -216,7 +217,7 @@ public class Ingestion_Regression_7 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		//add dataset details and click next
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Adding ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
 				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
@@ -252,7 +253,7 @@ public class Ingestion_Regression_7 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		//add dataset details and click next
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Adding ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
 				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
@@ -287,7 +288,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
 				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
@@ -315,7 +316,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
 				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
@@ -342,7 +343,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
 				"not in ingestion home page");
 		baseClass.waitForElement(ingestionPage.getIngestion_GridView());
@@ -370,7 +371,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
 				"not in ingestion home page");
 		baseClass.stepInfo("add new ingestion details and start ingestion");
@@ -396,7 +397,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
 				"not in ingestion home page");
 		baseClass.stepInfo("Add new ingestion details and click on next");
@@ -435,9 +436,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -489,9 +488,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {
@@ -541,7 +538,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
 				"not in ingestion home page");
 		//perform add only ingestion with 'mapped data' source system
@@ -574,9 +571,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//add new ingestion with text files
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		if (status == false) {
@@ -616,9 +611,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion link");
 		baseClass.waitForElement(ingestionPage.getAddanewIngestionButton());
 		ingestionPage.getAddanewIngestionButton().waitAndClick(10);
@@ -650,9 +643,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//add new ingestion with text files
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		if (status == false) {
@@ -696,9 +687,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion link");
 		baseClass.waitForElement(ingestionPage.getAddanewIngestionButton());
 		ingestionPage.getAddanewIngestionButton().waitAndClick(10);
@@ -725,9 +714,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
 			//perform add only ingestion
@@ -769,9 +756,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.ClickOnAddNewIngestionLink();
 		//enter all fields and verify
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
@@ -816,9 +801,7 @@ public class Ingestion_Regression_7 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
-				"not in ingestion home page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
 		if (status == false) {

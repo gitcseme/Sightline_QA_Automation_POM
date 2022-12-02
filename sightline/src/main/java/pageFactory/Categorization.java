@@ -226,11 +226,45 @@ public class Categorization {
 	public Element getDocCount() {
 		return driver.FindElementByXPath("//div[@class='proview-result']//div[@class='docs']");
 	}
+	
+
+	public Element getSelectedAnalyzedSub() {
+		return driver.FindElementByXPath("//*[@id='c-2-1']/div/div/span");
+	}
+	
+	public Element getSelectedAnalyzedXBtn() {
+		return driver.FindElementByXPath("//span[@data-role='remove']");
+	}
+
+	public Element getAssignedName(String AssignedName) {
+		return driver.FindElementByXPath("//div//span[text()='"+AssignedName+"']");
+	}
+	public Element getResultCount() {
+		return driver.FindElementByXPath("//div[@class='cohesion']");
+	}
+
+	
+	public Element getProductionSelectionPopUp() {
+		return driver.FindElementByXPath("//button[@id='btnProduction']");
+	}
+	
+	public ElementCollection getProductionSets() {
+		return driver.FindElementsByXPath("//a[contains(text(),'DefaultProductionSet')]//..//li");
+	}
+	
+	public Element getAnalyzeSelectBtnDisabled(String btn) {
+		return driver.FindElementByXPath("//button[@id='"+btn+"'][@disabled='disabled']");
+	}
+	
+	public Element getRunBtnDisabled() {
+		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
+	}
+
 
 	public Categorization(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Proview/Proview");
+//		this.driver.getWebDriver().get(Input.url + "Proview/Proview");
 		base = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 
@@ -240,6 +274,7 @@ public class Categorization {
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
 	}
+	
 
 	public void selectTagInCat(String tagName) {
 		driver.WaitUntil((new Callable<Boolean>() {

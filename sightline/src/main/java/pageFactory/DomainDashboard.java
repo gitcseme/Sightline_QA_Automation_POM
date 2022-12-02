@@ -238,6 +238,18 @@ public class DomainDashboard {
 		return driver.FindElementById("hdrEntityCreatedON");
 	}
 	
+	public Element projectStatusTab() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/thead/tr/th[2]");
+    }
+
+    public Element projectStatusFirstValue() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/tbody/tr[1]/td[2]");
+    }
+
+    public Element projectNameFirstValue() {
+        return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/tbody/tr[1]/td[1]");
+    }
+	
 	public DomainDashboard(Driver driver) {
 
 		this.driver = driver;
@@ -899,17 +911,18 @@ public class DomainDashboard {
 	/**
 	 * @author Krishna
 	 * @param projectName
-	 * Description: Verify searching project is listed in dasboard
+	 * Description: Verify searching project is listed in dashboard
 	 */
 	public void verifyFilterProjectIsListed(String ProjectName) {
 		driver.waitForPageToBeReady();
-		base.waitTime(8);
+		base.waitTime(10);
 		filterProject(ProjectName);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFirstHyperLink().Visible();
 			}
 		}), Input.wait120);
+		base.waitTime(10);
 		base.waitForElement(getFirstHyperLink());
 		String project = getFirstHyperLink().getText();
 		if (project.equals(ProjectName)) {

@@ -1941,7 +1941,7 @@ public class SessionSearch {
 	public Element getAdvScrnSearchLabel(String i) {
 		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
 	}
-
+	
 	public Element getConceptualTileHit(int i) {
 		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()=" + i + "]");
 	}
@@ -2082,6 +2082,37 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
+	
+	public Element getReportTotalCount() {
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
+	}
+	public Element getReportMetadat() {
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text'])[last()]");
+	}
+	public Element getGoToTallyReport() {
+		return driver.FindElementByXPath("//button[@id='bot3-Msg1']");
+	}
+	public Element getPopupHeader() {
+		return driver.FindElementByXPath("//span[@class='MsgTitle']");
+	}
+	public Element getPopupText() {
+		return driver.FindElementByXPath("//div[@id='tallyWrapperDiv']//p[contains(@style, 'margin-top')]");
+	}
+	
+	public ElementCollection getIDNames() {
+		return driver
+				.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
+	}
+	
+	public Element getPageNum(int num) {
+		return driver.FindElementByXPath(
+				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" +num+ "']");
+	}
+	public Element getLastPagenum() {
+		return driver.FindElementByXPath(
+				"(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	
 	public ElementCollection getStartDatesInBG() {
 		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
 	}
@@ -2106,6 +2137,28 @@ public class SessionSearch {
 	public Element getActionPopupCloseBtn() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 
+	}
+
+	public Element getAdvancedLabel() {
+		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
+	}
+	public Element getDraftQuery() {
+		return driver.FindElementByXPath("//span[@class='badge']");
+	}
+	
+
+	public Element getContentMetaDataBtnDisabled() {
+		return driver.FindElementByXPath(
+				"//*[@id='insertMetaPop']//button[@class='btn text-center btn-default addblock disabled'][@id='contentmetadata']");
+	}
+	public Element getSelectAllSecurityGroupBtn() {
+		return driver.FindElementByXPath("//*[@id='SelectAll']/following-sibling::i");
+	}
+	public Element getEnterSearchBox() {
+		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
+	}
+	public Element getSelectQueryText(String Text) {
+		return driver.FindElementByXPath("//td//span[contains(text(),'"+Text+"')]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -13708,6 +13761,39 @@ public class SessionSearch {
 	}
 
 	/**
+	 * @param TagName
+	 * @param docCount[doc count to be verified ] This method will verify the total
+	 *                     document selected in bulk tag pop up
+	 * @throws InterruptedException
+	 */
+
+	public void bulkTag_FluctuationVerification(String TagName, String docCount) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+
+		String actualCount_continue = getContinueCount().getText();
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate",
+				"Count is not same as expected.");
+
+		base.stepInfo("Now clicking new Tag tab");
+		base.waitForElement(getBulkNewTab());
+		getBulkNewTab().waitAndClick(10);
+
+		String passMsg = " Count didn't fluctuate and count didn't " + "even change after selecting the New Tag.";
+		String actualCount_AfterNewTabClick = getContinueCount().getText();
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick, passMsg,
+				"Count is not same as expected.");
+		base.waitForElement(getEnterTagName());
+		getEnterTagName().SendKeys(TagName);
+		base.waitForElement(getTagsAllRoot());
+		getTagsAllRoot().Click();
+
+		getContinueButton().waitAndClick(10);
+	}
+	/**
 	 * @author Jayanthi.Ganesan
 	 * @param TagName
 	 * @param docCount[doc count to be verified ] This method will verify the total
@@ -13743,6 +13829,41 @@ public class SessionSearch {
 
 	}
 
+	/**
+	 * this method verifies the Total docs selected count displayed in bulk folder
+	 * pop up.
+	 * 
+	 * @param folderName
+	 * @param docCount
+	 * @throws InterruptedException
+	 */
+	public void bulkFolder_FluctuationVerification(String folderName, String docCount) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+
+		String actualCount_continue = getContinueCount().getText();
+		base.textCompareEquals(actualCount_continue, docCount, "Count didn't fluctuate",
+				"Count is not same as expected.");
+
+		base.stepInfo("Now clicking new Folder tab");
+		base.waitForElement(getBulkNewTab());
+		getBulkNewTab().waitAndClick(10);
+
+		String passMsg = " Count didn't fluctuate and count didn't " + "even change after selecting the New Folder.";
+		String actualCount_AfterNewTabClick = getContinueCount().getText();
+		base.textCompareEquals(actualCount_continue, actualCount_AfterNewTabClick, passMsg,
+				"Count is not same as expected.");
+
+		base.waitForElement(getEnterFolderName());
+		getEnterFolderName().SendKeys(folderName);
+
+		base.waitForElement(getFolderAllRoot());
+		getFolderAllRoot().Click();
+		getContinueButton().Click();
+	}
 	/**
 	 * this method verifies the Total docs selected count displayed in bulk folder
 	 * pop up.
@@ -14021,6 +14142,105 @@ public class SessionSearch {
 		getQuerySearchBtn().Click();
 	}
 	
+
+	public void verifyDraftedQueryPresentInSearchbox(String query) {
+		String ExpectedMessage = query;
+		System.out.println("expected" + ExpectedMessage);
+		System.out.println("expected" + getDraftQuery().getText());
+		if (ExpectedMessage.equalsIgnoreCase(getDraftQuery().getText())) {
+			base.passedStep(
+					"Relevant message appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+		} else {
+			base.failedStep(
+					"Relevant message does not appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+		}
+
+	}
 	
+
+	
+	
+
+	public List<String> getAllIDFromBGPage() {
+		List<String> allIDinBG = new ArrayList<String>();
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getIDNames());	
+		allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+		if(getLastPagenum().isElementAvailable(4)) {
+		for(int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
+			driver.scrollingToBottomofAPage();
+			if(getPageNum(i).isElementAvailable(4)) {
+				getPageNum(i).waitAndClick(4);
+				base.waitTime(1);	
+				allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+			}}}
+		return allIDinBG;
+		}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator, String metaData1,
+			String metaDataValue1) {
+		
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		driver.waitForPageToBeReady();
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByValue(metaData);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(metaDataValue);
+
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(10);
+		
+		selectOperatorInBasicSearch(Operator);
+		
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		driver.waitForPageToBeReady();
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByValue(metaData1);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(metaDataValue1);
+
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(10);
+	}
+
+	/**
+	 * @author:sowndarya
+	 * @description:To bulk tag and not save
+	 */
+	public void bulkTagNotComplete(String tagName) {
+		base.waitForElement(getExistingTagSelectionCheckBox(tagName));
+		getExistingTagSelectionCheckBox(tagName).waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getContinueButton());
+		getContinueButton().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(5);
+
+
+	}
 
 }

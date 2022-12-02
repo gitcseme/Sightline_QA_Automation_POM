@@ -1,4 +1,3 @@
-
 package sightline.ingestion;
 
 import java.io.IOException;
@@ -55,6 +54,7 @@ public class Ingestion_Regression_5 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
@@ -74,10 +74,10 @@ public class Ingestion_Regression_5 {
 		String[] values = {"EmailCCAddresses","EmailCCNames","EmailCCNamesAndAddresses"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -107,10 +107,10 @@ public class Ingestion_Regression_5 {
 		String[] values = {"EmailBCCAddresses","EmailBCCNames","EmailBCCNamesAndAddresses"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -140,10 +140,10 @@ public class Ingestion_Regression_5 {
 		String[] values = {"EmailToAddresses","EmailToNames","EmailToNamesAndAddresses"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -173,10 +173,10 @@ public class Ingestion_Regression_5 {
 		String[] values = {"EmailAuthorAddress","EmailAuthorName","EmailAuthorNameAndAddress"};
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile4,Input.nativeLoadFile3,
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem,Input.datLoadFile4,Input.nativeLoadFile3,
 					Input.textLoadFile3);
 			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -204,7 +204,7 @@ public class Ingestion_Regression_5 {
 		baseClass.stepInfo("Verify overlay of different files with same unique id");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with Native and Tiff");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
@@ -246,7 +246,7 @@ public class Ingestion_Regression_5 {
 		String ingestionName = null;
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
@@ -283,7 +283,7 @@ public class Ingestion_Regression_5 {
 		baseClass.stepInfo("New Ingestion with Overwrite option as 'Add Only'");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
@@ -329,7 +329,7 @@ public class Ingestion_Regression_5 {
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -374,4 +374,3 @@ public class Ingestion_Regression_5 {
 	}
 
 }
-

@@ -44,7 +44,9 @@ public class Ingestion_Regression02 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	
+		Input in = new Input();
+		in.loadEnvConfig();
+
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -55,6 +57,7 @@ public class Ingestion_Regression02 {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage = new LoginPage(driver);
 
 	}
@@ -76,7 +79,7 @@ public class Ingestion_Regression02 {
 
 		baseClass.selectproject(Input.ingestionPrjt);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -117,7 +120,7 @@ public class Ingestion_Regression02 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		baseClass.selectproject(Input.ingestionProjectName);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		String ingestionType = "Add Only";
 		String familyMemberCount = "FamilyMemberCount";
@@ -164,7 +167,7 @@ public class Ingestion_Regression02 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		baseClass.selectproject(Input.ingestionPrjt);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		 boolean status=ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 
@@ -241,8 +244,7 @@ public class Ingestion_Regression02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.ingestionProjectName);
 
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// getting before unique count
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
@@ -290,8 +292,7 @@ public class Ingestion_Regression02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.ingestionProjectName);
 
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
@@ -349,7 +350,7 @@ public class Ingestion_Regression02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.ingestionProjectName);
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -373,11 +374,6 @@ public class Ingestion_Regression02 {
 		}
 	}
 }
-	
-	
-	
-	
-	
 	
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
@@ -468,7 +464,7 @@ public class Ingestion_Regression02 {
 		baseClass.selectproject(Input.ingestionProjectName);
 
 		String ingestionType = "Add Only";
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
@@ -556,7 +552,7 @@ public class Ingestion_Regression02 {
 
 		baseClass.selectproject(Input.ingestionProjectName);
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -610,7 +606,7 @@ public class Ingestion_Regression02 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		baseClass.selectproject(Input.ingestionProjectName);
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo(" addonly ingestion with mapping field selection");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
@@ -636,7 +632,6 @@ public class Ingestion_Regression02 {
 	@Test(description ="RPMXCON-49569",enabled = true, groups = { "regression" })
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		DocListPage docList = new DocListPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49569");
@@ -644,7 +639,8 @@ public class Ingestion_Regression02 {
 		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
 
 		String ingestionType="Add Only";
-		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		
 		System.out.println(status);

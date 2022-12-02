@@ -406,6 +406,7 @@ public class DocViewAudio_Regression25 {
 		// Check Display persistant hit - notrepetative
 		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 5));
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		baseClass.waitTillElemetToBeClickable(docview.getAudioPersistantHitEyeIcon());
 		docview.getAudioPersistantHitEyeIcon().Click();
 		docview.verifyAudioPersistanHitNotDisplayed(Input.audioSearchString2);
@@ -632,6 +633,8 @@ public class DocViewAudio_Regression25 {
 		assignmentPage.selectAssignmentToViewinDocView(assign);
 
 		// edit codingform and apply stamp
+		driver.waitForPageToBeReady();
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(Input.codingFormName);
 		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColours);
 		// play Audiofile
 		driver.waitForPageToBeReady();
@@ -685,7 +688,7 @@ public class DocViewAudio_Regression25 {
 		sessionSearch.bulkAssign();
 		assignPage.assignmentCreation(Asssignment, Input.codingFormName);
 		System.out.println(Asssignment);
-		assignPage.add2ReviewerAndDistribute();
+		assignPage.assignmentDistributingToReviewerManager();
 		baseClass.impersonateRMUtoReviewer();
 		driver.waitForPageToBeReady();
 

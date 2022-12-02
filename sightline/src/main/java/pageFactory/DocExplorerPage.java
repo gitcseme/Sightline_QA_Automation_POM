@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -631,14 +632,55 @@ public class DocExplorerPage {
 	public ElementCollection getNumberOfDocsCount() {
 		return driver.FindElementsByXPath("//table[@id='SearchDataTable']//tbody//tr");
 	}
+
 	public Element getListViewHeader(int i) {
-		return driver.FindElementByXPath("//table//thead//tr[1]//th["+i+"]");
+		return driver.FindElementByXPath("//table//thead//tr[1]//th[" + i + "]");
 	}
+
+	public Element getDocExp_CustodianNameSearchName(String custodianName) {
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + custodianName + "']");
+	}
+
+	public Element getCustodianNameValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[4]//div");
+	}
+
+	public Element getDocExp_EmailAuthorSearchName(String emailAuthor) {
+		return driver
+				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailAuthor + "']");
+	}
+	
+	public Element getEmailAuthorValues() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[8]//div");
+
+	}
+
+	
+	public ElementCollection getMasterDateAsc() {
+		return driver.FindElementsByXPath("//th[text()='MASTERDATE']/following::tr//td[7]/div");
+	}
+	
+	public Element getDocExMasterDate() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table/thead/tr[1]/th[7]");
+	}
+	
+
+	public ElementCollection getFolderName() {
+		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li//a");
+	}
+	public Element getFolderNameToolTip(int i) {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]//following-sibling::div//div[@class='popover-content']");
+	}	
+	public Element getFolderNameText(int i) {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
+	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
 		bc = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+//		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		driver.waitForPageToBeReady();
 		assertion = new SoftAssert();
 		doclist = new DocListPage(driver);
@@ -3837,7 +3879,7 @@ public class DocExplorerPage {
 
 		bc.waitForElement(getDocExplorerUnFolder());
 		getDocExplorerUnFolder().waitAndClick(5);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkFolderCheckBox(folderName).Visible();
@@ -3888,6 +3930,7 @@ public class DocExplorerPage {
 		// select all docs and view in docview
 		SelectingAllDocuments(value);
 		docExpViewInDocView();
+		bc.waitTime(5);
 		driver.waitForPageToBeReady();
 		bc.waitForElementCollection(getNumberOfDocsCount());
 		bc.verifyUrlLanding(Input.url + "en-us/DocumentViewer/DocView", " on doc View page", "Not on doc view page");
@@ -3983,7 +4026,7 @@ public class DocExplorerPage {
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for EmailRecipientNames
 	 */
-	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient,String EmailRecipient1) {
+	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient, String EmailRecipient1) {
 		try {
 
 			driver.waitForPageToBeReady();
@@ -4001,7 +4044,7 @@ public class DocExplorerPage {
 			bc.waitForElement(getAddToFilter());
 			bc.waitTillElemetToBeClickable(getAddToFilter());
 			getAddToFilter().Click();
-			if(EmailRecipient1 != null) {
+			if (EmailRecipient1 != null) {
 				bc.waitForElement(getExcludeRadioBtn());
 				bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
 				getExcludeRadioBtn().Click();
@@ -4022,7 +4065,7 @@ public class DocExplorerPage {
 					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
@@ -4047,5 +4090,183 @@ public class DocExplorerPage {
 					"Exception occcured while verifying documents after applying exclude functionality by EmailRecipientNames"
 							+ e.getMessage());
 		}
+	}
+
+	/**
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the CustodianName field values in doc
+	 *               exp list view
+	 */
+	public void verifyCustodianNameValuesInDocExp(String[] custodname) {
+
+		for (int j = 0; j < custodname.length; j++) {
+
+			bc.waitForElement(getDocExp_CustodianNameSearchName("CUSTODIANNAME"));
+			getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeys(custodname[j]);
+			getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getCustodianNameValues(), custodname[j]);
+			driver.Navigate().refresh();
+		}
+	}
+	/**
+	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude filter for EmailRecipientNames
+	 */
+	public void performExculdeEmailRecipientNamesFilter(String EmailRecipient) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getDocExp_EmailRecNameFilter());
+			bc.waitTillElemetToBeClickable(getDocExp_EmailRecNameFilter());
+			getDocExp_EmailRecNameFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(EmailRecipient);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAddToFilter());
+			bc.waitTillElemetToBeClickable(getAddToFilter());
+			getAddToFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method to verify documents after applying exclude functionality
+	 *               by EmailRecipientNames.
+	 * 
+	 */
+	public void verifyExcludeFunctionlityForEmailRecipientNames() {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getPresentDocCount());
+			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			driver.waitForPageToBeReady();
+			if (bc.text("ID000").isDisplayed()) {
+				bc.passedStep("Exclude filter functionality by EmailRecipientNames is working as expected");
+			} else {
+				bc.failedStep("Exclude filter functionality by EmailRecipientNames is not working as expected.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by EmailRecipientNames"
+							+ e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify the EmailAuthor field values
+	 *               in doc exp list view
+	 */
+	public void verifyEmailAuthorValuesInDocExp(String[] emailAuthor) {
+
+		for (int j = 0; j < emailAuthor.length; j++) {
+
+			bc.waitForElement(getDocExp_EmailAuthorSearchName("EMAILAUTHOR"));
+			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeys(emailAuthor[j]);
+			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.validatingGetTextElement(getEmailAuthorValues(), emailAuthor[j]);
+			driver.Navigate().refresh();
+		}
+	}
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description :suffling and verifying it in descending order
+	 */
+	public void verifyingDescendingOrderInColumn() {
+		try {
+			
+			driver.waitForPageToBeReady();
+			getDocExMasterDate().waitAndClick(5);
+			List<WebElement> RowCount = getMasterDateAsc().FindWebElements();
+			bc.waitTime(5);
+			List<String> Rowcounts = new ArrayList<String>();
+			List<String> sortValue = new ArrayList<String>();
+			bc.waitTime(3);
+			for (int j = 1; j <RowCount.size(); j++) {
+				driver.waitForPageToBeReady();
+				String row = RowCount.get(j).getText();
+				String nocounts[] = row.split("/");
+				bc.waitTime(2);
+				String output = nocounts[0];
+				Rowcounts.add(output);
+			}
+			bc.waitTime(5);
+			System.out.println("master date values" + Rowcounts);
+			Collections.sort(Rowcounts);
+			sortValue.addAll(Rowcounts);
+			System.out.println(sortValue);
+			
+			bc.waitTime(3);
+			if (Rowcounts.equals(sortValue)) {
+				bc.passedStep("" + Rowcounts + " and " + sortValue + "is in descending order as expected");
+			} else {
+				bc.failedStep("" + Rowcounts + "and " + sortValue + " is not in descending order as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform action as view in doclist
+	 */
+	public void docExpViewInDocList() {
+
+		bc.waitForElement(getDocExp_actionButton());
+		getDocExp_actionButton().waitAndClick(10);
+		if (getView().isElementAvailable(10)) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			bc.failedStep("view element not available");
+		}
+		bc.waitForElement(getDocListAction());
+		getDocListAction().waitAndClick(10);
+	}
+	
+	/**
+	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select all return documents and perform action
+	 *               as docview/doclist
+	 */
+
+	public int docExpToDocViewOrListWithIngestion(String ingestionName, String value,String action) {
+
+		applyIngestionNameFilter("include", ingestionName);
+		driver.waitForPageToBeReady();
+		int count = getDocumentCountFromListView();
+		// select all docs
+		SelectingAllDocuments(value);
+		if(action.equalsIgnoreCase("doclist")) {
+			docExpViewInDocList();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(doclist.SelectColumnBtn());
+		}
+		else if(action.equalsIgnoreCase("docview")) {
+			docExpViewInDocView();
+			driver.waitForPageToBeReady();
+		}
+		return count;
 	}
 }

@@ -1,7 +1,9 @@
 package pageFactory;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -160,12 +162,17 @@ public class ClientsPage {
 	public Element getColumnValueinDomainClient(int i) {
 		return driver.FindElementByXPath("//table[@id='EntityDataTable']//tbody//td[" + i + "]");
 	}
-
+	public ElementCollection ClientDetailsTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='EntityDataTable']//thead/tr/th");
+	}
+	public Element getClientPopUp() {
+		return driver.FindElementByXPath("//*[@class='ui-dialog-title']");
+	}
 	// Annotation Layer added successfully
 	public ClientsPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
+//		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
 		driver.waitForPageToBeReady();
 
 		bc = new BaseClass(driver);
@@ -564,5 +571,49 @@ public class ClientsPage {
 	  	bc.stepInfo("save button was clicked");
 	  	softAssertion.assertAll();
 	  }
+	 
 
+		/**
+		 * @author: Arun Created Date: 17/11/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the default selected and available options
+		 * 				 for 'initial size of project database' field.
+		 */
+	 public void verifyDefaultSizeAndAvailableOptions(String expected) {
+		 
+		 String[] sizeOptions = {"Small (less than 1000 documents)","Medium (less than 25000 documents)",
+		 			"Big (more than 25000 documents)"};
+		 bc.waitForElement(getDBSizeOption());
+		 //verify default selection
+		 String defaultOption = getDBSizeOption().selectFromDropdown().getFirstSelectedOption().getText();
+		 if(defaultOption.contains(expected)) {
+			 bc.passedStep("By default the 'Initial Size of Project Database' field-"+defaultOption);
+		 }
+		 else {
+			 bc.failedStep("default selected option of project database is not expected");
+		 }
+		 //get available options
+		 List <WebElement> options = getDBSizeOption().selectFromDropdown().getOptions();
+		 int numberOfOptions = options.size();
+		 for(int i=0;i<numberOfOptions;i++) {
+			 String getOption = options.get(i).getText();
+			 bc.textCompareEquals(sizeOptions[i], getOption, "option available in project db field-"+getOption, 
+					 "option not available in project db field"+getOption);
+		 }
+		 //close the popup
+		 bc.waitForElement(getCancelBtn());
+		 getCancelBtn().waitAndClick(10);
+	 }
+	 /**
+		 * @author Brundha.T
+		 * @param ColumName
+		 * @param row
+		 * @return
+		 * @Description get data from Client grid View
+		 */
+		public String getTableData(String ColumName, int row) {
+			driver.waitForPageToBeReady();
+			int colum = bc.getIndex(ClientDetailsTableHeader(), ColumName);
+			String data = getClientTableValue(row, colum).getText().trim();
+			return data;
+		}
 }

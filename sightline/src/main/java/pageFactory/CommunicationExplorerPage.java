@@ -383,13 +383,18 @@ public class CommunicationExplorerPage {
 	public Element getApplyBtn() {
         return driver.FindElementById("btnAppyFilter");
     }
+	
+	public Element getAnalyzeTally() {
+		return driver.FindElementByXPath("//a[text()='Analyze in Tally']");
+	}
 
 	public CommunicationExplorerPage(Driver driver) {
 
 		this.driver = driver;
 		base = new BaseClass(driver);
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+//		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
+		
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -1349,4 +1354,15 @@ public class CommunicationExplorerPage {
 		}
 		
 	}
+	
+	
+	public void analyzeInTallyAction() {
+		driver.scrollPageToTop();
+		base.waitForElement(getActionBtn());
+		getActionBtn().ScrollTo();
+		getActionBtn().waitAndClick(10);
+		base.waitForElement(getAnalyzeTally());
+		getAnalyzeTally().waitAndClick(5);
+	}
+
 }

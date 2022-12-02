@@ -47,8 +47,8 @@ public class CustomDocumentDataReport {
 		return driver.FindElementByXPath("//strong[contains(.,'Security Groups')]");
 	}
 
-	public Element getTally_SelectSecurityGroup(String value) {
-		return driver.FindElementByXPath(".//*[@id='secgroup']/li[contains(.,'" + value + "')]/label");
+	public Element getTally_SelectSecurityGroup(String sourceValue) {
+		return driver.FindElementByXPath("//label[@class='checkbox']//span[contains(text(),'"+sourceValue+"')]//..//i");
 	}
 
 	public Element getTally_SaveSelections() {
@@ -56,8 +56,8 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getMetdataField(String metaDataField) {
-		return driver.FindElementByXPath(
-				"//*[@id='tab1-export']/div/ul/li/label/strong[text()='" + metaDataField + "']");
+		return driver
+				.FindElementByXPath("//*[@id='tab1-export']/div/ul/li/label/strong[text()='" + metaDataField + "']");
 	}
 
 	public Element getAddToSelectedBtn() {
@@ -90,7 +90,7 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getWorkProductField(String workProductField) {
-		return driver.FindElementByXPath("//*[@id='tab2-export']/div//*[contains(text(),'" + workProductField + "')]");
+		return driver.FindElementByXPath("//*[@class='tab-pane left-panel active']/div//a[contains(text(),'"+workProductField+"')]");
 	}
 
 	public Element getExportFieldBtn() {
@@ -146,27 +146,41 @@ public class CustomDocumentDataReport {
 	public ElementCollection getSelectedFieldsList() {
 		return driver.FindElementsByXPath("//span[@class='itemFriendlyName']");
 	}
+
 	public Element getDefaultWorkproductCheckBox(String eleValue) {
-		return driver.FindElementByXPath("//*[@id='tab2-export']//div/ul/li/a[text()='"+eleValue+"']");
+		return driver.FindElementByXPath("//*[@id='tab2-export']//div/ul/li/a[text()='" + eleValue + "']");
 	}
+
 	public Element getToggle_ObjectName() {
 		return driver.FindElementByXPath("//label//i[@id='exportObject']");
 	}
+
 	public Element getToggle_ScrubSpecChar() {
 		return driver.FindElementByXPath("//div[@id='divCcrubSpecialChar']//i");
 	}
+
 	public Element getMetaDataFields_withoutLabel(int i) {
-		return driver.FindElementByXPath("(//div[@id='tab1-export']/div/ul/li/label)["+i+"]");
+		return driver.FindElementByXPath("(//div[@id='tab1-export']/div/ul/li/label)[" + i + "]");
 	}
 
 	public Element getWrkProductHeaders(String eleValue) {
-		return driver.FindElementByXPath("//a[text()='"+eleValue+"']/parent::li");
+		return driver.FindElementByXPath("//a[text()='" + eleValue + "']/parent::li");
 	}
+
 	public Element getSelectedSourceName() {
 		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
 	}
+
+	// added by sowndarya
+
+	public Element getScrubLink() {
+		return driver.FindElementById("btnScrubExportSpecialChar");
+	}
+		
+	public Element getRedXIcon() {
+		return driver.FindElementByXPath("//tr[@id='tablerow1']//i");
+	}
 	
-	//added by sowndary
 	public Element getExportNewLineBtn() {
 		return driver.FindElementById("newLineSelect");
 	}
@@ -174,19 +188,19 @@ public class CustomDocumentDataReport {
 	public Element getExportNewlineValue(String value) {
 		return driver.FindElementByXPath("//*[@id='newLineSelect']/*[contains(text(),'" + value + "')]");
 	}
-	
+
 	public Element getExportDateStyleDD() {
 		return driver.FindElementById("dateStyleSelect");
 	}
-	
+
 	public Element getExportStyleDD() {
 		return driver.FindElementById("styleSelect");
 	}
-	
+
 	public CustomDocumentDataReport(Driver driver) {
 
 		this.driver = driver;
-		//this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		bc = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 
@@ -201,6 +215,7 @@ public class CustomDocumentDataReport {
 				return getCustomDocumentDataReport().Visible();
 			}
 		}), Input.wait30);
+
 		getCustomDocumentDataReport().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -250,6 +265,7 @@ public class CustomDocumentDataReport {
 				getSwapMetaDataFiledDest(dest).getWebElement()).perform();
 
 	}
+
 	public void downloadExport() throws InterruptedException {
 		// Take Back up and clear all files
 
@@ -338,6 +354,7 @@ public class CustomDocumentDataReport {
 		for (int i = 0; i < value.length; i++) {
 			driver.scrollPageToTop();
 			if (getSelectedExports(value[i]).isDisplayed()) {
+				driver.waitForPageToBeReady();
 				softAssertion.assertTrue(true);
 				bc.passedStep("Selected metadata fields and work products " + value[i]
 						+ "  added under 'Selected for Export' section");
@@ -358,11 +375,12 @@ public class CustomDocumentDataReport {
 		}
 		return expected;
 	}
-/**
- * @author Jayanthi.Ganesan
- * This method will save the custom document data report
- * @param reportName
- */
+
+	/**
+	 * @author Jayanthi.Ganesan This method will save the custom document data
+	 *         report
+	 * @param reportName
+	 */
 	public void SaveReport(String reportName) {
 
 		if (getSaveReportBtn().isElementAvailable(2)) {
@@ -384,27 +402,35 @@ public class CustomDocumentDataReport {
 		getMetadataTab().Click();
 		for (int i = 0; i < Mfields.length; i++) {
 			getMetdataField(Mfields[i]).ScrollTo();
+			bc.waitForElement(getMetdataField(Mfields[i]));
 			getMetdataField(Mfields[i]).waitAndClick(5);
 		}
+		bc.waitForElement(getAddToSelectedBtn());
 		getAddToSelectedBtn().waitAndClick(2);
 		driver.scrollPageToTop();
 	}
 
 	public void selectWorkProductFields(String[] Wfields) {
 		driver.scrollPageToTop();
-		bc.waitTime(10);
+		driver.waitForPageToBeReady();
+		bc.waitTime(3);
 		getWorkProductTab().ScrollTo();
 		bc.waitTillElemetToBeClickable(getWorkProductTab());
-		getWorkProductTab().Click();
+		getWorkProductTab().waitAndClick(10);
 		bc.waitTime(2);
 		for (int i = 0; i < Wfields.length; i++) {
-		bc.waitTime(2);
-		//getWorkProductField(Wfields[i]).ScrollTo();
-		getWorkProductField(Wfields[i]).Click();
+			bc.waitForElement(getWorkProductField(Wfields[i]));
+			bc.waitTime(2);
+			driver.waitForPageToBeReady();
+			getWorkProductField(Wfields[i]).ScrollTo();
+//			bc.waitTillElemetToBeClickable(getWorkProductField(Wfields[i]));
+			getWorkProductField(Wfields[i]).waitAndClick(10);
 		}
-		getAddToSelectedBtn().waitAndClick(2);
+		bc.waitForElement(getAddToSelectedBtn());
+		getAddToSelectedBtn().waitAndClick(5);
 		driver.scrollPageToTop();
-		}
+		driver.waitForPageToBeReady();
+	}
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -466,6 +492,7 @@ public class CustomDocumentDataReport {
 		}
 		return slectdFieldList;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
@@ -474,7 +501,11 @@ public class CustomDocumentDataReport {
 
 	public String runReportandVerifyFileDownloaded() throws InterruptedException {
 		final int Bgcount = bc.initialBgCount();
+
 		String Filename = bc.GetLastModifiedFileName();
+		if (Filename == null) {
+			Filename = "Directory Empty";
+		}
 		bc.stepInfo(Filename + "Last Modified File name before Downloading the report");
 		getRunReport().Click();
 		reportRunSuccessMsg();
@@ -485,7 +516,7 @@ public class CustomDocumentDataReport {
 			}
 		}), Input.wait60);
 		downloadExport();
-		bc.waitTime(5);
+		bc.waitUntilFileDownload();
 		String Filename2 = bc.GetLastModifiedFileName();
 		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
 		if (Filename.equals(Filename2)) {
@@ -495,10 +526,11 @@ public class CustomDocumentDataReport {
 		}
 		return Filename2;
 	}
-/**
- * @author Jayanthi.ganesan
- * @throws InterruptedException
- */
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
 	public void dragAndDrop() throws InterruptedException {
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.clickAndHold((getSwapMetaDataFiledSource(1)).getWebElement());
@@ -509,6 +541,7 @@ public class CustomDocumentDataReport {
 		actions.build().perform();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param Wfields
@@ -522,28 +555,30 @@ public class CustomDocumentDataReport {
 		getAddToSelectedBtn().waitAndClick(2);
 		driver.scrollPageToTop();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * 
 	 */
-	
+
 	public void verifyMetaFieldDisplay() {
 		getMetadataTab().Click();
 		bc.stepInfo("Clicked on metadata Field tab");
-		for (int i = 1; i <=14; i++) {
-			if(getMetaDataFields_withoutLabel(i).isDisplayed()) {
+		for (int i = 1; i <= 14; i++) {
+			if (getMetaDataFields_withoutLabel(i).isDisplayed()) {
 				softAssertion.assertTrue(true);
 				continue;
-				
-			}else {
+
+			} else {
 				softAssertion.assertTrue(false);
 				break;
 			}
 		}
 		softAssertion.assertAll();
 		bc.passedStep("Available objects rows under metadata tab displayed upto 14 rows by default. ");
-		
+
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param Wfields
@@ -551,21 +586,22 @@ public class CustomDocumentDataReport {
 	public void validateWrkprductHeaders(String[] Wfields) {
 		getWorkProductTab().Click();
 		bc.stepInfo("Clciked on workproduct Tab");
-		for (int i =0; i <Wfields.length; i++) {
-			String status=getWrkProductHeaders(Wfields[i]).GetAttribute("aria-expanded");
+		for (int i = 0; i < Wfields.length; i++) {
+			String status = getWrkProductHeaders(Wfields[i]).GetAttribute("aria-expanded");
 			System.out.println(status);
 			softAssertion.assertEquals("true", status);
 		}
 		softAssertion.assertAll();
 		bc.passedStep("Available objects rows under workproduct tab displayed and expanded by default. ");
 	}
-/**
- * @author Jayanthi.Ganesan
- * This method will select source from export page
- * @param sourceName[Source name like security group,Folder,tag]
- * @param sourceValue[Tag Name ,Folder name to be selected under Folder/Tag Tree ]
- * @throws InterruptedException
- */
+
+	/**
+	 * @author Jayanthi.Ganesan This method will select source from export page
+	 * @param sourceName[Source name like security group,Folder,tag]
+	 * @param sourceValue[Tag   Name ,Folder name to be selected under Folder/Tag
+	 *                          Tree ]
+	 * @throws InterruptedException
+	 */
 	public void selectSources(String sourceName, final String sourceValue) throws InterruptedException {
 		bc.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().Click();
@@ -580,9 +616,10 @@ public class CustomDocumentDataReport {
 		getTally_SaveSelections().waitAndClick(5);
 
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will verify whether the selected source details are reflected in export page.
+	 * @author Jayanthi.Ganesan This method will verify whether the selected source
+	 *         details are reflected in export page.
 	 * @param sourceType[Source type-Ex: Advanced Search,Saved Search,Doc List,etc]
 	 */
 	public void validateSourceSelction(String sourceType) {
@@ -621,33 +658,35 @@ public class CustomDocumentDataReport {
 				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
 			}
 			break;
-		
-	case "tally":
-		if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Tally")) {
-			bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
-		} else {
 
-			bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
+		case "tally":
+			if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Tally")) {
+				bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
+			} else {
+
+				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
+			}
+			break;
 		}
-		break;
-	}
-		
 
 	}
+
 	/**
-	 * This method will select the saved custom document data report from reports page. 
+	 * This method will select the saved custom document data report from reports
+	 * page.
+	 * 
 	 * @param report1
 	 */
 	public void SavedCDDRToExportPage(String report1) {
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		getReportName(report1).Click();
 		driver.waitForPageToBeReady();
-		
+
 	}
-	
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will retrieve the value from csv file downloaded 
+	 * @author Jayanthi.Ganesan This method will retrieve the value from csv file
+	 *         downloaded
 	 * @param fileLocation
 	 * @param fileName[Name of file]
 	 * @return return a list of string [Values from csv file column]
@@ -667,10 +706,9 @@ public class CustomDocumentDataReport {
 		}
 		return lines;
 	}
-	
+
 	/**
-	 * @author sowndarya
-	 * This method will navigate To CDDReportPage
+	 * @author sowndarya This method will navigate To CDDReportPage
 	 */
 	public void navigateToCDDReportPage() {
 		ReportsPage report = new ReportsPage(driver);
@@ -684,7 +722,7 @@ public class CustomDocumentDataReport {
 		driver.waitForPageToBeReady();
 		bc.verifyPageNavigation("Report/ExportData");
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
@@ -692,7 +730,7 @@ public class CustomDocumentDataReport {
 		bc.waitForElement(getExportStyleDD());
 		getExportStyleDD().selectFromDropdown().selectByVisibleText(style);
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
@@ -703,7 +741,7 @@ public class CustomDocumentDataReport {
 		getExportNewlineValue(newLine).waitAndClick(5);
 
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */

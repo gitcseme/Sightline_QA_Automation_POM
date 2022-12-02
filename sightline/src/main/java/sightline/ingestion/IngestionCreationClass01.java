@@ -38,7 +38,9 @@ public class IngestionCreationClass01 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	
+
+		Input in = new Input();
+		in.loadEnvConfig();
 
 	}
 
@@ -51,6 +53,7 @@ public class IngestionCreationClass01 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -67,7 +70,7 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47566",enabled = true, groups = { "regression" } )
 	public void verifyStatusUpdateInPopup() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-47566");
 		baseClass.stepInfo(
 				"To Verify status update in cataloging, copying, and Indexing Section in Ingestion Details Page");
@@ -99,7 +102,7 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47404",enabled = true, groups = { "regression" } )
 	public void verifyConfigureMappingWarningMessage() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-47404");
 		baseClass.stepInfo(
 				"verify that if configure mapping is not matched the warning message is displayed and as per selection, admin can proceed.");
@@ -124,7 +127,7 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48175",enabled = true, groups = { "regression" } )
 	public void verifyRollbackReadOnlyAttribute() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-48175");
 		baseClass.stepInfo("To Verify Rollback In Ingestion for Files having Read Only Attributes.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
@@ -151,7 +154,7 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49703",enabled = true, groups = { "regression" } )
 	public void verifyStitchedTiffBeforeGeneratedSearchablePDFs() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-49703");
 		baseClass.stepInfo(
 				"Verify if 'Generate Searchable PDFs' is True Stitching TIFFs details should display before the Generate Searchable PDFs row on Ingestion details pop up");
@@ -179,7 +182,7 @@ public class IngestionCreationClass01 {
 		String[] selectedTerm = { "Native", "Text", "MP3 Variant", "Audio Transcript" };
 		String[] unselectedTerm = { "PDF", Input.StitchedTIFF, Input.generateSearchablePDF };
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-48194");
 		baseClass.stepInfo("To Verify In Ingestions the pop-up Details Window for media ;audio & Transcript Count.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -210,10 +213,11 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47402",enabled = true, groups = { "regression" } )
 	public void verifyCopyIngestionUsingNewApproach() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-47402");
 		baseClass.stepInfo(
 				"To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -237,9 +241,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49282",enabled = true, groups = { "regression" } )
 	public void verifyAddonlyIngestionWithMappedData() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-49282");
 		baseClass.stepInfo("To Verify Ingestion Add Only end to End Flow with Source System as Mapped Data");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion with source system as Mapped data
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -265,10 +270,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49467",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageIfDocidExists() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49467");
 		baseClass.stepInfo(
 				"Verify error message displays if adding same source Doc ID which is already exists in the DB");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
@@ -298,11 +303,12 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49466",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageIfDocIdNotAvailable() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-49466");
 		baseClass.stepInfo(
 				"Verify error message if the source system is matching and if the doc ID is not available in the database");
 		// perform add only ingestion
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -342,10 +348,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-46868",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForAudioFiles() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-46868");
 		baseClass.stepInfo("Add only ingestion with only .mp3 audio files with MP3 Variant file types.");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		System.out.println(status);
@@ -368,10 +374,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47842",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForMp3VariantFileTypes() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47842");
 		baseClass.stepInfo("Add only ingestion with only .mp3 audio files with MP3 Variant file types.");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion for mp3 variant file type
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
@@ -396,10 +401,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48147",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForMp3WithNative() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48147");
 		baseClass.stepInfo("To Verify User is able to Ingest MP3  File Variant along with native");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion for mp3 along with native
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
@@ -421,9 +425,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47293",enabled = true, groups = { "regression" } )
 	public void verifyErrorForIngestingDuplicateFiles() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-47293");
 		baseClass.stepInfo("Ingesting Duplicate files.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -452,11 +457,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49258",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyPdfOverlay() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49258");
 		baseClass.stepInfo(
 				"To verify that total unique ingested document count displays unique count if user perform only PDF overlay");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -496,10 +500,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49259",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyNativeOverlay() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49259");
 		baseClass.stepInfo(
 				"To verify that total unique ingested document count displays unique count if user perform only Native overlay");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -539,10 +543,11 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49261",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyMp3Overlay() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+
 		baseClass.stepInfo("Test case Id: RPMXCON-49261");
 		baseClass.stepInfo(
 				"To verify that total unique ingested document count displays unique count if user perform only MP3 overlay");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -583,10 +588,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47587",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithDatAlongWithNative() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47587");
 		baseClass.stepInfo("Ingestion with Overlay mode with only DAT file along with PDF or TIFF or Native file type");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion for mp3 variant file type
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -614,10 +618,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48591",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayDatWithoutText() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48591");
 		baseClass.stepInfo("Verify the Analytics process should be skipped when Text files are not overlayed .");
 		// perform add only ingestion 
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -665,10 +669,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48593",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayPdfWithoutText() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48593");
 		baseClass.stepInfo("Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed .");
 		// perform add only ingestion 
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -697,10 +701,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48592",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayWithText() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48592");
 		baseClass.stepInfo("Verify the Analytics process should take places when Text files are overlayed.");
 		// perform add only ingestion 
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -727,10 +731,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48594",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayMp3WithoutText() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48594");
 		baseClass.stepInfo("Verify the Analytics process should be skipped when we overlay Audio Files without Text File.");
 		// perform add only ingestion 
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -766,9 +770,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48267",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTranslation() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-48267");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Translation.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -799,9 +804,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48266",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTranscript() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48266");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Transcript.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -831,9 +836,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48265",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForMp3() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48265");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for MP3 Variant.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -866,9 +871,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48263",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForPdf() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48263");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for PDF");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -896,9 +901,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48262",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForNative() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48262");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Native.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -928,10 +933,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48203",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithOthers() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48203");
 		baseClass.stepInfo("To Verify Ingestion overlay of Others without Unpublish");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
@@ -960,10 +964,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48597",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayTiffWithoutText() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48597");
 		baseClass.stepInfo("Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.");
 		// perform add only ingestion 
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -993,11 +997,12 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-49260",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyTiffOverlay() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-49260");
 		baseClass.stepInfo(
 				"To verify that total unique ingested document count displays unique count if user perform only TIFF overlay");
 		// perform add only ingestion
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
 			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
@@ -1038,9 +1043,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48264",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTiff() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48264");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for TIFF.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -1068,10 +1073,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-48292",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionWithAnotherNewLineDelimiter() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48292");
 		baseClass.stepInfo("To verify In Ingestion, with another New Line delimiter other than ASCII(59)");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion with new line delimiter 
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
@@ -1097,9 +1101,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47598",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithoutMapping() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47598");
 		baseClass.stepInfo("Edit of saved Overlay ingestion with out mapping field selection.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
@@ -1129,9 +1133,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47597",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithMapping() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47597");
 		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
@@ -1162,9 +1166,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47600",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithoutDatAndIngestionMapping() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47600");
 		baseClass.stepInfo("Edit of saved Overlay with out DAT ingestion with out mapping field selection.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
@@ -1191,9 +1195,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47596",enabled = true, groups = { "regression" } )
 	public void verifyCopyOverlayIngestionWithMapping() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47596");
 		baseClass.stepInfo("Copy of Overlay saved ingestion with mapping field selection");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
@@ -1223,9 +1227,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47599",enabled = true, groups = { "regression" } )
 	public void verifyCopyOverlayIngestionWithoutDatAndMapping() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47599");
 		baseClass.stepInfo("Copy of saved Overlay without DAT ingestion with out mapping field selection.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
@@ -1254,9 +1258,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47369",enabled = true, groups = { "regression" } )
 	public void verifyIngestionDetailsPopupDisplay() {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47369");
 		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.verifyIngestionDetails();
 		loginPage.logout();
 	}
@@ -1269,10 +1273,10 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47362",enabled = true, groups = { "regression" } )
 	public void verifyIngestionHomePageNavigation() {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47362");
 		baseClass.stepInfo(
 				"To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.verifyHomePageNavigationControl();
 		loginPage.logout();
 	}
@@ -1289,10 +1293,10 @@ public class IngestionCreationClass01 {
 
 		String[] dataset = { Input.AllSourcesFolder, Input.TiffImagesFolder };
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49022");
 		baseClass.stepInfo(
 				"Verify two ingestions with step (Indexing  , Approval ) having ingestion type add only  must run simultaneously");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// Verify two add only type ingestion run simultaneously
 		boolean status1 = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		ingestionPage.navigateToIngestionPage();
@@ -1320,10 +1324,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47588",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithOnlyLoadFiles() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47588");
 		baseClass.stepInfo("Ingestion with Overlay mode with only load files for PDF or TIFF or Native file type");
-
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
@@ -1352,9 +1355,9 @@ public class IngestionCreationClass01 {
 	@Test(description ="RPMXCON-47594",enabled = true, groups = { "regression" } )
 	public void verifyRollbackStatusForApprovedIngestion() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47594");
 		baseClass.stepInfo("To Verify for Approved ingestions, there should not have any option for Rollback.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return ingestionPage.getFilterByButton().Visible();
@@ -1386,15 +1389,17 @@ public class IngestionCreationClass01 {
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-	baseClass = new BaseClass(driver);
-	loginPage = new LoginPage(driver);
-	Reporter.setCurrentTestResult(result);
-	if (ITestResult.FAILURE == result.getStatus()) {
-	Utility baseClass = new Utility(driver);
-	baseClass.screenShot(result);
-	}
-	loginPage.quitBrowser();
-
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)

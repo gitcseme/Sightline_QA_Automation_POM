@@ -79,7 +79,7 @@ public class ClassificationPage {
         this.driver = driver;
         base = new BaseClass(driver);
         sa = new SoftAssert();
-        this.driver.getWebDriver().get(Input.url+ "Assignment/Classification");
+//        this.driver.getWebDriver().get(Input.url+ "Assignment/Classification");
       }
 
     public void VerifyClassification() throws InterruptedException {

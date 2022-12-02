@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Jenkins-Basicsearch" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Basicsearch_Suite">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.basicSearch.BasicSearch_Regression1" />
+<class name= "sightline.basicSearch.BasicSearchRegression" />
+<class name= "sightline.basicSearch.BasicSearchRegression_18" />
+<class name= "sightline.basicSearch.BasicSearchRegression_20" />
+<class name= "sightline.basicSearch.BasicSearchRegression_21_25" />
+<class name= "sightline.basicSearch.BasicSearchRegression2" />
+<class name= "sightline.basicSearch.PerformanceTest_Regression" />
+
+
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

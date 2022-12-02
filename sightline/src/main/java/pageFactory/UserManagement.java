@@ -1163,6 +1163,36 @@ public class UserManagement {
 	public Element getProjectDropdown() {
 		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
 	}
+	public ElementCollection getProjectNameCol() {
+		return driver.FindElementsByXPath("//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1']");
+	}
+	
+	public Element getProjectNameColValue(int i) {
+		return driver.FindElementByXPath("(//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1'])["+i+"]");
+	}
+
+	public Element getProjectDropdownList(int i) {
+		return driver.FindElementByXPath("//*[@id='lstProjects']//option["+i+"]");
+	}
+	public Element getAlertMsgBox() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
+	}
+	public Element getErrorMsgInProjectTab() {
+		return driver.FindElementByXPath("//*[@id='RightAssignErrorMessage']");
+	}
+	
+	public Element getErrorMsgInDomainTab() {
+		return driver.FindElementById("RightAssignErrorMessageForDomain");
+	}
+	public Element getEditUserIngestion() {
+		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanIngestions']");
+	}
+	public Element getSelectProjectFromDropdown(String ProjectName) {
+		return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='"+ProjectName+"']");
+	}
+	public Element EditUserClosePopupBtn() {
+		return driver.FindElementByXPath("//*[text()='Edit User']/..//button[@class='ui-dialog-titlebar-close']");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1282,7 +1312,9 @@ public class UserManagement {
 				}
 			}), Input.wait30);
 			// getSelectDomain().SendKeys(domain);
-			getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			//getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			driver.waitForPageToBeReady();
+			getSelectProjectFromDropdown(project).waitAndClick(10);
 		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -5374,6 +5406,34 @@ public class UserManagement {
 		} catch (Exception e) {
 			bc.failedStep("Application doesn't displays any error message when mandatory fields are blank."+Get.class);
 		}
+	}
+	
+	/**
+	 * @author Sakthivel
+	 * @description: verify functionality selected tab is unchecked
+	 * @param userName, project, Tab
+	 * @throws Exception
+	 */
+	public void getUserSelectedFunctionalyTabIsUncheck(String userName, String project, String Tab) throws Exception {
+
+		driver.waitForPageToBeReady();
+		passingUserName(userName);
+		applyFilter();
+		selectEditUserUsingPagination(project, false, "");
+		bc.waitForElement(getFunctionalityButton());
+		getFunctionalityButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (getSelectFuctionalitiesCheckBox(Tab).isElementAvailable(3)) {
+			bc.waitForElement(getSelectFuctionalitiesCheckBox(Tab));
+			getSelectFuctionalitiesCheckBox(Tab).waitAndClick(5);
+			bc.passedStep(Tab + " is visable in functionality tab and clicked ");
+		} else {
+			bc.failedStep("Tab is not displayed");
+		}
+		bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+		getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+		bc.VerifySuccessMessage("User profile was successfully modified");
+
 	}
 
 }
