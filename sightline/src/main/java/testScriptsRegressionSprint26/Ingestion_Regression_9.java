@@ -85,6 +85,9 @@ public class Ingestion_Regression_9 {
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with text files");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
@@ -133,6 +136,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with ice source system");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
@@ -168,6 +173,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
@@ -206,6 +213,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with PDF");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -258,6 +267,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with Native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -310,6 +321,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with Pdf and Native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -363,6 +376,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		//add dataset details and click next
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Adding ingestion details");
@@ -399,6 +414,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion in home page");
 		ingestionPage.ClickOnAddNewIngestionLink();
@@ -420,6 +437,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
@@ -444,6 +463,9 @@ public class Ingestion_Regression_9 {
 		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -472,6 +494,8 @@ public class Ingestion_Regression_9 {
 		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with type as 'add only'");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -500,6 +524,8 @@ public class Ingestion_Regression_9 {
 		baseClass.stepInfo("Verify error message when similar destination field mapped twice.");
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -530,7 +556,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
-		
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		baseClass.stepInfo("Navigate to manage-project fields");
 		projectFieldPage = new ProjectFieldsPage(driver);
 		projectFieldPage.navigateToProjectFieldsPage();
@@ -558,6 +585,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -606,6 +635,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -652,6 +683,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		ingestionPage.IngestionOnlyForDatFile(Input.attachDocFolder, Input.datFile7);
@@ -675,6 +708,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -717,6 +752,8 @@ public class Ingestion_Regression_9 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("add new ingestion details");
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
