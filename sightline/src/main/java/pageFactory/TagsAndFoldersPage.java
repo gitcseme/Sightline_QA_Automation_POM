@@ -647,6 +647,10 @@ public class TagsAndFoldersPage {
 	public Element getBulkRelease_ButtonUnRelease() {
 		return driver.FindElementById("btnUnrelease");
 	}
+	
+	public Element getNewFolderPopup() {
+		return driver.FindElementById("modalFolderAdd");
+	}
 
 	public Element getTagPropagatePopup() {
 		return driver.FindElementByXPath("//*[contains(text(),'Propagate Tag To: ')]/..//a");
@@ -3509,5 +3513,38 @@ public class TagsAndFoldersPage {
 			getAllClosedArrow(textvalue.get(i)).waitAndClick(10);
 			base.stepInfo("Expanded All Arrow ");
 		}
+	}
+	/**
+	 * @author: Arun Created Date: 01/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the new folder creation popup availability 
+	 * 				 after clicking new folder btn
+	 */
+	public void verifyNewFolderCreationPopup() {
+		
+		//select folder and click new folder action
+		base.waitForElement(getAllFolderRoot());
+		getAllFolderRoot().waitAndClick(10);
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitForElement(getAddFolder());
+		getAddFolder().waitAndClick(10);
+		//verify new folder creation popup
+		base.waitForElement(getNewFolderPopup());
+		base.ValidateElement_Presence(getNewFolderPopup(), "new folder popup");
+		base.passedStep("new folder popup displayed");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 01/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the availability of existing folders under root folder
+	 */
+	public void verifyExistingFoldersAvailabilityUnderRoot() {
+		
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(10);
+		base.waitForElement(getFolder_ToggleDocCount());
+		base.ValidateElementCollection_Presence(getFolderList(), "Existing folders");
+		base.passedStep("All existing folders displayed under folder tab");
+		
 	}
 }
