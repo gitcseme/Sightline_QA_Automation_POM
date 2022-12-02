@@ -17,6 +17,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -98,6 +99,77 @@ public class Projects_Regression27 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-55916
+	 * @Description:Validate minimum length value while creating a Domain Project
+	 **/
+	@Test(description = "RPMXCON-55916", enabled = true, groups = { "regression" })
+	public void validatingMinlengthInDomainPrjt() throws Exception {
+
+		base.stepInfo("RPMXCON - 55916");
+		base.stepInfo("Validate minimum length value while creating a Domain Project");
+
+		String projectName = "Project" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String MinSpecialChar = "@#$9";
+		String MinAlphaNum = "AB10";
+		String MinWithMaxNum =page.getRandomNumber(3);
+		String MiniLength = "11";
+
+		String[] MinLength = { MinSpecialChar, MinAlphaNum };
+		String[] Char = { "Special Character", "Alphanumeric character" };
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As : " + Input.sa1userName);
+
+		ProjectPage project = new ProjectPage(driver);
+
+		base.stepInfo("Creating new domain project");
+		project.navigateToProductionPage();
+		project.AddDomainProject(projectName, Input.domainName);
+
+		for (int i = 0; i < MinLength.length; i++) {
+			base.stepInfo("Entering and verifying  min. length with " + Char[i]);
+			project.editProject(projectName);
+			base.waitForElement(project.getAddProject_SettingsTab());
+			project.getAddProject_SettingsTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			project.getMinLengthValue().SendKeys(MinLength[i]);
+			project.getButtonSaveProject().waitAndClick(20);
+			if (base.getYesBtn().isElementAvailable(1)) {
+				base.getYesBtn().waitAndClick(2);
+			}
+			project.editProject(projectName);
+			base.waitForElement(project.getAddProject_SettingsTab());
+			project.getAddProject_SettingsTab().waitAndClick(5);
+
+			String ActualString = project.getMinLengthValue().Value();
+			base.textCompareNotEquals(MinLength[i], ActualString, "Appropriate is not allowed to enter" + Char[i],
+					" Appropriate is allowed to enter" + Char);
+		}
+		base.stepInfo("Entering more numeric value and verifying error message");
+		driver.waitForPageToBeReady();
+		project.getMinLengthValue().SendKeys(MinWithMaxNum);
+		project.getButtonSaveProject().waitAndClick(10);
+		base.VerifyErrorMessage("The specified minimum length cannot be greater than 12.");
+
+		driver.waitForPageToBeReady();
+		project.getMinLengthValue().SendKeys(MiniLength);
+		project.getButtonSaveProject().waitAndClick(20);
+		if (base.getYesBtn().isElementAvailable(1)) {
+			base.getYesBtn().waitAndClick(2);
+		}
+		project.editProject(projectName);
+
+		base.stepInfo("Entering min. length and verifying the updated value");
+		base.waitForElement(project.getAddProject_SettingsTab());
+		project.getAddProject_SettingsTab().waitAndClick(5);
+		String ActualString = project.getMinLengthValue().Value();
+		base.textCompareEquals(MiniLength, ActualString,"Project is created successfully with Min. numeric character",
+				"project is not created with entered value");
+
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

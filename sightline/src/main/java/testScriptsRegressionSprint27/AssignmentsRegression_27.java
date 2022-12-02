@@ -270,6 +270,53 @@ public class AssignmentsRegression_27 {
 				"Verified - that if the Assignment name is long, the last three visible characters are an ellipsis");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Brundha.T Test case Id:RPMXCON-54400
+	 * @throws InterruptedException 
+	 * @Description :Verify the User is able to see all RMU , Reviewers mapped to
+	 *              Assignment.
+	 */
+	@Test(description = "RPMXCON-54400", enabled = true, groups = { "regression" })
+	public void VerifyMappedUsersInAssignment() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54400 Assignments");
+		baseClass.stepInfo("Verify the User is able to see all RMU , Reviewers mapped to Assignment.");
+
+		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+		String[] users = { Input.rmu1userName, Input.rev1userName };
+
+		baseClass.stepInfo("Navigating to Assignment Page.");
+		assignment.navigateToAssignmentsPage();
+		
+		baseClass.stepInfo("Create Assignment");
+		assignment.createAssignment(assignmentName, Input.codeFormName);
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		
+		baseClass.stepInfo("Add Reviewers");
+		assignment.assignReviewers(users);
+		
+		assignment.navigateToAssignmentsPage();
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.waitTillElemetToBeClickable(assignment.getAssignment_ManageReviewersTab());
+		assignment.getAssignment_ManageReviewersTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verifying Mapped users in Assignment");
+		int Size=assignment.getDashboadAssgn().size();
+		System.out.println(Size);
+		if(Size==2) {
+			baseClass.ValidateElement_Presence(assignment.getAssgn_ManageRev_selectReviewer(Input.rmu1userName),"Mapped user");
+			baseClass.ValidateElement_Presence(assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName),"Mapped user");
+			baseClass.passedStep("The user can able to see the mapped RMU/Rev Users to the Assignment");
+		}else {
+			baseClass.failedStep("The user can't able to see the mapped RMU/Rev Users to the Assignment");
+		}
+
+		loginPage.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
