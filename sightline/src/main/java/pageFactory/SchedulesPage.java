@@ -98,6 +98,10 @@ public class SchedulesPage {
 		return driver.FindElementByXPath("(//table[@id='GridSchedulerExecutionList']//td[text()='Review Results Report'])[\"+i+\"]");
 
 	}
+	
+	public Element getPageTitle() {
+		return driver.FindElementByXPath("//*[@id='content']/div//h1");
+	}
 
 	// Annotation Layer added successfully
 	public SchedulesPage(Driver driver) {
@@ -293,6 +297,20 @@ public class SchedulesPage {
 
 		softAssertion.assertAll();
 		bc.passedStep("Scheduled run is completed with the status 'COMPLETE'!");
+	}
+	
+	/**
+	 * @author 
+	 * @description : Method to navigate ManageScheduler page.
+	 */
+	public void navigateToSchedulerPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Scheduler/ManageScheduler");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while navigating to ManageScheduler page" + e.getMessage());
+
+		}
 	}
 
 	
