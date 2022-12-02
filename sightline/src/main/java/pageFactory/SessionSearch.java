@@ -105,6 +105,18 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getSelectSampleMethodFromNewAssignmentab() {
+		return driver.FindElementByXPath("//select[@id='sampleMethodNewAssignment']");
+	}
+	
+	public Element getTextBoxLableOfSampleMethodFromNewAssignmentab() {
+		return driver.FindElementByXPath("//label[@id='CountToAssignLabelNewAssignment']");
+	}
+	
+	public Element getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab() {
+		return driver.FindElementByXPath("//div[@id='divNumberToAssignNewAssignment' and @style='display: none;']");
+	}
+	
 	public Element getWorkProductTextBox() {
 		return driver.FindElementByXPath("//div[@id='workproduct']//input[@class='textboxlist-bit-editable-input']");
 	}
@@ -14242,5 +14254,31 @@ public class SessionSearch {
 
 
 	}
+	
+	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(String optionToSelect,boolean verifyTextBoxLableOfSampleMethod) {
+		
+		getSelectSampleMethodFromNewAssignmentab().selectFromDropdown().selectByVisibleText(optionToSelect);
+
+		if (verifyTextBoxLableOfSampleMethod) {
+			if (optionToSelect.equals("Count of Selected Docs")) {
+				String actualTextBoxLable = getTextBoxLableOfSampleMethodFromNewAssignmentab().getText();
+				String expectedTextBoxLable = "Number to Assign:";
+				base.textCompareEquals(expectedTextBoxLable, actualTextBoxLable,
+						"Verified that label is changed to \"Number to Assign\"",
+						"actual lable Text doesn't match with expected lable Text");
+			} else if (optionToSelect.equals("Percent of Selected Docs")) {
+				String actualTextBoxLable = getTextBoxLableOfSampleMethodFromNewAssignmentab().getText();
+				String expectedTextBoxLable = "Percentage to Assign:";
+				base.textCompareEquals(expectedTextBoxLable, actualTextBoxLable,
+						"Verify that Label is changed to \"Percentage to Assign\"",
+						"actual lable Text doesn't match with expected lable Text");
+			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
+				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab().isElementAvailable(5), true);
+				softAssert.assertAll();
+				base.passedStep("Verified that label is removed.");
+			}
+		}
+	}
+	
 
 }
