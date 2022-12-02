@@ -99,6 +99,7 @@ public class Assignment_Regression_Consilio {
 
 			
 	}
+	
 	@Test(description = "RPMXCON-69087", enabled = true, groups = { "regression" })
 	public void verifyRMUCanEnterSplCharsInClassificationField() throws Exception {
 		bc.stepInfo("Verify that error message display and application does NOT accepts - when user add names in manage classification with special characters < > & ‘ ");
