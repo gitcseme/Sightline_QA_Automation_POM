@@ -205,38 +205,58 @@ public class AdvancedSearchRegression_27 {
 
 	}
 
-	/**
+         /**
 	 * @author
+	 * @throws ParseException
 	 * @Description : Verify that Advanced Search works properly for EmailSentDate
 	 *              field with "Is" operator and NOT having time components.
 	 *              RPMXCON-49173
 	 */
 
 	@Test(description = "RPMXCON-49173", enabled = true, groups = { "regression" })
-	public void verifiedAdancedSearchWorkProperlyForEmailSentDateWithISOperatorAndNotHavingTimeComponents() {
+	public void verifiedAdancedSearchWorkProperlyForEmailSentDateWithISOperatorAndNotHavingTimeComponents()
+			throws ParseException {
 
 		String metaDataField = "EmailSentDate";
 		String operator = "IS";
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
+		String inputData = "2001-11-21";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49173 Advanced Search.");
 		baseClass.stepInfo(
 				"Verify that Advanced Search works properly for EmailSentDate field with \"Is\" operator and NOT having time components.");
 
 		// login
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		// configuring EmailSentDate Search Query with metaData as MasterDate and
 		// Operator as 'IS'.
 		baseClass.stepInfo("configuring EmailSentDate Search Query with metaData as MasterDate and Operator as 'IS'.");
 		sessionSearch.navigateToAdvancedSearchPage();
-		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, dateFormat.format(date), null);
+		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, inputData, null);
 
 		// Click on Search and Verify that "EmailSentDate" field search result return
 		// documents which satisfied above configured query.
 		baseClass.stepInfo("Click on 'Search' button");
 		sessionSearch.serarchWP();
+
+		// verify search result return documents which satisfied above configured query.
+		driver.waitForPageToBeReady();
+		sessionSearch.getPureHitsCount().waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getMasterDate());
+		String masterDate = sessionSearch.getMasterDate().getText();
+
+		driver.waitForPageToBeReady();
+		baseClass.compareTextViaContains(masterDate.replace("/", "-"), inputData,
+				"result returned documents which satisfied above configured query.", "Result is not as expected");
+		try {
+			dateFormat.parse(masterDate.trim());
+			baseClass.passedStep(masterDate + " : Match The Expected Format");
+		} catch (ParseException e) {
+			baseClass.failedStep(masterDate + " : Didnot Match The Expected Format");
+
+		}
+
 		baseClass.passedStep(
 				"Verified that \"EmailSentDate\" field search result return documents which satisfied above configured query.");
 
