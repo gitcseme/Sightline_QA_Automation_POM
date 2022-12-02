@@ -151,43 +151,36 @@ public class ProviewRegression_26 {
 		String folderName = "FOLDER" + Utility.dynamicNameAppender();
 		Categorization categorize = new Categorization(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softassert=new SoftAssert();
 
 		// Login As RMU
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 
-		// basic Content search
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolder(folderName);
-		ProductionPage page = new ProductionPage(driver);
-		driver.waitForPageToBeReady();
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
-		driver.scrollingToBottomofAPage();
-		base.waitForElementCollection(page.getProductionItem());
-		List<String> actualprodPresent = base.availableListofElements(page.getProductionItem());
-		base.stepInfo(actualprodPresent+"  production docs ");
-
-		categorize.navigateToCategorizePage();
-		categorize.fillingTrainingSetSection("Folder", folderName, null, null);
-
-		// select production sets
-		categorize.selectTrainingSet("Analyze Select Production Sets");
-		base.stepInfo("Analyze Select Production Sets  Results Sets Expanded");
-		base.waitForElement(categorize.getProductionSelectionPopUp());
-		categorize.getProductionSelectionPopUp().waitAndClick(5);
-
-		base.waitForElementCollection(categorize.getProductionSets());
-		List<String> folderPresentInCategorize = base.availableListofElements(categorize.getProductionSets());
-		base.stepInfo(folderPresentInCategorize+"  production docs in analyze section");
-
-		base.waitTime(5);
-        for (int i = 0; i <=10; i++) {
-            base.compareListWithOnlyOneString(folderPresentInCategorize, actualprodPresent.get(i),
-                    actualprodPresent.get(i) + "All existing production is displayed in Analyze section.",
-                    actualprodPresent.get(i)+"Not present");
+		 // basic Content search
+        sessionSearch.basicContentSearch(Input.testData1);
+        sessionSearch.bulkFolder(folderName);
+        ProductionPage page = new ProductionPage(driver);
+        driver.waitForPageToBeReady();
+        this.driver.getWebDriver().get(Input.url + "Production/Home");
+        base.waitForElementCollection(page.getProductionItemsTile());
+        String prodViewCount = page.gridAndTileViewProdCount().getText();
+        System.out.println(prodViewCount);
+        categorize.navigateToCategorizePage();
+        categorize.fillingTrainingSetSection("Folder", folderName, null, null);
  
-        }
-
+        // select production sets
+        categorize.selectTrainingSet("Analyze Select Production Sets");
+        base.stepInfo("Analyze Select Production Sets  Results Sets Expanded");
+        base.waitForElement(categorize.getProductionSelectionPopUp());
+        categorize.getProductionSelectionPopUp().waitAndClick(5);
+ 
+        base.waitForElementCollection(categorize.getProductionSets());
+        int existingProd = categorize.getProductionSets().FindWebElements().size();
+        System.out.println(existingProd);
+        softassert.assertEquals(existingProd, Integer.parseInt(prodViewCount));
+        base.passedStep("All existing production set is displayed successfully");
+        softassert.assertAll();
 
 	}
 
