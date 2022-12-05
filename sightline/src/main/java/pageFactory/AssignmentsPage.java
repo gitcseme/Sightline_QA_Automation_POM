@@ -1389,6 +1389,10 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
+	public Element getClassificationOptionsFormAssignment(String option) {
+		return driver.FindElementByXPath("//select[@id='SelectedClassification']/option[text()='" + option + "']");
+	}
+
 	public Element getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(String userName) {
 		return driver.FindElementByXPath("//td[contains(text(),'" + userName + "')]//following-sibling::td[2]");
 	}
@@ -1722,7 +1726,7 @@ public class AssignmentsPage {
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 
 	}
-	
+
 	public void createAssignmentWithSplChars(String assignmentName) throws InterruptedException {
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		driver.scrollPageToTop();
@@ -1930,7 +1934,7 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 
 	}
-	
+
 	public void editAssignmentWithSplChars(final String assignmentName) throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 
@@ -1997,12 +2001,13 @@ public class AssignmentsPage {
 		bc.waitTime(2);
 		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(3);
+
 		Assgnwithspecialchars(assignmentName+"<'>&");
 		bc.passedStep("editing of Assignment " + assignmentName+"<'>&" + " failed for special chars");
 		
 
+
 	}
-	
 
 	public void addReviewerAndDistributeDocs(String assignmentName, int docCount) throws InterruptedException {
 
@@ -2460,12 +2465,10 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(10);
 
 	}
-		
 
-	
 	public void createAssgnGroupWithSplChars(String assgngrpName) throws InterruptedException {
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		SoftAssert sa=new SoftAssert();
+		SoftAssert sa = new SoftAssert();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAssgGrptionDropdown().Visible();
@@ -2475,7 +2478,7 @@ public class AssignmentsPage {
 
 		bc.waitForElement(getAssgnGrp_Create());
 		getAssgnGrp_Create().waitAndClick(20);
-		
+
 		Assgnwithspecialchars(assgngrpName);
 		bc.passedStep("creating of Assignment Group " + assgngrpName + "failed for special chars");
 
@@ -2524,10 +2527,10 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(5);
 
 	}
-	
+
 	public void EditAssgnGroupSplChars(String assgngrpName) throws InterruptedException {
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		SoftAssert sa=new SoftAssert();
+		SoftAssert sa = new SoftAssert();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAssgGrptionDropdown().Visible();
@@ -2546,6 +2549,7 @@ public class AssignmentsPage {
 
 		Assgnwithspecialchars(assgngrpName+"<'>&");
 		bc.passedStep("editing of Assignment Group " + assgngrpName+"<'>& " + "failed for special chars");
+
 
 	}
 
@@ -11666,7 +11670,8 @@ public class AssignmentsPage {
 	 *              from the Reviewer is reassign to another Reviewer.
 	 * @throws InterruptedException
 	 */
-	public void RedistributeDocInManageReviewerTab(String reDistributeUser,String distributeduser) throws InterruptedException {
+	public void RedistributeDocInManageReviewerTab(String reDistributeUser, String distributeduser)
+			throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11678,8 +11683,7 @@ public class AssignmentsPage {
 		bc.waitTime(4);
 		int TotalDocsCount = Integer
 				.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(reDistributeUser).getText())
-				+ Integer.parseInt(
-						getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText());
+				+ Integer.parseInt(getAssgn_ManageRev_DocCountsDistributedUserBasedOnIndex(distributeduser).getText());
 		bc.waitForElement(getAssgn_ManageRev_selectrev());
 		getAssgn_ManageRev_selectrev().waitAndClick(10);
 
@@ -11769,6 +11773,15 @@ public class AssignmentsPage {
 		soft.assertAll();
 		bc.stepInfo(
 				"All selected coding forms should be displayed with set as default for chosen coding form in brackets");
+	}
+
+	public void verifyClassificationOptionsFromAssignmentPage(List<String> options) {
+
+		bc.waitForElement(getSelectedClassification());
+		getSelectedClassification().waitAndClick(5);
+		for (String option : options) {
+			bc.ValidateElement_Presence(getClassificationOptionsFormAssignment(option), option);
+		}
 	}
 
 }
