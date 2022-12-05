@@ -1520,6 +1520,7 @@ public class DocListPage {
 		return driver.FindElementByXPath("(//table[@id='dtDocList']//tr[@class='odd']//td[@class='image'])[1]");
 	}
 	
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;

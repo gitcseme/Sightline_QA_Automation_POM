@@ -79,6 +79,7 @@ public class DocList_Regression_Consilio {
 		UtilityLog.info(testMethod.getName());
 	}
 	
+	
 	@Test(description ="RPMXCON-66607",groups = { "regression" })
 	public void verifyThumbNailFeatureInDocList() throws InterruptedException {
 		baseClass.stepInfo("Thumbnail feature in DocList should in no way affect the performance when docs are being viewed in the list view (not Thumbnails view)");
