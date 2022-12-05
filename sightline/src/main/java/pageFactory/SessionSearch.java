@@ -2158,7 +2158,18 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
 	}
 
-
+	public Element getCountOfDocsLoading() {
+		return driver.FindElementByXPath("//div[@id='divUnAssignDocuments']//span[@class='label bg-color-blue font-md loader text-align-center bulkActionsSpanLoder']");
+	}
+	
+	public Element getSelectedUnAssignExistingAssignments() {
+		return driver.FindElementByXPath("//div[@id='jstreeUnAssign']//a[@class='jstree-anchor jstree-clicked']");
+	}
+	
+	public Element getExisAssignPOPOVER() {
+		return driver.FindElementByXPath("//div[@role='tooltip']//div[@class='popover-content']");
+	}
+	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");

@@ -271,6 +271,63 @@ public class AssignmentsRegression_27 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author NA Testcase No:RPMXCON-54325
+	 * @Description:Verify that the full Assignment name appears in a mouse over tool tip, and the same is true of Assignment Groups
+	 **/
+	@Test(description = "RPMXCON-54325", enabled = true, groups = { "regression" })
+	public void verifyFullAssignmentNameToolTip() throws Exception{	
+	    AssignmentsPage assign = new AssignmentsPage(driver);
+	    SessionSearch session = new SessionSearch(driver);
+	    SoftAssert asserts = new SoftAssert();
+	
+	    String assignMentGRP = "AssignGRP" + Utility.randomCharacterAppender(18);
+        String assignmentName = "Assignment" + Utility.randomCharacterAppender(18);
+	    String expStatus = "ellipsis";   
+	
+        baseClass.stepInfo("RPMXCON-54325");
+	    baseClass.stepInfo("Verify that the full Assignment name appears in a mouse over tool tip, and the same is true of Assignment Groups");
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+        assign.navigateToAssignmentsPage();
+        driver.waitForPageToBeReady();
+        assign.createAssgnGroup(assignMentGRP);
+        driver.waitForPageToBeReady();
+	    assign.createAssignment(assignmentName , Input.codingFormName);	
+	    driver.waitForPageToBeReady();
+	    
+	    session.navigateToSessionSearchPageURL();
+	    driver.waitForPageToBeReady();
+	    session.basicContentSearch(Input.testData1);
+	    driver.waitForPageToBeReady();	
+	    session.bulkAssignExisting(assignmentName);
+	    driver.waitForPageToBeReady();
+	
+	    session.bulkAssign();
+	    driver.waitForPageToBeReady();
+ 	    baseClass.waitForElement(session.getSelectAssignmentExisting(assignmentName)); 
+	    String actStatusAssignDoc = session.getSelectAssignmentExisting(assignmentName).GetCssValue("text-overflow").trim();
+	    System.out.println(actStatusAssignDoc);
+	    
+	    baseClass = new BaseClass(driver);
+	    baseClass.moveWaitAndClick(session.getSelectAssignmentExisting(assignmentName), 15);
+		baseClass.waitTime(2);
+	    String actStatusPopAssign = session.getExisAssignPOPOVER().GetCssValue("text-overflow").trim();
+	    System.out.println(actStatusPopAssign);
+	    
+	    baseClass.waitForElement(session.getSelectAssignmentExisting(assignMentGRP)); 
+		baseClass.mouseHoverOnElement(session.getSelectAssignmentExisting(assignMentGRP));
+		baseClass.waitTime(2);
+	    String actStatusPopAssignGRP = session.getExisAssignPOPOVER().GetCssValue("text-overflow").trim();
+	    System.out.println(actStatusPopAssignGRP);
+	    
+	    asserts.assertEquals(actStatusAssignDoc, expStatus);
+	    asserts.assertNotEquals(actStatusPopAssign, expStatus);
+	    asserts.assertNotEquals(actStatusPopAssignGRP, expStatus);
+		asserts.assertAll();
+	    baseClass.passedStep("Verified - that the full Assignment name appears in a mouse over tool tip, and the same is true of Assignment Groups");
+	      loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
