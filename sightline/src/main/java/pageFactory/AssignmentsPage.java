@@ -1742,6 +1742,7 @@ public class AssignmentsPage {
 		Thread.sleep(2000);
 		getAssignmentAction_NewAssignment().waitAndClick(20);
 		Assgnwithspecialchars(assignmentName);
+		bc.passedStep("creating of Assignment " + assignmentName + "failed for special chars");
 
 	}
 
@@ -2000,7 +2001,11 @@ public class AssignmentsPage {
 		bc.waitTime(2);
 		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(3);
-		Assgnwithspecialchars(assignmentName + "<'>&");
+
+		Assgnwithspecialchars(assignmentName+"<'>&");
+		bc.passedStep("editing of Assignment " + assignmentName+"<'>&" + " failed for special chars");
+		
+
 
 	}
 
@@ -2475,6 +2480,7 @@ public class AssignmentsPage {
 		getAssgnGrp_Create().waitAndClick(20);
 
 		Assgnwithspecialchars(assgngrpName);
+		bc.passedStep("creating of Assignment Group " + assgngrpName + "failed for special chars");
 
 	}
 
@@ -2541,7 +2547,9 @@ public class AssignmentsPage {
 
 		getAssgnGrp_Edit().waitAndClick(20);
 
-		Assgnwithspecialchars(assgngrpName + "<'>&");
+		Assgnwithspecialchars(assgngrpName+"<'>&");
+		bc.passedStep("editing of Assignment Group " + assgngrpName+"<'>& " + "failed for special chars");
+
 
 	}
 
@@ -2664,6 +2672,7 @@ public class AssignmentsPage {
 		System.out.println(getAssgnnameErrormsg().getText());
 		Assert.assertTrue(getAssgnnameErrormsg().getText()
 				.equalsIgnoreCase("Please enter an assignment name without using special characters"));
+		
 	}
 
 	public void deleteAssignment(final String assignmentName) {
