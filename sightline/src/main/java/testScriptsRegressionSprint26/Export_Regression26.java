@@ -78,7 +78,7 @@ public class Export_Regression26 {
 				"Verify that Export should generated successfully and documents should exported with Comments/Signautre");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String Tagname = "FolderName" + Utility.dynamicNameAppender();
+		String Tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		String exportName = "Export" + Utility.dynamicNameAppender();
@@ -91,13 +91,14 @@ public class Export_Regression26 {
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
 		base.stepInfo("Selecting dataset and navigating to doclist page");
-		dataset.selectDataSetWithName("RPMXCON40140");
+		dataset.SelectingUploadedDataSetViewInDoclist("RPMXCON40140");
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 
 		doc.documentSelection(1);
-		doc.bulkTagExistingFromDoclist(Tagname);
+		doc.bulkTagExisting(Tagname);
 		doc.documentSelection(1);
+		base.waitTime(4);
 		doc.docListToDocView();
 		DocViewPage docview = new DocViewPage(driver);
 		base.waitTillElemetToBeClickable(docview.getDocView_IconDownload());
@@ -130,11 +131,16 @@ public class Export_Regression26 {
 		base.stepInfo("Export Path" + actualCopedText);
 		String parentTab = page.openNewTab(actualCopedText);
 		
+		base.stepInfo("Accessing the Copypoth URL");
 		String[] Values= {"VOL0001","Natives/","0001/"};
 		for(int i=0;i<Values.length;i++) {
 			driver.waitForPageToBeReady();
+			if(page.getFileDir(Values[i]).isElementAvailable(2)) {
 			page.getFileDir(Values[i]).waitAndClick(10);
-			driver.waitForPageToBeReady();	
+			}else {
+				base.stepInfo("URL is not accessible");
+				base.failedStep("URL is not found");
+			}
 		}
 		base.stepInfo("getting the text inside pdf document");
 		if (page.getFirstPDFImageFile(prefixID + suffixID, subBates).isElementAvailable(2)) {

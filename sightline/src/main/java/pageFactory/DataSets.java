@@ -231,6 +231,27 @@ public class DataSets {
 		return driver.FindElementByXPath("//button[@id='SaveProjectPwd']");
 	}
 	
+	public ElementCollection getIngestionCount() {
+		return driver.FindElementsByXPath(
+				"//a//strong[contains(text(),'RPMXCON40140')]/../../..//div[@class='ingestCt col-md-4 txt-color-green']//span");
+	}
+	public Element getIngestionCount(int i) {
+		return driver.FindElementByXPath(
+				"(//a//strong[contains(text(),'RPMXCON40140')]/../../..//div[@class='ingestCt col-md-4 txt-color-green']//span)["+i+"]");
+						
+	}
+	
+	public Element getAction(int i) {
+		return driver.FindElementByXPath(
+				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//button[@id='idAction'])["+i+"]");
+						
+	}
+	public Element getDocList(int i) {
+		return driver.FindElementByXPath(
+				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//a[@id='idBulkTag'][text()='DocList'])["+i+"]");
+						
+
+	}
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -958,7 +979,43 @@ public class DataSets {
 	   
    }
    
-	
-		
+  
+
+	/**
+	 * @author Brundha
+	 * @description : Method to select dataset.
+	 */
+	public void SelectingUploadedDataSetViewInDoclist(String Dataset) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+		driver.waitForPageToBeReady();
+		int j=1;
+		while (!getDataset(Dataset).isElementAvailable(10)) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if (loadMoreOption().isElementAvailable(10)) {
+				loadMoreOption().waitAndClick(5);
+			}
+			if (j == 10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			j++;
+		}
+		for (int i = 1; i <=getIngestionCount().size(); i++) {
+			String count = getIngestionCount(i).getText();
+			int count1 = Integer.parseInt(count);
+			if (count1 == 0) {
+				continue;
+			} else if (count1 != 0)
+				base.waitForElement(getAction(i));
+			getAction(i).waitAndClick(10);
+			base.waitForElement(getDocList(i));
+			getDocList(i).waitAndClick(10);
+			break;
+		}
+	}	
 
 }
