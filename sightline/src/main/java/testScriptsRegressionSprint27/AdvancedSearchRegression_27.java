@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
@@ -331,6 +332,113 @@ public class AdvancedSearchRegression_27 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author: 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify an an user login, I will be able to select multiple
+	 *              Folder from Folder column under Work Product tab & set that as a
+	 *              search criteria for advanced search.RPMXCON-57042
+	 */
+
+	@Test(description = "RPMXCON-57042", enabled = true, groups = { "regression" })
+	public void verifySelectFolderUnderWpSearchCriteriaAdvancedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57042 Advanced Search");
+		baseClass.stepInfo(
+				"To verify an an PA user login, I will be able to select all the Security Groups from Security Group column under Work Product tab & set that as a search criteria for advanced search");
+		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
+		String Foldername = "AANew" + UtilityLog.dynamicNameAppender();
+		String Foldername1 = "AANew" + UtilityLog.dynamicNameAppender();
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		tagsandfolder.navigateToTagsAndFolderPage();
+		tagsandfolder.CreateFolderInRMU(Foldername);
+		tagsandfolder.CreateFolderInRMU(Foldername1);
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectFolderInASwp(Foldername);
+		sessionSearch.selectFolderInASwp(Foldername1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(Foldername).Displayed() && baseClass.text(Foldername1).Displayed()) {
+			baseClass.passedStep(Foldername + Foldername1
+					+ "   Selected Folders has been  inserted in search criteria for advanced search  as expected");
+		} else {
+			baseClass.failedStep("Selected Folders did not inserted in search criteria for advanced search ");
+		}
+		baseClass.waitForElement(sessionSearch.getWP_FolderBtn());
+		sessionSearch.getWP_FolderBtn().waitAndClick(10);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getAllFoldersTabInwp());
+		sessionSearch.getAllFoldersTabInwp().waitAndClick(10);
+		baseClass.waitTime(2);
+		List<String> AllFolders = baseClass.availableListofElements(savedSearch.getcurrentClickedNode());
+		baseClass.stepInfo(AllFolders + "  Present in workproduct SG list");
+		System.out.println(AllFolders);
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(10);
+		driver.scrollPageToTop();
+		baseClass.waitTime(5);
+		String Searchboxcriteria = sessionSearch.getEnterSearchBox().getText();
+		System.out.println(Searchboxcriteria);
+		baseClass.stepInfo(Searchboxcriteria + "  Present in workproduct search list");
+
+		for (int i = 0; i < AllFolders.size(); i++) {
+			if (Searchboxcriteria.contains(AllFolders.get(i))) {
+				baseClass.passedStep(AllFolders.get(i)
+						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
+			} else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
+			}
+		}
+
+		loginPage.logout();
+
+		// login as Rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  REV as with " + Input.rev1userName + "");
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectFolderInASwp(Foldername);
+		sessionSearch.selectFolderInASwp(Foldername1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(Foldername).Displayed() && baseClass.text(Foldername1).Displayed()) {
+			baseClass.passedStep(Foldername + Foldername1
+					+ "   Selected Folders has been  inserted in search criteria for advanced search  as expected");
+		} else {
+			baseClass.failedStep("Selected Folders did not inserted in search criteria for advanced search ");
+		}
+
+		baseClass.waitForElement(sessionSearch.getWP_FolderBtn());
+		sessionSearch.getWP_FolderBtn().waitAndClick(10);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getAllFoldersTabInwp());
+		sessionSearch.getAllFoldersTabInwp().waitAndClick(10);
+		baseClass.waitTime(2);
+		List<String> AllFolders1 = baseClass.availableListofElements(savedSearch.getcurrentClickedNode());
+		baseClass.stepInfo(AllFolders1 + "  Present in workproduct SG list");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(10);
+		driver.scrollPageToTop();
+		baseClass.waitTime(5);
+		String Searchboxcriteria1 = sessionSearch.getEnterSearchBox().getText();
+		System.out.println(Searchboxcriteria1);
+		baseClass.stepInfo(Searchboxcriteria1 + "  Present in workproduct search list");
+
+		for (int j = 0; j < AllFolders1.size(); j++) {
+			if (Searchboxcriteria1.contains(AllFolders1.get(j))) {
+
+				baseClass.passedStep(AllFolders1.get(j)
+						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
+			} else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
+
+			}
+		}
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
