@@ -219,10 +219,15 @@ public class Projects_Regression26 {
 		base.waitForElement(projects.getCancelButton());
 		projects.getCancelButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		base.waitForElement(projects.getSearchProjectName());
 		// verify project creation and redirected url
 		base.verifyUrlLanding(Input.url + "Project/Project", "Redirected to project page",
 				"not redirected to project page");
-		projects.filterTheProject(projectName);
+		base.waitForElement(projects.getSearchProjectName());
+		projects.getSearchProjectName().SendKeys(projectName);
+		base.waitForElement(projects.getProjectFilterButton());
+		base.waitTillElemetToBeClickable(projects.getProjectFilterButton());
+		projects.getProjectFilterButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		if (!(projects.getEditProject(projectName).isElementAvailable(10))) {
 			base.passedStep("Project not created after clicking cancel button");

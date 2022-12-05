@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint27;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -67,6 +69,7 @@ public class O365Regression_27 {
 		dataSets = new DataSets(driver);
 		collection = new CollectionPage(driver);
 		source = new SourceLocationPage(driver);
+		softassert = new SoftAssert();
 	}
 
 	@DataProvider(name = "AllTheUsers")
@@ -235,6 +238,107 @@ public class O365Regression_27 {
 		base.ValidateElement_Absence(base.getSuccessMsg(), "No message is Displayed");
 		base.printResutInReport(collection.getDatasetPopupCloseBtn().isDisplayed(), "Popup is Closed as expected",
 				"Popup is not closed", "Fail");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that warning message should be displayed on entering
+	 *              'Custodian/email' as invalid email address, valid email with
+	 *              invalid domain name [RPMXCON-61280]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61280", enabled = true, groups = { "regression" })
+	public void verifyWarningMsgForEmailId() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] emailAddresses = { { "AA" + Input.emailAddressinput1, "Invalid Email Address" },
+				{ Input.emailAddressinput1, "Valid Email Address With Invalid Domain" },
+				{ Input.emailAddressinput2, "non-existing valid email address" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61280 - O365");
+		base.stepInfo(
+				"Verify that warning message should be displayed on entering 'Custodian/email' as invalid email address, valid email with invalid domain name");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Select source location & Add collection Information.
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Click to add dataset from Dataset Selection tab
+		collection.addNewDataSetCLick("Button");
+		driver.waitForPageToBeReady();
+
+		// verify Custodian name & Dataset name fields
+		base.ValidateElement_Presence(collection.getCustodianIDInputTextField(), "Custodian name field is Displayed");
+		base.ValidateElement_Presence(collection.getDataSetNameTextFIeld(), "Dataset name field is Displayed");
+
+		// Enter Email Addresses & Verify No custodian Inline Error Message
+		collection.verifyNoCustodianErrorMsg(true, emailAddresses);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that in ‘Custodian Name/Email’ user should be able to
+	 *              specify a part of the account name/address and and application
+	 *              should display the auto suggestion [RPMXCON-61252]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61252", enabled = true, groups = { "regression" })
+	public void verifyAutoSuggestionIsDisplayedForCustodian() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61252 - O365");
+		base.stepInfo(
+				"Verify that in ‘Custodian Name/Email’ user should be able to specify a part of the account name/address and and application should display the auto suggestion ");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Select source location & Add collection Information.
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Click to add dataset from Dataset Selection tab
+		collection.addNewDataSetCLick("Button");
+		driver.waitForPageToBeReady();
+
+		// verify Custodian name & Dataset name fields
+		base.ValidateElement_Presence(collection.getCustodianIDInputTextField(), "Custodian name field is Displayed");
+		base.ValidateElement_Presence(collection.getDataSetNameTextFIeld(), "Dataset name field is Displayed");
+
+		// Enter 3 characters & verify Auto suggestion is displayed
+		String actualValue = collection.custodianNameSelectionInNewDataSet("Gou", Input.clientCollectionEmail02, true,
+				false, "");
+		base.textCompareNotEquals(actualValue, "",
+				"On entering first three characters auto suggestion box is displayed",
+				"Auto Suggestion Box is not Displayed");
+
+		// Enter letter part of email address & verify Auto suggestion is displayed
+		String actualValue2 = collection.custodianNameSelectionInNewDataSet(Input.clientcollectionFirstName02,
+				Input.clientCollectionEmail02, true, false, "");
+		base.textCompareNotEquals(actualValue2, "", "On entering letters of email id, auto suggestion box is displayed",
+				"Auto Suggestion Box is not Displayed");
 
 		// Logout
 		login.logout();

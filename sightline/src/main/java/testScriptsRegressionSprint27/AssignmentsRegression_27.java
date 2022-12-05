@@ -162,7 +162,8 @@ public class AssignmentsRegression_27 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-54340
-	 * @Description: To Verify that if the Assignment name is long, the last three visible characters are an ellipsis
+	 * @Description: To Verify that if the Assignment name is long, the last three
+	 *               visible characters are an ellipsis
 	 **/
 	@Test(description = "RPMXCON-54340", enabled = true, groups = { "regression" })
 	public void verifyAssignmentNameLong() throws Exception {
@@ -216,7 +217,8 @@ public class AssignmentsRegression_27 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-54324
-	 * @Description: To Verify that if the Assignment name is long, the last three visible characters are an ellipsis
+	 * @Description: To Verify that if the Assignment name is long, the last three
+	 *               visible characters are an ellipsis
 	 **/
 	@Test(description = "RPMXCON-54324", enabled = true, groups = { "regression" })
 	public void verifyAssignmentNameLongDocs() throws Exception {
@@ -270,6 +272,83 @@ public class AssignmentsRegression_27 {
 				"Verified - that if the Assignment name is long, the last three visible characters are an ellipsis");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Brundha.T Test case Id:RPMXCON-54400
+	 * @throws InterruptedException 
+	 * @Description :Verify the User is able to see all RMU , Reviewers mapped to
+	 *              Assignment.
+	 */
+	@Test(description = "RPMXCON-54400", enabled = true, groups = { "regression" })
+	public void VerifyMappedUsersInAssignment() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54400 Assignments");
+		baseClass.stepInfo("Verify the User is able to see all RMU , Reviewers mapped to Assignment.");
+
+		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+		String[] users = { Input.rmu1userName, Input.rev1userName };
+
+		baseClass.stepInfo("Navigating to Assignment Page.");
+		assignment.navigateToAssignmentsPage();
+		
+		baseClass.stepInfo("Create Assignment");
+		assignment.createAssignment(assignmentName, Input.codeFormName);
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		
+		baseClass.stepInfo("Add Reviewers");
+		assignment.assignReviewers(users);
+		
+		assignment.navigateToAssignmentsPage();
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.waitTillElemetToBeClickable(assignment.getAssignment_ManageReviewersTab());
+		assignment.getAssignment_ManageReviewersTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verifying Mapped users in Assignment");
+		int Size=assignment.getDashboadAssgn().size();
+		System.out.println(Size);
+		if(Size==2) {
+			baseClass.ValidateElement_Presence(assignment.getAssgn_ManageRev_selectReviewer(Input.rmu1userName),"Mapped user");
+			baseClass.ValidateElement_Presence(assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName),"Mapped user");
+			baseClass.passedStep("The user can able to see the mapped RMU/Rev Users to the Assignment");
+		}else {
+			baseClass.failedStep("The user can't able to see the mapped RMU/Rev Users to the Assignment");
+		}
+
+		loginPage.logout();
+
+	}
+
+
+	/**
+	 * @author
+	 * @Description : Validate Assignment classification values on Assignment
+	 *              screen. [RPMXCON-54508]
+	 */
+	@Test(description = "RPMXCON-54508", enabled = true, groups = { "regression" })
+	public void validateAssignmentClassificationValuesOnAssignmentScreen() {
+
+		List<String> listOfClassifictionOptions = new ArrayList<String>(Arrays.asList("1LR", "2LR", "QC"));
+    	baseClass.stepInfo("Test case Id: RPMXCON-54508 Assignments.");
+		baseClass.stepInfo("Validate Assignment classification values on Assignment screen.");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// navigating to create new assignment page
+		baseClass.stepInfo("navigating to Create new Assignment page.");
+		assignment.navigateToAssignmentsPage();
+		assignment.NavigateToNewEditAssignmentPage("new");
+
+		// verify that Classification list should contain following values 1LR, 2LR and
+		// QC
+		assignment.verifyClassificationOptionsFromAssignmentPage(listOfClassifictionOptions);
+		baseClass.passedStep("verified that Classification list contain following values 1LR, 2LR and QC.");
+
+		// logOut
+		loginPage.logout();
+	}
+
 
 	/**
 	 * @author NA Testcase No:RPMXCON-54325
@@ -328,6 +407,51 @@ public class AssignmentsRegression_27 {
 	    baseClass.passedStep("Verified - that the full Assignment name appears in a mouse over tool tip, and the same is true of Assignment Groups");
 	      loginPage.logout();
 	}
+
+	
+
+	/**
+	 * @author
+	 * @Description :"Verify when user selects \"Inclusive Emails\"
+	 *  sampling method from Assign Documents pop up."RPMXCON-54343
+	 */
+	
+	@Test(description = "RPMXCON-54343", enabled = true, groups = { "regression" })
+    public void verifyUserSelectInclusiveEmailsSamplingMethodFromAssignDocumentsPopUp() {
+		
+		String samplingMethodOption = "Inclusive Email";
+		baseClass.stepInfo("Test case Id: RPMXCON-54343 Assignments.");
+		baseClass.stepInfo("Verify when user selects \"Inclusive Emails\" sampling method from Assign Documents pop up.");
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// Performing Search and drag the result to shopping cart 
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.addPureHit();
+		//Performing Bulk Assign Action
+		sessionSearch.bulkAssign();
+		
+		//Select Sampling Method as 'Inclusive Emails' From  'Existing Assignment' tab
+		baseClass.stepInfo("Selecting Sampling Method as 'Inclusive Emails' From  'Existing Assignment' tab.");
+		sessionSearch.changeSampleMethodAndVerifyTextBoxLableOfSampleMethod(samplingMethodOption,true,false);
+		baseClass.passedStep("Verified that On selection of this sampling method-> Input field is no longer present in 'Existing Assignment' tab.");
+		
+		
+		//Select Sampling Method as 'Inclusive Emails' From  'New Assignment' tab
+		baseClass.stepInfo("Selecting Sampling Method as 'Inclusive Emails' From  'New Assignment' tab.");
+	    driver.Navigate().refresh();
+	    sessionSearch.bulkAssign();
+		baseClass.waitForElement(sessionSearch.getAssgn_NewAssignmnet());
+		sessionSearch.getAssgn_NewAssignmnet().waitAndClick(5);
+		baseClass.waitTime(4);
+		sessionSearch.changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(samplingMethodOption,true);
+		baseClass.passedStep("Verified that On selection of this sampling method-> Input field is no longer present in 'New Assignment' tab.");	
+		
+		// logOut
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

@@ -1011,6 +1011,10 @@ public class Input {
 	public static String transcriptId;
 	public static String env;
 	
+	public static String Involvedoutsiders;
+    public static String OutsideHelp;
+    public static String SalaryMatch;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -2066,6 +2070,10 @@ public class Input {
 		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
+		
+		 Involvedoutsiders = testData.getInvolvedoutsiders();
+	        OutsideHelp = testData.getOutsideHelp();
+	        SalaryMatch =testData.getSalaryMatch();
 		// createproject if configured
 		projectCreationAndUserAssignment();
 
