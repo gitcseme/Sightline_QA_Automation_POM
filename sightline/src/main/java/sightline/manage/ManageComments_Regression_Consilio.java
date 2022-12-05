@@ -33,14 +33,6 @@ public class ManageComments_Regression_Consilio {
 	BaseClass baseClass;
 	Input ip;
 	Utility utility;
-	SessionSearch sessionSearch;
-	SecurityGroupsPage securityGroupsPage;
-	UserManagement userManage;
-	DocExplorerPage docexp;
-	AssignmentsPage assignPage;
-	KeywordPage keywordPage;
-	SavedSearch savedsearch;
-	ProjectPage projectPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -60,7 +52,6 @@ public class ManageComments_Regression_Consilio {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
-		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
 
 	}
@@ -70,7 +61,6 @@ public class ManageComments_Regression_Consilio {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-66480");
 		baseClass.stepInfo("Verify that error message should be displayed when Comments added with < > * ; ‘ / ( ) # & from Manage-Comments");
-		userManage = new UserManagement(driver);
 		CommentsPage comments = new CommentsPage(driver);
 		String commentName1 = "56comment" + Utility.dynamicNameAppender()+"<'>&#$(";
 		// Login As PA
