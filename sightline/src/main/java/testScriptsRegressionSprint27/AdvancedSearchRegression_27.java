@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -19,6 +20,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
@@ -331,6 +333,203 @@ public class AdvancedSearchRegression_27 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author: 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify an an user login, I will be able to select multiple
+	 *              Folder from Folder column under Work Product tab & set that as a
+	 *              search criteria for advanced search.RPMXCON-57042
+	 */
+
+	@Test(description = "RPMXCON-57042", enabled = true, groups = { "regression" })
+	public void verifySelectFolderUnderWpSearchCriteriaAdvancedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57042 Advanced Search");
+		baseClass.stepInfo(
+				"To verify an an PA user login, I will be able to select all the Security Groups from Security Group column under Work Product tab & set that as a search criteria for advanced search");
+		TagsAndFoldersPage tagsandfolder = new TagsAndFoldersPage(driver);
+		String Foldername = "AANew" + UtilityLog.dynamicNameAppender();
+		String Foldername1 = "AANew" + UtilityLog.dynamicNameAppender();
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		tagsandfolder.navigateToTagsAndFolderPage();
+		tagsandfolder.CreateFolderInRMU(Foldername);
+		tagsandfolder.CreateFolderInRMU(Foldername1);
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectFolderInASwp(Foldername);
+		sessionSearch.selectFolderInASwp(Foldername1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(Foldername).Displayed() && baseClass.text(Foldername1).Displayed()) {
+			baseClass.passedStep(Foldername + Foldername1
+					+ "   Selected Folders has been  inserted in search criteria for advanced search  as expected");
+		} else {
+			baseClass.failedStep("Selected Folders did not inserted in search criteria for advanced search ");
+		}
+		baseClass.waitForElement(sessionSearch.getWP_FolderBtn());
+		sessionSearch.getWP_FolderBtn().waitAndClick(10);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getAllFoldersTabInwp());
+		sessionSearch.getAllFoldersTabInwp().waitAndClick(10);
+		baseClass.waitTime(2);
+		List<String> AllFolders = baseClass.availableListofElements(savedSearch.getcurrentClickedNode());
+		baseClass.stepInfo(AllFolders + "  Present in workproduct SG list");
+		System.out.println(AllFolders);
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(10);
+		driver.scrollPageToTop();
+		baseClass.waitTime(5);
+		String Searchboxcriteria = sessionSearch.getEnterSearchBox().getText();
+		System.out.println(Searchboxcriteria);
+		baseClass.stepInfo(Searchboxcriteria + "  Present in workproduct search list");
+
+		for (int i = 0; i < AllFolders.size(); i++) {
+			if (Searchboxcriteria.contains(AllFolders.get(i))) {
+				baseClass.passedStep(AllFolders.get(i)
+						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
+			} else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
+			}
+		}
+
+		loginPage.logout();
+
+		// login as Rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  REV as with " + Input.rev1userName + "");
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectFolderInASwp(Foldername);
+		sessionSearch.selectFolderInASwp(Foldername1);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(Foldername).Displayed() && baseClass.text(Foldername1).Displayed()) {
+			baseClass.passedStep(Foldername + Foldername1
+					+ "   Selected Folders has been  inserted in search criteria for advanced search  as expected");
+		} else {
+			baseClass.failedStep("Selected Folders did not inserted in search criteria for advanced search ");
+		}
+
+		baseClass.waitForElement(sessionSearch.getWP_FolderBtn());
+		sessionSearch.getWP_FolderBtn().waitAndClick(10);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getAllFoldersTabInwp());
+		sessionSearch.getAllFoldersTabInwp().waitAndClick(10);
+		baseClass.waitTime(2);
+		List<String> AllFolders1 = baseClass.availableListofElements(savedSearch.getcurrentClickedNode());
+		baseClass.stepInfo(AllFolders1 + "  Present in workproduct SG list");
+		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().waitAndClick(10);
+		driver.scrollPageToTop();
+		baseClass.waitTime(5);
+		String Searchboxcriteria1 = sessionSearch.getEnterSearchBox().getText();
+		System.out.println(Searchboxcriteria1);
+		baseClass.stepInfo(Searchboxcriteria1 + "  Present in workproduct search list");
+
+		for (int j = 0; j < AllFolders1.size(); j++) {
+			if (Searchboxcriteria1.contains(AllFolders1.get(j))) {
+
+				baseClass.passedStep(AllFolders1.get(j)
+						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
+			} else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
+
+			}
+		}
+	}
+	
+	/**
+	 * @author:
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that warning and pure hit result appears for
+	 *              EmailAuthorAddress Metadata search having phrase included in the
+	 *              query without wrapping in quotes on Advanced Search Screen.
+	 *              .RPMXCON-49679
+	 */
+
+	@Test(description = "RPMXCON-49679", enabled = true, groups = { "regression" })
+	public void verifyWarningPureHitResultIncludedQuery() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49679 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that warning and pure hit result appears for EmailAuthorAddress Metadata search having phrase included in the query without wrapping in quotes on Advanced Search Screen.");
+		String testdataSearch = "EmailAuthorAddress:(John Shaw)";
+		String testdataSearch1 = "EmailAuthorAddress:(John R. Shaw) OR Balance money";
+		String[] searchList = { testdataSearch, testdataSearch1 };
+		String emailAuthorAddress = "EmailAuthorAddress";
+		SoftAssert soft = new SoftAssert();
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		for (int i = 0; i < searchList.length; i++) {
+			baseClass.selectproject();
+			sessionSearch.navigateToAdvancedSearchPage();
+			baseClass.stepInfo("User navigate to session search page as expected");
+			sessionSearch.advMetaDataSearchQueryInsertTest(emailAuthorAddress, searchList[i]);
+			baseClass.stepInfo(searchList[i]+"  User has been able to configure query TestData");
+			baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+			sessionSearch.getQuerySearchButton().waitAndClick(5);
+			baseClass.stepInfo("Search button is clicked");
+			baseClass.waitForElement(sessionSearch.getQueryAlertGetText());
+			String Warningmsg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			Assert.assertEquals(Warningmsg.replaceAll(" ", ""),
+					sessionSearch.getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+			baseClass.passedStep("  Query Alert message is displayed  "+Warningmsg );
+			driver.waitForPageToBeReady();
+			if (sessionSearch.getYesQueryAlert().isElementAvailable(8)) {
+				sessionSearch.getYesQueryAlert().waitAndClick(8);
+			}
+			baseClass.waitForElement(sessionSearch.getPureHitsCountNumText());
+			soft.assertTrue(sessionSearch.getPureHitsCountNumText().isDisplayed());
+			baseClass.passedStep("Pure hit result has been appear for "+searchList[i] +"Metadata search as expected ");
+			soft.assertAll();
+			
+		}
+		
+	}
+
+	/**
+     * @author:
+     * @Date: :N/A
+     * @Modified date:N/A
+     * @Modified by: N/A
+     * @Description :Verify that Advanced Search works properly for "CreateDate"
+     *              field with "Is" operator and NOT having time components
+     *              .RPMXCON-49171
+     */
+   @Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
+    public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
+
+       baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
+        baseClass.stepInfo(
+                "Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
+        String testdataSearch = "2010-10-18";
+        DocListPage doclist = new DocListPage(driver);
+        String createDate = "CreateDate";
+	String[] values = { "CreateDate" };
+       // login as Rmu
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+        int result = sessionSearch.advancedMetaDataSearch(createDate, "IS", testdataSearch, null);
+       baseClass.passedStep(result + "CreateDate field search result has been return documents as expected ");
+        sessionSearch.ViewInDocList();
+        driver.waitForPageToBeReady();
+        doclist.SelectColumnDisplayByRemovingExistingOnes(values);
+        String date = doclist.getDataInDoclist(1, 4).getText();
+        baseClass.passedStep("Date Format present-" + date);
+        int size = date.length();
+        System.out.println(size);
+        baseClass.digitCompareEquals(size, 19, "CreateDate format is displayed as expected",
+                "CreateDate format is not displayed as expected");
+        loginPage.logout();
+   }
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
