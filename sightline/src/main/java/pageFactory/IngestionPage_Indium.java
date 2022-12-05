@@ -11485,7 +11485,7 @@ public class IngestionPage_Indium {
 				base.passedStep("Error count details displayed");
 			}
 			else {
-				base.failedMessage("Ingestion failed at the catalog stage");
+				base.failedMessage("Ingestion not failed at the catalog stage");
 			}
 			base.waitForElement(getCloseButton());
 			getCloseButton().waitAndClick(10);
