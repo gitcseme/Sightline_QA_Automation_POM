@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -437,6 +438,106 @@ public class AdvancedSearchRegression_27 {
 						"Selected  All folders is did not inserted in search criteria for advanced search ");
 
 			}
+		}
+	}
+	
+	/**
+	 * @author:
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that warning and pure hit result appears for
+	 *              EmailAuthorAddress Metadata search having phrase included in the
+	 *              query without wrapping in quotes on Advanced Search Screen.
+	 *              .RPMXCON-49679
+	 */
+
+	@Test(description = "RPMXCON-49679", enabled = true, groups = { "regression" })
+	public void verifyWarningPureHitResultIncludedQuery() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49679 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that warning and pure hit result appears for EmailAuthorAddress Metadata search having phrase included in the query without wrapping in quotes on Advanced Search Screen.");
+		String testdataSearch = "EmailAuthorAddress:(John Shaw)";
+		String testdataSearch1 = "EmailAuthorAddress:(John R. Shaw) OR Balance money";
+		String[] searchList = { testdataSearch, testdataSearch1 };
+		String emailAuthorAddress = "EmailAuthorAddress";
+		SoftAssert soft = new SoftAssert();
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		for (int i = 0; i < searchList.length; i++) {
+			baseClass.selectproject();
+			sessionSearch.navigateToAdvancedSearchPage();
+			baseClass.stepInfo("User navigate to session search page as expected");
+			sessionSearch.advMetaDataSearchQueryInsertTest(emailAuthorAddress, searchList[i]);
+			baseClass.stepInfo(searchList[i]+"  User has been able to configure query TestData");
+			baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+			sessionSearch.getQuerySearchButton().waitAndClick(5);
+			baseClass.stepInfo("Search button is clicked");
+			baseClass.waitForElement(sessionSearch.getQueryAlertGetText());
+			String Warningmsg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			Assert.assertEquals(Warningmsg.replaceAll(" ", ""),
+					sessionSearch.getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+			baseClass.passedStep("  Query Alert message is displayed  "+Warningmsg );
+			driver.waitForPageToBeReady();
+			if (sessionSearch.getYesQueryAlert().isElementAvailable(8)) {
+				sessionSearch.getYesQueryAlert().waitAndClick(8);
+			}
+			baseClass.waitForElement(sessionSearch.getPureHitsCountNumText());
+			soft.assertTrue(sessionSearch.getPureHitsCountNumText().isDisplayed());
+			baseClass.passedStep("Pure hit result has been appear for "+searchList[i] +"Metadata search as expected ");
+			soft.assertAll();
+			
+		}
+		
+	}
+
+	/**
+	 * @author: 
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that Advanced Search works properly for "CreateDate" field with "Is" operator and NOT having time components
+	 *              .RPMXCON-49171
+	 */
+
+	@Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
+	public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
+		String testdataSearch = "2009-09-20";
+		
+		String createDate = "CreateDate";
+		SoftAssert soft = new SoftAssert();
+
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		sessionSearch.advancedMetaDataForDraft(createDate, "IS", testdataSearch, null);
+		driver.waitForPageToBeReady();
+		if (baseClass.text(testdataSearch).isElementAvailable(5)) {
+			baseClass.passedStep(testdataSearch +" field is an enter on search box");
+			
+		}else {
+			baseClass.failedStep("field is an empty on search box");
+		}
+		baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+		sessionSearch.getQuerySearchButton().waitAndClick(5);
+		baseClass.stepInfo("Search button is clicked");
+		baseClass.waitTime(5);
+		baseClass.waitForElement(sessionSearch.getPureHitsCount());
+		String searchResult = sessionSearch.getPureHitsCount().getText();
+		System.out.println(searchResult);
+		if(searchResult.equalsIgnoreCase("0")) {
+			baseClass.failedStep("CreateDate field search result has not returned documents as expected");
+		} else {
+		soft.assertTrue(sessionSearch.getPureHitsCount().isDisplayed());
+		baseClass.passedStep(searchResult + "CreateDate field search result has been return documents as expected ");
+		soft.assertAll();
 		}
 	}
 	@AfterMethod(alwaysRun = true)
