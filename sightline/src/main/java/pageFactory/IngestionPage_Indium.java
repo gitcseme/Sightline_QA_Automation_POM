@@ -1129,6 +1129,12 @@ public class IngestionPage_Indium {
 	public Element getErrorPaginateNextBtnStatus() {
 		return driver.FindElementById("myDataTable_next");
 	}
+	public ElementCollection getPreviewRecordsCount() {
+		return driver.FindElementsByXPath("//*[@id='popupdiv']//tbody//tr");
+	}
+	public Element getIngestionFailedStatus() {
+		return driver.FindElementByXPath("//label[text()='% Complete :']/following-sibling::div[contains(text(),'Failed')]");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -4426,10 +4432,18 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		int headerSectionCount = previewRecordPopupHeaderFields().size();
 		base.waitForElement(goBackButton());
-		goBackButton().Click();
+		goBackButton().waitAndClick(10);
 		base.waitForElement(getPreviewRun());
 		int mappedFieldCount = mappedSourceFields(1).size();
-		
+		//verify records count in preview popup
+		int recordsCount = getPreviewRecordsCount().size();
+		if(recordsCount<=50) {
+			base.passedStep("Records of dat file displayed in preview page"+recordsCount);
+		}
+		else {
+			base.failedStep("more than 50 records are displayed in preview popup page");
+		}
+		//verify header count
 		if (mappedFieldCount == headerSectionCount) {
 			base.passedStep(
 					"Headers in preview record popup page count matched with mapped field in configuring section");
@@ -11453,4 +11467,28 @@ public class IngestionPage_Indium {
 			}	
 		}
 		
-}
+		/**
+		 * @author: Arunkumar Created Date: 05/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the failed status details present in ingestion
+		 * 				 detail popup
+		 */
+		public void verifyFailedIngestionStatusInPopup() {
+			
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			
+			base.waitForElement(errorCountCatalogingStage());
+			if(getIngestionFailedStatus().isElementAvailable(10)) {
+				base.passedStep("Failed status displayed in ingestion detail popup");
+				base.ValidateElement_Presence(errorCountCatalogingStage(), "Error Details");
+				base.passedStep("Error count details displayed");
+			}
+			else {
+				base.failedMessage("Ingestion failed at the catalog stage");
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+		}
+		
+	}
