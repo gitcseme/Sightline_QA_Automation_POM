@@ -985,11 +985,25 @@ public class DataSets {
 	 * @author Brundha
 	 * @description : Method to select dataset.
 	 */
-	public void SelectingUploadedDataSetViewInDoclist() {
+	public void SelectingUploadedDataSetViewInDoclist(String Dataset) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDataSetTypeList());
 		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
 		driver.waitForPageToBeReady();
+		int j=1;
+		while (!getDataset(Dataset).isElementAvailable(10)) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if (loadMoreOption().isElementAvailable(10)) {
+				loadMoreOption().waitAndClick(5);
+			}
+			if (j == 10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			j++;
+		}
 		for (int i = 1; i <=getIngestionCount().size(); i++) {
 			String count = getIngestionCount(i).getText();
 			int count1 = Integer.parseInt(count);

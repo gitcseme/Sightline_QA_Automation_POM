@@ -91,7 +91,7 @@ public class Export_Regression26 {
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
 		base.stepInfo("Selecting dataset and navigating to doclist page");
-		dataset.SelectingUploadedDataSetViewInDoclist();
+		dataset.SelectingUploadedDataSetViewInDoclist("RPMXCON40140");
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 
