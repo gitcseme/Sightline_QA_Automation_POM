@@ -495,51 +495,41 @@ public class AdvancedSearchRegression_27 {
 	}
 
 	/**
-	 * @author: 
-	 * @Date: :N/A
-	 * @Modified date:N/A
-	 * @Modified by: N/A
-	 * @Description :Verify that Advanced Search works properly for "CreateDate" field with "Is" operator and NOT having time components
-	 *              .RPMXCON-49171
-	 */
+     * @author:
+     * @Date: :N/A
+     * @Modified date:N/A
+     * @Modified by: N/A
+     * @Description :Verify that Advanced Search works properly for "CreateDate"
+     *              field with "Is" operator and NOT having time components
+     *              .RPMXCON-49171
+     */
+   @Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
+    public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
 
-	@Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
-	public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
-		baseClass.stepInfo(
-				"Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
-		String testdataSearch = "2009-09-20";
-		
-		String createDate = "CreateDate";
-		SoftAssert soft = new SoftAssert();
-
-		// login as Rmu
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
-		sessionSearch.advancedMetaDataForDraft(createDate, "IS", testdataSearch, null);
-		driver.waitForPageToBeReady();
-		if (baseClass.text(testdataSearch).isElementAvailable(5)) {
-			baseClass.passedStep(testdataSearch +" field is an enter on search box");
-			
-		}else {
-			baseClass.failedStep("field is an empty on search box");
-		}
-		baseClass.waitForElement(sessionSearch.getQuerySearchButton());
-		sessionSearch.getQuerySearchButton().waitAndClick(5);
-		baseClass.stepInfo("Search button is clicked");
-		baseClass.waitTime(5);
-		baseClass.waitForElement(sessionSearch.getPureHitsCount());
-		String searchResult = sessionSearch.getPureHitsCount().getText();
-		System.out.println(searchResult);
-		if(searchResult.equalsIgnoreCase("0")) {
-			baseClass.failedStep("CreateDate field search result has not returned documents as expected");
-		} else {
-		soft.assertTrue(sessionSearch.getPureHitsCount().isDisplayed());
-		baseClass.passedStep(searchResult + "CreateDate field search result has been return documents as expected ");
-		soft.assertAll();
-		}
-	}
+       baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
+        baseClass.stepInfo(
+                "Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
+        String testdataSearch = "2010-10-18";
+        DocListPage doclist = new DocListPage(driver);
+        String createDate = "CreateDate";
+	String[] values = { "CreateDate" };
+       // login as Rmu
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+        int result = sessionSearch.advancedMetaDataSearch(createDate, "IS", testdataSearch, null);
+       baseClass.passedStep(result + "CreateDate field search result has been return documents as expected ");
+        sessionSearch.ViewInDocList();
+        driver.waitForPageToBeReady();
+        doclist.SelectColumnDisplayByRemovingExistingOnes(values);
+        String date = doclist.getDataInDoclist(1, 4).getText();
+        baseClass.passedStep("Date Format present-" + date);
+        int size = date.length();
+        System.out.println(size);
+        baseClass.digitCompareEquals(size, 19, "CreateDate format is displayed as expected",
+                "CreateDate format is not displayed as expected");
+        loginPage.logout();
+   }
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
