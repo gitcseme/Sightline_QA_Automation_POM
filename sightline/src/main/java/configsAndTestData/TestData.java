@@ -873,7 +873,20 @@ public class TestData {
 	public String Involvedoutsiders;
 	public String OutsideHelp;
 	public String SalaryMatch;
-	    
+	public String EUPII; 
+	public String GenericPIITerms;
+    public String ChildRelatedContent;
+    public String SexualOrientation;
+    public String PregnancyORDivorce;
+    public String GDPRTermsEnglish;
+    public String K;
+    public String child;
+    public String doctor;
+    public String firing;
+    public String homo;
+    public String homesex;
+	public String TheftOfCustomerInfoOutsideHelp;
+ 
     //Added by Aathith ,Client Page details
   	public String FilterByType;
   	public String Name;

@@ -893,7 +893,20 @@
 	<Harassment>Harassment</Harassment>
 	<TheftOfCustomerInfo>Theft of Customer Info</TheftOfCustomerInfo>
 	<Involvedoutsiders>Involved Outsiders</Involvedoutsiders>
-	
+	<EUPII>EU PII</EUPII>
+    <GenericPIITerms>Generic PII Terms</GenericPIITerms>
+    <ChildRelatedContent>(Documentcontent.content: (child) AND child) OR school OR kindergarten OR nursery OR Playschool OR preschool OR tuition OR education OR kids</ChildRelatedContent>
+    <SexualOrientation>"sexual orientation" OR transgender OR gay OR homosexual</SexualOrientation>
+    <PregnancyORDivorce>divorce OR pregnant OR prenatal OR pregnancy</PregnancyORDivorce>
+    <GDPRTermsEnglish>GDPR Terms - English</GDPRTermsEnglish>
+    <K>401k</K>
+    <child>(Documentcontent.content: (child) AND child) OR children OR childhood OR childcare OR childbirth OR childbearing OR childless</child>
+    <doctor>doctor OR doctors</doctor>
+    <firing>firing*</firing>
+    <homo>homo</homo>
+    <homesex>homesex* OR homeseks*</homesex>
+ 	<TheftOfCustomerInfoOutsideHelp>Here you go. Yes. The problem is we're behind on the project. Can you help us get caught it? > Your right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</TheftOfCustomerInfoOutsideHelp>
+ 
 	 <!-- Added By Aathith , Client Page Details -->
     <FilterByType>Filter By Type</FilterByType>
 	<Name>Name</Name>

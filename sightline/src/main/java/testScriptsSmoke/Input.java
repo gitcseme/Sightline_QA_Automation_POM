@@ -973,6 +973,22 @@ public class Input {
 	public static String reteriveDSErr;
  	public static String completedWithErr;
  	public static String TheftOfCustomerInfo;
+ 	public static String EUPII;
+ 	 
+ 	public static String GenericPIITerms;
+ 	public static String ChildRelatedContent;
+    public static String SexualOrientation;
+    public static String PregnancyORDivorce;
+    public static String GDPRTermsEnglish;
+    public static String K;
+    public static String child;
+    public static String doctor;
+    public static String firing;
+    public static String homo;
+    public static String homesex;
+	public static String TheftOfCustomerInfoOutsideHelp;
+
+
 
 
 	// Added by Aathith ,Client Page details
@@ -2032,6 +2048,19 @@ public class Input {
 		PRIV = testData.getPRIV();
         NR_Detection = testData.getNR_Detection();
         TheftOfCustomerInfo = testData.getTheftOfCustomerInfo();
+        EUPII =testData.getEUPII();
+        GenericPIITerms =testData.getGenericPIITerms();
+        ChildRelatedContent =testData.getChildRelatedContent();
+		SexualOrientation = testData.getSexualOrientation();  
+		PregnancyORDivorce =testData.getPregnancyORDivorce();    
+		GDPRTermsEnglish = testData.getGDPRTermsEnglish();    
+		K = testData.getK();    
+		child = testData.getChild();    
+		doctor = testData.getDoctor();    
+		firing = testData.getFiring();    
+		homo = testData.getHomo();   
+		homesex = testData.getHomesex();
+		TheftOfCustomerInfoOutsideHelp= testData.getTheftOfCustomerInfoOutsideHelp();
 		
 		// Added by Aathith ,Client Page details
 		FilterByType = testData.getFilterByType();

@@ -803,7 +803,7 @@ public class SavedSearch {
 	}
 
 	public Element getSavedSearchDisplayedSearchRadioButton(int rowNo) {
-		return driver.FindElementByXPath("//table[@id='SavedSearchGrid']//tr[1]//label//i");
+		return driver.FindElementByXPath("//table[@id='SavedSearchGrid']//tr[" + rowNo + "]//label//i");
 	}
 	
 	public Element getSavedSearchSharedWithProjectAdminExpandButton() {
