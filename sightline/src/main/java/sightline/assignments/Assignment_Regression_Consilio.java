@@ -72,14 +72,11 @@ public class Assignment_Regression_Consilio {
 			//create Assignment group name with special characters
 
 			agnmt.createAssgnGroupWithSplChars(AssignmentGrpNameSplChars);	
-			
-			bc.passedStep("creating of Assignment group failed for special chars");
-			
+						
 			//edit assignment group name with special chars
 			
 			agnmt.EditAssgnGroupSplChars(AssignmentGrpName);
 			
-			bc.passedStep("editing of Assignment group failed for special chars");
 			
 	}
 	
@@ -94,15 +91,12 @@ public class Assignment_Regression_Consilio {
 			
 			//create Assignment name with special characters
 			
-			agnmt.createAssignmentWithSplChars(AssignmentNameSplChars);
-			
-			bc.passedStep("creating of Assignment name failed for special chars");
+			agnmt.createAssignmentWithSplChars(AssignmentNameSplChars);			
 			
 			//edit assignment name with special characterss		
 		
 			agnmt.editAssignmentWithSplChars(AssignmentName);
-			
-			bc.passedStep("editing of Assignment name failed for special chars");
+
 			
 	}
 	

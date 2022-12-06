@@ -1044,6 +1044,10 @@ public class SavedSearch {
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
 	List<String> sgList = new ArrayList<>();
+	
+	public ElementCollection getcurrentClickedNode() {
+        return driver.FindElementsByXPath("//a[@class='jstree-anchor jstree-clicked']");
+    }
 
 	public SavedSearch(Driver driver) {
 
