@@ -66,6 +66,7 @@ public class CodingForm_Consilio {
 	    sessionSearch = new SessionSearch(driver);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
+
 	}
 
 	@Test(description = "RPMXCON-68850",groups = { "regression" })
@@ -78,8 +79,10 @@ public class CodingForm_Consilio {
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Users loggedIn Successfully");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
 		baseClass.waitForElement(codingForm.getCodingFormName());
@@ -89,13 +92,15 @@ public class CodingForm_Consilio {
 		codingForm.CFnameErrormsg(errorMsg);
 
 		//create CodingForm
-		baseClass.selectproject();
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.createCodingFormWithoutObjects(codingform1);
 
 		//edit CF name
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.editCodingForm(codingform1);
+		baseClass.stepInfo("Navigated to edit coding form editor");
 		baseClass.waitForElement(codingForm.getCodingFormName());
 		codingForm.getCodingFormName().SendKeys(codingform);
 		codingForm.getSaveCFBtn().waitAndClick(3);
@@ -103,7 +108,8 @@ public class CodingForm_Consilio {
 		codingForm.CFnameErrormsg(errorMsg);
 
 		//Delete CF
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(codingform1, codingform1);
 
 		// logout
@@ -120,14 +126,15 @@ public class CodingForm_Consilio {
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    baseClass.stepInfo("Users loggedIn Successfully");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
 		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
 		
 		//create CodingForm
-		baseClass.selectproject();
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
@@ -140,15 +147,18 @@ public class CodingForm_Consilio {
 		baseClass.passedStep("Coding form"+codingform+ "created successfully");
 		
 		//edit CF name
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.editCodingForm(codingform);
+		baseClass.stepInfo("Navigated to edit coding form editor");
 		baseClass.waitForElement(codingForm.getRootClickDownarrow());
 		codingForm.getRootClickDownarrow().waitAndClick(5);
 		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
 		
 		
 		//Delete CF
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(codingform, codingform);
 
 		// logout
@@ -165,14 +175,15 @@ public class CodingForm_Consilio {
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Users loggedIn Successfully");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
         codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
 		
 		//create CodingForm
-		baseClass.selectproject();
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
@@ -185,15 +196,18 @@ public class CodingForm_Consilio {
 		baseClass.passedStep("Coding form"+codingformA+ "created successfully");
 		
 		//edit CF name
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.editCodingForm(codingformA);
+		baseClass.stepInfo("Navigated to edit coding form editor");
 		baseClass.waitForElement(codingForm.getRootClickDownarrow());
 		codingForm.getRootClickDownarrow().waitAndClick(5);
 		codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
 		
 		
 		//Delete CF
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(codingformA, codingformA);
 
 		// logout

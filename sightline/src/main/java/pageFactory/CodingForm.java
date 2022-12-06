@@ -3844,15 +3844,16 @@ public class CodingForm {
 			getErrorMessage0().SendKeys(ErrorMsg);
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			base.failedStep("Error message displayed successfully");
 			}	
 			
 	}
 		else {
 			base.waitForElement(getCF_CheckGrpObject());
 			getCF_CheckGrpObject().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects");
 			base.waitForElement(getCodingForm_AddToFormButton());
 			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects and added to Codign form editor");
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(checkgrouplabel);
 			base.waitForElement(getInstructionText0());
@@ -3876,15 +3877,16 @@ public class CodingForm {
 			getErrorMessage0().SendKeys(ErrorMsg);
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			base.failedStep("Error message displayed successfully");
 			}	
 			
 	}
 			else {
 				base.waitForElement(getCF_RadioGrpObject());
 				getCF_RadioGrpObject().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects");
 				base.waitForElement(getCodingForm_AddToFormButton());
 				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
 				base.waitForElement(getStaticText());
 				getStaticText().SendKeys(Radiogrouplabel);
 				base.waitForElement(getInstructionText0());
