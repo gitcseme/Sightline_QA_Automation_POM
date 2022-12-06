@@ -199,11 +199,11 @@ public class O365_Regression26 {
 		driver.waitForPageToBeReady();
 
 		// Verify Collection presence with expected Status
-		collection.verifyExpectedCollectionStatus(false, headerListDataSets, dataSourceName, statusListToVerify, 10,
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, dataSourceName, statusListToVerify, 25,
 				true, false, "", "");
 
 		// Completed status check
-		collection.verifyStatusUsingContainsTypeII(headerListDataSets, dataSourceName, statusList, 10);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, dataSourceName, statusList, 25);
 		driver.waitForPageToBeReady();
 
 		// Initial Notification count
@@ -347,11 +347,11 @@ public class O365_Regression26 {
 		driver.waitForPageToBeReady();
 
 		// Verify Collection presence with expected Status
-		collection.verifyExpectedCollectionStatus(false, headerListDataSets, dataSourceName, statusListToVerify, 10,
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, dataSourceName, statusListToVerify, 25,
 				true, false, "", "");
 
 		// Completed status check
-		collection.verifyStatusUsingContainsTypeII(headerListDataSets, dataSourceName, statusList, 10);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, dataSourceName, statusList, 25);
 		driver.waitForPageToBeReady();
 
 		// Initial Notification count
@@ -847,11 +847,11 @@ public class O365_Regression26 {
 		driver.waitForPageToBeReady();
 
 		// Verify Collection presence
-		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 20,
 				true, false, "", "");
 
 		// verify Failed status is displayed
-		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 25);
 
 		// verify colour of failed status is red
 		int index = base.getIndex(collection.getCollectionListHeaderFields(), Input.collectionStatusHeader);
@@ -999,12 +999,12 @@ public class O365_Regression26 {
 		// Verify Page Navigation
 		driver.waitForPageToBeReady();
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 25,
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 30,
 				true, false, "", "");
 
 		// Completed status check
 		base.stepInfo("Verify Collection is in 'Copied with Errors'");
-		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 25);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 30);
 		driver.waitForPageToBeReady();
 
 		// Collection Header details
@@ -1108,12 +1108,12 @@ public class O365_Regression26 {
 		// Verify Page Navigation
 		driver.waitForPageToBeReady();
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 25,
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 35,
 				true, false, "", "");
 
 		// Completed status check
 		base.stepInfo("Verify Collection is in 'Copied with Errors'");
-		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 25);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 35);
 		driver.waitForPageToBeReady();
 
 		// Collection Header details
