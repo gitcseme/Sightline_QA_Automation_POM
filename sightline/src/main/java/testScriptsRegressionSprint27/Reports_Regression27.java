@@ -10,11 +10,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
+import pageFactory.ABMReportPage;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.CommunicationExplorerPage;
@@ -22,6 +26,8 @@ import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReportsPage;
+import pageFactory.ReviewerCountsReportPage;
+import pageFactory.SessionSearch;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -83,6 +89,12 @@ public class Reports_Regression27 {
 
 	}
 
+	@DataProvider(name = "PA & RMU")
+	public Object[][] users() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		return users;
+	}
+
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-56576
 	 * @Description:To verify that if “Scrub export of special characters" option is
@@ -123,10 +135,11 @@ public class Reports_Regression27 {
 		base.passedStep("Special characters are not be replaced.");
 	}
 
-	
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-56574
-	 * @Description: To verify that any row/pair may be deleted by clicking the red "x" icon on export report->Scrub export of special characters pop up
+	 * @Description: To verify that any row/pair may be deleted by clicking the red
+	 *               "x" icon on export report->Scrub export of special characters
+	 *               pop up
 	 **/
 	@Test(description = "RPMXCON-56574", enabled = true, groups = { "regression" })
 	public void verifyRowDeletedInSCrubReport() throws Exception {
@@ -137,7 +150,8 @@ public class Reports_Regression27 {
 		String[] workProduct = { comment };
 		String[] metadata1 = { "DocID" };
 		base.stepInfo("RPMXCON - 56574");
-		base.stepInfo("To verify that any row/pair may be deleted by clicking the red \"x\" icon on export report->Scrub export of special characters pop up");
+		base.stepInfo(
+				"To verify that any row/pair may be deleted by clicking the red \"x\" icon on export report->Scrub export of special characters pop up");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		comments.AddComments(comment);
@@ -157,7 +171,7 @@ public class Reports_Regression27 {
 		base.waitForElement(custom.getRedXIcon());
 		custom.getRedXIcon().waitAndClick(10);
 		base.passedStep("Deleted  existing replacement character set on clicking on 'x' icon");
-		
+
 	}
 
 	/**
@@ -236,6 +250,7 @@ public class Reports_Regression27 {
 		base.stepInfo("Logged in As : " + username);
 
 		commExpl.navigateToCommunicationExpPage();
+		driver.waitForPageToBeReady();
 		commExpl.generateReportusingDefaultSG();
 		commExpl.clickReport();
 		commExpl.analyzeInTallyAction();
@@ -264,6 +279,203 @@ public class Reports_Regression27 {
 
 		base.passedStep("Executed - the tally report with EmailAuthorName filters selected");
 		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56716
+	 * @Description: Validate Navigate to Tally report from ABM Report
+	 **/
+	@Test(description = "RPMXCON-56716", enabled = true, groups = { "regression" })
+	public void verifyNavigationTallyFromABM() throws Exception {
+		ABMReportPage abmReportPage = new ABMReportPage(driver);
+		TallyPage tally = new TallyPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
+		String SaveSaerchName = "ABMSaveSearch" + UtilityLog.dynamicNameAppender();
+		String expSource = "Selected Documents from AdvBatchMangementRpt";
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		base.stepInfo("Test case Id:RPMXCON-56716");
+		base.stepInfo("Validate Navigate to Tally report from ABM Report");
+
+		// Basic Search and Bulk Assign
+		sessionsearch.basicContentSearch(Input.testData1);
+		base.stepInfo("Search for text input completed");
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSaerchName);
+		sessionsearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentsPage.add2ReviewerAndDistribute();
+		base.stepInfo(assignmentName1 + "  Assignment Created and distributed ");
+
+		abmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, false);
+		driver.waitForPageToBeReady();
+		abmReportPage.selectDocsinTable(assignmentName1, "IN SET", true);
+		driver.waitForPageToBeReady();
+		abmReportPage.performTallyResult();
+		driver.waitForPageToBeReady();
+
+		tally.selectTallyByMetaDataField(Input.metaDataName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(tally.getTally_btnTallyAll());
+		tally.getTally_btnTallyAll().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		tally.runBgReportandVerifyFileDownloaded();
+
+		base.waitForElement(tally.getTally_SelectedSource());
+		String selectedSource = tally.getTally_SelectedSource().getText();
+		asserts.assertTrue(selectedSource.contains(expSource));
+		asserts.assertAll();
+		base.passedStep("Verified - Navigate to Tally report from ABM Report");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56947
+	 * @Description: To Validate Distributed document count for Review Count report
+	 *               by hourly (Project Admin login)
+	 **/
+	@Test(description = "RPMXCON-56947", enabled = true, groups = { "regression" })
+	public void verifyDisCountFrRevCountRep() throws Exception {
+		ReviewerCountsReportPage count = new ReviewerCountsReportPage(driver);
+		AssignmentsPage assign = new AssignmentsPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		SessionSearch session = new SessionSearch(driver);
+
+		String assignment1 = "Assignment" + Utility.dynamicNameAppender();
+		String[] reviewers = { Input.rev1FullName, Input.rmu1FullName };
+
+		base.stepInfo("RPMXCON-56947");
+		base.stepInfo("To Validate Distributed document count for Review Count report by hourly (Project Admin login)");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in As : " + Input.rmu1FullName);
+
+		assign.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assign.createAssignment(assignment1, Input.codeFormName);
+		driver.waitForPageToBeReady();
+		session.basicContentSearch(Input.searchString1);
+		driver.waitForPageToBeReady();
+		session.bulkAssignExisting(assignment1);
+		assign.editAssignment(assignment1);
+		driver.waitForPageToBeReady();
+		assign.add2ReviewerAndDistribute();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As : " + Input.pa1FullName);
+		count.navigateTOReviewerCountsReportPage();
+		driver.waitForPageToBeReady();
+		count.generateReportMultiRev(assignment1, reviewers);
+		driver.waitForPageToBeReady();
+		String completedDocsInReportPage = count.verifyColumnValueDisplay(count.getTableHeaders(), "Distributed Docs");
+		System.out.println(completedDocsInReportPage);
+		asserts.assertTrue(completedDocsInReportPage.equals("100"));
+		asserts.assertAll();
+		base.passedStep(
+				"Validated - Distributed document count for Review Count report by hourly (Project Admin login)");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56948
+	 * @Description: Validate Distributed document count for Review Count report by hourly (RMU login)
+	 **/
+	@Test(description = "RPMXCON-56948", enabled = true, groups = { "regression" })
+	public void verifyDisCountFrRevCountRepRMULgin() throws Exception {
+		ReviewerCountsReportPage count = new ReviewerCountsReportPage(driver);
+		AssignmentsPage assign = new AssignmentsPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		SessionSearch session = new SessionSearch(driver);
+
+		String assignment1 = "Assignment" + Utility.dynamicNameAppender();
+		String[] reviewers = { Input.rev1FullName, Input.rmu1FullName };
+
+		base.stepInfo("RPMXCON-56948");
+		base.stepInfo("Validate Distributed document count for Review Count report by hourly (RMU login)");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in As : " + Input.rmu1FullName);
+
+		assign.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assign.createAssignment(assignment1, Input.codeFormName);
+		driver.waitForPageToBeReady();
+		session.basicContentSearch(Input.searchString1);
+		driver.waitForPageToBeReady();
+		session.bulkAssignExisting(assignment1);
+		assign.editAssignment(assignment1);
+		driver.waitForPageToBeReady();
+		assign.add2ReviewerAndDistribute();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		count.navigateTOReviewerCountsReportPage();
+		driver.waitForPageToBeReady();
+		count.generateReportMultiRev(assignment1, reviewers);
+		driver.waitForPageToBeReady();
+		String completedDocsInReportPage = count.verifyColumnValueDisplay(count.getTableHeaders(), "Distributed Docs");
+		System.out.println(completedDocsInReportPage);
+		asserts.assertTrue(completedDocsInReportPage.equals("100"));
+		asserts.assertAll();
+		base.passedStep(
+				"Validated - Distributed document count for Review Count report by hourly (RMU login)");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-56581
+	 * @Description:To verify export report if ‘Export Object Name’ and “Scrub export of special characters" option is toggled ‘OFF’
+	 **/
+	@Test(description = "RPMXCON-56581", enabled = true, groups = { "regression" })
+	public void verifyScrubExportSplChAndExportObjNameToggle() throws Exception {
+
+		CustomDocumentDataReport custom = new CustomDocumentDataReport(driver);
+		CommentsPage comments = new CommentsPage(driver);
+		String comment = "C_" + Utility.randomCharacterAppender(2);
+		String[] workProduct = { comment };
+		String[] metadata1 = { "DocID" };
+		base.stepInfo("RPMXCON - 56581");
+		base.stepInfo("To verify export report if ‘Export Object Name’ and “Scrub export of special characters\" option is toggled ‘OFF’");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		comments.AddComments(comment);
+		base.stepInfo("Comments with special character is created");
+
+		driver.waitForPageToBeReady();
+		custom.navigateToCDDReportPage();
+		custom.selectSources("Security Groups", Input.securityGroup);
+		custom.selectMetaDataFields(metadata1);
+		custom.selectWorkProductFields(workProduct);
+
+		base.waitForElement(custom.getToggle_ScrubSpecChar());
+		custom.getToggle_ScrubSpecChar().waitAndClick(10);
+		base.stepInfo("Toggle Scrub Export of special characters is turned Off ");
+		
+		base.waitForElement(custom.getToggle_ObjectName());
+		custom.getToggle_ObjectName().waitAndClick(10);
+		base.stepInfo("Toggle Export object name is turned Off ");
+		
+		custom.verifyScrubToggleAddDeleteAndModify();
+		base.stepInfo("verified scrub Toggle Add/Delete/Modify ");
+		
+		String fileName = custom.runReportandVerifyFileDownloaded();
+		String actualValue = custom.csvfileVerification("", fileName);
+		base.stepInfo(actualValue);
+		System.out.println(actualValue);
+		SoftAssert assets = new SoftAssert();
+		assets.assertTrue(actualValue.contains("_"));
+		assets.assertAll();
+		base.passedStep("Report generated successfully");
 	}
 
 }

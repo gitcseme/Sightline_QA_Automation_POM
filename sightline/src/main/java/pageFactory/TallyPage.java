@@ -260,7 +260,7 @@ public class TallyPage {
 
 	// Added by raghu
 	public Element getTallyCount() {
-		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @x])[last()]");
 	}
 
 	// Added by Jayanthi
@@ -610,7 +610,16 @@ public class TallyPage {
 	public ElementCollection getAllValueinEmailAuthorFilter() {
 		return driver.FindElementsByXPath("//ul[@id='select2-EmailAuthorName-results']//li");
 	}
-
+	
+	public Element getTxtHorizontalBarChart() {
+		return driver.FindElementByXPath("//div[contains(text(),'HorizontalBarChart')]");
+	}
+	
+	public Element getBtnTallyView() {
+		return driver.FindElementByXPath("//button[@id='tallyviewbtn']");
+	}
+	
+	
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1540,6 +1549,7 @@ public class TallyPage {
 		getTally_Assignments().Click();
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getTally_AssignmentsCheckBox(assignmentName));
+		base.waitForElement(getTally_AssignmentsCheckBox(assignmentName));
 		getTally_AssignmentsCheckBox(assignmentName).waitAndClick(15);
 		base.waitTime(2);
 		getTally_assignSaveSelections().ScrollTo();
@@ -2770,6 +2780,41 @@ public class TallyPage {
 		} else {
 			base.failedStep(field + "is not available in metadata list");
 		}
+	}
+	
+	/**
+	 * @author: sowndarya
+	 * @description: To run BG report and verify the file
+	 */
+	public String runBgReportandVerifyFileDownloaded() throws InterruptedException {
+		BaseClass bc = new BaseClass(driver);
+		CustomDocumentDataReport custom = new CustomDocumentDataReport(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		String Filename = bc.GetLastModifiedFileName();
+		if (Filename == null) {
+			Filename = "Directory Empty";
+		}
+		bc.stepInfo(Filename + "Last Modified File name before Downloading the report");
+		base.waitForElement(getExportButtonStatus());
+		getExportButtonStatus().waitAndClick(5);
+		base.VerifySuccessMessage("Your Report has been added into the Background successfully. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");	
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		custom.downloadExport();
+		bc.waitUntilFileDownload();
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		if (Filename.equals(Filename2)) {
+			bc.failedStep("File not downloaded after the export.");
+		} else {
+			bc.passedStep("File downloaded after the export-" + Filename2);
+		}
+		return Filename2;
 	}
 	
 	}

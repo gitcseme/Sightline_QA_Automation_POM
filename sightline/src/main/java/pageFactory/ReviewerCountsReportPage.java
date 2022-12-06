@@ -177,4 +177,47 @@ public class ReviewerCountsReportPage {
 		return value;
 	}
 
+	
+	public void selectReviewers(String[] reviwers) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getReviewerExpandButton());
+		getReviewerExpandButton().Click();
+		for(String rev : reviwers) {
+			bc.waitTime(2);
+			bc.waitForElement(getSelectReviewer(rev));
+			getSelectReviewer(rev).ScrollTo();
+			getSelectReviewer(rev).waitAndClick(10);
+			bc.waitTime(2);
+		}
+		
+	}
+	
+	/**
+	 * @author: sowndarya
+	 * @description: Generate Report multi reviewers
+	 */
+	public void generateReportMultiRev(String assgnName, String[] reviewers) throws InterruptedException {
+	    driver.waitForPageToBeReady();
+		selectReviewers(reviewers);	
+		getReviewerExpandButton().waitAndClick(5);
+		if (assgnName != null) {
+			bc.waitTime(5);
+			bc.waitTillElemetToBeClickable(getAssignmentExpandButton());
+			getAssignmentExpandButton().waitAndClick(10);
+			bc.waitTime(5);
+			bc.waitTillElemetToBeClickable(getAssignmentChkBox(assgnName));
+			getAssignmentChkBox(assgnName).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssignmentExpandButton());
+			getAssignmentExpandButton().waitAndClick(10);
+		}
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getDataRangeExpandBtn());
+		getDataRangeExpandBtn().waitAndClick(10);
+		selectFromDate(getFromDateRangeTxtBox(), "From date range");
+		driver.waitForPageToBeReady();
+		selectToDate(getToDateRangeTxtBox(), "To date range");
+		driver.scrollPageToTop();
+		getApplyChanges().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
 }
