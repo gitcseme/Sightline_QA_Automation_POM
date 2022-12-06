@@ -259,6 +259,9 @@ public class Categorization {
 	public Element getRunBtnDisabled() {
 		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
 	}
+	public Element getProdSet(String value) {
+		return driver.FindElementByXPath("//a[text()='"+value+"']");
+	}
 
 
 	public Categorization(Driver driver) {
