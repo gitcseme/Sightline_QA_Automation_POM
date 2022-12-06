@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -118,7 +119,7 @@ public class CommentsPage {
         Matcher m1 = p1.matcher(ComentName);
         boolean res = m.find();
         boolean res1 = m1.find();
-        if (res && res1) {
+        if ((res1 && res)||(res1 && !res)||(!res1 && res)){
         	base.waitForElement(getCommentsTableErrorMsg());
 			String ErrorMsg=getCommentsTableErrorMsg().getText();
 			if (ErrorMsg.equals("")) {
@@ -127,12 +128,31 @@ public class CommentsPage {
 			System.out.println("Error : " + ErrorMsg);
 			base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
 			}
-        }else  {
-		base.VerifySuccessMessage("Comment Field added successfully");
-		Reporter.log("Comment '" + ComentName + "' added successfully", true);
-		base.CloseSuccessMsgpopup();
+        } else {
+        	base.VerifySuccessMessage("Comment Field added successfully");
+    		Reporter.log("Comment '" + ComentName + "' added successfully", true);
+    		base.CloseSuccessMsgpopup();
+        }    
+        	
         }
-	}
+
+                
+	
+//        if (res || res1) {
+//        	base.waitForElement(getCommentsTableErrorMsg());
+//			String ErrorMsg=getCommentsTableErrorMsg().getText();
+//			if (ErrorMsg.equals("")) {
+//			base.failedStep("Expected Error Message is Not Displayed");
+//			} else {
+//			System.out.println("Error : " + ErrorMsg);
+//			base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+//			}
+//        }else  {
+//		base.VerifySuccessMessage("Comment Field added successfully");
+//		Reporter.log("Comment '" + ComentName + "' added successfully", true);
+//		base.CloseSuccessMsgpopup();
+//        }
+//	}
 
 	public void DeleteComments(String ComentName) {
 
