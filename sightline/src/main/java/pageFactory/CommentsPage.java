@@ -136,24 +136,6 @@ public class CommentsPage {
         	
         }
 
-                
-	
-//        if (res || res1) {
-//        	base.waitForElement(getCommentsTableErrorMsg());
-//			String ErrorMsg=getCommentsTableErrorMsg().getText();
-//			if (ErrorMsg.equals("")) {
-//			base.failedStep("Expected Error Message is Not Displayed");
-//			} else {
-//			System.out.println("Error : " + ErrorMsg);
-//			base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
-//			}
-//        }else  {
-//		base.VerifySuccessMessage("Comment Field added successfully");
-//		Reporter.log("Comment '" + ComentName + "' added successfully", true);
-//		base.CloseSuccessMsgpopup();
-//        }
-//	}
-
 	public void DeleteComments(String ComentName) {
 
 		FindComment(ComentName);
