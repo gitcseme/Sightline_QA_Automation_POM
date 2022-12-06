@@ -1672,6 +1672,10 @@ public class AssignmentsPage {
 				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
+	public Element getKeepFamiliesHelpIcon() {
+		return driver.FindElementByXPath("//a[@id='aDateRange']");
+	}
+	
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;

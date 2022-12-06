@@ -452,6 +452,164 @@ public class AssignmentsRegression_27 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:6/12/2022 RPMXCON-54219
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Draw from pool - Verify the display of 'Draw from Pool' Action
+	 *              when 'Draw From Pool' option is enabled in Assignment with draw
+	 *              from pool (i.e 20) is equal to the total docs assigned (i.e. 20)
+	 *              and 1 document is completed.
+	 */
+	@Test(description = "RPMXCON-54219", enabled = true, groups = { "regression" })
+	public void verifyDrawFromPoolIsNotDisplayedComplteCodingForm() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54219");
+		baseClass.stepInfo(
+				"Draw from pool - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' option is enabled in Assignment with draw from pool (i.e 20) is equal to the total docs assigned (i.e. 20) and 1 document is completed.");
+
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+    	baseClass.stepInfo("Created a Assignment " + assignmentName + " with draw pool toggle disabled");
+		// Edit Assignment
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		// Draw pool Toggle Enable and making draw limit as 20
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", false);
+		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+		// distributing docs
+		agnmt.addReviewerInManageReviewerTab();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		agnmt.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		docView.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(Input.codingFormName);
+		docView.codingFormSaveButton();
+		this.driver.getWebDriver().get(Input.url + "/Dashboard/Dashboard");
+		if (!agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementAvailable(3)) {
+			baseClass.passedStep("Draw pool link is Not displayed");
+		} else {
+			baseClass.failedStep("Draw pool link is displayed");
+		}
+		if (agnmt.getrev_assgnprogress(assignmentName).isDisplayed()) {
+			baseClass.passedStep("progress bar is displayed with 1 document completed and 19 left to do");
+		} else {
+			baseClass.failedStep("progress bar is not displayed");
+		}
+		
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:6/12/2022 RPMXCON-54395
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify the word Redistribute in all the pop up.
+	 */
+	@Test(description = "RPMXCON-54395", enabled = true, groups = { "regression" })
+	public void verifyRedistributeAllPopup() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54395");
+		baseClass.stepInfo(
+				"Verify the word Redistribute in all the pop up.");
+		AssignmentsPage assignment = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+		
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkAssign();
+
+		baseClass.stepInfo("Create Assignment");
+		assignment.createAssignmentNew(assignmentName, Input.codeFormName);
+	
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.waitTillElemetToBeClickable(assignment.getAssignment_ManageReviewersTab());
+		assignment.getAssignment_ManageReviewersTab().waitAndClick(5);
+		assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName).ScrollTo();
+		assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName).waitAndClick(5);
+		assignment.getAssgn_ManageRev_Action().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		baseClass.waitForElement(assignment.getAssgn_RedistributeDoc());
+		assignment.getAssgn_RedistributeDoc().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String CompareString="Redistribute Documents";
+		String ActualString = assignment.getMoveNotificationMessage().getText();
+		System.out.println(ActualString);
+		baseClass.compareTextViaContains(ActualString, CompareString, "Redistribute document is displayed in Belly band message",
+				"Redistribute document is not displayed in Belly band message");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:6/12/2022 RPMXCON-54399
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify the 'Keep families together when distributing' has a contextual help icon in Redistribute Documents pop up.
+	 */
+	@Test(description = "RPMXCON-54399", enabled = true, groups = { "regression" })
+	public void verifyRedistributeKeepFamiliesDistributingHelpIconDisplay() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54399");
+		baseClass.stepInfo(
+				"Verify the 'Keep families together when distributing' has a contextual help icon in Redistribute Documents pop up");
+		AssignmentsPage assignment = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+		
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkAssign();
+
+		baseClass.stepInfo("Create Assignment");
+		assignment.createAssignmentNew(assignmentName, Input.codeFormName);
+		
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.waitTillElemetToBeClickable(assignment.getAssignment_ManageReviewersTab());
+		assignment.getAssignment_ManageReviewersTab().waitAndClick(5);
+		assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName).ScrollTo();
+		assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName).waitAndClick(5);
+		assignment.getAssgn_ManageRev_Action().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		baseClass.waitForElement(assignment.getAssgn_RedistributeDoc());
+		assignment.getAssgn_RedistributeDoc().waitAndClick(10);
+		baseClass.getYesBtn().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(8);
+		if(assignment.getKeepFamiliesHelpIcon().isElementAvailable(3)) {
+			baseClass.passedStep("The help icon is displayed for 'Keep families together when distributing' in Redistribute Documents pop up");
+		}else {
+			baseClass.failedStep("The help icon is not displayed for Redistribute Documents pop up");
+		}
+		loginPage.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
