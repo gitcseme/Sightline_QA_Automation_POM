@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -21,6 +23,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
@@ -703,6 +706,160 @@ public class AdvancedSearchRegression_27 {
 		loginPage.logout();
 	}
 	
+   /**
+  	 * @author Brundha.T TestCase id:RPMXCON-49234
+  	 * @Description : Verify that entire "Tag" modal appears within the view-able
+  	 *              area of the "Advanced Search" screen. Browser Resolution
+  	 *              -1280x1024
+  	 */
+  	@Test(description = "RPMXCON-49234", enabled = true, groups = { "regression" })
+
+  	public void verifyingTagHelperMenuinBrowserResolution() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+  		baseClass.stepInfo("Test case Id: RPMXCON-49234 ");
+  		baseClass.stepInfo(
+  				"Verify that entire 'Tag' modal appears within the view-able area of the 'Advanced Search' screen. Browser Resolution -1280x1024");
+
+  		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+  		tf.navigateToTagsAndFolderPage();
+  		if (baseClass.getAllTags().size() < 6) {
+  			for (int i = 1; i <= 5; i++) {
+  				String Tag = "Tag" + Utility.dynamicNameAppender();
+  				tf.createNewTagwithClassification(Tag, "Select Tag Classification");
+  			}
+
+  		}
+  		baseClass.stepInfo("Navigating to Advanced Search page");
+  		sessionSearch.navigateToAdvancedSearchPage();
+  	
+  		double[] zoom = { 1, 1.1, 0.9, 0.8, 0.75 };
+
+  		
+  		baseClass.stepInfo("Set browser resolution as 1280*1024 ");
+  		Dimension pram1 = new Dimension(1280, 1024);
+  		driver.Manage().window().setSize(pram1);
+
+  		for (int i = 0; i < zoom.length; i++) {
+
+  			baseClass.stepInfo("set zoom function"+zoom[i]);
+  			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.body.style.zoom = '" + zoom[i] + "'");
+  			baseClass.waitTime(2);
+  			sessionSearch.navigateToAdvancedSearchPage();
+  			
+  			baseClass.waitForElement(sessionSearch.getWorkproductBtn());
+  			sessionSearch.getWorkproductBtn().waitAndClick(10);
+  			baseClass.stepInfo("Switched to Advanced search - Work product");
+  			baseClass.waitForElement(sessionSearch.getWP_TagBtn());
+  			sessionSearch.getWP_TagBtn().Click();
+
+  			if (sessionSearch.getTagMenuPopup().isDisplayed()) {
+  				baseClass.passedStep("Insert Tags helper menu is opened");
+
+  			} else {
+  				baseClass.failedStep("Insert Tags helper menu is not opened");
+  			}
+
+  		}
+  		loginPage.logout();
+
+  	}
+
+  	/**
+  	 * @author Brundha.T Test case Id:RPMXCON-48113
+  	 * @throws InterruptedException
+  	 * @Description :Verify that - Application returns all the documents which are
+  	 *              available under Assignments - Completed To in search result.
+  	 */
+  	@Test(description = "RPMXCON-48113", enabled = true, groups = { "regression" })
+  	public void verifyingCompletedDocInWP() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		baseClass.stepInfo("Test case Id: RPMXCON-48113 ");
+  		baseClass.stepInfo(
+  				"Verify that - Application returns all the documents which are available under Assignments - Completed To in search result.");
+
+  		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+
+  		AssignmentsPage assignment = new AssignmentsPage(driver);
+  		baseClass.stepInfo("Navigating to Assignment Page.");
+  		assignment.navigateToAssignmentsPage();
+
+  		baseClass.stepInfo("Create Assignment");
+  		assignment.createAssignment(assignmentName, Input.codeFormName);
+
+  		baseClass.stepInfo("Bulk action in created Assignment");
+  		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+  		sessionSearch.bulkAssignExisting(assignmentName);
+
+  		baseClass.stepInfo("Adding reviewers and distributing");
+  		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+  		assignment.add2ReviewerAndDistribute();
+
+  		baseClass.stepInfo("select action and complete all document");
+  		assignment.getAssignment(assignmentName, "Complete All Documents");
+
+  		baseClass.stepInfo("Navigate to advance search page");
+  		sessionSearch.navigateToAdvancedSearchPage();
+  		sessionSearch.getWorkproductBtn().waitAndClick(10);
+  		
+  		baseClass.stepInfo("verifying all the documents under completed assignment-reflecting in search result");
+  		 sessionSearch.selectAssignmentInWPS(assignmentName, "Completed", null);
+  		 int CompletedDoc =sessionSearch.serarchWP();
+  		baseClass.digitCompareEquals(PureHit, CompletedDoc,
+  				"Application returns all the documents under Assignments and Completed in search result.",
+  				"Application not returning exact document");
+
+  		loginPage.logout();
+
+  	}
+
+  	/**
+  	 * @author Brundha.T Test case Id:RPMXCON-48114
+  	 * @throws InterruptedException
+  	 * @Description :Verify that - Application returns all the documents which are
+  	 *              available under Assignments - Assigned in search result.
+  	 */
+  	@Test(description = "RPMXCON-48114", enabled = true, groups = { "regression" })
+  	public void verifyingAssignedDocinWP() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		baseClass.stepInfo("Test case Id: RPMXCON-48114");
+  		baseClass.stepInfo(
+  				"Verify that - Application returns all the documents which are available under Assignments - Assigned in search result.");
+
+  		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+
+  		AssignmentsPage assignment = new AssignmentsPage(driver);
+  		baseClass.stepInfo("Navigating to Assignment Page.");
+  		assignment.navigateToAssignmentsPage();
+
+  		baseClass.stepInfo("Create Assignment");
+  		assignment.createAssignment(assignmentName, Input.codeFormName);
+
+  		baseClass.stepInfo("Bulk action in created Assignment");
+  		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+  		sessionSearch.bulkAssignExisting(assignmentName);
+
+  		baseClass.stepInfo("Assigning reviewers and distributing");
+  		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+  		assignment.add2ReviewerAndDistribute();
+  		baseClass.getSelectProject();
+  		sessionSearch.navigateToAdvancedSearchPage();
+  		sessionSearch.getWorkproductBtn().waitAndClick(10);
+  		
+  		baseClass.stepInfo("verifying all the documents under assignment and Assigned in search result");
+  		sessionSearch.selectAssignmentInWPS(assignmentName, "Assigned", null);
+  		int CompletedDoc = sessionSearch.serarchWP();
+  		baseClass.digitCompareEquals(PureHit, CompletedDoc,
+  				"Application returns all the documents under Assignments and Assigned in search result.",
+  				"Application not returning exact document");
+
+  		loginPage.logout();
+
+  	}
+  	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
