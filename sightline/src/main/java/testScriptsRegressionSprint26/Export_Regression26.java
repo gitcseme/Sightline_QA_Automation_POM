@@ -101,6 +101,7 @@ public class Export_Regression26 {
 		base.waitTime(4);
 		doc.docListToDocView();
 		DocViewPage docview = new DocViewPage(driver);
+		base.waitTime(6);
 		base.waitTillElemetToBeClickable(docview.getDocView_IconDownload());
 		docview.getDocView_IconDownload().Click();
 		base.waitTillElemetToBeClickable(docview.getDOcViewDoc_DownloadOption("PDF"));
