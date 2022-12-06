@@ -1676,6 +1676,12 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//a[@id='aDateRange']");
 	}
 	
+	public Element getKeepFamiliesHelpText() {
+		return driver.FindElementByXPath(
+				"//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
+	}
+
+	
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;

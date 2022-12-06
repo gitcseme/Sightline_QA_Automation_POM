@@ -606,6 +606,13 @@ public class AssignmentsRegression_27 {
 		}else {
 			baseClass.failedStep("The help icon is not displayed for Redistribute Documents pop up");
 		}
+		assignment.getKeepFamiliesHelpIcon().Click();
+		driver.waitForPageToBeReady();
+		String CompareString="When distributing documents to multiple other reviewers, select this option if you do not want to break apart families.  For example, if you do not select this option, and if you choose to redistribute 100 documents to 2 Reviewers, then each Reviewer will automatically get 50 documents, evenly split.  However, if you do select this option then each Reviewer will get some (likely) uneven split of records, in order to keep whole families (parent documents and child attachment documents) together in each Reviewer's batch.";
+		String ActualString = assignment.getKeepFamiliesHelpText().getText();
+		System.out.println(ActualString);
+		baseClass.compareTextViaContains(ActualString, CompareString, "Keep families together when distributing help Msg is display",
+				"Keep families together when distributing help Msg is not display");
 		loginPage.logout();
 	}
 	
