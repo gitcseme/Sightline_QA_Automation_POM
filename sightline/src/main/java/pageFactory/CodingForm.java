@@ -47,7 +47,7 @@ public class CodingForm {
 	}
 
 	public Element getCodingForm_AddToFormButton() {
-		return driver.FindElementById("addFormObjects");
+		return driver.FindElementByXPath("//*[@id='addFormObjects']");
 	}
 
 	public Element getCodingForm_CommentTab() {
@@ -326,6 +326,9 @@ public class CodingForm {
 	public Element getRootClick() {
 		return driver.FindElementByXPath("//li[@id='0']");
 	}
+	public Element getRootClickDownarrow() {
+		return driver.FindElementByXPath("//li[@id='0']//following-sibling::i[2]");
+	}
 
 	public Element getupClick1() {
 		return driver.FindElementByXPath("//li[@id='0']//i[@class='fa fa-lg fa-angle-up pull-right']");
@@ -418,9 +421,16 @@ public class CodingForm {
 	public Element getInstructionText() {
 		return driver.FindElementByXPath("//input[@id='HelpText_1']");
 	}
+	public Element getInstructionText0() {
+		return driver.FindElementByXPath("//input[@id='HelpText_0']");
+	}
+
 
 	public Element getErrorMessage() {
 		return driver.FindElementByXPath("//input[@id='ErrorMessage_1']");
+	}
+	public Element getErrorMessage0() {
+		return driver.FindElementByXPath("//input[@id='ErrorMessage_0']");
 	}
 
 	public Element getRTagLabel() {
@@ -1727,6 +1737,10 @@ public class CodingForm {
 		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
 	}
 	
+	public Element ValidationErrormsg() {
+		return driver.FindElementByXPath("//*[@id='bigBox3']");
+	}
+
 	public Element FromnameErrormsg() {
 		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
 	}
@@ -3815,6 +3829,174 @@ public class CodingForm {
 				getCodingForm_AddToFormButton().waitAndClick(10);
 				getCF_RadioGroup().selectFromDropdown().selectByIndex(1);
 			}
+		}
+	}
+	
+	public void select_CheckGroup(String checkgrouplabel, String instructionText, String ErrorMsg) {
+		String Spchar="<>&'";
+		String ErrorMSgPoup= "Error !\r\n"
+				+ "Special characters(<,>) are not allowed.";
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			if (checkgrouplabel.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			 base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			if (instructionText.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ErrorMsg.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+	}
+		else {
+			base.waitForElement(getCF_CheckGrpObject());
+			getCF_CheckGrpObject().waitAndClick(5);
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			if (checkgrouplabel.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			if (instructionText.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ErrorMsg.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+		}
+	}
+	
+	public void select_RadioGroup(String Radiogrouplabel, String instructionText, String ErrorMsg) {
+		String Spchar="<>&'";
+		String ErrorMSgPoup= "Error !\r\n"
+				+ "Special characters(<,>) are not allowed.";
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(Radiogrouplabel);
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			if (Radiogrouplabel.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			if (instructionText.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ErrorMsg.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+	}
+		else {
+			base.waitForElement(getCF_RadioGrpObject());
+			getCF_RadioGrpObject().waitAndClick(5);
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(Radiogrouplabel);
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			if (Radiogrouplabel.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			if (instructionText.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ErrorMsg.contains(Spchar)) {
+			String Actualmessage = ValidationErrormsg().getText();
+			System.out.println("errorMsg"+Actualmessage);
+			  Assert.assertEquals(Actualmessage,ErrorMSgPoup);
+			  base.passedStep(ErrorMSgPoup);
+			}
+			else {
+			base.passedStep("Input strings to Fileds are expected");
+		  }
 		}
 	}
 

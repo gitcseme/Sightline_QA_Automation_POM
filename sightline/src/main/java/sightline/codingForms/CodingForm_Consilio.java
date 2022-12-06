@@ -110,6 +110,95 @@ public class CodingForm_Consilio {
 		loginPage.logout();
 	}
 
+	@Test(description= "RPMXCON-69033",groups= { "regression" })
+	public void CheckGroupObjectERRORMsg() {
+		baseClass.stepInfo("Test case Id: RPMXCON-69033 :Verify that error message display and Check Group Object inside Coding Form does NOT accept with special characters < > & ‘ ");
+	    String codingform = "TestCF"+Utility.dynamicNameAppender();
+	    String Spchar="&>‘<";
+	    String Spchar1="Test_term";
+	    
+	    //Create coding form as per attachment
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
+		
+		//create CodingForm
+		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.select_CheckGroup(Spchar1,Spchar1,Spchar1);
+		codingForm.getSaveCFBtn().waitAndClick(3);
+		codingForm.saveCodingForm();
+		baseClass.passedStep("Coding form"+codingform+ "created successfully");
+		
+		//edit CF name
+		baseClass.selectproject();
+		codingForm.editCodingForm(codingform);
+		baseClass.waitForElement(codingForm.getRootClickDownarrow());
+		codingForm.getRootClickDownarrow().waitAndClick(5);
+		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
+		
+		
+		//Delete CF
+		baseClass.selectproject();
+		codingForm.deleteCodingForm(codingform, codingform);
+
+		// logout
+		loginPage.logout();
+	}
+	
+	@Test(description= "RPMXCON-69032",groups= { "regression" })
+	public void RadioGroupObjectERRORMsg() {
+		baseClass.stepInfo("Test case Id: RPMXCON-69032 :Verify that error message  display and \"Radio Group Object\" inside Coding Form does NOT accept with special characters < > & ‘ ");
+	    String codingformA = "DummyCF"+Utility.dynamicNameAppender();
+	    String SpcharA="&>‘<";
+	    String SpcharB="Test_term";
+	    
+	    //Create coding form as per attachment
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+        codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
+		
+		//create CodingForm
+		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingformA);
+		codingForm.select_RadioGroup(SpcharB,SpcharB,SpcharB);
+		codingForm.getSaveCFBtn().waitAndClick(3);
+		codingForm.saveCodingForm();
+		baseClass.passedStep("Coding form"+codingformA+ "created successfully");
+		
+		//edit CF name
+		baseClass.selectproject();
+		codingForm.editCodingForm(codingformA);
+		baseClass.waitForElement(codingForm.getRootClickDownarrow());
+		codingForm.getRootClickDownarrow().waitAndClick(5);
+		codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
+		
+		
+		//Delete CF
+		baseClass.selectproject();
+		codingForm.deleteCodingForm(codingformA, codingformA);
+
+		// logout
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
