@@ -1671,9 +1671,21 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
+
+
+	public Element getKeepFamiliesHelpIcon() {
+		return driver.FindElementByXPath("//a[@id='aDateRange']");
+	}
+	
+	public Element getKeepFamiliesHelpText() {
+		return driver.FindElementByXPath(
+				"//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
+	}
+
 	public Element getAssignmentAction(String Assign) {
 		return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='" + Assign + "']");
 	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
