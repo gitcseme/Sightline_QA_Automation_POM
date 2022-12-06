@@ -167,6 +167,7 @@ public class ProviewRegression_26 {
         for (String s : productionSets) {
           result.add(s.replace(" (Production Set)", ""));
         }
+        base.stepInfo(result.toString());
         categorize.navigateToCategorizePage();
         categorize.fillingTrainingSetSection("SG", Input.securityGroup, null, null);
  
@@ -177,9 +178,12 @@ public class ProviewRegression_26 {
         categorize.getProductionSelectionPopUp().waitAndClick(5);
         for(int i=0;i<totalProdSets;i++) {
         	softassert.assertEquals(categorize.getProdSet(result.get(i)).isDisplayed(),true);
+        	if(categorize.getProdSet(result.get(i)).isDisplayed()) {
+        	base.stepInfo(result.get(i)+" is displayed as expected in proview page ");
+        	}
         }
         softassert.assertAll();
-        base.passedStep("Existing production sets are dislayed in proview page afterclicking production set icon");
+        base.passedStep("All existing production sets are dislayed in proview page afterclicking production set icon");
 
 	}
 
