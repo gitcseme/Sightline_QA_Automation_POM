@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -21,7 +23,9 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -207,7 +211,7 @@ public class AdvancedSearchRegression_27 {
 
 	}
 
-         /**
+	/**
 	 * @author
 	 * @throws ParseException
 	 * @Description : Verify that Advanced Search works properly for EmailSentDate
@@ -237,12 +241,12 @@ public class AdvancedSearchRegression_27 {
 		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.advancedMetaDataForDraft(metaDataField, operator, inputData, null);
 
-		//configured Query
+		// configured Query
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(sessionSearch.getModifiableSavedSearchQueryAS());
 		String configuredQuery = sessionSearch.getModifiableSavedSearchQueryAS().getText();
 		baseClass.stepInfo("Configure Query in \"Search Edit box\" : " + configuredQuery);
-		
+
 		// Click on Search and Verify that "EmailSentDate" field search result return
 		// documents which satisfied above configured query.
 		baseClass.stepInfo("Click on 'Search' button");
@@ -334,7 +338,7 @@ public class AdvancedSearchRegression_27 {
 	}
 
 	/**
-	 * @author: 
+	 * @author:
 	 * @Date: :N/A
 	 * @Modified date:N/A
 	 * @Modified by: N/A
@@ -440,7 +444,7 @@ public class AdvancedSearchRegression_27 {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author:
 	 * @Date: :N/A
@@ -472,7 +476,7 @@ public class AdvancedSearchRegression_27 {
 			sessionSearch.navigateToAdvancedSearchPage();
 			baseClass.stepInfo("User navigate to session search page as expected");
 			sessionSearch.advMetaDataSearchQueryInsertTest(emailAuthorAddress, searchList[i]);
-			baseClass.stepInfo(searchList[i]+"  User has been able to configure query TestData");
+			baseClass.stepInfo(searchList[i] + "  User has been able to configure query TestData");
 			baseClass.waitForElement(sessionSearch.getQuerySearchButton());
 			sessionSearch.getQuerySearchButton().waitAndClick(5);
 			baseClass.stepInfo("Search button is clicked");
@@ -480,56 +484,382 @@ public class AdvancedSearchRegression_27 {
 			String Warningmsg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			Assert.assertEquals(Warningmsg.replaceAll(" ", ""),
 					sessionSearch.getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
-			baseClass.passedStep("  Query Alert message is displayed  "+Warningmsg );
+			baseClass.passedStep("  Query Alert message is displayed  " + Warningmsg);
 			driver.waitForPageToBeReady();
 			if (sessionSearch.getYesQueryAlert().isElementAvailable(8)) {
 				sessionSearch.getYesQueryAlert().waitAndClick(8);
 			}
 			baseClass.waitForElement(sessionSearch.getPureHitsCountNumText());
 			soft.assertTrue(sessionSearch.getPureHitsCountNumText().isDisplayed());
-			baseClass.passedStep("Pure hit result has been appear for "+searchList[i] +"Metadata search as expected ");
+			baseClass.passedStep(
+					"Pure hit result has been appear for " + searchList[i] + "Metadata search as expected ");
 			soft.assertAll();
-			
+
 		}
-		
+
 	}
 
 	/**
-     * @author:
-     * @Date: :N/A
-     * @Modified date:N/A
-     * @Modified by: N/A
-     * @Description :Verify that Advanced Search works properly for "CreateDate"
-     *              field with "Is" operator and NOT having time components
-     *              .RPMXCON-49171
-     */
-   @Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
-    public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
+	 * @author:
+	 * @Date: :N/A
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that Advanced Search works properly for "CreateDate"
+	 *              field with "Is" operator and NOT having time components
+	 *              .RPMXCON-49171
+	 */
+	@Test(description = "RPMXCON-49171", enabled = true, groups = { "regression" })
+	public void verifyAdvancedSearchWorksForCreateDateWithISOperator() throws Exception {
 
-       baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
-        baseClass.stepInfo(
-                "Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
-        String testdataSearch = "2010-10-18";
-        DocListPage doclist = new DocListPage(driver);
-        String createDate = "CreateDate";
-	String[] values = { "CreateDate" };
-       // login as Rmu
-        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-        baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
-        int result = sessionSearch.advancedMetaDataSearch(createDate, "IS", testdataSearch, null);
-       baseClass.passedStep(result + "CreateDate field search result has been return documents as expected ");
-        sessionSearch.ViewInDocList();
-        driver.waitForPageToBeReady();
-        doclist.SelectColumnDisplayByRemovingExistingOnes(values);
-        String date = doclist.getDataInDoclist(1, 4).getText();
-        baseClass.passedStep("Date Format present-" + date);
-        int size = date.length();
-        System.out.println(size);
-        baseClass.digitCompareEquals(size, 19, "CreateDate format is displayed as expected",
-                "CreateDate format is not displayed as expected");
-        loginPage.logout();
-   }
+		baseClass.stepInfo("Test case Id: RPMXCON-49171 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that Advanced Search works properly for \"CreateDate\" field with \"Is\" operator and NOT having time components");
+		String testdataSearch = "2010-10-18";
+		DocListPage doclist = new DocListPage(driver);
+		String createDate = "CreateDate";
+		String[] values = { "CreateDate" };
+		// login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		int result = sessionSearch.advancedMetaDataSearch(createDate, "IS", testdataSearch, null);
+		baseClass.passedStep(result + "CreateDate field search result has been return documents as expected ");
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		doclist.SelectColumnDisplayByRemovingExistingOnes(values);
+		String date = doclist.getDataInDoclist(1, 4).getText();
+		baseClass.passedStep("Date Format present-" + date);
+		int size = date.length();
+		System.out.println(size);
+		baseClass.digitCompareEquals(size, 19, "CreateDate format is displayed as expected",
+				"CreateDate format is not displayed as expected");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description :Validate searching for @ found in phrases in Advanced
+	 *              Search.[RPMXCON-49746]
+	 */
+	@Test(description = "RPMXCON-49746", enabled = true, groups = { "regression" })
+	public void validateSearchingForAtSymbolFoundInPhrasesInAdvancedSearch() {
+
+		String searchString = "\"@consilio  test”~10";
+		String exampleSearchString = "@consilio";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49746 Advanced Search.");
+		baseClass.stepInfo("Validate searching for @ found in phrases in Advanced Search.");
+
+		// login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button
+		baseClass.waitTime(2);
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		// Verify that result appears for given TestData in Advanced Search Query
+		// Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep("Verified that result appears for given TestData in Advanced Search Query Screen.");
+
+		// Verify that result appears for terms that include @.
+		baseClass.stepInfo("performing search for terms that include @.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// Verify that pureHit appear for given test Data match with pureHit appear for
+		// terms that include @ .
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"verified that pureHit appear for given test Data match with pureHit appear for terms that include @ .");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "proximityWithinProximityQuery")
+	public Object[][] proximityWithinProximityQuery() {
+		return new Object[][] {
+				{"\"money (\"development requirements\"~4)\"~6"},
+				{"“money (“development requirements”~4)”~6"},
+				{"“money (“development requirements”~4)”~6"} };
+	}
 	
+	/**
+	 * @author
+	 * @Description : Verify that result appears for query when User configured
+	 *  proximity within proximity query in  Advanced Search Query Screen.RPMXCON-57338
+	 */
+	@Test(description = "RPMXCON-57338",dataProvider = "proximityWithinProximityQuery", enabled = true, groups = { "regression" })
+	public void verifyResultAppearsForQueryUserConfiguredProximityWithinProximityQueryInAdvanceSearch(String searchString) {
+		
+		String exampleSearchString ="\"money (\"development requirements\"~4)\"~6";
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57338 Advanced Search.");
+		baseClass.stepInfo("Verify that result appears for query when User configured proximity within proximity query in  Advanced Search Query Screen.");
+		
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+				
+		//Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+		
+		//verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false,true,5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+		
+		//Click on "Yes" button
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		//Verify that result appears for query when User configured proximity within proximity query in  Advanced Search Query Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep("Verified that result appears for query when User configured proximity within proximity query in  Advanced Search Query Screen.");
+		
+		// performing search for given example proximity search query.
+		baseClass.stepInfo("performing search for given example proximity search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+		
+		// Verify that Result should appear for proximity within proximity in Advanced Search Query Screen. example "money ("development requirements"~4)"~6 money within 6 words of instances where development is within 4 words of requirements
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep("verified that pureHit appear for test Data proximity Search Query match with pureHit appear for given example proximity Search Query.");
+		
+		// logOut
+		loginPage.logout();
+	}
+	
+	@DataProvider(name = "proximityHavingPhrasesAndTerm")
+	public Object[][] proximityHavingPhrasesAndTerm() {
+		return new Object[][] {
+				{"\"iterative  (\"development methodology\") (\"money related\")\"~9"},
+				{"“iterative  (“development methodology”) (“money related”)”~9"},
+				{"“iterative  (“development methodology”) (“money related”)”~9"} };
+	}
+	
+	/**
+	 * @author
+	 * @Description :Verify that result appears for proximity having
+	 *  Phrases and Term in  Advanced Search Query Screen.RPMXCON-57338
+	 */
+	@Test(description = "RPMXCON-57337",dataProvider = "proximityHavingPhrasesAndTerm", enabled = true, groups = { "regression" })
+	public void verifyResultAppearsForProximityHavingPhrasesAndTermInAdvancedSearchQuery(String searchString) {
+		
+		String exampleSearchString ="\"iterative  (\"development methodology\") (\"money related\")\"~9";
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57337 Advanced Search.");
+		baseClass.stepInfo("Verify that result appears for proximity having Phrases and Term in  Advanced Search Query Screen.");
+		
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+				
+		//Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+		
+		//verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false,true,5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+		
+		//Click on "Yes" button
+		sessionSearch.tallyContinue(5);
+		//Verify that result appears for proximity having  Phrases and Term in Advanced Search Query Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep("Verified that  result appears for proximity having  Phrases and Term in Advanced Search Query Screen.");
+		
+		// performing search for given example proximity search query.
+		baseClass.stepInfo("performing search for given example proximity search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+		
+		// Verify that Result should appear for proximity having Phrases and Term in Advanced Search Query Screen. example "iterative  ("development methodology") ("money related")"~9 iterative Term within phrases ("development methodology") OR ("money related") within 9 words of each other
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep("verified that pureHit appear for test Data proximity Search Query match with pureHit appear for given example proximity Search Query.");
+		
+		// logOut
+		loginPage.logout();
+	}
+	
+   /**
+  	 * @author Brundha.T TestCase id:RPMXCON-49234
+  	 * @Description : Verify that entire "Tag" modal appears within the view-able
+  	 *              area of the "Advanced Search" screen. Browser Resolution
+  	 *              -1280x1024
+  	 */
+  	@Test(description = "RPMXCON-49234", enabled = true, groups = { "regression" })
+
+  	public void verifyingTagHelperMenuinBrowserResolution() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+  		baseClass.stepInfo("Test case Id: RPMXCON-49234 ");
+  		baseClass.stepInfo(
+  				"Verify that entire 'Tag' modal appears within the view-able area of the 'Advanced Search' screen. Browser Resolution -1280x1024");
+
+  		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+  		tf.navigateToTagsAndFolderPage();
+  		if (baseClass.getAllTags().size() < 6) {
+  			for (int i = 1; i <= 5; i++) {
+  				String Tag = "Tag" + Utility.dynamicNameAppender();
+  				tf.createNewTagwithClassification(Tag, "Select Tag Classification");
+  			}
+
+  		}
+  		baseClass.stepInfo("Navigating to Advanced Search page");
+  		sessionSearch.navigateToAdvancedSearchPage();
+  	
+  		double[] zoom = { 1, 1.1, 0.9, 0.8, 0.75 };
+
+  		
+  		baseClass.stepInfo("Set browser resolution as 1280*1024 ");
+  		Dimension pram1 = new Dimension(1280, 1024);
+  		driver.Manage().window().setSize(pram1);
+
+  		for (int i = 0; i < zoom.length; i++) {
+
+  			baseClass.stepInfo("set zoom function"+zoom[i]);
+  			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.body.style.zoom = '" + zoom[i] + "'");
+  			baseClass.waitTime(2);
+  			sessionSearch.navigateToAdvancedSearchPage();
+  			
+  			baseClass.waitForElement(sessionSearch.getWorkproductBtn());
+  			sessionSearch.getWorkproductBtn().waitAndClick(10);
+  			baseClass.stepInfo("Switched to Advanced search - Work product");
+  			baseClass.waitForElement(sessionSearch.getWP_TagBtn());
+  			sessionSearch.getWP_TagBtn().Click();
+
+  			if (sessionSearch.getTagMenuPopup().isDisplayed()) {
+  				baseClass.passedStep("Insert Tags helper menu is opened");
+
+  			} else {
+  				baseClass.failedStep("Insert Tags helper menu is not opened");
+  			}
+
+  		}
+  		loginPage.logout();
+
+  	}
+
+  	/**
+  	 * @author Brundha.T Test case Id:RPMXCON-48113
+  	 * @throws InterruptedException
+  	 * @Description :Verify that - Application returns all the documents which are
+  	 *              available under Assignments - Completed To in search result.
+  	 */
+  	@Test(description = "RPMXCON-48113", enabled = true, groups = { "regression" })
+  	public void verifyingCompletedDocInWP() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		baseClass.stepInfo("Test case Id: RPMXCON-48113 ");
+  		baseClass.stepInfo(
+  				"Verify that - Application returns all the documents which are available under Assignments - Completed To in search result.");
+
+  		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+
+  		AssignmentsPage assignment = new AssignmentsPage(driver);
+  		baseClass.stepInfo("Navigating to Assignment Page.");
+  		assignment.navigateToAssignmentsPage();
+
+  		baseClass.stepInfo("Create Assignment");
+  		assignment.createAssignment(assignmentName, Input.codeFormName);
+
+  		baseClass.stepInfo("Bulk action in created Assignment");
+  		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+  		sessionSearch.bulkAssignExisting(assignmentName);
+
+  		baseClass.stepInfo("Adding reviewers and distributing");
+  		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+  		assignment.add2ReviewerAndDistribute();
+
+  		baseClass.stepInfo("select action and complete all document");
+  		assignment.getAssignment(assignmentName, "Complete All Documents");
+
+  		baseClass.stepInfo("Navigate to advance search page");
+  		sessionSearch.navigateToAdvancedSearchPage();
+  		sessionSearch.getWorkproductBtn().waitAndClick(10);
+  		
+  		baseClass.stepInfo("verifying all the documents under completed assignment-reflecting in search result");
+  		 sessionSearch.selectAssignmentInWPS(assignmentName, "Completed", null);
+  		 int CompletedDoc =sessionSearch.serarchWP();
+  		baseClass.digitCompareEquals(PureHit, CompletedDoc,
+  				"Application returns all the documents under Assignments and Completed in search result.",
+  				"Application not returning exact document");
+
+  		loginPage.logout();
+
+  	}
+
+  	/**
+  	 * @author Brundha.T Test case Id:RPMXCON-48114
+  	 * @throws InterruptedException
+  	 * @Description :Verify that - Application returns all the documents which are
+  	 *              available under Assignments - Assigned in search result.
+  	 */
+  	@Test(description = "RPMXCON-48114", enabled = true, groups = { "regression" })
+  	public void verifyingAssignedDocinWP() throws InterruptedException {
+
+  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		baseClass.stepInfo("Test case Id: RPMXCON-48114");
+  		baseClass.stepInfo(
+  				"Verify that - Application returns all the documents which are available under Assignments - Assigned in search result.");
+
+  		String assignmentName = "AssgnName" + Utility.dynamicNameAppender();
+
+  		AssignmentsPage assignment = new AssignmentsPage(driver);
+  		baseClass.stepInfo("Navigating to Assignment Page.");
+  		assignment.navigateToAssignmentsPage();
+
+  		baseClass.stepInfo("Create Assignment");
+  		assignment.createAssignment(assignmentName, Input.codeFormName);
+
+  		baseClass.stepInfo("Bulk action in created Assignment");
+  		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+  		sessionSearch.bulkAssignExisting(assignmentName);
+
+  		baseClass.stepInfo("Assigning reviewers and distributing");
+  		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+  		assignment.add2ReviewerAndDistribute();
+  		baseClass.getSelectProject();
+  		sessionSearch.navigateToAdvancedSearchPage();
+  		sessionSearch.getWorkproductBtn().waitAndClick(10);
+  		
+  		baseClass.stepInfo("verifying all the documents under assignment and Assigned in search result");
+  		sessionSearch.selectAssignmentInWPS(assignmentName, "Assigned", null);
+  		int CompletedDoc = sessionSearch.serarchWP();
+  		baseClass.digitCompareEquals(PureHit, CompletedDoc,
+  				"Application returns all the documents under Assignments and Assigned in search result.",
+  				"Application not returning exact document");
+
+  		loginPage.logout();
+
+  	}
+  	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

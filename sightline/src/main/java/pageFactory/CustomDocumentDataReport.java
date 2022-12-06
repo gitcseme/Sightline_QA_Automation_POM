@@ -173,6 +173,18 @@ public class CustomDocumentDataReport {
 
 	// added by sowndarya
 
+	public Element getCloseBtn_ScrubPopup() {
+		return driver.FindElementByXPath("//div[@aria-describedby='SelectScrubPopup']//button");
+	}
+	
+	public Element getScrubSpecialCharcterField() {
+		return driver.FindElementByXPath("//table[@id='table-scrub']//select[@id='scrubSpecialCharFieldSet2']");
+	}
+	
+	public Element getAddNewBtn_ScrubLink() {
+		return driver.FindElementById("addNew");
+	}
+
 	public Element getScrubLink() {
 		return driver.FindElementById("btnScrubExportSpecialChar");
 	}
@@ -507,7 +519,8 @@ public class CustomDocumentDataReport {
 			Filename = "Directory Empty";
 		}
 		bc.stepInfo(Filename + "Last Modified File name before Downloading the report");
-		getRunReport().Click();
+		getRunReport().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		reportRunSuccessMsg();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -749,4 +762,32 @@ public class CustomDocumentDataReport {
 		bc.waitForElement(getExportDateStyleDD());
 		getExportDateStyleDD().selectFromDropdown().selectByVisibleText(dateStyle);
 	}
+	
+
+	/**
+	 * @author sowndarya
+	 */
+	public void verifyScrubToggleAddDeleteAndModify() {
+	
+	bc.waitForElement(getScrubLink());
+	getScrubLink().waitAndClick(10);
+	
+	//add
+//	driver.scrollingToBottomofAPage();
+	bc.waitForElement(getAddNewBtn_ScrubLink());
+	getAddNewBtn_ScrubLink().ScrollTo();
+	getAddNewBtn_ScrubLink().waitAndClick(10);
+	
+	//modify
+	bc.waitForElement(getScrubSpecialCharcterField());
+	getScrubSpecialCharcterField().selectFromDropdown().selectByIndex(1);
+	
+	//delete
+	bc.waitForElement(getRedXIcon());
+	getRedXIcon().waitAndClick(10);
+	
+	//close popup
+	bc.waitForElement(getCloseBtn_ScrubPopup());
+	getCloseBtn_ScrubPopup().waitAndClick(10);
+}
 }

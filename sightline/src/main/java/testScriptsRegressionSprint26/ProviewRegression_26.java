@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.ITestResult;
@@ -148,39 +149,41 @@ public class ProviewRegression_26 {
 
 		base.stepInfo("RPMXC0N-54116  Proview");
 		base.stepInfo("To verify that on clicking on 'Production Set' icon, all existing sets should be displayed.");
-		String folderName = "FOLDER" + Utility.dynamicNameAppender();
 		Categorization categorize = new Categorization(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softassert=new SoftAssert();
 
 		// Login As RMU
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 
-		 // basic Content search
-        sessionSearch.basicContentSearch(Input.testData1);
-        sessionSearch.bulkFolder(folderName);
         ProductionPage page = new ProductionPage(driver);
         driver.waitForPageToBeReady();
         this.driver.getWebDriver().get(Input.url + "Production/Home");
-        base.waitForElementCollection(page.getProductionItemsTile());
-        String prodViewCount = page.gridAndTileViewProdCount().getText();
-        System.out.println(prodViewCount);
+        base.waitForElementCollection(page.getProductionSets());
+        List<String> productionSets = base.availableListofElements(page.getProductionSets());
+        int totalProdSets = page.getProductionSets().size();
+        System.out.println(totalProdSets);
+        List<String> result = new ArrayList<>();
+        for (String s : productionSets) {
+          result.add(s.replace(" (Production Set)", ""));
+        }
+        base.stepInfo(result.toString());
         categorize.navigateToCategorizePage();
-        categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+        categorize.fillingTrainingSetSection("SG", Input.securityGroup, null, null);
  
         // select production sets
         categorize.selectTrainingSet("Analyze Select Production Sets");
         base.stepInfo("Analyze Select Production Sets  Results Sets Expanded");
         base.waitForElement(categorize.getProductionSelectionPopUp());
         categorize.getProductionSelectionPopUp().waitAndClick(5);
- 
-        base.waitForElementCollection(categorize.getProductionSets());
-        int existingProd = categorize.getProductionSets().FindWebElements().size();
-        System.out.println(existingProd);
-        softassert.assertEquals(existingProd, Integer.parseInt(prodViewCount));
-        base.passedStep("All existing production set is displayed successfully");
+        for(int i=0;i<totalProdSets;i++) {
+        	softassert.assertEquals(categorize.getProdSet(result.get(i)).isDisplayed(),true);
+        	if(categorize.getProdSet(result.get(i)).isDisplayed()) {
+        	base.stepInfo(result.get(i)+" is displayed as expected in proview page ");
+        	}
+        }
         softassert.assertAll();
+        base.passedStep("All existing production sets are dislayed in proview page afterclicking production set icon");
 
 	}
 

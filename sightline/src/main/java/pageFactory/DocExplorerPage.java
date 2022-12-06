@@ -4269,4 +4269,16 @@ public class DocExplorerPage {
 		}
 		return count;
 	}
+	
+	/**
+	 * @author: sowndarya
+	 * @description: To run BG report and verify the file
+	 */
+	public void performBulkTagAction() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDocExp_actionButton());
+		getDocExp_actionButton().waitAndClick(5);
+		bc.waitForElement(getBulkTagButton());
+		getBulkTagButton().waitAndClick(5);	
+	}
 }
