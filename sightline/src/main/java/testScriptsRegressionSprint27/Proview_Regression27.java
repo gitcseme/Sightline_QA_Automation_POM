@@ -16,6 +16,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.Categorization;
+import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -160,7 +161,83 @@ public class Proview_Regression27 {
 		baseClass.passedStep("new folder not displayed on folder tree");
 		loginPage.logout();
 	}
-	
+	/**
+	 * @author Brundha.T Test case id : RPMXCON-54257
+	 * @Description :Verify that Categorization (Training Set : Folder) is working
+	 *              correctly and properly
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54257", enabled = true, groups = { "regression" })
+	public void verifyingFolderSetInProview() throws InterruptedException {
+
+		baseClass.stepInfo("RPMXC0N-54257 Proview");
+		baseClass.stepInfo("Verify that Categorization (Training Set : Folder) is working correctly and properly");
+
+		Categorization categorize = new Categorization(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		String[] UserName = { Input.pa1userName, Input.rmu1userName };
+		String[] Password = { Input.pa1password, Input.rmu1password };
+
+		for (int i = 0; i < UserName.length; i++) {
+			String folderName = "Folder" + Utility.dynamicNameAppender();
+			// Login as User
+			loginPage.loginToSightLine(UserName[i], Password[i]);
+			baseClass.stepInfo("Logged in As " + UserName[i]);
+
+			baseClass.stepInfo("Creating new bulkfolder");
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolder(folderName);
+
+			baseClass.stepInfo("Navigating to categorize page");
+			categorize.navigateToCategorizePage();
+
+			baseClass.stepInfo("Selecting training set and doc to be analyzed");
+			categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+			categorize.fillingStep2CorpusTab("folder", folderName, null, true);
+
+			final BaseClass bc = new BaseClass(driver);
+			final int Bgcount = bc.initialBgCount();
+			System.out.println(Bgcount);
+
+			driver.waitForPageToBeReady();
+			baseClass.stepInfo("Set cohesion level as 50%");
+			categorize.getCohesionLevel().SendKeys("50");
+
+			baseClass.stepInfo("Run Categorize and click on 'NO'");
+			categorize.runCategorization("No");
+			bc.checkNotificationCount(Bgcount, 1);
+			bc.getBackGroudTaskIcon().waitAndClick(10);
+			categorize.getProviewNotification().waitAndClick(10);
+			baseClass.waitTime(3);
+			String DocCount = categorize.getResultCount().getText();
+			String[] Document = DocCount.split(" ");
+			String ResultCoount = Document[1];
+			System.out.println(ResultCoount);
+			
+			String ResultCount = categorize.getDocCount().getText();
+			System.out.println(ResultCount);
+			baseClass.stepInfo("verifying cohesion level");
+			if (Integer.valueOf(ResultCoount) == 50) {
+				baseClass.passedStep("Categorize page is with selected cohesion level");
+			} else {
+				baseClass.failedStep("Categorize page not with selected cohesion level");
+			}
+			categorize.ViewInDocLIst();
+
+			baseClass.stepInfo("verifying document count in doclist page");
+			DocListPage doc = new DocListPage(driver);
+			baseClass.waitTillElemetToBeClickable(doc.getTableFooterDocListCount());
+			String DocListCount = doc.getTableFooterDocListCount().getText();
+			String[] doccount = DocListCount.split(" ");
+			String DocumentCount = doccount[5];
+
+			baseClass.digitCompareEquals(Integer.valueOf(ResultCount), Integer.valueOf(DocumentCount),
+					"Document count is displayed as expected", "Document count is not displayed");
+
+			loginPage.logout();
+		}
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

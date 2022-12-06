@@ -1672,6 +1672,7 @@ public class AssignmentsPage {
 				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
+
 	public Element getKeepFamiliesHelpIcon() {
 		return driver.FindElementByXPath("//a[@id='aDateRange']");
 	}
@@ -1681,7 +1682,10 @@ public class AssignmentsPage {
 				"//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
 	}
 
-	
+	public Element getAssignmentAction(String Assign) {
+		return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='" + Assign + "']");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -11793,5 +11797,51 @@ public class AssignmentsPage {
 			bc.ValidateElement_Presence(getClassificationOptionsFormAssignment(option), option);
 		}
 	}
+	/**
+	 * @author Brundha.T
+	 * @param assignmentName
+	 * @param Assign
+	 * @throws InterruptedException
+	 * @description this method is used to select any action in assignment .
+	 */
+	public void getAssignment(String assignmentName, String Assign) throws InterruptedException {
 
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
+				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+					getSelectAssignment(assignmentName).waitAndClick(5);
+				}
+				driver.scrollPageToTop();
+				getAssignmentActionDropdown().waitAndClick(3);
+				bc.stepInfo("Expected assignment found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getAssgnPaginationNextButton().waitAndClick(3);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+		bc.waitForElement(getAssignmentAction(Assign));
+		getAssignmentAction(Assign).waitAndClick(3);
+		bc.stepInfo("Assignment " + Assign + " option is clicked");
+		if (Assign.equals("Complete All Documents")) {
+			bc.getYesBtn().waitAndClick(10);
+			bc.VerifySuccessMessage("All Documents successfully completed.");
+		}
+	}
 }

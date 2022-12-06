@@ -3556,6 +3556,9 @@ public class ProductionPage {
 	public ElementCollection getProductionItem() {
 		return driver.FindElementsByXPath("//div//*[@class='prod-Title']");
 	}
+	public ElementCollection getProductionSets() {
+		return driver.FindElementsByXPath("//select[@id='ProductionSets']/option[@isproduction='1']");
+	}
 
 	public ProductionPage(Driver driver) {
 
