@@ -3844,7 +3844,7 @@ public class CodingForm {
 			getErrorMessage0().SendKeys(ErrorMsg);
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			base.passedStep("Error message displayed successfully");
+			base.failedStep("Error message displayed successfully");
 			}	
 			
 	}
@@ -3876,7 +3876,7 @@ public class CodingForm {
 			getErrorMessage0().SendKeys(ErrorMsg);
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			base.passedStep("Error message displayed successfully");
+			base.failedStep("Error message displayed successfully");
 			}	
 			
 	}
