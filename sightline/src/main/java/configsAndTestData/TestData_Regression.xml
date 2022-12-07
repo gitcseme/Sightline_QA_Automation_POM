@@ -135,6 +135,8 @@
 	<smallSetDat>0036_loadfile.dat</smallSetDat>
 	<uncAbsolutePdf>Ingestion Path_PDF_AbsolutePath.lst</uncAbsolutePdf>
 	<uncRelativeNative>Ingestion Path_Native_RelativePath.lst</uncRelativeNative>
+	<emailConversationGdFolder>EmailConversationIndex_GD</emailConversationGdFolder>
+	<emailGdDat>GDEmailConversation_DAT.dat</emailGdDat>
 	
 
 	<!-- Production path for redaction master doc -->

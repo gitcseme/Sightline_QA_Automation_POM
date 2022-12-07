@@ -592,6 +592,9 @@ public class TallyPage {
 	public Element getExportButtonStatus() {
 		return driver.FindElementByXPath("//button[@id='btnExportTallyReportToExcel']");
 	}
+	public Element getSubTallyMetaData(String field) {
+		return driver.FindElementByXPath("//select[@id='submetadataselect']//option[contains(text(),'"+field+"')]");
+	}
 
 	// added by Mohan
 
@@ -2713,7 +2716,7 @@ public class TallyPage {
 	}
 
 	/**
-	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: 07/12/2022
 	 * @description: this method will perform tally and search for metadata
 	 */
 	public void performTallyAndSearchForMetadata(String metadata) {
@@ -2727,12 +2730,21 @@ public class TallyPage {
 				base.stepInfo("tally result for " + value + "-" + tallyResult);
 				base.stepInfo("perform search with field and verify purehit count with report");
 				SessionSearch search = new SessionSearch(driver);
-				int searchResult = search.MetaDataSearchInBasicSearch(metadata, value);
+				int searchResult;
+				if(value.contains("=") || value.contains("%")) {
+					 searchResult = search.MetaDataSearchInBasicSearch(metadata, "\""+value+"\"");
+				}
+				else {
+					 searchResult = search.MetaDataSearchInBasicSearch(metadata, value);
+				}
 				base.stepInfo("search result for " + value + "-" + searchResult);
 				if (tallyResult == searchResult) {
+					base.stepInfo("tally result-"+tallyResult);
+					base.stepInfo("search result-"+tallyResult);
 					base.passedStep("Counts matched for search result and tally report");
 					break;
-				} else {
+				} 
+				else {
 					base.failedStep("Counts not matched for search result and tally report");
 				}
 			}
@@ -2815,6 +2827,94 @@ public class TallyPage {
 			bc.passedStep("File downloaded after the export-" + Filename2);
 		}
 		return Filename2;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the field available in metadata list
+	 */
+	public void verifyMetaDataAvailabilityInSubTallyReport(String field) {
+
+		base.waitForElement(getTally_SourceSubTally());
+		getTally_SourceSubTally().Click();
+		base.waitForElement(getTally_subMetadata());
+		getTally_subMetadata().waitAndClick(10);
+		if (getSubTallyMetaData(field).isElementAvailable(10)) {
+			base.passedStep(field + "is available in metadata list");
+		} else {
+			base.failedStep(field + "is not available in metadata list");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: 29/11/2022
+	 * @description: this method will check the generation of subtally report for
+	 *               metadata
+	 */
+	public void verifySubTallyReportGenerationForMetadata(String metadata,String filter) {
+
+		selectTallyByMetaDataField(metadata);
+		base.waitForElement(getTally_btnTallyAll());
+		getTally_btnTallyAll().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		String exportStatus = getExportButtonStatus().GetAttribute("disabled");
+		base.stepInfo("export button disabled status after searching with metadata-" + exportStatus);
+		if (getTallyChartRectbar().isDisplayed() && exportStatus == null) {
+			base.passedStep("Tally report generated for the field-" + metadata);
+		} else {
+			base.failedStep("Tally report not generated and export option not available" + metadata);
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: 29/11/2022
+	 * @throws InterruptedException 
+	 * @description: this method will perform tally with tag name and subtally with metadata
+	 */
+	public void performTallyByTagAndSubTallyByMetadata(String role,String tagName,String metaData) throws InterruptedException {
+		
+		navigateTo_Tallypage();
+		if(role.equalsIgnoreCase("PA")) {
+			selectSourceByProject();
+		}
+		else if(role.equalsIgnoreCase("RMU")){
+			SelectSource_SecurityGroup(Input.securityGroup);
+		}
+		selectTallyByTagName(tagName);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTally_btnTallyAll());
+		getTally_btnTallyAll().waitAndClick(10);
+		base.waitForElement(getTally_tallyactionbtn());
+		getTally_tallyactionbtn().waitAndClick(10);
+		selectSubTallyFromActionDropDown();
+		driver.scrollPageToTop();
+		base.stepInfo("verify metadata in subtally");
+		verifyMetaDataAvailabilityInSubTallyReport(metaData);
+		base.stepInfo("Run sub-tally by metdata");
+		selectMetaData_SubTally(metaData, 1);
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will navigate to doclist or docview from subtally report
+	 */
+	public void subTallyNavigation(String action) {
+		
+		if(action.equalsIgnoreCase("doclist")) {
+			base.waitForElement(getTally_SubTallyActionButton());
+			getTally_SubTallyActionButton().waitAndClick(10);
+			base.waitForElement(getTally_SubTally_Action_ViewDocList());
+			getTally_SubTally_Action_ViewDocList().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+		else if(action.equalsIgnoreCase("docview")) {
+			base.waitForElement(getTally_SubTallyActionButton());
+			getTally_SubTallyActionButton().waitAndClick(10);
+			base.waitForElement(getSubTallyViewinDocViewBtn());
+			getSubTallyViewinDocViewBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
 	}
 	
 	}

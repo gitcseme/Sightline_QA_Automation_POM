@@ -322,6 +322,8 @@ public class TestData {
 	public String smallSetDat;
 	public String uncAbsolutePdf;
 	public String uncRelativeNative;
+	public String emailConversationGdFolder;
+	public String emailGdDat;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

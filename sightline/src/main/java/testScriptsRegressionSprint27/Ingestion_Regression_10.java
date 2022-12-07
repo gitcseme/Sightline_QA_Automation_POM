@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
@@ -39,6 +40,7 @@ public class Ingestion_Regression_10 {
 	DataSets dataSets;
 	Input ip;
 	TallyPage tally;
+	DocExplorerPage docExplorer;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -138,6 +140,172 @@ public class Ingestion_Regression_10 {
 		baseClass.stepInfo("verify ingestion status in detail popup");
 		ingestionPage.ingestionAtCatlogState(Input.attachDocFolder);
 		ingestionPage.verifyFailedIngestionStatusInPopup();
+		loginPage.logout();
+	}
+	
+	@DataProvider(name = "users")
+	public Object[][] Users() {
+		return new Object[][] { { Input.pa1userName, Input.pa1password, "PA" },
+								{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+	}
+
+	/**
+	 * Author :Arunkumar date: 07/12/2022 TestCase Id:RPMXCON-48926
+	 * Description :Validate new metadata field DocLanguages
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48926",dataProvider = "users",enabled = true, groups = { "regression" })
+	public void verifyDocLanguagesMetadata(String userName, String password, String role) throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48926");
+		baseClass.stepInfo("Validate new metadata field DocLanguages");
+		String field = "DocLanguages";
+		String tagName = "tag"+Utility.dynamicNameAppender();
+		tally = new TallyPage(driver);
+		docExplorer = new DocExplorerPage(driver);
+		
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as "+role);
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("go to search and check field availability in metadata");
+		sessionSearch.navigateToSessionSearchPageURL();
+		baseClass.waitForElement(sessionSearch.getBasicSearch_MetadataBtn());
+		sessionSearch.getBasicSearch_MetadataBtn().waitAndClick(10);
+		baseClass.ValidateElement_Presence(sessionSearch.getMetaDataInDropdown(field), "doclanaguages metadata");
+		baseClass.stepInfo("go to report-tally and check field availability in metadata");
+		tally.verifyMetaDataAvailabilityInTallyReport(field);
+		baseClass.stepInfo("perform tally by metadata");
+		if(role.equalsIgnoreCase("PA")) {
+		tally.verifyTallyReportGenerationForMetadata(field, "project");
+		}
+		else if(role.equalsIgnoreCase("RMU")){
+			tally.verifyTallyReportGenerationForMetadata(field, "security group");
+		}
+		//verify purehit count with tally report for metadata
+		tally.performTallyAndSearchForMetadata(field);
+		baseClass.passedStep("pure hit count displayed correctly for metadata"+field);
+		baseClass.stepInfo("perform tally by tags");
+		docExplorer.navigateToDocExplorerPage();
+		int count =docExplorer.docExpToDocViewOrListWithIngestion("DocLanguagesExistingData", "no", "doclist");
+		driver.waitForPageToBeReady();
+		docList = new DocListPage(driver);
+		docList.selectAllDocsAndBulkTagFromDoclist(tagName);
+		//docview verification
+		baseClass.stepInfo("perform tally by tagname and subtally with metadata");
+		tally.performTallyByTagAndSubTallyByMetadata(role,tagName,field);
+		baseClass.waitForElement(tally.getTally_btnSubTallyAll());
+		tally.getTally_btnSubTallyAll().waitAndClick(10);
+		baseClass.stepInfo("Navigate to docview and verify doclanguages metadata");
+		tally.subTallyNavigation("docview");
+		ingestionPage.verifyDocLanguagesMetadata("docview",count);
+		//doclist verification
+		baseClass.stepInfo("perform tally by tagname and subtally with metadata");
+		tally.performTallyByTagAndSubTallyByMetadata(role,tagName,field);
+		baseClass.waitForElement(tally.getTally_btnSubTallyAll());
+		tally.getTally_btnSubTallyAll().waitAndClick(10);
+		baseClass.stepInfo("Navigate to doclist and verify doclanguages metadata");
+		tally.subTallyNavigation("doclist");
+		ingestionPage.verifyDocLanguagesMetadata("doclist",count);
+		loginPage.logout();		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 07/12/2022 TestCase Id:RPMXCON-48305
+	 * Description :To verify that new ingested field "EmailConversationIndex", value will be 
+	 * ingested from NUIX, should be done successfully. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48305",enabled = true, groups = { "regression" })
+	public void verifyEmailConversationIndexNuixValue() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48305");
+		baseClass.stepInfo("To verify that 'EmailConversationIndex' value ingested from NUIX.");
+		String ingestionName = null;
+		String[] value = {"EmailConversationIndex"};
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Perform add only ingestion with PDF");
+		boolean status = ingestionPage.verifyIngestionpublish("EmailConversationIndex_GD");
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix,
+					Input.sourceLocation, "EmailConversationIndex_GD");
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource("GDEmailConversation_DAT.dat", Input.documentKey);
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, 
+					Input.documentKey, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish add only ingestion");
+			ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName("EmailConversationIndex_GD");
+		}
+		baseClass.passedStep("Ingestion Name :"+ingestionName);
+		//performing search with ingestion name to filter only the docs with emailconversation index
+		baseClass.stepInfo("perform search and navigate to doclist");
+		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.ViewInDocList();
+		docList = new DocListPage(driver);
+		baseClass.stepInfo("select columns");
+		docList.SelectColumnDisplayByRemovingAddNewValues(value);
+		for(int i=1;i<=count;i++) {
+			String emailIndex = docList.getDataInDoclist(1,4).getText();
+			baseClass.stepInfo("Email conversation index value-"+emailIndex);
+			if(emailIndex.isEmpty()) {
+				baseClass.failedStep("Email conversation index value not displayed");
+			}
+			else {
+				baseClass.passedStep("Email conversation index value displayed");
+				break;
+			}
+		}
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 07/12/2022 TestCase Id:RPMXCON-60895
+	 * Description :check user should not obtain any error in any stage of ingestion phase while 
+	 * ingesting DAT file with fullpath metadata containing less than 400 chars in size 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60895",enabled = true, groups = { "regression" })
+	public void verifyDatIngestionLessThan400Chars() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-60895");
+		baseClass.stepInfo("Verify ingestion Dat file data having less than 400 chars.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("perform add only ingestion with less than 400 char dat");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.AutomationAllSources,Input.DATFile1);
+			baseClass.stepInfo("Perform catalog,copy,indexing and approve ingestion");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ignoreErrorsAndIndexing(Input.AutomationAllSources);
+			ingestionPage.approveIngestion(1);
+			baseClass.stepInfo("Publish ingestion");
+			ingestionPage.runFullAnalysisAndPublish();
+			baseClass.passedStep("Ingestion Published Successfully");
+		}
+		else {
+			baseClass.passedStep("Ingestion already published in the project"+Input.ingestDataProject);
+		}
 		loginPage.logout();
 	}
 	

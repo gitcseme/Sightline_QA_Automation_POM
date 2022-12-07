@@ -6544,5 +6544,38 @@ public class DocListPage {
 		base.waitForElement(getUpdateColumnBtn());
 		getUpdateColumnBtn().Click();
 	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select all the docs in doclist page and perform new bulk tag
+	 */
+	public void selectAllDocsAndBulkTagFromDoclist(String tagName) {
+		
+		selectAllDocs();
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(10);
+		base.waitForElement(getDocList_Bulktag());
+		getDocList_Bulktag().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTagUntagDocumentsDialogBox());
+		base.ValidateElement_Presence(getTagUntagDocumentsDialogBox(),"tag/untag popup");
+		base.waitForElement(getNewTagBtn());
+		getNewTagBtn().waitAndClick(10);
+		base.waitForElement(getAction_Bulktag_AllTag());
+		getAction_Bulktag_AllTag().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNameField());
+		getNameField().SendKeys(tagName);
+		base.waitForElement(getContinueButtonUntag());
+		getContinueButtonUntag().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		if(getPopUpOkBtn().isElementAvailable(10)) {
+			getPopUpOkBtn().waitAndClick(10);
+		}
+		base.VerifySuccessMessage("Records saved successfully");
+	}
 
 }
