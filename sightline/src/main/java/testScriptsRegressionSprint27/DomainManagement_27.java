@@ -390,6 +390,62 @@ public class DomainManagement_27 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author  RPMXCON-52805
+	 * @Description :Verify that for DA user, project drop down should show the
+	 *              projects in the instances
+	 */
+	@Test(description = "RPMXCON-52805", enabled = true, groups = { "regression" })
+	public void verifyDAUProjectDropDownShowProjectInstance() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52805");
+		baseClass.stepInfo("Verify that for DA user, project drop down should show the projects in the instances");
+		UserManagement user = new UserManagement(driver);
+		ArrayList<String> DropDownValues = new ArrayList<>();
+		SoftAssert softassert = new SoftAssert();
+
+		// login as DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Successfully login as DA user'" + Input.da1userName + "'");
+
+		baseClass.stepInfo("Navigating to Projects Page");
+		user.navigateToUsersPAge();
+		baseClass.stepInfo("Selecting Assign user and validating the project dropdown");
+		baseClass.waitForElement(user.getAssignUserButton());
+		user.getAssignUserButton().waitAndClick(5);
+		baseClass.waitForElement(user.getProjectTab());
+		user.getProjectTab().waitAndClick(5);
+		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+		int Size = user.getAssignUserProjectDrp_Dwn().selectFromDropdown().getOptions().size();
+		System.out.println(Size);
+		for (int i = 2; i <= Size; i++) {
+			String DropText = user.getProjectDropdownList(i).getText();
+			DropDownValues.add(DropText);
+		}
+		baseClass.stepInfo(DropDownValues + " Existing project");
+		System.out.println(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// projects show in drop down
+		user.verifySelectedRoleSGAccessControl("Review Manager");
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.verifySelectedRoleSGAccessControl("Reviewer");
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.verifySelectedRoleSGAccessControl(Input.ProjectAdministrator);
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(user.getPaSecurityGroupDisabled());
+		boolean sgDisabled = user.getPaSecurityGroupDisabled().isElementAvailable(2);
+		softassert.assertTrue(sgDisabled);
+		baseClass.passedStep("Security group drop down is read only as expected");
+		softassert.assertAll();
+		loginPage.logout();
+	}
 
 	
 
