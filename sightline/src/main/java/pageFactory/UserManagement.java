@@ -1193,6 +1193,9 @@ public class UserManagement {
 	public Element EditUserClosePopupBtn() {
 		return driver.FindElementByXPath("//*[text()='Edit User']/..//button[@class='ui-dialog-titlebar-close']");
 	}
+	public ElementCollection getSelectingProjectDropDown() {
+		return driver.FindElementsByXPath("//*[@id='ddlBulkUserProjects']/option/following-sibling::option");
+	}
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -5434,6 +5437,43 @@ public class UserManagement {
 		getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 		bc.VerifySuccessMessage("User profile was successfully modified");
 
+	}
+	/**
+	 * @Author 
+	 * @Description :  Select role  in access control
+	 * @param role
+	 */
+	public void verifySelectedRoleSGAccessControl(String role) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRollId());
+		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+		bc.stepInfo(role+ " User Role is Selected" );
+	}
+
+	/**
+	 * @Author 
+	 * @Description :Projects Present in access control dropdown
+	 * @param dropDownValues
+	 */
+	public void verifyAllProjectPresentInAccessControl(ArrayList<String> dropDownValues) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectingProject());
+		getSelectingProject().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitTime(5);
+		List<String> project = bc.availableListofElements(getSelectingProjectDropDown());
+		System.out.println(project);
+		for (int k = 0; k < project.size(); k++) {
+			if (dropDownValues.contains(project.get(k))) {
+				bc.passedStep("In project dropdown " + project.get(k) + " is displayed successfully");
+
+			} else {
+				bc.failedStep("In project dropdown " + project.get(k) + " is not displayed ");
+			}
+		}
 	}
 
 }
