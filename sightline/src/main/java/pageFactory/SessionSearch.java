@@ -13825,6 +13825,8 @@ public class SessionSearch {
 		getTagsAllRoot().Click();
 
 		getContinueButton().waitAndClick(10);
+		if(getFinalizeButton().isDisplayed()==false) {
+			base.failedStep("Continue button is not interactable");		}
 	}
 	/**
 	 * @author Jayanthi.Ganesan
@@ -13931,6 +13933,8 @@ public class SessionSearch {
 		base.waitForElement(getFolderAllRoot());
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
+		if(getFinalizeButton().isDisplayed()==false) {
+			base.failedStep("Continue button is not interactable");		}
 
 	}
 
