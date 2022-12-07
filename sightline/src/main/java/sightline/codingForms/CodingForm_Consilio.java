@@ -66,6 +66,7 @@ public class CodingForm_Consilio {
 	    sessionSearch = new SessionSearch(driver);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
+
 	}
 
 	@Test(description = "RPMXCON-68850",groups = { "regression" })
@@ -78,8 +79,10 @@ public class CodingForm_Consilio {
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Users loggedIn Successfully");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
 		baseClass.waitForElement(codingForm.getCodingFormName());
@@ -89,13 +92,15 @@ public class CodingForm_Consilio {
 		codingForm.CFnameErrormsg(errorMsg);
 
 		//create CodingForm
-		baseClass.selectproject();
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.createCodingFormWithoutObjects(codingform1);
 
 		//edit CF name
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.editCodingForm(codingform1);
+		baseClass.stepInfo("Navigated to edit coding form editor");
 		baseClass.waitForElement(codingForm.getCodingFormName());
 		codingForm.getCodingFormName().SendKeys(codingform);
 		codingForm.getSaveCFBtn().waitAndClick(3);
@@ -103,13 +108,111 @@ public class CodingForm_Consilio {
 		codingForm.CFnameErrormsg(errorMsg);
 
 		//Delete CF
-		baseClass.selectproject();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(codingform1, codingform1);
 
 		// logout
 		loginPage.logout();
 	}
 
+	@Test(description= "RPMXCON-69033",groups= { "regression" })
+	public void CheckGroupObjectERRORMsg() {
+		baseClass.stepInfo("Test case Id: RPMXCON-69033 :Verify that error message display and Check Group Object inside Coding Form does NOT accept with special characters < > & ‘ ");
+	    String codingform = "TestCF"+Utility.dynamicNameAppender();
+	    String Spchar="&>‘<";
+	    String Spchar1="Test_term";
+	    
+	    //Create coding form as per attachment
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    baseClass.stepInfo("Users loggedIn Successfully");
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
+		
+		//create CodingForm
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.select_CheckGroup(Spchar1,Spchar1,Spchar1);
+		codingForm.getSaveCFBtn().waitAndClick(3);
+		codingForm.saveCodingForm();
+		baseClass.passedStep("Coding form"+codingform+ "created successfully");
+		
+		//edit CF name
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.editCodingForm(codingform);
+		baseClass.stepInfo("Navigated to edit coding form editor");
+		baseClass.waitForElement(codingForm.getRootClickDownarrow());
+		codingForm.getRootClickDownarrow().waitAndClick(5);
+		codingForm.select_CheckGroup(Spchar,Spchar,Spchar);
+		
+		
+		//Delete CF
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.deleteCodingForm(codingform, codingform);
+
+		// logout
+		loginPage.logout();
+	}
+	
+	@Test(description= "RPMXCON-69032",groups= { "regression" })
+	public void RadioGroupObjectERRORMsg() {
+		baseClass.stepInfo("Test case Id: RPMXCON-69032 :Verify that error message  display and \"Radio Group Object\" inside Coding Form does NOT accept with special characters < > & ‘ ");
+	    String codingformA = "DummyCF"+Utility.dynamicNameAppender();
+	    String SpcharA="&>‘<";
+	    String SpcharB="Test_term";
+	    
+	    //Create coding form as per attachment
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Users loggedIn Successfully");
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+        codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
+		
+		//create CodingForm
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingformA);
+		codingForm.select_RadioGroup(SpcharB,SpcharB,SpcharB);
+		codingForm.getSaveCFBtn().waitAndClick(3);
+		codingForm.saveCodingForm();
+		baseClass.passedStep("Coding form"+codingformA+ "created successfully");
+		
+		//edit CF name
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.editCodingForm(codingformA);
+		baseClass.stepInfo("Navigated to edit coding form editor");
+		baseClass.waitForElement(codingForm.getRootClickDownarrow());
+		codingForm.getRootClickDownarrow().waitAndClick(5);
+		codingForm.select_RadioGroup(SpcharA,SpcharA,SpcharA);
+		
+		
+		//Delete CF
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.deleteCodingForm(codingformA, codingformA);
+
+		// logout
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

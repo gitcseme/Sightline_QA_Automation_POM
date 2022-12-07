@@ -47,7 +47,7 @@ public class CodingForm {
 	}
 
 	public Element getCodingForm_AddToFormButton() {
-		return driver.FindElementById("addFormObjects");
+		return driver.FindElementByXPath("//*[@id='addFormObjects']");
 	}
 
 	public Element getCodingForm_CommentTab() {
@@ -326,6 +326,9 @@ public class CodingForm {
 	public Element getRootClick() {
 		return driver.FindElementByXPath("//li[@id='0']");
 	}
+	public Element getRootClickDownarrow() {
+		return driver.FindElementByXPath("//li[@id='0']//following-sibling::i[2]");
+	}
 
 	public Element getupClick1() {
 		return driver.FindElementByXPath("//li[@id='0']//i[@class='fa fa-lg fa-angle-up pull-right']");
@@ -418,9 +421,16 @@ public class CodingForm {
 	public Element getInstructionText() {
 		return driver.FindElementByXPath("//input[@id='HelpText_1']");
 	}
+	public Element getInstructionText0() {
+		return driver.FindElementByXPath("//input[@id='HelpText_0']");
+	}
+
 
 	public Element getErrorMessage() {
 		return driver.FindElementByXPath("//input[@id='ErrorMessage_1']");
+	}
+	public Element getErrorMessage0() {
+		return driver.FindElementByXPath("//input[@id='ErrorMessage_0']");
 	}
 
 	public Element getRTagLabel() {
@@ -1727,6 +1737,10 @@ public class CodingForm {
 		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
 	}
 	
+	public Element ValidationErrormsg() {
+		return driver.FindElementByXPath("//*[@id='bigBox3']");
+	}
+
 	public Element FromnameErrormsg() {
 		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
 	}
@@ -3817,6 +3831,71 @@ public class CodingForm {
 			}
 		}
 	}
+	
+	public void select_CheckGroup(String checkgrouplabel, String instructionText, String ErrorMsg) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+		else {
+			base.waitForElement(getCF_CheckGrpObject());
+			getCF_CheckGrpObject().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+				}
+	
+			}
+
+	
+	public void select_RadioGroup(String Radiogrouplabel, String instructionText, String ErrorMsg) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(Radiogrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+			else {
+				base.waitForElement(getCF_RadioGrpObject());
+				getCF_RadioGrpObject().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects");
+				base.waitForElement(getCodingForm_AddToFormButton());
+				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
+				base.waitForElement(getStaticText());
+				getStaticText().SendKeys(Radiogrouplabel);
+				base.waitForElement(getInstructionText0());
+				getInstructionText0().SendKeys(instructionText);
+				base.waitForElement(getErrorMessage0());
+				getErrorMessage0().SendKeys(ErrorMsg);
+					}
+		
+				}
 
 	/**
 	 * @author Iyappan.Kasinathan
