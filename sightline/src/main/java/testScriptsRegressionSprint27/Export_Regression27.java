@@ -255,6 +255,7 @@ public class Export_Regression27 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTiffSectionTechIssueWithEnteringText(tagName, Input.tagNameTechnical);
+		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
