@@ -6154,7 +6154,31 @@ public class CodingForm {
 	}
 
 
-
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the buttons functionality present in add/remove CF popup
+	 */
+	public void verifyButtonsFunctionalityInAddCFPopup(String button) {
+		base.waitForElement(getStep1CfPopUp());
+		//verify after clicking cancel button
+		if(button.equalsIgnoreCase("cancel")) {
+			base.waitForElement(getCfPopUpCancel());
+			getCfPopUpCancel().waitAndClick(10);
+		}
+		//verify after clicking 'X' icon
+		else if(button.equalsIgnoreCase("X")) {
+			base.waitForElement(getPopUpCloseBtn());
+			getPopUpCloseBtn().waitAndClick(10);
+			
+		}
+		driver.waitForPageToBeReady();
+		if(getStep1CfPopUp().isDisplayed()) {
+			base.failedStep("coding form popup displayed");
+		}
+		else {
+			base.passedStep("coding form popup removed/cancelled after clicking button-"+button);
+		}	
+	}
 
 }
 
