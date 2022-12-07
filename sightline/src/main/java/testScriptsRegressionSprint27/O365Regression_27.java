@@ -344,6 +344,64 @@ public class O365Regression_27 {
 		login.logout();
 	}
 
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-68762
+	 * @Description:Verify that error message display and application does NOT accepts - when "Folder Group" Name entered with special characters < > & ‘
+	 **/
+	@Test(description = "RPMXCON-68762", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgFolderAndFoldergroup() throws Exception {
+		base.stepInfo("RPMXCON-68762");
+		base.stepInfo("Verify that error message display and application does NOT accepts - when \"Folder Group\" Name entered with special characters < > & ‘");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As : " + Input.pa1userName);
+		
+		String expected = "Special characters are not allowed.";
+		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
+		tags.navigateToTagsAndFolderPage();
+		
+		// folder group
+		String folderGroupName = "Folder&'Group" + Utility.dynamicRandomNumberAppender();
+		tags.navigateToTagsAndFolderPage();
+		driver.Navigate().refresh();
+		base.waitForElement(tags.getFoldersTab());
+		tags.getFoldersTab().waitAndClick(5);
+		base.stepInfo("Folder Tab Clicked");
+		base.waitForElement(tags.getAllFolderRoot());
+		tags.getAllFolderRoot().waitAndClick(5);
+		base.waitForElement(tags.getFolderActionDropDownArrow());
+		tags.getFolderActionDropDownArrow().waitAndClick(5);
+		base.waitForElement(tags.getNewFOlderGroupAction());
+		tags.getNewFOlderGroupAction().waitAndClick(10);
+		base.waitForElement(tags.getNewFolderGroupInputTextBox());
+		tags.getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+		base.waitTime(2);
+		String folderGroupError = tags.getFolderGroupErrorMsg().getText();
+		System.out.println(folderGroupError);
+		softassert.assertEquals(folderGroupError, expected);
+
+
+		// tag group
+		String tagGroupName = "Tag&'Group" + Utility.dynamicRandomNumberAppender();
+		tags.navigateToTagsAndFolderPage();
+		driver.Navigate().refresh();
+		base.waitForElement(tags.getTagsTab());
+		tags.getTagsTab().waitAndClick(5);
+		base.stepInfo("Tag Tab Clicked");
+		base.waitForElement(tags.getAllTagRoot());
+		tags.getAllTagRoot().waitAndClick(5);
+		tags.selectActionArrow("New Tag Group");
+		base.waitForElement(tags.getNewTagGroupInputTextBox());
+		tags.getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+		base.waitTime(2);
+		String tagGrouperror = tags.getTagGroupErrorMsg().getText();
+		System.out.println(tagGrouperror);
+		softassert.assertEquals(tagGrouperror, expected);
+		
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

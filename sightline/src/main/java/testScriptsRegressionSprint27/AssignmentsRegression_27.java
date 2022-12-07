@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.Dashboard;
 import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
@@ -616,7 +617,200 @@ public class AssignmentsRegression_27 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author NA  Testcase No:RPMXCON-67536
+	 * @Description:Verify that user can save/sort single or multiple coding form successfully while "
+				+ "creating new assignment in a user created assignment group with cascade setting OFF for new project
+	 **/
+	@Test(description = "RPMXCON-67536", groups = { "regression" })
+	public void verifySingleMultiCFCasecadeOFF() throws InterruptedException {
+		Dashboard dash = new Dashboard(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		List<String> codeForm = new ArrayList<String>();
+		codeForm.add(Input.codeFormName);
+		
+		String assignMentGRP = "AssignGRP" + Utility.dynamicNameAppender();
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String assignMentGRP1 = "AssignGRP1" + Utility.dynamicNameAppender();
+		String assignName1 = "Assignment1" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("RPMXCON-67536");
+		baseClass.stepInfo("Verify that user can save/sort single or multiple coding form successfully while "
+				+ "creating new assignment in a user created assignment group with cascade setting OFF for new project");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignMentGRP, "No");
+		assignment.selectAssignmentGroup(assignMentGRP);
+		List<String> sorting = assignment.createAssignmentFromAssgnGroupByChangeSortingSequenceOfCF(assignName, Input.codeFormName);
+		String ExpMultSorting = sorting.toString().replace(" (Set as Default)", ""); 
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+        sessionSearch.bulkAssignExisting(assignName);
+        
+        assignment.editAssignmentInAssignGroup(assignMentGRP, assignName);
+        driver.waitForPageToBeReady();
+		assignment.add2ReviewerAndDistribute();		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignName));
+		dash.getSelectAssignmentFromDashborad(assignName).waitAndClick(3);
+		driver.waitForPageToBeReady();	
+		baseClass.waitForElementCollection(docView.listOfCodingFormInDocViewDropDown());
+		String actMultiSorting = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown()).toString();
+		asserts.assertEquals(ExpMultSorting, actMultiSorting);
+		asserts.assertAll();
+		loginPage.logout();
+				
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignMentGRP1, "No");
+		assignment.selectAssignmentGroup(assignMentGRP1);
+		assignment.createAssignmentFromAssgnGroup(assignName1, Input.codeFormName);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+        sessionSearch.bulkAssignExisting(assignName1);
+        
+        assignment.editAssignmentInAssignGroup(assignMentGRP1, assignName1);
+        driver.waitForPageToBeReady();
+		List<String> singleSorting = assignment.editExistingCodingForm(codeForm, Input.codeFormName, true);
+		String ExpSingSorting = singleSorting.toString().replace(" (Set as Default)", ""); 
+		driver.waitForPageToBeReady();
+		assignment.add2ReviewerAndDistribute();		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignName1));
+		dash.getSelectAssignmentFromDashborad(assignName1).waitAndClick(3);
+		driver.waitForPageToBeReady();	
+		baseClass.waitForElementCollection(docView.listOfCodingFormInDocViewDropDown());
+		String actSingSorting = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown()).toString();
+		System.out.println(actSingSorting);
+		System.out.println(ExpSingSorting);
+		asserts.assertEquals(ExpSingSorting, actSingSorting);
+		asserts.assertAll();
+
+		baseClass.passedStep("Verify that user can save/sort single or multiple coding form successfully while"
+				+ " creating new assignment in a user created assignment group with cascade setting OFF for new project");
+		loginPage.logout();
+		
+	}
 	
+	/**
+	 * @author NA  Testcase No:RPMXCON-54441
+	 * @Description:Verify that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.
+	 **/
+	@Test(description = "RPMXCON-54441", groups = { "regression" })
+	public void verifySpclCharErrorMsgNewAssignScr() throws InterruptedException {	
+		String dataSet[] = { "AssignmentNameWith<test", "AssignmentNameWith(test", "AssignmentNameWith)test", "AssignmentNameWith[test", 
+				             "AssignmentNameWith]test", "AssignmentNameWith{test", "AssignmentNameWith}test", "AssignmentNameWith:test",
+				             "AssignmentNameWith'test", "AssignmentNameWith~test", "AssignmentNameWith*test", "AssignmentNameWith?test",
+				             "AssignmentNameWith&test", "AssignmentNameWith$test", "AssignmentNameWith#test", "AssignmentNameWith@test",
+				             "AssignmentNameWith!test", "AssignmentNameWith-test", "AssignmentNameWith_test"}; 
+		
+		baseClass.stepInfo("RPMXCON - 54441");
+		baseClass.stepInfo(
+				"Verify that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+
+		assignment.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		for (String name : dataSet) {
+			assignment.selectAssignmentGroup("Root");
+			assignment.NavigateToNewEditAssignmentPage("New");
+			baseClass.copyandPasteString(name, assignment.getAssignmentName());
+			baseClass.waitForElement(assignment.getAssignmentSaveButton());
+			assignment.getAssignmentSaveButton().waitAndClick(5);
+			assignment.verifyErrorMsginAssignmentName();
+		}
+		baseClass.passedStep(
+				"Verified - that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author NA  Testcase No:RPMXCON-67537
+	 * @Description:Verify that user can save/sort single or multiple coding form successfully while creating new assignment
+	 **/
+	@Test(description = "RPMXCON-67537", groups = { "regression" })
+	public void verifySingleMultiCFCasecadeON() throws InterruptedException {
+		Dashboard dash = new Dashboard(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		List<String> codeForm = new ArrayList<String>();
+		codeForm.add(Input.codeFormName);
+		
+		String assignMentGRP = "AssignGRP" + Utility.dynamicNameAppender();
+		String assignName = "Assignment" + Utility.dynamicNameAppender();
+		String assignMentGRP1 = "AssignGRP1" + Utility.dynamicNameAppender();
+		String assignName1 = "Assignment1" + Utility.dynamicNameAppender();
+		
+		baseClass.stepInfo("RPMXCON-67537");
+		baseClass.stepInfo("Verify that user can save/sort single or multiple coding form successfully while creating new assignment"
+				+ " in a user created assignment group with cascade setting ON for new project");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignMentGRP, "Yes");
+		assignment.selectAssignmentGroup(assignMentGRP);
+		List<String> sorting = assignment.createAssignmentFromAssgnGroupByChangeSortingSequenceOfCF(assignName, Input.codeFormName);
+		String ExpMultSorting = sorting.toString().replace(" (Set as Default)", ""); 
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+        sessionSearch.bulkAssignExisting(assignName);
+        
+        assignment.editAssignmentInAssignGroup(assignMentGRP, assignName);
+		assignment.add2ReviewerAndDistribute();		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignName));
+		dash.getSelectAssignmentFromDashborad(assignName).waitAndClick(3);
+		driver.waitForPageToBeReady();	
+		baseClass.waitForElementCollection(docView.listOfCodingFormInDocViewDropDown());
+		String actMultiSorting = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown()).toString();
+		asserts.assertEquals(ExpMultSorting, actMultiSorting);
+		asserts.assertAll();
+		loginPage.logout();
+				
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignMentGRP1, "Yes");
+		assignment.selectAssignmentGroup(assignMentGRP1);
+		assignment.createAssignmentFromAssgnGroup(assignName1, Input.codeFormName);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+        sessionSearch.bulkAssignExisting(assignName1);
+        
+        assignment.editAssignmentInAssignGroup(assignMentGRP1, assignName1);
+		List<String> singleSorting = assignment.editExistingCodingForm(codeForm, Input.codeFormName, true);
+		String ExpSingSorting = singleSorting.toString().replace(" (Set as Default)", ""); 
+		assignment.add2ReviewerAndDistribute();		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(dash.getSelectAssignmentFromDashborad(assignName1));
+		dash.getSelectAssignmentFromDashborad(assignName1).waitAndClick(3);
+		driver.waitForPageToBeReady();	
+		baseClass.waitForElementCollection(docView.listOfCodingFormInDocViewDropDown());
+		String actSingSorting = baseClass.availableListofElements(docView.listOfCodingFormInDocViewDropDown()).toString();
+		System.out.println(actSingSorting);
+		System.out.println(ExpSingSorting);
+		asserts.assertEquals(ExpSingSorting, actSingSorting);
+		asserts.assertAll();
+
+		baseClass.passedStep("Verified that user can save/sort single or multiple coding form successfully while creating "
+				+ "new assignment in a user created assignment group with cascade setting ON for new project");
+		loginPage.logout();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
