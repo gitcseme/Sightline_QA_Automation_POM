@@ -1194,6 +1194,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
+	
+	public Element getAssignmentsDrawPoolInreviewerPg1(String assignmentName) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody//tr/td[1]/a[contains(text(),'" + assignmentName +"')]/parent::td/following-sibling::td[6]/a[contains(text(),'Draw')]");
+	}
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
 		return driver.FindElementByXPath("//h2[contains(text(),'" + assignmentName + "')]");
