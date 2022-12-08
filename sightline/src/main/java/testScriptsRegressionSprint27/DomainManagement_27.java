@@ -447,6 +447,44 @@ public class DomainManagement_27 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author NA  Testcase No:RPMXCON-52990
+	 * @Description:To verify that Domain Admin user impersonate as Project Admin in different Domain successfully
+	 **/
+	@Test(description = "RPMXCON-52990", groups = { "regression" })
+	public void verifyDAImpersonatePA() throws InterruptedException {
+		ProjectPage project = new ProjectPage(driver);
+		UserManagement user = new UserManagement(driver);
+		
+		String ClientName = "" + Utility.dynamicNameAppender();
+		String shrtType = "" + Utility.randomCharacterAppender(4); 
+		
+		baseClass.stepInfo("RPMXCON-52990");
+		baseClass.stepInfo("To verify that Domain Admin user impersonate as Project Admin in different Domain successfully");
+		loginPage.loginToSightLine(Input.sa1userName,  Input.sa1password);	
+		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		driver.waitForPageToBeReady();
+		project.addNewClient(ClientName, shrtType, "Domain");
+		user.navigateToUsersPAge();
+		user.Assignusertodomain(ClientName, Input.da1FullName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		driver.waitForPageToBeReady();
+		baseClass.selectdomain(ClientName);
+		driver.waitForPageToBeReady();
+		
+		baseClass.impersonateDAtoPA();
+		driver.waitForPageToBeReady();
+		
+		baseClass.verifyCurrentRole(Input.ProjectAdministrator);
+		baseClass.passedStep("To verify that Domain Admin user impersonate as Project Admin in different Domain successfully");
+		loginPage.logout();
+	}
 	
 
 	@AfterMethod(alwaysRun = true)

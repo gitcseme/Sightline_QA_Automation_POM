@@ -1518,34 +1518,7 @@ public class UserManagement {
 		}
 	}
 
-	public void Assignusertodomain(String clientname) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAssignUserButton().Visible();
-			}
-		}), Input.wait30);
-		getAssignUserButton().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectDomainname().Visible();
-			}
-		}), Input.wait30);
-		getSelectDomainname().selectFromDropdown().selectByVisibleText(clientname);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectusertoassignindomain().Visible();
-			}
-		}), Input.wait30);
-		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText("0QADA1 DA1");
-
-		getrightBtndomainuser().waitAndClick(10);
-
-		getsavedomainuser().waitAndClick(10);
-
-	}
-
+	
 	// added by Narendra
 
 	public void lockAccount(String name, String role, String userSate) throws InterruptedException {
@@ -5476,4 +5449,36 @@ public class UserManagement {
 		}
 	}
 
+	/**
+	 * @author sowndarya
+	 * @description: assign the user to domain
+	 * @param clientname, usAssignedUser
+	 */
+	public void Assignusertodomain(String clientname, String usAssignedUser) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignUserButton().Visible();
+			}
+		}), Input.wait30);
+		getAssignUserButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectDomainname().Visible();
+			}
+		}), Input.wait30);
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(clientname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectusertoassignindomain().Visible();
+			}
+		}), Input.wait30);
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(usAssignedUser);
+
+		getrightBtndomainuser().waitAndClick(10);
+
+		getsavedomainuser().waitAndClick(10);
+
+	}
 }

@@ -1694,7 +1694,8 @@ public class ProductionPage {
 	}
 
 	public Element getDefaultSecurityGroup() {
-		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default Security Group']");
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default  Security Group']");
+		//select[@id='SecurityGrpList']//option[text()='Default  Security Group']
 	}
 
 	public Element getSelectDownloadBtn() {
@@ -3024,6 +3025,9 @@ public class ProductionPage {
 	}
 
 	// add by sowndarya
+	public Element getDATOnlyLink() {
+		return driver.FindElementById("txtShareableLinkDATFilesPath");
+	}
 	public Element redactedTextInRedaction() {
 		return driver.FindElementByXPath("//p[text()='REDACTED']");
 	}
@@ -22862,4 +22866,50 @@ public class ProductionPage {
 	        doc.close();
 	        return stripText;
 	    }
+	
+	
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verify download production using sharable link.
+	 */
+	public void verifyDownloadProductionUsingSharableLink_DATFileonly() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getQC_Download().isElementAvailable(10);
+			base.waitForElement(getQC_Download());
+			String name = getProduction().getText().trim();
+			base.waitTillElemetToBeClickable(getQC_Download());
+			getQC_Download().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getSelectSharableLinks().isElementAvailable(10);
+			base.waitForElement(getSelectSharableLinks());
+			getSelectSharableLinks().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getDATOnlyLink().isElementAvailable(10);
+			base.waitForElement(getDATOnlyLink());
+			getDATOnlyLink().ScrollTo();
+			base.waitTime(2);
+			String sharableLink = getDATOnlyLink().GetAttribute("value").trim();
+			String password = getShareLinkPassword().getText().trim();
+			String parentWindow = driver.getWebDriver().getWindowHandle();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+			driver.getWebDriver().switchTo().window(tabs.get(1));
+			driver.waitForPageToBeReady();
+			driver.getWebDriver().get(sharableLink);
+			base.waitTime(2);
+			getEnterPasswordTextField().isElementAvailable(10);
+			base.waitForElement(getEnterPasswordTextField());
+			getEnterPasswordTextField().SendKeys(password);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDownloadButton());
+			getDownloadButton().waitAndClick(10);
+			base.waitTime(3);
+			String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+			isFileDownloaded(downloadsHome, name);
+			driver.close();
+			driver.getWebDriver().switchTo().window(parentWindow);
+	
+	}
 }
