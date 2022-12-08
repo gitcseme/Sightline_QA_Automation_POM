@@ -283,6 +283,29 @@ public class ManageKeywords_Regression2 {
 		
 		
 	}
+	@Test(description = "RPMXCON-69061", enabled = true, groups = { "regression" })
+	public void verifykeywordHighlightGroupDetailsWIthSplChars() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-69061");
+		baseClass.stepInfo("Verify that error message should be display and application accepts - when user add & Edits keyword Highlight group details with special characters < > & ‘");
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		String CreateKeyWordName = "keywordName"+ Utility.dynamicNameAppender();
+		String CreateKeyWordValue = "keywordName"+ Utility.dynamicNameAppender();
+		String keyWordName = "KeywordName" + Utility.dynamicNameAppender()+"<>&‘";
+		String keywordValue = "KeywordValue"+ Utility.dynamicNameAppender()+"<>&‘";
+
+		// Navigate to Keyword Page and verify error message when user add keyword Highlight group details with special characters < > & ‘ 
+		keyWord.navigateToKeywordPage();
+		keyWord.verifyErrorMessageforkeywordHighlightGroupDetailsWithSplChars(keyWordName,keywordValue);	
+		
+		// Navigate to Keyword Page and verify error message when user Edit keyword Highlight group details with special characters < > & ‘ 
+		keyWord.navigateToKeywordPage();
+		keyWord.AddKeyword(CreateKeyWordName, CreateKeyWordValue);
+		keyWord.VerifyErrorMessageForeditExistigKeywordWithSplCharcters(CreateKeyWordName,keyWordName);
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
