@@ -3563,7 +3563,21 @@ public class ProductionPage {
 	public ElementCollection getProductionSets() {
 		return driver.FindElementsByXPath("//select[@id='ProductionSets']/option[@isproduction='1']");
 	}
-
+	public Element getDraftState(String PName) {
+		return driver.FindElementByXPath("//a[text()='"+PName+"']/..//strong[text()='DRAFT']");
+	}
+	public Element getTiffContainer(String ComponentOption) {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//label/span//b[text()='"+ComponentOption+"']");
+	}
+	public Element getBasicInfoLabel() {
+		return driver.FindElementByXPath("//*[contains(text(),'Basic Info and Select Template')]");
+	}
+	public Element getToggleOptionText() {
+		return driver.FindElementByXPath("//*[@name='IsExportProduction']/..//preceding-sibling::label");
+	}
+	public Element getDropdownoptionText() {
+		return driver.FindElementByXPath("//select[@id='ProductionSetLst']/..//span[text()='Select Production']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
