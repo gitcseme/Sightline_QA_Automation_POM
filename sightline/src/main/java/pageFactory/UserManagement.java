@@ -1196,6 +1196,12 @@ public class UserManagement {
 	public ElementCollection getSelectingProjectDropDown() {
 		return driver.FindElementsByXPath("//*[@id='ddlBulkUserProjects']/option/following-sibling::option");
 	}
+	 public ElementCollection getUserDropdown() {
+	        return driver.FindElementsByXPath("//select[@id='ddlDomainAdminCreateUserRoles']//option");
+	    }
+	 public Element getDomainName(String Domain) {
+	        return driver.FindElementByXPath("//label[contains(text(),'"+Domain+"')]");
+	    }
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
