@@ -356,6 +356,82 @@ public class CodingForm_Regression27 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 09/12/2022 TestCase Id:RPMXCON-65463 
+	 * Description:Verify that we have a note present with instructional text in 
+	 * "Add/remove coding form in this security group" pop-up page (UI).
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-65463", enabled = true, groups = { "regression" })
+	public void verifyInstructionalTextInPopup() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-65463");
+		baseClass.stepInfo("Verify instructional text present in add/remove cf popup");
+		String expectedNote = "You can configure up to 15 coding forms for a security group.";
+		
+		// Login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Navigate to manage-coding form");
+		codingForm.navigateToCodingFormPage();
+		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page",
+				"not in manage CF page");
+		baseClass.stepInfo("verify button present in manage coding form page");
+		codingForm.verifyButtonPresentInManageCFPage();
+		baseClass.stepInfo("click on set coding form button and validate popup");
+		codingForm.verifyAddOrRemoveCFpopup();
+		baseClass.stepInfo("verify note present in popup");
+		if(codingForm.getCodingFormNote().isElementAvailable(10)) {
+			baseClass.passedStep("Instructional note present in the add/remove coding form popup");
+			String actual = codingForm.getCodingFormNote().getText();
+			baseClass.stepInfo("Note present in popup-"+actual);
+			baseClass.compareTextViaContains(actual, expectedNote, "Expected info present in the instruction note", 
+					"expected note not present in the instruction");
+		}
+		else {
+			baseClass.failedStep("Instruction note not present in the add/remove coding form popup");
+		}
+		//closing the popup and log out
+		baseClass.waitForElement(codingForm.getCfPopUpCancel());
+		codingForm.getCfPopUpCancel().waitAndClick(10);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 09/12/2022 TestCase Id:RPMXCON-64671 
+	 * Description:To check that "Add/remove coding form in this security group" coding form pop-up 
+	 * should have two column table "CODING FORM NAME" and "SET AS DEFAULT (REQUIRED)" with 
+	 * check box and radio button(UI).
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-64671", enabled = true, groups = { "regression" })
+	public void verifyColumnTableInPopup() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-64671");
+		baseClass.stepInfo("Verify elements and column present in add/remove CF popup table");
+		
+		// Login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Navigate to manage-coding form");
+		codingForm.navigateToCodingFormPage();
+		baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "navigated to manage CF page",
+				"not in manage CF page");
+		baseClass.stepInfo("verify button present in manage coding form page");
+		codingForm.verifyButtonPresentInManageCFPage();
+		baseClass.stepInfo("click on set coding form button and validate popup");
+		codingForm.verifyAddOrRemoveCFpopup();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify column table present with checkbox and radio button");
+		codingForm.verifyElementsPresentInAddCFPopup();
+		//closing the popup and log out
+		baseClass.waitForElement(codingForm.getCfPopUpCancel());
+		codingForm.getCfPopUpCancel().waitAndClick(10);
+		loginPage.logout();
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
