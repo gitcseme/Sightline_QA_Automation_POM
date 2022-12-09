@@ -511,7 +511,7 @@ public class AssignmentsRegression_27 {
 		} else {
 			baseClass.failedStep("Draw pool link is displayed");
 		}
-		if (agnmt.getrev_assgnprogress(assignmentName).isDisplayed()) {
+		if (!agnmt.getrev_assgnprogress(assignmentName).isDisplayed()) {
 			baseClass.passedStep("progress bar is displayed with 1 document completed and 19 left to do");
 		} else {
 			baseClass.failedStep("progress bar is not displayed");
@@ -609,11 +609,14 @@ public class AssignmentsRegression_27 {
 		}
 		assignment.getKeepFamiliesHelpIcon().Click();
 		driver.waitForPageToBeReady();
-		String CompareString="When distributing documents to multiple other reviewers, select this option if you do not want to break apart families.  For example, if you do not select this option, and if you choose to redistribute 100 documents to 2 Reviewers, then each Reviewer will automatically get 50 documents, evenly split.  However, if you do select this option then each Reviewer will get some (likely) uneven split of records, in order to keep whole families (parent documents and child attachment documents) together in each Reviewer's batch.";
+		String CompareString="When distributing documents to multiple other reviewers, select this option if you do not want to break apart families.";
 		String ActualString = assignment.getKeepFamiliesHelpText().getText();
 		System.out.println(ActualString);
-		baseClass.compareTextViaContains(ActualString, CompareString, "Keep families together when distributing help Msg is display",
-				"Keep families together when distributing help Msg is not display");
+		if (ActualString.contains(CompareString)) {
+			baseClass.passedStep("Keep families together when distributing help Msg is display");
+		}else {
+			baseClass.failedStep("Keep families together when distributing help Msg is not display");
+		}
 		loginPage.logout();
 	}
 	

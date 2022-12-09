@@ -232,10 +232,13 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitUntilFileDownload();
+		baseClass.waitTime(5);
 		String CompareString = "mp3";
 		String fileName = baseClass.GetFileName();
 		System.out.println(fileName);
@@ -260,9 +263,11 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(fileName);
@@ -285,9 +290,11 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitUntilFileDownload();
 		baseClass.stepInfo(fileName);
 		driver.waitForPageToBeReady();
@@ -310,9 +317,11 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(fileName);
@@ -335,10 +344,12 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
 		baseClass.waitUntilFileDownload();
+		baseClass.waitTime(5);
 		baseClass.stepInfo(fileName);
 		driver.waitForPageToBeReady();
 		if (fileName.contains(CompareString)) {
@@ -360,6 +371,7 @@ public class DocViewAudio_Regression27 {
 		baseClass.waitForElement(docList.getAudioDownloadIcon());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioDownloadIcon());
 		docList.getAudioDownloadIcon().Click();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docList.getAudioOptionToDownload());
 		baseClass.waitTillElemetToBeClickable(docList.getAudioOptionToDownload());
 		docList.getAudioOptionToDownload().Click();
