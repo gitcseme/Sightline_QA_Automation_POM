@@ -667,7 +667,7 @@ public class O365Regression_27 {
 		// btn is displayed within the screen & clickable
 		driver.waitForPageToBeReady();
 		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
-		
+
 		// decreasing to 90%
 		assignmentspage.BrowserResolutionMin(2);
 		base.stepInfo("Zoom out : 90%");
@@ -805,6 +805,73 @@ public class O365Regression_27 {
 		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
 
 		// logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha R
+	 * @throws Exception
+	 * @Description : Verify 'Cancel Collection' action when Collection is in
+	 *              'Copying to datasets' status [RPMXCON-61120]
+	 */
+	@Test(description = "RPMXCON-61120", enabled = true, groups = { "regression" })
+	public void verifyCancelCollectionInCopyingDataset() throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusH, "Error Status",
+				Input.progressBarHeader, Input.actionColumnName };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusListBeforeCancel = { Input.copyDSstatus };
+		String[] statusList = { "Cancel in progress", "Draft" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("Test case Id: RPMXCON-61120 - O365");
+		base.stepInfo("Verify 'Cancel Collection' action when Collection is in 'Copying to datasets' status");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		//Create new collection With filter in Draft State
+		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Start Draft Collection from collection page
+		collection.collectionAction(collectionName, "Start Collection", false, "", false, "");
+
+		// Verify Collection All the Status including copying to dataset status & verify progress bar
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 30,
+				true, true, "", "");
+
+		base.stepInfo("Verify  status  : " + Input.copyDSstatus);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListBeforeCancel, 30);
+		driver.waitForPageToBeReady();
+
+		// Cancel collection when statsu is in copy to dataset status
+		collection.collectionAction(collectionName, "Cancel Collection", true, "Yes", false, "");
+		base.VerifySuccessMessage(Input.cancelCollectionNotification);
+
+		// verify it is rolled back to Draft State
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 30);
+
+		// Progress status check
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+		String collProgressStats = collection
+				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
+				.getText();
+		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
+				"Progress Bar value remains the same");
+
+		// Logout
 		login.logout();
 	}
 
