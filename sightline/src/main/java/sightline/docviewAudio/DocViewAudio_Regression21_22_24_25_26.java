@@ -31,16 +31,18 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ProjectPage;
 import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TallyPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocViewAudio_Regression21_22_24_25 {
+public class DocViewAudio_Regression21_22_24_25_26 {
 	
 	Driver driver;
 	LoginPage loginPage;
@@ -96,6 +98,88 @@ public class DocViewAudio_Regression21_22_24_25 {
 				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
 		return users;
 	}
+	/**
+	 * Author : Mohan date: 11/15/22 Modified date: NA Modified by: NA
+	 * Description:Verify navigating to the audio document should bring up the
+	 * document in 4 sec and ready for the user to act up on when navigating from
+	 * Tally/Sub Tally report
+	 */
+	@Test(description = "RPMXCON-51528", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentNavigationToDocViewIn4Secs() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51528");
+		baseClass.stepInfo(
+				"Verify navigating to the audio document should bring up the document in 4 sec and ready for the user to act up on when navigating from Tally/Sub Tally report");
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.pa1userName + "'");
+
+		// search for audio docs
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.tallyResults();
+
+		// select tally field and clickon apply button
+		TallyPage tallyPage = new TallyPage(driver);
+		tallyPage.selectTallyByMetaDataField(Input.dataSourceHeader);
+		tallyPage.selectBarChartAndNavigateTo("View in DocView");
+
+		// verify the latency of application
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage.loadingCountVerify(4, docViewPage.getDocView_CurrentDocId());
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 11/15/22 Modified date: NA Modified by: NA
+	 * Description:Verify that when mini doc list is configured then should display
+	 * search term on persistent hits panel
+	 */
+	@Test(description = "RPMXCON-51852", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyMiniDocListConfiguredDisplaysSearchTermPersistentHitPanel(String username, String password,
+			String role) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51852");
+		baseClass.stepInfo(
+				"Verify that when mini doc list is configured then should display search term on persistent hits panel");
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		String searchName1 = "AudioSearch" + Utility.dynamicNameAppender();
+
+		// create new search group
+		SavedSearch saveSearch = new SavedSearch(driver);
+		saveSearch.NavigateToSavedSearch();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, role, "No");
+
+		// save audio search under created node
+		SessionSearch session = new SessionSearch(driver);
+		session.audioSearch(Input.audioSearchString1, Input.language);
+		session.saveSearchInNewNode(searchName1, newNode);
+
+		baseClass.waitForElement(session.getNewSearchButton());
+		session.getNewSearchButton().waitAndClick(5);
+
+		// Saving additional search under child node
+		session.advancedContentBGSearch(Input.searchString1,1,false);
+		session.saveSearchInNodewithChildNode(searchName1, newNode);
+
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
+		saveSearch.docViewFromSS("View in DocView");
+		
+		MiniDocListPage miniDocListPage = new MiniDocListPage(driver);
+		miniDocListPage.fromSavedSearchToSelectWebField();
+		
+		loginPage.logout();
+		
+
+	}
+	
+
 	
 	/**
 	 * @author Vijaya.Rani ModifyDate:03/11/2022 RPMXCON-51251
