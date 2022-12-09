@@ -161,6 +161,200 @@ public class CodingForm_Regression27 {
 		baseClass.passedStep("'Set Security Group Coding form' button is present and enabled");
 		loginPage.logout();
 	}
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64674
+	 * @throws Exception
+	 * @Description To check that when user clicks on "Back" button from "Sort
+	 *              Coding Form Order" Popup it should revert back to "Add/remove
+	 *              coding form in this security group" Popup.
+	 */
+	@Test(description = "RPMXCON-64674", enabled = true, groups = { "regression" })
+	public void verifyClickBackBtnSortCodingFromOrderItRevertBack() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64674");
+		base.stepInfo(
+				"To check that when user clicks on \"Back\" button from \"Sort Coding Form Order\" Popup it should revert back to \"Add/remove coding form in this security group\" Popup..");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify button present in manage coding form page");
+		cf.verifyButtonPresentInManageCFPage();
+		base.stepInfo(
+				"Set Security Group Coding form button is present in Manage Coding Form page just before to Show/Hide column and its enable as expected");
+		cf.verifyAddOrRemoveCFpopup();
+		if (cf.checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+			cf.getDefaultCodingFormInputBox().waitAndClick(5);
+		}
+		if (cf.checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+			cf.getDefaultCodingFormRadioBtn().waitAndClick(5);
+		}
+		base.stepInfo("Select Default coding form as expected");
+		base.waitForElement(cf.sortOrderNxtBtn());
+		cf.sortOrderNxtBtn().waitAndClick(5);
+		base.waitForElement(cf.getCodingFormOrder());
+		boolean SortCodingFormOrder = cf.getCodingFormOrder().isElementAvailable(2);
+		base.passedStep("Sort Coding Form Order page is displayed successfully");
+		soft.assertTrue(SortCodingFormOrder);
+		base.waitForElement(cf.getCodingForm_BackButton());
+		cf.getCodingForm_BackButton().waitAndClick(5);
+		base.stepInfo("Cf back button is clicked");
+		driver.waitForPageToBeReady();
+		base.waitForElement(cf.getStep1CfPopUp());
+		boolean AddRemovePopUp = cf.getStep1CfPopUp().isElementAvailable(2);
+		base.passedStep(
+				"After Clicked back btn Revert back to \"Add/remove coding form in this security group\" Popup page is displayed successfully");
+		soft.assertTrue(AddRemovePopUp);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-65616
+	 * @throws Exception
+	 * @Description Verify that proper success message is displayed when user clicks
+	 *              on "Save" button from "Step 02 : Sort Coding Form Order" page
+	 *              present under "Manage Coding Forms".
+	 */
+	@Test(description = "RPMXCON-65616", enabled = true, groups = { "regression" })
+	public void verifySuccessMsgIsDisplayedClickSaveBtnOnCf() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-65616");
+		base.stepInfo(
+				"Verify that proper success message is displayed when user clicks on \"Save\" button from \"Step 02 : Sort Coding Form Order\" page present under \"Manage Coding Forms\".");
+		CodingForm cf = new CodingForm(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify button present in manage coding form page");
+		cf.verifyButtonPresentInManageCFPage();
+		base.stepInfo(
+				"Set Security Group Coding form button is present in Manage Coding Form page just before to Show/Hide column and its enable as expected");
+		driver.waitForPageToBeReady();
+		cf.verifyAddOrRemoveCFpopup();
+		if (cf.checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+			cf.getDefaultCodingFormInputBox().waitAndClick(5);
+		}
+		if (cf.checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+			cf.getDefaultCodingFormRadioBtn().waitAndClick(5);
+		}
+		base.stepInfo("Select Default coding form as expected");
+		base.waitForElement(cf.sortOrderNxtBtn());
+		cf.sortOrderNxtBtn().waitAndClick(5);
+		base.stepInfo("Click on next button");
+		cf.verifySelectedCodingFormSaved();
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64676
+	 * @throws Exception
+	 * @Description To check that when user clicks on "X" icon from the "Sort Coding
+	 *              Form Order" pop-up the PopUp should get removed.
+	 */
+	@Test(description = "RPMXCON-64676", enabled = true, groups = { "regression" })
+	public void verifyClicksXIconCfOrderPopUpRemoved() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64676");
+		base.stepInfo(
+				"To check that when user clicks on \"X\" icon from the \"Sort Coding Form Order\" pop-up the PopUp should get removed.");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+		String Cfname = cf.getCodingForm_Name(1).getText();
+		System.out.println(Cfname);
+		String SgCf = cf.getCodingFormSecurityGroupFormColumnValue(Cfname).getText();
+		System.out.println(SgCf);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify button present in manage coding form page");
+		cf.verifyButtonPresentInManageCFPage();
+		baseClass.stepInfo("click on set coding form button and validate popup");
+		cf.verifyAddOrRemoveCFpopup();
+		base.stepInfo(
+				"Set Security Group Coding form button is present in Manage Coding Form page just before to Show/Hide column and its enable as expected");
+		cf.verifyAddSelectedCodingFormOnDefault(Cfname);
+		base.waitForElement(cf.sortOrderNxtBtn());
+		cf.sortOrderNxtBtn().waitAndClick(5);
+		if (cf.getCodingFormOrderXIcon().isElementAvailable(5)) {
+			cf.getCodingFormOrderXIcon().waitAndClick(5);
+			base.passedStep("Coding Form order X icon is present and Clicked as expected");
+
+		} else {
+			base.failedStep("Coding Form order X icon is not present");
+
+		}
+		base.passedStep("After Clicked X icon Popup page is Removed successfully");
+		driver.waitForPageToBeReady();
+		String Cfname1 = cf.getCodingForm_Name(1).getText();
+		System.out.println(Cfname1);
+		soft.assertEquals(Cfname, Cfname1);
+		String SgCf1 = cf.getCodingFormSecurityGroupFormColumnValue(Cfname1).getText();
+		System.out.println(SgCf1);
+		soft.assertEquals(SgCf, SgCf1);
+		base.stepInfo("Both the codingforms are same "+SgCf+":"+SgCf1);
+		base.passedStep("No changes are done in SecurityGroup Form column in Manage CodingFormpage As expected");
+		soft.assertAll();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author  Date:NA ModifyDate:NA RPMXCON-64676
+	 * @throws Exception
+	 * @Description To check that when user clicks on "Save" button from "Sort
+	 *              Coding Form Order" PopUp after selecting the required fields it
+	 *              should get reflect to "Security Group Form" column in "Manage
+	 *              Coding Form" page.
+	 */
+	@Test(description = "RPMXCON-64675", enabled = true, groups = { "regression" })
+	public void verifyClicksSaveBtnCfOrderSelectingFieldGetReflect() throws Exception {
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id: RPMXCON-64675");
+		base.stepInfo(
+				"To check that when user clicks on \"Save\" button from \"Sort Coding Form Order\" PopUp after selecting the required fields it should get reflect to \"Security Group Form\" column in \"Manage Coding Form\" page.");
+		CodingForm cf = new CodingForm(driver);
+		SoftAssert soft = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		cf.navigateToCodingFormPage();
+		driver.waitForPageToBeReady();
+		String Cfname = cf.getCodingForm_Name(1).getText();
+		baseClass.stepInfo("verify button present in manage coding form page");
+		cf.verifyButtonPresentInManageCFPage();
+		baseClass.stepInfo("click on set coding form button and validate popup");
+		cf.verifyAddOrRemoveCFpopup();
+		base.stepInfo(
+				"Set Security Group Coding form button is present in Manage Coding Form page just before to Show/Hide column and its enable as expected");
+		cf.verifyAddSelectedCodingFormOnDefault(Cfname);
+		base.waitForElement(cf.sortOrderNxtBtn());
+		cf.sortOrderNxtBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		cf.verifySelectedCodingFormSaved();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		String Cfname1 = cf.getCodingForm_Name(1).getText();
+		System.out.println(Cfname1);
+		soft.assertEquals(Cfname, Cfname1);
+		String SgCf1 = cf.getCodingFormSecurityGroupFormColumnValue(Cfname1).getText();
+		System.out.println(SgCf1);
+		soft.assertEquals(SgCf1, "YES (Default)");
+		base.passedStep("No changes are done in SecurityGroup Form column in Manage CodingFormpage As expected");
+		soft.assertAll();
+		cf.selectDefaultProjectCodingForm();
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -1744,6 +1744,35 @@ public class CodingForm {
 	public Element FromnameErrormsg() {
 		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
 	}
+	public Element getCodingForm_BackButton() {
+        return driver.FindElementById("btnCodingFormBack");
+    }
+    public Element checkCodingFormIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']");
+    }
+    public Element checkCodingFormRadioBtnIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']/../../following-sibling::td//input");
+    }
+    public Element getCodingForm_Name(int i) {
+        return driver.FindElementByXPath("(//table[@id='CodingFormDataTable']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgName(int i) {
+        return driver.FindElementByXPath("(//table[@id='dtCodingFormList']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgNameCheckBox(String name) {
+        return driver.FindElementByXPath(
+                "//table[@id='dtCodingFormList']//input[@value='" + name + "']/following-sibling::i");
+    }
+
+    public Element getCodingFormOrder() {
+        return driver.FindElementByXPath("//*[@id='ui-id-1']");
+    }
+
+ 
+
+    public Element getCodingFormOrderXIcon() {
+        return driver.FindElementByXPath("//button[@type='button'][@class='ui-dialog-titlebar-close']");
+    }
 
 	public void CFnameErrormsg(String errormsg)throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -6257,6 +6286,43 @@ public class CodingForm {
 		else {
 			base.passedStep("coding form popup removed/cancelled after clicking button-"+button);
 		}	
+	}
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the Selected coding form is saved in
+	 *               popup
+	 */
+	public void verifySelectedCodingFormSaved() {
+		driver.waitForPageToBeReady();
+		if (btnCodingFormSave().isElementAvailable(5)) {
+			btnCodingFormSave().waitAndClick(5);
+			base.VerifySuccessMessage("Configured coding forms saved successfully");
+
+		} else {
+			base.failedStep("Codingform is not saved");
+
+		}
+
+	}
+
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will Selected the coding form in popup
+	 */
+	public void verifyAddSelectedCodingFormOnDefault(String Cfname) {
+		driver.waitForPageToBeReady();
+		if (checkCodingFormIsSelected(Cfname).GetAttribute("checked") == null) {
+			getCodingForm_SgNameCheckBox(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group ");
+		}
+		if (checkCodingFormRadioBtnIsSelected(Cfname).GetAttribute("checked") == null) {
+			getSelectCodeFormRadioBtn(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group  default");
+		} else {
+			base.failedStep("Codingform popup is not opened to select");
+
+		}
+
 	}
 
 }
