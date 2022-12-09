@@ -1931,97 +1931,68 @@ public class ProjectPage {
 
 	}
 
-	/**
-	 * @author Brundha.T
-	 * @param projectname
-	 * @param hcode       Description: method to create new non-doman project
-	 */
-	public void CreateNewNonDomainProject(String projectname, String hcode) {
-		bc.waitForElement(getAddProjectBtn());
-		getAddProjectBtn().Click();
-		bc.waitForElement(getProjectName());
-		getProjectName().SendKeys(projectname);
-		bc.waitForElement(getSelectEntity());
-		getSelectEntity().selectFromDropdown().selectByIndex(1);
-		getHCode().SendKeys(hcode);
-		driver.scrollingToBottomofAPage();
-		bc.waitForElement(getProjectDBServerDropdown());
-		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
-		bc.waitForElement(getProjServerPathinCreateProjPg());
-		getProjServerPathinCreateProjPg().waitAndClick(10);
-		bc.waitForElement(getIngestionserverpath());
-		getIngestionserverpath().waitAndClick(10);
+	 /**
+     * @author Brundha.T
+     * @param projectname
+     * @param hcode
+     * Description: method to create new non-doman project
+     */
+    public void CreateNewNonDomainProject(String projectname, String hcode) {
+        bc.waitForElement(getAddProjectBtn());
+        getAddProjectBtn().Click();
+        bc.waitForElement(getProjectName());
+        getProjectName().SendKeys(projectname);
+        bc.waitForElement(getSelectEntity());
+        getSelectEntity().selectFromDropdown().selectByIndex(1);
+        getHCode().SendKeys(hcode);
+        driver.scrollingToBottomofAPage();
+        bc.waitForElement(getProjectDBServerDropdown());
+        getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+        bc.waitForElement(getProjServerPathinCreateProjPg());
+        getProjServerPathinCreateProjPg().waitAndClick(10);
+        bc.waitForElement(getIngestionserverpath());
+        getIngestionserverpath().waitAndClick(10);
 
-		bc.waitForElement(getProductionserverpath());
-		getProductionserverpath().waitAndClick(10);
+        bc.waitForElement(getProductionserverpath());
+        getProductionserverpath().waitAndClick(10);
 
-		getProjectFolder().Clear();
-		getProjectFolder().SendKeys("Automation");
-		getIngestionFolder().Clear();
-		getIngestionFolder().SendKeys("Automation");
-		getProductionFolder().Clear();
-		getProductionFolder().SendKeys("Automation");
-		driver.scrollPageToTop();
-		bc.waitForElement(getAddProject_SettingsTab());
-		getAddProject_SettingsTab().waitAndClick(10);
+        getProjectFolder().Clear();
+        getProjectFolder().SendKeys("Automation");
+        getIngestionFolder().Clear();
+        getIngestionFolder().SendKeys("Automation");
+        getProductionFolder().Clear();
+        getProductionFolder().SendKeys("Automation");
+        driver.scrollPageToTop();
+        bc.waitForElement(getAddProject_SettingsTab());
+        getAddProject_SettingsTab().waitAndClick(10);
 
-		bc.waitForElement(getNoOfDocuments());
-		getNoOfDocuments().waitAndClick(10);
-		getNoOfDocuments().SendKeys("20000");
+        bc.waitForElement(getNoOfDocuments());
+        getNoOfDocuments().waitAndClick(10);
+        getNoOfDocuments().SendKeys("20000");
 
-		final BaseClass bc = new BaseClass(driver);
-		final int Bgcount = bc.initialBgCount();
-		System.out.println(Bgcount);
+        final BaseClass bc = new BaseClass(driver);
+        final int Bgcount = bc.initialBgCount();
+        System.out.println(Bgcount);
 
+        driver.scrollingToBottomofAPage();
+        bc.waitForElement(getButtonSaveProject());
+        getButtonSaveProject().waitAndClick(10);
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return bc.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait120 + Input.wait60);
-			System.out.println(bc.initialBgCount());
-			UtilityLog.info(bc.initialBgCount());
-			bc.checkNotificationCount(Bgcount,1);
-		}
+        bc.waitTime(2);
+        bc.VerifySuccessMessage(
+                "Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return bc.initialBgCount() == Bgcount + 1;
+            }
+        }), Input.wait120 + Input.wait60);
+        System.out.println(bc.initialBgCount());
+        UtilityLog.info(bc.initialBgCount());
+        bc.checkNotificationCount(Bgcount,1);
+    }
 		
-		/**
-		 * @author Brundha.T
-		 * @param ElementName
-		 * Description:method to verify slash in the foldername
-		 * @return
-		 */
-		public String verifyingFolderName(Element ElementName) {
-			
-			String Foldername = ElementName.GetAttribute("value");
-			System.out.println(Foldername);
-			String Slash="\\";
-					
-			if (!Foldername.contains(Slash)) {
-				bc.failedStep("" + Foldername + " is with slash");
-			} else {
-				bc.passedStep("" + Foldername + " is not with slash");
-
-		driver.scrollingToBottomofAPage();
-		bc.waitForElement(getButtonSaveProject());
-		getButtonSaveProject().waitAndClick(10);
-
-		bc.waitTime(2);
-		bc.VerifySuccessMessage(
-				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return bc.initialBgCount() == Bgcount + 1;
-
-			}
-		}), Input.wait120 + Input.wait60);
-		System.out.println(bc.initialBgCount());
-		UtilityLog.info(bc.initialBgCount());
-		bc.checkNotificationCount(Bgcount, 1);
-		SavedSearch saveSearch = new SavedSearch(driver);
-		saveSearch.verifyExecuteAndReleaseNotify(Bgcount, 1);
-	}
-
+	
 	/**
 	 * @author Brundha.T
 	 * @param ElementName Description:method to verify slash in the foldername
