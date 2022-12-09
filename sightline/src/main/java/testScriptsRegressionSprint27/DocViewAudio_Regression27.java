@@ -534,7 +534,7 @@ public class DocViewAudio_Regression27 {
 		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
 		String defaultSpeed = docViewPage.getAudioSilderValue().getText();
 		System.out.println(defaultSpeed);
-		WebElement slider = driver.FindElementByXPath("//div[@class='slider-handle round']").getWebElement();
+		WebElement slider = docViewPage.getAudioSilderPoint().getWebElement();
 		action.dragAndDropBy(slider, 200, 250).perform();
 		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
 		String modifySpeed = docViewPage.getAudioSilderValue().getText();
