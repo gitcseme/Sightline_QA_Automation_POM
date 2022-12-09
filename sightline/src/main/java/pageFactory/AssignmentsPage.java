@@ -5055,9 +5055,9 @@ public class AssignmentsPage {
 	 *              80%
 	 * @throws AWTException
 	 */
-	public void BrowserResolutionMin() throws AWTException {
+	public void BrowserResolutionMin(int count) throws AWTException {
 		Robot robot = new Robot();
-		for (int i = 0; i <= 1; i++) {
+		for (int i = 0; i <= count; i++) {
 			robot.keyPress(KeyEvent.VK_CONTROL);
 			robot.keyPress(KeyEvent.VK_SUBTRACT);
 			robot.keyRelease(KeyEvent.VK_SUBTRACT);
@@ -5072,9 +5072,9 @@ public class AssignmentsPage {
 	 * @throws AWTException
 	 */
 
-	public void BrowserResolutionMax() throws AWTException {
+	public void BrowserResolutionMax(int count) throws AWTException {
 		Robot robot = new Robot();
-		for (int k = 0; k <= 1; k++) {
+		for (int k = 0; k <= count; k++) {
 			robot.keyPress(KeyEvent.VK_CONTROL);
 			robot.keyPress(KeyEvent.VK_ADD);
 			robot.keyRelease(KeyEvent.VK_ADD);
@@ -5100,7 +5100,7 @@ public class AssignmentsPage {
 		bc.waitForElement(configureButton());
 		configureButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		BrowserResolutionMin();
+		BrowserResolutionMin(1);
 		driver.waitForPageToBeReady();
 		Thread.sleep(10000);
 		Thread.sleep(10000);
@@ -5131,7 +5131,7 @@ public class AssignmentsPage {
 			bc.failedStep("Formatting ToolBar is not displayed");
 			softAssertion.assertFalse(false);
 		}
-		BrowserResolutionMax();
+		BrowserResolutionMax(1);
 		instructionOkButton().waitAndClick(5);
 		driver.scrollPageToTop();
 		assertion.assertAll();
