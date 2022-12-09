@@ -3650,6 +3650,13 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='l_it_0']/span");
 	}
 
+	public Element getAudioSilderValue() {
+		return driver.FindElementByXPath("//div[@class='tooltip top in']//div[@class='tooltip-inner']");
+	}
+	
+	public Element getAudioSilderPoint() {
+		return driver.FindElementByXPath("//div[@class='slider-handle round']");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
