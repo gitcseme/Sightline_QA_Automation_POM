@@ -2467,6 +2467,7 @@ public class TallyPage {
 		}
 		System.out.println(ApplyFilterMetaData + " filter tally by");
 		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).ScrollTo();
 		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
 		ApplyFilterTallyBy().waitAndClick(10);
 		base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));

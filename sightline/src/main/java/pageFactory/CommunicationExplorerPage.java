@@ -529,24 +529,18 @@ public class CommunicationExplorerPage {
 	public void generateReportusingDefaultSG() throws InterruptedException {
 		base.waitForElement(getReports_CommunicationsExplorer());
 		getReports_CommunicationsExplorer().waitAndClick(15);
+		
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().waitAndClick(25);
 		driver.waitForPageToBeReady();
-		try {
-			base.waitForElement(getTally_SecurityGroupsButton());
-			Actions action = new Actions(driver.getWebDriver());
-			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
-		} catch (Exception e) {
-			base.waitForElement(getTally_SecurityGroupsButton());
-			base.waitTillElemetToBeClickable(getTally_SecurityGroupsButton());
-			Actions action = new Actions(driver.getWebDriver());
-			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
-			getTally_SecurityGroupsButton().waitAndClick(30);
-		}
+		base.waitForElement(getTally_SecurityGroupsButton());
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
 		base.waitForElement(getTally_SelectSecurityGroup());
 		getTally_SelectSecurityGroup().waitAndClick(10);
 		base.waitForElement(getTally_SaveSelections());
 		getTally_SaveSelections().waitAndClick(15);
+		
 		base.waitForElement(getCommunicationExplorer_ApplyBtn());
 		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();

@@ -198,11 +198,11 @@ public class Reports_Regression27 {
 
 		tally.selectTallyByMetaDataField(Input.metaDataName);
 		driver.waitForPageToBeReady();
-		float beforeCustName = System.currentTimeMillis();
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.metaDataName));
 		tally.metaDataFilterForTallyBy(Input.metaDataName).waitAndClick(10);
+		float beforeCustName = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
-		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
+		tally.FilterInputTextBoxTallyBy().waitAndClick(10);
 		base.waitForElementCollection(tally.getAllValueinCustNameFilter());
 		float afterCustName = System.currentTimeMillis();
 		float totalSecCustName = afterCustName - beforeCustName;
@@ -214,6 +214,7 @@ public class Reports_Regression27 {
 		driver.waitForPageToBeReady();
 		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
+		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).ScrollTo();
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
 		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
