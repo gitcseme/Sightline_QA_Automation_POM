@@ -232,8 +232,8 @@ public class BulkActions_Regression27 {
 	}
 
 	/**
-	 * @author NA Testcase No:RPMXCON-65734
-	 * @Description:verify Warning message to validate for conflicts during bulk tagging from Doc Explorer
+	 * @author NA Testcase No:RPMXCON-54490
+	 * @Description:To verify that while the 'Total Selected Count' is In Progress,user can select Existing Assignment in the 'Bulk Assign' -UnAssign Documents section
 	 **/
 	@Test(description = "RPMXCON-54490", enabled = true, groups = { "regression" })
 	public void verifySelectExisAssgnWhenCountINPROGRESS() throws Exception{
