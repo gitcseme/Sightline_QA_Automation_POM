@@ -29,7 +29,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BasicSearchRegression_21_25 {
+public class BasicSearchRegression_21_25_26 {
 
 	Driver driver;
 	LoginPage login;
@@ -53,6 +53,211 @@ public class BasicSearchRegression_21_25 {
 		return new Object[][] { { "\"\"development methodology\" \"money related\"\"~5" },
 				{ "“”development methodology” “money related””~5" },
 				{ "\"\"development methodology” “money related””~5" }, };
+	}
+	
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (Subtraction mark -) embedded within a
+	 *              Regular Expression query.RPMXCON-61610
+	 */
+	@Test(description = "RPMXCON-61610", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotDisplayingWarningMessageSubtractionMarkEmbeddedWithinRegularExpressionQuery() {
+
+		String searchString = "\"##U-C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61610 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (Subtraction mark -) embedded within a Regular Expression query.");
+
+		// configuring the search
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query.");
+
+		// Verify that Subtraction mark - is treating as whitespace and it returns pure
+		// hit count on Basic search screen.
+		base.stepInfo("Performing Search Action");
+		int purehit = session.searchAndReturnPureHit_BS();
+		base.passedStep(
+				"Verified that Subtraction mark - is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (asterisk mark *) embedded within a
+	 *              Regular Expression query.RPMXCON-61611
+	 */
+	@Test(description = "RPMXCON-61611", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotDisplayingWarningMessageAsteriskMarkEmbeddedWithinRegularExpressionQuery() {
+
+		String searchString = "\"##U\\*C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61611 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (asterisk mark *) embedded within a Regular Expression query.");
+
+		// configuring the search
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query.");
+
+		// Verify that asterisk mark * is treating as whitespace and it returns pure hit
+		// count on Basic search screen.
+		base.stepInfo("Performing Search Action");
+		int purehit = session.searchAndReturnPureHit_BS();
+		base.passedStep(
+				"Verified that asterisk mark * is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (dollar $) embedded within a Regular
+	 *              Expression query.RPMXCON-61600
+	 */
+	@Test(description = "RPMXCON-61600", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotDisplayingWarningMessagedollarEmbeddedWithinRegularExpressionQuery() {
+
+		String searchString = "\"##U\\$C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61600 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (dollar $) embedded within a Regular Expression query.");
+
+		// configuring the search
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query.");
+
+		// Verify that dollar $ is treating as whitespace and it returns pure hit count
+		// on Basic search screen.
+		base.stepInfo("Performing Search Action");
+		int purehit = session.searchAndReturnPureHit_BS();
+		base.passedStep(
+				"Verified that dollar $ is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (space) embedded within a Regular
+	 *              Expression query.RPMXCON-61595
+	 */
+	@Test(description = "RPMXCON-61595", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotDisplayingWarningMessageSpaceEmbeddedWithinRegularExpressionQuery() {
+
+		String searchString = "\"##U\\ C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61595 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (space) embedded within a Regular Expression query.");
+
+		// configuring the search
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query.");
+
+		// Verify that Space is treating as whitespace and it returns pure hit count on
+		// Basic search screen.
+		base.stepInfo("Performing Search Action");
+		int purehit = session.searchAndReturnPureHit_BS();
+		base.passedStep(
+				"Verified that Space is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (colon mark : ) embedded within a Regular
+	 *              Expression query.RPMXCON-61594
+	 */
+	@Test(description = "RPMXCON-61594", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotDisplayingWarningMessageColonMarkEmbeddedWithinRegularExpressionQuery() {
+
+		String searchString = "\"##U\\:C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61594 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (colon mark : ) embedded within a Regular Expression query.");
+
+		// configuring the search
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query.");
+
+		// Verify that colon mark : is treating as whitespace and it returns pure hit
+		// count on Basic search screen.
+		base.stepInfo("Performing Search Action");
+		int purehit = session.searchAndReturnPureHit_BS();
+		base.passedStep(
+				"Verified that colon mark : is treating as whitespace and it returns pure hit count on Basic search screen.");
+
+		// verify returning documents having word U and C Tester
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"it is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
 	}
 
 	/**
