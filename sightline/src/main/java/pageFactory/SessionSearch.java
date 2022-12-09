@@ -418,6 +418,9 @@ public class SessionSearch {
 	public Element getMetaDataInDropdown(String field) {
 		return driver.FindElementByXPath("//select[@id='metatagSelect']//option[@value='" + field + "']");
 	}
+	public Element getUniqueDocCountReadout() {
+		return driver.FindElementByXPath("//h1[@class='page-title']//span//label");
+	}
 
 	// Metadata
 	public Element getBasicSearch_MetadataBtn() {
@@ -14354,6 +14357,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(20);
 		driver.scrollPageToTop();
 		base.stepInfo("Assignment is selected in work product - advanced search");
+
 	}
 
 	public void verifyListOfMetaDataFromMetaDataDropDown(List<String> listOfMetaData) {
@@ -14367,6 +14371,41 @@ public class SessionSearch {
 				base.failedStep(
 						"MetaData Option '" + listOfMetaData.get(i) + "' is Not presnt in the MetaData dropdown List.");
 			}
+
+		
+		
+	}	
+	
+	/**
+	 * @author: Arun Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the unique docids count in search page
+	 */
+	public void getUniqueDocCountAsDifferentUser(String role) {
+		
+		String expectedPaReadout = "Count of unique DocIDs indexed in the project:";
+		String expectedReadout = "Count of unique DocIDs indexed and available in your Security Group:";
+		int uniqueDocCount=0;
+		String actualReadout=null;
+		//verify unique doc count readout for PA user
+		if(role.equalsIgnoreCase("PA")) {
+			actualReadout = getCountUniqueDocId().getText();
+			base.compareTextViaContains(actualReadout, expectedPaReadout, 
+					"Readout displayed as expected for PA user", "not displayed as expected");	
+		}
+		//verify unique doc count readout for RMU/Rev user
+		else if(role.equalsIgnoreCase("RMU") || role.equalsIgnoreCase("Rev")) {
+			actualReadout = getCountUniqueDocId().getText();
+			base.compareTextViaContains(actualReadout, expectedReadout, 
+					"Readout displayed as expected for RMU/Rev user", "not displayed as expected");
+		}
+		String countlabel = actualReadout.substring(actualReadout.indexOf(":"));
+		uniqueDocCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+		if(uniqueDocCount>0) {
+			base.passedStep("count of unique published DocIds displayed-"+uniqueDocCount);
+		}
+		else {
+			base.failedStep("count of unique published DocIds not displayed-"+uniqueDocCount);
+
 		}
 	}
 

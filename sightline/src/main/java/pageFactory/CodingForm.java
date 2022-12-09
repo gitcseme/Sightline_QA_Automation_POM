@@ -1745,6 +1745,48 @@ public class CodingForm {
 		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
 	}
 
+	public Element getCodingForm_BackButton() {
+        return driver.FindElementById("btnCodingFormBack");
+    }
+    public Element checkCodingFormIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']");
+    }
+    public Element checkCodingFormRadioBtnIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']/../../following-sibling::td//input");
+    }
+    public Element getCodingForm_Name(int i) {
+        return driver.FindElementByXPath("(//table[@id='CodingFormDataTable']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgName(int i) {
+        return driver.FindElementByXPath("(//table[@id='dtCodingFormList']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgNameCheckBox(String name) {
+        return driver.FindElementByXPath(
+                "//table[@id='dtCodingFormList']//input[@value='" + name + "']/following-sibling::i");
+    }
+
+    public Element getCodingFormOrder() {
+        return driver.FindElementByXPath("//*[@id='ui-id-1']");
+    }
+
+ 
+
+    public Element getCodingFormOrderXIcon() {
+        return driver.FindElementByXPath("//button[@type='button'][@class='ui-dialog-titlebar-close']");
+    }
+
+	
+	public Element getCodingFormNote() {
+		return driver.FindElementByXPath("//div[@id='codingFormMsg']//label");
+	}
+	public ElementCollection getColumnsPresentInAddCfPopup() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//th");
+	}
+	public Element getCFNameOrSetDefaultColumnSelectionType(int row,int col) {
+		return driver.FindElementByXPath("//tbody[@id='tbodyCodingForm']//tr['"+row+"']//td["+col+"]//label");
+	}
+
+
 	public void CFnameErrormsg(String errormsg)throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -6257,6 +6299,72 @@ public class CodingForm {
 		else {
 			base.passedStep("coding form popup removed/cancelled after clicking button-"+button);
 		}	
+	}
+
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the Selected coding form is saved in
+	 *               popup
+	 */
+	public void verifySelectedCodingFormSaved() {
+		driver.waitForPageToBeReady();
+		if (btnCodingFormSave().isElementAvailable(5)) {
+			btnCodingFormSave().waitAndClick(5);
+			base.VerifySuccessMessage("Configured coding forms saved successfully");
+
+		} else {
+			base.failedStep("Codingform is not saved");
+
+		}
+
+	}
+
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will Selected the coding form in popup
+	 */
+	public void verifyAddSelectedCodingFormOnDefault(String Cfname) {
+		driver.waitForPageToBeReady();
+		if (checkCodingFormIsSelected(Cfname).GetAttribute("checked") == null) {
+			getCodingForm_SgNameCheckBox(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group ");
+		}
+		if (checkCodingFormRadioBtnIsSelected(Cfname).GetAttribute("checked") == null) {
+			getSelectCodeFormRadioBtn(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group  default");
+		} else {
+			base.failedStep("Codingform popup is not opened to select");
+
+		}
+
+
+	
+	/**
+	 * @author: Arun Created Date: 09/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the elements present in add/remove CF popup
+	 */
+	public void verifyElementsPresentInAddCFPopup() {
+		String[] expectedColumn = {"Coding Form Name","Set As Default (Required)"};
+		String[] expectedType = {"checkbox","radio"};
+		
+		//verify number of column present in table
+		int columns = getColumnsPresentInAddCfPopup().size();
+		base.stepInfo("number of columns present in the table-"+columns);
+		base.digitCompareEquals(columns, expectedColumn.length, "expected number of columns present in table", 
+				"expected number of columns not present");
+		base.ValidateElement_Presence(getPopUpCheckBox(), expectedColumn[0]);
+		base.ValidateElement_Presence(getSetAsDefaultHelpIcon(), expectedColumn[1]);
+		
+		//verify selection type(checkbox/radio) of column
+		for(int i=1;i<=columns;i++) {
+			String actualType = getCFNameOrSetDefaultColumnSelectionType(1,i).GetAttribute("class");
+			base.stepInfo(expectedColumn[i-1]+"column selection type is"+actualType);
+			base.textCompareEquals(actualType, expectedType[i-1], 
+					"selection type matched for"+expectedColumn[i-1], 
+					"selection type not matched for"+expectedColumn[i-1]);
+		}
+		
+
 	}
 
 }

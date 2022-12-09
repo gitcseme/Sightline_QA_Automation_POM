@@ -291,13 +291,13 @@ public class Ingestion_Regression_10 {
 		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with less than 400 char dat");
-		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.AutomationAllSources,Input.DATFile1);
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
 			baseClass.stepInfo("Perform catalog,copy,indexing and approve ingestion");
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ignoreErrorsAndIndexing(Input.AutomationAllSources);
+			ingestionPage.ignoreErrorsAndIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
 			baseClass.stepInfo("Publish ingestion");
 			ingestionPage.runFullAnalysisAndPublish();
@@ -306,6 +306,75 @@ public class Ingestion_Regression_10 {
 		else {
 			baseClass.passedStep("Ingestion already published in the project"+Input.ingestDataProject);
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 08/12/2022 TestCase Id:RPMXCON-48585
+	 * Description :Verify that PA Users go to the Advance Search screen,  the Advance Search page 
+	 * will show a count of unique DocIDs that are in the Project 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48585",enabled = true, groups = { "regression" })
+	public void verifyUniqueDocIdsCountDisplayAsPA() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48585");
+		baseClass.stepInfo("Verify count of unique DocIDs present in Project as PA user");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem, Input.DATFile1, Input.prodBeg);
+			baseClass.stepInfo("Publish docs");
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("Navigate to search>>Advanced search");
+		sessionSearch.navigateToAdvancedSearchPage();
+		baseClass.stepInfo("verify count of unique DocIDs present in project");
+		sessionSearch.getUniqueDocCountAsDifferentUser("PA");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 08/12/2022 TestCase Id:RPMXCON-48586
+	 * Description :check user should not obtain any error in any stage of ingestion phase while 
+	 * ingesting DAT file with fullpath metadata containing less than 400 chars in size 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48586",enabled = true, groups = { "regression" })
+	public void verifyUniqueDocIdsCountDisplayAsRMU() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48586");
+		baseClass.stepInfo("Verify count of unique DocIDs present in Project as RMU user");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Add new ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem, Input.DATFile1, Input.prodBeg);
+			baseClass.stepInfo("Publish docs");
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("Release published docs to security group");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		loginPage.logout();
+		baseClass.stepInfo("Login to the application as Rmu");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("navigate to search screen and verify");
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.getUniqueDocCountAsDifferentUser("RMU");
 		loginPage.logout();
 	}
 	

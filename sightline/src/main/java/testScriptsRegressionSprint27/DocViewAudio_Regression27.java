@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -456,6 +459,252 @@ public class DocViewAudio_Regression27 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:9/12/2022 RPMXCON-51093
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio files Stop functionality is working properly
+	 *              inside Doc view screen.
+	 */
+
+	@Test(description = "RPMXCON-51093", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentPlayAndStopBtnWokingproperly(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51093");
+		baseClass.stepInfo("Verify that audio files Stop functionality is working properly inside Doc view screen.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		baseClass.waitTime(10);
+		String strTime = docViewPage.getDocView_RunningTime().getText();
+		System.out.println(strTime);
+		baseClass.waitTillElemetToBeClickable(docViewPage.getDocView_IconStop());
+		docViewPage.getDocView_IconStop().waitAndClick(5);
+		String endTime = docViewPage.getDocView_RunningTime().getText();
+		System.out.println(endTime);
+		if (!strTime.equals(endTime)) {
+			baseClass.passedStep("Audio files Stop functionality is work  properly inside Doc view screen");
+		} else {
+			baseClass.failedStep("Audio files Stop functionality is not work  properly inside Doc view screen");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/12/2022 RPMXCON-51472
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that the speed control should be properly clickable from
+	 *              audio doc view and can select each of the speed settings.
+	 */
+
+	@Test(description = "RPMXCON-51472", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentSpeedPlayerClickableInDocView(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51472");
+		baseClass.stepInfo(
+				"Verify that the speed control should be properly clickable from audio doc view and can select each of the speed settings.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		Actions action = new Actions(driver.getWebDriver());
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewPage.getDocView_ConfigMinidoclist());
+		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
+		String defaultSpeed = docViewPage.getAudioSilderValue().getText();
+		System.out.println(defaultSpeed);
+		WebElement slider = docViewPage.getAudioSilderPoint().getWebElement();
+		action.dragAndDropBy(slider, 200, 250).perform();
+		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
+		String modifySpeed = docViewPage.getAudioSilderValue().getText();
+		System.out.println(modifySpeed);
+		if (defaultSpeed != modifySpeed) {
+			baseClass.passedStep("Speed control is clickable from audio doc view");
+		} else {
+			baseClass.failedStep("Speed control is not clickable from audio doc view");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:9/12/2022 RPMXCON-51478
+	 * @throws Exception
+	 * @Description Verify that application should not hang when the user tries to
+	 *              save the audio document when audio is playing.
+	 */
+	@Test(description = "RPMXCON-51478", dataProvider = "Users_RMUREV", enabled = true, groups = { "regression" })
+	public void verifyApplicationNotHangAudioIsPlaying(String username, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51478");
+		baseClass.stepInfo(
+				"Verify that application should not hang when the user tries to save the audio document when audio is playing.");
+
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.viewInDocView();
+
+		driver.waitForPageToBeReady();
+		docView.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(Input.codingFormName);
+		docView.editCodingFormSave();
+		docView.docviewPageLoadPerformanceForStamp();
+		baseClass.passedStep("Audio document is saved and make the application is not hang");
+		
+		loginPage.logout();
+
+	}
+
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/12/2022 RPMXCON-51627
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Edge: Verify when user enters the document id in the "doc id
+	 *              input box" and hits the enter key, then corresponding audio
+	 *              document should load in the default view.
+	 */
+
+	@Test(description = "RPMXCON-51627", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentNoEnterInDocIdInputBox(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51627");
+		baseClass.stepInfo(
+				"Edge: Verify when user enters the document id in the \"doc id input box\" and hits the enter key, then corresponding audio document should load in the default view.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		String color =  docViewPage.getDocView_MiniDoc_SelectdocAsText(1,2).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#3e65ac";
+		if (ActualColor.equals(ExpectedColor)) {
+			baseClass.passedStep("User redirect to the audio doc view and first audio document is loaded successfully");
+		} else {
+			baseClass.failedStep("User redirect to the audio doc view and first audio document is not loaded");
+		}
+		driver.waitForPageToBeReady();
+		docViewPage.getDocView_NumTextBox().SendKeys("5");
+		docViewPage.getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
+		String color1 = docViewPage.getDocView_MiniDoc_SelectdocAsText(5,2).GetCssValue("background-color");
+		System.out.println(color1);
+		String ExpectedColor1 = Color.fromString(color1).asHex();
+		System.out.println(ExpectedColor1);
+		String ActualColor1 = "#3e65ac";
+		baseClass.waitTime(5);
+		String defaultView=docViewPage.getDefaultViewTab().GetAttribute("class");
+		baseClass.compareTextViaContains(defaultView, "active", "audio document is loaded in the default view", "audio document is not loaded in the default view");
+		if ( ActualColor1.equals(ExpectedColor1)) {
+			baseClass.passedStep(
+					"same document is selected from mini doc list");
+		} else {
+			baseClass.failedStep("same document is not selected from mini doc list");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/12/2022 RPMXCON-51628
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Edge: Verify when user enters the document id in the "doc id input box" and hits the enter key, then corresponding audio doc should load in the default view prior to that document navigation is done with <<, <, > and >>.
+	 */
+
+	@Test(description = "RPMXCON-51628", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsIdInInputBoxLoadedDefaultView(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51628");
+		baseClass.stepInfo(
+				"Edge: Verify when user enters the document id in the \"doc id input box\" and hits the enter key, then corresponding audio doc should load in the default view prior to that document navigation is done with <<, <, > and >>");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		String color =  docViewPage.getDocView_MiniDoc_SelectdocAsText(1,2).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#3e65ac";
+		if (ActualColor.equals(ExpectedColor)) {
+			baseClass.passedStep("User redirect to the audio doc view and first audio document is loaded successfully");
+		} else {
+			baseClass.failedStep("User redirect to the audio doc view and first audio document is not loaded");
+		}
+		driver.waitForPageToBeReady();
+		String docId=docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(docId);
+		docViewPage.getDocView_Last().waitAndClick(5);
+		String AfterClickdocId=docViewPage.getDocView_CurrentDocId().getText();
+		System.out.println(AfterClickdocId);
+		if (!docId.equals(AfterClickdocId)) {
+			baseClass.passedStep("Audio document is loaded as per the clicked document navigation option ");
+		} else {
+			baseClass.failedStep("Audio document is not loaded as per the clicked document navigation option ");
+		}
+		driver.waitForPageToBeReady();
+		docViewPage.getDocView_NumTextBox().SendKeys("10");
+		docViewPage.getDocView_NumTextBox().Enter();
+		driver.waitForPageToBeReady();
+		String color1 = docViewPage.getDocView_MiniDoc_SelectdocAsText(10,2).GetCssValue("background-color");
+		System.out.println(color1);
+		String ExpectedColor1 = Color.fromString(color1).asHex();
+		System.out.println(ExpectedColor1);
+		String ActualColor1 = "#3e65ac";
+		baseClass.waitTime(5);
+		String defaultView=docViewPage.getDefaultViewTab().GetAttribute("class");
+		baseClass.compareTextViaContains(defaultView, "active", "audio document is loaded in the default view", "audio document is not loaded in the default view");
+		if ( ActualColor1.equals(ExpectedColor1)) {
+			baseClass.passedStep(
+					"same document is selected from mini doc list");
+		} else {
+			baseClass.failedStep("same document is not selected from mini doc list");
+		}
+		loginPage.logout();
+	}
+
+
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
