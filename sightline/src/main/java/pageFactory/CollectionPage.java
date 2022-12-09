@@ -397,6 +397,10 @@ public class CollectionPage {
 		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//th");
 	}
 
+	public Element getDataSetDetailsHeaderS(int i) {
+		return driver.FindElementByXPath("//div[@class='dataTables_sizing'][" + i + "]");
+	}
+
 	public Element getActionDiv(String action) {
 		return driver.FindElementByXPath("//a[text()='" + action + "']");
 	}
@@ -805,10 +809,12 @@ public class CollectionPage {
 		}
 
 		// Get Collection ID
+		driver.waitForPageToBeReady();
 		String collectionID = getCollectionID().getText();
 		colllectionData.put(collectionName, collectionID);
 
 		// Get Destination Path - latest
+		driver.waitForPageToBeReady();
 		String destinationPath = getDestinationPathLocation().getText();
 		colllectionData.put("DestinationPath", destinationPath);
 
@@ -874,6 +880,7 @@ public class CollectionPage {
 
 		if (getCollectionPageFirstCollectionSelect().isElementAvailable(5)) {
 			base.waitForElement(getCollectionPageFirstCollectionSelect());
+			driver.waitForPageToBeReady();
 			dataSourceName = getCollectionPageFirstCollectionSelect().GetAttribute("data-content");
 
 		} else {
@@ -3085,6 +3092,11 @@ public class CollectionPage {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param enterCustodian
+	 * @param emailAddresses
+	 */
 	public void verifyNoCustodianErrorMsg(boolean enterCustodian, String[][] emailAddresses) {
 		for (int i = 0; i < emailAddresses.length; i++) {
 			int j = 0;
@@ -3114,6 +3126,35 @@ public class CollectionPage {
 			base.textCompareEquals(actualError, expectedError, actualError,
 					"Error Message displayed is not as expected");
 		}
+	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param headerList
+	 */
+	public void verifyCollectionPageIsDisplayedWithinTheScreen(List<String> headerList) {
+		// verify All the Headers Is displayed within the screen
+		driver.waitForPageToBeReady();
+		for (int i = 1; i < headerList.size(); i++) {
+			System.out.println("******" + headerList.get(i));
+			if (getCollectionHeaderList(i).isDisplayed()) {
+				driver.waitForPageToBeReady();
+				base.passedStep(headerList.get(i) + " : is Displayed");
+			} else {
+				base.failedStep(headerList.get(i) + " : is not Displayed");
+			}
+		}
+
+		// verify create new collection btn is displayed within the screen & clickable
+		if (getNewCollectionBtn().isDisplayed()) {
+			base.passedStep("Create New Collection is displayed within the screen");
+			getNewCollectionBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.verifyUrlLanding(Input.url + "en-us/Collection/NewCollection",
+					"Create New collection button is clickable",
+					"Create new collection buttion is not working as expected");
+		} else {
+			base.failedStep("Create New Collection is not displayed within the screen");
+		}
 	}
 }

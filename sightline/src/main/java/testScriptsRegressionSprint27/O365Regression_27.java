@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -24,10 +25,12 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SourceLocationPage;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
@@ -344,22 +347,24 @@ public class O365Regression_27 {
 		login.logout();
 	}
 
-
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-68762
-	 * @Description:Verify that error message display and application does NOT accepts - when "Folder Group" Name entered with special characters < > & ‘
+	 * @Description:Verify that error message display and application does NOT
+	 *                     accepts - when "Folder Group" Name entered with special
+	 *                     characters < > & ‘
 	 **/
 	@Test(description = "RPMXCON-68762", enabled = true, groups = { "regression" })
 	public void verifyErrorMsgFolderAndFoldergroup() throws Exception {
 		base.stepInfo("RPMXCON-68762");
-		base.stepInfo("Verify that error message display and application does NOT accepts - when \"Folder Group\" Name entered with special characters < > & ‘");
+		base.stepInfo(
+				"Verify that error message display and application does NOT accepts - when \"Folder Group\" Name entered with special characters < > & ‘");
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in As : " + Input.pa1userName);
-		
+
 		String expected = "Special characters are not allowed.";
 		TagsAndFoldersPage tags = new TagsAndFoldersPage(driver);
 		tags.navigateToTagsAndFolderPage();
-		
+
 		// folder group
 		String folderGroupName = "Folder&'Group" + Utility.dynamicRandomNumberAppender();
 		tags.navigateToTagsAndFolderPage();
@@ -380,7 +385,6 @@ public class O365Regression_27 {
 		System.out.println(folderGroupError);
 		softassert.assertEquals(folderGroupError, expected);
 
-
 		// tag group
 		String tagGroupName = "Tag&'Group" + Utility.dynamicRandomNumberAppender();
 		tags.navigateToTagsAndFolderPage();
@@ -397,9 +401,411 @@ public class O365Regression_27 {
 		String tagGrouperror = tags.getTagGroupErrorMsg().getText();
 		System.out.println(tagGrouperror);
 		softassert.assertEquals(tagGrouperror, expected);
-		
+
 		login.logout();
 
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify 'View Datasets' action when Collection is in 'Completed
+	 *              with Errors' status [RPMXCON-61203]
+	 */
+	@Test(description = "RPMXCON-61203", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyViewDatasetForCompletedWithErr(String username, String password, String userRole)
+			throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String collectionEmailId2 = Input.collection2ndEmailId;
+		String firstName2 = Input.collsecondFirstName;
+		String lastName2 = Input.collsecondlastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder1 = "Inbox";
+		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
+				"Error Status" };
+		String collectionID = "";
+		String[][] userRolesData = { { username, userRole, "SA" } };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
+		String[] statusList = { Input.reteriveDSErr };
+		String[] statusListAfterIG = { Input.virusScanStatus, Input.copyDSstatus, Input.completedWithErr };
+		String selectedFolder2 = "Drafts";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61203 - O365");
+		base.stepInfo("Verify 'View Datasets' action when Collection is in 'Completed with Erros' status");
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, false, null, false);
+		collectionName = base.returnKey(collectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Fill in DS user 2
+		collection.fillingDatasetSelection("Button", firstName2, lastName2, collectionEmailId2, selectedApp,
+				collectionData, collectionName, 3, selectedFolder2, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 35,
+				true, false, "", "");
+
+		// Completed status check
+		base.stepInfo("Verify Collection is in 'Copied with Errors'");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 35);
+		driver.waitForPageToBeReady();
+
+		// Collection Header details
+		collection.getDataSetsHeaderIndex(headerListDataSets);
+
+		// Continue Successful Datasets - Yes
+		base.stepInfo("Click on Yes\r\n" + "Collection should get \"completed with error\"");
+		collection.collectionAction(collectionName, "Continue Successful Datasets", true, "Yes", false, "");
+		driver.waitForPageToBeReady();
+
+		// verify Completed with error status
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 15);
+		driver.waitForPageToBeReady();
+
+		// Click On View Dataset
+		collection.clickViewDataset(collectionName);
+		driver.waitForPageToBeReady();
+
+		// verify is it navigating to datasets page
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(Input.url + "en-us/ICE/Datasets", "Navigated To Dataset Page",
+				"Navigation is not as expected");
+
+		// verify collection name displays in the Search/Filter text box.
+		dataSets.verifysearchBoxValue(collectionName, "");
+
+		// verify Datasets of the collection present in 'Draft' mode.
+		dataSets.VerifyLastStatusOfCollection("Draft", 0, null);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : verify that collection process execution should start from
+	 *              collection wizard with automatic initiate processing selection
+	 *              for collection and documents should be published with full
+	 *              analytics [RPMXCON-61407]
+	 */
+	@Test(description = "RPMXCON-61407", enabled = true, groups = { "regression" })
+	public void verifyCollectionIsPublished() throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder1 = "Analytics-1";
+		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
+				"Error Status" };
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.failedMessage(
+				"Selected \"Analytics-1\" folder To publish only once in a project so make sure that current project doesn't have this dataset ingested");
+		base.stepInfo("Test case Id: RPMXCON-61407 - O365");
+		base.stepInfo(
+				"erify that collection process execution should start from collection wizard with automatic initiate processing selection for collection and documents should be published with full analytics");
+
+		// Enable KickOff Analytics
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		ProjectPage project = new ProjectPage(driver);
+		project.navigateToProductionPage();
+		base.stepInfo("Enable auto analytics");
+		project.disableOrEnableKickOffAnalytics(Input.projectName, "Enable", false);
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collectionName = base.returnKey(collectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 35,
+				true, false, "", "");
+
+		// Completed status check
+		base.stepInfo("Verify Collection is in 'Copied with Errors'");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 35);
+		driver.waitForPageToBeReady();
+
+		// Click On View Dataset
+		collection.clickViewDataset(collectionName);
+		driver.waitForPageToBeReady();
+
+		// verify is it navigating to datasets page
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(Input.url + "en-us/ICE/Datasets", "Navigated To Dataset Page",
+				"Navigation is not as expected");
+
+		// verify collection name displays in the Search/Filter text box.
+		dataSets.verifysearchBoxValue(collectionName, "");
+
+		// verify Datasets of the collection is published
+		dataSets.VerifyLastStatusOfCollection("Published", 40, collectionName);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha R
+	 * @Description :Verify that collections home screen present cleanly when the
+	 *              user zooms in and out between 75% to 120% on resolutions
+	 *              1366x768 on chrome browser. [RPMXCON-61248]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61248", enabled = true, groups = { "regression" })
+	public void verifyCollectionHomeScreenResol768() throws Exception {
+		String selectedFolder = "Inbox";
+
+		String collectionName = "";
+		String[][] userRolesData = { { Input.pa1userName, Input.ProjectAdministrator, "SA" } };
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("RPMXCON-61248 O365");
+		base.stepInfo(
+				"Verify that collections home screen present cleanly when the user zooms in and out between 75% to 120% on resolutions 1366x768 on chrome browser.");
+
+		// login
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to collection Page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// fetch collection & Header before performing zoom in & zoom out
+		if (collection.getCollectionListDatasetValueCollectionName().isElementAvailable(10)) {
+			collectionName = collection.getCollectionListDatasetValueCollectionName().getText();
+		} else {
+			colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+					"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+			collectionId = base.returnKey(colllectionData, "", false);
+			collectionName = colllectionData.get(collectionId);
+		}
+		driver.waitForPageToBeReady();
+		List<String> headerList = base.availableListofElements(collection.getDataSetDetailsHeader());
+
+		// Change Screen resolution to 1366*768
+		driver.waitForPageToBeReady();
+		driver.Manage().window().setSize(new Dimension(1366, 768));
+		driver.waitForPageToBeReady();
+
+		// Zoom in : increasing to 120%
+		assignmentspage.BrowserResolutionMax(1);
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+		
+		// decreasing to 90%
+		assignmentspage.BrowserResolutionMin(2);
+		base.stepInfo("Zoom out : 90%");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+
+		// decreasing to 75%
+		assignmentspage.BrowserResolutionMin(1);
+		base.stepInfo("Zoom out : 75%");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify that collections home screen present cleanly when the
+	 *              user zooms in and out between 75% to 120% on resolutions
+	 *              1920x1080 on chrome browser. [RPMXCON-61247]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61247", enabled = true, groups = { "regression" })
+	public void verifyCollectionHomeScreenResol1080() throws Exception {
+		String selectedFolder = "Inbox";
+
+		String collectionName = "";
+		String[][] userRolesData = { { Input.pa1userName, Input.ProjectAdministrator, "SA" } };
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("RPMXCON-61247 O365");
+		base.stepInfo(
+				"Verify that collections home screen present cleanly when the user zooms in and out between 75% to 120% on resolutions 1920x1080 on chrome browser.");
+
+		// login
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to collection Page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// fetch collection & Header before performing zoom in & zoom out
+		if (collection.getCollectionListDatasetValueCollectionName().isElementAvailable(10)) {
+			collectionName = collection.getCollectionListDatasetValueCollectionName().getText();
+		} else {
+			colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+					"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+			collectionId = base.returnKey(colllectionData, "", false);
+			collectionName = colllectionData.get(collectionId);
+		}
+		driver.waitForPageToBeReady();
+		List<String> headerList = base.availableListofElements(collection.getDataSetDetailsHeader());
+
+		// Change Screen resolution to 1366*768
+		driver.waitForPageToBeReady();
+		driver.Manage().window().setSize(new Dimension(1920, 1080));
+		driver.waitForPageToBeReady();
+
+		// Zoom in : increasing to 120%
+		assignmentspage.BrowserResolutionMax(1);
+		base.stepInfo("Zoom In : 125%");
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+
+		// decreasing to 90%
+		assignmentspage.BrowserResolutionMin(2);
+		base.stepInfo("Zoom out : 90%");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+
+		// decreasing to 75%
+		assignmentspage.BrowserResolutionMin(1);
+		base.stepInfo("Zoom out : 75%");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		driver.waitForPageToBeReady();
+
+		// Check collection presence
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(collection.getCollectionNameElement(collectionName)),
+				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
+				"Pass");
+
+		// verify All the Headers Is displayed within the screen & create new collection
+		// btn is displayed within the screen & clickable
+		driver.waitForPageToBeReady();
+		collection.verifyCollectionPageIsDisplayedWithinTheScreen(headerList);
+
+		// logout
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
