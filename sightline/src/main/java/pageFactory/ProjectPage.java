@@ -1973,6 +1973,34 @@ public class ProjectPage {
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
 
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return bc.initialBgCount() == Bgcount + 1;
+				}
+			}), Input.wait120 + Input.wait60);
+			System.out.println(bc.initialBgCount());
+			UtilityLog.info(bc.initialBgCount());
+			bc.checkNotificationCount(Bgcount,1);
+		}
+		
+		/**
+		 * @author Brundha.T
+		 * @param ElementName
+		 * Description:method to verify slash in the foldername
+		 * @return
+		 */
+		public String verifyingFolderName(Element ElementName) {
+			
+			String Foldername = ElementName.GetAttribute("value");
+			System.out.println(Foldername);
+			String Slash="\\";
+					
+			if (!Foldername.contains(Slash)) {
+				bc.failedStep("" + Foldername + " is with slash");
+			} else {
+				bc.passedStep("" + Foldername + " is not with slash");
+
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getButtonSaveProject());
 		getButtonSaveProject().waitAndClick(10);
@@ -1984,6 +2012,7 @@ public class ProjectPage {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
+
 			}
 		}), Input.wait120 + Input.wait60);
 		System.out.println(bc.initialBgCount());

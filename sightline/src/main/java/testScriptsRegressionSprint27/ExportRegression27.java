@@ -229,7 +229,7 @@ public class ExportRegression27 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
 
-		sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString, Input.testData1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(FolderName);
 
 		base = new BaseClass(driver);
