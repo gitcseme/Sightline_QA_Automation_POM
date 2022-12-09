@@ -1698,6 +1698,11 @@ public class ProductionPage {
 		//select[@id='SecurityGrpList']//option[text()='Default  Security Group']
 	}
 
+	public Element getSecurityGrp() {
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default Security Group']");
+		
+	}
+
 	public Element getSelectDownloadBtn() {
 
 		return driver.FindElementByXPath("//a[text()='Download']");
@@ -10485,9 +10490,12 @@ public class ProductionPage {
 		navigatingToProductionHomePage();
 		base.waitForElement(getSecurityGroupDropDown());
 		getSecurityGroupDropDown().waitAndClick(10);
-		base.waitForElement(getDefaultSecurityGroup());
+		if(getSecurityGrp().isElementAvailable(2)) {
+			getSecurityGrp().waitAndClick(10);
+		}else {
+		driver.waitForPageToBeReady();
 		getDefaultSecurityGroup().waitAndClick(10);
-
+		}
 	}
 
 	/**

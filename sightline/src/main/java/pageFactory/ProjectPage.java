@@ -1962,8 +1962,6 @@ public class ProjectPage {
 			System.out.println(bc.initialBgCount());
 			UtilityLog.info(bc.initialBgCount());
 			bc.checkNotificationCount(Bgcount,1);
-			SavedSearch saveSearch=new SavedSearch(driver);
-			saveSearch.verifyExecuteAndReleaseNotify(Bgcount, 1);
 		}
 		
 		/**
