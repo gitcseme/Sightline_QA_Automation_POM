@@ -410,9 +410,11 @@ public class DomainManagement_27 {
 
 		baseClass.stepInfo("Navigating to Projects Page");
 		user.navigateToUsersPAge();
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Selecting Assign user and validating the project dropdown");
 		baseClass.waitForElement(user.getAssignUserButton());
 		user.getAssignUserButton().waitAndClick(5);
+		baseClass.waitTime(5);
 		baseClass.waitForElement(user.getProjectTab());
 		user.getProjectTab().waitAndClick(5);
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());

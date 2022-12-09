@@ -100,6 +100,7 @@ public class ICE_Regression27 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.sa1userName + "");
 		// Impersonate SA to DA
 		baseClass.impersonateSAtoDA();
+		baseClass.waitTime(10);
 		softAssert.assertFalse(data.getDatasetBtn().isDisplayed());
 		baseClass.passedStep("DataSats left menu is disabled by default for the user with DA role");
 		softAssert.assertAll();
@@ -124,6 +125,7 @@ public class ICE_Regression27 {
 		// Login as DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.da1userName + "");
+		baseClass.waitTime(10);
 		// Impersonate DA to PA
 		baseClass.impersonateDAtoPA();
 		softAssert.assertTrue(data.getDatasetBtn().isDisplayed());
@@ -134,6 +136,7 @@ public class ICE_Regression27 {
 		// Login as DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.da1userName + "");
+		baseClass.waitTime(10);
 		// Impersonate DA to RMU
 		baseClass.impersonateDAtoRMU();
 		softAssert.assertTrue(data.getDatasetBtn().isDisplayed());
@@ -144,6 +147,7 @@ public class ICE_Regression27 {
 		// Login as DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.da1userName + "");
+		baseClass.waitTime(10);
 		softAssert.assertFalse(data.getDatasetBtn().isDisplayed());
 		baseClass.passedStep("DataSats left menu is disabled by default for the user with DA role");
 		softAssert.assertAll();
