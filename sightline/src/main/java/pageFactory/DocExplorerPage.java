@@ -675,7 +675,9 @@ public class DocExplorerPage {
 	public Element getFolderNameText(int i) {
 		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
 	}
-
+	public Element getFolderName(int i) {
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
+	}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
