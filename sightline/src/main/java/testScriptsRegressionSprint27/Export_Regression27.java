@@ -285,7 +285,7 @@ public class Export_Regression27 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50686
 	 * @Description:Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully
 	 **/
-	@Test(description = "RPMXCON-49136", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-50686", enabled = true, groups = { "regression" })
 	public void verifyGeneratePDF_MultiPage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50686");
