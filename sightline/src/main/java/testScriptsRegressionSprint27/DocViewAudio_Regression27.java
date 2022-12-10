@@ -714,6 +714,13 @@ public class DocViewAudio_Regression27 {
 		return users;
 	}
 	
+	@DataProvider(name = "Users_RMUREV")
+	public Object[][] PA_RMU() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
