@@ -389,7 +389,222 @@ public class ExportRegression27 {
 		loginPage.logout();
 	}
 	
-	
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-50687
+	 * @Description:Verify If PDF is produced in the production which is selected as
+	 *                     the basis for export then in export user can select
+	 *                     'Generate TIFF',export should complete sucessfully
+	 */
+	@Test(description = "RPMXCON-50687", enabled = true, groups = { "regression" })
+
+	public void verifyingExportWithTIFFAndText() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as " + Input.pa1userName);
+
+		base.stepInfo("RPMXCON-50687");
+		base.stepInfo(
+				"Verify If PDF is produced in the production which is selected as the basis for export then in export user can select 'Generate TIFF',export should complete sucessfully");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = "E" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectPrivDocsInPDFSection(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExportwithProduction(exportName, productionname);
+		base.waitTillElemetToBeClickable(page.getTIFFChkBox());
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		driver.scrollPageToTop();
+		base.waitForElement(page.getRadioButton_GenerateTIFF());
+		page.getRadioButton_GenerateTIFF().waitAndClick(10);
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		base.waitForElement(page.getOkButton());
+		page.getOkButton().waitAndClick(3);
+		page.fillingExportLocationPage(exportName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
+
+		String actualCopedText = page.getCopiedTextFromClipBoard();
+		base.stepInfo("Generated export path" + actualCopedText);
+		String parentTab = page.openNewTab(actualCopedText);
+
+		page.goToImageFiles();
+			if (base.text(prefixID+beginningBates+suffixID).isElementAvailable(5)) {
+				base.passedStep("Tiff files are displayed in export ");
+
+			} else {
+				base.failedStep("Tiff file is not displayed");
+
+			}
+		page.navigatingBack(2);
+		base.elementDisplayCheck(page.getFileDir("Text/"));
+		page.getFileDir("Text/").waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.getFileDir("0001/").waitAndClick(10);
+		base.elementDisplayCheck(base.text(prefixID+beginningBates+suffixID));
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-50654
+	 * @Description: Verify that on Clicking on 'Copy Path' , it will copy the path
+	 *               to review the documents
+	 **/
+	@Test(description = "RPMXCON-50654", enabled = true, groups = { "regression" })
+	public void verifyExportedFileIsDisplayed() throws Exception {
+		base.stepInfo("Test case Id: RPMXCON-50654");
+		base.stepInfo("Verify that on Clicking on 'Copy Path' , it will copy the path to review the documents");
+
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = "Export" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as" + Input.pa1userName);
+
+		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagName);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(exportName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingExportGeneratePageWithContinueGenerationPopup();
+
+		base.stepInfo("Copied path is paste in new tab");
+		String actualCopedText = page.getCopiedTextFromClipBoard();
+		String parentTab = page.openNewTab(actualCopedText);
+		base.stepInfo("Generated export path" + actualCopedText);
+
+		base.stepInfo("verifying user can able to view the exported file");
+		base.waitForElement(page.getFileDir("VOL0001"));
+		if (page.getFileDir("VOL0001").isDisplayed()) {
+			page.getFileDir("VOL0001").waitAndClick(5);
+			page.getFileDir("Images/").waitAndClick(10);
+			page.getFileDir("0001/").waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.elementDisplayCheck(page.getFirstImageFile(prefixID + "(" + 2 + ")" + suffixID, subBates));
+			base.passedStep("user can able to see the exported file");
+		} else {
+			base.failedStep("User can't able to view the exported file");
+		}
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-50331
+	 * @Description:Verify that use cannot access the Production Export deatils by
+	 *                     copying the Production URL if user is not part of
+	 *                     Project/SG
+	 **/
+	@Test(description = "RPMXCON-50331", enabled = true, groups = { "regression" })
+	public void verifyingErrorMsgInExport() throws Exception {
+		base.stepInfo("Test case Id: RPMXCON-50331");
+		base.stepInfo(
+				"Verify that use cannot access the Production Export deatils by copying the Production URL if user is not part of Project/SG");
+
+		String exportName = "Export" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in as " + Input.sa1userName);
+
+		base.stepInfo("Impersonating SA as PA");
+		base.impersonateSAtoPA();
+
+		base.stepInfo("Copying export set URL");
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+
+		String currentURL = driver.getWebDriver().getCurrentUrl();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as " + Input.pa1userName);
+
+		base.stepInfo("Selecting the same project");
+		base.selectproject(Input.projectName);
+
+		base.stepInfo("navigating to production set");
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+
+		base.stepInfo("paste the encrypted URL and verifying error message");
+		driver.Navigate().to(currentURL);
+		driver.waitForPageToBeReady();
+		String ErrorMsg = page.getErrorMsgText().getText();
+		if (ErrorMsg.contains("Error")) {
+			base.passedStep("Error message is displayed as expected");
+		} else {
+			base.failedStep("Error message is not  displayed as expected");
+		}
+
+		loginPage.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
