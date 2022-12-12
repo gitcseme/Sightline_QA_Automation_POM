@@ -71,12 +71,10 @@ public class AdvancedSearchRegression_27 {
 
 	@DataProvider(name = "userForRmuRev")
 	public Object[][] userForRmuRev() {
-		return new Object[][] { 
-			{Input.rmu1userName, Input.rmu1password},
-			{Input.rev1userName, Input.rev1password}
-		};
+		return new Object[][] { { Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
 	}
-	
+
 	@DataProvider(name = "PaRmuAndRevUSer")
 	public Object[][] PaRmuAndRevUSer() {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
@@ -333,7 +331,9 @@ public class AdvancedSearchRegression_27 {
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
+		baseClass.waitTime(2);
 		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
 		int searchStringPureHit = sessionSearch.returnPurehitCount();
 
 		// performing search for given example search query.
@@ -646,6 +646,7 @@ public class AdvancedSearchRegression_27 {
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
+		baseClass.waitTime(2);
 		sessionSearch.tallyContinue(5);
 		baseClass.waitTime(2);
 		// Verify that result appears for query when User configured proximity within
@@ -923,6 +924,7 @@ public class AdvancedSearchRegression_27 {
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
+		baseClass.waitTime(2);
 		sessionSearch.tallyContinue(5);
 		baseClass.waitTime(2);
 		// Verify that correct result appears for Proximity Queries containing Boolean
@@ -995,122 +997,146 @@ public class AdvancedSearchRegression_27 {
 		loginPage.logout();
 	}
 
-  	/**
+	/**
 	 * @author
-	 * @Description :Verify that user should be able to search with the
-	 *  field EmailBCCNamesAndAddresses from Advanced search."RPMXCON-49768
+	 * @Description :Verify that user should be able to search with the field
+	 *              EmailBCCNamesAndAddresses from Advanced search."RPMXCON-49768
 	 */
-  		@Test(description = "RPMXCON-49768",dataProvider="PaRmuAndRevUSer", enabled = true, groups = { "regression" })
-  	public void verifyUserAbleToSearchWithFieldEmailBCCNamesAndAddressesInAdvancedSearch(String userName, String password) {
-  		
-  		String metaDataField = "EmailBCCNamesAndAddresses";
-  		String searchStringWithDoubleQuotes = "\""+Input.emailAllDomainOption+"\"";
-  		String searchStringWithOutDoubleQuotes = Input.emailAllDomainOption;
-  		loginPage.loginToSightLine(userName,password);
-  		baseClass.stepInfo("Test case Id: RPMXCON-49768 Advanced Search");
-  		baseClass.stepInfo("Verify that user should be able to search with the field EmailBCCNamesAndAddresses from Advanced search.");
-  		
-  		// Configure the query to search with Metadata EmailBCCNamesAndAddresses with double quotes
-  		baseClass.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses with double quotes.");
-  		sessionSearch.advancedMetaDataForDraft(metaDataField,null,searchStringWithDoubleQuotes,null);
-  		
-  	// verify that Result should appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.
-  		sessionSearch.SearchBtnAction();
-  		sessionSearch.returnPurehitCount();
-  		baseClass.waitForElement(sessionSearch.contentAndMetaDataResult());
-  		baseClass.stepInfo("Resultant Search Query : "+sessionSearch.contentAndMetaDataResult().getText()+" in Advanced Search Query Screen.");
-  		baseClass.passedStep("verified that Result appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.");
-  		
-  		//click add new search button 
-  		sessionSearch.addNewSearch();
-		
-		// Configure the query in ADVANCED SEARCH to search with Metadata EmailBCCNamesAndAddresses without double quotes  
-  		driver.waitForPageToBeReady();
-  		baseClass.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses without double quotes.");
-  		sessionSearch.getContentAndMetaDatabtnC().waitAndClick(10);
-  		sessionSearch.newMetaDataSearchInBasicSearch(metaDataField, searchStringWithOutDoubleQuotes);
-  		driver.waitForPageToBeReady();
+	@Test(description = "RPMXCON-49768", dataProvider = "PaRmuAndRevUSer", enabled = true, groups = { "regression" })
+	public void verifyUserAbleToSearchWithFieldEmailBCCNamesAndAddressesInAdvancedSearch(String userName,
+			String password) {
 
-    	// verify that Result should appear for entered EmailBCCNamesAndAddresses without double quote in Search Query Screen.
-  		baseClass.stepInfo("Resultant Search Query : "+sessionSearch.contentAndMetaDataResult().getText()+" in Advanced Search Query Screen.");
-  		baseClass.passedStep("verified that Result appear for entered EmailBCCNamesAndAddresses without double quote in  Search Query Screen");
-  	
-  		// logOut
-  		loginPage.logout();
-  	}
-  	
-  	
-  	/**
+		String metaDataField = "EmailBCCNamesAndAddresses";
+		String searchStringWithDoubleQuotes = "\"" + Input.emailAllDomainOption + "\"";
+		String searchStringWithOutDoubleQuotes = Input.emailAllDomainOption;
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-49768 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that user should be able to search with the field EmailBCCNamesAndAddresses from Advanced search.");
+
+		// Configure the query to search with Metadata EmailBCCNamesAndAddresses with
+		// double quotes
+		baseClass.stepInfo(
+				"Configuring the query to search with Metadata EmailBCCNamesAndAddresses with double quotes.");
+		sessionSearch.advancedMetaDataForDraft(metaDataField, null, searchStringWithDoubleQuotes, null);
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses with
+		// double quote in Search Query Screen with exact match.
+		sessionSearch.SearchBtnAction();
+		sessionSearch.returnPurehitCount();
+		baseClass.waitForElement(sessionSearch.contentAndMetaDataResult());
+		baseClass.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResult().getText()
+				+ " in Advanced Search Query Screen.");
+		baseClass.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.");
+
+		// click add new search button
+		sessionSearch.addNewSearch();
+
+		// Configure the query in ADVANCED SEARCH to search with Metadata
+		// EmailBCCNamesAndAddresses without double quotes
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(
+				"Configuring the query to search with Metadata EmailBCCNamesAndAddresses without double quotes.");
+		sessionSearch.getContentAndMetaDatabtnC().waitAndClick(10);
+		sessionSearch.newMetaDataSearchInBasicSearch(metaDataField, searchStringWithOutDoubleQuotes);
+		driver.waitForPageToBeReady();
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses
+		// without double quote in Search Query Screen.
+		baseClass.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResult().getText()
+				+ " in Advanced Search Query Screen.");
+		baseClass.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses without double quote in  Search Query Screen");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
 	 * @author
-	 * @Description :dvanced Search- Verify that fields should be released automatically to security group: "EmailToNamesAndAddresses",
-	 *  "EmailAuthorNameAndAddresses", "EmailCCNamesAndAddresses", "EmailBCCNamesAndAddresses".RPMXCON-49771
+	 * @Description :dvanced Search- Verify that fields should be released
+	 *              automatically to security group: "EmailToNamesAndAddresses",
+	 *              "EmailAuthorNameAndAddresses", "EmailCCNamesAndAddresses",
+	 *              "EmailBCCNamesAndAddresses".RPMXCON-49771
 	 */
-  	@Test(description = "RPMXCON-49771",dataProvider="userForRmuRev", enabled = true, groups = { "regression" })
-  	public void verifyFieldsReleasedAutomaticallyToSecurityGroup(String userName, String password) throws Exception {
-  		securityGroupsPage = new SecurityGroupsPage(driver);
-  		UserManagement user = new UserManagement(driver);
-  		String securityGroup = "securityGroup" + Utility.dynamicNameAppender();
-  		List<String> listOfMetaData = new ArrayList<String>(Arrays.asList("EmailToNamesAndAddresses","EmailAuthorNameAndAddress","EmailCCNamesAndAddresses","EmailBCCNamesAndAddresses"));
-  		
-  		baseClass.stepInfo("Test case Id: RPMXCON-49771");
-  		baseClass.stepInfo("Advanced Search- Verify that fields should be released automatically to security group: \"EmailToNamesAndAddresses\", \"EmailAuthorNameAndAddresses\", \"EmailCCNamesAndAddresses\", \"EmailBCCNamesAndAddresses\".");
-  	
-  		// login as PA
-  		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
-  		
-  		// create securityGroup 
-  		securityGroupsPage.navigateToSecurityGropusPageURL();
+	@Test(description = "RPMXCON-49771", dataProvider = "userForRmuRev", enabled = true, groups = { "regression" })
+	public void verifyFieldsReleasedAutomaticallyToSecurityGroup(String userName, String password) throws Exception {
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		UserManagement user = new UserManagement(driver);
+		String securityGroup = "securityGroup" + Utility.dynamicNameAppender();
+		List<String> listOfMetaData = new ArrayList<String>(Arrays.asList("EmailToNamesAndAddresses",
+				"EmailAuthorNameAndAddress", "EmailCCNamesAndAddresses", "EmailBCCNamesAndAddresses"));
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49771");
+		baseClass.stepInfo(
+				"Advanced Search- Verify that fields should be released automatically to security group: \"EmailToNamesAndAddresses\", \"EmailAuthorNameAndAddresses\", \"EmailCCNamesAndAddresses\", \"EmailBCCNamesAndAddresses\".");
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create securityGroup
+		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(securityGroup);
 		// assign securityGroup to User
 		baseClass.stepInfo("assigning securityGroup to User.");
-		user.assignAccessToSecurityGroups(securityGroup,userName);
+		user.assignAccessToSecurityGroups(securityGroup, userName);
 		// logOut
-  		loginPage.logout();
-  		
-  		//login as User
-  		loginPage.loginToSightLine(userName,password);
-  		baseClass.selectsecuritygroup(securityGroup);
- 
-  		//verify That "EmailToNamesAndAddresses", "EmailAuthorNameAndAddresses", "EmailCCNamesAndAddresses", "EmailBCCNamesAndAddresses" fields should be released to the security group automatically
-  		sessionSearch.verifyListOfMetaDataFromMetaDataDropDown(listOfMetaData);
-  		baseClass.stepInfo("verified That \"EmailToNamesAndAddresses\", \"EmailAuthorNameAndAddresses\", \"EmailCCNamesAndAddresses\", \"EmailBCCNamesAndAddresses\" fields released to the security group automatically.");
-  		
-  	    // logOut
-  		loginPage.logout();
-  		
-  		// Deleting SecurityGroup
-  		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
-  		securityGroupsPage.deleteSecurityGroups(securityGroup);
-  		
-  	    // logOut
-  		loginPage.logout();
-  	}
-  	
-  	/**
+		loginPage.logout();
+
+		// login as User
+		loginPage.loginToSightLine(userName, password);
+		baseClass.selectsecuritygroup(securityGroup);
+
+		// verify That "EmailToNamesAndAddresses", "EmailAuthorNameAndAddresses",
+		// "EmailCCNamesAndAddresses", "EmailBCCNamesAndAddresses" fields should be
+		// released to the security group automatically
+		sessionSearch.verifyListOfMetaDataFromMetaDataDropDown(listOfMetaData);
+		baseClass.stepInfo(
+				"verified That \"EmailToNamesAndAddresses\", \"EmailAuthorNameAndAddresses\", \"EmailCCNamesAndAddresses\", \"EmailBCCNamesAndAddresses\" fields released to the security group automatically.");
+
+		// logOut
+		loginPage.logout();
+
+		// Deleting SecurityGroup
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage.deleteSecurityGroups(securityGroup);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
 	 * @author
-	 * @Description :Verify that Audio search functionality is working proper
-	 *  with only alphabets terms in Advanced Search.RPMXCON-49365
+	 * @Description :Verify that Audio search functionality is working proper with
+	 *              only alphabets terms in Advanced Search.RPMXCON-49365
 	 */
-  	@Test(description = "RPMXCON-49365",dataProvider="PaRmuAndRevUSer",enabled = true, groups = { "regression" })
-  	public void verifyAudioSearchFunctionalityWorkingProperWithOnlyAlphabetsTermInAdvanSearch(String userName, String password) throws InterruptedException {
-  		String searchString = Input.audioSearch;
-  		String language = Input.language;
-  		String operator = "ANY";
-  		baseClass.stepInfo("Test case Id: RPMXCON-49365 Advanced Search");
-  		baseClass.stepInfo("Verify that Audio search functionality is working proper with only alphabets terms in Advanced Search.");
-  		
-  		loginPage.loginToSightLine(userName,password);
-  		
-  		// verify That Audio search Result should get displayed in Advanced Search  Result and Pure Hit count should get display on Result screen
-  		baseClass.stepInfo("Navigating to Advanced Search Page.");
-  		baseClass.stepInfo("Configuring Valid query only alphabets like Term Operator : Any Language Pack / Dialect: North American English Minimum Confidence Threshold: 55  Search Term : Morning");
-  		sessionSearch.audioSearchWithOperator(searchString,"",language,-110,operator);
-  		baseClass.passedStep("verified That Audio search Result get displayed in Advanced Search  Result and Pure Hit count get display on Result screen.");
-  		
-  		 // logOut
-  		loginPage.logout();
-  		
-  	}
+	@Test(description = "RPMXCON-49365", dataProvider = "PaRmuAndRevUSer", enabled = true, groups = { "regression" })
+	public void verifyAudioSearchFunctionalityWorkingProperWithOnlyAlphabetsTermInAdvanSearch(String userName,
+			String password) throws InterruptedException {
+		String searchString = Input.audioSearch;
+		String language = Input.language;
+		String operator = "ANY";
+		baseClass.stepInfo("Test case Id: RPMXCON-49365 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that Audio search functionality is working proper with only alphabets terms in Advanced Search.");
+
+		loginPage.loginToSightLine(userName, password);
+
+		// verify That Audio search Result should get displayed in Advanced Search
+		// Result and Pure Hit count should get display on Result screen
+		baseClass.stepInfo("Navigating to Advanced Search Page.");
+		baseClass.stepInfo(
+				"Configuring Valid query only alphabets like Term Operator : Any Language Pack / Dialect: North American English Minimum Confidence Threshold: 55  Search Term : Morning");
+		sessionSearch.audioSearchWithOperator(searchString, "", language, -110, operator);
+		baseClass.passedStep(
+				"verified That Audio search Result get displayed in Advanced Search  Result and Pure Hit count get display on Result screen.");
+
+		// logOut
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
