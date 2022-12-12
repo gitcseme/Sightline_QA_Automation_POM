@@ -2345,19 +2345,11 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
+		base.waitForElement(getSavedSearch_MySearchesTab());
 
-			public Boolean call() {
-				return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
-			}
-		}), Input.wait30);
+			
 		getSavedSearch_MySearchesTab().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
-			}
-		}), Input.wait30);
 		getSaveSearch_Name().SendKeys(searchName);
 //		driver.Manage().window().fullscreen();
 
@@ -9879,9 +9871,7 @@ public class SessionSearch {
 
 			Reporter.log("Saved the search with name '" + searchName + "'", true);
 			UtilityLog.info("Saved search with name - " + searchName);
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -14378,6 +14368,7 @@ public class SessionSearch {
 				base.failedStep(
 						"MetaData Option '" + listOfMetaData.get(i) + "' is Not presnt in the MetaData dropdown List.");
 			}
+		}
 
 		
 		
@@ -14490,5 +14481,7 @@ public class SessionSearch {
 		}
 		return pureHit;
 	}
+
+	
 }
 
