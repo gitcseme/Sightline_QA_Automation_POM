@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint26;
+package testScriptsRegressionSprint27;
 
 import java.awt.AWTException;
 import java.io.IOException;
