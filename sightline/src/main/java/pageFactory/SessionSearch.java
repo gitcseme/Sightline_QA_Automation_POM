@@ -2098,6 +2098,13 @@ public class SessionSearch {
 	}
 	// added by sowndarya
 
+	
+
+	public Element getSearchThirdTextField() {
+		return driver.FindElementByXPath("(.//*[@id='xEdit']//li/following-sibling::li//input)[last()]");
+	}
+	
+
 	public Element getReportTotalCount() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
 	}
@@ -14409,4 +14416,79 @@ public class SessionSearch {
 		}
 	}
 
+
+	public void refreshAndVerifyStatus(String backGroundID, String status, int noToRefresh) {	
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < noToRefresh; i++) {
+			System.out.println(i);
+			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
+				
+                base.stepInfo("waiting for status"+status);
+                break;
+		}
+			else {
+                driver.Navigate().refresh();
+                System.out.println("Refresh");
+                driver.waitForPageToBeReady();
+            }
+		}
+	}
+	
+
+	public int basicContentSearchForThreeItems(String SearchString, String SearchString2, String SearchString3) {
+		int pureHit = 0;
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getEnterSearchString().isDisplayed();
+				}
+			}), Input.wait60);
+			getEnterSearchString().getWebElement().sendKeys(SearchString);
+			driver.waitForPageToBeReady();
+			getEnterSearchString().getWebElement().sendKeys(Keys.ENTER);
+			driver.waitForPageToBeReady();
+			getSearchSecondTextField().getWebElement().sendKeys(SearchString2);
+			driver.waitForPageToBeReady();
+			getSearchSecondTextField().getWebElement().sendKeys(Keys.ENTER);
+			driver.waitForPageToBeReady();
+			getSearchThirdTextField().getWebElement().sendKeys(SearchString3);
+			driver.waitForPageToBeReady();			// Click on Search button
+			getSearchButton().waitAndClick(10);
+
+			// handle pop confirmation for regex and proximity queries
+			try {
+				if (getYesQueryAlert().isElementAvailable(8)) {
+					getYesQueryAlert().waitAndClick(8);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait120);
+
+			pureHit = Integer.parseInt(getPureHitsCount().getText());
+
+			// System.out.println("Search is done for "+SearchString+" and PureHit is :
+			// "+pureHit);
+			UtilityLog.info("Search is done for " + SearchString + " and PureHit is : " + pureHit);
+			Reporter.log("Search is done for " + SearchString + " and PureHit is : " + pureHit, true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
+
+		}
+		return pureHit;
+	}
 }
+

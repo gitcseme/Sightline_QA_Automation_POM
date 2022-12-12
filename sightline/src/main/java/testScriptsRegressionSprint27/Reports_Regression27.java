@@ -22,6 +22,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.CommunicationExplorerPage;
+import pageFactory.ConceptExplorerPage;
 import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -479,4 +480,44 @@ public class Reports_Regression27 {
 		base.passedStep("Report generated successfully");
 	}
 
+	/**
+	 * @author NA TESTCASE No:RPMXCON-56773
+	 * @Description: Verified - Conceptual Report generation based on Clusters
+	 **/
+	@Test(description = "RPMXCON-56773", enabled = true, groups = { "regression" })
+	public void verifyConceptualReportBasedOnCLuster() throws Exception {
+		ConceptExplorerPage concept = new ConceptExplorerPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		String sourceToSelect = "Security Groups";
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+		
+		base.stepInfo("RPMXCON-56773");
+		base.stepInfo("Verified - Conceptual Report generation based on Clusters");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As  : " + Input.pa1userName);
+		
+		concept.navigateToConceptExplorerPage();
+		driver.waitForPageToBeReady();
+		concept.clickSelectSources();
+		concept.selectSGsource(sourceToSelect, Input.securityGroup);
+		driver.waitForPageToBeReady();
+		concept.filterAction(Input.custodianName_Andrew, Input.metaDataName, null, true);
+		concept.applyFilter("Yes", 10);
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(concept.getDataToAddInCart());
+		asserts.assertTrue(concept.getDataToAddInCart().isElementAvailable(5));
+		asserts.assertAll();
+		base.stepInfo("Clusters are displayed at the bottom of the page ");
+		String docCount = concept.addMultipleTilesToCart(1);
+		driver.waitForPageToBeReady();
+		concept.performActions("Bulk Folder");
+		String bulkFolderCount = sessionSearch.BulkActions_Folder_returnCount(folderName);
+		base.textCompareEquals(docCount, bulkFolderCount, "Folder Document count matches as expected",
+				"Mis-match in document count");
+		base.stepInfo("Bulk Folder Action done successfully");
+		base.passedStep("To Verify Conceptual Report generation based on Clusters");
+	    loginPage.logout();
+	}
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -17,6 +19,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.BatchPrintPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -275,6 +278,179 @@ public class Export_Regression27 {
 		File TiffFile = new File(
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(TiffFile, Input.tagNameTechnical);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author sowndarya TESTCASE No:RPMXCON-50686
+	 * @Description:Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully
+	 **/
+	@Test(description = "RPMXCON-50686", enabled = true, groups = { "regression" })
+	public void verifyGeneratePDF_MultiPage() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-50686");
+		base.stepInfo("Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully");
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String productionname = "Prod" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagName,Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		System.out.println("created production "+ productionname);
+		page.fillingDATSection();
+		page.fillingPDFWithMultiPage(tagName);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitTime(2);
+		
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		
+		BatchPrintPage batch= new BatchPrintPage(driver);
+		String extractFile = batch.extractFile(name+".zip");
+		System.out.println(extractFile);
+
+		driver.waitForPageToBeReady();
+
+		page.verifyDownloadPDFFileCount(extractFile, false);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author sowndarya TESTCASE No:RPMXCON-50688
+	 * @Description:Verify If both TIFF and PDF are produced in the existing production (before upgrade) selected as the basis for export, in Export, you will only be able to export only TIFF.
+	 **/
+	@Test(description = "RPMXCON-50688", enabled = true, groups = { "regression" })
+	public void verifyGeneratePDF_SinglePage() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-50688");
+		base.stepInfo("Verify If both TIFF and PDF are produced in the existing production (before upgrade) selected as the basis for export, in Export, you will only be able to export only TIFF.");
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String productionname = "Prod" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagName,Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		System.out.println("created production "+ productionname);
+		page.fillingDATSection();
+		base.stepInfo("selecting single page");
+		page.fillingTIFFWithSinglePage(tagName);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitTime(2);
+		
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		
+		BatchPrintPage batch= new BatchPrintPage(driver);
+		String extractFile = batch.extractFile(name+".zip");
+		System.out.println(extractFile);
+		base.passedStep("TIFF with single page is exported successfully");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author sowndarya TESTCASE No:RPMXCON-50692
+	 * @Description:Verify that Export should generate successfully by selecting only DAT and 'Generate TIFF' option with Priv Placholder
+	 **/
+	@Test(description = "RPMXCON-50692", enabled = true, groups = { "regression" })
+	public void verifyPrivPlaceholder() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-50692");
+		base.stepInfo("Verify that Export should generate successfully by selecting only DAT and 'Generate TIFF' option with Priv Placholder");
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String productionname = "Prod" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagName,Input.tagNamePrev);
+
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		int FirstFile = Integer.valueOf(beginningBates);
+		page.addANewProduction(productionname);
+		System.out.println("created production "+ productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionPrivDocs(tagName, Input.tagNamePrev);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String privCountInSummaryPage = page.getPrivDocCountInSummaryPage().getText();
+		base.digitCompareEquals(purehit, Integer.parseInt(privCountInSummaryPage), "summary count is as expected", "summary count is not as expected");
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.extractFile();
+		int LastFile = purehit + FirstFile;
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+		File TiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.isfileisExists(TiffFile);
+
+		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, LastFile, prefixID, suffixID, Input.tagNamePrev);
 		loginPage.logout();
 	}
 }
