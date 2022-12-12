@@ -5487,4 +5487,32 @@ public class UserManagement {
 		getsavedomainuser().waitAndClick(10);
 
 	}
+	
+	/**
+	 * @author Vijaya.rani
+	 * @description: userRoleImpersonate
+	 * @param role, impersonateRole
+	 */
+	
+	public void userRoleImpersonate(String role, String impersonateRole) throws InterruptedException {
+		if (role.equalsIgnoreCase("SA")) {
+			if (impersonateRole.equalsIgnoreCase("PA")) {
+				bc.impersonateSAtoPA();
+			} else if (impersonateRole.equalsIgnoreCase("RMU")) {
+				bc.impersonateSAtoRMU();
+			} else if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonateSAtoReviewer();
+			}
+		} else if (role.equalsIgnoreCase("PA")) {
+			if (impersonateRole.equalsIgnoreCase("RMU")) {
+				bc.impersonatePAtoRMU();
+			} else if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonatePAtoReviewer();
+			}
+		} else if (role.equalsIgnoreCase("RMU")) {
+			if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonateRMUtoReviewer();
+			}
+		}
+	}
 }

@@ -156,7 +156,6 @@ public class SessionSearch {
 	public Element contentAndMetaDataResult() {
 		return driver.FindElementByXPath("//td[text()='Content and Metadata']/parent::tr//span[@class='badge']");
 	}
-
 	public Element getFromBatesBtn() {
 		return driver.FindElementByXPath("//input[@id='BatesFrom']");
 	}
@@ -2213,6 +2212,11 @@ public class SessionSearch {
 
 	public Element getTagMenuPopup() {
 		return driver.FindElementByXPath("//*[@id='insertMetaPop']");
+	}
+	
+	public Element contentAndMetaDataResultBasicSearch() {
+		return driver.FindElementByXPath("//*[@id='xEdit']/li//following-sibling::li/span");
+
 	}
 
 	public SessionSearch(Driver driver) {
