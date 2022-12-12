@@ -108,15 +108,15 @@ public class SessionSearch {
 	public Element getSelectSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//select[@id='sampleMethodNewAssignment']");
 	}
-	
+
 	public Element getTextBoxLableOfSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//label[@id='CountToAssignLabelNewAssignment']");
 	}
-	
+
 	public Element getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//div[@id='divNumberToAssignNewAssignment' and @style='display: none;']");
 	}
-	
+
 	public Element getWorkProductTextBox() {
 		return driver.FindElementByXPath("//div[@id='workproduct']//input[@class='textboxlist-bit-editable-input']");
 	}
@@ -1956,7 +1956,7 @@ public class SessionSearch {
 	public Element getAdvScrnSearchLabel(String i) {
 		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
 	}
-	
+
 	public Element getConceptualTileHit(int i) {
 		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()=" + i + "]");
 	}
@@ -2097,50 +2097,58 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
+
 	
 
 	public Element getSearchThirdTextField() {
 		return driver.FindElementByXPath("(.//*[@id='xEdit']//li/following-sibling::li//input)[last()]");
 	}
 	
+
 	public Element getReportTotalCount() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
 	}
+
 	public Element getReportMetadat() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text'])[last()]");
 	}
+
 	public Element getGoToTallyReport() {
 		return driver.FindElementByXPath("//button[@id='bot3-Msg1']");
 	}
+
 	public Element getPopupHeader() {
 		return driver.FindElementByXPath("//span[@class='MsgTitle']");
 	}
+
 	public Element getPopupText() {
 		return driver.FindElementByXPath("//div[@id='tallyWrapperDiv']//p[contains(@style, 'margin-top')]");
 	}
-	
+
 	public ElementCollection getIDNames() {
-		return driver
-				.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
 	}
-	
+
 	public Element getPageNum(int num) {
 		return driver.FindElementByXPath(
-				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" +num+ "']");
+				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" + num + "']");
 	}
+
 	public Element getLastPagenum() {
-		return driver.FindElementByXPath(
-				"(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
+		return driver.FindElementByXPath("(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
 	}
-	
+
 	public ElementCollection getStartDatesInBG() {
 		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
 	}
+
 	public Element getStartDateButton() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//th[6]");
 	}
-	public Element getStatusText(String id,String status) {
-		return driver.FindElementByXPath("//td[contains(text(),'"+id+"')]//following-sibling::td[text()='"+status+"']");
+
+	public Element getStatusText(String id, String status) {
+		return driver.FindElementByXPath(
+				"//td[contains(text(),'" + id + "')]//following-sibling::td[text()='" + status + "']");
 	}
 
 	public Element getTxtDownloadFile(String id) {
@@ -2160,48 +2168,53 @@ public class SessionSearch {
 	}
 
 	public Element getAdvancedLabel() {
-		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
+		return driver.FindElementByXPath(
+				"//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
 	}
+
 	public Element getDraftQuery() {
 		return driver.FindElementByXPath("//span[@class='badge']");
 	}
-	
 
 	public Element getContentMetaDataBtnDisabled() {
 		return driver.FindElementByXPath(
 				"//*[@id='insertMetaPop']//button[@class='btn text-center btn-default addblock disabled'][@id='contentmetadata']");
 	}
+
 	public Element getSelectAllSecurityGroupBtn() {
 		return driver.FindElementByXPath("//*[@id='SelectAll']/following-sibling::i");
 	}
-	public Element getEnterSearchBox() {
-		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
-	}
 
+	public Element getEnterSearchBox() {
+		return driver
+				.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
+	}
 
 	public Element getCountOfDocsLoading() {
-		return driver.FindElementByXPath("//div[@id='divUnAssignDocuments']//span[@class='label bg-color-blue font-md loader text-align-center bulkActionsSpanLoder']");
+		return driver.FindElementByXPath(
+				"//div[@id='divUnAssignDocuments']//span[@class='label bg-color-blue font-md loader text-align-center bulkActionsSpanLoder']");
 	}
-	
+
 	public Element getSelectedUnAssignExistingAssignments() {
 		return driver.FindElementByXPath("//div[@id='jstreeUnAssign']//a[@class='jstree-anchor jstree-clicked']");
 	}
-	
+
 	public Element getExisAssignPOPOVER() {
 		return driver.FindElementByXPath("//div[@role='tooltip']//div[@class='popover-content']");
 	}
-	
 
 	public Element getSelectQueryText(String Text) {
-		return driver.FindElementByXPath("//td//span[contains(text(),'"+Text+"')]");
+		return driver.FindElementByXPath("//td//span[contains(text(),'" + Text + "')]");
 	}
 
 	public Element getDistributeUserAssign(String User) {
-		return driver.FindElementByXPath("//*[@id='dist']//option[contains(text(),'"+User+"')]");
+		return driver.FindElementByXPath("//*[@id='dist']//option[contains(text(),'" + User + "')]");
 	}
+
 	public Element getTagMenuPopup() {
 		return driver.FindElementByXPath("//*[@id='insertMetaPop']");
 	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -12020,7 +12033,8 @@ public class SessionSearch {
 	 * @param metaDataField
 	 * @param val1
 	 * @return
-	 * @Description new metadata basic search
+	 * @Description new metadata  search in Basic & Advanced search
+           * @Modified By jeevitha @ modified date :12/12/2022
 	 */
 	public int newMetaDataSearchInBasicSearch(String metaDataField, String val1) {
 		// To make sure we are in basic search page
@@ -12039,11 +12053,10 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(3);
 		// Click on Search button
-		base.waitForElement(getSecondSearchBtn());
-		getSecondSearchBtn().waitAndClick(3);
-		if (base.getYesBtn().isElementAvailable(2)) {
-			base.getYesBtn().waitAndClick(10);
-		}
+		//base.waitForElement(getSecondSearchBtn());
+//		getSecondSearchBtn().waitAndClick(3);
+		SearchBtnAction();
+		base.waitTime(2);
 		base.waitForElement(getPureHitsCount2ndSearch());
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -13833,9 +13846,11 @@ public class SessionSearch {
 		getTagsAllRoot().Click();
 
 		getContinueButton().waitAndClick(10);
-		if(getFinalizeButton().isDisplayed()==false) {
-			base.failedStep("Continue button is not interactable");		}
+		if (getFinalizeButton().isDisplayed() == false) {
+			base.failedStep("Continue button is not interactable");
+		}
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param TagName
@@ -13868,7 +13883,7 @@ public class SessionSearch {
 		base.waitForElement(getTagsAllRoot());
 		getTagsAllRoot().Click();
 
-		getContinueButton().waitAndClick(10);	
+		getContinueButton().waitAndClick(10);
 
 	}
 
@@ -13907,6 +13922,7 @@ public class SessionSearch {
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
 	}
+
 	/**
 	 * this method verifies the Total docs selected count displayed in bulk folder
 	 * pop up.
@@ -13941,8 +13957,9 @@ public class SessionSearch {
 		base.waitForElement(getFolderAllRoot());
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
-		if(getFinalizeButton().isDisplayed()==false) {
-			base.failedStep("Continue button is not interactable");		}
+		if (getFinalizeButton().isDisplayed() == false) {
+			base.failedStep("Continue button is not interactable");
+		}
 
 	}
 
@@ -14129,36 +14146,35 @@ public class SessionSearch {
 						"Verify that Label is changed to \"Percentage to Assign\"",
 						"actual lable Text doesn't match with expected lable Text");
 			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
-				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
+				softAssert.assertEquals((boolean) getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
 				softAssert.assertAll();
 				base.passedStep("Verified that label is removed.");
 			}
 		}
 
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
-	public void checkingStatusUsingRefresh(String backGroundID,String status) {
+	public void checkingStatusUsingRefresh(String backGroundID, String status) {
 		driver.waitForPageToBeReady();
 
 		for (int i = 0; i < 10; i++) {
 			System.out.println(i);
-			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
-				
-                base.stepInfo("waiting for status"+status);
-                break;
+			if (getStatusText(backGroundID, status).isElementAvailable(15)) {
+
+				base.stepInfo("waiting for status" + status);
+				break;
+			} else {
+				driver.Navigate().refresh();
+				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
+			}
 		}
-			else {
-                driver.Navigate().refresh();
-                System.out.println("Refresh");
-                driver.waitForPageToBeReady();
-            }
-		}
-		
+
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
@@ -14186,7 +14202,6 @@ public class SessionSearch {
 		// Click on Search button
 		getQuerySearchBtn().Click();
 	}
-	
 
 	public void verifyDraftedQueryPresentInSearchbox(String query) {
 		String ExpectedMessage = query;
@@ -14201,33 +14216,31 @@ public class SessionSearch {
 		}
 
 	}
-	
-
-	
-	
 
 	public List<String> getAllIDFromBGPage() {
 		List<String> allIDinBG = new ArrayList<String>();
 		driver.waitForPageToBeReady();
-		base.waitForElementCollection(getIDNames());	
+		base.waitForElementCollection(getIDNames());
 		allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
-		if(getLastPagenum().isElementAvailable(4)) {
-		for(int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
-			driver.scrollingToBottomofAPage();
-			if(getPageNum(i).isElementAvailable(4)) {
-				getPageNum(i).waitAndClick(4);
-				base.waitTime(1);	
-				allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
-			}}}
-		return allIDinBG;
+		if (getLastPagenum().isElementAvailable(4)) {
+			for (int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
+				driver.scrollingToBottomofAPage();
+				if (getPageNum(i).isElementAvailable(4)) {
+					getPageNum(i).waitAndClick(4);
+					base.waitTime(1);
+					allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+				}
+			}
 		}
-	
+		return allIDinBG;
+	}
+
 	/**
 	 * @author sowndarya
 	 */
-	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator, String metaData1,
-			String metaDataValue1) {
-		
+	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator,
+			String metaData1, String metaDataValue1) {
+
 		base.waitForElement(getBasicSearch_MetadataBtn());
 		driver.waitForPageToBeReady();
 		getBasicSearch_MetadataBtn().waitAndClick(10);
@@ -14242,9 +14255,9 @@ public class SessionSearch {
 
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
-		
+
 		selectOperatorInBasicSearch(Operator);
-		
+
 		base.waitForElement(getBasicSearch_MetadataBtn());
 		driver.waitForPageToBeReady();
 		getBasicSearch_MetadataBtn().waitAndClick(10);
@@ -14285,11 +14298,11 @@ public class SessionSearch {
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(5);
 
-
 	}
-	
-	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(String optionToSelect,boolean verifyTextBoxLableOfSampleMethod) {
-		
+
+	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(String optionToSelect,
+			boolean verifyTextBoxLableOfSampleMethod) {
+
 		getSelectSampleMethodFromNewAssignmentab().selectFromDropdown().selectByVisibleText(optionToSelect);
 
 		if (verifyTextBoxLableOfSampleMethod) {
@@ -14306,22 +14319,25 @@ public class SessionSearch {
 						"Verify that Label is changed to \"Percentage to Assign\"",
 						"actual lable Text doesn't match with expected lable Text");
 			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
-				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab().isElementAvailable(5), true);
+				softAssert.assertEquals(
+						(boolean) getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab().isElementAvailable(5),
+						true);
 				softAssert.assertAll();
 				base.passedStep("Verified that label is removed.");
 			}
 		}
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param assignMentName
 	 * @param Status
 	 * @param User
-	 * @return 
-	 * @throws InterruptedException
-	 * Description: selecting Assignment in workproduct
+	 * @return
+	 * @throws InterruptedException Description: selecting Assignment in workproduct
 	 */
-	public void selectAssignmentInWPS(final String assignMentName,String Status,String User) throws InterruptedException {
+	public void selectAssignmentInWPS(final String assignMentName, String Status, String User)
+			throws InterruptedException {
 		base.waitForElement(getWP_assignmentsBtn());
 		getWP_assignmentsBtn().Click();
 		System.out.println(getTree().FindWebElements().size());
@@ -14336,18 +14352,33 @@ public class SessionSearch {
 				break;
 			}
 		}
-		if(Status!=null) {
-		base.waitForElement(getadwp_assgn_status());
-		getadwp_assgn_status().selectFromDropdown().selectByVisibleText(Status);
-		}else {
+		if (Status != null) {
+			base.waitForElement(getadwp_assgn_status());
+			getadwp_assgn_status().selectFromDropdown().selectByVisibleText(Status);
+		} else {
 			base.waitForElement(getDistributeUserAssign(User));
 			getDistributeUserAssign(User).waitAndClick(10);
 		}
-		
+
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(20);
 		driver.scrollPageToTop();
 		base.stepInfo("Assignment is selected in work product - advanced search");
+
+	}
+
+	public void verifyListOfMetaDataFromMetaDataDropDown(List<String> listOfMetaData) {
+
+		navigateToAdvancedMetaDataSearch();
+		for (int i = 0; i < listOfMetaData.size(); i++) {
+			if (getMetaDataInDropdown(listOfMetaData.get(i)).isElementAvailable(5)) {
+				base.passedStep(
+						"MetaData Option '" + listOfMetaData.get(i) + "' is presnt in the MetaData dropdown List.");
+			} else {
+				base.failedStep(
+						"MetaData Option '" + listOfMetaData.get(i) + "' is Not presnt in the MetaData dropdown List.");
+			}
+
 		
 		
 	}	
@@ -14381,8 +14412,10 @@ public class SessionSearch {
 		}
 		else {
 			base.failedStep("count of unique published DocIds not displayed-"+uniqueDocCount);
+
 		}
 	}
+
 
 	public void refreshAndVerifyStatus(String backGroundID, String status, int noToRefresh) {	
 		driver.waitForPageToBeReady();
@@ -14458,3 +14491,4 @@ public class SessionSearch {
 		return pureHit;
 	}
 }
+
