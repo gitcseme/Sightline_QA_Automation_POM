@@ -3926,7 +3926,7 @@ public class CodingForm {
 				getInstructionText0().SendKeys(HelpText);
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMessage);
-					}
+				base.stepInfo("Edited coding form and verified error message");					}
 		
 				}
 
@@ -3958,6 +3958,7 @@ public class CodingForm {
 				getInstructionText0().SendKeys(HelpText);
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMessage);
+				base.stepInfo("Edited coding form and verified error message");	
 					}
 		
 				}
@@ -3992,6 +3993,7 @@ public class CodingForm {
 				getInstructionText0().SendKeys(instructionText);
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMsg);
+				base.stepInfo("Edited coding form and verified error message");	
 					}
 		
 				}

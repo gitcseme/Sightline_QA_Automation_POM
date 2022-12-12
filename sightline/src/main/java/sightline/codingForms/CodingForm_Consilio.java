@@ -72,7 +72,7 @@ public class CodingForm_Consilio {
 
 	}
 
-	@Test(description = "RPMXCON-68850",groups = { "regression" })
+	//@Test(description = "RPMXCON-68850",groups = { "regression" })
 	public void verifyCFnameSpecialChar() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-68850 :Verify that error message display and application does NOT accepts - \"Coding Form\" Name with special characters < > & ‘");
 	    String codingform = "test&'test>";
@@ -119,7 +119,7 @@ public class CodingForm_Consilio {
 		loginPage.logout();
 	}
 
-	@Test(description= "RPMXCON-69033",groups= { "regression" })
+	//@Test(description= "RPMXCON-69033",groups= { "regression" })
 	public void CheckGroupObjectERRORMsg() {
 		baseClass.stepInfo("Test case Id: RPMXCON-69033 :Verify that error message display and Check Group Object inside Coding Form does NOT accept with special characters < > & ‘ ");
 	    String codingform = "TestCF"+Utility.dynamicNameAppender();
@@ -168,7 +168,7 @@ public class CodingForm_Consilio {
 		loginPage.logout();
 	}
 	
-	@Test(description= "RPMXCON-69032",groups= { "regression" })
+	//@Test(description= "RPMXCON-69032",groups= { "regression" })
 	public void RadioGroupObjectERRORMsg() {
 		baseClass.stepInfo("Test case Id: RPMXCON-69032 :Verify that error message  display and \"Radio Group Object\" inside Coding Form does NOT accept with special characters < > & ‘ ");
 	    String codingformA = "DummyCF"+Utility.dynamicNameAppender();
@@ -228,6 +228,7 @@ public class CodingForm_Consilio {
 		    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.stepInfo("Create or edit codign form page is displayed");
 	        codingForm.select_EditableMetaDataObject(SpcharB,SpcharB,SpcharB);
 			
 			//create CodingForm
@@ -235,6 +236,7 @@ public class CodingForm_Consilio {
 			driver.waitForPageToBeReady();
 		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.stepInfo("Create or edit codign form page is displayed");
 			baseClass.waitForElement(codingForm.getCodingFormName());
 			codingForm.getCodingFormName().SendKeys(codingformB);
 			codingForm.select_EditableMetaDataObject(SpcharC,SpcharC,SpcharC);
@@ -272,6 +274,7 @@ public class CodingForm_Consilio {
 				    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 				    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 					codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+					baseClass.stepInfo("Create or edit codign form page is displayed");
 			        codingForm.select_TagObject(SpcharB,SpcharB,SpcharB);
 					
 					//create CodingForm
@@ -279,6 +282,7 @@ public class CodingForm_Consilio {
 					driver.waitForPageToBeReady();
 				    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 					codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+					baseClass.stepInfo("Create or edit codign form page is displayed");
 					baseClass.waitForElement(codingForm.getCodingFormName());
 					codingForm.getCodingFormName().SendKeys(codingformB);
 					codingForm.select_TagObject(SpcharC,SpcharC,SpcharC);
@@ -316,6 +320,7 @@ public class CodingForm_Consilio {
 		    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
 		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.stepInfo("Create or edit codign form page is displayed");
 	        codingForm.select_CommentObject(SpcharB,SpcharB,SpcharB);
 			
 			//create CodingForm
@@ -323,6 +328,7 @@ public class CodingForm_Consilio {
 			driver.waitForPageToBeReady();
 		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
 			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.stepInfo("Create or edit codign form page is displayed");
 			baseClass.waitForElement(codingForm.getCodingFormName());
 			codingForm.getCodingFormName().SendKeys(codingformB);
 			codingForm.select_CommentObject(SpcharC,SpcharC,SpcharC);
