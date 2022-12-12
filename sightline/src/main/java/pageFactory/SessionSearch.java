@@ -13041,9 +13041,7 @@ public class SessionSearch {
 			base.stepInfo(actualMsg);
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
-		}
-
-		if (MessageNumber == 2) {
+		} else if (MessageNumber == 2) {
 
 			String msg = " Your query may contain an invalid Proximity Query. Any Double Quoted phrases as part of a Proximity Query must also be wrapped in Parentheses, e.g. \"Term1 (\"Specific Phrase\")\"~4.";
 			base.waitTime(2);
@@ -13053,9 +13051,7 @@ public class SessionSearch {
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 			base.passedStep(actualMsg);
-		}
-
-		if (MessageNumber == 3) {
+		} else if (MessageNumber == 3) {
 
 			String msg = " Double quotes are missing in your search query. Please correct the query to include double quotes.";
 			base.waitTime(2);
@@ -13065,8 +13061,7 @@ public class SessionSearch {
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 			base.passedStep(actualMsg);
-		}
-		if (MessageNumber == 4) {
+		} else if (MessageNumber == 4) {
 			String msg = "Your query has multiple potential syntax issues.  1. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.  2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).  Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			base.waitTime(2);
 			base.waitForElement(getWarningMsg());
@@ -13075,9 +13070,13 @@ public class SessionSearch {
 			base.stepInfo(actualMsg);
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
-		}
-		if (MessageNumber == 5) {
+		} else if (MessageNumber == 5) {
 			String msg = "Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)  Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			System.out.println(getQueryAlertGetText().getText().replaceAll("\n", " "));
+			Assert.assertEquals(msg.replaceAll(" ", ""),
+					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+		} else if (MessageNumber == 6) {
+			String msg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			System.out.println(getQueryAlertGetText().getText().replaceAll("\n", " "));
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));

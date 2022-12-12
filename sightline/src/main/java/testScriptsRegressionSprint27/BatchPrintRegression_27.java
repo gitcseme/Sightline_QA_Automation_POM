@@ -1,6 +1,7 @@
 package testScriptsRegressionSprint27;
 
 import java.awt.AWTException;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -20,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import net.lingala.zip4j.ZipFile;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
@@ -178,6 +180,148 @@ public class BatchPrintRegression_27 {
 		baseClass.sortAndCompareList(zipFileList, actualSkippedFile, true, "Ascending",
 				"Skipped Document are as expected & are not printed", "Skipped document are not as expected");
 
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that user can select the Prior Production option and
+	 *              view the details. [RPMXCON-47796]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47796", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyAllProductionDisplayedInBatchPrint(String username, String password) throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47796 Batch Print");
+		baseClass.stepInfo("To verify that user can select the Prior Production option and view the details.");
+
+		// create folder in Default SG
+		tagsAndFolderPage.CreateFolder(Folder, Input.securityGroup);
+
+		// configure query & Bulk Folder
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolderExisting(Folder);
+
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
+		// create Production Set & Generate Production with TIFF
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String productionSet = "P" + Utility.dynamicNameAppender();
+
+		page.navigateToProductionPage();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.CreateProductionSets(productionSet);
+		page.VerifyProductionSet(productionSet);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionwithBurnRedaction();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, Folder, productionname,
+				beginningBates);
+
+		// Fetch Available Production in Created Production Set
+		page.navigateToProductionPage();
+		driver.waitForPageToBeReady();
+		page.VerifyProductionSet(productionSet);
+		baseClass.waitForElementCollection(page.getProductionItem());
+		List<String> availableProduction = baseClass.availableListofElements(page.getProductionItem());
+
+		// Select Folder in source selection
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+
+		// Fetch Available Production in basis for printing Tab & verify production
+		// Displayed
+		List<String> availableProdInBatchPrint = batchPrint.selectProductionFromBasisTab(productionSet, productionname,
+				null);
+		baseClass.sortAndCompareList(availableProduction, availableProdInBatchPrint, true, "Ascending",
+				"All Production produced with TIFFs/PDFs files under the production set is Displayed.",
+				"Expected Production is not dispalyed");
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify PDF file should be generated for the production
+	 *              documents when production contains the documents with same file
+	 *              name [RPMXCON-47475]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47475", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyPdfFileForProdDoc(String username, String password) throws Exception {
+		String tagName = "tagName" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47475 Batch Print");
+		baseClass.stepInfo(
+				"Verify PDF file should be generated for the production documents when production contains the documents with same file name");
+
+		// create folder in Default SG
+		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
+
+		// configure query & Bulk Folder
+		session.basicContentSearch(Input.testData1);
+		session.bulkTagExisting(tagName);
+
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
+		// Generate Production with PDF for multiple Pages
+		String productionname = "P" + Utility.dynamicNameAppender();
+		System.out.println("Creating production : " + productionname);
+		page.navigateToProductionPage();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFWithMultiPage(tagName);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+
+		// Verify Downloaded File name is same as production Name
+		baseClass.waitUntilFileDownload();
+		String downloadedFile = baseClass.GetLastModifiedFileName();
+		baseClass.compareTextViaContains(downloadedFile, productionname,
+				"Downloaded ZIP file is same as Craeted Producion Name", "Downloaded ZIP file name is not as expected");
+
+		// Extract the downloaded zip file
+		driver.waitForPageToBeReady();
+		String name = page.getProduction().getText().trim();
+		String extractFile = batchPrint.extractFile(name + ".zip");
+		System.out.println(extractFile);
+		driver.waitForPageToBeReady();
+		List<String> fileName = page.verifyDownloadPDFFileCount(extractFile, false);
+
+		// verify dowloaded has PDF file generated each for the document
+		// & the document from the selected production set have same file name as
+		// Production name
+		for (int i = 0; i < fileName.size(); i++) {
+			baseClass.validateFileFormat(fileName.get(i), "pdf");
+			baseClass.compareTextViaContains(fileName.get(i), name,
+					"PDF file is generated each for the document & contain same file name as selected : "
+							+ fileName.get(i),
+					"Generated PDF file is not as expected");
+		}
+
+		// logout
 		loginPage.logout();
 	}
 

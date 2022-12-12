@@ -22953,7 +22953,9 @@ public class ProductionPage {
 
 	}
 
-	public void verifyDownloadPDFFileCount(String extractedFile, boolean expectedCountIs1) {
+	public List<String> verifyDownloadPDFFileCount(String extractedFile, boolean expectedCountIs1) {
+		List<String> fileNames = new ArrayList<>();
+
 		File dir = new File(Input.fileDownloadLocation + "//" + extractedFile + "/VOL0001/PDF/0001");
 		base.stepInfo("Downloaded File Location :" + dir);
 		File[] dir_contents = dir.listFiles();
@@ -22968,7 +22970,13 @@ public class ProductionPage {
 		} else {
 			base.failedStep("PDF File not generated");
 			}
-
+		for (int i = 0; i < PDFFile; i++) {
+			// Get File Names
+			String filename = dir_contents[i].getName();
+			System.out.println("Downloaded File Name : " + filename);
+			fileNames.add(filename);
+		}
+		return fileNames;
 	}
 
 	public void verifyDownloadTIFFFileCount(String extractedFile, boolean expectedCountIs1) {
