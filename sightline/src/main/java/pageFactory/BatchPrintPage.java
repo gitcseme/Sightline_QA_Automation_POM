@@ -3267,4 +3267,30 @@ public class BatchPrintPage {
 		return detailValue;
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : select production from production set and return list of
+	 *              production inavailable in production set
+	 * @param productionSet
+	 * @param productionName
+	 * @param additional
+	 * @return
+	 */
+	public List<String> selectProductionFromBasisTab(String productionSet, String productionName, String additional) {
+		base.waitForElement(getProductionRadioButton());
+		getProductionRadioButton().waitAndClick(5);
+
+		base.waitForElement(getSelectProductionSet());
+		getSelectProductionSet().waitAndClick(10);
+		getSelectProductionSet().selectFromDropdown().selectByVisibleText(productionSet);
+		base.stepInfo("Selected Production Set is : " + productionSet);
+
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getProductionList());
+		List<String> availableProduction = base.availableListofElements(getProductionList());
+		getSelectProduction().selectFromDropdown().selectByVisibleText(productionName);
+		base.stepInfo("Selected Production is : " + productionName);
+		return availableProduction;
+	}
+
 }

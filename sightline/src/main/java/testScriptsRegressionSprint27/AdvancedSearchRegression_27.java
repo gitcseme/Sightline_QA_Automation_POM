@@ -1137,6 +1137,60 @@ public class AdvancedSearchRegression_27 {
 
 	}
 
+	@DataProvider(name = "phraseWithoutWrappingInQuotes")
+	public Object[][] phraseWithoutWrappingInQuotes() {
+		return new Object[][] { {"CustodianName: (John R. Shaw) OR Balance money"},
+				{"Balance money Mobile"},
+				{"Balance money Mobile OR CustodianName:(John R. Shaw)"}};
+	}
+	
+	
+	/**
+	 * @author
+	 * @Description :Verify that warning and pure hit result appears While Editing an
+	 *  existing CustodianName Metadata search having phrase included in the query
+	 *   without wrapping in quotes on Advanced Search Screen.RPMXCON-49700
+	 */
+	
+	@Test(description = "RPMXCON-49700", dataProvider = "phraseWithoutWrappingInQuotes",enabled = true, groups = { "regression" })
+	public void verifyWaringAndPureHitResultAppearsWhileEditingExistingCustodianNameMetadataSearchHavingPhraseQueryWithoutWrappingInQuotes(String searchString){
+	
+  		String savedSearchString = "savedSearch"+Utility.dynamicNameAppender();
+  		baseClass.stepInfo("Test case Id: RPMXCON-49700");
+  		baseClass.stepInfo("Verify that warning and pure hit result appears While Editing an existing CustodianName Metadata search having phrase included in the query without wrapping in quotes on Advanced Search Screen.");
+  	
+  	    // login
+  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  			
+  		//Pre-Requisite
+  		// performing search for given search Query and saving the search Result 
+  		baseClass.stepInfo("performing search for given search Query and saving the search Result.");
+  		sessionSearch.advancedContentSearch(searchString);
+  		sessionSearch.saveSearch(savedSearchString);
+  		
+  		//Clearing All the searches in session Search since it is Pre-Requisite
+  		baseClass.selectproject();
+  		
+  		// selecting the saved search and Click on Edit Button
+  		baseClass.stepInfo("selecting the saved search and Click on Edit Button.");
+  		savedSearch.savesearch_Edit(savedSearchString);
+  		
+  		// Click On Search Button
+  		baseClass.stepInfo("Click On Search Button.");
+  		sessionSearch.resubmitSearch();
+  		
+  		// Verify that application displays Query Alert message.
+  		sessionSearch.verifyWarningMessage(false,true,6);
+  		baseClass.passedStep("Verified that application displays Query Alert message.");
+  		
+  		// Verify that pure hit result appears for TestData Metadata search while editing Metadata having phrase included in the query without wrapping in quotes on Advanced Search Screen.
+  		sessionSearch.tallyContinue(5);
+  		sessionSearch.returnPurehitCount();
+  		baseClass.stepInfo("Verified that pure hit result appears for '"+searchString+"' Metadata search while editing Metadata having phrase included in the query without wrapping in quotes on Advanced Search Screen.");
+  		
+  	// logOut
+  			loginPage.logout();
+  	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
