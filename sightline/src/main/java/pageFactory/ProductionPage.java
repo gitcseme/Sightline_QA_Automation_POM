@@ -22961,9 +22961,9 @@ public class ProductionPage {
 		int PDFFile = dir_contents.length;
 
 		if (PDFFile > 1 && !expectedCountIs1) {
-			base.passedStep("PDF generated file is as expected and the count is :" + PDFFile);
+			base.passedStep("PDF generated file is as expected  with multipage and the count is :" + PDFFile);
 		} else if (PDFFile == 1 && expectedCountIs1) {
-			base.passedStep("PDF generated file is as expected and the count is :" + PDFFile);
+			base.passedStep("PDF generated file is as expected with singlepage and the count is :" + PDFFile);
 
 		} else {
 			base.failedStep("PDF File not generated");
@@ -22979,9 +22979,9 @@ public class ProductionPage {
 		int PDFFile = dir_contents.length;
 
 		if (PDFFile > 1 && !expectedCountIs1) {
-			base.passedStep("PDF generated file is as expected and the count is :" + PDFFile);
+			base.passedStep("TIFF generated file is as expected  with multipage and the count is :" + PDFFile);
 		} else if (PDFFile == 1 && expectedCountIs1) {
-			base.passedStep("PDF generated file is as expected and the count is :" + PDFFile);
+			base.passedStep("TIFF generated file is as expected with singlepage and the count is :" + PDFFile);
 
 		} else {
 			base.failedStep("PDF File not generated");
