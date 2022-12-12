@@ -412,13 +412,21 @@ public class DomainManagement_27 {
 		baseClass.stepInfo("Navigating to Projects Page");
 		user.navigateToUsersPAge();
 		baseClass.waitTime(5);
-		baseClass.stepInfo("Selecting Assign user and validating the project dropdown");
-		baseClass.waitForElement(user.getAssignUserButton());
-		user.getAssignUserButton().waitAndClick(5);
-		baseClass.waitTime(5);
-		baseClass.waitForElement(user.getProjectTab());
-		user.getProjectTab().waitAndClick(5);
-		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+        baseClass.stepInfo("Selecting Assign user and validating the project dropdown");
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return user.getAssignUserButton().Visible();
+            }
+        }), Input.wait120);
+        user.getAssignUserButton().waitAndClick(10);
+        baseClass.waitTime(5);
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return user.getProjectTab().Visible();
+            }
+        }), Input.wait120);
+        user.getProjectTab().waitAndClick(10);
+        driver.waitForPageToBeReady();
 		int Size = user.getAssignUserProjectDrp_Dwn().selectFromDropdown().getOptions().size();
 		System.out.println(Size);
 		for (int i = 2; i <= Size; i++) {
