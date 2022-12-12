@@ -6577,5 +6577,29 @@ public class DocListPage {
 		}
 		base.VerifySuccessMessage("Records saved successfully");
 	}
+	
+	/**
+	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will return the single metadata value from doclist when search result under 500
+	 */
+	public String getDoclistMetaDataValue(int count) {
+			
+			String metadataValue=null;
+			base.waitForElement(getDocList_SelectLenthtobeshown());
+			getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDataInDoclist(1,4));
+			for(int i=1;i<=count;i++) {
+				metadataValue = getDataInDoclist(i,4).getText();
+				if(!(metadataValue.isEmpty())) {
+					base.passedStep("metadata value"+metadataValue);
+					break;
+				}
+				else {
+					System.out.println("checking next row");
+				}
+			}
+			return metadataValue;
+		}
 
 }
