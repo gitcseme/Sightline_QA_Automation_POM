@@ -444,6 +444,8 @@ public class Input {
 	public static String uncRelativeNative;
 	public static String emailConversationGdFolder;
 	public static String emailGdDat;
+	public static String smallSetDat2;
+	public static String specialCjkDat;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1484,7 +1486,8 @@ public class Input {
 		uncRelativeNative = testData.getUncRelativeNative();
 		emailConversationGdFolder = testData.getEmailConversationGdFolder();
 		emailGdDat = testData.getEmailGdDat();
-		
+		smallSetDat2 = testData.getSmallSetDat2();
+		specialCjkDat = testData.getSpecialCjkDat();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

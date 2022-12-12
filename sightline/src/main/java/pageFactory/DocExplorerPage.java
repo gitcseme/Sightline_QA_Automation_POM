@@ -4171,8 +4171,7 @@ public class DocExplorerPage {
 	}
 	
 	/**
-	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by: NA Modified Date:
-	 *          NA
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by:Arun Modified Date:12/12/2022
 	 * @description: this method will verify the EmailAuthor field values
 	 *               in doc exp list view
 	 */
@@ -4185,6 +4184,14 @@ public class DocExplorerPage {
 			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailAuthorValues(), emailAuthor[j]);
+			//added count verification for filter result
+			int count = getDocumentCountFromListView();
+			if(count>0) {
+				bc.passedStep("search returned docs"+emailAuthor[j]);
+			}
+			else {
+				bc.failedStep("search not returned docs");
+			}
 			driver.Navigate().refresh();
 		}
 	}

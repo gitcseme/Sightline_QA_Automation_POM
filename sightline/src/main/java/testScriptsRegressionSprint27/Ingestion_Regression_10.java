@@ -3,6 +3,9 @@ package testScriptsRegressionSprint27;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -378,6 +381,261 @@ public class Ingestion_Regression_10 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 10/12/2022 TestCase Id:RPMXCON-47391
+	 * Description :To verify that on Ingestion Home page, on scrolling down next 10 tiles are 
+	 * loaded and displayed and with sort options
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47391",enabled = true, groups = { "regression" })
+	public void verifyDefault10TilesAndLoadMoreOption() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47391");
+		baseClass.stepInfo("Verify default tiles count in ingestion home page");
+		int tilesCount;
+		int ingestionCount;
+		
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		driver.waitForPageToBeReady();
+		//pre-requisite -checking number of ingestion tiles is more than 10
+		ingestionPage.applyFilters();
+		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+		baseClass.waitForElement(ingestionPage.getTotalIngestionCount());
+		ingestionCount = Integer.parseInt(ingestionPage.getTotalIngestionCount().getText());
+		baseClass.stepInfo("Ingestion tiles present  in home page--"+ingestionCount);
+		if(ingestionCount<=10) {
+			baseClass.stepInfo("need to add ingestion");
+			for(int i=ingestionCount+1;i<=11;i++) {
+				ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
+						Input.sourceLocation, Input.HiddenPropertiesFolder);
+				ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+				baseClass.stepInfo("Selecting Dat and Native file");
+				ingestionPage.selectDATSource(Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+				ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
+				ingestionPage.clickOnNextButton();
+				baseClass.waitForElement(ingestionPage.getIngestion_SaveAsDraft());
+				ingestionPage.getIngestion_SaveAsDraft().waitAndClick(10);
+				if(ingestionPage.getApproveMessageOKButton().isElementAvailable(10)) {
+					ingestionPage.getApproveMessageOKButton().waitAndClick(5);
+					}
+				baseClass.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+			}
+			baseClass.stepInfo("Navigate to ingestion home screen");
+			ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+			ingestionPage.applyFilters();
+		}
+		else if(ingestionCount>10) {
+			baseClass.passedStep("Ingestion home page have more than 10 tiles");
+		}
+		baseClass.stepInfo("scroll down and verify default tiles count");
+		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		tilesCount = ingestionPage.getIngestionTilesCount().size();
+		baseClass.stepInfo("Default tiles Count--"+tilesCount);
+		baseClass.stepInfo("Click on load more button and verify ingestion tiles count");
+		ingestionPage.clickOnLoadMoreAndRefresh();
+		tilesCount = ingestionPage.getIngestionTilesCount().size();
+		baseClass.stepInfo("Ingestion tiles count--"+tilesCount);
+		ingestionCount = Integer.parseInt(ingestionPage.getTotalIngestionCount().getText());
+		baseClass.stepInfo("Number of ingestion present--"+tilesCount);
+		baseClass.digitCompareEquals(tilesCount, ingestionCount, 
+				"All the existing ingestions displayed", "existing ingestions not displayed");
+		baseClass.stepInfo("Select each option in sort by dropdown and verify default tiles count");
+		ingestionPage.verifyDefaultTilesCountForDifferentSortOptions();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/12/2022 TestCase Id:RPMXCON-47301
+	 * Description :To Verify the reload of the ingestion with the 'Refresh' option.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47301",enabled = true, groups = { "regression" })
+	public void verifyIngestionRefreshOption() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47301");
+		baseClass.stepInfo("Verify the reload of the ingestion with the 'Refresh' option.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("try to perform ingestion once");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem, Input.DATFile1, Input.prodBeg);
+			baseClass.stepInfo("Publish docs");
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("after performing ingestion,select all filter");
+		ingestionPage.navigateToIngestionPage();
+		ingestionPage.applyFilters();
+		baseClass.stepInfo("click on refresh link available in home Page");
+		baseClass.waitForElement(ingestionPage.getIngestionDetailPopup(1));
+		baseClass.waitForElement(ingestionPage.getRefreshButton());
+		ingestionPage.getRefreshButton().waitAndClick(10);
+		baseClass.stepInfo("verify count and other details after reload ingestion page");
+		int tilesCount = ingestionPage.getIngestionTilesCount().size();
+		baseClass.stepInfo("Ingestion tiles count--"+tilesCount);
+		int ingestionCount = Integer.parseInt(ingestionPage.getTotalIngestionCount().getText());
+		baseClass.stepInfo("Number of ingestion present in project--"+tilesCount);
+		if((tilesCount>0) && (ingestionCount>0)){
+			baseClass.passedStep("Ingestion tiles and count updated successfully.");
+		}
+		else {
+			baseClass.failedStep("Count not updated successfully");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/12/2022 TestCase Id:RPMXCON-54734
+	 * Description :Verify that “EmailAuthor” Column header Filter with CJK characters is working 
+	 * correctly on Doc Explorer list
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-54734",enabled = true, groups = { "regression" })
+	public void verifyEmailAuthorColumnHeader() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54734");
+		baseClass.stepInfo("Verify that “EmailAuthor” Column header Filter is working correctly");
+		//taken the cjk char present in dat file mentioned in testdata
+		String[] cjkChar = {"?","ã","ą","æ","ç","ĉ","ć","č","ð","è","é","ú",
+				"ŭ","ü","ý","ż","ž","€","£","¥"};
+		
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, 
+					Input.specialCjkDat);
+			baseClass.stepInfo("Publish docs");
+			ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
+		}
+		docExplorer = new DocExplorerPage(driver);
+		docExplorer.navigateToDocExplorerPage();
+		baseClass.stepInfo("perform email author header filter");
+		docExplorer.verifyEmailAuthorValuesInDocExp(cjkChar);
+		baseClass.passedStep("Email author header filter is working correctly");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/12/2022 TestCase Id:RPMXCON-48075
+	 * Description :To Verify SourceAttachDocIDs and AttachDocIDs  in Search.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48075",enabled = true, groups = { "regression" })
+	public void verifyAttachDocIdsInSearch() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48075");
+		baseClass.stepInfo("To Verify SourceAttachDocIDs and AttachDocIDs in Search.");
+		String[] field ={"AttachDocIDs"};
+		
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting project which have the pre-requisite data
+		baseClass.selectproject(Input.additionalDataProject);
+		//getting the attachdocid to perform search
+		docExplorer = new DocExplorerPage(driver);
+		docExplorer.navigateToDocExplorerPage();
+		int count =docExplorer.docExpToDocViewOrListWithIngestion("Zip_DocView_20Family_20Threaded", "yes", "doclist");
+		docList = new DocListPage(driver);
+		baseClass.stepInfo("select columns");
+		docList.SelectColumnDisplayByRemovingAddNewValues(field);
+		driver.waitForPageToBeReady();
+		String attachDocIds =docList.getDoclistMetaDataValue(count);	
+		baseClass.stepInfo("navigate to project field and verify");
+		ProjectFieldsPage projectFieldPage = new ProjectFieldsPage(driver);
+		projectFieldPage.navigateToProjectFieldsPage();
+		projectFieldPage.applyFilterByFilterName(field[0]);
+		projectFieldPage.verifyExpectedFieldStatus(field[0],"false","true","active");
+		baseClass.passedStep(field[0]+"is searchable and not tallyable");
+		baseClass.stepInfo("perform metadata search and verify purehit");
+		int purehit =sessionSearch.MetaDataSearchInBasicSearch(field[0],attachDocIds);
+		baseClass.stepInfo("docs returned for the search--"+purehit);
+		sessionSearch.verifySearchResultReturnsForConfiguredQuery(purehit);
+		baseClass.passedStep(field[0]+"is searchable");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/12/2022 TestCase Id:RPMXCON-48077
+	 * Description :To Verify FamilyRelationship in Tally and Search.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48077",enabled = true, groups = { "regression" })
+	public void verifyFamilyRelationShipInSearch() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48077");
+		baseClass.stepInfo("To Verify FamilyRelationship in Tally and Search.");
+		String metadata ="FamilyRelationship";
+		String value ="Parent";
+		
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting project which have the pre-requisite data
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Navigate to report-tally");
+		tally = new TallyPage(driver);
+		tally.navigateTo_Tallypage();
+		baseClass.stepInfo("verify tally report generation for metadata"+metadata);
+		tally.verifyTallyReportGenerationForMetadata(metadata,"project");
+		List<String> values = tally.verifyTallyChart();
+		HashMap<String, Integer> map = tally.getDocsCountFortallyReport();
+		int tallyResult = map.get(value);
+		baseClass.stepInfo("Tally report status for parent value--"+tallyResult);
+		baseClass.stepInfo("perform search and verify pure hit count");
+		int searchResult = sessionSearch.MetaDataSearchInBasicSearch(metadata, value);
+		baseClass.stepInfo("purehit for parent value--"+searchResult);
+		baseClass.digitCompareEquals(tallyResult, searchResult, 
+				"pure hit count matches with the tally result", 
+				"search and tally result count not matched");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/12/2022 TestCase Id:RPMXCON-46890
+	 * Description :To Verify In Ingestions Overlay for Audio Doc with Trimmed audio duration 
+	 * fields should be successfull.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-46890",enabled = true, groups = { "regression" })
+	public void verifyOverlayWithTrimmedAudioDuration() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-46890");
+		baseClass.stepInfo("Verify Overlay for Audio Doc with Trimmed audio duration.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		//selecting ingestion project
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.H13696smallSetFolder);
+		if (status == false) {
+			ingestionPage.performSmallSetGdIngestion(Input.ingestionType);
+			ingestionPage.publishAddonlyIngestion(Input.H13696smallSetFolder);
+		}
+		baseClass.stepInfo("perform overlay with trimmed audio duration field");
+		ingestionPage.performSmallSetGdIngestion(Input.overlayOnly);
+		ingestionPage.publishAudioOverlayIngestion(Input.H13696smallSetFolder);
+		baseClass.passedStep("Overlay ingestion performed successfully");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
