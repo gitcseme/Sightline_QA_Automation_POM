@@ -1000,7 +1000,7 @@ public class AdvancedSearchRegression_27 {
 	 * @Description :Verify that user should be able to search with the
 	 *  field EmailBCCNamesAndAddresses from Advanced search."RPMXCON-49768
 	 */
-  	@Test(description = "RPMXCON-49768",dataProvider="PaRmuAndRevUSer", enabled = true, groups = { "regression" })
+  		@Test(description = "RPMXCON-49768",dataProvider="PaRmuAndRevUSer", enabled = true, groups = { "regression" })
   	public void verifyUserAbleToSearchWithFieldEmailBCCNamesAndAddressesInAdvancedSearch(String userName, String password) {
   		
   		String metaDataField = "EmailBCCNamesAndAddresses";
@@ -1021,16 +1021,17 @@ public class AdvancedSearchRegression_27 {
   		baseClass.stepInfo("Resultant Search Query : "+sessionSearch.contentAndMetaDataResult().getText()+" in Advanced Search Query Screen.");
   		baseClass.passedStep("verified that Result appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.");
   		
-  		// Configure the query to search with Metadata EmailBCCNamesAndAddresses without double quotes   
-  		baseClass.selectproject();
+  		//click add new search button 
+  		sessionSearch.addNewSearch();
+		
+		// Configure the query in ADVANCED SEARCH to search with Metadata EmailBCCNamesAndAddresses without double quotes  
+  		driver.waitForPageToBeReady();
   		baseClass.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses without double quotes.");
-  		sessionSearch.advancedMetaDataForDraft(metaDataField,null,searchStringWithOutDoubleQuotes,null);
-  		
-  	// verify that Result should appear for entered EmailBCCNamesAndAddresses without double quote in Search Query Screen.
-  		sessionSearch.SearchBtnAction();
-  		sessionSearch.tallyContinue(5);
-  		sessionSearch.returnPurehitCount();
-  		baseClass.waitForElement(sessionSearch.contentAndMetaDataResult());
+  		sessionSearch.getContentAndMetaDatabtnC().waitAndClick(10);
+  		sessionSearch.newMetaDataSearchInBasicSearch(metaDataField, searchStringWithOutDoubleQuotes);
+  		driver.waitForPageToBeReady();
+
+    	// verify that Result should appear for entered EmailBCCNamesAndAddresses without double quote in Search Query Screen.
   		baseClass.stepInfo("Resultant Search Query : "+sessionSearch.contentAndMetaDataResult().getText()+" in Advanced Search Query Screen.");
   		baseClass.passedStep("verified that Result appear for entered EmailBCCNamesAndAddresses without double quote in  Search Query Screen");
   	
