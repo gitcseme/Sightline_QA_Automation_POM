@@ -3,6 +3,8 @@ package testScriptsRegressionSprint27;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -26,6 +28,7 @@ import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -703,6 +706,164 @@ public class DocViewAudio_Regression27 {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :date: 12/12/22 Modified date: NA Modified by: NA
+	 * Description:Verify user can see the applied folder to the audio files on doc
+	 * view
+	 */
+	@Test(description = "RPMXCON-51076", enabled = true, groups = { "regression" })
+	public void verifyUserSeeAppliedFolderAudioFilesOnDoc() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51076- DocView Audio");
+		baseClass.stepInfo("Verify user can see the applied folder to the audio files on doc view");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String Folder = "AAFolder" + Utility.dynamicNameAppender();
+		TagsAndFoldersPage tagsAndFolder = new TagsAndFoldersPage(driver);
+
+		// Login As RMU user
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+		tagsAndFolder.CreateFolderInRMU(Folder);
+
+		// search for audio docs
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.viewInDocView();
+
+		// verify selected folder
+		driver.waitForPageToBeReady();
+		docViewPage.VerifySelectedFolderTab(Folder, 1);
+		baseClass.passedStep(Folder
+				+ " is Selected folder audio documents  applied folders is displayed on Folders tab as expected  ");
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : date: 12/12/22 Modified date: NA Modified by: NA
+	 * Description:To verify that remarks can be edited if document is marked as
+	 * Completed in audio doc view. view
+	 * @throws Throwable 
+	 */
+	@Test(description = "RPMXCON-51183", enabled = true, groups = { "regression" })
+	public void verifyRemarksEditedDocMarkedCompletedInAudioDocView() throws InterruptedException, Throwable {
+		baseClass.stepInfo("Test case Id: RPMXCON-51183- DocView Audio");
+		baseClass
+				.stepInfo("To verify that remarks can be edited if document is marked as Completed in audio doc view.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String remarkText1 = Input.randomText + Utility.dynamicNameAppender();
+		String remarkText2 = Input.randomText + Utility.dynamicNameAppender();
+		Map<String, String> updateDatas = new HashMap<String, String>();
+		SoftAssert softassert = new SoftAssert();
+
+		// Login As RMU user
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+
+		baseClass.stepInfo("Create Assignment");
+		assignment.assignDocstoNewAssgnEnableAnalyticalPanel(Asssignment, Input.codingFormName, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+		// Select the Assignment from dashboard
+		assignment.SelectAssignmentByReviewer(Asssignment);
+        
+		// reviewer remark edited 
+		driver.waitForPageToBeReady();
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(Input.codingFormName);
+		docViewPage.editCodingFormComplete();
+		docViewPage.getDocView_MiniDoc_Selectdoc(1).Click();
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(docViewPage.getAdvancedSearchAudioRemarkIcon().isElementAvailable(8));
+		baseClass.passedStep("Reviewer Remark Icon is Displayed successfully");
+		docViewPage.audioRemark(remarkText1);
+		driver.waitForPageToBeReady();
+		docViewPage.editAndVerifyData(remarkText1, updateDatas, remarkText2);
+		baseClass.passedStep("Audio document  Remark is editable and it is updated  ");
+		softassert.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Sakthivel date: 12/09/22 Modified date: NA Modified by: NA
+	 * Description:Verify audio doc view when transcript is not ingested for audio
+	 * file
+	 */
+	@Test(description = "RPMXCON-51134", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyTranscriptIsNotIngestedAudioFile(String username, String password, String role)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51134- DocView Audio");
+		baseClass.stepInfo("Verify audio doc view when transcript is not ingested for audio file");
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// search for audio docs
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.stepInfo("User navigated Audio docs to docview page");
+		driver.waitForPageToBeReady();
+
+		// verify transcript tab is not display
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docViewPage.getTranscriptsTab());
+		baseClass.elementNotdisplayed(docViewPage.getTranscriptsTab(),
+				"Transcript tab is not displayed for audio docs as expected");
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Sakthivel date: 12/09/22 Modified date: NA Modified by: NA
+	 * Description:To verify that if Reviewer Remark is off at Assignment level then
+	 * it should not displayed if user naivgates from Assignment-Audio Doc View.
+	 */
+	@Test(description = "RPMXCON-51179", enabled = true, groups = { "regression" })
+	public void verifyReviewerRemarkOffAtAssignmentRemarkNotDisplayed() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51179- DocView Audio");
+		baseClass.stepInfo(
+				"To verify that if Reviewer Remark is off at Assignment level then it should not displayed if user naivgates from Assignment-Audio Doc View.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		AssignmentsPage assignment = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login As RMU user
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		// search for audio docs
+		sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		sessionSearch.bulkAssign();
+		assignment.assignmentCreationReviewerRemarkOff(Asssignment, Input.codingFormName);
+		System.out.println(Asssignment);
+		assignment.add2ReviewerAndDistribute();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignment.selectAssignmentToViewinDocView(Asssignment);
+		driver.waitForPageToBeReady();
+		baseClass.elementNotdisplayed(docViewPage.getAdvancedSearchAudioRemarkIcon(),
+				"Remarks tab  is not displayed on audio doc view when it is off at an assignment level as expected  ");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rev1userName + "");
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		driver.waitForPageToBeReady();
+		baseClass.elementNotdisplayed(docViewPage.getAdvancedSearchAudioRemarkIcon(),
+				"Remarks tab  is not displayed on audio doc view when it is off at an assignment level as expected  ");
+		loginPage.logout();
+	}
+
 
 
 
