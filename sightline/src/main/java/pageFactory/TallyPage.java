@@ -622,6 +622,12 @@ public class TallyPage {
 		return driver.FindElementByXPath("//button[@id='tallyviewbtn']");
 	}
 	
+	public Element getCloseByEAFilterPopUp() {
+		return driver.FindElementByXPath("//div[text()= ' Filter by EmailAuthorName:']//a[@id='close']");
+	}
+	public Element getCloseByCNFilterPopUp() {
+		return driver.FindElementByXPath("//div[text()= ' Filter by CustodianName:']//a[@id='close']");
+	}
 	
 	public TallyPage(Driver driver) {
 
