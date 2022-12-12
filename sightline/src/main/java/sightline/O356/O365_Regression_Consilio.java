@@ -71,6 +71,8 @@ public class O365_Regression_Consilio {
 	
 	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
+		base.stepInfo("Verify that error message does not display and application accepts - when edit Source location name in collection is entered with special characters < > & ‘");
+		base.stepInfo("Test case Id:RPMXCON-69262");
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
@@ -78,12 +80,14 @@ public class O365_Regression_Consilio {
 		// Login and Pre-requesties
 		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
 		login.loginToSightLine(userName, password);
+		base.stepInfo("logged in as "+role+" user");
 		base.stepInfo("User Role : " + role);
-		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
+		
 
 		// Pre-requesties - Access verification
-		base.stepInfo("**Step-3 Go to Datasets > Collections page **");
+		base.stepInfo("**Step-2 Go to Datasets > Collections page **");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+		
 		
 		// navigate to source location page
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
@@ -91,6 +95,7 @@ public class O365_Regression_Consilio {
 		//check for existing source location to edit
 		
 		if (!(source.getSourceLocationPageFirstCollectionSelect().isElementAvailable(5))) {
+			base.stepInfo("**Step-3 Pre-requisites: Collections should be added **");
 			driver.waitForPageToBeReady();
 			base.waitForElement(source.getNewSrcLocationBtn());
 			source.getNewSrcLocationBtn().waitAndClick(10);
@@ -99,7 +104,7 @@ public class O365_Regression_Consilio {
 		}
 		
 		//edit source location for special chars
-			
+		base.stepInfo("**Step-4 : edit the source location with special characters**");
 		dataSourceName=source.getSourceLocationPageFirstdataSourceSelect().getText();
 		System.out.println("dataSourceName :-"+dataSourceName);
 		base.waitForElement(source.getSrcActionBtn(dataSourceName, "Edit"));
@@ -117,6 +122,9 @@ public class O365_Regression_Consilio {
 	}
 	@Test(description = "RPMXCON-69186",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifyCollectionIsSuccessfulWithDirectoryNameWhiteSpaces(String userName, String password, String role) throws Exception {
+		base.stepInfo("Verify Collection if directory name contains leading and trailing white spaces");
+		base.stepInfo("Test case Id:RPMXCON-69186");
+		base.stepInfo("logged in as "+role+" user");
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
 		String collectionEmailId = Input.collectionJebEmailId;
@@ -173,7 +181,7 @@ public class O365_Regression_Consilio {
 				driver.waitForPageToBeReady();
 
 				// Verify Collection presence with expected Status
-				collection.verifyExpectedCollectionStatus(false, headerListDataSets, CollectionName, statusListToVerify, 10,
+				collection.verifyExpectedCollectionStatus(false, headerListDataSets, CollectionName, statusListToVerify, 20,
 						true, false, "", "");
 
 				// Completed status check
@@ -185,17 +193,20 @@ public class O365_Regression_Consilio {
 	}
 	@Test(description = "RPMXCON-69052",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsWhileEnteringSourceLocName(String userName, String password, String role) throws Exception {
+		base.stepInfo("Verify that error message does not display and application accepts - when Source location name in collection is entered with special characters < > & ‘");
+		base.stepInfo("Test case Id:RPMXCON-69052");
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
 		
 		// Login and Pre-requesties
 		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
 		login.loginToSightLine(userName, password);
+		base.stepInfo("logged in as "+role+" user");
 		base.stepInfo("User Role : " + role);
-		base.stepInfo("**Step-2 Pre-requisites: Collections should be added **");
+		
 
 		// Pre-requesties - Access verification
-		base.stepInfo("**Step-3 Go to Datasets > Collections page **");
+		base.stepInfo("**Step-2 Go to Datasets > Collections page **");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 		
 		// navigate to source location page
@@ -208,6 +219,7 @@ public class O365_Regression_Consilio {
 		String ApplicationIDWithSplChars=Input.ApplicationID+"<&'>";
 		String ApplicationKeyWithSplChars=Input.ApplicationKey+"<&'>";
 		
+		base.stepInfo("**Step-3 : Add source location with special characters **");
 		driver.waitForPageToBeReady();
 		base.waitForElement(source.getNewSrcLocationBtn());
 		source.getNewSrcLocationBtn().waitAndClick(10);
