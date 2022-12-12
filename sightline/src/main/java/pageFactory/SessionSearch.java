@@ -12026,7 +12026,8 @@ public class SessionSearch {
 	 * @param metaDataField
 	 * @param val1
 	 * @return
-	 * @Description new metadata basic search
+	 * @Description new metadata  search in Basic & Advanced search
+           * @Modified By jeevitha @ modified date :12/12/2022
 	 */
 	public int newMetaDataSearchInBasicSearch(String metaDataField, String val1) {
 		// To make sure we are in basic search page
@@ -12045,11 +12046,10 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(3);
 		// Click on Search button
-		base.waitForElement(getSecondSearchBtn());
-		getSecondSearchBtn().waitAndClick(3);
-		if (base.getYesBtn().isElementAvailable(2)) {
-			base.getYesBtn().waitAndClick(10);
-		}
+		//base.waitForElement(getSecondSearchBtn());
+//		getSecondSearchBtn().waitAndClick(3);
+		SearchBtnAction();
+		base.waitTime(2);
 		base.waitForElement(getPureHitsCount2ndSearch());
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
