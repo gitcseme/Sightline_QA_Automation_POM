@@ -156,6 +156,7 @@ public class SessionSearch {
 	public Element contentAndMetaDataResult() {
 		return driver.FindElementByXPath("//td[text()='Content and Metadata']/parent::tr//span[@class='badge']");
 	}
+
 	public Element getFromBatesBtn() {
 		return driver.FindElementByXPath("//input[@id='BatesFrom']");
 	}
@@ -417,6 +418,7 @@ public class SessionSearch {
 	public Element getMetaDataInDropdown(String field) {
 		return driver.FindElementByXPath("//select[@id='metatagSelect']//option[@value='" + field + "']");
 	}
+
 	public Element getUniqueDocCountReadout() {
 		return driver.FindElementByXPath("//h1[@class='page-title']//span//label");
 	}
@@ -2097,12 +2099,9 @@ public class SessionSearch {
 	}
 	// added by sowndarya
 
-	
-
 	public Element getSearchThirdTextField() {
 		return driver.FindElementByXPath("(.//*[@id='xEdit']//li/following-sibling::li//input)[last()]");
 	}
-	
 
 	public Element getReportTotalCount() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
@@ -2213,7 +2212,7 @@ public class SessionSearch {
 	public Element getTagMenuPopup() {
 		return driver.FindElementByXPath("//*[@id='insertMetaPop']");
 	}
-	
+
 	public Element contentAndMetaDataResultBasicSearch() {
 		return driver.FindElementByXPath("//*[@id='xEdit']/li//following-sibling::li/span");
 
@@ -2351,7 +2350,6 @@ public class SessionSearch {
 
 		base.waitForElement(getSavedSearch_MySearchesTab());
 
-			
 		getSavedSearch_MySearchesTab().waitAndClick(10);
 
 		getSaveSearch_Name().SendKeys(searchName);
@@ -6154,6 +6152,9 @@ public class SessionSearch {
 
 		// Click on Search button
 		getQuerySearchButton().waitAndClick(5);
+
+		tallyContinue(7);
+
 		try {
 
 			// verify counts for all the tiles
@@ -12027,8 +12028,8 @@ public class SessionSearch {
 	 * @param metaDataField
 	 * @param val1
 	 * @return
-	 * @Description new metadata  search in Basic & Advanced search
-           * @Modified By jeevitha @ modified date :12/12/2022
+	 * @Description new metadata search in Basic & Advanced search
+	 * @Modified By jeevitha @ modified date :12/12/2022
 	 */
 	public int newMetaDataSearchInBasicSearch(String metaDataField, String val1) {
 		// To make sure we are in basic search page
@@ -12047,7 +12048,7 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(3);
 		// Click on Search button
-		//base.waitForElement(getSecondSearchBtn());
+		// base.waitForElement(getSecondSearchBtn());
 //		getSecondSearchBtn().waitAndClick(3);
 		SearchBtnAction();
 		base.waitTime(2);
@@ -14374,62 +14375,56 @@ public class SessionSearch {
 			}
 		}
 
-		
-		
-	}	
-	
+	}
+
 	/**
 	 * @author: Arun Created Date: 08/12/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify the unique docids count in search page
 	 */
 	public void getUniqueDocCountAsDifferentUser(String role) {
-		
+
 		String expectedPaReadout = "Count of unique DocIDs indexed in the project:";
 		String expectedReadout = "Count of unique DocIDs indexed and available in your Security Group:";
-		int uniqueDocCount=0;
-		String actualReadout=null;
-		//verify unique doc count readout for PA user
-		if(role.equalsIgnoreCase("PA")) {
+		int uniqueDocCount = 0;
+		String actualReadout = null;
+		// verify unique doc count readout for PA user
+		if (role.equalsIgnoreCase("PA")) {
 			actualReadout = getCountUniqueDocId().getText();
-			base.compareTextViaContains(actualReadout, expectedPaReadout, 
-					"Readout displayed as expected for PA user", "not displayed as expected");	
+			base.compareTextViaContains(actualReadout, expectedPaReadout, "Readout displayed as expected for PA user",
+					"not displayed as expected");
 		}
-		//verify unique doc count readout for RMU/Rev user
-		else if(role.equalsIgnoreCase("RMU") || role.equalsIgnoreCase("Rev")) {
+		// verify unique doc count readout for RMU/Rev user
+		else if (role.equalsIgnoreCase("RMU") || role.equalsIgnoreCase("Rev")) {
 			actualReadout = getCountUniqueDocId().getText();
-			base.compareTextViaContains(actualReadout, expectedReadout, 
+			base.compareTextViaContains(actualReadout, expectedReadout,
 					"Readout displayed as expected for RMU/Rev user", "not displayed as expected");
 		}
 		String countlabel = actualReadout.substring(actualReadout.indexOf(":"));
 		uniqueDocCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
-		if(uniqueDocCount>0) {
-			base.passedStep("count of unique published DocIds displayed-"+uniqueDocCount);
-		}
-		else {
-			base.failedStep("count of unique published DocIds not displayed-"+uniqueDocCount);
+		if (uniqueDocCount > 0) {
+			base.passedStep("count of unique published DocIds displayed-" + uniqueDocCount);
+		} else {
+			base.failedStep("count of unique published DocIds not displayed-" + uniqueDocCount);
 
 		}
 	}
 
-
-	public void refreshAndVerifyStatus(String backGroundID, String status, int noToRefresh) {	
+	public void refreshAndVerifyStatus(String backGroundID, String status, int noToRefresh) {
 		driver.waitForPageToBeReady();
 
 		for (int i = 0; i < noToRefresh; i++) {
 			System.out.println(i);
-			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
-				
-                base.stepInfo("waiting for status"+status);
-                break;
-		}
-			else {
-                driver.Navigate().refresh();
-                System.out.println("Refresh");
-                driver.waitForPageToBeReady();
-            }
+			if (getStatusText(backGroundID, status).isElementAvailable(15)) {
+
+				base.stepInfo("waiting for status" + status);
+				break;
+			} else {
+				driver.Navigate().refresh();
+				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
+			}
 		}
 	}
-	
 
 	public int basicContentSearchForThreeItems(String SearchString, String SearchString2, String SearchString3) {
 		int pureHit = 0;
@@ -14452,7 +14447,7 @@ public class SessionSearch {
 			getSearchSecondTextField().getWebElement().sendKeys(Keys.ENTER);
 			driver.waitForPageToBeReady();
 			getSearchThirdTextField().getWebElement().sendKeys(SearchString3);
-			driver.waitForPageToBeReady();			// Click on Search button
+			driver.waitForPageToBeReady(); // Click on Search button
 			getSearchButton().waitAndClick(10);
 
 			// handle pop confirmation for regex and proximity queries
@@ -14486,6 +14481,4 @@ public class SessionSearch {
 		return pureHit;
 	}
 
-	
 }
-

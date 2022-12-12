@@ -254,6 +254,9 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getSelectProductionSet() {
+		return driver.FindElementById("productionSetDropDown");
+	}
 
 	public ElementCollection getErrorDetailsHeaderFromPopup() {
 		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//thead//th");
@@ -2437,8 +2440,10 @@ public class BatchPrintPage {
 		// verify INPROGRESS status
 		base.waitForElement(getBatchPrintStatus());
 		String inprogressStatus = getBatchPrintStatus().getText();
-		base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
-				"Batch Print Status Is Not As Expected");
+		if (inprogressStatus.equalsIgnoreCase("INPROGRESS")) {
+			base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
+					"Batch Print Status Is Not As Expected");
+		}
 
 		for (int i = 0; i < refreshCount; i++) {
 
@@ -3261,4 +3266,5 @@ public class BatchPrintPage {
 		}
 		return detailValue;
 	}
+
 }
