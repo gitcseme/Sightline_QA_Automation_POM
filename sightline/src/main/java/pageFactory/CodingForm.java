@@ -3896,7 +3896,106 @@ public class CodingForm {
 					}
 		
 				}
+	
+	public void select_EditableMetaDataObject(String FIELDLabel, String HelpText, String ErrorMessage) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(FIELDLabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(HelpText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMessage);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+			else {
+				base.waitForElement(getCF_RadioGrpObject());
+				getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(5);
+				getCF_Metadata().waitAndClick(5);
+				base.stepInfo("Metadata is selected from available Objects");
+				base.waitForElement(getCodingForm_AddToFormButton());
+				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Metadata is selected from available Objects and added to Codign form editor");
+				base.waitForElement(getStaticText());
+				getStaticText().SendKeys(FIELDLabel);
+				base.waitForElement(getInstructionText0());
+				getInstructionText0().SendKeys(HelpText);
+				base.waitForElement(getErrorMessage0());
+				getErrorMessage0().SendKeys(ErrorMessage);
+					}
+		
+				}
 
+	public void select_TagObject(String FIELDLabel, String HelpText, String ErrorMessage) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(FIELDLabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(HelpText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMessage);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+			else {
+				base.waitForElement(getCodingForm_FirstTag());
+				getCodingForm_FirstTag().waitAndClick(5);
+				base.stepInfo("Tag is selected from available Objects");
+				base.waitForElement(getCodingForm_AddToFormButton());
+				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Tag is selected from available Objects and added to Codign form editor");
+				base.waitForElement(getStaticText());
+				getStaticText().SendKeys(FIELDLabel);
+				base.waitForElement(getInstructionText0());
+				getInstructionText0().SendKeys(HelpText);
+				base.waitForElement(getErrorMessage0());
+				getErrorMessage0().SendKeys(ErrorMessage);
+					}
+		
+				}
+	
+	public void select_CommentObject(String COMMENTLabel, String instructionText, String ErrorMsg) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(COMMENTLabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+			else {
+				base.waitForElement(getCodingForm_CommentTab());
+				getCodingForm_CommentTab().waitAndClick(5);
+				base.waitForElement(getCodingForm_FirstComment());
+				getCodingForm_FirstComment().waitAndClick(5);
+				base.stepInfo("Comment tab Group is slected from Special Objects");
+				base.waitForElement(getCodingForm_AddToFormButton());
+				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Comment tab Group is slected from Special Objects and added to Codign form editor");
+				base.waitForElement(getStaticText());
+				getStaticText().SendKeys(COMMENTLabel);
+				base.waitForElement(getInstructionText0());
+				getInstructionText0().SendKeys(instructionText);
+				base.waitForElement(getErrorMessage0());
+				getErrorMessage0().SendKeys(ErrorMsg);
+					}
+		
+				}
+	
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @Description : this method used for to verify the deleted coding form is not

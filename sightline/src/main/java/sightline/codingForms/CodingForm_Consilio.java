@@ -45,6 +45,9 @@ public class CodingForm_Consilio {
 	SessionSearch sessionSearch;
 	TagsAndFoldersPage  tagsAndFoldersPage;
 
+	 String codingformB = "DummyCF"+Utility.dynamicNameAppender();
+	    String SpcharB="&>‘<";
+	    String SpcharC="Test_term";
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -213,6 +216,139 @@ public class CodingForm_Consilio {
 		// logout
 		loginPage.logout();
 	}
+	
+	@Test(description= "RPMXCON-68854",groups= { "regression" })
+		public void EditableMetaDataObjectERRORMsg() {
+			baseClass.stepInfo("Test case Id: RPMXCON-68854 :Verify that error message display and \"Editable MetaData Object\" inside Coding Form does NOT accept with special characters < > & ‘");
+	   	    
+		    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		    driver.waitForPageToBeReady();
+		    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
+		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+	        codingForm.select_EditableMetaDataObject(SpcharB,SpcharB,SpcharB);
+			
+			//create CodingForm
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.waitForElement(codingForm.getCodingFormName());
+			codingForm.getCodingFormName().SendKeys(codingformB);
+			codingForm.select_EditableMetaDataObject(SpcharC,SpcharC,SpcharC);
+			codingForm.getSaveCFBtn().waitAndClick(3);
+			codingForm.saveCodingForm();
+			baseClass.passedStep("Coding form"+codingformB+ "created successfully");
+			
+			//edit CF name
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.editCodingForm(codingformB);
+			baseClass.stepInfo("Navigated to edit coding form editor");
+			baseClass.waitForElement(codingForm.getRootClickDownarrow());
+			codingForm.getRootClickDownarrow().waitAndClick(5);
+			codingForm.select_EditableMetaDataObject(SpcharB,SpcharB,SpcharB);
+			
+			
+			//Delete CF
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.deleteCodingForm(codingformB, codingformB);
+
+			// logout
+			loginPage.logout();
+		}
+		
+	@Test(description= "RPMXCON-68852",groups= { "regression" })
+		public void TagObjectERRORMsg() {
+			baseClass.stepInfo("Test case Id: RPMXCON-68852 :Verify that error message displays and \"Tag Object\" inside Coding Form does NOT accept with special characters < > & ‘");
+			   	    
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+					UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+				    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+				    driver.waitForPageToBeReady();
+				    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
+				    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+					codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			        codingForm.select_TagObject(SpcharB,SpcharB,SpcharB);
+					
+					//create CodingForm
+					this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+					driver.waitForPageToBeReady();
+				    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+					codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+					baseClass.waitForElement(codingForm.getCodingFormName());
+					codingForm.getCodingFormName().SendKeys(codingformB);
+					codingForm.select_TagObject(SpcharC,SpcharC,SpcharC);
+					codingForm.getSaveCFBtn().waitAndClick(3);
+					codingForm.saveCodingForm();
+					baseClass.passedStep("Coding form"+codingformB+ "created successfully");
+					
+					//edit CF name
+					this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+					driver.waitForPageToBeReady();
+					codingForm.editCodingForm(codingformB);
+					baseClass.stepInfo("Navigated to edit coding form editor");
+					baseClass.waitForElement(codingForm.getRootClickDownarrow());
+					codingForm.getRootClickDownarrow().waitAndClick(5);
+					codingForm.select_TagObject(SpcharB,SpcharB,SpcharB);
+					
+					
+					//Delete CF
+					this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+					driver.waitForPageToBeReady();
+					codingForm.deleteCodingForm(codingformB, codingformB);
+
+					// logout
+					loginPage.logout();
+				}
+		
+		@Test(description= "RPMXCON-68853",groups= { "regression" })
+        public void CommentObjectERRORMsg() {
+	baseClass.stepInfo("Test case Id: RPMXCON-68853 :Verify that error message display and \"Comments Object\" inside Coding Form does NOT accept with special characters < > & ‘");
+	   	    
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		    driver.waitForPageToBeReady();
+		    baseClass.stepInfo("Navigated to Manage Coding Forms screen");
+		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+	        codingForm.select_CommentObject(SpcharB,SpcharB,SpcharB);
+			
+			//create CodingForm
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+		    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+			codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+			baseClass.waitForElement(codingForm.getCodingFormName());
+			codingForm.getCodingFormName().SendKeys(codingformB);
+			codingForm.select_CommentObject(SpcharC,SpcharC,SpcharC);
+			codingForm.getSaveCFBtn().waitAndClick(3);
+			codingForm.saveCodingForm();
+			baseClass.passedStep("Coding form"+codingformB+ "created successfully");
+			
+			//edit CF name
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.editCodingForm(codingformB);
+			baseClass.stepInfo("Navigated to edit coding form editor");
+			baseClass.waitForElement(codingForm.getRootClickDownarrow());
+			codingForm.getRootClickDownarrow().waitAndClick(5);
+			codingForm.select_CommentObject(SpcharB,SpcharB,SpcharB);
+			
+			
+			//Delete CF
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.deleteCodingForm(codingformB, codingformB);
+
+			// logout
+			loginPage.logout();
+		}
+		
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
