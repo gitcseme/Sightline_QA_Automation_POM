@@ -3880,10 +3880,13 @@ public class CodingForm {
 		if(getRootClick().isElementAvailable(1)){
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(checkgrouplabel);
+			base.stepInfo("Expected string values are entered in CHECKGROUP Label fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Instruction Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
 			}	
@@ -3898,10 +3901,13 @@ public class CodingForm {
 			base.stepInfo("Check Group is slected from Special Objects and added to Codign form editor");
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(checkgrouplabel);
+			base.stepInfo("Expected string values are entered in CHECKGROUP Label fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Instruction Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 				}
 	
 			}
@@ -3913,10 +3919,13 @@ public class CodingForm {
 		if(getRootClick().isElementAvailable(1)){
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(Radiogrouplabel);
+			base.stepInfo("Expected string values are entered in RADIOGROUP Label fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Instruction Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
 			}	
@@ -3931,10 +3940,13 @@ public class CodingForm {
 				base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
 				base.waitForElement(getStaticText());
 				getStaticText().SendKeys(Radiogrouplabel);
+				base.stepInfo("Expected string values are entered in RADIOGROUP Label fields");
 				base.waitForElement(getInstructionText0());
 				getInstructionText0().SendKeys(instructionText);
+				base.stepInfo("Expected string values are entered in Instruction Text fields");
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMsg);
+				base.stepInfo("Expected string values are entered in Error Message fields");
 					}
 		
 				}
@@ -3945,10 +3957,13 @@ public class CodingForm {
 		if(getRootClick().isElementAvailable(1)){
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(FIELDLabel);
+			base.stepInfo("Expected string values are entered in FIELD Label fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(HelpText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMessage);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
 			}	
@@ -3964,12 +3979,14 @@ public class CodingForm {
 				base.stepInfo("Metadata is selected from available Objects and added to Codign form editor");
 				base.waitForElement(getStaticText());
 				getStaticText().SendKeys(FIELDLabel);
+				base.stepInfo("Expected string values are entered in FIELD Label fields");
 				base.waitForElement(getInstructionText0());
 				getInstructionText0().SendKeys(HelpText);
+				base.stepInfo("Expected string values are entered in Help Text fields");
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMessage);
-				base.stepInfo("Edited coding form and verified error message");					}
-		
+				base.stepInfo("Expected string values are entered in Error Message fields");
+				}
 				}
 
 	public void select_TagObject(String FIELDLabel, String HelpText, String ErrorMessage) {
@@ -3978,10 +3995,13 @@ public class CodingForm {
 		if(getRootClick().isElementAvailable(1)){
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(FIELDLabel);
+			base.stepInfo("Expected string values are entered in TAG Label fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(HelpText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMessage);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
 			}	
@@ -3996,11 +4016,13 @@ public class CodingForm {
 				base.stepInfo("Tag is selected from available Objects and added to Codign form editor");
 				base.waitForElement(getStaticText());
 				getStaticText().SendKeys(FIELDLabel);
+				base.stepInfo("Expected string values are entered in TAG Label fields");
 				base.waitForElement(getInstructionText0());
 				getInstructionText0().SendKeys(HelpText);
+				base.stepInfo("Expected string values are entered in Help Text fields");
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMessage);
-				base.stepInfo("Edited coding form and verified error message");	
+				base.stepInfo("Expected string values are entered in Error Message fields");
 					}
 		
 				}
@@ -4011,10 +4033,13 @@ public class CodingForm {
 		if(getRootClick().isElementAvailable(1)){
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(COMMENTLabel);
+			base.stepInfo("Expected string values are entered in COMMENTLabel fields");
 			base.waitForElement(getInstructionText0());
 			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
 			if (ValidationErrormsg().Visible()){	
 			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
 			}	
@@ -4031,11 +4056,13 @@ public class CodingForm {
 				base.stepInfo("Comment tab Group is slected from Special Objects and added to Codign form editor");
 				base.waitForElement(getStaticText());
 				getStaticText().SendKeys(COMMENTLabel);
+				base.stepInfo("Expected string values are entered in COMMENTLabel fields");
 				base.waitForElement(getInstructionText0());
 				getInstructionText0().SendKeys(instructionText);
+				base.stepInfo("Expected string values are entered in Help Text fields");
 				base.waitForElement(getErrorMessage0());
 				getErrorMessage0().SendKeys(ErrorMsg);
-				base.stepInfo("Edited coding form and verified error message");	
+				base.stepInfo("Expected string values are entered in Error Message fields");
 					}
 		
 				}
@@ -6438,7 +6465,6 @@ public class CodingForm {
 		}
 
 		}
-	}
 
 
 	
