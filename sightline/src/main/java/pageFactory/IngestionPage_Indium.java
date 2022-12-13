@@ -1141,7 +1141,12 @@ public class IngestionPage_Indium {
 	public Element loadMoreBtn() {
 		return driver.FindElementByXPath("//button[@id='btnLoadTile']");
 	}
-	
+	public Element accessDeniedErrorMsg() {
+		return driver.FindElementByXPath("//div[@id='content']//label[contains(text(),'Access Denied')]");
+	}
+	public Element getingestionpath(String path) {
+		return driver.FindElementByXPath("//select[@id='ddlServerLocation']//option[contains(text(),'"+path+"')]");
+	}
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -11596,6 +11601,46 @@ public class IngestionPage_Indium {
 			runFullAnalysisAndPublish();
 		}
 		
-
+		/**
+		 * @author: Arunkumar Created Date: 12/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the ingestion access for pa
+		 */
+		public void verifyIngestionAccess(String project) {
+			
+			base.selectproject(project);
+			//verify 1
+			navigateToIngestionPage();
+			base.waitForElement(getRefreshButton());
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(accessDeniedErrorMsg().isElementAvailable(10)) {
+				navigateToDataSetsPage();
+				base.selectproject(project);
+			}
+			else {
+				ClickOnAddNewIngestionLink();
+			}
+			//verify 2
+			if(getIngestions().isElementAvailable(10)) {
+				base.passedStep("Ingestion menu available");
+			}
+			else {
+				base.selectproject(project);
+			}
+			//verify3
+			navigateToIngestionHomePageAndVerifyUrl();
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 13/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the ingestion folder path present in project
+		 */
+		public void verifyIngestionFolderPath(String expectedPath) {
+			ClickOnAddNewIngestionLink();
+			base.waitForElement(getSpecifyLocation());
+			getSpecifyLocation().waitAndClick(10);
+			base.ValidateElement_Presence(getingestionpath(expectedPath), "expected ingestion folder path");
+		}
+		
 		
 }

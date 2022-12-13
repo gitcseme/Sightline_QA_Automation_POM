@@ -1202,6 +1202,9 @@ public class UserManagement {
 	 public Element getDomainName(String Domain) {
 	        return driver.FindElementByXPath("//label[contains(text(),'"+Domain+"')]");
 	    }
+	 public Element getDisabledNextBtn() {
+		 return driver.FindElementByXPath("//li[@class='paginate_button next disabled']//a");
+	 }
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -5514,5 +5517,49 @@ public class UserManagement {
 				bc.impersonateRMUtoReviewer();
 			}
 		}
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 13/12/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will enable the ingestion functionality for PA user and verify
+	 */
+	public void EnableIngestionFunctionality(String userName,String project) throws Exception {
+		
+		navigateToUsersPAge();
+		passingUserName(userName);
+		applyFilter();
+		driver.waitForPageToBeReady();
+		for(int i=0;i<5;i++) {
+			if(getSelectUserToEdit(project).isElementAvailable(10)) {
+				bc.passedStep("user available");
+				break;
+			}
+			else if(!(getDisabledNextBtn().isElementAvailable(10))) {
+				getAssgnPaginationNextButton().waitAndClick(10);
+				bc.waitTime(2);
+				System.out.println("checking next page");
+			}
+		}
+		editFunctionality(project);
+		getFunctionalityTab().waitAndClick(5);
+		verifyStatusIngestion("true");
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 13/12/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will provide access and enable the ingestion functionality 
+	 * for PA user and verify
+	 */
+	public void provideAccessToPaAndEnableIngestion(String paUser,String project) throws Exception {
+
+		navigateToUsersPAge();
+		filterByName(paUser);
+		String userName = getfirstUserName();
+		AssignUserToProject(project, Input.ProjectAdministrator, userName);
+		bc.stepInfo("Enable ingestion functionality and verify access");
+		EnableIngestionFunctionality(userName, project);
+		
 	}
 }
