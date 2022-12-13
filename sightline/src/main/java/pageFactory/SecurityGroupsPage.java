@@ -66,19 +66,19 @@ public class SecurityGroupsPage {
 	public Element clickSecurityGroup() {
 		return driver.FindElementByXPath("//*[@class='a-menu' and @name='Security']");
 	}
-	
+
 	public Element getSecurityGroupUpdateButton() {
 		return driver.FindElementById("btnUpdateSecurityGroup");
 	}
-	
+
 	public Element getEditMsg() {
 		return driver.FindElementById("lblEditmsg");
 	}
-	
+
 	public Element getSecurityGroupNameUpdate() {
 		return driver.FindElementById("txtSecurityGroupNameUpdate");
 	}
-	
+
 	public Element securityGroupCreate() {
 		return driver.FindElementById("btnNewSecurityGroup");
 	}
@@ -564,23 +564,26 @@ public class SecurityGroupsPage {
 	public ElementCollection getSelectdFieldsList() {
 		return driver.FindElementsByXPath("//div[@id='fieldJSTree_Selected']//ul[@class='jstree-children']//a");
 	}
-	
+
 	public Element getSG_PopUp() {
 		return driver.FindElementByXPath("//*[@id='divSecurityGroup']");
 	}
+
 	public Element getSG_InvalidErrorMsg() {
 		return driver.FindElementByXPath("//*[@id='lblmsg']");
 	}
+
 	public Element getSG_NameCancelBtn() {
 		return driver.FindElementById("btnCancelSave");
 	}
-	
+
 	// Added by arun
 	public Element getAnalyticsSGLevel() {
 		return driver.FindElementByXPath("//input[@id='sglevelemail']//..//i");
 	}
-	public Element getBackGroundTaskStatus(int taskRow,int dataCol) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr["+taskRow+"]//td["+dataCol+"]");
+
+	public Element getBackGroundTaskStatus(int taskRow, int dataCol) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[" + taskRow + "]//td[" + dataCol + "]");
 	}
 
 	public SecurityGroupsPage(Driver driver) {
@@ -822,10 +825,12 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSecurityGroupList());
 		getSecurityGroupList().waitAndClick(3);
+		bc.waitTime(2);
 		bc.waitForElement(selectSGFromDropdown(SGName));
-		selectSGFromDropdown(SGName).waitAndClick(2);
+		selectSGFromDropdown(SGName).waitAndClick(5);
+		bc.waitTime(2);
 		bc.waitForElement(SG_deleteButton());
-		SG_deleteButton().Click();
+		SG_deleteButton().waitAndClick(5);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return SGdeleteMessage(SGName).Visible();
@@ -1814,37 +1819,37 @@ public class SecurityGroupsPage {
 			bc.failedMessage("folder is not displayed");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 18/11/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform regenerate analytics at SG level
 	 */
 	public void regenerateAnalyticsAtSgLevel() {
-		
+
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		//start the regenerate analytics
+		// start the regenerate analytics
 		bc.waitForElement(getAnalyticsSGLevel());
 		getAnalyticsSGLevel().waitAndClick(10);
 		bc.waitForElement(getSG_GenerateEmailButton());
 		getSG_GenerateEmailButton().waitAndClick(10);
-		if(getYesButton().isElementAvailable(10)) {
+		if (getYesButton().isElementAvailable(10)) {
 			getYesButton().waitAndClick(10);
-			bc.VerifySuccessMessage("Process Regenerate Email Inclusive and Email Duplicate data has started successfully.");
+			bc.VerifySuccessMessage(
+					"Process Regenerate Email Inclusive and Email Duplicate data has started successfully.");
 		}
-		//verify the status
+		// verify the status
 		bc.stepInfo("navigate to background task page and verify");
 		bc.verifyMegaPhoneIconAndBackgroundTasks(true, true);
 		for (int i = 0; i < 500; i++) {
 			bc.waitTime(2);
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
-			String status = getBackGroundTaskStatus(1,8).getText();
+			String status = getBackGroundTaskStatus(1, 8).getText();
 			System.out.println(status);
-			if(status.contains("ERROR")) {
+			if (status.contains("ERROR")) {
 				bc.failedStep("Regenerate Analytics failed, need to contact admin/retry");
-			}
-			else if(status.contains("COMPLETED")) {
+			} else if (status.contains("COMPLETED")) {
 				bc.passedStep("Regenerate analytics completed successfully at SG level");
 				break;
 			}

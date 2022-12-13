@@ -377,13 +377,15 @@ public class CommunicationExplorerPage {
 	public Element getFolders() {
 		return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
 	}
+
 	public Element getReportPanelText() {
-        return driver.FindElementByXPath("//*[@id='textpannel']/span");
-    }
+		return driver.FindElementByXPath("//*[@id='textpannel']/span");
+	}
+
 	public Element getApplyBtn() {
-        return driver.FindElementById("btnAppyFilter");
-    }
-	
+		return driver.FindElementById("btnAppyFilter");
+	}
+
 	public Element getAnalyzeTally() {
 		return driver.FindElementByXPath("//a[text()='Analyze in Tally']");
 	}
@@ -394,7 +396,6 @@ public class CommunicationExplorerPage {
 		base = new BaseClass(driver);
 //		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
-		
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -528,24 +529,18 @@ public class CommunicationExplorerPage {
 	public void generateReportusingDefaultSG() throws InterruptedException {
 		base.waitForElement(getReports_CommunicationsExplorer());
 		getReports_CommunicationsExplorer().waitAndClick(15);
+		
 		base.waitForElement(getTally_SelectSource());
 		getTally_SelectSource().waitAndClick(25);
 		driver.waitForPageToBeReady();
-		try {
-			base.waitForElement(getTally_SecurityGroupsButton());
-			Actions action = new Actions(driver.getWebDriver());
-			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
-		} catch (Exception e) {
-			base.waitForElement(getTally_SecurityGroupsButton());
-			base.waitTillElemetToBeClickable(getTally_SecurityGroupsButton());
-			Actions action = new Actions(driver.getWebDriver());
-			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
-			getTally_SecurityGroupsButton().waitAndClick(30);
-		}
+		base.waitForElement(getTally_SecurityGroupsButton());
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
 		base.waitForElement(getTally_SelectSecurityGroup());
 		getTally_SelectSecurityGroup().waitAndClick(10);
 		base.waitForElement(getTally_SaveSelections());
 		getTally_SaveSelections().waitAndClick(15);
+		
 		base.waitForElement(getCommunicationExplorer_ApplyBtn());
 		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -1314,8 +1309,9 @@ public class CommunicationExplorerPage {
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * @author 
+	 * @author
 	 * @param options
 	 * @param include
 	 * @param data
@@ -1352,10 +1348,9 @@ public class CommunicationExplorerPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 	public void analyzeInTallyAction() {
 		driver.scrollPageToTop();
 		base.waitForElement(getActionBtn());
@@ -1365,4 +1360,24 @@ public class CommunicationExplorerPage {
 		getAnalyzeTally().waitAndClick(5);
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param clickApplyBtn
+	 * @param purehit
+	 */
+	public void verifyDocCountDisplayed(boolean clickApplyBtn,int purehit) {
+		if (clickApplyBtn) {
+			clickApplyBtn();
+		}
+		
+		//verify Document count
+		int docCount_displayed = Integer.parseInt(VerifyTaggedDocsCountDisplay());
+		base.stepInfo("Doc Count displayed after selecting two folders as source in communication exp report is"
+				+ String.valueOf(docCount_displayed));
+		if (docCount_displayed <= purehit) {
+			base.passedStep("The report generated with expected count of Folders " + "containing documents ");
+		} else {
+			base.failedStep("The report  generated is not  with expected count of Folders containing documents");
+		}
+	}
 }

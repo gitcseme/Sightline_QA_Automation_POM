@@ -254,6 +254,9 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getSelectProductionSet() {
+		return driver.FindElementById("productionSetDropDown");
+	}
 
 	public ElementCollection getErrorDetailsHeaderFromPopup() {
 		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//thead//th");
@@ -2437,8 +2440,10 @@ public class BatchPrintPage {
 		// verify INPROGRESS status
 		base.waitForElement(getBatchPrintStatus());
 		String inprogressStatus = getBatchPrintStatus().getText();
-		base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
-				"Batch Print Status Is Not As Expected");
+		if (inprogressStatus.equalsIgnoreCase("INPROGRESS")) {
+			base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
+					"Batch Print Status Is Not As Expected");
+		}
 
 		for (int i = 0; i < refreshCount; i++) {
 
@@ -3261,4 +3266,31 @@ public class BatchPrintPage {
 		}
 		return detailValue;
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : select production from production set and return list of
+	 *              production inavailable in production set
+	 * @param productionSet
+	 * @param productionName
+	 * @param additional
+	 * @return
+	 */
+	public List<String> selectProductionFromBasisTab(String productionSet, String productionName, String additional) {
+		base.waitForElement(getProductionRadioButton());
+		getProductionRadioButton().waitAndClick(5);
+
+		base.waitForElement(getSelectProductionSet());
+		getSelectProductionSet().waitAndClick(10);
+		getSelectProductionSet().selectFromDropdown().selectByVisibleText(productionSet);
+		base.stepInfo("Selected Production Set is : " + productionSet);
+
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getProductionList());
+		List<String> availableProduction = base.availableListofElements(getProductionList());
+		getSelectProduction().selectFromDropdown().selectByVisibleText(productionName);
+		base.stepInfo("Selected Production is : " + productionName);
+		return availableProduction;
+	}
+
 }

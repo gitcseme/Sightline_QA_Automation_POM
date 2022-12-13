@@ -72,6 +72,22 @@ public class ManageComments_Regression_Consilio {
 				loginPage.logout();
 
 	}
+	@Test(description = "RPMXCON-68805", enabled = true, groups = { "regression" })
+	public void verifyManagCommentsWIthSpecificSplChars() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-68805");
+		baseClass.stepInfo("Verify that error message display and application does NOT accepts - when \"Comment\" Name entered with special characters < > & ‘");
+		CommentsPage comments = new CommentsPage(driver);
+		String commentName1 = "comment" + Utility.dynamicNameAppender()+"<'>&";
+		// Login As PA
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				comments.navigateToCommentsPage();
+				comments.AddComments(commentName1);
+				baseClass.passedStep("The commentName :- " + commentName1 + "failed to add in manage comments");
+				driver.waitForPageToBeReady();
+				loginPage.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

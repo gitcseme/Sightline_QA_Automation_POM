@@ -28,7 +28,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class UserAndRoleManagement_Regression25 {
+public class UserAndRoleManagement_Regression25_26 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
@@ -71,6 +71,74 @@ public class UserAndRoleManagement_Regression25 {
 	public Object[][] SaAndPaUser() {
 		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
+	}
+	
+
+
+	/**
+	 * Author :Mohan date: 15/11/2022 TestCase Id:RPMXCON-52891 Description :To
+	 * verify the access of functionality for RMU role after login
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52522", enabled = true, groups = { "regression" })
+	public void verifyAccessFunctionalityForRMURoleAfterLogin() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52522");
+		baseClass.stepInfo("To verify the access of functionality for RMU role after login");
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", false);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
+		// login as Sys Admin
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(Input.rmu1userName);
+		userManage.selectEditUserUsingPagination(Input.projectName, null, null);
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusForComponents(userManage.getComponentCheckBoxStatus("Analytics Panels"),
+				"Analytics Panels", true);
+		loginPage.logout();
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		// Navigate to docview
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocViews();
+
+		// verify Analytics Panel
+		docView = new DocViewPage(driver);
+		docView.verifyAnalyticsPanel(docView.getDocView_Analytics_liDocumentThreadMap(), "Thread Map");
+		loginPage.logout();
+
 	}
 
 	/**

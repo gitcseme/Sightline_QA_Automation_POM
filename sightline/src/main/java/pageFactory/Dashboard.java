@@ -278,7 +278,9 @@ public class Dashboard {
 	public Element getAssignmentPageTitleInAssignmentPage() {
 		return driver.FindElementByXPath("//h1[text()='My Assignments']");
 	}
-
+	public Element getDomainDashboardPage() {
+		return driver.FindElementByXPath("//a[@name='DomainDashboard']");
+	}
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;

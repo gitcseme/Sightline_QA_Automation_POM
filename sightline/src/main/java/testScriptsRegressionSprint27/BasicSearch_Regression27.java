@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -156,7 +157,74 @@ public class BasicSearch_Regression27 {
 		login.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/12/2022 RPMXCON-49763
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that user should be able to search with the field EmailCCNamesAndAddresses from basic search.
+	 */
+	@Test(description = "RPMXCON-49763", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyUserSearchWithEmailBCCNamesAndAddressesInBasicSearch(String username, String password, String role) {
+
+		base.stepInfo("Test case Id: RPMXCON-49763 ");
+		base.stepInfo(
+				"Verify that user should be able to search with the field EmailCCNamesAndAddresses from basic search.");
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String metaDataField = "EmailBCCNamesAndAddresses";
+		String searchStringWithDoubleQuotes = "\"" + Input.emailAllDomainOption + "\"";
+		String searchStringWithOutDoubleQuotes = Input.emailAllDomainOption;
+
+		// Login As user
+		login.loginToSightLine(username, password);
+		base.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// Configure the query to search with Metadata EmailBCCNamesAndAddresses with
+		// double quotes
+		base.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses with double quotes.");
+		sessionSearch.basicMetaDataDraftSearch(metaDataField, null, searchStringWithDoubleQuotes, null);
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses with
+		// double quote in Search Query Screen with exact match.
+		sessionSearch.SearchBtnAction();
+		sessionSearch.returnPurehitCount();
+		base.waitForElement(sessionSearch.contentAndMetaDataResultBasicSearch());
+		base.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResultBasicSearch().getText()
+				+ " in Basic Search Query Screen.");
+		base.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.");
+
+		// click add new search button
+		sessionSearch.addNewSearch();
+		
+		// EmailBCCNamesAndAddresses without double quotes
+		driver.waitForPageToBeReady();
+		base.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses without double quotes.");
+		sessionSearch.getContentAndMetaDatabtnC().waitAndClick(10);
+		sessionSearch.newMetaDataSearchInBasicSearch(metaDataField, searchStringWithOutDoubleQuotes);
+		driver.waitForPageToBeReady();
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses
+		// without double quote in Search Query Screen.
+		base.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResultBasicSearch().getText()
+				+ " in Basic Search Query Screen.");
+		base.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses without double quote in  Search Query Screen");
+
+		// logOut
+		login.logout();
+	}
+
 	
+
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } 
+		};
+		return users;
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

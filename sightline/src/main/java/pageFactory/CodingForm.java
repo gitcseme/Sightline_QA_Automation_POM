@@ -47,7 +47,7 @@ public class CodingForm {
 	}
 
 	public Element getCodingForm_AddToFormButton() {
-		return driver.FindElementById("addFormObjects");
+		return driver.FindElementByXPath("//*[@id='addFormObjects']");
 	}
 
 	public Element getCodingForm_CommentTab() {
@@ -326,6 +326,9 @@ public class CodingForm {
 	public Element getRootClick() {
 		return driver.FindElementByXPath("//li[@id='0']");
 	}
+	public Element getRootClickDownarrow() {
+		return driver.FindElementByXPath("//li[@id='0']//following-sibling::i[2]");
+	}
 
 	public Element getupClick1() {
 		return driver.FindElementByXPath("//li[@id='0']//i[@class='fa fa-lg fa-angle-up pull-right']");
@@ -418,9 +421,16 @@ public class CodingForm {
 	public Element getInstructionText() {
 		return driver.FindElementByXPath("//input[@id='HelpText_1']");
 	}
+	public Element getInstructionText0() {
+		return driver.FindElementByXPath("//input[@id='HelpText_0']");
+	}
+
 
 	public Element getErrorMessage() {
 		return driver.FindElementByXPath("//input[@id='ErrorMessage_1']");
+	}
+	public Element getErrorMessage0() {
+		return driver.FindElementByXPath("//input[@id='ErrorMessage_0']");
 	}
 
 	public Element getRTagLabel() {
@@ -1727,9 +1737,55 @@ public class CodingForm {
 		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
 	}
 	
+	public Element ValidationErrormsg() {
+		return driver.FindElementByXPath("//*[@id='bigBox3']");
+	}
+
 	public Element FromnameErrormsg() {
 		return driver.FindElementByXPath("//*[@id='spntxtFormName']");
 	}
+
+	public Element getCodingForm_BackButton() {
+        return driver.FindElementById("btnCodingFormBack");
+    }
+    public Element checkCodingFormIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']");
+    }
+    public Element checkCodingFormRadioBtnIsSelected(String Cfname) {
+        return driver.FindElementByXPath("//input[@value='" + Cfname + "']/../../following-sibling::td//input");
+    }
+    public Element getCodingForm_Name(int i) {
+        return driver.FindElementByXPath("(//table[@id='CodingFormDataTable']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgName(int i) {
+        return driver.FindElementByXPath("(//table[@id='dtCodingFormList']//tr//td)[" + i + "]");
+    }
+    public Element getCodingForm_SgNameCheckBox(String name) {
+        return driver.FindElementByXPath(
+                "//table[@id='dtCodingFormList']//input[@value='" + name + "']/following-sibling::i");
+    }
+
+    public Element getCodingFormOrder() {
+        return driver.FindElementByXPath("//*[@id='ui-id-1']");
+    }
+
+ 
+
+    public Element getCodingFormOrderXIcon() {
+        return driver.FindElementByXPath("//button[@type='button'][@class='ui-dialog-titlebar-close']");
+    }
+
+	
+	public Element getCodingFormNote() {
+		return driver.FindElementByXPath("//div[@id='codingFormMsg']//label");
+	}
+	public ElementCollection getColumnsPresentInAddCfPopup() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//th");
+	}
+	public Element getCFNameOrSetDefaultColumnSelectionType(int row,int col) {
+		return driver.FindElementByXPath("//tbody[@id='tbodyCodingForm']//tr['"+row+"']//td["+col+"]//label");
+	}
+
 
 	public void CFnameErrormsg(String errormsg)throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3817,6 +3873,71 @@ public class CodingForm {
 			}
 		}
 	}
+	
+	public void select_CheckGroup(String checkgrouplabel, String instructionText, String ErrorMsg) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+		else {
+			base.waitForElement(getCF_CheckGrpObject());
+			getCF_CheckGrpObject().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Check Group is slected from Special Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(checkgrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+				}
+	
+			}
+
+	
+	public void select_RadioGroup(String Radiogrouplabel, String instructionText, String ErrorMsg) {
+		driver.waitForPageToBeReady();
+		
+		if(getRootClick().isElementAvailable(1)){
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(Radiogrouplabel);
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			if (ValidationErrormsg().Visible()){	
+			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}	
+			
+	}
+			else {
+				base.waitForElement(getCF_RadioGrpObject());
+				getCF_RadioGrpObject().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects");
+				base.waitForElement(getCodingForm_AddToFormButton());
+				getCodingForm_AddToFormButton().waitAndClick(5);
+				base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
+				base.waitForElement(getStaticText());
+				getStaticText().SendKeys(Radiogrouplabel);
+				base.waitForElement(getInstructionText0());
+				getInstructionText0().SendKeys(instructionText);
+				base.waitForElement(getErrorMessage0());
+				getErrorMessage0().SendKeys(ErrorMsg);
+					}
+		
+				}
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -6154,7 +6275,99 @@ public class CodingForm {
 	}
 
 
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the buttons functionality present in add/remove CF popup
+	 */
+	public void verifyButtonsFunctionalityInAddCFPopup(String button) {
+		base.waitForElement(getStep1CfPopUp());
+		//verify after clicking cancel button
+		if(button.equalsIgnoreCase("cancel")) {
+			base.waitForElement(getCfPopUpCancel());
+			getCfPopUpCancel().waitAndClick(10);
+		}
+		//verify after clicking 'X' icon
+		else if(button.equalsIgnoreCase("X")) {
+			base.waitForElement(getPopUpCloseBtn());
+			getPopUpCloseBtn().waitAndClick(10);
+			
+		}
+		driver.waitForPageToBeReady();
+		if(getStep1CfPopUp().isDisplayed()) {
+			base.failedStep("coding form popup displayed");
+		}
+		else {
+			base.passedStep("coding form popup removed/cancelled after clicking button-"+button);
+		}	
+	}
 
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the Selected coding form is saved in
+	 *               popup
+	 */
+	public void verifySelectedCodingFormSaved() {
+		driver.waitForPageToBeReady();
+		if (btnCodingFormSave().isElementAvailable(5)) {
+			btnCodingFormSave().waitAndClick(5);
+			base.VerifySuccessMessage("Configured coding forms saved successfully");
+
+		} else {
+			base.failedStep("Codingform is not saved");
+
+		}
+
+	}
+
+	/**
+	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will Selected the coding form in popup
+	 */
+	public void verifyAddSelectedCodingFormOnDefault(String Cfname) {
+		driver.waitForPageToBeReady();
+		if (checkCodingFormIsSelected(Cfname).GetAttribute("checked") == null) {
+			getCodingForm_SgNameCheckBox(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group ");
+		}
+		if (checkCodingFormRadioBtnIsSelected(Cfname).GetAttribute("checked") == null) {
+			getSelectCodeFormRadioBtn(Cfname).waitAndClick(5);
+			base.stepInfo("Select" + Cfname + " coding form on Security group  default");
+		} else {
+			base.failedStep("Codingform popup is not opened to select");
+		}
+
+		}
+	}
+
+
+	
+	/**
+	 * @author: Arun Created Date: 09/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the elements present in add/remove CF popup
+	 */
+	public void verifyElementsPresentInAddCFPopup() {
+		String[] expectedColumn = {"Coding Form Name","Set As Default (Required)"};
+		String[] expectedType = {"checkbox","radio"};
+		
+		//verify number of column present in table
+		int columns = getColumnsPresentInAddCfPopup().size();
+		base.stepInfo("number of columns present in the table-"+columns);
+		base.digitCompareEquals(columns, expectedColumn.length, "expected number of columns present in table", 
+				"expected number of columns not present");
+		base.ValidateElement_Presence(getPopUpCheckBox(), expectedColumn[0]);
+		base.ValidateElement_Presence(getSetAsDefaultHelpIcon(), expectedColumn[1]);
+		
+		//verify selection type(checkbox/radio) of column
+		for(int i=1;i<=columns;i++) {
+			String actualType = getCFNameOrSetDefaultColumnSelectionType(1,i).GetAttribute("class");
+			base.stepInfo(expectedColumn[i-1]+"column selection type is"+actualType);
+			base.textCompareEquals(actualType, expectedType[i-1], 
+					"selection type matched for"+expectedColumn[i-1], 
+					"selection type not matched for"+expectedColumn[i-1]);
+		}
+		
+
+	}
 
 }
 

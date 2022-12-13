@@ -131,12 +131,13 @@ public class DataSets {
 	}
 
 	// Jeevitha
+	public Element getLastStatus() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Last Status')]");
+	}
 
 	public Element getDatasetTile(int index) {
 		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']//li)[" + index + "]");
 	}
-	
-	
 
 	public ElementCollection getTotalDataset() {
 		return driver
@@ -163,9 +164,10 @@ public class DataSets {
 	// added by sowndariya
 
 	public Element getDataset(String dataset) {
-        return driver.FindElementByXPath("//a[contains(@title,'" + dataset
-                + "')]//..//..//input[@value='View Set in...']//..//button[@id='idAction']");
-  	  }
+		return driver.FindElementByXPath("//a[contains(@title,'" + dataset
+				+ "')]//..//..//input[@value='View Set in...']//..//button[@id='idAction']");
+	}
+
 	public Element allSourcesDataset() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]");
 	}
@@ -188,70 +190,109 @@ public class DataSets {
 	public Element NavigateToDataSets(String componentName) {
 		return driver.FindElementByXPath("//a[@name='" + componentName + "']//i");
 	}
-	
+
 	public Element getDataSetNameViaViewDS() {
 		return driver.FindElementByXPath("//a[@class='tileTooltipText']//strong");
 	}
-	public Element getdatasetleftmenuBtn() {return driver.FindElementByName("DataSets");}
-	public Element getdatasetleftsubmenuBtn() {return driver.FindElementByName("Datasets1");}
-	public Element getCreateNewUploadSetLink(){return driver.FindElementByCssSelector("#createSet");}
-	public Element getDatasetNameTxtBox() {return driver.FindElementById("txtDatasetName");}
-	public Element getCustodianNameTxtBox() {return driver.FindElementById("txtCustodianName");}
-	public Element getDescriptionTxtBox() {return driver.FindElementById("txtDatasetDescription");}
-	public Element getCreateBtn() {return driver.FindElementById("CreateUploadSet");}
+
+	public Element getdatasetleftmenuBtn() {
+		return driver.FindElementByName("DataSets");
+	}
+
+	public Element getdatasetleftsubmenuBtn() {
+		return driver.FindElementByName("Datasets1");
+	}
+
+	public Element getCreateNewUploadSetLink() {
+		return driver.FindElementByCssSelector("#createSet");
+	}
+
+	public Element getDatasetNameTxtBox() {
+		return driver.FindElementById("txtDatasetName");
+	}
+
+	public Element getCustodianNameTxtBox() {
+		return driver.FindElementById("txtCustodianName");
+	}
+
+	public Element getDescriptionTxtBox() {
+		return driver.FindElementById("txtDatasetDescription");
+	}
+
+	public Element getCreateBtn() {
+		return driver.FindElementById("CreateUploadSet");
+	}
+
 	public Element getNOBtn() {
 		return driver.FindElementById("bot2-Msg1");
 	}
-	public Element getdraganddroppage() { return driver.FindElementById("mydropzone"); }
-	public Element getdataSetErrorMsg() { return driver.FindElementByXPath("//span[@id='txtDatasetName-error']"); }
+
+	public Element getdraganddroppage() {
+		return driver.FindElementById("mydropzone");
+	}
+
+	public Element getdataSetErrorMsg() {
+		return driver.FindElementByXPath("//span[@id='txtDatasetName-error']");
+	}
+
 	public Element getCreateUploadDatasetPopUpClose() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
+
 	public Element geteditDatasetDetails() {
 		return driver.FindElementByXPath("(//a[@id='editUploadSet'])[1]");
 	}
+
 	public Element getSaveDatasetDetails() {
 		return driver.FindElementByXPath("//button[@id='EditUploadSet']");
 	}
-	
+
 	public Element geteditFirstDataSetElement() {
 		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']/li/span[2]/a/strong)[1]");
 	}
-	
+
 	public Element getNoOpenInCurrentTab() {
 		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
 	}
+
 	public Element geteditProjectPwds() {
 		return driver.FindElementByXPath("//a[@id='editProjectPwd']");
 	}
+
 	public Element getProjectPwdsText() {
 		return driver.FindElementByXPath("//textArea[@id='txtProjectPwds']");
 	}
+
 	public Element getSaveProjectPwdsText() {
 		return driver.FindElementByXPath("//button[@id='SaveProjectPwd']");
 	}
-	
+
 	public ElementCollection getIngestionCount() {
 		return driver.FindElementsByXPath(
 				"//a//strong[contains(text(),'RPMXCON40140')]/../../..//div[@class='ingestCt col-md-4 txt-color-green']//span");
 	}
+
 	public Element getIngestionCount(int i) {
 		return driver.FindElementByXPath(
-				"(//a//strong[contains(text(),'RPMXCON40140')]/../../..//div[@class='ingestCt col-md-4 txt-color-green']//span)["+i+"]");
-						
-	}
-	
-	public Element getAction(int i) {
-		return driver.FindElementByXPath(
-				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//button[@id='idAction'])["+i+"]");
-						
-	}
-	public Element getDocList(int i) {
-		return driver.FindElementByXPath(
-				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//a[@id='idBulkTag'][text()='DocList'])["+i+"]");
-						
+				"(//a//strong[contains(text(),'RPMXCON40140')]/../../..//div[@class='ingestCt col-md-4 txt-color-green']//span)["
+						+ i + "]");
 
 	}
+
+	public Element getAction(int i) {
+		return driver.FindElementByXPath(
+				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//button[@id='idAction'])["
+						+ i + "]");
+
+	}
+
+	public Element getDocList(int i) {
+		return driver.FindElementByXPath(
+				"(//input[contains(@value,'View Set' )]/../../../..//Strong[contains(text(),'RPMXCON40140')]/../../..//a[@id='idBulkTag'][text()='DocList'])["
+						+ i + "]");
+
+	}
+
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -795,9 +836,9 @@ public class DataSets {
 		String passMsg = "After Navigating to Dataset page from Collection Page Filter is Applied & search filter box value is : "
 				+ actualSearchValue;
 		String failMsg = "Filter is Not Applied";
+		base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
 
 		if (!expectedTileView.equals("")) {
-			base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
 			String actualType = getTileViewType();
 			base.textCompareEquals(actualType, expectedTileView,
 					"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
@@ -848,8 +889,7 @@ public class DataSets {
 		}
 
 	}
-	
-    
+
 	/**
 	 * @Author Hema MJ
 	 * @Description : create & set dataset details
@@ -857,129 +897,125 @@ public class DataSets {
 	 * @param ddcustodianit
 	 * @param ddisc
 	 */
-   public void setdatasetdetails(String dname,String dcustodian,String ddisc){
+	public void setdatasetdetails(String dname, String dcustodian, String ddisc) {
 		System.out.println("********Started to create new uploaded set.********");
 		getCreateNewUploadSetLink().WaitUntilPresent().Click();
 		base.waitForElement(getDatasetNameTxtBox());
 		getDatasetNameTxtBox().SendKeys(dname);
-		getCustodianNameTxtBox().SendKeys(dcustodian);	
+		getCustodianNameTxtBox().SendKeys(dcustodian);
 		getDescriptionTxtBox().SendKeys(ddisc);
 		getCreateBtn().WaitUntilPresent().Click();
-		
-		//checking for special characters
+
+		// checking for special characters
 		Pattern p = Pattern.compile("[<'>&]", Pattern.CASE_INSENSITIVE);
-	       // Creating matcher for above pattern on our string
-	        Matcher m1 = p.matcher(dname);
-	        Matcher m2 = p.matcher(dcustodian);
-	        Matcher m3 = p.matcher(ddisc);
-	        // Now finding the matches for which let us set a boolean flag and imposing find() method
-	        boolean dnameflag = m1.find();
-	        boolean dcustodianflag = m2.find();
-	        boolean ddiscflag = m3.find();
-		if(dnameflag||ddiscflag||dcustodianflag) {
-		
-			if(dnameflag) {
+		// Creating matcher for above pattern on our string
+		Matcher m1 = p.matcher(dname);
+		Matcher m2 = p.matcher(dcustodian);
+		Matcher m3 = p.matcher(ddisc);
+		// Now finding the matches for which let us set a boolean flag and imposing
+		// find() method
+		boolean dnameflag = m1.find();
+		boolean dcustodianflag = m2.find();
+		boolean ddiscflag = m3.find();
+		if (dnameflag || ddiscflag || dcustodianflag) {
+
+			if (dnameflag) {
 				base.waitForElement(getdataSetErrorMsg());
-				String ErrorMsg=getdataSetErrorMsg().getText();
+				String ErrorMsg = getdataSetErrorMsg().getText();
 				if (ErrorMsg.equals("")) {
-				base.failedStep("Expected Error Message is Not Displayed");
+					base.failedStep("Expected Error Message is Not Displayed");
 				} else {
-				System.out.println("Error : " + ErrorMsg);
-				base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+					System.out.println("Error : " + ErrorMsg);
+					base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
 				}
 			}
-			if(ddiscflag || dcustodianflag) {
-				String ErrorMsg="Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
+			if (ddiscflag || dcustodianflag) {
+				String ErrorMsg = "Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
 				base.VerifyErrorMessage(ErrorMsg);
 				base.passedStep("dataset failed to create");
 			}
 			base.waitForElement(getCreateUploadDatasetPopUpClose());
 			getCreateUploadDatasetPopUpClose().waitAndClick(5);
-			
-		}
-		else {
-			try{
+
+		} else {
+			try {
 				base.waitForElement(getNoOpenInCurrentTab());
-		 		getNoOpenInCurrentTab().waitAndClick(10);	
-			}catch(Exception e){
+				getNoOpenInCurrentTab().waitAndClick(10);
+			} catch (Exception e) {
 				base.failedStep("dataset failed to create");
-				}
+			}
 			base.passedStep("Creation of new uploaded set is completed.");
 			System.out.println("********Creation of new uploaded set is completed.********");
 		}
 	}
-   public void updateDatasetDetails(String dname,String dcustodian,String ddisc)
-   {
-   		base.waitForElement(geteditDatasetDetails());
-   		
-   		geteditDatasetDetails().Click();
-   		
-   		base.waitForElement(getDatasetNameTxtBox());
-   		
-   		getDatasetNameTxtBox().Clear();
+
+	public void updateDatasetDetails(String dname, String dcustodian, String ddisc) {
+		base.waitForElement(geteditDatasetDetails());
+
+		geteditDatasetDetails().Click();
+
+		base.waitForElement(getDatasetNameTxtBox());
+
+		getDatasetNameTxtBox().Clear();
 		getDatasetNameTxtBox().SendKeys(dname);
 		getCustodianNameTxtBox().Clear();
-		getCustodianNameTxtBox().SendKeys(dcustodian);	
+		getCustodianNameTxtBox().SendKeys(dcustodian);
 		getDescriptionTxtBox().Clear();
 		getDescriptionTxtBox().SendKeys(ddisc);
 		getSaveDatasetDetails().WaitUntilPresent().Click();
-		
-		//checking for special characters
+
+		// checking for special characters
 		Pattern p = Pattern.compile("[<'>&]", Pattern.CASE_INSENSITIVE);
-	       // Creating matcher for above pattern on our string
-	        Matcher m1 = p.matcher(dname);
-	        Matcher m2 = p.matcher(dcustodian);
-	        Matcher m3 = p.matcher(ddisc);
-	        // Now finding the matches for which let us set a boolean flag and imposing find() method
-	        boolean dnameflag = m1.find();
-	        boolean dcustodianflag = m2.find();
-	        boolean ddiscflag = m3.find();
-		if(dnameflag||ddiscflag||dcustodianflag) {
-		
-			if(dnameflag) {
+		// Creating matcher for above pattern on our string
+		Matcher m1 = p.matcher(dname);
+		Matcher m2 = p.matcher(dcustodian);
+		Matcher m3 = p.matcher(ddisc);
+		// Now finding the matches for which let us set a boolean flag and imposing
+		// find() method
+		boolean dnameflag = m1.find();
+		boolean dcustodianflag = m2.find();
+		boolean ddiscflag = m3.find();
+		if (dnameflag || ddiscflag || dcustodianflag) {
+
+			if (dnameflag) {
 				base.waitForElement(getdataSetErrorMsg());
-				String ErrorMsg=getdataSetErrorMsg().getText();
+				String ErrorMsg = getdataSetErrorMsg().getText();
 				if (ErrorMsg.equals("")) {
-				base.failedStep("Expected Error Message is Not Displayed");
+					base.failedStep("Expected Error Message is Not Displayed");
 				} else {
-				System.out.println("Error : " + ErrorMsg);
-				base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+					System.out.println("Error : " + ErrorMsg);
+					base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
 				}
 			}
-			if(ddiscflag || dcustodianflag) {
-				String ErrorMsg="Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
+			if (ddiscflag || dcustodianflag) {
+				String ErrorMsg = "Failed to create a dataset due to invalid details. Custodian Name and Dataset description should not include characters < or > in them.";
 				base.VerifyErrorMessage(ErrorMsg);
 				base.CloseSuccessMsgpopup();
 				base.passedStep("dataset failed to create");
 			}
 			base.waitForElement(getCreateUploadDatasetPopUpClose());
 			getCreateUploadDatasetPopUpClose().waitAndClick(5);
-			
+
+		} else {
+			base.VerifySuccessMessage("Upload dataset updated successfully");
 		}
-		else {
-				base.VerifySuccessMessage("Upload dataset updated successfully");
-			}
-			base.passedStep("Updating of existing uploaded set is completed.");
-			System.out.println("********Updating of existing uploaded set is completed.********");
-		
-   		
-   }
-   public void updateProjectPwds(String projectPwd) throws InterruptedException
-   {
-	   base.waitForElement(geteditProjectPwds());
-	   geteditProjectPwds().Click();
-	   base.waitForElement(getProjectPwdsText());
-	   getProjectPwdsText().Clear();
-	   getProjectPwdsText().SendKeys(projectPwd);
-	   base.waitForElement(getSaveProjectPwdsText());
-	   getSaveProjectPwdsText().Click();
-	   Thread.sleep(2000);
-	   base.VerifySuccessMessage("Passwords saved successfully.");
-	   
-	   
-   }
-   
-  
+		base.passedStep("Updating of existing uploaded set is completed.");
+		System.out.println("********Updating of existing uploaded set is completed.********");
+
+	}
+
+	public void updateProjectPwds(String projectPwd) throws InterruptedException {
+		base.waitForElement(geteditProjectPwds());
+		geteditProjectPwds().Click();
+		base.waitForElement(getProjectPwdsText());
+		getProjectPwdsText().Clear();
+		getProjectPwdsText().SendKeys(projectPwd);
+		base.waitForElement(getSaveProjectPwdsText());
+		getSaveProjectPwdsText().Click();
+		Thread.sleep(2000);
+		base.VerifySuccessMessage("Passwords saved successfully.");
+
+	}
 
 	/**
 	 * @author Brundha
@@ -990,7 +1026,7 @@ public class DataSets {
 		base.waitForElement(getDataSetTypeList());
 		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
 		driver.waitForPageToBeReady();
-		int j=1;
+		int j = 1;
 		while (!getDataset(Dataset).isElementAvailable(10)) {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -1004,7 +1040,7 @@ public class DataSets {
 			}
 			j++;
 		}
-		for (int i = 1; i <=getIngestionCount().size(); i++) {
+		for (int i = 1; i <= getIngestionCount().size(); i++) {
 			String count = getIngestionCount(i).getText();
 			int count1 = Integer.parseInt(count);
 			if (count1 == 0) {
@@ -1016,6 +1052,38 @@ public class DataSets {
 			getDocList(i).waitAndClick(10);
 			break;
 		}
-	}	
+	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param expectedStatus
+	 * @param count
+	 * @param collectionName
+	 * @return
+	 */
+	public String VerifyLastStatusOfCollection(String expectedStatus, int count, String collectionName) {
+		base.waitForElement(getLastStatus());
+		String actualStatus = getLastStatus().getText();
+		String[] status = actualStatus.split("\n");
+		if (actualStatus.equalsIgnoreCase(expectedStatus)) {
+			base.textCompareEquals(status[1], expectedStatus, "Last Status Displayed is : " + status[1],
+					"Displayed Last Status is not as Expected");
+		} else {
+			for (int i = 0; i < count; i++) {
+				base.waitTime(25);
+				base.waitForElement(getClkSearch());
+				getClkSearch().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				base.waitForElement(getLastStatus());
+				actualStatus = getLastStatus().getText();
+				status = actualStatus.split("\n");
+				if(status[1].equals(expectedStatus)) {
+					break;
+				}
+			}
+			base.textCompareEquals(status[1], expectedStatus, "Last Status Displayed is : " + status[1],
+					"Displayed Last Status is not as Expected");
+		}
+		return actualStatus;
+	}
 }

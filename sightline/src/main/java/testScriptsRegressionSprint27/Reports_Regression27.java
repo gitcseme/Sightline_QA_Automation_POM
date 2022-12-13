@@ -22,6 +22,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.CommunicationExplorerPage;
+import pageFactory.ConceptExplorerPage;
 import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -179,7 +180,6 @@ public class Reports_Regression27 {
 	 * @Description: Executing the tally report with CustodianName & EmailAuthorName
 	 *               filters selected
 	 **/
-	@Test(description = "RPMXCON-56722", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
 	public void validateTallyReportWithCNandEA(String username, String password) throws Exception {
 		CommunicationExplorerPage commExpl = new CommunicationExplorerPage(driver);
 		TallyPage tally = new TallyPage(driver);
@@ -198,32 +198,40 @@ public class Reports_Regression27 {
 
 		tally.selectTallyByMetaDataField(Input.metaDataName);
 		driver.waitForPageToBeReady();
-		float beforeCustName = System.currentTimeMillis();
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.metaDataName));
 		tally.metaDataFilterForTallyBy(Input.metaDataName).waitAndClick(10);
+		float beforeCustName = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
-		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
+		tally.FilterInputTextBoxTallyBy().waitAndClick(10);
 		base.waitForElementCollection(tally.getAllValueinCustNameFilter());
 		float afterCustName = System.currentTimeMillis();
+		base.waitForElement(tally.getCloseByCNFilterPopUp());
+		tally.getCloseByCNFilterPopUp().waitAndClick(5);
 		float totalSecCustName = afterCustName - beforeCustName;
 		asserts.assertTrue(totalSecCustName < 4000);
 		asserts.assertAll();
 
-		tally.applyFilterToTallyBy(Input.metaDataName, "exclude", Input.custodianName_Andrew);
-
 		driver.waitForPageToBeReady();
-		float beforeEmailAuthor = System.currentTimeMillis();
+		tally.applyFilterToTallyBy(Input.metaDataName, "exclude", Input.custodianName_Andrew);
+		driver.waitForPageToBeReady();
+
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
+		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).ScrollTo();
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
+		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
 		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
 		base.waitForElementCollection(tally.getAllValueinEmailAuthorFilter());
 		float afterEmailAuthor = System.currentTimeMillis();
+		base.waitForElement(tally.getCloseByEAFilterPopUp());
+		tally.getCloseByEAFilterPopUp().waitAndClick(5);
 		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
 		asserts.assertTrue(totalSecEmailAuthor < 4000);
 		asserts.assertAll();
 
+		driver.waitForPageToBeReady();
 		tally.applyFilterToTallyBy(Input.MetaDataEAName, "exclude", Input.EmailAuthourName);
+		driver.waitForPageToBeReady();
 
 		base.waitForElement(tally.getTally_btnTallyApply());
 		base.waitTillElemetToBeClickable(tally.getTally_btnTallyApply());
@@ -257,20 +265,22 @@ public class Reports_Regression27 {
 		driver.waitForPageToBeReady();
 
 		tally.selectTallyByMetaDataField(Input.metaDataName);
-		driver.waitForPageToBeReady();
-		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
-		base.waitTillElemetToBeClickable(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
+		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
 		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
 		base.waitForElementCollection(tally.getAllValueinEmailAuthorFilter());
 		float afterEmailAuthor = System.currentTimeMillis();
+		base.waitForElement(tally.getCloseByEAFilterPopUp());
+		tally.getCloseByEAFilterPopUp().waitAndClick(5);
 		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
 		asserts.assertTrue(totalSecEmailAuthor < 4000);
 		asserts.assertAll();
 
+		driver.waitForPageToBeReady();
 		tally.applyFilterToTallyBy(Input.MetaDataEAName, "exclude", Input.EmailAuthourName);
+		driver.waitForPageToBeReady();
 
 		base.waitForElement(tally.getTally_btnTallyApply());
 		base.waitTillElemetToBeClickable(tally.getTally_btnTallyApply());
@@ -388,7 +398,8 @@ public class Reports_Regression27 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56948
-	 * @Description: Validate Distributed document count for Review Count report by hourly (RMU login)
+	 * @Description: Validate Distributed document count for Review Count report by
+	 *               hourly (RMU login)
 	 **/
 	@Test(description = "RPMXCON-56948", enabled = true, groups = { "regression" })
 	public void verifyDisCountFrRevCountRepRMULgin() throws Exception {
@@ -426,15 +437,14 @@ public class Reports_Regression27 {
 		System.out.println(completedDocsInReportPage);
 		asserts.assertTrue(completedDocsInReportPage.equals("100"));
 		asserts.assertAll();
-		base.passedStep(
-				"Validated - Distributed document count for Review Count report by hourly (RMU login)");
+		base.passedStep("Validated - Distributed document count for Review Count report by hourly (RMU login)");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * @author sowndarya Testcase No:RPMXCON-56581
-	 * @Description:To verify export report if ‘Export Object Name’ and “Scrub export of special characters" option is toggled ‘OFF’
+	 * @Description:To verify export report if ‘Export Object Name’ and “Scrub
+	 *                 export of special characters" option is toggled ‘OFF’
 	 **/
 	@Test(description = "RPMXCON-56581", enabled = true, groups = { "regression" })
 	public void verifyScrubExportSplChAndExportObjNameToggle() throws Exception {
@@ -445,7 +455,8 @@ public class Reports_Regression27 {
 		String[] workProduct = { comment };
 		String[] metadata1 = { "DocID" };
 		base.stepInfo("RPMXCON - 56581");
-		base.stepInfo("To verify export report if ‘Export Object Name’ and “Scrub export of special characters\" option is toggled ‘OFF’");
+		base.stepInfo(
+				"To verify export report if ‘Export Object Name’ and “Scrub export of special characters\" option is toggled ‘OFF’");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		comments.AddComments(comment);
@@ -460,14 +471,14 @@ public class Reports_Regression27 {
 		base.waitForElement(custom.getToggle_ScrubSpecChar());
 		custom.getToggle_ScrubSpecChar().waitAndClick(10);
 		base.stepInfo("Toggle Scrub Export of special characters is turned Off ");
-		
+
 		base.waitForElement(custom.getToggle_ObjectName());
 		custom.getToggle_ObjectName().waitAndClick(10);
 		base.stepInfo("Toggle Export object name is turned Off ");
-		
+
 		custom.verifyScrubToggleAddDeleteAndModify();
 		base.stepInfo("verified scrub Toggle Add/Delete/Modify ");
-		
+
 		String fileName = custom.runReportandVerifyFileDownloaded();
 		String actualValue = custom.csvfileVerification("", fileName);
 		base.stepInfo(actualValue);
@@ -478,4 +489,44 @@ public class Reports_Regression27 {
 		base.passedStep("Report generated successfully");
 	}
 
+	/**
+	 * @author NA TESTCASE No:RPMXCON-56773
+	 * @Description: Verified - Conceptual Report generation based on Clusters
+	 **/
+	@Test(description = "RPMXCON-56773", enabled = true, groups = { "regression" })
+	public void verifyConceptualReportBasedOnCLuster() throws Exception {
+		ConceptExplorerPage concept = new ConceptExplorerPage(driver);
+		SoftAssert asserts = new SoftAssert();
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		String sourceToSelect = "Security Groups";
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+
+		base.stepInfo("RPMXCON-56773");
+		base.stepInfo("Verified - Conceptual Report generation based on Clusters");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As  : " + Input.pa1userName);
+
+		concept.navigateToConceptExplorerPage();
+		driver.waitForPageToBeReady();
+		concept.clickSelectSources();
+		concept.selectSGsource(sourceToSelect, Input.securityGroup);
+		driver.waitForPageToBeReady();
+		concept.filterAction(Input.custodianName_Andrew, Input.metaDataName, null, true);
+		concept.applyFilter("Yes", 10);
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(concept.getDataToAddInCart());
+		asserts.assertTrue(concept.getDataToAddInCart().isElementAvailable(5));
+		asserts.assertAll();
+		base.stepInfo("Clusters are displayed at the bottom of the page ");
+		String docCount = concept.addMultipleTilesToCart(1);
+		driver.waitForPageToBeReady();
+		concept.performActions("Bulk Folder");
+		String bulkFolderCount = sessionSearch.BulkActions_Folder_returnCount(folderName);
+		base.textCompareEquals(docCount, bulkFolderCount, "Folder Document count matches as expected",
+				"Mis-match in document count");
+		base.stepInfo("Bulk Folder Action done successfully");
+		base.passedStep("To Verify Conceptual Report generation based on Clusters");
+		loginPage.logout();
+	}
 }

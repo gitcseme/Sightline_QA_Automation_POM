@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,13 +22,15 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.Categorization;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ProviewRegression_24_25 {
+public class ProviewRegression_24_25_26 {
 	Driver driver;
 	LoginPage login;
 	SessionSearch session;
@@ -46,12 +49,270 @@ public class ProviewRegression_24_25 {
 
 	}
 
+
+	
 	@DataProvider(name = "USERS")
 	public Object[][] USERS() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
+
+	/**
+	 * @Author Krishna Date:NA ModifyDate:NA RPMXCON-54117
+	 * @Description : To verify that RMU can view the selected folders.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54117", enabled = true, groups = { "regression" })
+	public void verifyRmuCanViewSelectedFolder() throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54117  Proview");
+		base.stepInfo("TTo verify that RMU can view the selected folders.");
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		SoftAssert softassert = new SoftAssert();
+		Categorization categorize = new Categorization(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		// Login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Folder
+		sessionSearch.bulkFolder(folderName);
+
+		// select Folder in Corpus Section
+		categorize.navigateToCategorizePage();
+		categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+		categorize.fillingStep2CorpusTab("folder", folderName, null, true);
+		driver.waitForPageToBeReady();
+		String selectedFolder = categorize.getSelectedAnalyzedSub().getText();
+		softassert.assertEquals(folderName, selectedFolder);
+		base.stepInfo("Selected folder is displayed successfully");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Krishna Date:NA ModifyDate:NA RPMXCON-54121
+	 * @Description : To verify that user can remove the folder.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54121", dataProvider = "USERS", enabled = true, groups = { "regression" })
+	public void verifyUserCanRemoveFolder(String username, String password, String userRole)
+			throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54121  Proview");
+		base.stepInfo("To verify that user can remove the folder.");
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		SoftAssert softassert = new SoftAssert();
+		Categorization categorize = new Categorization(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		base.stepInfo("Logged in as : " + userRole);
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Folder
+		sessionSearch.bulkFolder(folderName);
+		categorize.navigateToCategorizePage();
+		categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+
+		// select Folder in Corpus Section
+		categorize.fillingStep2CorpusTab("folder", folderName, null, true);
+		driver.waitForPageToBeReady();
+		String selectedFolder = categorize.getSelectedAnalyzedSub().getText();
+		softassert.assertEquals(folderName, selectedFolder);
+		base.stepInfo("Folder is selected in analyzed as expected");
+
+		// verify selected data is removed
+		base.waitForElement(categorize.getSelectedAnalyzedXBtn());
+		categorize.getSelectedAnalyzedXBtn().waitAndClick(5);
+		base.stepInfo("Clicled x icon in selected folder");
+		driver.waitForPageToBeReady();
+		base.ValidateElement_AbsenceReturn(categorize.getSelectedAnalyzedSub());
+		base.passedStep("Data is removed successfully as expected");
+		softassert.assertAll();
+		login.logout();
+	}
+	
+	/**
+	 * @throws AWTException
+	 * @Author Krishna Date:NA ModifyDate:NA RPMXCON-54116
+	 * @Description : To verify that on clicking on 'Production Set' icon, all
+	 *              existing sets should be displayed.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54116", enabled = true, groups = { "regression" })
+	public void verifyProductionSetExistingSetDisplayed() throws InterruptedException, AWTException {
+
+		base.stepInfo("RPMXC0N-54116  Proview");
+		base.stepInfo("To verify that on clicking on 'Production Set' icon, all existing sets should be displayed.");
+		Categorization categorize = new Categorization(driver);
+		SoftAssert softassert=new SoftAssert();
+
+		// Login As RMU
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+        ProductionPage page = new ProductionPage(driver);
+        driver.waitForPageToBeReady();
+        this.driver.getWebDriver().get(Input.url + "Production/Home");
+        base.waitForElementCollection(page.getProductionSets());
+        List<String> productionSets = base.availableListofElements(page.getProductionSets());
+        int totalProdSets = page.getProductionSets().size();
+        System.out.println(totalProdSets);
+        List<String> result = new ArrayList<>();
+        for (String s : productionSets) {
+          result.add(s.replace(" (Production Set)", ""));
+        }
+        base.stepInfo(result.toString());
+        categorize.navigateToCategorizePage();
+        categorize.fillingTrainingSetSection("SG", Input.securityGroup, null, null);
+ 
+        // select production sets
+        categorize.selectTrainingSet("Analyze Select Production Sets");
+        base.stepInfo("Analyze Select Production Sets  Results Sets Expanded");
+        base.waitForElement(categorize.getProductionSelectionPopUp());
+        categorize.getProductionSelectionPopUp().waitAndClick(5);
+        for(int i=0;i<totalProdSets;i++) {
+        	softassert.assertEquals(categorize.getProdSet(result.get(i)).isDisplayed(),true);
+        	if(categorize.getProdSet(result.get(i)).isDisplayed()) {
+        	base.stepInfo(result.get(i)+" is displayed as expected in proview page ");
+        	}
+        }
+        softassert.assertAll();
+        base.passedStep("All existing production sets are dislayed in proview page afterclicking production set icon");
+
+	}
+
+	/**
+	 * @Author Krishna Date:NA ModifyDate:NA RPMXCON-54133
+	 * @Description : To verify that if system admin remove the 'Categorize' rights,
+	 *              user cannot view the proview page.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54133", dataProvider = "USERS", enabled = true, groups = { "regression" })
+	public void verifyUserCanRemove(String username, String password, String userRole) throws Exception {
+
+		base.stepInfo("RPMXC0N-54133  Proview");
+		base.stepInfo(
+				"To verify that if system admin remove the 'Categorize' rights, user cannot view the proview page.");
+		Categorization categorize = new Categorization(driver);
+		UserManagement user = new UserManagement(driver);
+		String categorizetab = "Categorize";
+
+		// Login As SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage  SAU as with " + Input.sa1userName + "");
+		user.getUserSelectedFunctionalyTabIsUncheck(username, Input.projectName, categorizetab);
+		login.logout();
+
+		// Login as
+		login.loginToSightLine(username, password);
+		base.stepInfo("Login as " + userRole);
+		driver.waitForPageToBeReady();
+		if (categorize.getCategorizeMenu().isDisplayed()) {
+			base.failedStep("Categorize option is visible for the user.");
+		} else {
+			base.passedStep("Categorize option is not visible for the user as expected.");
+		}
+		login.logout();
+
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.getUserSelectedFunctionalyTabIsUncheck(username, Input.projectName, categorizetab);
+		login.logout();
+	}
+	
+	/**
+	 * @Author  Date:NA ModifyDate:NA RPMXCON-54135
+	 * @Description : To verify that “Select Docs to be Analyzed“ frame enabled once
+	 *              any data selected “Identify the Training Set” frame.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54135", enabled = true, groups = { "regression" })
+	public void verifySelectDoxAnalyzedFrameEnabled() throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54135  Proview");
+		base.stepInfo(
+				"To verify that “Select Docs to be Analyzed“ frame  enabled once any data selected “Identify the Training Set” frame.");
+		String folderName = "FOLDER" + Utility.dynamicNameAppender();
+		Categorization categorize = new Categorization(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SoftAssert softassert = new SoftAssert();
+		String assign = "btnAssign";
+		String prod = "btnProduction";
+		String folder = "btnFolder";
+		String savedsearch = "btnSavedSearch";
+
+		// Login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// basic Content search
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		// perform Bulk Folder
+		sessionSearch.bulkFolder(folderName);
+		categorize.navigateToCategorizePage();
+		categorize.fillingTrainingSetSection("Folder", folderName, null, null);
+		driver.waitForPageToBeReady();
+
+		// select corpus to analyzed sets
+		base.waitTime(5);
+		categorize.getAnalyzeSelectFolders().waitAndClick(5);
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(folder).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Assignments");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(assign).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Production Sets");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(prod).isElementAvailable(5));
+		categorize.selectTrainingSet("Analyze Select Saved Search Results Sets");
+		softassert.assertFalse(categorize.getAnalyzeSelectBtnDisabled(savedsearch).isElementAvailable(5));
+		softassert.assertFalse(categorize.getRunBtnDisabled().isElementAvailable(5));
+		base.passedStep("Selected Docs to be Analyzed frame has been enabled as expected");
+		softassert.assertAll();
+
+	}
+	
+	
+	/**
+	 * @Author  Date:NA ModifyDate:NA RPMXCON-54131
+	 * @Description : To verify that 'Doc to be analyzed' should be display warning
+	 *              message if training set is not selected.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54131", enabled = true, groups = { "regression" })
+	public void verifyDocsToBeAnalyzedWarningMsg() throws InterruptedException {
+
+		base.stepInfo("RPMXC0N-54131  Proview");
+		base.stepInfo(
+				"To verify that 'Doc to be analyzed' should be display warning message if training set is not selected.");
+		Categorization categorize = new Categorization(driver);
+
+		// Login As RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		categorize.navigateToCategorizePage();
+
+		driver.scrollingToBottomofAPage();
+		categorize.getGotoStep2().waitAndClick(5);
+		base.stepInfo("To be analyzed is clicked as expected");
+		boolean warningStatus = base.getWarningsMsgHeader().isElementAvailable(3);
+		System.out.println(warningStatus);
+		if (warningStatus == true) {
+			base.VerifyWarningMessage("Please select a training set");
+			base.passedStep("Warning message is displayed successfully");
+			
+		} else {
+			base.failedStep("warning msg is not displayed");
+		}
+	}
+
 	
 	/**
 	 * @Author Jeevitha

@@ -3650,6 +3650,13 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='l_it_0']/span");
 	}
 
+	public Element getAudioSilderValue() {
+		return driver.FindElementByXPath("//div[@class='tooltip top in']//div[@class='tooltip-inner']");
+	}
+	
+	public Element getAudioSilderPoint() {
+		return driver.FindElementByXPath("//div[@class='slider-handle round']");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -28953,4 +28960,86 @@ public class DocViewPage {
             base.failedStep("Copy and paste icon is in disabled state");
         }
    }
+   
+   /**
+	 * @author  Created Date: NA
+	 * @description To verify selected folder in docview folder tab
+	 */
+
+	public void VerifySelectedFolderTab(final String folderName, int rowno) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_MiniDoc_SelectRow(rowno).Visible();
+			}
+		}), Input.wait60);
+		getDocView_MiniDoc_SelectRow(rowno).waitAndClick(15);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Mini_ActionButton().Visible();
+			}
+		}), Input.wait30);
+		getDocView_Mini_ActionButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Mini_FolderAction().Visible();
+			}
+		}), Input.wait30);
+		getDocView_Mini_FolderAction().Click();
+
+		sp.getSelectFolderExisting(folderName).waitAndClick(15);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		sp.getContinueButton().Click();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sp.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		sp.getFinalizeButton().Click();
+
+		base.VerifySuccessMessage("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk folder is done, folder is : " + folderName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_FolderTab().Visible();
+			}
+		}), Input.wait30);
+		getDocView_FolderTab().ScrollTo();
+		getDocView_FolderTab().waitAndClick(30);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_FolderTab_Expand().Visible();
+			}
+		}), Input.wait30);
+		getDocView_FolderTab_Expand().Click();
+		Thread.sleep(2000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderFromList(folderName).Displayed();
+			}
+		}), Input.wait30);
+		Assert.assertTrue(getFolderFromList(folderName).Displayed());
+
+	}
 }

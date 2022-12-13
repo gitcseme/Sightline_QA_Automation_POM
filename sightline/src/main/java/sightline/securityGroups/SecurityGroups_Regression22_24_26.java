@@ -37,7 +37,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SecurityGroups_Regression22_24 {
+public class SecurityGroups_Regression22_24_26 {
 	
 	Driver driver;
 	LoginPage loginPage;
@@ -91,6 +91,57 @@ public class SecurityGroups_Regression22_24 {
 			loginPage.quitBrowser();
 		}
 	}
+	
+	/**
+	 * @author Krishna Date: Modified date:N/A Modified by: Description :Verify
+	 *         that user can not enter external scripts in Create Security Group
+	 *         screen
+	 */
+	@Test(description = "RPMXCON-54907", enabled = true, groups = { "regression" })
+	public void verifyUserCannotExternalScriptInSg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54907");
+		baseClass.stepInfo("Verify that user can not enter external scripts in Create Security Group screen");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		String SGname = "<script>alert(3)</script>";
+		String SGname1 = "\\/()~`!@#$%^&*,;. |";
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+        
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.createSecurityGroups(SGname);
+		String Actualwarningmsg = "The security group name is invalid.";
+		baseClass.waitTime(5);
+		String expectWarningmsg = sgpage.getSG_InvalidErrorMsg().getText();
+		System.out.println(expectWarningmsg);
+		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
+		driver.waitForPageToBeReady();
+		if (Actualwarningmsg.equals(expectWarningmsg)) {
+			baseClass.passedStep(expectWarningmsg+"   Warning message is displayed successfully");
+		} else {
+			baseClass.failedStep("Warning msg is not displayed");
+		}
+		
+		baseClass.waitForElement(sgpage.getSG_NameCancelBtn());
+		sgpage.getSG_NameCancelBtn().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		softassert.assertFalse(sgpage.getSG_PopUp().isElementPresent());
+		baseClass.passedStep("Security Group is deleted and no pop up  displayed as expected.");
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		sgpage.createSecurityGroups(SGname1);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		softassert.assertTrue(sgpage.getSG_PopUp().isElementPresent());
+		baseClass.passedStep("User has been able to use the listed chars. as expected");
+		sgpage.deleteSecurityGroups(SGname1);
+		loginPage.logout();
+	}
+
 	
 	/**
 	 * @author Krishna Date: Modified date:N/A Modified by: Description :To verify

@@ -1193,6 +1193,15 @@ public class UserManagement {
 	public Element EditUserClosePopupBtn() {
 		return driver.FindElementByXPath("//*[text()='Edit User']/..//button[@class='ui-dialog-titlebar-close']");
 	}
+	public ElementCollection getSelectingProjectDropDown() {
+		return driver.FindElementsByXPath("//*[@id='ddlBulkUserProjects']/option/following-sibling::option");
+	}
+	 public ElementCollection getUserDropdown() {
+	        return driver.FindElementsByXPath("//select[@id='ddlDomainAdminCreateUserRoles']//option");
+	    }
+	 public Element getDomainName(String Domain) {
+	        return driver.FindElementByXPath("//label[contains(text(),'"+Domain+"')]");
+	    }
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1515,34 +1524,7 @@ public class UserManagement {
 		}
 	}
 
-	public void Assignusertodomain(String clientname) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAssignUserButton().Visible();
-			}
-		}), Input.wait30);
-		getAssignUserButton().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectDomainname().Visible();
-			}
-		}), Input.wait30);
-		getSelectDomainname().selectFromDropdown().selectByVisibleText(clientname);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectusertoassignindomain().Visible();
-			}
-		}), Input.wait30);
-		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText("0QADA1 DA1");
-
-		getrightBtndomainuser().waitAndClick(10);
-
-		getsavedomainuser().waitAndClick(10);
-
-	}
-
+	
 	// added by Narendra
 
 	public void lockAccount(String name, String role, String userSate) throws InterruptedException {
@@ -5435,5 +5417,102 @@ public class UserManagement {
 		bc.VerifySuccessMessage("User profile was successfully modified");
 
 	}
+	/**
+	 * @Author 
+	 * @Description :  Select role  in access control
+	 * @param role
+	 */
+	public void verifySelectedRoleSGAccessControl(String role) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRollId());
+		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+		bc.stepInfo(role+ " User Role is Selected" );
+	}
 
+	/**
+	 * @Author 
+	 * @Description :Projects Present in access control dropdown
+	 * @param dropDownValues
+	 */
+	public void verifyAllProjectPresentInAccessControl(ArrayList<String> dropDownValues) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectingProject());
+		getSelectingProject().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitTime(5);
+		List<String> project = bc.availableListofElements(getSelectingProjectDropDown());
+		System.out.println(project);
+		for (int k = 0; k < project.size(); k++) {
+			if (dropDownValues.contains(project.get(k))) {
+				bc.passedStep("In project dropdown " + project.get(k) + " is displayed successfully");
+
+			} else {
+				bc.failedStep("In project dropdown " + project.get(k) + " is not displayed ");
+			}
+		}
+	}
+
+	/**
+	 * @author sowndarya
+	 * @description: assign the user to domain
+	 * @param clientname, usAssignedUser
+	 */
+	public void Assignusertodomain(String clientname, String usAssignedUser) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignUserButton().Visible();
+			}
+		}), Input.wait30);
+		getAssignUserButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectDomainname().Visible();
+			}
+		}), Input.wait30);
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(clientname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectusertoassignindomain().Visible();
+			}
+		}), Input.wait30);
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(usAssignedUser);
+
+		getrightBtndomainuser().waitAndClick(10);
+
+		getsavedomainuser().waitAndClick(10);
+
+	}
+	
+	/**
+	 * @author Vijaya.rani
+	 * @description: userRoleImpersonate
+	 * @param role, impersonateRole
+	 */
+	
+	public void userRoleImpersonate(String role, String impersonateRole) throws InterruptedException {
+		if (role.equalsIgnoreCase("SA")) {
+			if (impersonateRole.equalsIgnoreCase("PA")) {
+				bc.impersonateSAtoPA();
+			} else if (impersonateRole.equalsIgnoreCase("RMU")) {
+				bc.impersonateSAtoRMU();
+			} else if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonateSAtoReviewer();
+			}
+		} else if (role.equalsIgnoreCase("PA")) {
+			if (impersonateRole.equalsIgnoreCase("RMU")) {
+				bc.impersonatePAtoRMU();
+			} else if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonatePAtoReviewer();
+			}
+		} else if (role.equalsIgnoreCase("RMU")) {
+			if (impersonateRole.equalsIgnoreCase("REV")) {
+				bc.impersonateRMUtoReviewer();
+			}
+		}
+	}
 }

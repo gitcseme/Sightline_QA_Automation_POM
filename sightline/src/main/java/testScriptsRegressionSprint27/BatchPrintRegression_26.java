@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint26;
+package testScriptsRegressionSprint27;
 
 import java.awt.AWTException;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -44,6 +45,7 @@ public class BatchPrintRegression_26 {
 	SessionSearch session;
 	TagsAndFoldersPage tagsAndFolderPage;
 	ProductionPage page;
+	String specificTag = "Tag" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -72,6 +74,192 @@ public class BatchPrintRegression_26 {
 		page = new ProductionPage(driver);
 		softassert = new SoftAssert();
 	}
+	
+	@DataProvider(name = "UserSaUDaUPaU")
+	public Object[][] UserSaUDaUPaU() {
+		Object[][] users = { 
+				{ Input.sa1userName, Input.sa1password,"SA","PA" },
+				{ Input.sa1userName, Input.sa1password,"SA","RMU" },
+				{ Input.da1userName, Input.da1password,"SA","PA" },
+				{ Input.da1userName, Input.da1password,"SA","RMU" },
+				};
+		return users;
+	}
+	
+
+	
+	/**
+	 * @throws Exception
+	 * @Author sowndarya
+	 * @Description :Verify after impersonation native should be printed as per
+	 *              selected option from analysis tab [RPMXCON-47470]
+	 */
+	@Test(description = "RPMXCON-47470", enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" })
+	public void verifyNativeFromAnalysisTabAfterImpersonation(String username, String password, String fromRole, String toRole) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47470 Batch Print");
+		baseClass.stepInfo(
+				"Verify after impersonation native should be printed as per selected option from analysis tab");
+	
+		String slipsheetDD = "Create new slip sheets";
+		int count = 7;
+		
+		// Login via User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fromRole);
+		// Pre-requesties
+		baseClass.rolesToImp(fromRole,toRole);
+		
+		if (toRole.equals("PA")) {
+			
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(specificTag, Input.tagNamePrev);
+
+		DataSets data = new DataSets(driver);
+		data.NavigateToDataSets();
+		data.selectDataSetWithName("_Automation_All");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.documentSelection(count);
+		doc.bulkTagExistingFromDoclist(specificTag);
+		}
+		
+		// Select TAG & Select Native in basis for printing
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, specificTag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.fillingAnalysisTab(false, false, false, true);
+
+		baseClass.waitForElement(batchPrint.getDocCountInAnalysisPage());
+		String translationDocCount = batchPrint.getDocCountInAnalysisPage().getText();
+		System.out.println("Trranslated doc :"+translationDocCount);
+
+		baseClass.waitForElement(batchPrint.getRequestedDocCountInAnalysisPage());
+		String completeText = batchPrint.getRequestedDocCountInAnalysisPage().getText();
+		String[] reqDocCount = completeText.split(" ");
+		System.out.println("file count : " + reqDocCount[4]);
+		int docToPrint = Integer.parseInt(reqDocCount[4]);
+
+		// verifying selected documents and requested documents are having same count
+		baseClass.digitCompareEquals(count, docToPrint, "selected documents and requested documents are having same count", "selected documents and requested documents are not having same count");
+
+		batchPrint.navigateToNextPage(1);
+		if (!batchPrint.getSlipSheetDD_prod().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
+		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+		batchPrint.fillingSlipSheetWithMetadata("AllProductionBatesRanges", true, null);
+		if (!batchPrint.getSelectExportFileName().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract Zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count and Format
+		List<String> list = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		int downloadedDocCount = list.size();
+		System.out.println(downloadedDocCount);
+
+	   // verifying translation documents are excluded
+		int translationExcludedDoc =docToPrint-Integer.parseInt(translationDocCount);
+		baseClass.digitCompareEquals(translationExcludedDoc, downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
+	
+		loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception
+	 * @Author sowndarya
+	 * @Description :Verify native should be printed when 'Ignore these documents from print request.' is selected from analysis tab [RPMXCON-47469]
+	 */
+	@Test(description = "RPMXCON-47469", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyNativeFromAnalysisTab(String username,String password) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47469 Batch Print");
+		baseClass.stepInfo(
+				"Verify native should be printed when 'Ignore these documents from print request.' is selected from analysis tab");
+	
+		String slipsheetDD = "Create new slip sheets";
+		int count = 7;
+		
+		// Login via User
+		loginPage.loginToSightLine(username, password);
+		
+		if (username.equals(Input.pa1userName)) {
+			
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(specificTag, Input.tagNamePrev);
+
+		DataSets data = new DataSets(driver);
+		data.NavigateToDataSets();
+		data.selectDataSetWithName("_Automation_All");
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+
+		doc.documentSelection(count);
+		doc.bulkTagExistingFromDoclist(specificTag);
+		}
+		
+		// Select TAG & Select Native in basis for printing
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, specificTag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.fillingAnalysisTab(false, false, false, true);
+
+		baseClass.waitForElement(batchPrint.getDocCountInAnalysisPage());
+		String translationDocCount = batchPrint.getDocCountInAnalysisPage().getText();
+		System.out.println("Trranslated doc :"+translationDocCount);
+
+		baseClass.waitForElement(batchPrint.getRequestedDocCountInAnalysisPage());
+		String completeText = batchPrint.getRequestedDocCountInAnalysisPage().getText();
+		String[] reqDocCount = completeText.split(" ");
+		System.out.println("file count : " + reqDocCount[4]);
+		int docToPrint = Integer.parseInt(reqDocCount[4]);
+
+		// verifying selected documents and requested documents are having same count
+		baseClass.digitCompareEquals(count, docToPrint, "selected documents and requested documents are having same count", "selected documents and requested documents are not having same count");
+
+		batchPrint.navigateToNextPage(1);
+		if (!batchPrint.getSlipSheetDD_prod().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
+		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+		batchPrint.fillingSlipSheetWithMetadata("AllProductionBatesRanges", true, null);
+		if (!batchPrint.getSelectExportFileName().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract Zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count and Format
+		List<String> list = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		int downloadedDocCount = list.size();
+		System.out.println(downloadedDocCount);
+
+		// verifying translation documents excluded
+		int translationExcludedDoc =docToPrint-Integer.parseInt(translationDocCount);
+		baseClass.digitCompareEquals(translationExcludedDoc, downloadedDocCount, "verifying translation documents and downloaded documents are having same count", "verifying translation documents and downloaded documents are not having same count");
+	
+		loginPage.logout();
+	}
+
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
