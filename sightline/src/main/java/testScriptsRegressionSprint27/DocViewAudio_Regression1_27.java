@@ -24,6 +24,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -72,9 +73,8 @@ public class DocViewAudio_Regression1_27 {
 	 *              documents with AudioPlayerReady as 1.
 	 */
 
-	@Test(description = "RPMXCON-51485", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
-	public void verifyAudioDocumentDefaultTabWithAudioPlayerReady(String username, String password, String role)
-			throws InterruptedException {
+	@Test(description = "RPMXCON-51485", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentDefaultTabWithAudioPlayerReady() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51485");
 		baseClass.stepInfo(
@@ -82,11 +82,44 @@ public class DocViewAudio_Regression1_27 {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		String audioReady = "AudioPlayerReady";
 
-		// Login As user
-		loginPage.loginToSightLine(username, password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.pa1userName + "");
 
+		sg.addProjectFieldtoSG(audioReady);
+		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+		
+		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rev1userName + "");
+		
 		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
 		sessionSearch.ViewInDocView();
 
