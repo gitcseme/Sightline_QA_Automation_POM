@@ -333,18 +333,7 @@ public class SourceLocationPage {
 					base.passedStep("Dispalyed Error Msg : " + errorMsg);
 				}
 			}
-		}else if(srceName.matches("[\\w+&<'>]*")) {
-				for (int i = 1; i < 2; i++) {
-					base.waitForElement(collection.getErrroMsg(i));
-					String errorMsg = collection.getErrroMsg(i).getText();
-					if (errorMsg.equals("")) {
-						base.passedStep("Expected Error Message is Not Displayed");
-					} else {
-						System.out.println("Error : " + errorMsg);
-						base.failedStep("Dispalyed Error Msg : " + errorMsg);
-					}
-				}
-			}
+		}
 		
 		
 			base.VerifySuccessMessage("Source Location updated successfully");
