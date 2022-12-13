@@ -106,8 +106,7 @@ public class UserRoleManagement_Regression27 {
 		user.AssignUserToDomain(clientName, Input.rmu1FullName);
 		user.unAssignUserToDomain(clientName, Input.pa1FullName);
 		user.AssignUserToDomain(clientName, Input.rev1FullName);
-
-	
+		
 		baseClass.waitForElement(user.getAssignUserButton());
 		user.getAssignUserButton().waitAndClick(10);
 		baseClass.waitForElement(user.getSelectDomainname());
@@ -117,9 +116,12 @@ public class UserRoleManagement_Regression27 {
 		} else {
 			baseClass.failedStep("Modified user changes not saved for the selected Domain As Expected");
 		}
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		user.unAssignUserToDomain(clientName, Input.rmu1FullName);
+		user.unAssignUserToDomain(clientName, Input.rev1FullName);
 		baseClass.passedStep("To Validate SystemAdmin modifying assigned billable/internal users for a Domain");
 		loginPage.logout();
 
 	}
-	
 }
