@@ -1292,13 +1292,9 @@ public class TagsAndFoldersPage {
 		driver.waitForPageToBeReady();
 		getTagName(strtag).ScrollTo();
 		base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagName(strtag).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getTagName(strtag));
 		getTagName(strtag).waitAndClick(10);
-
+		base.waitTime(2);
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getTagActionDropDownArrow());
