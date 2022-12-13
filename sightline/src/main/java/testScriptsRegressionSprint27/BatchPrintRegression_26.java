@@ -296,7 +296,7 @@ public class BatchPrintRegression_26 {
 		// configure query & view in doclist
 		session.basicContentSearch(Input.testData1);
 		session.ViewInDocList();
-		doclist.selectMultipleDocsFromDocList(3);
+		doclist.documentSelectionIncludeChildDoc(3);
 
 		// bulk tag selected docs
 		doclist.addNewBulkTag(Tag);

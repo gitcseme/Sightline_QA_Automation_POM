@@ -1905,12 +1905,8 @@ public class DocListPage {
 		getBulkFolderAction().waitAndClick(10);
 		driver.Manage().window().fullscreen();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolderExisting(folderName).Visible();
-			}
-		}), Input.wait60);
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectFolderExisting(folderName));
 		getSelectFolderExisting(folderName).waitAndClick(5);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2320,7 +2316,9 @@ public class DocListPage {
 				final int random1 = rand.nextInt(10);
 				driver.scrollingToBottomofAPage();
 				if (random1 != 0) {
-					getDocCheckBox(random1).Click();
+					base.waitForElement(getSelectAllDocCheckBox());
+					base.waitTillElemetToBeClickable(getDocCheckBox(random1));
+					getDocCheckBox(random1).waitAndClick(10);;
 					arList.add(getDocID(random1).getText().trim());
 				} else if (random1 == 0) {
 					i--;

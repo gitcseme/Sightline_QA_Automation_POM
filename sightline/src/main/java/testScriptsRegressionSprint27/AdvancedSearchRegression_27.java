@@ -1095,6 +1095,8 @@ public class AdvancedSearchRegression_27 {
 		baseClass.stepInfo(
 				"verified That \"EmailToNamesAndAddresses\", \"EmailAuthorNameAndAddresses\", \"EmailCCNamesAndAddresses\", \"EmailBCCNamesAndAddresses\" fields released to the security group automatically.");
 
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		
 		// logOut
 		loginPage.logout();
 
