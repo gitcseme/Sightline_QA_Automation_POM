@@ -774,4 +774,30 @@ public class ProjectFieldsPage {
 				base.failedStep("Field data type not displayed as expected");
 			}
 	}
+	public void verifyWarningMessageAddProjectFieldWithSplCharacters(String fieldName, String presentationFieldName, String fldClassification,
+			String fldDescription, String fieldType) {
+		try {
+			base.stepInfo("Entered to Project fileds page and clicked on add project field button");
+			base.waitForElement(getAddProjectFieldButton());
+			getAddProjectFieldButton().Click();
+
+			base.stepInfo("Creating new project field");
+			base.waitForElement(getFieldNameTextField());
+			getFieldNameTextField().SendKeys(fieldName);
+			getPresentationFieldLabelTextField().SendKeys(presentationFieldName);
+			getFieldClassificationDropDown().selectFromDropdown().selectByVisibleText(fldClassification);
+			getFieldDescriptionTextArea().SendKeys(fldDescription);
+			getFieldTypeDropDown().selectFromDropdown().selectByVisibleText(fieldType);
+			getIsSearchableCheckBox().Click();
+			getIsEditableCheckBox().Click();
+			getSaveButton().Click();
+			base.VerifyWarningMessage("The Project Field Name must not contain special characters except for underscore (\"_\")");
+
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while adding project field" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	
 }
