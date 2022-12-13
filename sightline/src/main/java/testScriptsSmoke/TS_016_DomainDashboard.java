@@ -55,7 +55,7 @@ public class TS_016_DomainDashboard {
 		project.AddDomainProject(projectnamedomain, Clientnamedomain);
 
 		UserManagement user = new UserManagement(driver);
-		user.Assignusertodomain(Clientnamedomain);
+		user.Assignusertodomain(Clientnamedomain,Input.da1FullName);
 
 	}
 

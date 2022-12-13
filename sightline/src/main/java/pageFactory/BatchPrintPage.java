@@ -254,6 +254,17 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getSelectProductionSet() {
+		return driver.FindElementById("productionSetDropDown");
+	}
+
+	public ElementCollection getErrorDetailsHeaderFromPopup() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//thead//th");
+	}
+
+	public ElementCollection getErrorDetailsValueFromPopup(int i) {
+		return driver.FindElementsByXPath("//table[@id='BatchPrintErrorGrid']//tbody//td[" + i + "]");
+	}
 
 	public Element getReportAnalysisDetails() {
 		return driver.FindElementByXPath("//div[@id='noIssuesDocDiv']");
@@ -581,12 +592,14 @@ public class BatchPrintPage {
 	// added by sowndarya
 
 	public Element getSearchNodeExpand(String gropuName) {
-		return driver.FindElementByXPath("//div[@id='searchTree']//a[text()='" + gropuName + "']//preceding-sibling::i[@class='jstree-icon jstree-ocl']");
+		return driver.FindElementByXPath("//div[@id='searchTree']//a[text()='" + gropuName
+				+ "']//preceding-sibling::i[@class='jstree-icon jstree-ocl']");
 	}
+
 	public Element getSelectSearch(String searchname) {
 		return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li//a[contains(text(),'" + searchname + "')]");
 	}
-	
+
 	public Element getBatchId(int i) {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//td[@class='sorting_1'][" + i + "]");
 	}
@@ -594,11 +607,11 @@ public class BatchPrintPage {
 	public Element getRequestedDocCountInAnalysisPage() {
 		return driver.FindElementByXPath("//strong[contains(text(),'Analysis')]//..//..//div//p");
 	}
-	
+
 	public Element getDocCountInAnalysisPage() {
 		return driver.FindElementByXPath("//p//span[last()]");
 	}
-	
+
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -1968,6 +1981,7 @@ public class BatchPrintPage {
 			driver.waitForPageToBeReady();
 			getSkipExcelFileRadioButton().isElementAvailable(10);
 			getSkipExcelFileRadioButton().Click();
+			base.stepInfo("Clicked Skip Excel File radio button");
 			driver.waitForPageToBeReady();
 			String value = getIncludePlaceHolderToogle().GetAttribute("class");
 			if (flag == false && value.contains("active")) {
@@ -2426,8 +2440,10 @@ public class BatchPrintPage {
 		// verify INPROGRESS status
 		base.waitForElement(getBatchPrintStatus());
 		String inprogressStatus = getBatchPrintStatus().getText();
-		base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
-				"Batch Print Status Is Not As Expected");
+		if (inprogressStatus.equalsIgnoreCase("INPROGRESS")) {
+			base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
+					"Batch Print Status Is Not As Expected");
+		}
 
 		for (int i = 0; i < refreshCount; i++) {
 
@@ -3059,7 +3075,8 @@ public class BatchPrintPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : enable/disable fodler skipped documents toggle & verify folder tree structure is displayed
+	 * @Description : enable/disable fodler skipped documents toggle & verify folder
+	 *              tree structure is displayed
 	 */
 	public void verifyFolderSkippedDoc(Boolean clickSkipFold, Boolean enableFolderSkip) {
 		if (clickSkipFold) {
@@ -3187,13 +3204,12 @@ public class BatchPrintPage {
 			getbtnNext().waitAndClick(20);
 			UtilityLog.info("Saved search with  name  " + SearchName);
 
-			
 		} else {
 			base.stepInfo(SearchName + " is Not Displayed");
 
+		}
 	}
-	}
-	
+
 	public void fillingSourceSelectionTag(String grpName, String nodeName, String SearchName) {
 		driver.waitForPageToBeReady();
 		if (getSelectRadioButton().isElementAvailable(3) && getTagBatchPrint().isElementAvailable(3)
@@ -3201,8 +3217,80 @@ public class BatchPrintPage {
 			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
 			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
 		}
-	
+
 		selectSearch(grpName, nodeName, SearchName);
 		navigateToNextPage(1);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription : Disable Exception File types toggle And verify it is disabled
+	 */
+	public void disableExceptionTypes() {
+		if (getOther_InsertMetadata().isElementAvailable(15)) {
+			base.waitTillElemetToBeClickable(getExceptionFileTypeException());
+			getExceptionFileTypeException().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.printResutInReport(getOther_InsertMetadata().isDisplayed(), "Disabled Exception File Toggle",
+					"Toggle is not disabled as expected", "Fail");
+		} else {
+			base.stepInfo("No Exception file Toggle Displayed");
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Click Error Info Link and Fetch Details Displayed
+	 * @param headerName
+	 * @param closePopup
+	 * @return
+	 */
+	public List<String> clickErrorInfoAndReturn(String headerName, boolean closePopup) {
+		List<String> detailValue = new ArrayList<>();
+		base.waitForElement(getErrorInfoLink());
+		getErrorInfoLink().waitAndClick(5);
+		base.stepInfo("CLicked Error Info Link");
+		if (getErrortext().isDisplayed()) {
+			base.passedStep("Error Details Popup is displayed");
+			driver.waitForPageToBeReady();
+			int index = base.getIndex(getErrorDetailsHeaderFromPopup(), headerName);
+			System.out.println(index);
+			detailValue = base.availableListofElements(getErrorDetailsValueFromPopup(index));
+		} else {
+			base.failedStep("Error Details Popup is not displayed");
+		}
+
+		if (closePopup) {
+			getCloseButton().waitAndClick(10);
+			base.stepInfo("CLicked Close button");
+		}
+		return detailValue;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : select production from production set and return list of
+	 *              production inavailable in production set
+	 * @param productionSet
+	 * @param productionName
+	 * @param additional
+	 * @return
+	 */
+	public List<String> selectProductionFromBasisTab(String productionSet, String productionName, String additional) {
+		base.waitForElement(getProductionRadioButton());
+		getProductionRadioButton().waitAndClick(5);
+
+		base.waitForElement(getSelectProductionSet());
+		getSelectProductionSet().waitAndClick(10);
+		getSelectProductionSet().selectFromDropdown().selectByVisibleText(productionSet);
+		base.stepInfo("Selected Production Set is : " + productionSet);
+
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getProductionList());
+		List<String> availableProduction = base.availableListofElements(getProductionList());
+		getSelectProduction().selectFromDropdown().selectByVisibleText(productionName);
+		base.stepInfo("Selected Production is : " + productionName);
+		return availableProduction;
+	}
+
 }

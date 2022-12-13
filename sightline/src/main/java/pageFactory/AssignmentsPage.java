@@ -1194,6 +1194,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
+	
+	public Element getAssignmentsDrawPoolInreviewerPg1(String assignmentName) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody//tr/td[1]/a[contains(text(),'" + assignmentName +"')]/parent::td/following-sibling::td[6]/a[contains(text(),'Draw')]");
+	}
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
 		return driver.FindElementByXPath("//h2[contains(text(),'" + assignmentName + "')]");
@@ -1672,6 +1676,24 @@ public class AssignmentsPage {
 				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
+
+	public Element getKeepFamiliesHelpIcon() {
+		return driver.FindElementByXPath("//a[@id='aDateRange']");
+	}
+	
+	public Element getKeepFamiliesHelpText() {
+		return driver.FindElementByXPath(
+				"//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
+	}
+
+	public Element getAssignmentAction(String Assign) {
+		return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='" + Assign + "']");
+	}
+	
+	public Element getAssgn_EditReviewerReMarkToggle() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowReviwerRemarks']/following-sibling::i");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1742,6 +1764,7 @@ public class AssignmentsPage {
 		Thread.sleep(2000);
 		getAssignmentAction_NewAssignment().waitAndClick(20);
 		Assgnwithspecialchars(assignmentName);
+		bc.passedStep("creating of Assignment " + assignmentName + "failed for special chars");
 
 	}
 
@@ -2000,7 +2023,11 @@ public class AssignmentsPage {
 		bc.waitTime(2);
 		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(3);
-		Assgnwithspecialchars(assignmentName + "<'>&");
+
+		Assgnwithspecialchars(assignmentName+"<'>&");
+		bc.passedStep("editing of Assignment " + assignmentName+"<'>&" + " failed for special chars");
+		
+
 
 	}
 
@@ -2475,6 +2502,7 @@ public class AssignmentsPage {
 		getAssgnGrp_Create().waitAndClick(20);
 
 		Assgnwithspecialchars(assgngrpName);
+		bc.passedStep("creating of Assignment Group " + assgngrpName + "failed for special chars");
 
 	}
 
@@ -2541,7 +2569,9 @@ public class AssignmentsPage {
 
 		getAssgnGrp_Edit().waitAndClick(20);
 
-		Assgnwithspecialchars(assgngrpName + "<'>&");
+		Assgnwithspecialchars(assgngrpName+"<'>&");
+		bc.passedStep("editing of Assignment Group " + assgngrpName+"<'>& " + "failed for special chars");
+
 
 	}
 
@@ -2664,6 +2694,7 @@ public class AssignmentsPage {
 		System.out.println(getAssgnnameErrormsg().getText());
 		Assert.assertTrue(getAssgnnameErrormsg().getText()
 				.equalsIgnoreCase("Please enter an assignment name without using special characters"));
+		
 	}
 
 	public void deleteAssignment(final String assignmentName) {
@@ -5028,9 +5059,9 @@ public class AssignmentsPage {
 	 *              80%
 	 * @throws AWTException
 	 */
-	public void BrowserResolutionMin() throws AWTException {
+	public void BrowserResolutionMin(int count) throws AWTException {
 		Robot robot = new Robot();
-		for (int i = 0; i <= 1; i++) {
+		for (int i = 0; i <= count; i++) {
 			robot.keyPress(KeyEvent.VK_CONTROL);
 			robot.keyPress(KeyEvent.VK_SUBTRACT);
 			robot.keyRelease(KeyEvent.VK_SUBTRACT);
@@ -5045,9 +5076,9 @@ public class AssignmentsPage {
 	 * @throws AWTException
 	 */
 
-	public void BrowserResolutionMax() throws AWTException {
+	public void BrowserResolutionMax(int count) throws AWTException {
 		Robot robot = new Robot();
-		for (int k = 0; k <= 1; k++) {
+		for (int k = 0; k <= count; k++) {
 			robot.keyPress(KeyEvent.VK_CONTROL);
 			robot.keyPress(KeyEvent.VK_ADD);
 			robot.keyRelease(KeyEvent.VK_ADD);
@@ -5073,7 +5104,7 @@ public class AssignmentsPage {
 		bc.waitForElement(configureButton());
 		configureButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		BrowserResolutionMin();
+		BrowserResolutionMin(1);
 		driver.waitForPageToBeReady();
 		Thread.sleep(10000);
 		Thread.sleep(10000);
@@ -5104,7 +5135,7 @@ public class AssignmentsPage {
 			bc.failedStep("Formatting ToolBar is not displayed");
 			softAssertion.assertFalse(false);
 		}
-		BrowserResolutionMax();
+		BrowserResolutionMax(1);
 		instructionOkButton().waitAndClick(5);
 		driver.scrollPageToTop();
 		assertion.assertAll();
@@ -11774,5 +11805,148 @@ public class AssignmentsPage {
 			bc.ValidateElement_Presence(getClassificationOptionsFormAssignment(option), option);
 		}
 	}
+	/**
+	 * @author Brundha.T
+	 * @param assignmentName
+	 * @param Assign
+	 * @throws InterruptedException
+	 * @description this method is used to select any action in assignment .
+	 */
+	public void getAssignment(String assignmentName, String Assign) throws InterruptedException {
 
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
+				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+					getSelectAssignment(assignmentName).waitAndClick(5);
+				}
+				driver.scrollPageToTop();
+				getAssignmentActionDropdown().waitAndClick(3);
+				bc.stepInfo("Expected assignment found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getAssgnPaginationNextButton().waitAndClick(3);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+		bc.waitForElement(getAssignmentAction(Assign));
+		getAssignmentAction(Assign).waitAndClick(3);
+		bc.stepInfo("Assignment " + Assign + " option is clicked");
+		if (Assign.equals("Complete All Documents")) {
+			bc.getYesBtn().waitAndClick(10);
+			bc.VerifySuccessMessage("All Documents successfully completed.");
+		}
+	}
+	
+	/**
+	 * @author Sakthivel date: 12/09/2022 Modified date: Modified by:NA *
+	 * @Description: Assignment creation
+	 * @param assignmentName
+	 * @param codingForm
+	 */
+	public void assignmentCreationReviewerRemarkOff(String assignmentName, String codingForm) {
+		bc.waitForElement(getAssgn_NewAssignmnet());
+		bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+		getAssgn_NewAssignmnet().waitAndClick(5);
+		bc.waitForElement(getbulkassgnpopup());
+		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+		bc.waitForElement(getPersistCB_NewAssgn());
+		getPersistCB_NewAssgn().waitAndClick(15);
+		try {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(30);
+		} catch (Exception e) {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(30);
+		}
+		bc.waitForElement(getAssgn_TotalCount());
+		bc.waitForElement(getFinalizeButton());
+		bc.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		try {
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().SendKeys(assignmentName);
+		} catch (Exception e) {
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().Clear();
+			getAssignmentName().SendKeys(assignmentName);
+		}
+		getParentAssignmentGroupName().isDisplayed();
+		bc.waitForElement(getSelectedClassification());
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		SelectCodingform(codingForm);
+		bc.waitForElement(getAssgn_EditReviewerReMarkToggle());
+		getAssgn_EditReviewerReMarkToggle().ScrollTo();
+		if (getAssgn_EditReviewerReMarkToggle().GetAttribute("true") == null) {
+			getAssgn_EditReviewerReMarkToggle().waitAndClick(5);
+			bc.stepInfo("Reviewer Remark Toggle is off");
+
+		} else {
+			bc.stepInfo("Reviewer Remark Toggle is already off");
+
+		}
+		getAssignmentSaveButton().ScrollTo();
+		bc.waitForElement(getAssignmentSaveButton());
+		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		try {
+			if (getAssignmentErrorText().isElementAvailable(5)) {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+				bc.waitForElement(getAssignmentSaveButton());
+				getAssignmentSaveButton().waitAndClick(5);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getAssgn_Pagination());
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
+				getSelectAssignment(assignmentName).waitAndClick(5);
+				driver.scrollPageToTop();
+				bc.waitForElement(getAssignmentActionDropdown());
+				getAssignmentActionDropdown().Click();
+				bc.stepInfo("Expected assignment found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+		bc.waitForElement(getAssignmentAction_EditAssignment());
+		bc.waitTillElemetToBeClickable(getAssignmentAction_EditAssignment());
+		getAssignmentAction_EditAssignment().waitAndClick(5);
+
+	}
 }

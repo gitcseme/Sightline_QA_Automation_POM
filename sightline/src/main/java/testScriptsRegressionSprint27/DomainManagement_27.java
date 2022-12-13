@@ -21,6 +21,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.ClientsPage;
+import pageFactory.Dashboard;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -390,8 +391,244 @@ public class DomainManagement_27 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author  RPMXCON-52805
+	 * @Description :Verify that for DA user, project drop down should show the
+	 *              projects in the instances
+	 */
+	@Test(description = "RPMXCON-52805", enabled = true, groups = { "regression" })
+	public void verifyDAUProjectDropDownShowProjectInstance() throws Exception {
 
-	
+		baseClass.stepInfo("Test case Id: RPMXCON-52805");
+		baseClass.stepInfo("Verify that for DA user, project drop down should show the projects in the instances");
+		UserManagement user = new UserManagement(driver);
+		ArrayList<String> DropDownValues = new ArrayList<>();
+		SoftAssert softassert = new SoftAssert();
+
+		// login as DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Successfully login as DA user'" + Input.da1userName + "'");
+
+		baseClass.stepInfo("Navigating to Projects Page");
+		user.navigateToUsersPAge();
+		baseClass.waitTime(5);
+        baseClass.stepInfo("Selecting Assign user and validating the project dropdown");
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return user.getAssignUserButton().Visible();
+            }
+        }), Input.wait120);
+        user.getAssignUserButton().waitAndClick(10);
+        baseClass.waitTime(5);
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return user.getProjectTab().Visible();
+            }
+        }), Input.wait120);
+        user.getProjectTab().waitAndClick(10);
+        driver.waitForPageToBeReady();
+		int Size = user.getAssignUserProjectDrp_Dwn().selectFromDropdown().getOptions().size();
+		System.out.println(Size);
+		for (int i = 2; i <= Size; i++) {
+			String DropText = user.getProjectDropdownList(i).getText();
+			DropDownValues.add(DropText);
+		}
+		baseClass.stepInfo(DropDownValues + " Existing project");
+		System.out.println(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// projects show in drop down
+		user.verifySelectedRoleSGAccessControl("Review Manager");
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.verifySelectedRoleSGAccessControl("Reviewer");
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.verifySelectedRoleSGAccessControl(Input.ProjectAdministrator);
+		user.verifyAllProjectPresentInAccessControl(DropDownValues);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(user.getPaSecurityGroupDisabled());
+		boolean sgDisabled = user.getPaSecurityGroupDisabled().isElementAvailable(2);
+		softassert.assertTrue(sgDisabled);
+		baseClass.passedStep("Security group drop down is read only as expected");
+		softassert.assertAll();
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA  Testcase No:RPMXCON-52990
+	 * @Description:To verify that Domain Admin user impersonate as Project Admin in different Domain successfully
+	 **/
+	@Test(description = "RPMXCON-52990", groups = { "regression" })
+	public void verifyDAImpersonatePA() throws InterruptedException {
+		ProjectPage project = new ProjectPage(driver);
+		UserManagement user = new UserManagement(driver);
+		
+		String ClientName = "" + Utility.dynamicNameAppender();
+		String shrtType = "" + Utility.randomCharacterAppender(4); 
+		
+		baseClass.stepInfo("RPMXCON-52990");
+		baseClass.stepInfo("To verify that Domain Admin user impersonate as Project Admin in different Domain successfully");
+		loginPage.loginToSightLine(Input.sa1userName,  Input.sa1password);	
+		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
+		
+		project.navigateToClientFromHomePage();
+		driver.waitForPageToBeReady();
+		project.addNewClient(ClientName, shrtType, "Domain");
+		user.navigateToUsersPAge();
+		user.Assignusertodomain(ClientName, Input.da1FullName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		driver.waitForPageToBeReady();
+		baseClass.selectdomain(ClientName);
+		driver.waitForPageToBeReady();
+		
+		baseClass.impersonateDAtoPA();
+		driver.waitForPageToBeReady();
+		
+		baseClass.verifyCurrentRole(Input.ProjectAdministrator);
+		baseClass.passedStep("To verify that Domain Admin user impersonate as Project Admin in different Domain successfully");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-52909
+	 * @Description:To verify that 'Short Name' is disabled on Edit Clients/Domains
+	 *                 pop up
+	 **/
+	@Test(description = "RPMXCON-52909", groups = { "regression" })
+	public void verifyShortNameDisableInClient() throws InterruptedException {
+		ProjectPage project = new ProjectPage(driver);
+		ClientsPage client = new ClientsPage(driver);
+
+		String ClientName = "C" + Utility.dynamicNameAppender();
+		String shrtType = Utility.randomCharacterAppender(4);
+
+		baseClass.stepInfo("RPMXCON-52909");
+		baseClass.stepInfo("To verify that 'Short Name' is disabled on Edit Clients/Domains pop up");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
+
+		baseClass.stepInfo("Navigating to clients/Domains page");
+		project.navigateToClientFromHomePage();
+		driver.waitForPageToBeReady();
+		
+		project.addNewClient(ClientName, shrtType, "Domain");
+		baseClass.waitTime(2);
+		
+		 baseClass.stepInfo("verifying Short name is disabled");
+		client.getEntityNameFilter().SendKeys(ClientName);
+		client.getFilterButton().waitAndClick(10);
+		client.getClientEditBtn(ClientName).waitAndClick(10);
+		if (client.getShortNameDisable().isDisplayed()) {
+			baseClass.passedStep("Short name is disabled as expected");
+		} else {
+			baseClass.failedStep("Short name is not disabled");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-52831
+	 * @Description:Verify that domain admin user cannot create System Admin user or
+	 *                     Domain admin users for other domains (other than the
+	 *                     current domain)
+	 **/
+	@Test(description = "RPMXCON-52831", groups = { "regression" })
+	public void verifyingAddnewUsersDropDownInDA() throws InterruptedException {
+
+		baseClass.stepInfo("RPMXCON-52831");
+		baseClass.stepInfo(
+				"Verify that domain admin user cannot create System Admin user or Domain admin users for other domains (other than the current domain)");
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Logged in As : " + Input.da1userName);
+
+		UserManagement user = new UserManagement(driver);
+
+		baseClass.selectdomain(Input.domainName);
+		
+		baseClass.stepInfo("Navigating to user page");
+		user.navigateToUsersPAge();
+		
+		baseClass.stepInfo("selecting Add new user button");
+		user.openAddNewUserPopUp();
+		baseClass.availableListofElements(user.getUserDropdown());
+		
+		baseClass.stepInfo("verifying SA role is not displaying in dropdown");
+		List<String> Users = baseClass.availableListofElements(user.getUserDropdown());
+		System.out.println("user list" + Users);
+		if (!Users.contains(Input.SystemAdministrator)) {
+			baseClass.passedStep("System admin role is not displayed in Domain admin user");
+		} else {
+			baseClass.failedStep("System admin is displayed");
+		}
+		
+		baseClass.stepInfo("verifying domain is displayed and read only");
+		baseClass.waitForElement(user.getSelectRole());
+		user.getSelectRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		if (user.getDomainName(Input.domainName).isDisplayed()) {
+			baseClass.passedStep("Domain is ready only and non-editable");
+		} else {
+			baseClass.failedStep("domain is not read only");
+		}
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-52859
+	 * @Description:Verify that Sys Admin should be able to impersonate as Domain
+	 *                     Admin
+	 **/
+	@Test(description = "RPMXCON-52859", groups = { "regression" })
+	public void verifyingImpersonatingSAToDA() throws InterruptedException {
+		Dashboard dash = new Dashboard(driver);
+
+		baseClass.stepInfo("RPMXCON-52859");
+		baseClass.stepInfo("Verify that Sys Admin should be able to impersonate as Domain Admin");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
+
+
+		baseClass.stepInfo("Selecting domain administrator and select domain");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(baseClass.getSignoutMenu());
+		baseClass.getSignoutMenu().waitAndClick(10);
+		baseClass.waitForElement(baseClass.getChangeRole());
+		baseClass.getChangeRole().waitAndClick(5);
+		baseClass.waitForElement(baseClass.getSelectRole());
+		baseClass.getSelectRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		baseClass.waitForElement(baseClass.getAvlDomain());
+		
+		baseClass.stepInfo("verifying domain dropdown is displayed");
+		baseClass.elementDisplayCheck(baseClass.getAvlDomain());
+		
+		baseClass.getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitTime(1);
+		baseClass.waitForElement(baseClass.getSaveChangeRole());
+		baseClass.getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersonated from SA to DA");
+
+		baseClass.waitTime(2);
+		baseClass.stepInfo("verifying Domain landing page");
+		if (dash.getDomainDashboardPage().isDisplayed()) {
+			baseClass.passedStep("SA is impersonated as DA and user navigates to domain landing page");
+		} else {
+			baseClass.failedStep("SA is not impersonated as DA and not navigates to domain landing page");
+		}
+		
+		loginPage.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -260,7 +260,7 @@ public class TallyPage {
 
 	// Added by raghu
 	public Element getTallyCount() {
-		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @x])[last()]");
 	}
 
 	// Added by Jayanthi
@@ -592,6 +592,9 @@ public class TallyPage {
 	public Element getExportButtonStatus() {
 		return driver.FindElementByXPath("//button[@id='btnExportTallyReportToExcel']");
 	}
+	public Element getSubTallyMetaData(String field) {
+		return driver.FindElementByXPath("//select[@id='submetadataselect']//option[contains(text(),'"+field+"')]");
+	}
 
 	// added by Mohan
 
@@ -610,7 +613,22 @@ public class TallyPage {
 	public ElementCollection getAllValueinEmailAuthorFilter() {
 		return driver.FindElementsByXPath("//ul[@id='select2-EmailAuthorName-results']//li");
 	}
-
+	
+	public Element getTxtHorizontalBarChart() {
+		return driver.FindElementByXPath("//div[contains(text(),'HorizontalBarChart')]");
+	}
+	
+	public Element getBtnTallyView() {
+		return driver.FindElementByXPath("//button[@id='tallyviewbtn']");
+	}
+	
+	public Element getCloseByEAFilterPopUp() {
+		return driver.FindElementByXPath("//div[text()= ' Filter by EmailAuthorName:']//a[@id='close']");
+	}
+	public Element getCloseByCNFilterPopUp() {
+		return driver.FindElementByXPath("//div[text()= ' Filter by CustodianName:']//a[@id='close']");
+	}
+	
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1540,6 +1558,7 @@ public class TallyPage {
 		getTally_Assignments().Click();
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getTally_AssignmentsCheckBox(assignmentName));
+		base.waitForElement(getTally_AssignmentsCheckBox(assignmentName));
 		getTally_AssignmentsCheckBox(assignmentName).waitAndClick(15);
 		base.waitTime(2);
 		getTally_assignSaveSelections().ScrollTo();
@@ -2454,6 +2473,7 @@ public class TallyPage {
 		}
 		System.out.println(ApplyFilterMetaData + " filter tally by");
 		FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+		FilterInputOptionTallyBy(ApplyFilterMetaData).ScrollTo();
 		FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
 		ApplyFilterTallyBy().waitAndClick(10);
 		base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
@@ -2703,7 +2723,7 @@ public class TallyPage {
 	}
 
 	/**
-	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 10/11/2022 Modified by: NA Modified Date: 07/12/2022
 	 * @description: this method will perform tally and search for metadata
 	 */
 	public void performTallyAndSearchForMetadata(String metadata) {
@@ -2717,12 +2737,21 @@ public class TallyPage {
 				base.stepInfo("tally result for " + value + "-" + tallyResult);
 				base.stepInfo("perform search with field and verify purehit count with report");
 				SessionSearch search = new SessionSearch(driver);
-				int searchResult = search.MetaDataSearchInBasicSearch(metadata, value);
+				int searchResult;
+				if(value.contains("=") || value.contains("%")) {
+					 searchResult = search.MetaDataSearchInBasicSearch(metadata, "\""+value+"\"");
+				}
+				else {
+					 searchResult = search.MetaDataSearchInBasicSearch(metadata, value);
+				}
 				base.stepInfo("search result for " + value + "-" + searchResult);
 				if (tallyResult == searchResult) {
+					base.stepInfo("tally result-"+tallyResult);
+					base.stepInfo("search result-"+tallyResult);
 					base.passedStep("Counts matched for search result and tally report");
 					break;
-				} else {
+				} 
+				else {
 					base.failedStep("Counts not matched for search result and tally report");
 				}
 			}
@@ -2769,6 +2798,129 @@ public class TallyPage {
 			base.passedStep(field + "is available in metadata list");
 		} else {
 			base.failedStep(field + "is not available in metadata list");
+		}
+	}
+	
+	/**
+	 * @author: sowndarya
+	 * @description: To run BG report and verify the file
+	 */
+	public String runBgReportandVerifyFileDownloaded() throws InterruptedException {
+		BaseClass bc = new BaseClass(driver);
+		CustomDocumentDataReport custom = new CustomDocumentDataReport(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		String Filename = bc.GetLastModifiedFileName();
+		if (Filename == null) {
+			Filename = "Directory Empty";
+		}
+		bc.stepInfo(Filename + "Last Modified File name before Downloading the report");
+		base.waitForElement(getExportButtonStatus());
+		getExportButtonStatus().waitAndClick(5);
+		base.VerifySuccessMessage("Your Report has been added into the Background successfully. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");	
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		custom.downloadExport();
+		bc.waitUntilFileDownload();
+		String Filename2 = bc.GetLastModifiedFileName();
+		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
+		if (Filename.equals(Filename2)) {
+			bc.failedStep("File not downloaded after the export.");
+		} else {
+			bc.passedStep("File downloaded after the export-" + Filename2);
+		}
+		return Filename2;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the field available in metadata list
+	 */
+	public void verifyMetaDataAvailabilityInSubTallyReport(String field) {
+
+		base.waitForElement(getTally_SourceSubTally());
+		getTally_SourceSubTally().Click();
+		base.waitForElement(getTally_subMetadata());
+		getTally_subMetadata().waitAndClick(10);
+		if (getSubTallyMetaData(field).isElementAvailable(10)) {
+			base.passedStep(field + "is available in metadata list");
+		} else {
+			base.failedStep(field + "is not available in metadata list");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: 29/11/2022
+	 * @description: this method will check the generation of subtally report for
+	 *               metadata
+	 */
+	public void verifySubTallyReportGenerationForMetadata(String metadata,String filter) {
+
+		selectTallyByMetaDataField(metadata);
+		base.waitForElement(getTally_btnTallyAll());
+		getTally_btnTallyAll().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		String exportStatus = getExportButtonStatus().GetAttribute("disabled");
+		base.stepInfo("export button disabled status after searching with metadata-" + exportStatus);
+		if (getTallyChartRectbar().isDisplayed() && exportStatus == null) {
+			base.passedStep("Tally report generated for the field-" + metadata);
+		} else {
+			base.failedStep("Tally report not generated and export option not available" + metadata);
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: 29/11/2022
+	 * @throws InterruptedException 
+	 * @description: this method will perform tally with tag name and subtally with metadata
+	 */
+	public void performTallyByTagAndSubTallyByMetadata(String role,String tagName,String metaData) throws InterruptedException {
+		
+		navigateTo_Tallypage();
+		if(role.equalsIgnoreCase("PA")) {
+			selectSourceByProject();
+		}
+		else if(role.equalsIgnoreCase("RMU")){
+			SelectSource_SecurityGroup(Input.securityGroup);
+		}
+		selectTallyByTagName(tagName);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTally_btnTallyAll());
+		getTally_btnTallyAll().waitAndClick(10);
+		base.waitForElement(getTally_tallyactionbtn());
+		getTally_tallyactionbtn().waitAndClick(10);
+		selectSubTallyFromActionDropDown();
+		driver.scrollPageToTop();
+		base.stepInfo("verify metadata in subtally");
+		verifyMetaDataAvailabilityInSubTallyReport(metaData);
+		base.stepInfo("Run sub-tally by metdata");
+		selectMetaData_SubTally(metaData, 1);
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will navigate to doclist or docview from subtally report
+	 */
+	public void subTallyNavigation(String action) {
+		
+		if(action.equalsIgnoreCase("doclist")) {
+			base.waitForElement(getTally_SubTallyActionButton());
+			getTally_SubTallyActionButton().waitAndClick(10);
+			base.waitForElement(getTally_SubTally_Action_ViewDocList());
+			getTally_SubTally_Action_ViewDocList().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+		else if(action.equalsIgnoreCase("docview")) {
+			base.waitForElement(getTally_SubTallyActionButton());
+			getTally_SubTallyActionButton().waitAndClick(10);
+			base.waitForElement(getSubTallyViewinDocViewBtn());
+			getSubTallyViewinDocViewBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
 		}
 	}
 	

@@ -108,15 +108,15 @@ public class SessionSearch {
 	public Element getSelectSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//select[@id='sampleMethodNewAssignment']");
 	}
-	
+
 	public Element getTextBoxLableOfSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//label[@id='CountToAssignLabelNewAssignment']");
 	}
-	
+
 	public Element getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab() {
 		return driver.FindElementByXPath("//div[@id='divNumberToAssignNewAssignment' and @style='display: none;']");
 	}
-	
+
 	public Element getWorkProductTextBox() {
 		return driver.FindElementByXPath("//div[@id='workproduct']//input[@class='textboxlist-bit-editable-input']");
 	}
@@ -417,6 +417,10 @@ public class SessionSearch {
 
 	public Element getMetaDataInDropdown(String field) {
 		return driver.FindElementByXPath("//select[@id='metatagSelect']//option[@value='" + field + "']");
+	}
+
+	public Element getUniqueDocCountReadout() {
+		return driver.FindElementByXPath("//h1[@class='page-title']//span//label");
 	}
 
 	// Metadata
@@ -1953,7 +1957,7 @@ public class SessionSearch {
 	public Element getAdvScrnSearchLabel(String i) {
 		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
 	}
-	
+
 	public Element getConceptualTileHit(int i) {
 		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()=" + i + "]");
 	}
@@ -2094,45 +2098,55 @@ public class SessionSearch {
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
 	// added by sowndarya
-	
+
+	public Element getSearchThirdTextField() {
+		return driver.FindElementByXPath("(.//*[@id='xEdit']//li/following-sibling::li//input)[last()]");
+	}
+
 	public Element getReportTotalCount() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
 	}
+
 	public Element getReportMetadat() {
 		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text'])[last()]");
 	}
+
 	public Element getGoToTallyReport() {
 		return driver.FindElementByXPath("//button[@id='bot3-Msg1']");
 	}
+
 	public Element getPopupHeader() {
 		return driver.FindElementByXPath("//span[@class='MsgTitle']");
 	}
+
 	public Element getPopupText() {
 		return driver.FindElementByXPath("//div[@id='tallyWrapperDiv']//p[contains(@style, 'margin-top')]");
 	}
-	
+
 	public ElementCollection getIDNames() {
-		return driver
-				.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//tbody//tr//td[1]");
 	}
-	
+
 	public Element getPageNum(int num) {
 		return driver.FindElementByXPath(
-				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" +num+ "']");
+				"//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a[text()='" + num + "']");
 	}
+
 	public Element getLastPagenum() {
-		return driver.FindElementByXPath(
-				"(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
+		return driver.FindElementByXPath("(//div[@id='dt_basic_paginate']//li[@class='paginate_button ']//a)[last()]");
 	}
-	
+
 	public ElementCollection getStartDatesInBG() {
 		return driver.FindElementsByXPath("//div[@id='dt_basic_wrapper']//table//tbody//tr//td[6]");
 	}
+
 	public Element getStartDateButton() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//th[6]");
 	}
-	public Element getStatusText(String id,String status) {
-		return driver.FindElementByXPath("//td[contains(text(),'"+id+"')]//following-sibling::td[text()='"+status+"']");
+
+	public Element getStatusText(String id, String status) {
+		return driver.FindElementByXPath(
+				"//td[contains(text(),'" + id + "')]//following-sibling::td[text()='" + status + "']");
 	}
 
 	public Element getTxtDownloadFile(String id) {
@@ -2152,25 +2166,56 @@ public class SessionSearch {
 	}
 
 	public Element getAdvancedLabel() {
-		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
+		return driver.FindElementByXPath(
+				"//div[@class='col-md-6']//span[text()='SS: Outside Help']//following::span[text()='Advanced']");
 	}
+
 	public Element getDraftQuery() {
 		return driver.FindElementByXPath("//span[@class='badge']");
 	}
-	
 
 	public Element getContentMetaDataBtnDisabled() {
 		return driver.FindElementByXPath(
 				"//*[@id='insertMetaPop']//button[@class='btn text-center btn-default addblock disabled'][@id='contentmetadata']");
 	}
+
 	public Element getSelectAllSecurityGroupBtn() {
 		return driver.FindElementByXPath("//*[@id='SelectAll']/following-sibling::i");
 	}
+
 	public Element getEnterSearchBox() {
-		return driver.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
+		return driver
+				.FindElementByXPath("//*[@id='xEdit']/li//span[@class='editable editable-pre-wrapped editable-click']");
 	}
+
+	public Element getCountOfDocsLoading() {
+		return driver.FindElementByXPath(
+				"//div[@id='divUnAssignDocuments']//span[@class='label bg-color-blue font-md loader text-align-center bulkActionsSpanLoder']");
+	}
+
+	public Element getSelectedUnAssignExistingAssignments() {
+		return driver.FindElementByXPath("//div[@id='jstreeUnAssign']//a[@class='jstree-anchor jstree-clicked']");
+	}
+
+	public Element getExisAssignPOPOVER() {
+		return driver.FindElementByXPath("//div[@role='tooltip']//div[@class='popover-content']");
+	}
+
 	public Element getSelectQueryText(String Text) {
-		return driver.FindElementByXPath("//td//span[contains(text(),'"+Text+"')]");
+		return driver.FindElementByXPath("//td//span[contains(text(),'" + Text + "')]");
+	}
+
+	public Element getDistributeUserAssign(String User) {
+		return driver.FindElementByXPath("//*[@id='dist']//option[contains(text(),'" + User + "')]");
+	}
+
+	public Element getTagMenuPopup() {
+		return driver.FindElementByXPath("//*[@id='insertMetaPop']");
+	}
+
+	public Element contentAndMetaDataResultBasicSearch() {
+		return driver.FindElementByXPath("//*[@id='xEdit']/li//following-sibling::li/span");
+
 	}
 
 	public SessionSearch(Driver driver) {
@@ -2303,19 +2348,10 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
+		base.waitForElement(getSavedSearch_MySearchesTab());
 
-			public Boolean call() {
-				return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
-			}
-		}), Input.wait30);
 		getSavedSearch_MySearchesTab().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
-			}
-		}), Input.wait30);
 		getSaveSearch_Name().SendKeys(searchName);
 //		driver.Manage().window().fullscreen();
 
@@ -6116,6 +6152,9 @@ public class SessionSearch {
 
 		// Click on Search button
 		getQuerySearchButton().waitAndClick(5);
+
+		tallyContinue(7);
+
 		try {
 
 			// verify counts for all the tiles
@@ -9837,9 +9876,7 @@ public class SessionSearch {
 
 			Reporter.log("Saved the search with name '" + searchName + "'", true);
 			UtilityLog.info("Saved search with name - " + searchName);
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -11991,7 +12028,8 @@ public class SessionSearch {
 	 * @param metaDataField
 	 * @param val1
 	 * @return
-	 * @Description new metadata basic search
+	 * @Description new metadata search in Basic & Advanced search
+	 * @Modified By jeevitha @ modified date :12/12/2022
 	 */
 	public int newMetaDataSearchInBasicSearch(String metaDataField, String val1) {
 		// To make sure we are in basic search page
@@ -12010,11 +12048,10 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(3);
 		// Click on Search button
-		base.waitForElement(getSecondSearchBtn());
-		getSecondSearchBtn().waitAndClick(3);
-		if (base.getYesBtn().isElementAvailable(2)) {
-			base.getYesBtn().waitAndClick(10);
-		}
+		// base.waitForElement(getSecondSearchBtn());
+//		getSecondSearchBtn().waitAndClick(3);
+		SearchBtnAction();
+		base.waitTime(2);
 		base.waitForElement(getPureHitsCount2ndSearch());
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -13004,9 +13041,7 @@ public class SessionSearch {
 			base.stepInfo(actualMsg);
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
-		}
-
-		if (MessageNumber == 2) {
+		} else if (MessageNumber == 2) {
 
 			String msg = " Your query may contain an invalid Proximity Query. Any Double Quoted phrases as part of a Proximity Query must also be wrapped in Parentheses, e.g. \"Term1 (\"Specific Phrase\")\"~4.";
 			base.waitTime(2);
@@ -13016,9 +13051,7 @@ public class SessionSearch {
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 			base.passedStep(actualMsg);
-		}
-
-		if (MessageNumber == 3) {
+		} else if (MessageNumber == 3) {
 
 			String msg = " Double quotes are missing in your search query. Please correct the query to include double quotes.";
 			base.waitTime(2);
@@ -13028,8 +13061,7 @@ public class SessionSearch {
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 			base.passedStep(actualMsg);
-		}
-		if (MessageNumber == 4) {
+		} else if (MessageNumber == 4) {
 			String msg = "Your query has multiple potential syntax issues.  1. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.  2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).  Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			base.waitTime(2);
 			base.waitForElement(getWarningMsg());
@@ -13038,9 +13070,13 @@ public class SessionSearch {
 			base.stepInfo(actualMsg);
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
-		}
-		if (MessageNumber == 5) {
+		} else if (MessageNumber == 5) {
 			String msg = "Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)  Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			System.out.println(getQueryAlertGetText().getText().replaceAll("\n", " "));
+			Assert.assertEquals(msg.replaceAll(" ", ""),
+					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+		} else if (MessageNumber == 6) {
+			String msg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			System.out.println(getQueryAlertGetText().getText().replaceAll("\n", " "));
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
@@ -13804,7 +13840,11 @@ public class SessionSearch {
 		getTagsAllRoot().Click();
 
 		getContinueButton().waitAndClick(10);
+		if (getFinalizeButton().isDisplayed() == false) {
+			base.failedStep("Continue button is not interactable");
+		}
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param TagName
@@ -13837,7 +13877,7 @@ public class SessionSearch {
 		base.waitForElement(getTagsAllRoot());
 		getTagsAllRoot().Click();
 
-		getContinueButton().waitAndClick(10);	
+		getContinueButton().waitAndClick(10);
 
 	}
 
@@ -13876,6 +13916,7 @@ public class SessionSearch {
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
 	}
+
 	/**
 	 * this method verifies the Total docs selected count displayed in bulk folder
 	 * pop up.
@@ -13910,6 +13951,9 @@ public class SessionSearch {
 		base.waitForElement(getFolderAllRoot());
 		getFolderAllRoot().Click();
 		getContinueButton().Click();
+		if (getFinalizeButton().isDisplayed() == false) {
+			base.failedStep("Continue button is not interactable");
+		}
 
 	}
 
@@ -14096,36 +14140,35 @@ public class SessionSearch {
 						"Verify that Label is changed to \"Percentage to Assign\"",
 						"actual lable Text doesn't match with expected lable Text");
 			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
-				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
+				softAssert.assertEquals((boolean) getTextBoxLableRemovedOfSampleMethod().isElementAvailable(5), true);
 				softAssert.assertAll();
 				base.passedStep("Verified that label is removed.");
 			}
 		}
 
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
-	public void checkingStatusUsingRefresh(String backGroundID,String status) {
+	public void checkingStatusUsingRefresh(String backGroundID, String status) {
 		driver.waitForPageToBeReady();
 
 		for (int i = 0; i < 10; i++) {
 			System.out.println(i);
-			if (getStatusText(backGroundID,status).isElementAvailable(15)) {
-				
-                base.stepInfo("waiting for status"+status);
-                break;
+			if (getStatusText(backGroundID, status).isElementAvailable(15)) {
+
+				base.stepInfo("waiting for status" + status);
+				break;
+			} else {
+				driver.Navigate().refresh();
+				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
+			}
 		}
-			else {
-                driver.Navigate().refresh();
-                System.out.println("Refresh");
-                driver.waitForPageToBeReady();
-            }
-		}
-		
+
 	}
-	
+
 	/**
 	 * @author sowndarya
 	 */
@@ -14153,7 +14196,6 @@ public class SessionSearch {
 		// Click on Search button
 		getQuerySearchBtn().Click();
 	}
-	
 
 	public void verifyDraftedQueryPresentInSearchbox(String query) {
 		String ExpectedMessage = query;
@@ -14168,33 +14210,31 @@ public class SessionSearch {
 		}
 
 	}
-	
-
-	
-	
 
 	public List<String> getAllIDFromBGPage() {
 		List<String> allIDinBG = new ArrayList<String>();
 		driver.waitForPageToBeReady();
-		base.waitForElementCollection(getIDNames());	
+		base.waitForElementCollection(getIDNames());
 		allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
-		if(getLastPagenum().isElementAvailable(4)) {
-		for(int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
-			driver.scrollingToBottomofAPage();
-			if(getPageNum(i).isElementAvailable(4)) {
-				getPageNum(i).waitAndClick(4);
-				base.waitTime(1);	
-				allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
-			}}}
-		return allIDinBG;
+		if (getLastPagenum().isElementAvailable(4)) {
+			for (int i = 2; i <= Integer.parseInt(getLastPagenum().getText()); i++) {
+				driver.scrollingToBottomofAPage();
+				if (getPageNum(i).isElementAvailable(4)) {
+					getPageNum(i).waitAndClick(4);
+					base.waitTime(1);
+					allIDinBG.addAll(base.getAvailableListofElements(getIDNames()));
+				}
+			}
 		}
-	
+		return allIDinBG;
+	}
+
 	/**
 	 * @author sowndarya
 	 */
-	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator, String metaData1,
-			String metaDataValue1) {
-		
+	public void basicMetadataSearchesUsingOperators(String metaData, String metaDataValue, String Operator,
+			String metaData1, String metaDataValue1) {
+
 		base.waitForElement(getBasicSearch_MetadataBtn());
 		driver.waitForPageToBeReady();
 		getBasicSearch_MetadataBtn().waitAndClick(10);
@@ -14209,9 +14249,9 @@ public class SessionSearch {
 
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
-		
+
 		selectOperatorInBasicSearch(Operator);
-		
+
 		base.waitForElement(getBasicSearch_MetadataBtn());
 		driver.waitForPageToBeReady();
 		getBasicSearch_MetadataBtn().waitAndClick(10);
@@ -14252,11 +14292,11 @@ public class SessionSearch {
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(5);
 
-
 	}
-	
-	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(String optionToSelect,boolean verifyTextBoxLableOfSampleMethod) {
-		
+
+	public void changeSampleMethodAndVerifyTextBoxLableOfSampleMethodFromNewAssignmentab(String optionToSelect,
+			boolean verifyTextBoxLableOfSampleMethod) {
+
 		getSelectSampleMethodFromNewAssignmentab().selectFromDropdown().selectByVisibleText(optionToSelect);
 
 		if (verifyTextBoxLableOfSampleMethod) {
@@ -14273,12 +14313,171 @@ public class SessionSearch {
 						"Verify that Label is changed to \"Percentage to Assign\"",
 						"actual lable Text doesn't match with expected lable Text");
 			} else if (optionToSelect.equals("Parent Level Docs Only") || optionToSelect.equals("Inclusive Email")) {
-				softAssert.assertEquals((boolean)getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab().isElementAvailable(5), true);
+				softAssert.assertEquals(
+						(boolean) getTextBoxLableRemovedOfSampleMethodFromNewAssignmentab().isElementAvailable(5),
+						true);
 				softAssert.assertAll();
 				base.passedStep("Verified that label is removed.");
 			}
 		}
 	}
-	
+
+	/**
+	 * @author Brundha.T
+	 * @param assignMentName
+	 * @param Status
+	 * @param User
+	 * @return
+	 * @throws InterruptedException Description: selecting Assignment in workproduct
+	 */
+	public void selectAssignmentInWPS(final String assignMentName, String Status, String User)
+			throws InterruptedException {
+		base.waitForElement(getWP_assignmentsBtn());
+		getWP_assignmentsBtn().Click();
+		System.out.println(getTree().FindWebElements().size());
+		UtilityLog.info(getTree().FindWebElements().size());
+		for (WebElement iterable_element : getTree().FindWebElements()) {
+			if (iterable_element.getText().contains(assignMentName)) {
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				driver.scrollingToBottomofAPage();
+				System.out.println(iterable_element.getText());
+				UtilityLog.info(iterable_element.getText());
+				iterable_element.click();
+				break;
+			}
+		}
+		if (Status != null) {
+			base.waitForElement(getadwp_assgn_status());
+			getadwp_assgn_status().selectFromDropdown().selectByVisibleText(Status);
+		} else {
+			base.waitForElement(getDistributeUserAssign(User));
+			getDistributeUserAssign(User).waitAndClick(10);
+		}
+
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(20);
+		driver.scrollPageToTop();
+		base.stepInfo("Assignment is selected in work product - advanced search");
+
+	}
+
+	public void verifyListOfMetaDataFromMetaDataDropDown(List<String> listOfMetaData) {
+
+		navigateToAdvancedMetaDataSearch();
+		for (int i = 0; i < listOfMetaData.size(); i++) {
+			if (getMetaDataInDropdown(listOfMetaData.get(i)).isElementAvailable(5)) {
+				base.passedStep(
+						"MetaData Option '" + listOfMetaData.get(i) + "' is presnt in the MetaData dropdown List.");
+			} else {
+				base.failedStep(
+						"MetaData Option '" + listOfMetaData.get(i) + "' is Not presnt in the MetaData dropdown List.");
+			}
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the unique docids count in search page
+	 */
+	public void getUniqueDocCountAsDifferentUser(String role) {
+
+		String expectedPaReadout = "Count of unique DocIDs indexed in the project:";
+		String expectedReadout = "Count of unique DocIDs indexed and available in your Security Group:";
+		int uniqueDocCount = 0;
+		String actualReadout = null;
+		// verify unique doc count readout for PA user
+		if (role.equalsIgnoreCase("PA")) {
+			actualReadout = getCountUniqueDocId().getText();
+			base.compareTextViaContains(actualReadout, expectedPaReadout, "Readout displayed as expected for PA user",
+					"not displayed as expected");
+		}
+		// verify unique doc count readout for RMU/Rev user
+		else if (role.equalsIgnoreCase("RMU") || role.equalsIgnoreCase("Rev")) {
+			actualReadout = getCountUniqueDocId().getText();
+			base.compareTextViaContains(actualReadout, expectedReadout,
+					"Readout displayed as expected for RMU/Rev user", "not displayed as expected");
+		}
+		String countlabel = actualReadout.substring(actualReadout.indexOf(":"));
+		uniqueDocCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+		if (uniqueDocCount > 0) {
+			base.passedStep("count of unique published DocIds displayed-" + uniqueDocCount);
+		} else {
+			base.failedStep("count of unique published DocIds not displayed-" + uniqueDocCount);
+
+		}
+	}
+
+	public void refreshAndVerifyStatus(String backGroundID, String status, int noToRefresh) {
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < noToRefresh; i++) {
+			System.out.println(i);
+			if (getStatusText(backGroundID, status).isElementAvailable(15)) {
+
+				base.stepInfo("waiting for status" + status);
+				break;
+			} else {
+				driver.Navigate().refresh();
+				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
+			}
+		}
+	}
+
+	public int basicContentSearchForThreeItems(String SearchString, String SearchString2, String SearchString3) {
+		int pureHit = 0;
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getEnterSearchString().isDisplayed();
+				}
+			}), Input.wait60);
+			getEnterSearchString().getWebElement().sendKeys(SearchString);
+			driver.waitForPageToBeReady();
+			getEnterSearchString().getWebElement().sendKeys(Keys.ENTER);
+			driver.waitForPageToBeReady();
+			getSearchSecondTextField().getWebElement().sendKeys(SearchString2);
+			driver.waitForPageToBeReady();
+			getSearchSecondTextField().getWebElement().sendKeys(Keys.ENTER);
+			driver.waitForPageToBeReady();
+			getSearchThirdTextField().getWebElement().sendKeys(SearchString3);
+			driver.waitForPageToBeReady(); // Click on Search button
+			getSearchButton().waitAndClick(10);
+
+			// handle pop confirmation for regex and proximity queries
+			try {
+				if (getYesQueryAlert().isElementAvailable(8)) {
+					getYesQueryAlert().waitAndClick(8);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait120);
+
+			pureHit = Integer.parseInt(getPureHitsCount().getText());
+
+			// System.out.println("Search is done for "+SearchString+" and PureHit is :
+			// "+pureHit);
+			UtilityLog.info("Search is done for " + SearchString + " and PureHit is : " + pureHit);
+			Reporter.log("Search is done for " + SearchString + " and PureHit is : " + pureHit, true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
+
+		}
+		return pureHit;
+	}
 
 }

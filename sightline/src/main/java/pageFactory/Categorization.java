@@ -259,8 +259,16 @@ public class Categorization {
 	public Element getRunBtnDisabled() {
 		return driver.FindElementByXPath("//button[@id='btnRun'][@disabled='disabled']");
 	}
+	public Element getProdSet(String value) {
+		return driver.FindElementByXPath("//a[text()='"+value+"']");
+	}
 
-
+	public Element getCohesionLevel() {
+		return driver.FindElementByXPath("//input[@id='slider-value']");
+	}
+	public Element getProviewNotification() {
+		return driver.FindElementByXPath("//div[@id='bgTask']//ul//a[contains(text(),'CATEGORIZATION ')]");
+	}
 	public Categorization(Driver driver) {
 
 		this.driver = driver;

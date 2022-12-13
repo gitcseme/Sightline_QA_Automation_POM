@@ -217,6 +217,10 @@ public class ABMReportPage {
 		return driver.FindElementByXPath("//div[@id='assignmentsJSTree']//a[text()='" + assignment + "']");
 	}
 
+	public Element getTallyResultAction() {
+		return driver.FindElementByXPath("//a[text()='Tally Results']");
+	}
+
 	public ABMReportPage(Driver driver) {
 
 		this.driver = driver;
@@ -787,5 +791,16 @@ public class ABMReportPage {
 		} else {
 			bc.failedStep("Advanced Batch Management Report is not Displayed");
 		}
+	}
+	
+	/**
+	 * @author: sowndarya
+	 * @description: preform tally result
+	 */
+	public void performTallyResult() {
+		bc.waitForElement(getActionButton());
+		getActionButton().waitAndClick(20);
+		bc.waitForElement(getTallyResultAction());
+		getTallyResultAction().Click();
 	}
 }

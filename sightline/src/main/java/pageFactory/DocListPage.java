@@ -1516,6 +1516,11 @@ public class DocListPage {
 	public Element getSaveToProfileBtn() {
 		return driver.FindElementById("btnSaveProfile");
 	}
+	public Element getThumbNailOfFirstDocInDocList() {
+		return driver.FindElementByXPath("(//table[@id='dtDocList']//tr[@class='odd']//td[@class='image'])[1]");
+	}
+	
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6539,5 +6544,62 @@ public class DocListPage {
 		base.waitForElement(getUpdateColumnBtn());
 		getUpdateColumnBtn().Click();
 	}
+	
+	/**
+	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select all the docs in doclist page and perform new bulk tag
+	 */
+	public void selectAllDocsAndBulkTagFromDoclist(String tagName) {
+		
+		selectAllDocs();
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(10);
+		base.waitForElement(getDocList_Bulktag());
+		getDocList_Bulktag().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTagUntagDocumentsDialogBox());
+		base.ValidateElement_Presence(getTagUntagDocumentsDialogBox(),"tag/untag popup");
+		base.waitForElement(getNewTagBtn());
+		getNewTagBtn().waitAndClick(10);
+		base.waitForElement(getAction_Bulktag_AllTag());
+		getAction_Bulktag_AllTag().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNameField());
+		getNameField().SendKeys(tagName);
+		base.waitForElement(getContinueButtonUntag());
+		getContinueButtonUntag().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		if(getPopUpOkBtn().isElementAvailable(10)) {
+			getPopUpOkBtn().waitAndClick(10);
+		}
+		base.VerifySuccessMessage("Records saved successfully");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will return the single metadata value from doclist when search result under 500
+	 */
+	public String getDoclistMetaDataValue(int count) {
+			
+			String metadataValue=null;
+			base.waitForElement(getDocList_SelectLenthtobeshown());
+			getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDataInDoclist(1,4));
+			for(int i=1;i<=count;i++) {
+				metadataValue = getDataInDoclist(i,4).getText();
+				if(!(metadataValue.isEmpty())) {
+					base.passedStep("metadata value"+metadataValue);
+					break;
+				}
+				else {
+					System.out.println("checking next row");
+				}
+			}
+			return metadataValue;
+		}
 
 }

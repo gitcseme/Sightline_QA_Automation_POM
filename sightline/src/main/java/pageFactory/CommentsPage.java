@@ -2,6 +2,9 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -110,11 +113,28 @@ public class CommentsPage {
 		}), Input.wait30);
 		getCommentName().SendKeys(ComentName);
 		getSaveBtn().Click();
-
-		base.VerifySuccessMessage("Comment Field added successfully");
-		Reporter.log("Comment '" + ComentName + "' added successfully", true);
-		base.CloseSuccessMsgpopup();
-	}
+		Pattern p = Pattern.compile("^[0-9]", Pattern.CASE_INSENSITIVE);       
+        Pattern p1 = Pattern.compile("[^0-9a-z_]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(ComentName);
+        Matcher m1 = p1.matcher(ComentName);
+        boolean res = m.find();
+        boolean res1 = m1.find();
+        if ((res1 && res)||(res1 && !res)||(!res1 && res)){
+        	base.waitForElement(getCommentsTableErrorMsg());
+			String ErrorMsg=getCommentsTableErrorMsg().getText();
+			if (ErrorMsg.equals("")) {
+			base.failedStep("Expected Error Message is Not Displayed");
+			} else {
+			System.out.println("Error : " + ErrorMsg);
+			base.passedStep("Dispalyed Error Msg : " + ErrorMsg);
+			}
+        } else {
+        	base.VerifySuccessMessage("Comment Field added successfully");
+    		Reporter.log("Comment '" + ComentName + "' added successfully", true);
+    		base.CloseSuccessMsgpopup();
+        }    
+        	
+        }
 
 	public void DeleteComments(String ComentName) {
 

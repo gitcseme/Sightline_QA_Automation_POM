@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -1694,7 +1695,13 @@ public class ProductionPage {
 	}
 
 	public Element getDefaultSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default  Security Group']");
+		// select[@id='SecurityGrpList']//option[text()='Default Security Group']
+	}
+
+	public Element getSecurityGrp() {
 		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default Security Group']");
+
 	}
 
 	public Element getSelectDownloadBtn() {
@@ -1777,6 +1784,10 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[@id='rbdMultiPageType']//following-sibling::i");
 	}
 
+	public Element getTIFF_SinglePage_RadioButton() {
+		return driver.FindElementByXPath("//input[@id='rbdSinglePageType']//following-sibling::i");
+	}
+	
 	public Element getNumbering_Document_RadioButton() {
 		return driver.FindElementByXPath("//input[@id='rdbDocumentLevel']//following-sibling::i");
 	}
@@ -3024,6 +3035,10 @@ public class ProductionPage {
 	}
 
 	// add by sowndarya
+	public Element getDATOnlyLink() {
+		return driver.FindElementById("txtShareableLinkDATFilesPath");
+	}
+
 	public Element redactedTextInRedaction() {
 		return driver.FindElementByXPath("//p[text()='REDACTED']");
 	}
@@ -3552,9 +3567,33 @@ public class ProductionPage {
 	public Element getBlankPageRemovalMsg() {
 		return driver.FindElementByXPath("//a[contains(@data-content,'Blnk Page')]/../following-sibling::td");
 	}
-	
+
 	public ElementCollection getProductionItem() {
 		return driver.FindElementsByXPath("//div//*[@class='prod-Title']");
+	}
+
+	public ElementCollection getProductionSets() {
+		return driver.FindElementsByXPath("//select[@id='ProductionSets']/option[@isproduction='1']");
+	}
+
+	public Element getDraftState(String PName) {
+		return driver.FindElementByXPath("//a[text()='" + PName + "']/..//strong[text()='DRAFT']");
+	}
+
+	public Element getTiffContainer(String ComponentOption) {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//label/span//b[text()='" + ComponentOption + "']");
+	}
+
+	public Element getBasicInfoLabel() {
+		return driver.FindElementByXPath("//*[contains(text(),'Basic Info and Select Template')]");
+	}
+
+	public Element getToggleOptionText() {
+		return driver.FindElementByXPath("//*[@name='IsExportProduction']/..//preceding-sibling::label");
+	}
+
+	public Element getDropdownoptionText() {
+		return driver.FindElementByXPath("//select[@id='ProductionSetLst']/..//span[text()='Select Production']");
 	}
 
 	public ProductionPage(Driver driver) {
@@ -6734,6 +6773,9 @@ public class ProductionPage {
 
 		driver.scrollPageToTop();
 
+		base.waitForElement(getTIFF_SinglePage_RadioButton());
+		getTIFF_SinglePage_RadioButton().waitAndClick(10);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
@@ -10464,9 +10506,12 @@ public class ProductionPage {
 		navigatingToProductionHomePage();
 		base.waitForElement(getSecurityGroupDropDown());
 		getSecurityGroupDropDown().waitAndClick(10);
-		base.waitForElement(getDefaultSecurityGroup());
-		getDefaultSecurityGroup().waitAndClick(10);
-
+		if (getSecurityGrp().isElementAvailable(2)) {
+			getSecurityGrp().waitAndClick(10);
+		} else {
+			driver.waitForPageToBeReady();
+			getDefaultSecurityGroup().waitAndClick(10);
+		}
 	}
 
 	/**
@@ -16960,7 +17005,7 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getPDFGenerateRadioButton().Click();
-
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
@@ -19116,7 +19161,7 @@ public class ProductionPage {
 	 * @Description Extract downloaded file
 	 * 
 	 */
-	public void extractFile() throws ZipException, InterruptedException {
+	public String extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
 		waitForFileDownload();
 		String name = getProduction().getText().trim();
@@ -19139,6 +19184,7 @@ public class ProductionPage {
 		}
 		driver.waitForPageToBeReady();
 		base.stepInfo("Downloaded zip file was extracted");
+		return name;
 	}
 
 	/**
@@ -22743,23 +22789,22 @@ public class ProductionPage {
 
 	}
 
-	
 	/**
 	 * @author NA
 	 * @param file
 	 * @Description verifying text on the tiff image file on downloaded zip file
 	 */
-	public PDFont verifyFontDetailsPDF(File file) throws IOException {					
+	public PDFont verifyFontDetailsPDF(File file) throws IOException {
 		PDFont PDfont = null;
 		PDDocument doc = PDDocument.load(file);
 		PDPageTree pages = doc.getDocumentCatalog().getPages();
-		for(PDPage page : pages) {
+		for (PDPage page : pages) {
 			PDResources res = page.getResources();
-			for(COSName fontName : res.getFontNames()) {
+			for (COSName fontName : res.getFontNames()) {
 
 				try {
-					PDfont = res.getFont(fontName);				
-				} catch(IOException e) {
+					PDfont = res.getFont(fontName);
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -22799,6 +22844,7 @@ public class ProductionPage {
 			}
 		}
 	}
+
 	/**
 	 * @author Brundha.T
 	 */
@@ -22810,7 +22856,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 
-		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);;
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
+		;
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -22822,6 +22869,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("production location Page section is filled");
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param fileName
@@ -22829,34 +22877,123 @@ public class ProductionPage {
 	 * @throws IOException
 	 * @Description:verifying text in Downloaded pdf file
 	 */
-	public   String verifyingTextInPDFFile(String fileName) throws IOException {
-        PDDocument document = PDDocument.load(new File(fileName));
-            PDFTextStripper stripper = new PDFTextStripper();
-            String ActualPdfText = stripper.getText(document);
-            int count = document.getNumberOfPages();
-            System.out.println(count);
-            System.out.println("Text:" + ActualPdfText);
-        document.close();
-        return ActualPdfText;
-    }
-	
+	public String verifyingTextInPDFFile(String fileName) throws IOException {
+		PDDocument document = PDDocument.load(new File(fileName));
+		PDFTextStripper stripper = new PDFTextStripper();
+		String ActualPdfText = stripper.getText(document);
+		int count = document.getNumberOfPages();
+		System.out.println(count);
+		System.out.println("Text:" + ActualPdfText);
+		document.close();
+		return ActualPdfText;
+	}
+
 	/**
 	 * @author Brundha.T
 	 * @param url
 	 * @return
 	 * @throws IOException
-	 *  @Description:verifying pdf file text in url
+	 * @Description:verifying pdf file text in url
 	 */
 	public static String getPdfContent(String url) throws IOException {
 
-	       URL pdfURL = new URL(url);
-	        InputStream is = pdfURL.openStream();
-	        BufferedInputStream bis = new BufferedInputStream(is);
-	        PDDocument doc = PDDocument.load(bis);
-	        PDFTextStripper strip = new PDFTextStripper();
-	        String stripText = strip.getText(doc);
-	        System.out.println(stripText);
-	        doc.close();
-	        return stripText;
-	    }
+		URL pdfURL = new URL(url);
+		InputStream is = pdfURL.openStream();
+		BufferedInputStream bis = new BufferedInputStream(is);
+		PDDocument doc = PDDocument.load(bis);
+		PDFTextStripper strip = new PDFTextStripper();
+		String stripText = strip.getText(doc);
+		System.out.println(stripText);
+		doc.close();
+		return stripText;
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verify download production using sharable link.
+	 */
+	public void verifyDownloadProductionUsingSharableLink_DATFileonly() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitTime(3);
+		getQC_Download().isElementAvailable(10);
+		base.waitForElement(getQC_Download());
+		String name = getProduction().getText().trim();
+		base.waitTillElemetToBeClickable(getQC_Download());
+		getQC_Download().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectSharableLinks().isElementAvailable(10);
+		base.waitForElement(getSelectSharableLinks());
+		getSelectSharableLinks().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getDATOnlyLink().isElementAvailable(10);
+		base.waitForElement(getDATOnlyLink());
+		getDATOnlyLink().ScrollTo();
+		base.waitTime(2);
+		String sharableLink = getDATOnlyLink().GetAttribute("value").trim();
+		String password = getShareLinkPassword().getText().trim();
+		String parentWindow = driver.getWebDriver().getWindowHandle();
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+		driver.getWebDriver().switchTo().window(tabs.get(1));
+		driver.waitForPageToBeReady();
+		driver.getWebDriver().get(sharableLink);
+		base.waitTime(2);
+		getEnterPasswordTextField().isElementAvailable(10);
+		base.waitForElement(getEnterPasswordTextField());
+		getEnterPasswordTextField().SendKeys(password);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDownloadButton());
+		getDownloadButton().waitAndClick(10);
+		base.waitTime(3);
+		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+		isFileDownloaded(downloadsHome, name);
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentWindow);
+
+	}
+
+	public List<String> verifyDownloadPDFFileCount(String extractedFile, boolean expectedCountIs1) {
+		List<String> fileNames = new ArrayList<>();
+
+		File dir = new File(Input.fileDownloadLocation + "//" + extractedFile + "/VOL0001/PDF/0001");
+		base.stepInfo("Downloaded File Location :" + dir);
+		File[] dir_contents = dir.listFiles();
+		System.out.println(dir_contents.length);
+		int PDFFile = dir_contents.length;
+
+		if (PDFFile > 1 && !expectedCountIs1) {
+			base.passedStep("PDF generated file is as expected  with multipage and the count is :" + PDFFile);
+		} else if (PDFFile == 1 && expectedCountIs1) {
+			base.passedStep("PDF generated file is as expected with singlepage and the count is :" + PDFFile);
+
+		} else {
+			base.failedStep("PDF File not generated");
+			}
+		for (int i = 0; i < PDFFile; i++) {
+			// Get File Names
+			String filename = dir_contents[i].getName();
+			System.out.println("Downloaded File Name : " + filename);
+			fileNames.add(filename);
+		}
+		return fileNames;
+	}
+
+	public void verifyDownloadTIFFFileCount(String extractedFile, boolean expectedCountIs1) {
+		File dir = new File(Input.fileDownloadLocation + "//" + extractedFile + "/VOL0001/TIFF/0001");
+		base.stepInfo("Downloaded File Location :" + dir);
+		File[] dir_contents = dir.listFiles();
+		System.out.println(dir_contents.length);
+		int PDFFile = dir_contents.length;
+
+		if (PDFFile > 1 && !expectedCountIs1) {
+			base.passedStep("TIFF generated file is as expected  with multipage and the count is :" + PDFFile);
+		} else if (PDFFile == 1 && expectedCountIs1) {
+			base.passedStep("TIFF generated file is as expected with singlepage and the count is :" + PDFFile);
+
+		} else {
+			base.failedStep("PDF File not generated");
+			}
+
+	}
 }

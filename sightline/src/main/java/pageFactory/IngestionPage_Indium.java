@@ -1129,6 +1129,18 @@ public class IngestionPage_Indium {
 	public Element getErrorPaginateNextBtnStatus() {
 		return driver.FindElementById("myDataTable_next");
 	}
+	public ElementCollection getPreviewRecordsCount() {
+		return driver.FindElementsByXPath("//*[@id='popupdiv']//tbody//tr");
+	}
+	public Element getIngestionFailedStatus() {
+		return driver.FindElementByXPath("//label[text()='% Complete :']/following-sibling::div[contains(text(),'Failed')]");
+	}
+	public Element getSortby() {
+		return driver.FindElementById("SortBy");
+	}
+	public Element loadMoreBtn() {
+		return driver.FindElementByXPath("//button[@id='btnLoadTile']");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -4426,10 +4438,18 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		int headerSectionCount = previewRecordPopupHeaderFields().size();
 		base.waitForElement(goBackButton());
-		goBackButton().Click();
+		goBackButton().waitAndClick(10);
 		base.waitForElement(getPreviewRun());
 		int mappedFieldCount = mappedSourceFields(1).size();
-		
+		//verify records count in preview popup
+		int recordsCount = getPreviewRecordsCount().size();
+		if(recordsCount<=50) {
+			base.passedStep("Records of dat file displayed in preview page"+recordsCount);
+		}
+		else {
+			base.failedStep("more than 50 records are displayed in preview popup page");
+		}
+		//verify header count
 		if (mappedFieldCount == headerSectionCount) {
 			base.passedStep(
 					"Headers in preview record popup page count matched with mapped field in configuring section");
@@ -6612,7 +6632,7 @@ public class IngestionPage_Indium {
 		base.waitTime(5);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
-		base.waitTime(5);
+		base.waitTime(10);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
@@ -11111,11 +11131,12 @@ public class IngestionPage_Indium {
 			
 			base.waitForElement(getFilterByButton());
 			getFilterByButton().waitAndClick(10);
-			getFilterByDRAFT().waitAndClick(5);
+			base.waitForElement(getFilterByDRAFT());
+			getFilterByDRAFT().waitAndClick(10);
 			base.waitForElement(getFilterByFAILED());
-			getFilterByFAILED().waitAndClick(5);
+			getFilterByFAILED().waitAndClick(10);
 			base.waitForElement(getFilterByCATALOGED());
-			getFilterByCATALOGED().waitAndClick(5);
+			getFilterByCATALOGED().waitAndClick(10);
 			base.waitForElement(getFilterByCOPIED());
 			getFilterByCOPIED().waitAndClick(5);
 			base.waitForElement(getFilterByINDEXED());
@@ -11126,6 +11147,7 @@ public class IngestionPage_Indium {
 			getFilterByPUBLISHED().waitAndClick(10);
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitTime(10); //wait for app sync to load all filter type tiles
 		}
 		
 		/**
@@ -11452,5 +11474,128 @@ public class IngestionPage_Indium {
 				base.failedMessage("No errors present for this ingestion at catalog stage");
 			}	
 		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 05/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the failed status details present in ingestion
+		 * 				 detail popup
+		 */
+		public void verifyFailedIngestionStatusInPopup() {
+			
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			
+			base.waitForElement(errorCountCatalogingStage());
+			if(getIngestionFailedStatus().isElementAvailable(10)) {
+				base.passedStep("Failed status displayed in ingestion detail popup");
+				base.ValidateElement_Presence(errorCountCatalogingStage(), "Error Details");
+				base.passedStep("Error count details displayed");
+			}
+			else {
+				base.failedMessage("Ingestion not failed at the catalog stage");
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify default tiles displayed in home page for 
+		 * different sort options
+		 */
+		public void verifyDefaultTilesCountForDifferentSortOptions() {
+			
+			String[] options = {"ProjectName","UserName","IngestionStatus","IngestionDate"};
+			
+			for(int i=0;i<options.length;i++) {
+				base.waitForElement(getSortby());
+				getSortby().selectFromDropdown().selectByValue(options[i]);
+				base.waitTime(10); //wait for app to sync/load tiles with sort options
+				getRefreshButton().waitAndClick(10);
+				base.waitForElement(getIngestionDetailPopup(1));
+				int tilesCount = getIngestionTilesCount().size();
+				if(tilesCount<=10) {
+					base.passedStep("Displayed default tiles count for sort type"+options[i]);
+				}
+				else {
+					base.failedStep("displayed more than default count"+options[i]);
+				}
+			}
+			base.passedStep("Deafult tiles count displayed for all sort options");;
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will click on load more and refresh button to load all existing 
+		 * ingestions present in the project
+		 */
+		public void clickOnLoadMoreAndRefresh() {
+			
+			base.waitForElement(loadMoreBtn());
+			loadMoreBtn().waitAndClick(10); 
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			for(int i=0;i<10;i++) {
+				base.waitTime(10);
+				if(loadMoreBtn().isDisplayed()) {
+					loadMoreBtn().waitAndClick(10);
+					driver.scrollingToBottomofAPage();
+					driver.waitForPageToBeReady();
+				}
+				else if(!(loadMoreBtn().isDisplayed())){
+					base.stepInfo("all existing ingestions loaded");
+					break;
+				}
+			}		
+			driver.scrollPageToTop();
+			base.waitForElement(getRefreshButton());
+			getRefreshButton().waitAndClick(10);
+			base.waitForElement(getIngestionDetailPopup(1));
+		}
+		/**
+		 * @author: Arunkumar Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will start the ingestion for '0002_H13696_1_smallset_GD1'
+		 */
+		public void performSmallSetGdIngestion(String ingestionType) {
+			
+			selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.H13696smallSetFolder);
+			addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(Input.smallSetDat, Input.docIdKey);
+			base.stepInfo("Selecting audio file");
+			selectMP3VarientSource(Input.selectMp3File, false);
+			base.stepInfo("Select date format");
+			selectDateAndTimeFormat(Input.dateFormat);
+			base.stepInfo("click on next button");
+			clickOnNextButton();
+			if (ingestionType.trim().equalsIgnoreCase("Add Only")) {
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.docIdKey,Input.docIdKey,Input.docIdKey);
+			}
+			else {
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("M_Duration");
+				getMappingCategoryField(2).selectFromDropdown().selectByVisibleText("AUDIO");
+				getMappingDestinationField(2).selectFromDropdown().selectByVisibleText("AudioTrimmedDuration");
+			}
+			clickOnPreviewAndRunButton();
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 12/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will publish overlay ingestion which have mp3 files
+		 */
+		public void publishAudioOverlayIngestion(String dataset) {
+			
+			driver.waitForPageToBeReady();
+			ignoreErrorsAndCatlogging();
+			ignoreErrorsAndCopying();
+			ignoreErrorsAndIndexing(dataset);
+			approveIngestion(1);
+			runFullAnalysisAndPublish();
+		}
+		
+
 		
 }
