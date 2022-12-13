@@ -14203,10 +14203,10 @@ public class SessionSearch {
 		System.out.println("expected" + getDraftQuery().getText());
 		if (ExpectedMessage.equalsIgnoreCase(getDraftQuery().getText())) {
 			base.passedStep(
-					"Relevant message appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+					"Drafted message is displayed as"+getDraftQuery().getText());
 		} else {
 			base.failedStep(
-					"Relevant message does not appears when user Navigate - Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved search page on Search Screen");
+					"Drafted message is not displayed ");
 		}
 
 	}

@@ -507,4 +507,8 @@ public class Driver {
 		Boolean attributeValue = (Boolean) js.executeScript(attribute);
 		return attributeValue;
 	}
+	public void NavigateBack() {
+		driver.navigate().back();
+	}
+
 }

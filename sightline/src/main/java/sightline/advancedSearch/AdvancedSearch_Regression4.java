@@ -38,13 +38,14 @@ public class AdvancedSearch_Regression4 {
 	BaseClass baseClass;
 	String hitsCountPA;
 	int hitsCount;
-
+	Input in;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException, AWTException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		in = new Input();
+		in.loadEnvConfig();
 		}
 
 	/**
@@ -88,8 +89,7 @@ public class AdvancedSearch_Regression4 {
 	 *              value is same in its default value as well as when we change its
 	 *              slider value. [RPMXCON-63566]
 	 */
-	@Test(description = "RPMXCON-63566", dataProvider = "Users", groups = {
-			"regression" })
+	@Test(description = "RPMXCON-63566", dataProvider = "Users", groups = {"regression" })
 	public void verifyConceptualDefaultPS(String username, String password) throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 

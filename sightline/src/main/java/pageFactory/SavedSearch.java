@@ -803,9 +803,9 @@ public class SavedSearch {
 	}
 
 	public Element getSavedSearchDisplayedSearchRadioButton(int rowNo) {
-		return driver.FindElementByXPath("//table[@id='SavedSearchGrid']//tr[1]//label//i");
+		return driver.FindElementByXPath("//table[@id='SavedSearchGrid']//tr[" + rowNo + "]//label//i");
 	}
-
+	
 	public Element getSavedSearchSharedWithProjectAdminExpandButton() {
 		return driver.FindElementByXPath(
 				"//*[@class='jstree-node gp_tc_pashared jstree-closed']//i[contains(@class,'ocl')]");
@@ -1035,6 +1035,11 @@ public class SavedSearch {
 	public Element getUnBulkTagConfirmationButton() {
 		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
 	}
+	
+	public Element getSavedSearchSelectRadioButton() {
+		return driver.FindElementByXPath("(//*[@id='SavedSearchGrid']/tbody//td[2])[last()]/../td[@class='sorting_1']/label/i");
+	}
+	
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();

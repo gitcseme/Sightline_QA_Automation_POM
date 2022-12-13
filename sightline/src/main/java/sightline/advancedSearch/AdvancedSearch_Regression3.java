@@ -38,7 +38,6 @@ public class AdvancedSearch_Regression3 {
 	BaseClass baseClass;
 	String hitsCountPA;
 	int hitsCount;
-
 	String prefixID = "A_" + Utility.dynamicNameAppender();
 	String suffixID = "_P" + Utility.dynamicNameAppender();
 	String productionname = "AdvancedSearchRegression3";//"prod" + Utility.dynamicNameAppender();
@@ -48,7 +47,8 @@ public class AdvancedSearch_Regression3 {
 	public void preCondition() throws ParseException, InterruptedException, IOException, AWTException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		
+		Input in = new Input();
+		in.loadEnvConfig();
 		// Open browser
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
@@ -578,8 +578,9 @@ public class AdvancedSearch_Regression3 {
 
 	@Test(description ="RPMXCON-48158",dataProvider = "Users", groups = { "regression" })
 	public void verifyAudioSearchCreteria(String username, String password) throws InterruptedException {
-
+		lp = new LoginPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48158");
+		lp.loginToSightLine(username, password);
 		baseClass.stepInfo(
 				"Verify that while Searching Audio with Content searches-  configured Audio search settings does not revert back to "
 						+ "inappropriate setting in \"Audio\" block  on \"Advanced Search\" screen");

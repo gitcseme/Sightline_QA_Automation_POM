@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -152,6 +153,9 @@ public class KeywordPage {
 		return driver.FindElementByXPath(
 				"//*[@id='KeywordsDatatable']/tbody/tr//td[@class='width_blankSpaces sorting_1'][text()='" + keyword
 						+ "']//following::a[text()='Edit']");
+	}
+	public Element getKeywordHighlightingGroupErrorMessage() {
+		return driver.FindElementByXPath("//span[text()='Select special characters are disallowed']");
 	}
 	
 	// Annotation Layer added successfully
@@ -840,6 +844,84 @@ public class KeywordPage {
 		base.VerifySuccessMessage("Keyword Highlighting Group successfully updated");
 
 	}
+	public void verifyErrorMessageforkeywordHighlightGroupDetailsWithSplChars(String keyWordName,String keywordValue ) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewKeywordButton().Visible();
+			}
+		}), Input.wait60);
+		getNewKeywordButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeywordName().Visible();
+			}
+		}), Input.wait30);
+		getKeywordName().SendKeys(keyWordName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDescription().Visible();
+			}
+		}), Input.wait30);
+		getDescription().SendKeys(keyWordName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeywords().Visible();
+			}
+		}), Input.wait30);
+		getKeywords().SendKeys(keywordValue);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveBtn().Visible();
+			}
+		}), Input.wait30);
+		getSaveBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getYesButton().Visible();
+			}
+		}), Input.wait30);
+		getYesButton().Click();
+		VerifyerrorMessageForDisallowedSpecialCharecters("Select special characters are disallowed");
+	}
+	public void VerifyErrorMessageForeditExistigKeywordWithSplCharcters(String keywordName, String editkeywordName) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getKeywordTableEditKeyword(keywordName));
+		getKeywordTableEditKeyword(keywordName).waitAndClick(5);
+		base.waitForElement(getKeywordTableEditFields());
+		getKeywordTableEditFields().waitAndClick(5);
+		base.waitForElement(getKeywordName());
+		getKeywordName().Clear();
+		getKeywordName().SendKeys(editkeywordName);
+		base.waitForElement(getDescription());
+		getDescription().Clear();
+		getDescription().SendKeys(editkeywordName);
+		base.waitForElement(getKeywords());
+		getKeywords().Clear();
+		getKeywords().SendKeys(editkeywordName);
+		base.waitForElement(getSaveBtn());
+		getSaveBtn().waitAndClick(5);
+		base.waitForElement(getYesButton());
+		getYesButton().waitAndClick(5);
+		VerifyerrorMessageForDisallowedSpecialCharecters("Select special characters are disallowed");
+		
+	}
+	
+	public void VerifyerrorMessageForDisallowedSpecialCharecters(String ErrorMessage) {
+		String errorMessage = getKeywordHighlightingGroupErrorMessage().getText();
+		SoftAssert softAssert = new SoftAssert();
+		softAssert.assertEquals("Select special characters are disallowed", errorMessage);
+		softAssert.assertAll();
+		UtilityLog.info("Expected error message - " + errorMessage);
+		Reporter.log("Expected error message - " + errorMessage, true);
+		base.passedStep("verified error message when user add & Edits keyword Highlight group details with special characters < > & ‘");	
+	}
+
+
 	
 
 }
