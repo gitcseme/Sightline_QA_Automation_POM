@@ -255,6 +255,10 @@ public class CollectionPage {
 	}
 
 	// Added by Raghuram
+	public Element getCollectionDataFromPopupCustomized(String name) {
+		return driver.FindElementByXPath("//p[text()='" + name + "']//parent::div//following-sibling::div//p");
+	}
+	
 	public Element getDestinationPathLocation(String nameAtttribute) {
 		return driver.FindElementByXPath("//div[text()='" + nameAtttribute + "']//..//div[@class='popout text-wrap']");
 	}
@@ -440,6 +444,29 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+
+	public Element getCloseBtnOfErrorReportPopup() {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Close']");
+	}
+
+	public Element getRetrievalOfErrorReportPopup() {
+		return driver.FindElementByXPath(
+				"//td[contains(text(),'Retrieval')]//following-sibling::td//span[@id='dots1']//parent::span");
+	}
+
+	public Element getStartOfErrorReportPopup(String startMsg) {
+		return driver.FindElementByXPath(
+				"//td[contains(text(),'Start')]//following-sibling::td//span[contains(text(),'" + startMsg + "')]");
+	}
+
+	public Element getCollectionId_ErrorReportPopup() {
+		return driver.FindElementByXPath("//span[@class='error-collectionid']//following-sibling::span");
+	}
+
+	public Element getDownloadReportLink_Popup() {
+		return driver.FindElementByXPath("//button[@id='downloadReportLinkText']");
+	}
+
 	public Element getNoCustodianErrorMsg() {
 		return driver.FindElementByXPath("//span[@id='spanNoCustodianResult']");
 	}
@@ -810,13 +837,15 @@ public class CollectionPage {
 
 		// Get Collection ID
 		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		String collectionID = getCollectionID().getText();
 		colllectionData.put(collectionName, collectionID);
 
-		// Get Destination Path - latest
-		driver.waitForPageToBeReady();
-		String destinationPath = getDestinationPathLocation().getText();
-		colllectionData.put("DestinationPath", destinationPath);
+//		// Get Destination Path - latest
+//		driver.waitForPageToBeReady();
+//		base.waitTime(2);
+//		String destinationPath = getDestinationPathLocation().getText();
+//		colllectionData.put("DestinationPath", destinationPath);
 
 		if (Next) {
 			getNextBtn().waitAndClick(10);
@@ -1079,6 +1108,7 @@ public class CollectionPage {
 		try {
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
+			base.mouseHoverOnElement(getFolderabLabel());
 			getFolderNameToSelect(folderName).waitAndClick(10);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3157,4 +3187,56 @@ public class CollectionPage {
 			base.failedStep("Create New Collection is not displayed within the screen");
 		}
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify details present in error report popup
+	 * @param downloadReport
+	 * @param expectedID
+	 * @param expectedRetrievalTxt
+	 * @throws InterruptedException
+	 */
+	public void verifyViewErrorReportPopup(boolean downloadReport, String expectedID, String expectedRetrievalTxt)
+			throws InterruptedException {
+		base.ValidateElement_Presence(getDownloadReportLink_Popup(), "Download This Report Link");
+		base.ValidateElement_Presence(getCollectionId_ErrorReportPopup(), "Collection ID ");
+		base.ValidateElement_Presence(getStartOfErrorReportPopup("Success"), "Start with Success Message");
+		base.ValidateElement_Presence(getRetrievalOfErrorReportPopup(), "Retrieval");
+
+		driver.waitForPageToBeReady();
+		String actualID = getCollectionId_ErrorReportPopup().getText();
+		base.textCompareEquals(actualID, expectedID,
+				"Error Report Popup is displayed as expected for collectionID : " + actualID,
+				"error report Dispalyed is not as expected");
+
+		driver.waitForPageToBeReady();
+		String actualRetrievaltxt = getRetrievalOfErrorReportPopup().getText();
+		base.compareTextViaContains(actualRetrievaltxt, expectedRetrievalTxt,
+				"Retrieval detail is displayed as expected : " + actualRetrievaltxt,
+				"Retrieval detail displayed is not as expected");
+
+		if (downloadReport) {
+			// check initialCount & click download Report
+			int Bgcount = base.initialBgCount();
+			base.waitForElement(getDownloadReportLink_Popup());
+			getDownloadReportLink_Popup().waitAndClick(10);
+			base.VerifySuccessMessage(
+					"A background task has been added for the Collection Summary report. You will receive a notification when it completes.");
+			base.waitForElement(getCloseBtnOfErrorReportPopup());
+			getCloseBtnOfErrorReportPopup().waitAndClick(10);
+
+			// Check NotificationCount
+			base.checkNotificationCount(Bgcount, 1);
+			base.notificationSelection("", false);
+			base.waitUntilFileDownload();
+
+			// Format validation
+			String fileName = base.GetLastModifiedFileName();
+			base.validateFileFormat(fileName, "xlsx");
+			String actualName = base.GetLastModifiedFileName();
+			base.compareTextViaContains(actualName, "COLLSUMMARYREPORT",
+					"Collection Summary Report is Downloaded Successfully", "CSV Report Is downloaded as expected");
+		}
+	}
+
 }

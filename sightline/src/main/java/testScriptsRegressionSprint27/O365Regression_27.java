@@ -84,7 +84,8 @@ public class O365Regression_27 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" },
 
 		};
@@ -838,7 +839,7 @@ public class O365Regression_27 {
 		// Login as User and verify Module Access
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 
-		//Create new collection With filter in Draft State
+		// Create new collection With filter in Draft State
 		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
 				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
 		collectionId = base.returnKey(colllectionData, "", false);
@@ -847,7 +848,8 @@ public class O365Regression_27 {
 		// Start Draft Collection from collection page
 		collection.collectionAction(collectionName, "Start Collection", false, "", false, "");
 
-		// Verify Collection All the Status including copying to dataset status & verify progress bar
+		// Verify Collection All the Status including copying to dataset status & verify
+		// progress bar
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 30,
 				true, true, "", "");
@@ -875,6 +877,285 @@ public class O365Regression_27 {
 		login.logout();
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @throws Exception
+	 * @Description : Verify error report on click of 'View Error Report' when
+	 *              Collection is in 'Copied to Datasets' status [RPMXCON-61154]
+	 */
+	@Test(description = "RPMXCON-61154", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyErrorReportOnClickOfViewErrorLink(String username, String password, String userRole)
+			throws Exception {
+
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, String> colllectionData = new HashMap<>();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String collectionEmailId2 = Input.collection2ndEmailId;
+		String firstName2 = Input.collsecondFirstName;
+		String lastName2 = Input.collsecondlastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder1 = "Inbox";
+		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
+				"Error Status" };
+		String collectionID = "";
+		String[][] userRolesData = { { username, userRole, "SA" } };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.reteriveDSErr };
+		String[] statusListAfterIG = { Input.virusScanStatus, Input.copyDSstatus, Input.completedWithErr };
+		String selectedFolder2 = "Drafts";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61154 - O365");
+		base.stepInfo(
+				"Verify error report on click of 'View Error Report' when Collection is in 'Copied to Datasets' status");
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, false, null, false);
+		collectionName = base.returnKey(collectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Fill in DS user 2
+		collection.fillingDatasetSelection("Button", firstName2, lastName2, collectionEmailId2, selectedApp,
+				collectionData, collectionName, 3, selectedFolder2, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Initiate collection
+		collection.clickNextBtnOnDatasetTab();
+		driver.waitForPageToBeReady();
+		collection.collectionSaveAsDraft();
+
+		// Start Draft Collection from collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.collectionAction(collectionName, "Start Collection", false, "", false, "");
+
+		// verify status displayed
+		base.stepInfo("Verify  status  : " + Input.copyDSstatus);
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListToVerify, 30);
+		driver.waitForPageToBeReady();
+
+		// Continue Successful Datasets - Yes
+		base.stepInfo("Click on Yes\r\n" + "Collection should get \"completed with error\"");
+		collection.collectionAction(collectionName, "Continue Successful Datasets", true, "Yes", false, "");
+		driver.waitForPageToBeReady();
+
+		// verify Copying to datset status completed & click on view errro Report
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 15);
+		driver.waitForPageToBeReady();
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Error Status", false, "");
+		base.stepInfo("Clicked on View Error report");
+		driver.waitForPageToBeReady();
+
+		// verify All the details Displayed in Popup & download report and verify
+		String expectedTxt = "Retrieved with Errors: Some Files cannot be Retrieved, Click Download Error Report Link";
+		collection.verifyViewErrorReportPopup(true, collectionID, expectedTxt);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author 
+	 * @throws Exception
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that when 'Collection' is in ‘Completed With Errors’
+	 *              status and user clicks on the 'CollectionID' from the Collection
+	 *              Grid, it should present the 'Collection' details popup with the
+	 *              detail information. RPMXCON-61010
+	 */
+	@Test(description = "RPMXCON-61010", enabled = true, groups = { "regression" })
+	public void verifyCollectionInfoPopuoDetails() throws Exception {
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		HashMap<String, String> collectionData = new HashMap<>();
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+		String selectedFolder = "Drafts";
+		String selectedFolder2 = "AnalyticsCheck1";
+		String collectionId = "";
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader5, Input.retreivingDSCountH, Input.dateKeywordHeaderC };
+		String collection2ndEmailId = Input.collection2ndEmailId;
+		String secondFirstName = Input.collsecondFirstName;
+		String secondlastName = Input.collsecondlastName;
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
+		String[] statusList = { Input.reteriveDSErr };
+		String[] statusListAfterIG = { Input.completedWithErr };
+
+		base.stepInfo("Test case Id: RPMXCON-61010 - O365");
+		base.stepInfo(
+				"Verify that when 'Collection' is in ‘Completed With Errors’ status and user clicks on the 'CollectionID' from the Collection Grid, it should present the 'Collection' details popup with the detail information");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String currentUser = login.getCurrentUserName();
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Click create New Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+		base.stepInfo("Selected source location : " + dataSourceName);
+
+		// click created source location and verify navigated page
+		collectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+		collectionId = collectionData.get(collectionName);
+
+		// Initiate collection process
+		String destinationPath = collection.getDestinationPathLocation().getText();
+		collection.selectInitiateCollectionOrClickNext(false, true, true);
+
+		// Fill in DS user 1
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Fill in DS user 2
+		collection.fillingDatasetSelection("Button", secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder2, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 35,
+				true, false, "", "");
+
+		// Completed status check
+		base.stepInfo("Verify Collection is in 'Copied with Errors'");
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 35);
+		driver.waitForPageToBeReady();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
+
+		// Verify Collection progress bar presence
+		collection.verifyCollectionPausedStatus(collectionName, colllectionDataHeadersIndex, "", false);
+
+		// Continue Successful Datasets - Yes
+		base.stepInfo("Click on Yes\r\n" + "Collection should get \"completed with error\"");
+		collection.collectionAction(collectionName, "Continue Successful Datasets", true, "Yes", false, "");
+		driver.waitForPageToBeReady();
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 20);
+		driver.waitForPageToBeReady();
+
+		// Launch collection details
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Collection Id", false, "");
+		driver.waitForPageToBeReady();
+		base.printResutInReport(base.ValidateElement_AbsenceReturn((collection.getCollectionInfoPopUpStatus())),
+				"Opened : Collection Info popup", "No Collection Info popup", "Pass");
+
+		// Verify Collection Name in Collection info popup
+		base.stepInfo("Verify Expected Collection name is displayed in the collection info popup");
+		base.textCompareEquals(collectionName, collection.getCollectionNameFromInfoPopup().getText(),
+				"Expected Collection name is displayed in Collection Info popup",
+				"Expected Collection name is not displayed in Collection Info popup");
+
+		// Verify Collection Id in Collection info popup
+		base.stepInfo("Verify Expected Collection ID is displayed in the collection info popup");
+		base.textCompareEquals(collectionId, collection.getCollectionIdFromInfoPopup().getText(),
+				"Expected Collection ID is displayed in Collection Info popup",
+				"Expected Collection ID is not displayed in Collection Info popup");
+
+		// Verify Destination path in Collection info popup
+		base.stepInfo("Verify Expected Destination path is displayed in the collection info popup");
+		base.textCompareEquals(destinationPath, collection.getDestinationLocationInfoPopup().getText(),
+				"Expected Destination path is displayed in Collection Info popup",
+				"Expected Destination path is not displayed in Collection Info popup");
+
+		// Verify Source Location in Collection info popup
+		base.stepInfo("Verify Expected Source Location is displayed in the collection info popup");
+		base.textCompareEquals("O365" + dataSourceName, collection.getSourceLocationFromInfoPopup().getText(),
+				"Expected Source Location is displayed in Collection Info popup",
+				"Expected Source Location is not displayed in Collection Info popup");
+
+		// Verify Initiate Process in Collection info popup
+		base.stepInfo("Verify Expected Initiate processing status is displayed in the collection info popup");
+		base.textCompareEquals("Do not automatically initiate processing",
+				collection.getInitiateStatInfoPopup().getText(),
+				"Expected Initiate process status is displayed in Collection Info popup",
+				"Expected Initiate process status is not displayed in Collection Info popup");
+
+		// Verify Ran By is in Collection info popup
+		base.stepInfo("Verify Expected Ran By User details is displayed in the collection info popup");
+		base.textCompareEquals(currentUser,
+				collection.getCollectionDataFromPopupCustomized("Collection Ran By:").getText(),
+				"Expected Ran by user detail is displayed in Collection Info popup",
+				"Expected Ran by user detail is not displayed in Collection Info popup");
+
+		// Verify Collection Completion Date is in Collection info popup
+		base.stepInfo("Verify Collection Completed Date and Time is displayed in the collection info popup");
+		base.printResutInReport(
+				base.ValidateElement_PresenceReturn(
+						collection.getCollectionDataFromPopupCustomized("Collection Completion Date:")),
+				"Collection Completed Date and Time is displayed in the collection info popup",
+				"Collection Completed Date and Time is not displayed in the collection info popup", "Pass");
+		base.stepInfo(collection.getCollectionDataFromPopupCustomized("Collection Completion Date:").getText());
+
+		// Get user data retrived value
+		base.stepInfo("Verify Expected Data retrived content is displayed in the collection info popup");
+		String actualValue = collection
+				.getDataSetDetails(firstName + " " + lastName,
+						base.getIndex(collection.getCollectionDataSetDetailsHeader(), Input.collectionDataHeader4))
+				.getText();
+		collection.verifyRetrivedDataMatches(firstName, lastName, collectionId, selectedApp, actualValue, true, false,
+				"");
+
+		// verify DataSet Contents - retrieved count 0 is fixed value
+		base.stepInfo("Verify other contents is displayed in the collection info popup as expected");
+		collection.verifyDataSetContentsCustomize(collection.getCollectionDataSetDetailsHeader(), headerList, firstName,
+				lastName, selectedApp, collectionEmailId, collectionEmailId, selectedFolder, "0", "Test", "", false, 0);
+
+		// verify DataSet Contents - retrieved count 1 is fixed value
+		base.stepInfo("Verify other contents is displayed in the collection info popup as expected");
+		collection.verifyDataSetContentsCustomize(collection.getCollectionDataSetDetailsHeader(), headerList,
+				secondFirstName, secondlastName, selectedApp, collection2ndEmailId, collection2ndEmailId,
+				selectedFolder2, "1", "Test", "", false, 0);
+
+		// Logout
+		login.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
