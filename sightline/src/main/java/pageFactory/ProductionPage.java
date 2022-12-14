@@ -8922,18 +8922,16 @@ public class ProductionPage {
 	}
 
 	public void VerifyProductionSet(final String prodsetName) throws InterruptedException {
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getProdExport_ProductionSets());
 		getProdExport_ProductionSets().waitAndClick(10);
 
 		String myString = prodsetName.concat(" (Production Set)");
-
+		base.waitForElement(getProdExport_ProductionSets());
 		getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(myString);
+		driver.waitForPageToBeReady();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPRODUCTIONSSETName().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPRODUCTIONSSETName());
 		String myprodsetname = getPRODUCTIONSSETName().getText();
 
 //	        	Assert.assertEquals(prodsetName, myprodsetname);
