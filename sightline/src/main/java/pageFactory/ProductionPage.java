@@ -3595,6 +3595,9 @@ public class ProductionPage {
 	public Element getDropdownoptionText() {
 		return driver.FindElementByXPath("//select[@id='ProductionSetLst']/..//span[text()='Select Production']");
 	}
+	public Element getPath(String Path) {
+		return driver.FindElementByXPath("//a[contains(text(),'"+Path+"')]");
+	}
 
 	public ProductionPage(Driver driver) {
 
