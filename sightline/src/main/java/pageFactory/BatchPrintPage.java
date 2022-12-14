@@ -2440,7 +2440,9 @@ public class BatchPrintPage {
 		// verify INPROGRESS status
 		base.waitForElement(getBatchPrintStatus());
 		String inprogressStatus = getBatchPrintStatus().getText();
-		if (inprogressStatus.equalsIgnoreCase("INPROGRESS")) {
+		if (getbackgroundDownLoadLink().isElementAvailable(5)) {
+			System.out.println("It is already in completed status");
+		} else {
 			base.textCompareEquals("INPROGRESS", inprogressStatus, "Batch Print Entry Status is in : INPROGRESS",
 					"Batch Print Status Is Not As Expected");
 		}
