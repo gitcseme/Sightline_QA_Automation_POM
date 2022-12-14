@@ -538,8 +538,9 @@ public class ExportRegression27 {
 			page.getFileDir("VOL0001").waitAndClick(5);
 			page.getFileDir("Images/").waitAndClick(10);
 			page.getFileDir("0001/").waitAndClick(5);
-			driver.waitForPageToBeReady();
-			base.elementDisplayCheck(page.getFirstImageFile(prefixID + "(" + 2 + ")" + suffixID, subBates));
+			base.waitTime(2);
+			base.elementDisplayCheck(page.getPath(prefixID));
+			base.elementDisplayCheck(page.getPath(suffixID));
 			base.passedStep("user can able to see the exported file");
 		} else {
 			base.failedStep("User can't able to view the exported file");
