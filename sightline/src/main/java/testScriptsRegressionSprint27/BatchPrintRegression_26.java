@@ -45,7 +45,8 @@ public class BatchPrintRegression_26 {
 	SessionSearch session;
 	TagsAndFoldersPage tagsAndFolderPage;
 	ProductionPage page;
-	String specificTag = "Tag" + Utility.dynamicNameAppender();
+	String specificTag = "BatchPrintTag" + Utility.dynamicNameAppender();
+	String specificTag2 = "BatchTag" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -113,7 +114,7 @@ public class BatchPrintRegression_26 {
 		if (toRole.equals("PA")&& fromRole=="SA") {
 			
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(specificTag, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(specificTag2, Input.tagNamePrev);
 
 		DataSets data = new DataSets(driver);
 		data.NavigateToDataSets();
@@ -122,12 +123,12 @@ public class BatchPrintRegression_26 {
 		driver.waitForPageToBeReady();
 
 		doc.documentSelection(count);
-		doc.bulkTagExistingFromDoclist(specificTag);
+		doc.bulkTagExistingFromDoclist(specificTag2);
 		}
 		
 		// Select TAG & Select Native in basis for printing
 		batchPrint.navigateToBatchPrintPage();
-		batchPrint.fillingSourceSelectionTab(Input.tag, specificTag, true);
+		batchPrint.fillingSourceSelectionTab(Input.tag, specificTag2, true);
 		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.fillingAnalysisTab(false, false, false, true);
 
