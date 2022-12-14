@@ -289,8 +289,10 @@ public class DomainManagement_27 {
 		project.navigateToProductionPage();
 		project.CreatProjectInDA(ProjectName);
 		project.filterTheProject(ProjectName);
+		baseClass.waitTime(3);
 		int n = baseClass.getIndex(project.getProjectTableHeader(), "NAME");
 		String Project = project.getColumValue(n).getText().trim();
+		baseClass.waitTime(2);
 		baseClass.textCompareEquals(Project, ProjectName, "Newly created project is available under selected domain",
 				"newly created project is not displayed");
 
