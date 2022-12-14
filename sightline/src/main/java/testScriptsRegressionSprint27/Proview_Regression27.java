@@ -225,9 +225,10 @@ public class Proview_Regression27 {
 			}
 			categorize.ViewInDocLIst();
 
+			baseClass.waitTime(3);
 			baseClass.stepInfo("verifying document count in doclist page");
 			DocListPage doc = new DocListPage(driver);
-			baseClass.waitTillElemetToBeClickable(doc.getTableFooterDocListCount());
+			baseClass.waitForElement(doc.getTableFooterDocListCount());
 			String DocListCount = doc.getTableFooterDocListCount().getText();
 			String[] doccount = DocListCount.split(" ");
 			String DocumentCount = doccount[5];

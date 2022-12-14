@@ -209,7 +209,7 @@ public class DomainManagement_27 {
 				baseClass.failedStep("user is not displayed in Assigned users list");
 			}
 			user.getPopUpCloseBtn().waitAndClick(10);
-
+            baseClass.waitTime(2);
 			// delete the created user
 			user.filterTodayCreatedUser();
 			user.filterByName(MailID);
@@ -232,6 +232,7 @@ public class DomainManagement_27 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Logged in As " + Input.da1userName);
 
+		baseClass.selectdomain(Input.domainName);
 		ProjectPage project = new ProjectPage(driver);
 		UserManagement user = new UserManagement(driver);
 
