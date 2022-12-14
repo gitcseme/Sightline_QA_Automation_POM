@@ -599,7 +599,7 @@ public class O365Regression_27 {
 		dataSets.verifysearchBoxValue(collectionName, "");
 
 		// verify Datasets of the collection is published
-		dataSets.VerifyLastStatusOfCollection("Published", 40, collectionName);
+		dataSets.VerifyLastStatusOfCollection("Published", 25, collectionName);
 
 		// Logout
 		login.logout();
