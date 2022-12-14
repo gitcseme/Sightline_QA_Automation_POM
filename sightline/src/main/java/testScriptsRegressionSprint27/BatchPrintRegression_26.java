@@ -80,8 +80,8 @@ public class BatchPrintRegression_26 {
 		Object[][] users = { 
 				{ Input.sa1userName, Input.sa1password,"SA","PA" },
 				{ Input.sa1userName, Input.sa1password,"SA","RMU" },
-				{ Input.da1userName, Input.da1password,"SA","PA" },
-				{ Input.da1userName, Input.da1password,"SA","RMU" },
+				{ Input.da1userName, Input.da1password,"DA","PA" },
+				{ Input.da1userName, Input.da1password,"DA","RMU" },
 				};
 		return users;
 	}
@@ -110,7 +110,7 @@ public class BatchPrintRegression_26 {
 		// Pre-requesties
 		baseClass.rolesToImp(fromRole,toRole);
 		
-		if (toRole.equals("PA")) {
+		if (toRole.equals("PA")&& fromRole=="SA") {
 			
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(specificTag, Input.tagNamePrev);
