@@ -168,6 +168,10 @@ public class ClientsPage {
 	public Element getClientPopUp() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-title']");
 	}
+	
+	public Element getShortNameDisable() {
+        return driver.FindElementByXPath("//input[@id='EntityCode' and  @readonly='readonly']");
+    }
 	// Annotation Layer added successfully
 	public ClientsPage(Driver driver) {
 
