@@ -521,7 +521,6 @@ public class O365Regression_27 {
 	 */
 	@Test(description = "RPMXCON-61407", enabled = true, groups = { "regression" })
 	public void verifyCollectionIsPublished() throws Exception {
-
 		HashMap<String, String> collectionData = new HashMap<>();
 		HashMap<String, String> colllectionData = new HashMap<>();
 
@@ -600,7 +599,7 @@ public class O365Regression_27 {
 		dataSets.verifysearchBoxValue(collectionName, "");
 
 		// verify Datasets of the collection is published
-		dataSets.VerifyLastStatusOfCollection("Published", 40, collectionName);
+		dataSets.VerifyLastStatusOfCollection("Published", 25, collectionName);
 
 		// Logout
 		login.logout();
@@ -888,7 +887,6 @@ public class O365Regression_27 {
 			throws Exception {
 
 		HashMap<String, String> collectionData = new HashMap<>();
-		HashMap<String, String> colllectionData = new HashMap<>();
 
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -922,9 +920,9 @@ public class O365Regression_27 {
 
 		// create new Collection with Datasets and Initiate
 		collectionData = collection.createNewCollection(collectionData, collectionName, false, null, false);
-		collectionName = base.returnKey(collectionData, "", false);
+		collectionID = collectionData.get(collectionName);
 		System.out.println(collectionName);
-		collectionID = colllectionData.get(collectionName);
+		System.out.println(collectionID);
 
 		// Fill in DS user 1
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
@@ -958,6 +956,8 @@ public class O365Regression_27 {
 		// verify Copying to datset status completed & click on view errro Report
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusListAfterIG, 15);
 		driver.waitForPageToBeReady();
+		
+		//
 		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Error Status", false, "");
 		base.stepInfo("Clicked on View Error report");
 		driver.waitForPageToBeReady();
