@@ -29,6 +29,7 @@ import pageFactory.ProjectPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TallyPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -44,6 +45,8 @@ public class Ingestion_Regression_10 {
 	Input ip;
 	TallyPage tally;
 	DocExplorerPage docExplorer;
+	ProjectPage project;
+	UserManagement userManage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -636,6 +639,80 @@ public class Ingestion_Regression_10 {
 		baseClass.passedStep("Overlay ingestion performed successfully");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 13/12/2022 TestCase Id:RPMXCON-55584
+	 * Description :To verify that user cannot Ingest the document beyond the limit.
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-55584",enabled = true, groups = { "regression" })
+	public void verifyProjectIngestionLimit() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-55584");
+		baseClass.stepInfo("verify that user cannot Ingest the document beyond the limit.");
+		String projectName = "QAproject" +Utility.dynamicNameAppender();				
+		
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);		
+		baseClass.stepInfo("Logged in as SA");
+		project = new ProjectPage(driver);
+		baseClass.stepInfo("create new project with specific limit");
+		System.out.println(projectName);
+		project.createIngestionProject(projectName, "Automation", "100");
+		baseClass.stepInfo("provide access to PA user with ingestion functionality");
+		userManage = new UserManagement(driver);
+		userManage.provideAccessToPaAndEnableIngestion(Input.pa1userName, projectName);
+		loginPage.logout();
+		//login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.verifyIngestionAccess(projectName);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("try to ingest more number of docs and verify error message");
+		ingestionPage.performAutomationAllsourcesIngestion(Input.sourceSystem, Input.DATFile1, Input.prodBeg);
+		ingestionPage.ingestionAtCatlogState(Input.AllSourcesFolder);
+		ingestionPage.verifyCatalogedIngestionErrorMessage("more than specified limit of documents for this project");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 13/12/2022 TestCase Id:RPMXCON-55873
+	 * Description :Add new path using "Ingestion Folder" option for ingestion while creating the new project
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-55873",enabled = true, groups = { "regression" })
+	public void verifyAddNewPathForIngestionFolder() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-55873");
+		baseClass.stepInfo("Verify Add new path using 'Ingestion Folder' option for ingestion");
+		String projectName = "QAproject" +Utility.dynamicNameAppender();
+		String actualPath = "ingestion";
+		String updatedPath = "Automation";
+		
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		project = new ProjectPage(driver);
+		baseClass.stepInfo("create new project with ingestion folder data");
+		System.out.println(projectName);
+		project.createIngestionProject(projectName, actualPath, "100");
+		baseClass.stepInfo("select same project and edit ingestion folder");
+		project.editIngestionFolderPath(projectName, updatedPath);
+		baseClass.stepInfo("provide access to PA user with ingestion functionality");
+		userManage = new UserManagement(driver);
+		userManage.provideAccessToPaAndEnableIngestion(Input.pa1userName, projectName);
+		loginPage.logout();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage.verifyIngestionAccess(projectName);
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("verify source location list for updated path");
+		ingestionPage.verifyIngestionFolderPath(updatedPath);
+		baseClass.passedStep("Newly added path available");
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

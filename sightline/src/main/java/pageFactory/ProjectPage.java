@@ -2011,5 +2011,74 @@ public class ProjectPage {
 		}
 		return Foldername;
 	}
+	
+	/**
+	 * @author: Arun Created Date: 12/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will create ingestion project
+	 * 
+	 */
+	public void createIngestionProject(String projectname, String ingestionfolder,String docsLimit) {
+
+		//navigate to project creation page
+		navigateToProductionPage();
+		//add new project
+		bc.waitForElement(getAddProjectBtn());
+		getAddProjectBtn().waitAndClick(10);
+		//project name
+		bc.waitForElement(getProjectName());
+		getProjectName().SendKeys(projectname);
+		//domain and client name
+		bc.waitForElement(getSelectEntityType());
+		getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+		bc.waitForElement(getSelectClientName());
+		getSelectClientName().selectFromDropdown().selectByVisibleText(Input.domainName);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getProjectFolder());
+		getProjectFolder().SendKeys("Automation");
+		bc.waitForElement(getIngestionFolder());
+		getIngestionFolder().SendKeys(ingestionfolder);
+		bc.waitForElement(getProductionFolder());
+		getProductionFolder().SendKeys("Automation");
+		driver.scrollPageToTop();
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().waitAndClick(10);
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(10);
+		getNoOfDocuments().SendKeys(docsLimit);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60);
+		System.out.println(bc.initialBgCount());
+	}
+	
+	/**
+	 * @author: Arun Created Date: 12/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will edit the ingestion folder path and save
+	 * 
+	 */
+	public void editIngestionFolderPath(String project,String ingestionPath) {
+		
+		//filter the project and click on edit
+		editProject(project);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getIngestionFolder());
+		getIngestionFolder().SendKeys(ingestionPath);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+		bc.VerifySuccessMessage("Project updated successfully");		
+	}
 
 }
