@@ -155,7 +155,7 @@ public class CommunicationReportRegression_27 {
 		// validation of exclude & include filter functionality
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		conceptExplorer.filterValidation("IncludeAndExclude", Input.MetaDataEAName, Input.emailAllDomain,
-				Input.emailAllDomainOption, Input.emailReciepientName2, Input.MetaDataDomainName, false, "");
+				Input.emailAllDomainOption, Input.EmailAuthourName, Input.MetaDataDomainName, false, "");
 
 		// Logout
 		loginPage.logout();
