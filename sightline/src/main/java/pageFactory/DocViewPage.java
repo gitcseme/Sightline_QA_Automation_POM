@@ -3657,6 +3657,11 @@ public class DocViewPage {
 	public Element getAudioSilderPoint() {
 		return driver.FindElementByXPath("//div[@class='slider-handle round']");
 	}
+	
+	public Element getDocviewAudio_StartTime() {
+		return driver.FindElementByXPath("//*[@class='jp-current-time']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
