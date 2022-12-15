@@ -24,6 +24,8 @@ import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -345,6 +347,51 @@ public class DocViewAudio_Regression28 {
 			baseClass.failedStep("Audio file is not played with the selected speed from the control");
 		}
 		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:15/12/2022 RPMXCON-51443
+	 * @throws Exception 
+	 * @Description Verify that > and < arrows should work when the hit in the
+	 *              document is due to Keyword Group Highlights when redirected to
+	 *              doc view from saved search.
+	 */
+
+	@Test(description = "RPMXCON-51443", enabled = true, groups = { "regression" })
+	public void verifyArrowsKeywordGroupDocViewFromSavedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51443");
+		baseClass.stepInfo(
+				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from saved search.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docView =new DocViewPage(driver);
+		KeywordPage keyWord = new KeywordPage(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String hitTerms = Input.randomText + Utility.dynamicNameAppender();
+		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rmu1userName + "'");
+
+		keyWord.navigateToKeywordPage();
+		keyWord.AddKeyword(hitTerms, hitTerms);
+
+		sessionSearch.basicContentSearch(Input.randomText);
+		sessionSearch.saveSearchQuery(saveName);
+		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		savedSearch.savedSearchToDocView(saveName);
+
+		docViewRedact.checkingPersistentHitPanel();
+		baseClass.stepInfo("persistent hit panel displayed in docview panel");
+		docView.getPersistantHitEyeIcon().Click();
+		docView.VerifyKeywordHit(hitTerms);
+		
+		//hit is displayed with < and >
+		docViewRedact.TraverseForwardAndBackwardOnHits();
+		loginPage.logout();
+		
 	}
 
 	@DataProvider(name = "AllTheUsers")
