@@ -2123,63 +2123,7 @@ public void popOutCodingFormChildWindow() {
 
 	}
 
-	/*
-	 * Jagadeesh.Jana Test Case Id: RPMXCON-51563
-	 */
-	public void TraverseForwardAndBackwardOnHits() throws Exception {
-		SoftAssert softAssertion = new SoftAssert();
-		base = new BaseClass(driver);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return getSearchIcon().Visible() && HighliteIcon().Enabled();
-			}
-		}), Input.wait30);
-		getSearchIcon().waitAndClick(30);
-
-		base.passedStep("successfully Clicked the Search Icon");
-
-		driver.waitForPageToBeReady();
-		base.waitForElement(getInputSearchBox());
-		getInputSearchBox().waitAndClick(30);
-
-		getInputSearchBox().SendKeys("test");
-		base.stepInfo("Search input Text completed");
-
-		Thread.sleep(2000); // Implicitly need here
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-
-		base.waitForElement(hitForwardIcon("test"));
-		hitForwardIcon("test").waitAndClick(10);
-		String forwardCount = getHitCount("test").getText();
-		System.out.println("forwardCount: " + forwardCount);
-		if (forwardCount.equals("2 of 2")) {
-			System.out.println("Traverse Forward to the hits - PASSED");
-			base.passedStep("Traverse Forward to the hits - PASSED");
-			softAssertion.assertTrue(true);
-		} else {
-			System.out.println("Traverse Forward to the hits - FAILED");
-			base.failedStep("Traverse Forward to the hits - FAILED");
-			softAssertion.assertTrue(false);
-		}
-
-		base.waitForElement(hitBackwardIcon("test"));
-		hitBackwardIcon("test").waitAndClick(10);
-		String backwardCount = getHitCount("test").getText();
-		System.out.println("backwardCount :" + backwardCount);
-		if (backwardCount.equals("1 of 2")) {
-			System.out.println("Traverse Backward to the hits - PASSED");
-			base.passedStep("Traverse Backward to the hits - PASSED");
-			softAssertion.assertTrue(true);
-		} else {
-			System.out.println("Traverse Backward to the hits - FAILED");
-			base.failedStep("Traverse Backward to the hits - FAILED");
-			softAssertion.assertTrue(false);
-		}
-		softAssertion.assertAll();
-	}
+	
 
 	/*
 	 * Jagadeesh.Jana Test Case Id: RPMXCON-51564
@@ -4271,5 +4215,64 @@ public String verifyingRevertOffAndOn(Element ele) {
 	 
 	}
 
+	/*
+	 * Author:Jagadeesh.Jana Date:NA Modify Author:Vijaya.Rani Modify Date:15/12/2022
+	 */
+	public void TraverseForwardAndBackwardOnHits() throws Exception {
+		SoftAssert softAssertion = new SoftAssert();
+		base = new BaseClass(driver);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getSearchIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		getSearchIcon().waitAndClick(30);
+
+		base.passedStep("successfully Clicked the Search Icon");
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getInputSearchBox());
+		getInputSearchBox().waitAndClick(30);
+
+		getInputSearchBox().SendKeys("test");
+		base.stepInfo("Search input Text completed");
+
+		Thread.sleep(2000); // Implicitly need here
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+
+		base.waitForElement(hitForwardIcon("test"));
+		hitForwardIcon("test").waitAndClick(10);
+		String forwardCount = getHitCount("test").getText();
+		System.out.println("forwardCount: " + forwardCount);
+		base.waitTime(3);
+		if (forwardCount.contains("2 of ")) {
+			System.out.println("Traverse Forward to the hits - PASSED");
+			base.passedStep("Traverse Forward to the hits - PASSED");
+			softAssertion.assertTrue(true);
+		} else {
+			System.out.println("Traverse Forward to the hits - FAILED");
+			base.failedStep("Traverse Forward to the hits - FAILED");
+			softAssertion.assertTrue(false);
+		}
+
+		base.waitForElement(hitBackwardIcon("test"));
+		hitBackwardIcon("test").waitAndClick(10);
+		String backwardCount = getHitCount("test").getText();
+		System.out.println("backwardCount :" + backwardCount);
+		base.waitTime(3);
+		if (backwardCount.contains("1 of ")) {
+			System.out.println("Traverse Backward to the hits - PASSED");
+			base.passedStep("Traverse Backward to the hits - PASSED");
+			softAssertion.assertTrue(true);
+		} else {
+			System.out.println("Traverse Backward to the hits - FAILED");
+			base.failedStep("Traverse Backward to the hits - FAILED");
+			softAssertion.assertTrue(false);
+		}
+		softAssertion.assertAll();
+	}
 
 }
