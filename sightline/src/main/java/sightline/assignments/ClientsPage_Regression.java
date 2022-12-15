@@ -49,7 +49,7 @@ public class ClientsPage_Regression {
 		loginPage.logout();
 	}
 
-	@Test(description ="RPMXCON-54958, RPMXCON-54959",groups = { "regression" })
+	@Test(description ="RPMXCON-54958,RPMXCON-54959",groups = { "regression" })
 	public void verifyHelpTextPopUpWhenClickingInClientPg() throws InterruptedException, ParseException, IOException {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
