@@ -149,7 +149,95 @@ public class AdvancedSearchRegression_28 {
 		loginPage.logout();
 	}
 
-	
+	/**
+	 * @author Brundha.T TestCase id-RPMXCON-48566
+	 * @Description Verify that - After impersonation (RMU to Reviewer) - User can
+	 *              search Audio - Remarked documents in Advanced Search.
+	 */
+	@Test(description = "RPMXCON-48566", enabled = true, groups = { "regression" })
+	public void verifyingAudioRemarkCountWhileImpersonatingRmuAsRev() throws Exception {
+
+		DocViewPage docView = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String remark = "remark" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("RPMXCON-48566");
+		baseClass.stepInfo(
+				"Verify that - After impersonation (RMU to Reviewer) - User can search Audio - Remarked documents in Advanced Search.");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		int remarkCount = 1;
+
+		baseClass.stepInfo("Navigate to Search page");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Searching audio doc and navigate to docview page");
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.ViewInDocView();
+
+		baseClass.stepInfo("Adding remark for audio document");
+		docView.audioRemark(remark);
+
+		baseClass.waitTime(2);
+		baseClass.stepInfo("Impersonating RMU as REV");
+		baseClass.impersonateRMUtoReviewer();
+
+		int PureHit = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch("Remark", remark);
+
+		baseClass.digitCompareEquals(PureHit, remarkCount, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T TestCase id-RPMXCON-48565
+	 * @Description Verify that - After impersonation (RMU to Reviewer) - User can
+	 *              search Audio - commented documents in Advanced Search.
+	 */
+	@Test(description = "RPMXCON-48565", enabled = true, groups = { "regression" })
+	public void verifyingAudioCommentsCountWhileImpersonatingRmuAsRev() throws Exception {
+
+		DocViewPage docView = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("RPMXCON-48565");
+		baseClass.stepInfo(
+				"Verify that - After impersonation (RMU to Reviewer) - User can search Audio - commented documents in Advanced Search.");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in As : " + Input.rmu1userName);
+		int CommentCount = 2;
+		String docComment = "Reviewed" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Navigate to Search page");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Searching audio doc and navigate to docview page");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+
+		driver.Navigate().refresh();
+		baseClass.waitTime(2);
+
+		baseClass.stepInfo("Add Comments in audio doc");
+		docView.addCommentAndSave(docComment, true, CommentCount);
+
+		baseClass.waitTime(2);
+		baseClass.stepInfo("Impersonating RMU as REV");
+		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.stepInfo("Navigate to Search page");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("verifying comments document count");
+		int PureHit = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment);
+
+		baseClass.digitCompareEquals(PureHit, CommentCount, "pureHit count match with comments count",
+				"pureHit count doesn't match with comments count");
+
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
