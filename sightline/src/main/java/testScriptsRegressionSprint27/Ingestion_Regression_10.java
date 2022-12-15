@@ -78,7 +78,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47400",enabled = true, groups = { "regression" })
-	public void verifyPreviewRecordIngestionPopup() throws InterruptedException {
+	public void TCA1verifyPreviewRecordIngestionPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47400");
 		baseClass.stepInfo("verify Preview Records pop up display.");
@@ -119,7 +119,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47567",enabled = true, groups = { "regression" })
-	public void verifyIngestionStatusInDetailPage() throws InterruptedException {
+	public void TCA2verifyIngestionStatusInDetailPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47567");
 		baseClass.stepInfo("To Verify Ingestion Status in Ingestion Detail Page .");
@@ -161,7 +161,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48926",dataProvider = "users",enabled = true, groups = { "regression" })
-	public void verifyDocLanguagesMetadata(String userName, String password, String role) throws InterruptedException {
+	public void TCB6verifyDocLanguagesMetadata(String userName, String password, String role) throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48926");
 		baseClass.stepInfo("Validate new metadata field DocLanguages");
@@ -169,6 +169,23 @@ public class Ingestion_Regression_10 {
 		String tagName = "tag"+Utility.dynamicNameAppender();
 		tally = new TallyPage(driver);
 		docExplorer = new DocExplorerPage(driver);
+		
+		//verifying data availability
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA ");
+		baseClass.selectproject(Input.additionalDataProject);
+		docExplorer.navigateToDocExplorerPage();
+		baseClass.waitForElement(docExplorer.getDocExp_IngestionNameFilter());
+		docExplorer.getDocExp_IngestionNameFilter().waitAndClick(10);
+		docExplorer.getIncludeRadioBtn().waitAndClick(10);
+		docExplorer.getSearchTextArea().waitAndClick(10);
+		if(docExplorer.getIngestionName("DocLanguagesExistingData").isElementAvailable(10)) {
+			baseClass.passedStep("data available");
+		}
+		else {
+			baseClass.failedStep("dataset not available");
+		}
+		loginPage.logout();
 		
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Logged in as "+role);
@@ -222,7 +239,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48305",enabled = true, groups = { "regression" })
-	public void verifyEmailConversationIndexNuixValue() throws InterruptedException {
+	public void TCA3verifyEmailConversationIndexNuixValue() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48305");
 		baseClass.stepInfo("To verify that 'EmailConversationIndex' value ingested from NUIX.");
@@ -286,7 +303,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60895",enabled = true, groups = { "regression" })
-	public void verifyDatIngestionLessThan400Chars() throws InterruptedException {
+	public void TCA4verifyDatIngestionLessThan400Chars() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-60895");
 		baseClass.stepInfo("Verify ingestion Dat file data having less than 400 chars.");
@@ -322,7 +339,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48585",enabled = true, groups = { "regression" })
-	public void verifyUniqueDocIdsCountDisplayAsPA() throws InterruptedException {
+	public void TCA5verifyUniqueDocIdsCountDisplayAsPA() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48585");
 		baseClass.stepInfo("Verify count of unique DocIDs present in Project as PA user");
@@ -354,7 +371,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48586",enabled = true, groups = { "regression" })
-	public void verifyUniqueDocIdsCountDisplayAsRMU() throws InterruptedException {
+	public void TCA6verifyUniqueDocIdsCountDisplayAsRMU() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48586");
 		baseClass.stepInfo("Verify count of unique DocIDs present in Project as RMU user");
@@ -391,7 +408,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47391",enabled = true, groups = { "regression" })
-	public void verifyDefault10TilesAndLoadMoreOption() throws InterruptedException {
+	public void TCB5verifyDefault10TilesAndLoadMoreOption() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47391");
 		baseClass.stepInfo("Verify default tiles count in ingestion home page");
@@ -460,7 +477,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47301",enabled = true, groups = { "regression" })
-	public void verifyIngestionRefreshOption() throws InterruptedException {
+	public void TCA7verifyIngestionRefreshOption() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47301");
 		baseClass.stepInfo("Verify the reload of the ingestion with the 'Refresh' option.");
@@ -505,7 +522,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54734",enabled = true, groups = { "regression" })
-	public void verifyEmailAuthorColumnHeader() throws InterruptedException {
+	public void TCA8verifyEmailAuthorColumnHeader() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-54734");
 		baseClass.stepInfo("Verify that “EmailAuthor” Column header Filter is working correctly");
@@ -540,12 +557,12 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48075",enabled = true, groups = { "regression" })
-	public void verifyAttachDocIdsInSearch() throws InterruptedException {
+	public void TCB2verifyAttachDocIdsInSearch() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48075");
 		baseClass.stepInfo("To Verify SourceAttachDocIDs and AttachDocIDs in Search.");
 		String[] field ={"AttachDocIDs"};
-		
+		String searchId=null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
 		baseClass.stepInfo("Logged in as PA");
@@ -559,7 +576,14 @@ public class Ingestion_Regression_10 {
 		baseClass.stepInfo("select columns");
 		docList.SelectColumnDisplayByRemovingAddNewValues(field);
 		driver.waitForPageToBeReady();
-		String attachDocIds =docList.getDoclistMetaDataValue(count);	
+		String attachDocIds =docList.getDoclistMetaDataValue(count);
+		if(attachDocIds.contains(";")) {
+			String[] attachid = attachDocIds.split(";");
+			searchId = attachid[0];
+		}else {
+			searchId =attachDocIds;
+		}
+		 
 		baseClass.stepInfo("navigate to project field and verify");
 		ProjectFieldsPage projectFieldPage = new ProjectFieldsPage(driver);
 		projectFieldPage.navigateToProjectFieldsPage();
@@ -567,7 +591,7 @@ public class Ingestion_Regression_10 {
 		projectFieldPage.verifyExpectedFieldStatus(field[0],"false","true","active");
 		baseClass.passedStep(field[0]+"is searchable and not tallyable");
 		baseClass.stepInfo("perform metadata search and verify purehit");
-		int purehit =sessionSearch.MetaDataSearchInBasicSearch(field[0],attachDocIds);
+		int purehit =sessionSearch.MetaDataSearchInBasicSearch(field[0],searchId);
 		baseClass.stepInfo("docs returned for the search--"+purehit);
 		sessionSearch.verifySearchResultReturnsForConfiguredQuery(purehit);
 		baseClass.passedStep(field[0]+"is searchable");
@@ -580,7 +604,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48077",enabled = true, groups = { "regression" })
-	public void verifyFamilyRelationShipInSearch() throws InterruptedException {
+	public void TCB1verifyFamilyRelationShipInSearch() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48077");
 		baseClass.stepInfo("To Verify FamilyRelationship in Tally and Search.");
@@ -617,7 +641,7 @@ public class Ingestion_Regression_10 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-46890",enabled = true, groups = { "regression" })
-	public void verifyOverlayWithTrimmedAudioDuration() throws InterruptedException {
+	public void TCA9verifyOverlayWithTrimmedAudioDuration() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-46890");
 		baseClass.stepInfo("Verify Overlay for Audio Doc with Trimmed audio duration.");
@@ -630,11 +654,11 @@ public class Ingestion_Regression_10 {
 		baseClass.stepInfo("perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.H13696smallSetFolder);
 		if (status == false) {
-			ingestionPage.performSmallSetGdIngestion(Input.ingestionType);
+			ingestionPage.performSmallSetGdIngestion(Input.ingestionType,Input.smallSetDat2);
 			ingestionPage.publishAddonlyIngestion(Input.H13696smallSetFolder);
 		}
 		baseClass.stepInfo("perform overlay with trimmed audio duration field");
-		ingestionPage.performSmallSetGdIngestion(Input.overlayOnly);
+		ingestionPage.performSmallSetGdIngestion(Input.overlayOnly,Input.smallSetDat2);
 		ingestionPage.publishAudioOverlayIngestion(Input.H13696smallSetFolder);
 		baseClass.passedStep("Overlay ingestion performed successfully");
 		loginPage.logout();
@@ -646,7 +670,7 @@ public class Ingestion_Regression_10 {
 	 * @throws Exception 
 	 */
 	@Test(description ="RPMXCON-55584",enabled = true, groups = { "regression" })
-	public void verifyProjectIngestionLimit() throws Exception {
+	public void TCB3verifyProjectIngestionLimit() throws Exception {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-55584");
 		baseClass.stepInfo("verify that user cannot Ingest the document beyond the limit.");
@@ -681,7 +705,7 @@ public class Ingestion_Regression_10 {
 	 * @throws Exception 
 	 */
 	@Test(description ="RPMXCON-55873",enabled = true, groups = { "regression" })
-	public void verifyAddNewPathForIngestionFolder() throws Exception {
+	public void TCB4verifyAddNewPathForIngestionFolder() throws Exception {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-55873");
 		baseClass.stepInfo("Verify Add new path using 'Ingestion Folder' option for ingestion");

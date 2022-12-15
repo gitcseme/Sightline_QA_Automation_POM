@@ -678,6 +678,9 @@ public class DocExplorerPage {
 	public Element getFolderName(int i) {
 		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
 	}
+	public Element getIngestionName(String ingestion) {
+		return driver.FindElementByXPath("//ul[@id='select2-IngestionName-results']//li[contains(text(),'"+ingestion+"')]");
+	}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
