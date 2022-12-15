@@ -5559,7 +5559,7 @@ public class UserManagement {
 		String userName = getfirstUserName();
 		AssignUserToProject(project, Input.ProjectAdministrator, userName);
 		bc.stepInfo("Enable ingestion functionality and verify access");
-		EnableIngestionFunctionality(userName, project);
+		EnableIngestionFunctionality(paUser, project);
 		
 	}
 }

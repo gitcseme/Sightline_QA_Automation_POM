@@ -11562,13 +11562,13 @@ public class IngestionPage_Indium {
 		 * @author: Arunkumar Created Date: 10/12/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will start the ingestion for '0002_H13696_1_smallset_GD1'
 		 */
-		public void performSmallSetGdIngestion(String ingestionType) {
+		public void performSmallSetGdIngestion(String ingestionType,String dat) {
 			
 			selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
 					Input.sourceLocation, Input.H13696smallSetFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 			base.stepInfo("Selecting Dat file");
-			selectDATSource(Input.smallSetDat, Input.docIdKey);
+			selectDATSource(dat, Input.docIdKey);
 			base.stepInfo("Selecting audio file");
 			selectMP3VarientSource(Input.selectMp3File, false);
 			base.stepInfo("Select date format");
