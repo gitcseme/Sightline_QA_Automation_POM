@@ -185,7 +185,9 @@ public class TestData {
 	public String ToDoDocs;
 	public String Complete;
 	public String BeginBates;
-	
+	public String NativeSourceDocId;
+	public String TextSourceDocId;
+	public String ExeTypeSourceDocId;
 	
 
 	// Added by Sai Krishna

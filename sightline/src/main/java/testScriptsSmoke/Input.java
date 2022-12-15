@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -264,6 +264,9 @@ public class Input {
 	public static String ToDoDocs;
 	public static String Complete;
 	public static String BeginBates;
+	public static String NativeSourceDocId;
+	public static String TextSourceDocId;
+	public static String ExeTypeSourceDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1280,6 +1283,9 @@ public class Input {
 		stampSelection = testData.getStampSelection();
 
 		// Indium Sowndarya
+		ExeTypeSourceDocId=testData.getExeTypeSourceDocId();
+		TextSourceDocId=testData.getTextSourceDocId();
+		NativeSourceDocId=testData.getNativeSourceDocId();
 		testData1 = testData.getTestData1();
 		tagNamePrev = testData.getTagNamePrev();
 		tagNameTechnical = testData.getTagNameTechnical();
