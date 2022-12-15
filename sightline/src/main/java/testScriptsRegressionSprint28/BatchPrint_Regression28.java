@@ -102,7 +102,7 @@ public class BatchPrint_Regression28 {
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password },
-//				{ Input.rmu1userName, Input.rmu1password }, 
+				{ Input.rmu1userName, Input.rmu1password }, 
 		};
 		return users;
 	}
@@ -218,7 +218,7 @@ public class BatchPrint_Regression28 {
 			// verify Downloaded File Count and Format
 			List<String> list = batchPrint
 					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
-			baseClass.compareTextViaContains(list.get(0),docId, "Native file is downloaded", "Native file is downloaded");
+			baseClass.compareTextViaContains(list.get(0),docId, "Downloaded documents doesn't have native and text files", "Downloaded documents have native and text files");
 		}
 		loginPage.logout();
 	}
@@ -275,7 +275,7 @@ public class BatchPrint_Regression28 {
 			// verify Downloaded File Count and Format
 			List<String> list = batchPrint
 					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
-			baseClass.compareTextViaContains(list.get(0),docId, "Native file is downloaded", "Native file is downloaded");
+			baseClass.compareTextViaContains(list.get(0),docId, "Text file is downloaded", "Text file is not downloaded");
 		}
 		loginPage.logout();
 	}
