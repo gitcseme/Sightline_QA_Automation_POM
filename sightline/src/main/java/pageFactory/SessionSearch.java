@@ -13080,6 +13080,22 @@ public class SessionSearch {
 			System.out.println(getQueryAlertGetText().getText().replaceAll("\n", " "));
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+		} else if (MessageNumber == 7) {
+			String msg = "Your query has multiple potential syntax issues.1. Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value .If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4.Note there is no space before or after the tilde.Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+
+			String actualMsg = getWarningMsg().getText();
+			System.out.println(actualMsg);
+			base.stepInfo(actualMsg);
+			driver.waitForPageToBeReady();
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+		}else if (MessageNumber == 8) {
+			String msg = "Your query has multiple potential syntax issues.1. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value .If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4.Note there is no space before or after the tilde.2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+
+			String actualMsg = getWarningMsg().getText();
+			System.out.println(actualMsg);
+			base.stepInfo(actualMsg);
+			driver.waitForPageToBeReady();
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 		}
 		softAssert.assertAll();
 	}
@@ -14202,11 +14218,9 @@ public class SessionSearch {
 		System.out.println("expected" + ExpectedMessage);
 		System.out.println("expected" + getDraftQuery().getText());
 		if (ExpectedMessage.equalsIgnoreCase(getDraftQuery().getText())) {
-			base.passedStep(
-					"Drafted message is displayed as"+getDraftQuery().getText());
+			base.passedStep("Drafted message is displayed as" + getDraftQuery().getText());
 		} else {
-			base.failedStep(
-					"Drafted message is not displayed ");
+			base.failedStep("Drafted message is not displayed ");
 		}
 
 	}
