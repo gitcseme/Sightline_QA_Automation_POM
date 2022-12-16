@@ -237,6 +237,77 @@ public class AdvancedSearchRegression_28 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49289
+	 * Description :Verify that information message does not appear above the Tiles and below 
+	 * "Your Search Results" labels in Result Screen when the user Edit search not having any
+	 *  Advanced Search option. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49289",enabled = true, groups = { "regression" })
+	public void verifyInformationMessageWhenNotHavingOption() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49289");
+		baseClass.stepInfo("verify information message when the user Edit search not having any option.");
+		String searchName = "search"+Utility.dynamicNameAppender();
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("perform advanced metadata search");
+		sessionSearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
+		baseClass.stepInfo("save the search result without selecting any option");
+		sessionSearch.saveSearchadvanced(searchName);
+		System.out.println("saved search"+searchName);
+		baseClass.stepInfo("Select the saved search");
+		savedSearch.navigateToSavedSearchPage();
+		savedSearch.selectSavedSearch(searchName);
+		baseClass.stepInfo("Click on edit and verify");
+		baseClass.waitForElement(savedSearch.getSavedSearchEditButton());
+		savedSearch.getSavedSearchEditButton().waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getNewSearch());
+		baseClass.verifyUrlLanding(Input.url + "Search/Searches", "Redirected to search page", 
+				"not redirected to search page");
+		baseClass.stepInfo("verify information message ");
+		baseClass.ValidateElement_Absence(sessionSearch.getInformationMessage(), "Information message");
+		baseClass.passedStep("Information message not displayed when not selected any option");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49274
+	 * Description :Verify that information message does not appear above the Tiles and below 
+	 * "Your Search Results" labels in Result Screen when the user Select none of 
+	 * Advanced Search option.  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49274",enabled = true, groups = { "regression" })
+	public void verifyInformationMessageWhenNoSelection() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49274");
+		baseClass.stepInfo("verify information message when the user select none of option.");
+		
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("configure advanced metadata search query");
+		sessionSearch.configureAdvancedMetaDataQuery(Input.metaDataName, Input.custodianName_Andrew);
+		baseClass.stepInfo("verify no option selected in advanced search option");
+		sessionSearch.verifyAdvancedSearchOptionStatus();
+		baseClass.passedStep("None of te advanced search option gets selected");
+		baseClass.stepInfo("click on search");
+		baseClass.waitForElement(sessionSearch.getQuerySearchButton());
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		sessionSearch.returnPurehitCount();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify information message ");
+		baseClass.ValidateElement_Absence(sessionSearch.getInformationMessage(), "Information message");
+		baseClass.passedStep("Information message not displayed when not selected any option");
+		loginPage.logout();
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

@@ -2217,6 +2217,25 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='xEdit']/li//following-sibling::li/span");
 
 	}
+	public Element getInformationMessage() {
+		return driver.FindElementByXPath("//div[@id='combinedResultMsg']//td//p");
+	}
+	public Element getASRegexSearchCheckboxStatus() {
+		return driver.FindElementByXPath("//input[@id='chkIncludeSanitationFilter']");
+	}
+	public Element getASRegexSearchCheckbox() {
+		return driver.FindElementByXPath("//input[@id='chkIncludeSanitationFilter']//following-sibling::i");
+	}
+	public Element getAsThreadedDocCheckboxStatus() {
+		return driver.FindElementByXPath("//input[@id='chkIncludeThreadedDocuments']");
+	}
+	public Element getAsFamilyDocCheckboxStatus() {
+		return driver.FindElementByXPath("//input[@id='chkIncludeFamilyMember']");
+	}
+	public Element get90perOrHigherDocsCheckboxStatus() {
+		return driver.FindElementByXPath("//input[@id='chkIncludeNearDuplicate']");
+	}
+	
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -14492,6 +14511,40 @@ public class SessionSearch {
 
 		}
 		return pureHit;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 15/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the status of advanced search options
+	 */
+	public void verifyAdvancedSearchOptionStatus() {
+		
+		if(getASRegexSearchCheckboxStatus().Selected() || getAsThreadedDocCheckboxStatus().Selected()
+				|| getAsFamilyDocCheckboxStatus().Selected() || get90perOrHigherDocsCheckboxStatus().Selected()) {
+			base.failedStep("advanced search option selected");
+		}
+		else {
+			base.passedStep("advanced search options not selected");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 15/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will configure advanced search query without searching for result
+	 */
+	public void configureAdvancedMetaDataQuery(String metaDataField, String val1) {
+		
+		navigateToAdvancedMetaDataSearch();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().waitAndClick(5);
+		base.waitForElement(SelectFromDropDown(metaDataField));
+		SelectFromDropDown(metaDataField).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		base.waitForElement(getQuerySearchButton());
+				
 	}
 
 }
