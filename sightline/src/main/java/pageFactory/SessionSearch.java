@@ -14458,6 +14458,7 @@ public class SessionSearch {
 
 		for (int i = 0; i < noToRefresh; i++) {
 			System.out.println(i);
+			base.waitTime(10);
 			if (getStatusText(backGroundID, status).isElementAvailable(15)) {
 
 				base.stepInfo("waiting for status" + status);

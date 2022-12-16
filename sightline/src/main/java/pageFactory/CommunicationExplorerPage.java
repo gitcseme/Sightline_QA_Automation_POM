@@ -534,8 +534,9 @@ public class CommunicationExplorerPage {
 		getTally_SelectSource().waitAndClick(25);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getTally_SecurityGroupsButton());
-		Actions action = new Actions(driver.getWebDriver());
-		action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
+//		Actions action = new Actions(driver.getWebDriver());
+//		action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
+		getTally_SecurityGroupsButton().waitAndClick(10);
 		base.waitForElement(getTally_SelectSecurityGroup());
 		getTally_SelectSecurityGroup().waitAndClick(10);
 		base.waitForElement(getTally_SaveSelections());

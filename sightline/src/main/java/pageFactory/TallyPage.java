@@ -629,6 +629,10 @@ public class TallyPage {
 		return driver.FindElementByXPath("//div[text()= ' Filter by CustodianName:']//a[@id='close']");
 	}
 	
+	public Element getFilterInputOpts(int index) {
+		return driver.FindElementByXPath("(//span[@class='select2-results']//ul//li)["+index+"]");
+	}
+	
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -2922,6 +2926,27 @@ public class TallyPage {
 			getSubTallyViewinDocViewBtn().waitAndClick(10);
 			driver.waitForPageToBeReady();
 		}
+	}
+	
+	/**
+	 * @author: sowndarya 
+	 * @description: apply filter to tally 
+	 */
+	public void applyFilterToTallyByIndex(String metaDataTally, String FilterType, int index) {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
+		base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
+		metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
+		if (FilterType.equalsIgnoreCase("Include")) {
+			IncludeRadioButtonForTallyBy().waitAndClick(10);
+		} else if (FilterType.equalsIgnoreCase("Exclude")) {
+			ExcludeRadioButtonForTallyBy().waitAndClick(10);
+		}
+		FilterInputTextBoxTallyBy().waitAndClick(5);
+		base.waitForElement(getFilterInputOpts(index));
+		getFilterInputOpts(index).waitAndClick(5);
+		ApplyFilterTallyBy().waitAndClick(10);
 	}
 	
 	}
