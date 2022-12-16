@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-TagAndFolders" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Sightline_TagAndFolders">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.tagsAndFolders.TagAndFolder" />
+<class name= "sightline.tagsAndFolders.TagsAndFolder_Regression" />
+<class name= "sightline.tagsAndFolders.TagsAndFolders_22" />
+<class name= "sightline.tagsAndFolders.TagsAndFolders_23" />
+<class name= "sightline.tagsAndFolders.TagsAndFolders_Regression24_25" />
+
+
+
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

@@ -10,25 +10,48 @@
 <classes>
 <class name="testScriptsSmoke.Input" />
 <class name="sightline.reports.AssignmentReviewProgressReport2_1"/>
+<class name="sightline.reports.AssignmentReviewProgressReport2_2"/>
+<class name="sightline.reports.CommunicationEXp_21"/>
 <class name="sightline.reports.CommunicationExplorer_Regression1"/>
 <class name="sightline.reports.CommunicationExplorer_Regression2_1"/>
 <class name="sightline.reports.CommunicationExplorer_Regression2_2"/>
+<class name="sightline.reports.CommunicationExplorerRegression_2_19"/>
 <class name="sightline.reports.ConceptExplorerRegression" />
+<class name="sightline.reports.ConceptExplorer_Regression" />
 <class name="sightline.reports.ConceptExplorer_Regression_2_1"/>
+<class name="sightline.reports.ConceptExplorer_Regression_20"/>
+<class name="sightline.reports.ConceptExplorerRegression_2_19"/>
 <class name= "sightline.reports.CustomDocumentDataReport_Regression1" />
 <class name= "sightline.reports.DocumentAuditReport_Regression" />
+<class name= "sightline.reports.DayHourReport_Regression2_1" />
+<class name= "sightline.reports.ReporsCommunication_26" />
+<class name= "sightline.reports.ReportEngineRegression_21" />
+<class name= "sightline.reports.ReportRegression_25" />
+<class name= "sightline.reports.Reports_Consilio" />
 <class name= "sightline.reports.Reports_Regression1" />
+<class name= "sightline.reports.ReportsRegression_23" />
+<class name= "sightline.reports.ReportsRegression_24" />
+<class name= "sightline.reports.ReportsRegression26" />
+<class name= "sightline.reports.ReviewerTimeOnlineReport2_1" />
 <class name="sightline.reports.ReviewerProductiviytReport_Regression"/>
 <class name="sightline.reports.ReviewResultReport_Regression"/>
 <class name= "sightline.reports.SearchTermReport_Regression1" />
 <class name= "sightline.reports.TagCountByTagsReport_Regression" />
+<class name="sightline.reports.Tally_Regression_sprint22"/>
 <class name="sightline.reports.Tally_Regression1"/>
 <class name="sightline.reports.Tally_Regression2"/>
 <class name="sightline.reports.Tally_Regression2_1"/>
+<class name="sightline.reports.TimelineAndGap_Regression2_1"/>
+<class name="sightline.reports.TimelineAndGap_Regression2_2"/>
 <class name="sightline.reports.UserLoginActivityReport_Regression2_1"/>
 <class name="sightline.reports.UserLoginActivityReport_Regression2_2"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_3"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_4"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_5"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_6"/>
 <class name="sightline.reports.UserReviewActivityReport_Regression2_1"/>
 <class name="sightline.reports.UserReviewActivityReport_Regression2_2"/>
+<class name="sightline.reports.UserReviewActivityReport_Regression2_3"/>
 </classes>
 </test>
 
