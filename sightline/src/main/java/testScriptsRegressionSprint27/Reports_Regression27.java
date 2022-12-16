@@ -92,7 +92,10 @@ public class Reports_Regression27 {
 
 	@DataProvider(name = "PA & RMU")
 	public Object[][] users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		Object[][] users = { 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.pa1userName, Input.pa1password }
+				 };
 		return users;
 	}
 
@@ -267,19 +270,20 @@ public class Reports_Regression27 {
 		tally.selectTallyByMetaDataField(Input.metaDataName);
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
-		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
 		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
+		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElementCollection(tally.getAllValueinEmailAuthorFilter());
 		float afterEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.getCloseByEAFilterPopUp());
 		tally.getCloseByEAFilterPopUp().waitAndClick(5);
 		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
+		System.out.println(totalSecEmailAuthor);
 		asserts.assertTrue(totalSecEmailAuthor < 4000);
 		asserts.assertAll();
 
 		driver.waitForPageToBeReady();
-		tally.applyFilterToTallyBy(Input.MetaDataEAName, "exclude", Input.EmailAuthourName);
+		tally.applyFilterToTallyByIndex(Input.MetaDataEAName, "exclude", 1);
 		driver.waitForPageToBeReady();
 
 		base.waitForElement(tally.getTally_btnTallyApply());
@@ -290,6 +294,7 @@ public class Reports_Regression27 {
 		base.passedStep("Executed - the tally report with EmailAuthorName filters selected");
 		loginPage.logout();
 	}
+
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56716

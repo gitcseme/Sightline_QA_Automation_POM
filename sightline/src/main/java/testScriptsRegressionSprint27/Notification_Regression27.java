@@ -135,7 +135,7 @@ public class Notification_Regression27 {
 		String idValue = batchPrint.getBatchId(1).getText();
 		System.out.println("Id : "+ idValue);
 //		sessionSearch.verifyba
-		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 40);
+		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 50);
 		driver.waitForPageToBeReady();
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
 		System.out.println("status is : "+status);
@@ -213,7 +213,7 @@ public class Notification_Regression27 {
 		driver.waitForPageToBeReady();
 		String idValue = batchPrint.getBatchId(1).getText();
 		System.out.println("Id : "+ idValue);
-		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 40);
+		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 50);
 		driver.waitForPageToBeReady();
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
 		System.out.println("status is : "+status);
@@ -294,7 +294,7 @@ public class Notification_Regression27 {
 		driver.waitForPageToBeReady();
 		String idValue = batchPrint.getBatchId(1).getText();
 		System.out.println("Id : "+ idValue);
-		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 40);
+		sessionSearch.refreshAndVerifyStatus(idValue, "COMPLETED", 50);
 		driver.waitForPageToBeReady();
 		String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
 		System.out.println("status is : "+status);
