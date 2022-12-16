@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline-Security_Groups" preserve-order="true">
+<listeners>
+		<listener class-name="executionMaintenance.TestListener" />
+	</listeners>
+<!-- *******************************************SavedSearch Component********************************** -->
+	
+	<test name="Security_Groups">
+		<classes>
+		    <class name="testScriptsSmoke.Input"></class>			
+			<class name="sightline.securityGroups.SecurityGroup_Consilio"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression1_21"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression1_Sprint18"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression2_Sprint18"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression21_2"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression21"></class>
+			<class name="sightline.securityGroups.SecurityGroup_Regression4"></class>
+			<class name="sightline.securityGroups.SecurityGroups_Regression1"></class>
+			<class name="sightline.securityGroups.Securitygroups_Regression2"></class>
+			<class name="sightline.securityGroups.SecurityGroups_Regression22_24_26"></class>
+			<class name="sightline.securityGroups.SecurityGroups_Regression5"></class>
+			<class name="sightline.securityGroups.SecurityGroups_Regression6"></class>
+			<class name="sightline.securityGroups.SecurityGruop_Regression6"></class>
+			</classes>
+	</test> 
+</suite>

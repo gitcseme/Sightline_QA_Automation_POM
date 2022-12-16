@@ -15,6 +15,8 @@
 <class name="sightline.productions.Export_Regression19"></class>
 <class name="sightline.productions.Export_Regression19_1"></class>
 <class name="sightline.productions.Export_Regression20"></class>
+<class name="sightline.productions.Export_Regression21"></class>
+<class name="sightline.productions.Export_Regression22_24_25_26"></class>
 <class name="sightline.productions.ProductionDBVerification"></class>
 <class name="sightline.productions.ProductionNew_Regression"></class>
 <class name="sightline.productions.ProductionPage_Regression"></class>
@@ -28,6 +30,11 @@
 <class name="sightline.productions.Production_Regression18_1"></class>
 <class name="sightline.productions.Production_Regression19"></class>
 <class name="sightline.productions.Production_Regression19_01"></class>
+<class name="sightline.productions.Production_Regression20"></class>
+<class name="sightline.productions.Production_Regression20_01"></class>
+<class name="sightline.productions.Production_Regression21"></class>
+<class name="sightline.productions.Production_Regression22"></class>
+<class name="sightline.productions.Production_Regression23_24_25"></class>
 <class name="sightline.productions.Production_Regression2"></class>
 <class name="sightline.productions.Production_Regression20"></class>
 <class name="sightline.productions.Production_Regression20_01"></class>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Sightline.Proview" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *******************************************Projects Component********************************** -->
+<test name="Proview">
+<classes>
+ <class name="testScriptsSmoke.Input" />
+<class name= "sightline.proview.Proview_Regression" />
+<class name= "sightline.proview.Proview_Regression26" />
+<class name= "sightline.proview.ProviewRegression_20" />
+<class name= "sightline.proview.ProviewRegression_24_25_26" />
+
+</classes>
+</test>
+</suite>
+
