@@ -48,7 +48,8 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getTally_SelectSecurityGroup(String sourceValue) {
-		return driver.FindElementByXPath("//label[@class='checkbox']//span[contains(text(),'"+sourceValue+"')]//..//i");
+		return driver
+				.FindElementByXPath("//label[@class='checkbox']//span[contains(text(),'" + sourceValue + "')]//..//i");
 	}
 
 	public Element getTally_SaveSelections() {
@@ -90,7 +91,8 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getWorkProductField(String workProductField) {
-		return driver.FindElementByXPath("//*[@class='tab-pane left-panel active']/div//a[contains(text(),'"+workProductField+"')]");
+		return driver.FindElementByXPath(
+				"//*[@class='tab-pane left-panel active']/div//a[contains(text(),'" + workProductField + "')]");
 	}
 
 	public Element getExportFieldBtn() {
@@ -173,14 +175,70 @@ public class CustomDocumentDataReport {
 
 	// added by sowndarya
 
+	public Element getSpecialCharDD(int ddNo) {
+		return driver.FindElementById("scrubSpecialCharFieldSet" + ddNo);
+	}
+
+	public Element getReplaceCharDD(int ddNo) {
+		return driver.FindElementById("scrubReplaceCharFieldSet" + ddNo);
+	}
+
+	public Element getSpecialCharDDLast() {
+		return driver.FindElementByXPath("(//select[contains(@id, 'scrubSpecialCharFieldSet')])[last()]");
+	}
+
+	public Element getReplaceCharLast() {
+		return driver.FindElementByXPath("(//select[contains(@id, 'scrubReplaceCharFieldSet')])[last()]");
+	}
+
+	public Element getRedXIcon(int numDD) {
+		return driver.FindElementByXPath("//tr[@id='tablerow" + numDD + "']//i");
+	}
+
+	public Element getShareIcon() {
+		return driver.FindElementById("ReportReviewer");
+	}
+
+	public Element getEmailtextarea() {
+		return driver.FindElementByXPath("//textarea[@id='txtEmail']");
+	}
+
+	public Element getLastUser() {
+		return driver.FindElementByXPath("(//ul[@class='multiselect-container dropdown-menu']//label)[last()]");
+	}
+
+	public Element getShareBtn() {
+		return driver.FindElementById("btnSaveShareReport");
+	}
+
+	public Element getUserDD(String username) {
+		return driver.FindElementByXPath("//label[normalize-space()='" + username + "']");
+	}
+
+	public Element getShareUsersDD() {
+		return driver.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']");
+	}
+
+	public Element getSharedID(int index) {
+		return driver.FindElementByXPath("(//div[@id='bgShared']//a)[" + index + "]");
+	}
+
+	public Element getSharedAlert() {
+		return driver.FindElementByXPath("//label[@id='idShared']//span");
+	}
+
+	public Element getSharedNotification(String ID) {
+		return driver.FindElementByXPath("//div[@id='bgShared']//a[contains(text(),'" + ID + "')]");
+	}
+
 	public Element getCloseBtn_ScrubPopup() {
 		return driver.FindElementByXPath("//div[@aria-describedby='SelectScrubPopup']//button");
 	}
-	
+
 	public Element getScrubSpecialCharcterField() {
 		return driver.FindElementByXPath("//table[@id='table-scrub']//select[@id='scrubSpecialCharFieldSet2']");
 	}
-	
+
 	public Element getAddNewBtn_ScrubLink() {
 		return driver.FindElementById("addNew");
 	}
@@ -188,11 +246,11 @@ public class CustomDocumentDataReport {
 	public Element getScrubLink() {
 		return driver.FindElementById("btnScrubExportSpecialChar");
 	}
-		
+
 	public Element getRedXIcon() {
 		return driver.FindElementByXPath("//tr[@id='tablerow1']//i");
 	}
-	
+
 	public Element getExportNewLineBtn() {
 		return driver.FindElementById("newLineSelect");
 	}
@@ -762,32 +820,116 @@ public class CustomDocumentDataReport {
 		bc.waitForElement(getExportDateStyleDD());
 		getExportDateStyleDD().selectFromDropdown().selectByVisibleText(dateStyle);
 	}
-	
 
 	/**
 	 * @author sowndarya
 	 */
 	public void verifyScrubToggleAddDeleteAndModify() {
-	
-	bc.waitForElement(getScrubLink());
-	getScrubLink().waitAndClick(10);
-	
-	//add
+
+		bc.waitForElement(getScrubLink());
+		getScrubLink().waitAndClick(10);
+
+		// add
 //	driver.scrollingToBottomofAPage();
-	bc.waitForElement(getAddNewBtn_ScrubLink());
-	getAddNewBtn_ScrubLink().ScrollTo();
-	getAddNewBtn_ScrubLink().waitAndClick(10);
-	
-	//modify
-	bc.waitForElement(getScrubSpecialCharcterField());
-	getScrubSpecialCharcterField().selectFromDropdown().selectByIndex(1);
-	
-	//delete
-	bc.waitForElement(getRedXIcon());
-	getRedXIcon().waitAndClick(10);
-	
-	//close popup
-	bc.waitForElement(getCloseBtn_ScrubPopup());
-	getCloseBtn_ScrubPopup().waitAndClick(10);
-}
+		bc.waitForElement(getAddNewBtn_ScrubLink());
+		getAddNewBtn_ScrubLink().ScrollTo();
+		getAddNewBtn_ScrubLink().waitAndClick(10);
+
+		// modify
+		bc.waitForElement(getScrubSpecialCharcterField());
+		getScrubSpecialCharcterField().selectFromDropdown().selectByIndex(1);
+
+		// delete
+		bc.waitForElement(getRedXIcon());
+		getRedXIcon().waitAndClick(10);
+
+		// close popup
+		bc.waitForElement(getCloseBtn_ScrubPopup());
+		getCloseBtn_ScrubPopup().waitAndClick(10);
+	}
+
+	/**
+	 * @author sowndarya
+	 */
+	public String selectSpecialORReplaceCharByIndex(String type, int ddNo, int valueIndex) {
+		String value = null;
+		bc.waitForElement(getScrubLink());
+		getScrubLink().waitAndClick(10);
+		// add
+		driver.scrollingToBottomofAPage();
+		if (type.equalsIgnoreCase("special character")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getSpecialCharDD(ddNo));
+			getSpecialCharDD(ddNo).selectFromDropdown().selectByIndex(valueIndex);
+			driver.waitForPageToBeReady();
+			value = getSpecialCharDD(ddNo).selectFromDropdown().getFirstSelectedOption().getText();
+		} else {
+			bc.waitForElement(getReplaceCharDD(ddNo));
+			getReplaceCharDD(ddNo).selectFromDropdown().selectByIndex(valueIndex);
+			value = getReplaceCharDD(ddNo).selectFromDropdown().getFirstSelectedOption().getText();
+		}
+		bc.waitForElement(getCloseBtn_ScrubPopup());
+		getCloseBtn_ScrubPopup().waitAndClick(10);
+		return value;
+	}
+
+	/**
+	 * @author sowndarya
+	 */
+	public void performSharingAction(String username, String emailId) {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		bc.waitForElement(getShareIcon());
+		getShareIcon().waitAndClick(10);
+		bc.waitForElement(getShareUsersDD());
+		getShareUsersDD().waitAndClick(10);
+		if (getUserDD(username).isElementAvailable(10)) {
+			getUserDD(username).waitAndClick(10);
+		} else {
+			bc.waitForElement(getLastUser());
+			getLastUser().waitAndClick(10);
+		}
+		getShareUsersDD().waitAndClick(10);
+		bc.waitForElement(getEmailtextarea());
+		getEmailtextarea().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getEmailtextarea().SendKeys(emailId);
+
+		bc.waitForElement(getShareBtn());
+		getShareBtn().waitAndClick(10);
+		bc.VerifySuccessMessage("Your Report has been successfully shared with others.");
+		bc.waitTime(10);
+	}
+
+	/**
+	 * @author sowndarya
+	 */
+	public String SharedIDFromNotification(int index) {
+		bc.waitTime(4);
+		bc.waitForElement(getSharedAlert());
+		getSharedAlert().waitAndClick(5);
+		bc.waitTime(4);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSharedID(index));
+		String text = getSharedID(index).getText().trim();
+		String[] splits = text.split("\\s");
+		String ID = splits[splits.length - 1];
+		System.out.println(splits);
+		System.out.println(ID);
+		return ID;
+	}
+
+	/**
+	 * @author sowndarya
+	 */
+	public void openSharedNotification(String ID) {
+		bc.waitTime(5);
+		bc.waitForElement(getSharedAlert());
+		getSharedAlert().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSharedNotification(ID));
+		getSharedNotification(ID).waitAndClick(5);
+		driver.waitForPageToBeReady();
+	}
+
 }

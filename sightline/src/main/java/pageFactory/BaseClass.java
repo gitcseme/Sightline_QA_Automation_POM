@@ -4799,4 +4799,23 @@ public class BaseClass {
 		}
 		return isKeyPresent;
 	}
+	
+	/**
+	 * @author sowndarya
+	 */
+	public String getcurrentdateinUTC() throws ParseException {
+		// Time in UTC
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		// Local time zone
+		SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		System.out.println(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+		UtilityLog.info(dateFormatLocal.parse(dateFormatGmt.format(new Date())));
+
+		String Time = dateFormatGmt.format(new Date()).toString();
+		System.out.println(Time);
+		UtilityLog.info(Time);
+		return Time;
+}
 }

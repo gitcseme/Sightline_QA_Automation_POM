@@ -221,6 +221,30 @@ public class ABMReportPage {
 		return driver.FindElementByXPath("//a[text()='Tally Results']");
 	}
 
+	public Element getPageTitle() {
+		return driver.FindElementByXPath("//h1[@class='page-title']");
+	}
+	public Element getHelpButton() {
+		return driver.FindElementByXPath("//h1[@class='page-title']//a[@class='helptip fa fa-question-circle']");
+	}
+	public Element getDateTimeinReport() {
+		return driver.FindElementByXPath("//span[@id='DataAsOf']");
+	}
+	public Element getShareButton() {
+		return driver.FindElementByXPath("//i[@id='ReportReviewer']");
+	}
+
+	public Element getSaveReportBtn() {
+		return driver.FindElementById("saveReport");
+	}
+
+	public Element getSaveBtn() {
+		return driver.FindElementById("saveXML");
+	}
+
+	public Element getSaveReportName() {
+		return driver.FindElementById("txtReportname");
+	}
 	public ABMReportPage(Driver driver) {
 
 		this.driver = driver;
@@ -802,5 +826,20 @@ public class ABMReportPage {
 		getActionButton().waitAndClick(20);
 		bc.waitForElement(getTallyResultAction());
 		getTallyResultAction().Click();
+	}
+	
+	public void SaveReport(String reportName) {
+
+		if (getSaveReportBtn().isElementAvailable(2)) {
+			getSaveReportBtn().ScrollTo();
+			getSaveReportBtn().waitAndClick(2);
+		}
+		getSaveReportName().isElementAvailable(3);
+		getSaveReportName().Click();
+		getSaveReportName().Clear();
+		getSaveReportName().SendKeys(reportName);
+		getSaveBtn().Click();
+		bc.CloseSuccessMsgpopup();
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 	}
 }

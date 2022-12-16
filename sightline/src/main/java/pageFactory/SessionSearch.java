@@ -2099,6 +2099,11 @@ public class SessionSearch {
 	}
 	// added by sowndarya
 
+	
+	public Element getValueFromTable(int i) {
+		return driver.FindElementByXPath("//div[@class='dt-toolbar']//following-sibling::table//td["+i+"]");
+	}
+	
 	public Element getSearchThirdTextField() {
 		return driver.FindElementByXPath("(.//*[@id='xEdit']//li/following-sibling::li//input)[last()]");
 	}
@@ -10502,7 +10507,7 @@ public class SessionSearch {
 	 * @param cdName
 	 * @param headerName
 	 */
-	public void verifySearchReult(String cdName, String headerName, String checkType, Boolean resultCheck) {
+	public String verifySearchReult(String cdName, String headerName, String checkType, Boolean resultCheck) {
 		HashMap<String, Integer> headerDataPair = new HashMap<>();
 		Boolean conditionPass = false;
 		String custodianName = "";
@@ -10555,6 +10560,7 @@ public class SessionSearch {
 				base.failedStep("CustodianName mis-matches : " + custodianName);
 			}
 		}
+		return custodianName;
 	}
 
 	/**

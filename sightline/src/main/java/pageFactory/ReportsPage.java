@@ -308,6 +308,12 @@ public class ReportsPage {
 		return driver.FindElementByXPath("//a[text()='" + reportName +"']");
 	}
 	
+	public ElementCollection getCustomReportList() {
+		return driver.FindElementsByXPath("//div[@id='divReviewCustomTemplate']//table//tbody//tr//td//a");
+	}
+	public Element getReportReviewCustom(String reportName) {
+		return driver.FindElementByXPath("//div[@id='divReviewCustomTemplate']//table//tbody//tr//td//a[text()='" + reportName +"']");
+	}
 	
 	public ReportsPage(Driver driver) {
 
