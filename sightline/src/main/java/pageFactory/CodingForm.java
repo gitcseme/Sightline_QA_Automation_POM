@@ -6495,6 +6495,67 @@ public class CodingForm {
 		
 
 	}
+	
+
+	/**
+	 * @author:  Created Date:NA Modified by: NA Modified Date: NA
+	 * @description: this method will Add expected coding form
+	 */
+	public void verifyAddExpectedCf(int Cfcount) {
+		driver.waitForPageToBeReady();
+		DocListPage doclist = new DocListPage(driver);
+		base.waitForElement(doclist.getTableFooterDocListCount());
+		String cfCount = doclist.getTableFooterDocListCount().getText();
+		System.out.println(cfCount);
+		driver.waitForPageToBeReady();
+		String[] doccount = cfCount.split(" ");
+		int Count = Integer.parseInt(doccount[5]);
+		driver.waitForPageToBeReady();
+		if (Count <= Cfcount) {
+			for (int i = Count + 1; i <= Cfcount; i++) {
+				String cfname = "codingform" + Utility.dynamicNameAppender();
+				createCodingform(cfname);
+
+			}
+		} else {
+			base.stepInfo("expected codingform is already present in cf page ");
+		}
+	}
+
+	/**
+	 * @author: Created Date:NA Modified by: NA Modified Date: NA
+	 * @description: this method will Selected coding form is draggable to sort
+	 *               codingform popup
+	 */
+	public void verifySelectedCfOrferIsDraggable(int selectedCf, int x, int y) {
+		driver.waitForPageToBeReady();
+		List<String> actual = new ArrayList<String>();
+		List<WebElement> beforeDrag = sortOrderHamBurger().FindWebElements();
+		for (WebElement webElement : beforeDrag) {
+			actual.add(webElement.getText().toString());
+		}
+		String Cf = beforeDrag.get(selectedCf).getText();
+		System.out.println(Cf);
+		System.out.println(beforeDrag);
+		Actions actions = new Actions(driver.getWebDriver());
+		// Drag and Drop to x,y
+		actions.clickAndHold(getHamBurgerDrag(Cf).getWebElement());
+		actions.moveToElement(getHamBurgerDrag(Cf).getWebElement(), -10, 10);
+		actions.moveToElement(getHamBurgerDrag(Cf).getWebElement(), -10, 30);
+		actions.moveToElement(getHamBurgerDrag(Cf).getWebElement(), x, y).build().perform();
+		actions.release();
+		actions.build().perform();
+		base.waitTime(5);
+		List<String> expected = new ArrayList<String>();
+		List<WebElement> afterDrag = sortOrderHamBurger().FindWebElements();
+		for (WebElement webElement : afterDrag) {
+			expected.add(webElement.getText().toString());
+		}
+		driver.waitForPageToBeReady();
+		softAssertion.assertNotEquals(actual, expected);
+		softAssertion.assertAll();
+		base.stepInfo(Cf + " Coding Form are draggable to sort the order");
+	}
 
 }
 
