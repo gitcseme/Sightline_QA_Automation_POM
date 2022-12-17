@@ -11949,4 +11949,33 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().waitAndClick(5);
 
 	}
+	
+	
+	public void RedistributeDocstouser(String reDistributeUser)
+			throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssignment_ManageReviewersTab().Visible();
+			}
+		}), Input.wait60);
+		bc.waitTime(3);
+		getAssignment_ManageReviewersTab().Click();
+		bc.waitTime(4);
+		bc.waitForElement(getAssgn_ManageRev_selectReviewer(reDistributeUser));
+		getAssgn_ManageRev_selectReviewer(reDistributeUser).waitAndClick(10);
+
+		getAssgn_ManageRev_Action().waitAndClick(10);
+
+		Assert.assertTrue(getAssgn_ManageRev_Action_redistributedoc().isDisplayed());
+		getAssgn_ManageRev_Action_redistributedoc().waitAndClick(10);
+		bc.getYesBtn().waitAndClick(10);
+
+		getAssgn_Redistributepopup().waitAndClick(10);
+
+		getAssgn_Redistributepopup_save().waitAndClick(10);
+
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitTime(10);
+	}
 }

@@ -132,4 +132,55 @@ public class Assignment_Regression28 {
 	    
 		}
 
+	/**
+	 * @author NA Testcase No:RPMXCON-54404
+	 * @Description:Verify when RMU can input when count of left Docid in Reviewer batch.
+	 **/
+	@Test(description = "RPMXCON-54404", enabled = true, groups = { "regression" })
+	public void verifyRMUCanInputRev() throws Exception {
+	AssignmentsPage assignment = new AssignmentsPage(driver);
+	SessionSearch session = new SessionSearch(driver);
+	
+	String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+	String expLeftTODO = "10";
+	String expCount = "20";	
+	
+	base.stepInfo("RPMXCON-54404");
+	base.stepInfo("Verify when RMU can input when count of left Docid in Reviewer batch.");
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	base.stepInfo("Logged in As : " + Input.rmu1userName);
+	
+	assignment.navigateToAssignmentsPage();
+	assignment.createAssignment(assignmentName, Input.codeFormName);
+	
+	session.basicContentSearch(Input.searchString2);
+	session.bulkAssign();
+	assignment.assignwithSamplemethod(assignmentName, "Count of Selected Docs", "20");
+	assignment.editAssignmentUsingPaginationConcept(assignmentName);
+	assignment.add2ReviewerAndDistribute();
+	
+	assignment.navigateToAssignmentsPage();
+	assignment.editAssignmentUsingPaginationConcept(assignmentName);
+	base.waitForElement(assignment.getAssignment_ManageReviewersTab());
+	assignment.getAssignment_ManageReviewersTab().waitAndClick(5);
+	
+	base.waitForElement(assignment.getDistributedDocs(Input.rmu1userName, "4"));
+	String rmuLeftTodo = assignment.getDistributedDocs(Input.rmu1userName, "4").getText();
+	String revLeftTodo = assignment.getDistributedDocs(Input.rev1userName, "4").getText();
+	base.textCompareEquals(rmuLeftTodo, expLeftTODO, "RMU LeftToDoCount Expected" ,"RMU LeftToDoCount Not Expected");
+	base.textCompareEquals(revLeftTodo, expLeftTODO, "REV LeftToDoCount Expected" ,"REV LeftToDoCountNot Expected");
+	driver.Navigate().refresh();
+	driver.waitForPageToBeReady();
+	assignment.RedistributeDocstouser(Input.rmu1userName);
+	driver.Navigate().refresh();
+	driver.waitForPageToBeReady();
+	base.waitForElement(assignment.getAssignment_ManageReviewersTab());
+	assignment.getAssignment_ManageReviewersTab().waitAndClick(5);
+	base.waitForElement(assignment.getDistributedDocs(Input.rev1userName, "4"));
+	String actCount = assignment.getDistributedDocs(Input.rev1userName, "4").getText();
+	base.textCompareEquals(actCount, expCount, "All the Docs Shared", "All the Docs Not Shared");
+	base.passedStep("Verified - when RMU can input when count of left Docid in Reviewer batch.");
+	loginPage.logout();
+	}
+	
 }

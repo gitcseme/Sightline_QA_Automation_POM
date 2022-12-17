@@ -133,13 +133,19 @@ public class ReviewerReviewProgressReport {
 		applyChangesBtn().Click();
 		base.stepInfo("Changes applied successfully");
 	}
+
+
 	/**
+	 * Modified by sowndarya
 	 * @author Iyappan.Kasinathan
 	 * @description This method generates the assignment review progress report
 	 */
 	public void generateRRPreport(String agnmtGrp,String reviewer) {
+		driver.waitForPageToBeReady();
 		selectReviewer(reviewer);
+		driver.waitForPageToBeReady();
 		selectAssignmentGroup(agnmtGrp);
+		driver.waitForPageToBeReady();
 		applyChanges();	
 		base.waitForElement(titleHeader());
 		String title = titleHeader().getText();
@@ -150,12 +156,14 @@ public class ReviewerReviewProgressReport {
 		}
 		
 	}
+	
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method returns the value of the column.
 	 */
 	public String getColoumnValue(ElementCollection coloumnHeader, String textValue, String agnmtName ) {
 		int indexValue =base.getIndex(coloumnHeader, textValue);
+		driver.waitForPageToBeReady();
 		String value = reviewerColumnNameValue(agnmtName,indexValue).getText();
 		return value;	
 		

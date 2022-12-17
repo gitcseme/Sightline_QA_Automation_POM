@@ -189,6 +189,24 @@ public class DocExplorerPage {
 	}
 
 	// added by sowndariya
+
+	public Element getMetaDataChoose(String type) {
+		return driver.FindElementByXPath(
+				"//strong[text()='" + type + "']//..//input[@name='checkbox']//following-sibling::i");
+	}
+
+	public Element getChooseWorkProduct(String fieldName) {
+		return driver.FindElementByXPath("//div[@class='tree-wrapper']//ul[@class='jstree-container-ul jstree-children']//a[@class='jstree-anchor' and text()='"+fieldName+"']");
+	}
+
+	public Element getBtnCloseWindow() {
+		return driver.FindElementByXPath("(//button[@class='ui-dialog-titlebar-close'])[last()]");
+	}
+
+	public Element getBtnWorkProduct_ExportData() {
+		return driver.FindElementByXPath("//div[@class='tab-pane active']//span[text()='WORKPRODUCT']");
+	}
+
 	public Element getExportDataSaveReport() {
 		return driver.FindElementByXPath("//i[@id='saveReport']");
 	}
@@ -650,37 +668,42 @@ public class DocExplorerPage {
 		return driver
 				.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + emailAuthor + "']");
 	}
-	
+
 	public Element getEmailAuthorValues() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td[8]//div");
 
 	}
 
-	
 	public ElementCollection getMasterDateAsc() {
 		return driver.FindElementsByXPath("//th[text()='MASTERDATE']/following::tr//td[7]/div");
 	}
-	
+
 	public Element getDocExMasterDate() {
 		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table/thead/tr[1]/th[7]");
 	}
-	
 
 	public ElementCollection getFolderName() {
 		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li//a");
 	}
+
 	public Element getFolderNameToolTip(int i) {
-		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]//following-sibling::div//div[@class='popover-content']");
-	}	
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)[" + i
+				+ "]//following-sibling::div//div[@class='popover-content']");
+	}
+
 	public Element getFolderNameText(int i) {
-		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)[" + i + "]");
 	}
+
 	public Element getFolderName(int i) {
-		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)["+i+"]");
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//li//a)[" + i + "]");
 	}
+
 	public Element getIngestionName(String ingestion) {
-		return driver.FindElementByXPath("//ul[@id='select2-IngestionName-results']//li[contains(text(),'"+ingestion+"')]");
+		return driver.FindElementByXPath(
+				"//ul[@id='select2-IngestionName-results']//li[contains(text(),'" + ingestion + "')]");
 	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -4115,6 +4138,7 @@ public class DocExplorerPage {
 			driver.Navigate().refresh();
 		}
 	}
+
 	/**
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for EmailRecipientNames
@@ -4146,7 +4170,7 @@ public class DocExplorerPage {
 					"Exception occcured while performing exclude filter for EmailRecipientNames" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
@@ -4172,11 +4196,12 @@ public class DocExplorerPage {
 							+ e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by:Arun Modified Date:12/12/2022
-	 * @description: this method will verify the EmailAuthor field values
-	 *               in doc exp list view
+	 * @author: Vijaya.Rani Created Date: 14/11/2022 Modified by:Arun Modified
+	 *          Date:12/12/2022
+	 * @description: this method will verify the EmailAuthor field values in doc exp
+	 *               list view
 	 */
 	public void verifyEmailAuthorValuesInDocExp(String[] emailAuthor) {
 
@@ -4187,25 +4212,24 @@ public class DocExplorerPage {
 			getDocExp_EmailAuthorSearchName("EMAILAUTHOR").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
 			bc.validatingGetTextElement(getEmailAuthorValues(), emailAuthor[j]);
-			//added count verification for filter result
+			// added count verification for filter result
 			int count = getDocumentCountFromListView();
-			if(count>0) {
-				bc.passedStep("search returned docs"+emailAuthor[j]);
-			}
-			else {
+			if (count > 0) {
+				bc.passedStep("search returned docs" + emailAuthor[j]);
+			} else {
 				bc.failedStep("search not returned docs");
 			}
 			driver.Navigate().refresh();
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.rani
 	 * @Description :suffling and verifying it in descending order
 	 */
 	public void verifyingDescendingOrderInColumn() {
 		try {
-			
+
 			driver.waitForPageToBeReady();
 			getDocExMasterDate().waitAndClick(5);
 			List<WebElement> RowCount = getMasterDateAsc().FindWebElements();
@@ -4213,7 +4237,7 @@ public class DocExplorerPage {
 			List<String> Rowcounts = new ArrayList<String>();
 			List<String> sortValue = new ArrayList<String>();
 			bc.waitTime(3);
-			for (int j = 1; j <RowCount.size(); j++) {
+			for (int j = 1; j < RowCount.size(); j++) {
 				driver.waitForPageToBeReady();
 				String row = RowCount.get(j).getText();
 				String nocounts[] = row.split("/");
@@ -4226,7 +4250,7 @@ public class DocExplorerPage {
 			Collections.sort(Rowcounts);
 			sortValue.addAll(Rowcounts);
 			System.out.println(sortValue);
-			
+
 			bc.waitTime(3);
 			if (Rowcounts.equals(sortValue)) {
 				bc.passedStep("" + Rowcounts + " and " + sortValue + "is in descending order as expected");
@@ -4237,7 +4261,7 @@ public class DocExplorerPage {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform action as view in doclist
@@ -4256,32 +4280,31 @@ public class DocExplorerPage {
 		bc.waitForElement(getDocListAction());
 		getDocListAction().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 28/11/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will select all return documents and perform action
 	 *               as docview/doclist
 	 */
 
-	public int docExpToDocViewOrListWithIngestion(String ingestionName, String value,String action) {
+	public int docExpToDocViewOrListWithIngestion(String ingestionName, String value, String action) {
 
 		applyIngestionNameFilter("include", ingestionName);
 		driver.waitForPageToBeReady();
 		int count = getDocumentCountFromListView();
 		// select all docs
 		SelectingAllDocuments(value);
-		if(action.equalsIgnoreCase("doclist")) {
+		if (action.equalsIgnoreCase("doclist")) {
 			docExpViewInDocList();
 			driver.waitForPageToBeReady();
 			bc.waitForElement(doclist.SelectColumnBtn());
-		}
-		else if(action.equalsIgnoreCase("docview")) {
+		} else if (action.equalsIgnoreCase("docview")) {
 			docExpViewInDocView();
 			driver.waitForPageToBeReady();
 		}
 		return count;
 	}
-	
+
 	/**
 	 * @author: sowndarya
 	 * @description: To run BG report and verify the file
@@ -4291,6 +4314,34 @@ public class DocExplorerPage {
 		bc.waitForElement(getDocExp_actionButton());
 		getDocExp_actionButton().waitAndClick(5);
 		bc.waitForElement(getBulkTagButton());
-		getBulkTagButton().waitAndClick(5);	
+		getBulkTagButton().waitAndClick(5);
+	}
+
+	/**
+	 * @author: sowndarya
+	 * @description: To select metadata and workproduct from export data
+	 */
+	public void SelectExportDataWithMetadataAndWorkproduct(String metIndex, String workIndex) throws InterruptedException {
+
+		bc = new BaseClass(driver);
+		bc.waitForElement(getMetaDataChoose(metIndex));
+		getMetaDataChoose(metIndex).ScrollTo();
+		getMetaDataChoose(metIndex).waitAndClick(10);
+
+		getBtnWorkProduct_ExportData().ScrollTo();
+		bc.waitForElement(getBtnWorkProduct_ExportData());
+		getBtnWorkProduct_ExportData().waitAndClick(10);
+
+		bc.waitForElement(getChooseWorkProduct(workIndex));
+		getChooseWorkProduct(workIndex).ScrollTo();
+		getChooseWorkProduct(workIndex).waitAndClick(10);
+
+		bc.waitForElement(exportWindow_AddToSelectedButton());
+		exportWindow_AddToSelectedButton().ScrollTo();
+		exportWindow_AddToSelectedButton().waitAndClick(10);
+		bc.stepInfo(
+				"select  metadata and workproduct at the bottom to verify Add to selected appears with a fixed position (top-center) regardless how far down the user scrolls.");
+
+		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 	}
 }

@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -25,12 +26,13 @@ import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReportsPage;
+import pageFactory.ReviewerCountsReportPage;
+import pageFactory.ReviewerReviewProgressReport;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class Reports_Regression28 {
-	
 
 	Driver driver;
 	LoginPage loginPage;
@@ -89,19 +91,22 @@ public class Reports_Regression28 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56579
-	 * @Description:To verify that custom export repot should be shared to user or by email with the \"Scrub export of special characters\" settings
+	 * @Description:To verify that custom export repot should be shared to user or
+	 *                 by email with the \"Scrub export of special characters\"
+	 *                 settings
 	 **/
 	@Test(description = "RPMXCON-56579", enabled = true, groups = { "regression" })
 	public void verifyScrubExportSplChShareByUser() throws Exception {
-        SoftAssert asserts = new SoftAssert();
+		SoftAssert asserts = new SoftAssert();
 		CustomDocumentDataReport custom = new CustomDocumentDataReport(driver);
 		CommentsPage comments = new CommentsPage(driver);
 		String comment = "C_" + Utility.randomCharacterAppender(2);
 		String[] workProduct = { comment };
 		String[] metadata1 = { "DocID" };
-		
+
 		base.stepInfo("RPMXCON - 56579");
-		base.stepInfo("To verify that custom export repot should be shared to user or by email with the \"Scrub export of special characters\" settings");
+		base.stepInfo(
+				"To verify that custom export repot should be shared to user or by email with the \"Scrub export of special characters\" settings");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		comments.AddComments(comment);
@@ -111,11 +116,11 @@ public class Reports_Regression28 {
 		custom.navigateToCDDReportPage();
 		custom.selectSources("Security Groups", Input.securityGroup);
 		custom.selectMetaDataFields(metadata1);
-		custom.selectWorkProductFields(workProduct);     
+		custom.selectWorkProductFields(workProduct);
 		base.waitForElement(custom.getScrubLink());
 		custom.getScrubLink().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
+
 		// Delete
 		base.waitForElement(custom.getSpecialCharDD(0));
 		String befSpcOptDel = custom.getSpecialCharDD(0).selectFromDropdown().getFirstSelectedOption().getText();
@@ -129,7 +134,7 @@ public class Reports_Regression28 {
 		asserts.assertAll();
 		base.waitForElement(custom.getCloseBtn_ScrubPopup());
 		custom.getCloseBtn_ScrubPopup().waitAndClick(5);
-		
+
 		// Newly Added
 		base.waitForElement(custom.getScrubLink());
 		custom.getScrubLink().waitAndClick(10);
@@ -144,14 +149,14 @@ public class Reports_Regression28 {
 		System.out.println(expRplcOptNew);
 		base.waitForElement(custom.getCloseBtn_ScrubPopup());
 		custom.getCloseBtn_ScrubPopup().waitAndClick(5);
-		
+
 		// Modify
 		driver.waitForPageToBeReady();
 		String expSpcOptMod = custom.selectSpecialORReplaceCharByIndex("Special Character", 2, 3);
 		String expRplcOptMod = custom.selectSpecialORReplaceCharByIndex("Replacement Character", 2, 3);
 		System.out.println(expSpcOptMod);
 		System.out.println(expRplcOptMod);
-		
+
 		custom.runReportandVerifyFileDownloaded();
 		base.waitForElement(base.getBackgroundTask_Button());
 		base.getBackgroundTask_Button().waitAndClick(10);
@@ -161,7 +166,7 @@ public class Reports_Regression28 {
 		driver.waitForPageToBeReady();
 		String Id = custom.SharedIDFromNotification(1);
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		driver.waitForPageToBeReady();
 		base.verifyMegaPhoneIconAndBackgroundTasks(true, false);
@@ -169,24 +174,24 @@ public class Reports_Regression28 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(custom.getScrubLink());
 		custom.getScrubLink().waitAndClick(10);
-			
+
 		base.waitForElement(custom.getSpecialCharDDLast());
 		String actSpcOptNew = custom.getSpecialCharDDLast().selectFromDropdown().getFirstSelectedOption().getText();
 		String actRplcOptNew = custom.getReplaceCharLast().selectFromDropdown().getFirstSelectedOption().getText();
 		asserts.assertEquals(expSpcOptNew, actSpcOptNew);
 		asserts.assertEquals(expRplcOptNew, actRplcOptNew);
 		asserts.assertAll();
-		
+
 		driver.waitForPageToBeReady();
 		String actSpcOptMod = custom.getSpecialCharDD(1).selectFromDropdown().getFirstSelectedOption().getText();
 		String actRplcOptMod = custom.getReplaceCharDD(1).selectFromDropdown().getFirstSelectedOption().getText();
 		asserts.assertEquals(expSpcOptMod, actSpcOptMod);
 		asserts.assertEquals(expRplcOptMod, actRplcOptMod);
 		asserts.assertAll();
-		base.passedStep("To verify that custom export repot should be shared to user or by email with the \"Scrub export of special characters\" settings");
+		base.passedStep(
+				"To verify that custom export repot should be shared to user or by email with the \"Scrub export of special characters\" settings");
 		loginPage.logout();
-		}
-
+	}
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56702
@@ -198,15 +203,15 @@ public class Reports_Regression28 {
 		SessionSearch session = new SessionSearch(driver);
 		AssignmentsPage assign = new AssignmentsPage(driver);
 		SoftAssert asserts = new SoftAssert();
-		
+
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		String expPageTitle = "Advanced Batch Management";
-		
+
 		base.stepInfo("RPMXCON-56702");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Verify Advanced Batch Management Report layout");
-		
+
 //		create folder and add save search in folder
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
@@ -220,19 +225,19 @@ public class Reports_Regression28 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(abmReport.getReport_ABM());
 		abmReport.getReport_ABM().waitAndClick(5);
-		
+
 //		Verify Report Title
 		base.waitForElement(abmReport.getPageTitle());
 		String pageTitle = abmReport.getPageTitle().getText().trim();
 		asserts.assertEquals(expPageTitle, pageTitle);
 		asserts.assertTrue(abmReport.getHelpButton().isElementAvailable(6));
 		asserts.assertAll();
-		
+
 //		Verify Report Options
 		base.waitForElement(abmReport.getManageBatchAt());
 		asserts.assertTrue(abmReport.getManageBatchAt().isElementAvailable(5));
 		asserts.assertAll();
-		
+
 //		Verify Report Source
 		base.waitForElement(abmReport.getABM_SelectSource());
 		abmReport.getABM_SelectSource().waitAndClick(5);
@@ -250,7 +255,7 @@ public class Reports_Regression28 {
 		asserts.assertTrue(abmReport.getShareButton().isElementAvailable(5));
 		asserts.assertAll();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.impersonatePAtoRMU();
 		base.passedStep("Verified Advanced Batch Management Report layout");
@@ -262,30 +267,30 @@ public class Reports_Regression28 {
 	 * @Description:To Verify Advanced Batch Management report option
 	 **/
 	@Test(description = "RPMXCON-56701", enabled = true, groups = { "regression" })
-	public void verifyABMReportOption() throws InterruptedException, Exception {		
+	public void verifyABMReportOption() throws InterruptedException, Exception {
 		ABMReportPage abmReport = new ABMReportPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		AssignmentsPage assign = new AssignmentsPage(driver);
 		AssignmentReviewProgressReport arpr = new AssignmentReviewProgressReport(driver);
 		ReportsPage report = new ReportsPage(driver);
 		SoftAssert aserts = new SoftAssert();
-		
+
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String assignmentName1 = "Assignment" + Utility.dynamicNameAppender();
 		String assignmentName2 = "Assignment" + Utility.dynamicNameAppender();
-		String assignmentGrpName = "AssignmentGrp"+Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssignmentGrp" + Utility.dynamicNameAppender();
 		String reportABM = "ABMReport" + Utility.dynamicNameAppender();
 		String reportARP = "ARPReport" + Utility.dynamicNameAppender();
-		
+
 		base.stepInfo("RPMXCON-56701");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("To Verify Advanced Batch Management report option");
-		
-	    assign.navigateToAssignmentsPage();
-	    assign.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
-	    assign.selectAssignmentGroup(assignmentGrpName);
-     	assign.createAssignmentFromAssgnGroup(assignmentName2, Input.codeFormName);	
-	 
+
+		assign.navigateToAssignmentsPage();
+		assign.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
+		assign.selectAssignmentGroup(assignmentGrpName);
+		assign.createAssignmentFromAssgnGroup(assignmentName2, Input.codeFormName);
+
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		session.bulkAssignExisting(assignmentName2);
@@ -296,12 +301,12 @@ public class Reports_Regression28 {
 		assign.add2ReviewerAndDistribute();
 		abmReport.generateABM_Report(searchName, assignmentName1, false);
 		abmReport.SaveReport(reportABM);
-		
+
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		arpr.navigateToAssgnmntReviewProgressReport();
 		arpr.generateARPreport(assignmentGrpName, "1LR");
 		arpr.SaveReport(reportARP);
-	
+
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(report.getCustomReportList());
@@ -315,6 +320,115 @@ public class Reports_Regression28 {
 		aserts.assertAll();
 
 		base.passedStep("Verify Advanced Batch Management report option");
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "PA & RMU")
+	public Object[][] users() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		return users;
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56255
+	 * @Description:To verify that User is able to select Date and Time from date
+	 *                 selection criteria on Reviewer Counts by Day/Hour Report
+	 **/
+	@Test(description = "RPMXCON-56255", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
+	public void verifyUserAbleToSelectDateTime(String username, String password) throws Exception {
+		ReviewerCountsReportPage report = new ReviewerCountsReportPage(driver);
+		SoftAssert asserts = new SoftAssert();
+
+		base.stepInfo("RPMXCON - 56255");
+		loginPage.loginToSightLine(username, password);
+		base.stepInfo(
+				"To verify that User is able to select Date and Time from date selection criteria on Reviewer Counts by Day/Hour Report");
+		base.stepInfo("Logged in As : " + username);
+		report.navigateTOReviewerCountsReportPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(report.getHourlyRadio());
+		report.getHourlyRadio().waitAndClick(5);
+		base.waitForElement(report.getExpandDateRange());
+		report.getExpandDateRange().waitAndClick(5);
+
+		String actFromDate = report.getSelectFromDateTime().Value();
+		base.stepInfo("By Default Date and Time From Range : " + actFromDate);
+		String actToDate = report.getSelectToDateTime().Value();
+		base.stepInfo("By Default Date and Time To Range : " + actToDate);
+
+		String expDateTime = base.getcurrentdateinUTC();
+		report.selectFromDate(report.getSelectFromDateTime(), "From");
+		report.selectFromDate(report.getSelectToDateTime(), "To");
+
+		String afterFrmChange = report.getSelectFromDateTime().Value();
+		base.stepInfo("After Change From Range : " + afterFrmChange);
+		String afterToChange = report.getSelectToDateTime().Value();
+		base.stepInfo("After Change To Range : " + afterFrmChange);
+		asserts.assertFalse(afterFrmChange.contains(expDateTime));
+		asserts.assertFalse(afterToChange.contains(expDateTime));
+		asserts.assertAll();
+		base.passedStep("User Can Select Date Time From and To Range");
+
+		asserts.assertTrue(actFromDate.contains(expDateTime));
+		asserts.assertTrue(actToDate.contains(expDateTime));
+		asserts.assertAll();
+		base.passedStep("Date Selection criteria is displayed with current date and time by default selected.");
+		base.passedStep("Verified - that User is able to select Date and Time from date selection "
+				+ "criteria on Reviewer Counts by Day/Hour Report");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA Testcase No:RPMXCON-56568
+	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'
+	 **/
+	@Test(description = "RPMXCON-56568", enabled = true, groups = { "regression" })
+	public void verifyDocDistriMyBatchDocs() throws Exception {
+		AssignmentsPage assignment = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		ReviewerReviewProgressReport rrpr = new ReviewerReviewProgressReport(driver);
+
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssignmentGrp" + Utility.dynamicNameAppender();
+		String expMsg = "Total no of Docs distributed should be displayed on 'My Batch Docs' column";
+		String failMsg = "Total no of Docs distributed should be displayed on 'My Batch Docs' column";
+
+		base.stepInfo("RPMXCON - 56568");
+		base.stepInfo(
+				"To verify that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged in As : " + Input.rmu1userName);
+
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		assignment.selectAssignmentGroup(assignmentGrpName);
+		assignment.createAssignmentFromAssgnGroup(assignmentName, Input.codeFormName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		// search to Assignment creation
+		sessionSearch.navigateToSessionSearchPageURL();
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		driver.waitForPageToBeReady();
+		assignment.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		assignment.editAssignmentInAssignGroup(assignmentGrpName, assignmentName);
+		assignment.addReviewerInManageReviewerTab();
+		assignment.distributeGivenDocCountToReviewers(String.valueOf(purehit));
+
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		rrpr.navigateToReviewerReviewProgressReport();
+		driver.waitForPageToBeReady();
+		rrpr.generateRRPreport(assignmentGrpName, Input.rev1FullName);
+		driver.waitForPageToBeReady();
+		String actMyBatchDogs = rrpr.getColoumnValue(rrpr.reviewerColumnNameHeader(), "My Batch Docs", assignmentName);
+		base.textCompareEquals(actMyBatchDogs, String.valueOf(6), expMsg, failMsg);
+		base.passedStep(
+				"Verified - that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'");
 		loginPage.logout();
 	}
 }
