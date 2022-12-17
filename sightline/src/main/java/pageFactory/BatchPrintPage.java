@@ -28,6 +28,7 @@ import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.sourceforge.tess4j.TesseractException;
 import testScriptsSmoke.Input;
 
 public class BatchPrintPage {
@@ -254,6 +255,23 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getBrandingMetadataPopupOkBtn() {
+		return driver.FindElementByXPath("//div[@class='popover-content']//button[@id='popupModelOk']");
+	}
+
+	public ElementCollection getBrandingMetadataDDList() {
+		return driver.FindElementsByXPath("//div[@class='popover-content']//select[@id='locationMetaData']//option");
+	}
+
+	public Element getBrandingMetadataDD() {
+		return driver.FindElementById("locationMetaData");
+	}
+
+	public Element getBrandingInsertMetadataLink() {
+		return driver.FindElementByXPath("//a[text()='Insert Metadata Field']");
+	}
+
 	public Element getSelectProductionSet() {
 		return driver.FindElementById("productionSetDropDown");
 	}
@@ -3293,6 +3311,86 @@ public class BatchPrintPage {
 		getSelectProduction().selectFromDropdown().selectByVisibleText(productionName);
 		base.stepInfo("Selected Production is : " + productionName);
 		return availableProduction;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Read the PDF FILE and Returns Downloaded Documents DOCID's in List
+	 * @param fileLocation
+	 * @return
+	 * @throws TesseractException
+	 * @throws IOException
+	 */
+	public List<String> verifyDownloadedPDfFileOrder(String fileLocation) throws TesseractException, IOException {
+		driver.waitForPageToBeReady();
+		List<String> docID = new ArrayList();
+		File file = new File(fileLocation);
+
+		PDDocument document = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String text = pdfStripper.getText(document);
+		System.out.println(text);
+		if (text.contains("DocID: ID")) {
+			String[] docid = text.split("\\s+");
+			for (String id : docid) {
+				if (id.startsWith("ID")) {
+					docID.add(id);
+				}
+			}
+		} else {
+			System.out.println("Other Text OR Empty");
+		}
+		base.printListString(docID);
+		return docID;
+	}
+
+	/**
+	 * @Author Jeevitha 
+	 * @Dsecription : add text or insert metadata for location
+	 * @param position
+	 * @param typeText
+	 * @param configureTxt
+	 * @param InsertMetadata
+	 * @param MetadaValue
+	 * @param ClickLocOkButton
+	 * @return
+	 */
+	public List<String> fillBrandingSelectedPosition(String position, boolean typeText, String configureTxt,
+			boolean InsertMetadata, String MetadaValue, boolean ClickLocOkButton) {
+		driver.waitForPageToBeReady();
+		List<String> availableListofElements = new ArrayList<>();
+		int index = base.getIndex(getBrandingPositions(), position);
+
+		base.waitForElement(getHeaderPositionBtn(index));
+		getHeaderPositionBtn(index).waitAndClick(10);
+		base.stepInfo("Clicked Location in Branding Tab is  : " + position);
+
+		if (typeText) {
+			base.waitForElement(getBatchPrintEnterBranding());
+			getBatchPrintEnterBranding().waitAndClick(10);
+			base.waitTime(2);
+			getBatchPrintEnterBranding().SendKeys(configureTxt);
+			base.stepInfo("TExt Entered in Location popup is : " + configureTxt);
+		}
+
+		if (InsertMetadata) {
+			base.waitForElement(getBrandingInsertMetadataLink());
+			getBrandingInsertMetadataLink().waitAndClick(10);
+			base.waitForElementCollection(getBrandingMetadataDDList());
+			availableListofElements = base.availableListofElements(getBrandingMetadataDDList());
+			getBrandingMetadataDD().waitAndClick(10);
+			getBrandingMetadataDD().selectFromDropdown().selectByVisibleText(MetadaValue);
+			base.stepInfo("Inserted Metadata In Location Popup is : " + MetadaValue);
+			base.waitTillElemetToBeClickable(getBrandingMetadataPopupOkBtn());
+			getBrandingMetadataPopupOkBtn().waitAndClick(10);
+		}
+
+		if (ClickLocOkButton) {
+			base.waitForElement(getInsertMetadataFieldOKButton());
+			getInsertMetadataFieldOKButton().waitAndClick(5);
+			base.stepInfo("Clicked Ok Button");
+		}
+		return availableListofElements;
 	}
 
 }

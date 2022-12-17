@@ -309,6 +309,91 @@ public class AdvancedSearchRegression_28 {
 		
 	}
 
+	/**
+	 * @author
+	 * @Description :Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when
+	 *  search goes to BackGround and User elect "When All Results Are Ready" on Advanced Search Screen.RPMXCON-48651
+	 */
+	
+	@Test(description = "RPMXCON-48651", enabled = true, groups = { "regression" })
+	public void verifyPureHitTileDoesNotGetCorruptedInShoppingCartAndUserSelectWhenAllResultsAreReadyOnAdvanSearch() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48651 Advanced Search.");
+		baseClass.stepInfo("Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User elect \"When All Results Are Ready\" on Advanced Search Screen.");
+		
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+	    // Configure valid Query and Click on "Search" button
+		baseClass.stepInfo("Configure valid Query and Click on \"Search\" button.");
+		sessionSearch.AdvContentSearchWithoutPopHandling(Input.searchStringStar);
+		
+		// Click on "When All Results Are Ready" button
+		sessionSearch.handleWhenAllResultsBtnInUncertainPopup();
+		baseClass.stepInfo("Click on \"When All Results Are Ready\" button.");
+		//Drag only Pure Hit tile into Shipping cart and wait for other tiles appear (Thread document/Near Duplicate/Family Member)  
+		baseClass.stepInfo("Drag only Pure Hit tile into Shipping cart and wait for other tiles appear (Thread document/Near Duplicate/Family Member).");
+		sessionSearch.addPureHit();
+		sessionSearch.verifyAllTilesResultsinAdvSrcScrn();
+		
+		// Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select "When All Results Are Ready" on Advanced Search Screen
+		baseClass.ValidateElement_Presence(sessionSearch.getPureHitsCount(),"PureHit Tile");
+		baseClass.passedStep("Verified that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select \"When All Results Are Ready\" on Advanced Search Screen.");
+	
+		// logOut
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author
+	 * @Description :Verify that result appears for proximity having
+	 *  2 Phrases within brackets in Advanced Search Query Screen.RPMXCON-57335
+	 */
+	@Test(description = "RPMXCON-57335", enabled = true, groups = { "regression" })
+	public void verifyResultAppearsForProximityHavingTwoPhrasesWithinBracketsInAdvancedSearch() {
+		
+		String searchString = "\"(\"development methodology\") (\"money related\")\"~5";
+		String exampleSearchString = "\"(\"development methodology\") (\"money related\")\"~5";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57335 Advanced Search.");
+		baseClass.stepInfo("Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(true, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button
+		baseClass.waitTime(2);
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		// Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep(
+				"Verified that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
+
+		// performing search for given example proximity search query.
+		baseClass.stepInfo("performing search for given example proximity search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// verify that pureHit appear for proximity having 2 Phrases within brackets match with pureHit appear for given example proximity Search Query.
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep("verified that pureHit appear for proximity having 2 Phrases within brackets match with pureHit appear for given example proximity Search Query.");
+
+		// logOut
+		loginPage.logout();
+  		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

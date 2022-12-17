@@ -22,6 +22,7 @@ import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -37,6 +38,7 @@ public class BatchPrint_Regression28 {
 	SessionSearch session;
 	TagsAndFoldersPage tagsAndFolderPage;
 	ProductionPage page;
+	DocListPage doclist;
 	String specificTag = "Tag" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
@@ -65,6 +67,7 @@ public class BatchPrint_Regression28 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		page = new ProductionPage(driver);
 		softassert = new SoftAssert();
+		doclist = new DocListPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -102,7 +105,7 @@ public class BatchPrint_Regression28 {
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password },
-				{ Input.rmu1userName, Input.rmu1password }, 
+//				{ Input.rmu1userName, Input.rmu1password }, 
 		};
 		return users;
 	}
@@ -115,7 +118,7 @@ public class BatchPrint_Regression28 {
 	 */
 	@Test(description = "RPMXCON-50731", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyPrintingExcelWithNativeAndText(String username, String password) throws Exception {
-		
+
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
 
@@ -131,7 +134,7 @@ public class BatchPrint_Regression28 {
 		// configure query for native and text file & view in doclist
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, Input.NativeSourceDocId, null);
 		int index = baseClass.getIndex(session.getDetailsTable(), "DOCID");
-		 String docId = session.getValueFromTable(index).getText();
+		String docId = session.getValueFromTable(index).getText();
 		System.out.println(docId);
 		session.bulkTagExisting(Tag);
 
@@ -160,20 +163,21 @@ public class BatchPrint_Regression28 {
 			// verify Downloaded File Count and Format
 			List<String> list = batchPrint
 					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
-			baseClass.compareTextViaContains(list.get(0),docId, "Native file is downloaded", "Native file is downloaded");
+			baseClass.compareTextViaContains(list.get(0), docId, "Native file is downloaded",
+					"Native file is downloaded");
 		}
 		loginPage.logout();
 	}
-	
 
 	/**
 	 * @Author sowndarya
-	 * @Description :Validate printing an EXCEL file type and doesn't have it's Native or text file [RPMXCON-50733]
+	 * @Description :Validate printing an EXCEL file type and doesn't have it's
+	 *              Native or text file [RPMXCON-50733]
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-50733", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyPrintingExcelWithoutNativeAndText(String username, String password) throws Exception {
-		
+
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
 
@@ -189,7 +193,7 @@ public class BatchPrint_Regression28 {
 		// configure query for native and text file & view in doclist
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, Input.TextSourceDocId, null);
 		int index = baseClass.getIndex(session.getDetailsTable(), "DOCID");
-		 String docId = session.getValueFromTable(index).getText();
+		String docId = session.getValueFromTable(index).getText();
 		System.out.println(docId);
 		session.bulkTagExisting(Tag);
 
@@ -218,19 +222,22 @@ public class BatchPrint_Regression28 {
 			// verify Downloaded File Count and Format
 			List<String> list = batchPrint
 					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
-			baseClass.compareTextViaContains(list.get(0),docId, "Downloaded documents doesn't have native and text files", "Downloaded documents have native and text files");
+			baseClass.compareTextViaContains(list.get(0), docId,
+					"Downloaded documents doesn't have native and text files",
+					"Downloaded documents have native and text files");
 		}
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author sowndarya
-	 * @Description :Validate printing an EXCEL file type and has text file but not it's native [RPMXCON-50732]
+	 * @Description :Validate printing an EXCEL file type and has text file but not
+	 *              it's native [RPMXCON-50732]
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-50732", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyPrintingExcelWithTextOnly(String username, String password) throws Exception {
-		
+
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
 
@@ -246,7 +253,7 @@ public class BatchPrint_Regression28 {
 		// configure query for text and not native file & Bulk tag
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, Input.TextSourceDocId, null);
 		int index = baseClass.getIndex(session.getDetailsTable(), "DOCID");
-		 String docId = session.getValueFromTable(index).getText();
+		String docId = session.getValueFromTable(index).getText();
 		System.out.println(docId);
 		session.bulkTagExisting(Tag);
 
@@ -275,8 +282,242 @@ public class BatchPrint_Regression28 {
 			// verify Downloaded File Count and Format
 			List<String> list = batchPrint
 					.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
-			baseClass.compareTextViaContains(list.get(0),docId, "Text file is downloaded", "Text file is not downloaded");
+			baseClass.compareTextViaContains(list.get(0), docId, "Text file is downloaded",
+					"Text file is not downloaded");
 		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Validate Batch Print Sorting docs by DocID [Prior Productions
+	 *              (TIFFs/PDFs)]with one PDF for all docs in ascending order
+	 *              [RPMXCON-49194]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-49194", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void validateSortProdByDocId(String username, String password) throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+		String slipsheetDD = "Create new slip sheets";
+		DocListPage doclist = new DocListPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49194 Batch Print");
+		baseClass.stepInfo(
+				"Validate Batch Print Sorting docs by DocID [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order");
+
+		// create folder in Default SG
+		tagsAndFolderPage.CreateFolder(Folder, Input.securityGroup);
+
+		// configure query & view in doclist
+		session.basicContentSearch(Input.testData1);
+		session.bulkFolderExisting(Folder);
+		session.ViewInDocList();
+
+		// verify DOCFILENAME column is present & add the column if it is not available
+		driver.waitForPageToBeReady();
+		doclist.verifyAndAddColumn(Input.docFileName);
+
+		// Sort DocID column in ASCending For Final Result Verification
+		driver.waitForPageToBeReady();
+		doclist.sortColumn(true, Input.documentKey, true);
+
+		// Get the expected sorting docid List For Final Result Verification
+		int index = baseClass.getIndex(doclist.getColumnHeader(), Input.documentKey);
+		baseClass.waitForElementCollection(doclist.GetColumnData(index));
+		List<String> actualdocIdList = doclist.availableListofElementsForDocList(doclist.GetColumnData(index));
+
+		// Remove not downloadable & Null Docid's from list For Final Result
+		// Verification
+		List<String> docIDList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocIdList);
+
+		// Get The first DocFileName after sorting to verify downloaded file name For
+		// Final Result Verification
+		int docfileNameIndex = baseClass.getIndex(doclist.getColumnHeader(), Input.docFileName);
+		baseClass.waitForElement(doclist.getColumValue(docfileNameIndex));
+		String docfileName = doclist.getColumValue(docfileNameIndex).getText();
+
+		// Generate Production with TIFF
+		String productionname = page.preRequisiteGenerateProduction(Folder);
+
+		// Select Folder in source selection & Production in basis for print
+		batchPrint.navigateToBatchPrintPage();
+		driver.waitForPageToBeReady();
+		batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+		batchPrint.fillingBasisForPrinting(false, true, productionname);
+		batchPrint.navigateToNextPage(1);
+
+		// filling SlipSheet With metadata
+		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+		// Filling Export File Name as 'DOCFILENAME', select Sort by 'DOCID' In
+		// "ASC" Order And select [One PDF for All doc]
+		batchPrint.selectSortingFromExportPage("ASC");
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		// verify whether downloaded filename is DOCFIELNAME & is as expected
+		baseClass.waitTime(3);
+		baseClass.compareTextViaContains(actualFileName.get(0), docfileName,
+				"Downloaded FileName is as expected : " + docfileName, "Downloaded filename is not as expected");
+
+		// Read the PDF FILE And get the Order of downloaded documents DOCID
+		List<String> downloadedsortedDocID = batchPrint.verifyDownloadedPDfFileOrder(
+				Input.fileDownloadLocation + "\\" + extractedFile + "\\" + actualFileName.get(0));
+
+		// verify the Documents sorting option
+		boolean result = baseClass.compareListViaContains(downloadedsortedDocID, docIDList);
+		String passMsg = "Downloaded file is Sorted in ASC Of LastSaveDate : " + docIDList;
+		baseClass.printResutInReport(result, passMsg, "Sorting is not as Expected", "Pass");
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Meta Data should be displayed if clicks on
+	 *              Insert Meta Data link [RPMXCON-47802]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-47802", enabled = true, groups = { "regression" })
+	public void verifyMetadataFields() throws Exception {
+		String SearchName = "Search" + Utility.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47802 Batch Print");
+		baseClass.stepInfo("To verify that Meta Data should be displayed if clicks on Insert Meta Data link");
+
+		// fetch Fields associated with Security group
+		security.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
+		baseClass.waitForElementCollection(security.getSelectdFieldsList());
+		List<String> sgAssociatedFields = baseClass.availableListofElements(security.getSelectdFieldsList());
+
+		// logout
+		loginPage.logout();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure query & view in doclist
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(SearchName);
+
+		// Select search & Native from basis for printing
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search", SearchName, false);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(2);
+
+		// Toggle OFF the 'Enable Slip Sheets'
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(batchPrint.getEnableSlipSheetToggle());
+		batchPrint.getEnableSlipSheetToggle().waitAndClick(10);
+
+		// fetch the Metadata Fields available in Branding & Redaction Tab
+		batchPrint.navigateToNextPage(1);
+		driver.waitForPageToBeReady();
+		batchPrint.verifyCurrentTab("Branding and Redactions");
+		List<String> availableMetadatainBrandingTab = batchPrint.fillBrandingSelectedPosition("CENTER", false, null,
+				true, Input.documentKey, true);
+
+		// verify all the fields associated with security group available in insert
+		// metadata dropdown in Branding tab
+		baseClass.listCompareEquals(sgAssociatedFields, availableMetadatainBrandingTab,
+				"All The Associated Fields is available in Branding TAb",
+				"All The Associated Fields is Not available in Branding Tab");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @throws Exception
+	 * @Author Jeevitha
+	 * @Description : Verify that PDF should be generated of Batch Print with
+	 *              documents having same file name as per selected option 'One PDF
+	 *              for each document', ExportFileName as 'DocFileName' and Sort By
+	 *              'DocID' [RPMXCON-58916]
+	 */
+	@Test(description = "RPMXCON-58916", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifPDFForDocWithSameName(String username, String password) throws Exception {
+		String Folder = "Folder" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-58916 Batch Print");
+		baseClass.stepInfo(
+				"Verify that PDF should be generated of Batch Print with documents having same file name as per selected option 'One PDF for each document', ExportFileName as 'DocFileName' and Sort By 'DocID'");
+
+		// Configure query of Documents with same file name with uppercase, lowecase,
+		// combination of upper and lower case & perform Bulk FOLDER
+		session.basicMetaDataSearch(Input.docFileName, null, "confidential", null);
+		session.addPureHit();
+		session.addNewSearch();
+		session.newMetaDataSearchInBasicSearch(Input.docFileName, "CONFIDENTIAL");
+		session.addPureHit();
+		session.addNewSearch();
+		session.newMetaDataSearchInBasicSearch(Input.docFileName, "ConFidenTIAL");
+		session.addPureHit();
+		session.ViewInDocListWithOutPureHit();
+
+		doclist.documentSelectionIncludeChildDoc(6);
+		doclist.bulkFolderInDocListPage(Folder);
+
+		// Select Folder from Source selection Tab
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Folder", Folder, true);
+
+		// select Native Viewable file variant
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+
+		// Verify user will be on 'Exception File Types' tab & select any metadata
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata & click Next
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+		//keep the toggle ON in branding TAB & Navigate to export page
+		batchPrint.navigateToNextPage(1);
+
+		// Keep All Default options As it is I.e.., Except Export by DOCFILENAME as
+		// DOCID, Sort BY DOCID
+		// , ASC Order
+
+		// Verify Success Message, BackgroundTask page & downloaded link In this Method
+		// itself
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		// verify Documents Exported Correctly By selecting One PDF for Each
+		softassert.assertNotEquals(actualFileName.size(), 1);
+		baseClass.passedStep("Document Successfully exported as 'One PDF For Each'");
+		softassert.assertAll();
+
 		loginPage.logout();
 	}
 }

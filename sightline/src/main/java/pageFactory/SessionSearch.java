@@ -14559,5 +14559,21 @@ public class SessionSearch {
 		base.waitForElement(getQuerySearchButton());
 				
 	}
+	
+	/*
+	 * @Author 
+	 */
+	public void remarksOrCommentFields_DraftBS(String remarks, String val1) {
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.waitForElement(getCommentsFieldAndRemarks());
+		getCommentsFieldAndRemarks().waitAndClick(5);
+		base.waitForElement(SelectFromDropDown(remarks));
+		SelectFromDropDown(remarks).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
+	}
 
 }

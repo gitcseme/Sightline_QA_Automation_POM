@@ -19,6 +19,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -174,6 +175,66 @@ public class BasicSearchRegression_28 {
 		login.logout();
 	}
 
+	/**
+	 * @author
+	 * @Description :Verify that User can run [Execute] - Drafted Basic search
+	 *  with Comments from Saved Search Screen. RPMXCON-48954
+	 */
+	
+	@Test(description = "RPMXCON-48954", enabled = true,groups = { "regression" })
+	public void verifyUserRunDraftedBasicSearchWithCommentsFromSavedSearchScreen() throws InterruptedException, AWTException {
+		
+		String savedSearchName = "savedSearch"+Utility.dynamicNameAppender();
+		String comment = "Reviewed";
+		String expectedLastStatus = "COMPLETED";
+		DocViewPage docView = new DocViewPage(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-48954");
+		base.stepInfo("Verify that User can run [Execute] - Drafted Basic search with Comments from Saved Search Screen.");
+  		
+  	    // login
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		
+  		// Configure Documents_Comments: Reviewed and Save it without execute
+  		base.stepInfo("Configure Documents_Comments: Reviewed and Save it without execute.");
+  		session.remarksOrCommentFields_DraftBS(Input.documentComments,comment);
+  		session.saveSearch(savedSearchName);
+  		
+  		//getting count before adding comment
+  		base.selectproject();
+  		int countBeforeAddingComment = session.getCommentsOrRemarksCount(Input.documentComments,comment);
+  		
+  		// performing metaData search 
+  		base.selectproject();
+  		session.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCustodianNameInput,null);
+  		
+  		// viewing the Resultant documents in the docView
+  		base.stepInfo("viewing the Resultant documents in the docView.");
+  		session.ViewInDocView();
+  		
+  		// adding comment 'Reviewed' to document in docView
+  		base.stepInfo("adding comment 'Reviewed' to document in docView.");
+  		docView.editingCodingFormAndEnteringToNextDocument(comment);
+  		
+  	    
+  		//verify that User should run [Execute] - Drafted Basic search with comment from Saved Search Screen. and correct "Count Of Result"" column should get updated which satisfied criteria in Saved Search Screen.
+  		int expectedCountOfResult = countBeforeAddingComment+1;
+  		saveSearch.savedSearchExecute(savedSearchName,expectedCountOfResult);
+  		base.passedStep("verified that User run [Execute] - Drafted Basic search with comment from Saved Search Screen. and correct \"Count Of Result\"\" column should get updated which satisfied criteria in Saved Search Screen.");
+  		
+  		//Verify that Last Status column status should  get displayed as "COMPLETED"
+  		base.ValidateElement_Presence(saveSearch.getSearchStatus(savedSearchName,expectedLastStatus), "Last Status 'COMPLETED'");
+  		base.passedStep("Verified that Last Status column status  get displayed as \"COMPLETED\".");
+  		
+  		// Deleting the SavedSearch
+  		session.ViewInDocView();
+  		docView.editingCodingFormAndEnteringToNextDocument("");
+  		saveSearch.deleteSearch(savedSearchName,Input.mySavedSearch,"Yes");
+  		
+  	// logOut
+  		login.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
