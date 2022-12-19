@@ -115,4 +115,34 @@ public class Projects_Regression28 {
 		baseClass.passedStep("Verified - that user can delete the Client.");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author  TestCase id:55585 DATE:NA
+	 * @Description:UI_To verify that error message is displayed if user enters the
+	 *                    invalid value for No of Documents.
+	 */
+	@Test(description = "RPMXCON-55585", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgDisplayedInvalidValue() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		
+		baseClass.stepInfo("Testcase -RPMXCON-55585  project");
+		String DocNumber = "Abc";
+		String DocNumber1 = "-234";
+		String DocNumber2 = "34#";
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"UI_To verify that error message is displayed if user enters the invalid value for No of Documents.");
+		project.navigateToProjectsPage();
+
+		// verify no of doc error Message
+		baseClass.waitForElement(project.getAddProjectBtn());
+		project.getAddProjectBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		project.verifyDocumentNumberErrorMessage(DocNumber);
+		driver.waitForPageToBeReady();
+		project.verifyDocumentNumberErrorMessage(DocNumber1);
+		driver.waitForPageToBeReady();
+		project.verifyDocumentNumberErrorMessage(DocNumber2);
+	}
 }

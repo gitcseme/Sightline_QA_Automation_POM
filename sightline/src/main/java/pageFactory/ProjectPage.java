@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -446,6 +447,10 @@ public class ProjectPage {
 	// added by jeevitha
 	public Element getKickoffStatus() {
 		return driver.FindElementById("chkAutoAnalytics");
+	}
+	
+	public Element getNoOfDocError() {
+		return driver.FindElementById("txtMaxNoOfDocs-error");
 	}
 
 	// Annotation Layer added successfully
@@ -2079,6 +2084,49 @@ public class ProjectPage {
 		bc.waitForElement(getButtonSaveProject());
 		getButtonSaveProject().waitAndClick(10);
 		bc.VerifySuccessMessage("Project updated successfully");		
+	}
+	
+	/**
+	 * @author:  Created Date:NA Modified by: NA Modified Date: NA
+	 * @description: this method is verify no of document applied after getting
+	 *               error msg
+	 * 
+	 */
+	public void verifyDocumentNumberErrorMessage(String Name) {
+		SoftAssert softassert = new SoftAssert();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProject_SettingsTab().Visible();
+			}
+		}), Input.wait30);
+		getAddProject_SettingsTab().waitAndClick(10);
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().waitAndClick(5);
+		getNoOfDocuments().SendKeys(Name);
+		bc.stepInfo(Name +" value is entered as expected ");
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().Click();
+		bc.waitForElement(getNoOfDocError());
+		String errormsg = getNoOfDocError().getText();
+		softassert.assertTrue(getNoOfDocError().isDisplayed());
+		softassert.assertAll();
+		bc.passedStep(errormsg + " ..Error message is displayed successfully");
+	}
+	
+	/**
+	 * @author 
+	 * @Description : Method for navigating to projects page
+	 */
+	public void navigateToProjectsPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Project/Project");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while navigating to project page" + e.getMessage());
+		}
 	}
 
 }
