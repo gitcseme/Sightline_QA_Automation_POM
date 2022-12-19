@@ -11970,4 +11970,33 @@ public class AssignmentsPage {
 	}
 
 	
+/**
+	 * @author Brundha.T
+	 * @param
+	 * @description:add reviewer and distribute
+	 */
+
+	public void addReviewerAndDistribute(String User) {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		getSelectUserToAssignAsReviewer(User).ScrollTo();
+		getSelectUserToAssignAsReviewer(User).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.waitTillElemetToBeClickable(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(getReviewerPopupCloseBtn());
+		getReviewerPopupCloseBtn().waitAndClick(10);
+		bc.elementDisplayCheck(getAssignment_ManageReviewersTab());
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeTabToReassign(User));
+		getSelectUserInDistributeTabToReassign(User).waitAndClick(5);
+		getDistributeBtn().waitAndClick(5);
+
+	}
+
 }

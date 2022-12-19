@@ -331,7 +331,128 @@ public class ExportRegression28 {
 		}
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-50362
+	 * @Description:Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'
+	 **/
+	@Test(description = "RPMXCON-50362", enabled = true, groups = { "regression" })
+	public void verifyCompletedStatusInGenPage() throws Exception {
 
+		base.stepInfo("Test case Id: RPMXCON-50362");
+		base.stepInfo("Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String FolderName = "FolderName" + Utility.dynamicNameAppender();
+		String TagName = "FolderName" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = "Export" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(TagName,Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(FolderName);
+		sessionSearch.bulkTagExisting(TagName);
+
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingPDFSection(TagName);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(FolderName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(exportName);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		driver.waitForPageToBeReady();
+		page.getBackButton().waitAndClick(5);
+		base.stepInfo("verifying Completed status in Generate Page");
+		page.verifyProductionStatusInGenPage("Completed");
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-50372
+	 * @throws Exception
+	 * @Description:Verify that in the Export components page 'Archive File from
+	 *                     FTP' component is not available
+	 **/
+	@Test(description = "RPMXCON-50372", enabled = true, groups = { "regression" })
+	public void verifyingInVisiblityOfArchiveFile() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50372");
+		base.stepInfo("Verify that in the Export components page 'Archive File from FTP' component is not available");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		String ExportName = "p" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(ExportName);
+		base.waitTime(1);
+		base.stepInfo("verifying archieve file from FTP is not available in Component tab");
+		base.waitForElement(page.getAdvancedProductionComponents());
+		page.getAdvancedProductionComponents().Click();
+		base.elementNotdisplayed(page.getArchieveFile(), "Archieve files from FTP");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T Testcase No:RPMXCON-47804
+	 * @throws Exception
+	 * @Description:To Verify Basic Info UI with Toggle option (For Export).
+	 **/
+	@Test(description = "RPMXCON-47804", enabled = true, groups = { "regression" })
+	public void verifyingBasicInfoTabInExport() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47804");
+		base.stepInfo("To Verify Basic Info UI with Toggle option (For Export).");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		String ExportName = "E" + Utility.dynamicNameAppender();
+		base = new BaseClass(driver);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		base.waitForElement(page.getAddNewExport());
+		page.getAddNewExport().Click();
+
+		base.waitForElement(page.getProductionName());
+		page.getProductionName().SendKeys(ExportName);
+		base.stepInfo("verifying export production toggle is off and select production dropdown is disabled");
+		page.toggleOffCheck(page.getExportProdToogle());
+		base.elementDisplayCheck(page.getSelectProductionDisabled());
+		
+		base.stepInfo("export toggle is on and verifying the select dropdown is enabled");
+		page.getExportProdToogle().waitAndClick(5);
+		base.elementNotdisplayed(page.getSelectProductionDisabled(),"Select Production dropdown");
+		page.getExportProdToogle().waitAndClick(5);
+		driver.scrollPageToTop();
+		page.getMarkCompleteLink().Click();
+		base.waitTime(1);
+		if(page.getDATChkBox().isDisplayed()) {
+			base.passedStep("Navigated to component tab as expected");
+		}else {
+			base.failedStep("component tab is not displayed");
+		}
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
