@@ -189,6 +189,24 @@ public class DocExplorerPage {
 	}
 
 	// added by sowndariya
+
+	public Element getMetaDataChoose(String type) {
+		return driver.FindElementByXPath(
+				"//strong[text()='" + type + "']//..//input[@name='checkbox']//following-sibling::i");
+	}
+
+	public Element getChooseWorkProduct(String fieldName) {
+		return driver.FindElementByXPath("//div[@class='tree-wrapper']//ul[@class='jstree-container-ul jstree-children']//a[@class='jstree-anchor' and text()='"+fieldName+"']");
+	}
+
+	public Element getBtnCloseWindow() {
+		return driver.FindElementByXPath("(//button[@class='ui-dialog-titlebar-close'])[last()]");
+	}
+
+	public Element getBtnWorkProduct_ExportData() {
+		return driver.FindElementByXPath("//div[@class='tab-pane active']//span[text()='WORKPRODUCT']");
+	}
+
 	public Element getExportDataSaveReport() {
 		return driver.FindElementByXPath("//i[@id='saveReport']");
 	}
@@ -684,6 +702,7 @@ public class DocExplorerPage {
 	public Element getIngestionName(String ingestion) {
 		return driver.FindElementByXPath(
 				"//ul[@id='select2-IngestionName-results']//li[contains(text(),'" + ingestion + "')]");
+
 	}
 
 	public Element getDocExplorerGrid() {
@@ -4301,5 +4320,35 @@ public class DocExplorerPage {
 		getDocExp_actionButton().waitAndClick(5);
 		bc.waitForElement(getBulkTagButton());
 		getBulkTagButton().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author: sowndarya
+	 * @description: To select metadata and workproduct from export data
+	 */
+	public void SelectExportDataWithMetadataAndWorkproduct(String metIndex, String workIndex) throws InterruptedException {
+
+		bc = new BaseClass(driver);
+		bc.waitForElement(getMetaDataChoose(metIndex));
+		getMetaDataChoose(metIndex).ScrollTo();
+		getMetaDataChoose(metIndex).waitAndClick(10);
+
+		getBtnWorkProduct_ExportData().ScrollTo();
+		bc.waitForElement(getBtnWorkProduct_ExportData());
+		getBtnWorkProduct_ExportData().waitAndClick(10);
+
+		bc.waitForElement(getChooseWorkProduct(workIndex));
+		getChooseWorkProduct(workIndex).ScrollTo();
+		getChooseWorkProduct(workIndex).waitAndClick(10);
+
+		bc.waitForElement(exportWindow_AddToSelectedButton());
+		exportWindow_AddToSelectedButton().ScrollTo();
+		exportWindow_AddToSelectedButton().waitAndClick(10);
+		bc.stepInfo(
+				"select  metadata and workproduct at the bottom to verify Add to selected appears with a fixed position (top-center) regardless how far down the user scrolls.");
+
+		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
+
 	}
 }

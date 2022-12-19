@@ -72,6 +72,19 @@ public class ReviewerCountsReportPage {
 	}
 
 	//added by sowndarya
+	public Element getSelectFromDateTime() {
+		return driver.FindElementByXPath("//input[@id='FromDateTime']");
+	}
+	public Element getSelectToDateTime() {
+		return driver.FindElementByXPath("//input[@id='ToDateTime']");
+	}
+	public Element getHourlyRadio() {
+		return driver.FindElementByXPath("//input[@id='id_radio2']//following-sibling::i");
+	}
+	public Element getExpandDateRange() {
+		return driver.FindElementByXPath("//a[@id='aDateRange']//following-sibling::a");
+	}
+	
 	public Element getSaveReportBtn() {
 		return driver.FindElementById("saveReport");
 	}
