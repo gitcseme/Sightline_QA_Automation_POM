@@ -3598,7 +3598,13 @@ public class ProductionPage {
 	public Element getPath(String Path) {
 		return driver.FindElementByXPath("//a[contains(text(),'"+Path+"')]");
 	}
+	public Element getArchieveFile() {
+		return driver.FindElementByXPath("//h2[text()=' Advanced Production Components ']/..//following-sibling::div//a[contains(text(),'Archive File')]");
+	}
 
+	public Element getSelectProductionDisabled() {
+		return driver.FindElementByXPath("//select[@id='ProductionSetLst'][@disabled]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;

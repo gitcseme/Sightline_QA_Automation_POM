@@ -702,6 +702,11 @@ public class DocExplorerPage {
 	public Element getIngestionName(String ingestion) {
 		return driver.FindElementByXPath(
 				"//ul[@id='select2-IngestionName-results']//li[contains(text(),'" + ingestion + "')]");
+
+	}
+
+	public Element getDocExplorerGrid() {
+		return driver.FindElementByXPath("//div[@id='divDocExplorerDT']");
 	}
 
 	public DocExplorerPage(Driver driver) {
@@ -4315,6 +4320,7 @@ public class DocExplorerPage {
 		getDocExp_actionButton().waitAndClick(5);
 		bc.waitForElement(getBulkTagButton());
 		getBulkTagButton().waitAndClick(5);
+
 	}
 
 	/**
@@ -4343,5 +4349,6 @@ public class DocExplorerPage {
 				"select  metadata and workproduct at the bottom to verify Add to selected appears with a fixed position (top-center) regardless how far down the user scrolls.");
 
 		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
+
 	}
 }

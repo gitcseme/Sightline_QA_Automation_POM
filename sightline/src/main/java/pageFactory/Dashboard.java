@@ -281,6 +281,9 @@ public class Dashboard {
 	public Element getDomainDashboardPage() {
 		return driver.FindElementByXPath("//a[@name='DomainDashboard']");
 	}
+	public ElementCollection getReviewerslist() {
+		return driver.FindElementsByXPath("//div[@id='divReviewerProuctivity']//tbody[2]//tr//strong");
+	}
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;
