@@ -3,7 +3,10 @@ package testScriptsRegressionSprint28;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -16,10 +19,12 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.Dashboard;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -131,5 +136,96 @@ public class Assignment_Regression28 {
 	    loginPage.logout();
 	    
 		}
+	/**
+	 * @author Brundha.T RPMXCON-54761
+	 * @Description :To verify that RMU is able to view/add Add Reviewers pop on
+	 *              click of Add Pending User Reviewer button
+	 */
+	@Test(description = "RPMXCON-54761", enabled = true, groups = { "regression" })
+	public void verifyReviewersCountInWidget() throws InterruptedException {
+
+		
+		base.stepInfo("Test case Id: RPMXCON-54761");
+		base.stepInfo(
+				"To verify that RMU is able to view/add Add Reviewers pop on click of Add Pending User Reviewer button");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+
+		String assgngrpName = "assignmentGrp" + Utility.dynamicNameAppender();
+		String newAssign = "assignment" + Utility.dynamicNameAppender();
+		String FirstName = "QA1" + Utility.dynamicNameAppender();
+		String LastName = "Automation";
+		String MailID = "testing" + Utility.dynamicNameAppender() + "@consilio.com";
+		
+		UserManagement user = new UserManagement(driver);
+		AssignmentsPage agnmt=new AssignmentsPage(driver);
+		SessionSearch search=new SessionSearch(driver);
+		Dashboard dashBoard =new Dashboard(driver);
+		
+		user.navigateToUsersPAge();
+		base.stepInfo("Creating pending active user for reviewer");
+		user.createUser(FirstName, LastName, Input.Reviewer, MailID, " ", Input.projectName);
+		System.out.println(MailID);
+		loginPage.logout();
+		
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		
+		base.stepInfo("Create Assignment Group");
+		agnmt.createAssgnGroup(assgngrpName);
+		agnmt.selectAssignmentGroup(assgngrpName);
+		agnmt.createAssignmentFromAssgnGroup(newAssign,Input.codingFormName);
+		
+		base.stepInfo("Bulk Assigning");
+		search.basicContentSearch(Input.testData1);
+		search.bulkAssignExistingForCopyAssignment(assgngrpName);
+		
+		
+		base.stepInfo("Adding Reviewer and distributing");
+		agnmt.selectAssignmentGroup(assgngrpName);
+		if (!agnmt.getSelectAssignmentHighlightCheck(newAssign).isElementAvailable(5)) {
+			agnmt.getSelectAssignment(newAssign).waitAndClick(5);
+		}
+		driver.scrollPageToTop();
+		agnmt.getAssignmentActionDropdown().waitAndClick(3);
+		base.waitForElement(agnmt.getAssignmentAction_EditAssignment());
+		agnmt.getAssignmentAction_EditAssignment().waitAndClick(3);
+		agnmt.addReviewerAndDistribute(MailID);
+		
+		base.stepInfo("Verifying reviewers count in RMU dashboard");
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
+		base.waitTime(2);
+		int Size = dashBoard.getReviewerslist().size();
+		base.ValidateElementCollection_Presence(dashBoard.getReviewerslist(),
+				"Reviewers in dashboard");
+		List<String> Reviewers = new ArrayList<>();
+		List<WebElement>elementList = dashBoard.getReviewerslist().FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String RevName = webElementNames.getText();
+			Reviewers.add(RevName);
+		}
+		System.out.println(Reviewers);
+		base.stepInfo("Reviewers in reviewer productivity widget"+Reviewers);
+		System.out.println(Size);
+		if (Size == 6) {
+			base.passedStep("Reviewers are displayed in dashboard");
+		} else {
+			base.failedStep("Reviewers are not displayed as expected");
+		}
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Logged in As " + Input.sa1userName);
+		
+		// delete the created user
+		user.filterTodayCreatedUser();
+		user.filterByName(MailID);
+		user.deleteUser();
+		loginPage.logout();
+	}
 
 }
