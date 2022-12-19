@@ -3,7 +3,10 @@ package testScriptsRegressionSprint28;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -199,6 +202,14 @@ public class Assignment_Regression28 {
 		int Size = dashBoard.getReviewerslist().size();
 		base.ValidateElementCollection_Presence(dashBoard.getReviewerslist(),
 				"Reviewers in dashboard");
+		List<String> Reviewers = new ArrayList<>();
+		List<WebElement>elementList = dashBoard.getReviewerslist().FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String RevName = webElementNames.getText();
+			Reviewers.add(RevName);
+		}
+		System.out.println(Reviewers);
+		base.stepInfo("Reviewers in reviewer productivity widget"+Reviewers);
 		System.out.println(Size);
 		if (Size == 6) {
 			base.passedStep("Reviewers are displayed in dashboard");
