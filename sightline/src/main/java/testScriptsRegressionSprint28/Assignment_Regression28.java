@@ -347,4 +347,62 @@ public class Assignment_Regression28 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Description : Verify that Assignment objects appear with a checkbox, and Assignment Group
+	 *  objects appear with a folder icon in Assign Documents pop up.RPMXCON-54339
+	 */
+	@Test(description = "RPMXCON-54339", enabled = true, groups = { "regression" })
+	public void verifyAssignmentObjectAppearWithCheckboxAndAssignmentGroupObjectAppearWithFolder() throws Exception {
+		
+		String assignmentName = "assignment"+Utility.dynamicNameAppender();
+		String assignmentGroupName = "assignmentGroup"+Utility.dynamicNameAppender();
+		
+		System.out.println(assignmentName);
+		System.out.println(assignmentGroupName);
+		
+		base.stepInfo("RPMXCON-54339");
+		base.stepInfo("Verify that Assignment objects appear with a checkbox, and Assignment Group objects appear with a folder icon in Assign Documents pop up.");
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		//creating Assignment Group
+		base.stepInfo("creating Assignment Group.");
+		assignment.navigateToAssignmentsPage();
+		assignment.createAssgnGroup(assignmentGroupName);
+		//creating Assignment 
+		base.stepInfo("creating Assignment.");
+		assignment.createAssignment(assignmentName,Input.codingFormName);
+		
+		//performing basic content search 
+		base.stepInfo("performing basic content search .");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		base.waitTime(2);
+		
+		// verify that Assignment Group object folder icon appear in Existing Assignment. 
+		base.ValidateElement_Presence(assignment.getAssignmentGroupFolderIconInExistingAssignmentInBulkAssignTab(assignmentGroupName),"Assignment Group Folder Icon in Existing Assignment.");
+		base.stepInfo("verified that Assignment Group object folder icon appear in Existing Assignment.");
+		
+		// verify that Assignment object checkbox appear in Existing Assignment.
+		base.ValidateElement_Presence(assignment.getAssignmentCheckBoxInExistingAssignmentInBulkAssignTab(assignmentName),"Assignment CheckBox in Existing Assignment.");
+		base.stepInfo("verified that Assignment object checkbox appear in Existing Assignment.");
+		
+		// verify that Assignment Group object folder icon appear in New Assignment.
+		base.waitForElement(sessionSearch.getBulkAssign_NewAssignment());
+		sessionSearch.getBulkAssign_NewAssignment().waitAndClick(5);
+		base.ValidateElement_Presence(assignment.getAssignmentGroupFolderIconInNewAssignmentInBulkAssignTab(assignmentGroupName),"Assignment Group Folder Icon in New Assignment.");
+		base.stepInfo("verified that Assignment Group object folder icon appear in New Assignment.");
+		
+		// deleting assignment
+		assignment.navigateToAssignmentsPage();
+		assignment.DeleteAssgnGroup(assignmentGroupName);
+		// deleting assignment group
+		assignment.deleteAssgnmntUsingPagination(assignmentName);
+		
+		// logout
+		loginPage.logout();
+	}
+	
 }
