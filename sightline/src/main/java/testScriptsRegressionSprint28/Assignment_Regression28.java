@@ -20,7 +20,9 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.Dashboard;
+import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -405,4 +407,203 @@ public class Assignment_Regression28 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author NA
+	 * @Description :Verify that user can save/sort single or multiple coding form successfully .[RPMXCON-67511]
+	 */
+	@Test(description = "RPMXCON-67511", enabled = true, groups = { "regression" })
+	public void verifySingleMultiCFSortExisProjCasCadeOFF()
+			throws InterruptedException {
+		List<String> listOfCFAfterSorting01 = new ArrayList<String>();
+		List<String> listOfCFAfterSorting02 = new ArrayList<String>();
+		listOfCFAfterSorting02.add(Input.codeFormName);
+		String assignmentGroup01 = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentGroup02 = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentName01 = "assignment" + Utility.dynamicNameAppender();
+		String assignmentName02 = "assignment" + Utility.dynamicNameAppender();
+		DocViewPage docView = new DocViewPage(driver);
+		CodingForm codingForm = new CodingForm(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-67511");
+		base.stepInfo("Verify that user can save/sort single or multiple coding form successfully "
+				+ "while editing existing assignment in a user created assignment group with cascade setting OFF for existing project");
+		List<String> listOfCodingForm = codingForm.createCodingformBasedOnCondition(3);
+
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGroup01, "No");
+		base.passedStep("creating assignment Group : '" + assignmentGroup01 + "' with cascading setting OFF");
+
+		base.stepInfo("creating assignment under newly created Assignment group");
+		assignment.selectAssignmentGroup(assignmentGroup01);
+		assignment.createAssignmentFromAssgnGroup(assignmentName01, Input.codingFormName);
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName01);
+
+		base.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
+		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
+		assignment.add2ReviewerAndDistribute();
+
+		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
+		listOfCFAfterSorting01 = assignment.SelectAllCodingFormAndChangeSortingSequence(Input.codingFormName);
+		base.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(3);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("selecting assignment from dashBoard to view in DocView");
+		assignment.SelectAssignmentByReviewer(assignmentName01);
+        base.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> listOfCFInDocViewDropDown01 = base
+				.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		base.compareListViaContains(listOfCFAfterSorting01, listOfCFInDocViewDropDown01);
+		base.stepInfo("verified that coding forms in Coding Form dropdown from doc view loaded as per the saved sort order.");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup(assignmentGroup02, "No");
+		base.stepInfo("creating assignment under newly created Assignment group");
+		assignment.selectAssignmentGroup(assignmentGroup02);
+		assignment.createAssignmentFromAssgnGroup(assignmentName02, listOfCFAfterSorting01.get(1));
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName02);
+
+		base.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
+		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
+		assignment.add2ReviewerAndDistribute();
+
+		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
+		List<String> listOfCFName = new ArrayList<String>();
+		listOfCFName.add(Input.codeFormName);
+		listOfCFAfterSorting02 = assignment.editExistingCodingForm(listOfCFName, Input.codeFormName, false);
+		base.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(3);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("selecting assignment from dashBoard to view in DocView");
+		assignment.SelectAssignmentByReviewer(assignmentName02);
+		base.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> listOfCFInDocViewDropDown02 = base
+				.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		base.compareListViaContains(listOfCFAfterSorting02, listOfCFInDocViewDropDown02);
+		base.stepInfo(
+				"verified that coding forms in Coding Form dropdown from doc view loaded as per the saved sort order.");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		codingForm.navigateToCodingFormPage();
+		codingForm.DeleteMultipleCodingform(listOfCodingForm);
+		base.passedStep("Verify that user can save/sort single or multiple coding form successfully while editing existing assignment "
+				+ "in a user created assignment group with cascade setting OFF for existing project");
+		loginPage.logout();		
+	}
+	
+	/**
+	 * @author NA
+	 * @Description :Verify that user can save/sort single or multiple coding form successfully while creating new assignment in root assignment group for existing project[RPMXCON-67508]
+	 */
+	@Test(description = "RPMXCON-67508", enabled = true, groups = { "regression" })
+	public void verifySingleMultiCFSortNewProjRootGRP() throws Exception {
+		List<String> listOfCFAfterSorting01 = new ArrayList<String>();
+		List<String> listOfCFAfterSorting02 = new ArrayList<String>();
+		listOfCFAfterSorting02.add(Input.codeFormName);
+		String assignmentName01 = "assignment" + Utility.dynamicNameAppender();
+		String assignmentName02 = "assignment" + Utility.dynamicNameAppender();
+		DocViewPage docView = new DocViewPage(driver);
+		CodingForm codingForm = new CodingForm(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-67508");
+		base.stepInfo("Verify that user can save/sort single or multiple coding form successfully "
+				+ "while creating new assignment in root assignment group for existing project");
+		codingForm.createCodingformBasedOnCondition(3);
+
+		assignment.navigateToAssignmentsPage();
+		base.stepInfo("creating assignment under Root Assignment group");
+		assignment.createAssignment_withoutSave(assignmentName01, Input.codingFormName);
+		listOfCFAfterSorting01 = assignment.SelectAllCodingFormAndChangeSortingSequence(Input.codingFormName);
+		base.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(5);
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName01);
+
+		base.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
+		assignment.editAssignmentUsingPaginationConcept(assignmentName01);
+		assignment.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("selecting assignment from dashBoard to view in DocView");
+		assignment.SelectAssignmentByReviewer(assignmentName01);
+        base.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> listOfCFInDocViewDropDown01 = base
+				.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		base.compareListViaContains(listOfCFAfterSorting01, listOfCFInDocViewDropDown01);
+		base.stepInfo("verified that coding forms in Coding Form dropdown from doc view loaded as per the saved sort order.");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignment.navigateToAssignmentsPage();
+		assignment.createAssignment_withoutSave(assignmentName02, listOfCFAfterSorting01.get(1));
+		List<String> listOfCFName = new ArrayList<String>();
+		listOfCFName.add(Input.codeFormName);
+		listOfCFAfterSorting02 = assignment.editExistingCodingForm(listOfCFName, Input.codeFormName, false);
+		base.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(3);
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName02);
+
+		base.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
+		assignment.editAssignmentUsingPaginationConcept(assignmentName02);
+		assignment.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("selecting assignment from dashBoard to view in DocView");
+		assignment.SelectAssignmentByReviewer(assignmentName02);
+		base.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> listOfCFInDocViewDropDown02 = base
+				.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		base.compareListViaContains(listOfCFAfterSorting02, listOfCFInDocViewDropDown02);
+		base.stepInfo(
+				"verified that coding forms in Coding Form dropdown from doc view loaded as per the saved sort order.");
+		loginPage.logout();
+		
+		String assignmentName03 = "Assignment03" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignWithNewAssignment();
+		assignment.createAssignment_fromAssignUnassignPopup(assignmentName03, Input.codingFormName);
+		List<String> listOfCFAfterSorting03 = assignment.SelectAllCodingFormAndChangeSortingSequence(Input.codingFormName);
+		base.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(5);
+		base.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
+		assignment.editAssignmentUsingPaginationConcept(assignmentName03);
+		assignment.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("selecting assignment from dashBoard to view in DocView");
+		assignment.SelectAssignmentByReviewer(assignmentName03);
+        base.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		List<String> listOfCFInDocViewDropDown03 = base
+				.availableListofElements(docView.listOfCodingFormInDocViewDropDown());
+		base.compareListViaContains(listOfCFAfterSorting03, listOfCFInDocViewDropDown03);
+		base.stepInfo("verified that coding forms in Coding Form dropdown from doc view loaded as per the saved sort order.");
+		base.passedStep("Verified - that user can save/sort single or multiple coding form successfully "
+				+ "while creating new assignment in root assignment group for existing project");
+		loginPage.logout();		
+	}
 }

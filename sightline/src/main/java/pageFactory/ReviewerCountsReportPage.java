@@ -72,6 +72,10 @@ public class ReviewerCountsReportPage {
 	}
 
 	//added by sowndarya
+	public ElementCollection getReviewersList() {
+		return driver.FindElementsByXPath("//div[@id='rvlist']//following::span");
+	}
+
 	public Element getSelectFromDateTime() {
 		return driver.FindElementByXPath("//input[@id='FromDateTime']");
 	}

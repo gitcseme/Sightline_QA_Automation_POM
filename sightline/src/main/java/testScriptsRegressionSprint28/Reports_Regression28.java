@@ -380,7 +380,8 @@ public class Reports_Regression28 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56568
-	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'
+	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch
+	 *                 Docs' in 'reviewer progress report'
 	 **/
 	@Test(description = "RPMXCON-56568", enabled = true, groups = { "regression" })
 	public void verifyDocDistriMyBatchDocs() throws Exception {
@@ -430,5 +431,35 @@ public class Reports_Regression28 {
 		base.passedStep(
 				"Verified - that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'");
 		loginPage.logout();
+	}
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-56254
+	 * @Description: To verify that User is able to view RUs in Reviewer Selection
+	 *               on Reviewer Counts by Day/Hour Report
+	 **/
+	@Test(description = "RPMXCON-56254", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
+	public void verifyReviewerSelection(String username,String password) throws Exception {
+
+		ReviewerCountsReportPage rcrp = new ReviewerCountsReportPage(driver);
+		base.stepInfo("RPMXCON - 56254");
+		base.stepInfo(
+				"To verify that User is able to view RUs in Reviewer Selection on Reviewer Counts by Day/Hour Report");
+		loginPage.loginToSightLine(username,password);
+		base.stepInfo("Logged in As : " + Input.pa1userName);
+		
+		rcrp.navigateTOReviewerCountsReportPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(rcrp.getReviewerExpandButton());
+		rcrp.getReviewerExpandButton().waitAndClick(10);
+		if (rcrp.getReviewersList().isElementAvailable(5)) {
+			driver.waitForPageToBeReady();
+			List<String> reviewersList = base.availableListofElements(rcrp.getReviewersList());
+			System.out.println("Reviewer names available in Reviewer selection : " + reviewersList);
+		}
+
+		else {
+			System.out.println("Reviewerlist is empty");
+		}
 	}
 }
