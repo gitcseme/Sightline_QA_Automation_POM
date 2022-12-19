@@ -539,11 +539,11 @@ public class SessionSearch {
 	}
 
 	public Element getContentAndMetaDatabtn() {
-		return driver.FindElementByXPath("//button[@id='contentmetadata']");
+		return driver.FindElementByXPath("(//button[@id='contentmetadata'])[last()]");
 	}
 
 	public Element getWorkproductBtn() {
-		return driver.FindElementByXPath("//button[@id='workproduct']");
+		return driver.FindElementByXPath("(//button[@id='workproduct'])[last()]");
 	}
 
 	public Element getSavedSearchBtn() {
@@ -672,7 +672,7 @@ public class SessionSearch {
 	}
 
 	public Element getWP_TagBtn() {
-		return driver.FindElementById("tagsHelper");
+		return driver.FindElementByXPath("(//button[@id='tagsHelper'])[last()]");
 	}
 
 	public Element getWP_assignmentsBtn() {
@@ -700,15 +700,15 @@ public class SessionSearch {
 	}
 
 	public Element getRedactionBtn() {
-		return driver.FindElementById("redactionsHelper");
+		return driver.FindElementByXPath("(//button[@id='redactionsHelper'])[last()]");
 	}
 
 	public Element getProductionBtn() {
-		return driver.FindElementById("productionsHelper");
+		return driver.FindElementByXPath("(//button[@id='productionsHelper'])[last()]");
 	}
 
 	public Element getSecurityGrpBtn() {
-		return driver.FindElementById("SecurityGroupsHelper");
+		return driver.FindElementByXPath("(//button[@id='SecurityGroupsHelper'])[last()]");
 	}
 
 	public Element getOperatorDD() {
@@ -2239,6 +2239,18 @@ public class SessionSearch {
 	}
 	public Element get90perOrHigherDocsCheckboxStatus() {
 		return driver.FindElementByXPath("//input[@id='chkIncludeNearDuplicate']");
+	}
+	public Element getAdvancedSearch_MetadataBtn() {
+		return driver.FindElementByXPath("(//*[@id='metadataHelper'])[last()]");
+	}
+	public Element searchBtn() {
+		return driver.FindElementByXPath("(//a[@id='qSearch'])[last()]");
+	}
+	public Element removeBtn() {
+		return driver.FindElementByXPath("(//a[@id='contentmetadata'][@style='color: red;text-decoration: underline;'])[last()]");
+	}
+	public Element contentBtnPanel() {
+		return driver.FindElementByXPath("//div[@id='Adv']//ol[@id='coreList']/li[@lang='contentmetadata']");
 	}
 	
 
@@ -14574,6 +14586,63 @@ public class SessionSearch {
 		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().Click();
+	}
+	/**
+	 * @author: Iyappan 
+	 * @description: this method will configure advanced search query and basic search uery for metadata
+	 */
+   public int contentMetadataSearch(String metaDataField, String val1, String searchType) {		
+		if(searchType=="Adv") {
+			base.waitForElement(getContentAndMetaDatabtn());
+			getContentAndMetaDatabtn().waitAndClick(3);
+			// Enter search string
+			base.waitForElement(getAdvancedSearch_MetadataBtn());
+			getAdvancedSearch_MetadataBtn().waitAndClick(3);
+			base.waitForElement(getSelectMetaData());
+			// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().waitAndClick(3);
+			base.waitForElement(SelectFromDropDown(metaDataField));
+			SelectFromDropDown(metaDataField).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(3);
+			base.waitForElement(searchBtn());
+			searchBtn().waitAndClick(3);
+		}else {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAdvancedSearch_MetadataBtn());
+			driver.waitForPageToBeReady();
+			getAdvancedSearch_MetadataBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().selectFromDropdown().selectByValue(metaDataField);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(val1);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);			
+			base.waitForElement(getSecondSearchBtn());
+			getSecondSearchBtn().waitAndClick(3);
+		}
+		// Click on Search button	
+
+		if (getTallyContinue().isElementAvailable(2)) {
+			getTallyContinue().Click();
+		}
+
+		base.waitForElement(getPureHitsCount2ndSearch());
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
+		return pureHit;
 	}
 
 	
