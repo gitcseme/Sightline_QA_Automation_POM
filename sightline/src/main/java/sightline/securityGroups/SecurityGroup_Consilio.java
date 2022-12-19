@@ -90,6 +90,7 @@ public class SecurityGroup_Consilio {
     sgpage.getRenameBtn().waitAndClick(10);
     sgpage.getSecurityGroupNameUpdate().SendKeys(Sgnameedit);
     sgpage.getSecurityGroupUpdateButton().waitAndClick(10);
+    baseClass.waitTime(5);
     String errorMsg=sgpage.getEditMsg().getText();
 	System.out.println("errorMsg"+errorMsg);
 	  Assert.assertEquals(errorMsg,"The security group name is invalid.");    
