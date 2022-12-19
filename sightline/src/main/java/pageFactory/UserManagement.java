@@ -702,11 +702,11 @@ public class UserManagement {
 	public ElementCollection getErrorFieldsFromAddNewUser() {
 		return driver.FindElementsByXPath("//span[@class='field-validation-error']//span");
 	}
-	
+
 	public Element getFirstNameEditUserPopup() {
 		return driver.FindElementById("txtBxUserName");
 	}
-	
+
 	public Element getLastNameEditUserPopup() {
 		return driver.FindElementById("txtBxUserLastName");
 	}
@@ -715,7 +715,7 @@ public class UserManagement {
 		return driver.FindElementByXPath("//*[@class='dataTables_scroll']//th[contains(text(),'" + headerName
 				+ "')]//ancestor::div//*[@id='dtUserList']//td[" + columnNo + "]");
 	}
-	
+
 	public Element getAlertMessageFromRole() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 	}
@@ -1133,78 +1133,97 @@ public class UserManagement {
 	public Element getPopupWindowHeader() {
 		return driver.FindElementByXPath("//div[contains(text(),'Modify Multiple User Profiles')]");
 	}
+
 	public Element getCollectionsCheckBox() {
 		return driver.FindElementById("chkCanCollections");
 	}
-	
-	//added by sowndarya
+
+	// added by sowndarya
 	public Element getRightAssignErrorMessage() {
 		return driver.FindElementById("RightAssignErrorMessage");
 	}
+
 	public Element getRightAssignErrorMessage1() {
 		return driver.FindElementById("RightAssignErrorMessage2");
 	}
+
 	public Element getLeftAssignErrorMessage() {
 		return driver.FindElementById("LeftAssignErrorMessage");
 	}
+
 	public ElementCollection getDomainRoleOptions() {
 		return driver.FindElementsByXPath("//select[@id='lstRoles']/option");
 	}
+
 	public Element getIsActiveCheckBox() {
 		return driver.FindElementByXPath("//input[@id='IsActiveCheckbox']//parent::label//i");
 	}
+
 	public Element getNextBtn() {
 		return driver.FindElementByXPath("//a[text()='Next']/..");
 	}
+
 	public Element getDomainProjectDropdown(int i) {
-		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']//option["+i+"]");
+		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']//option[" + i + "]");
 	}
-	
+
 	public Element getProjectDropdown() {
 		return driver.FindElementByXPath("//*[@id='ddlDomainAdminProjName']");
 	}
+
 	public ElementCollection getProjectNameCol() {
 		return driver.FindElementsByXPath("//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1']");
 	}
-	
+
 	public Element getProjectNameColValue(int i) {
-		return driver.FindElementByXPath("(//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1'])["+i+"]");
+		return driver
+				.FindElementByXPath("(//td[text()='Active']//preceding-sibling::td[3][@class='sorting_1'])[" + i + "]");
 	}
 
 	public Element getProjectDropdownList(int i) {
-		return driver.FindElementByXPath("//*[@id='lstProjects']//option["+i+"]");
+		return driver.FindElementByXPath("//*[@id='lstProjects']//option[" + i + "]");
 	}
+
 	public Element getAlertMsgBox() {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
 	}
+
 	public Element getErrorMsgInProjectTab() {
 		return driver.FindElementByXPath("//*[@id='RightAssignErrorMessage']");
 	}
-	
+
 	public Element getErrorMsgInDomainTab() {
 		return driver.FindElementById("RightAssignErrorMessageForDomain");
 	}
+
 	public Element getEditUserIngestion() {
 		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanIngestions']");
 	}
+
 	public Element getSelectProjectFromDropdown(String ProjectName) {
-		return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='"+ProjectName+"']");
+		return driver.FindElementByXPath("//*[@tabindex='7']//option[@title='" + ProjectName + "']");
 	}
+
 	public Element EditUserClosePopupBtn() {
 		return driver.FindElementByXPath("//*[text()='Edit User']/..//button[@class='ui-dialog-titlebar-close']");
 	}
+
 	public ElementCollection getSelectingProjectDropDown() {
 		return driver.FindElementsByXPath("//*[@id='ddlBulkUserProjects']/option/following-sibling::option");
 	}
-	 public ElementCollection getUserDropdown() {
-	        return driver.FindElementsByXPath("//select[@id='ddlDomainAdminCreateUserRoles']//option");
-	    }
-	 public Element getDomainName(String Domain) {
-	        return driver.FindElementByXPath("//label[contains(text(),'"+Domain+"')]");
-	    }
-	 public Element getDisabledNextBtn() {
-		 return driver.FindElementByXPath("//li[@class='paginate_button next disabled']//a");
-	 }
+
+	public ElementCollection getUserDropdown() {
+		return driver.FindElementsByXPath("//select[@id='ddlDomainAdminCreateUserRoles']//option");
+	}
+
+	public Element getDomainName(String Domain) {
+		return driver.FindElementByXPath("//label[contains(text(),'" + Domain + "')]");
+	}
+
+	public Element getDisabledNextBtn() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']//a");
+	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1324,7 +1343,7 @@ public class UserManagement {
 				}
 			}), Input.wait30);
 			// getSelectDomain().SendKeys(domain);
-			//getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			// getSelectProject().selectFromDropdown().selectByVisibleText(project);
 			driver.waitForPageToBeReady();
 			getSelectProjectFromDropdown(project).waitAndClick(10);
 		}
@@ -1527,7 +1546,6 @@ public class UserManagement {
 		}
 	}
 
-	
 	// added by Narendra
 
 	public void lockAccount(String name, String role, String userSate) throws InterruptedException {
@@ -1815,10 +1833,10 @@ public class UserManagement {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		  if (getSavePassword().isElementAvailable(5)) {
-	            getSavePassword().waitAndClick(20);
-	            driver.waitForPageToBeReady();
-	        }
+		if (getSavePassword().isElementAvailable(5)) {
+			getSavePassword().waitAndClick(20);
+			driver.waitForPageToBeReady();
+		}
 	}
 
 	/**
@@ -4974,35 +4992,35 @@ public class UserManagement {
 	 * @author Brundha.T
 	 * @param Value
 	 * @param users Description:method for enable or disable user rights
-	 * @return 
+	 * @return
 	 */
 	public void enableOrDisableUsersRights(String Value, String[] users) {
 		selectRoleBulkUserAccessControl(Input.ProjectAdministrator, Input.projectName, null);
 		driver.waitForPageToBeReady();
 		boolean flag;
-		flag=getCollectionsCheckBox().GetAttribute("disabled") == null ;
+		flag = getCollectionsCheckBox().GetAttribute("disabled") == null;
 		System.out.println(flag);
-		if(!flag) {
-		defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false, false,
-				false, false, false, false);
+		if (!flag) {
+			defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, true, true, false, false,
+					false, false, false, false, false);
 
-		if ("Enable".equals(Value)) {
-			bc.waitForElement(getEnableRadioBtn());
-			getEnableRadioBtn().waitAndClick(10);
+			if ("Enable".equals(Value)) {
+				bc.waitForElement(getEnableRadioBtn());
+				getEnableRadioBtn().waitAndClick(10);
 
+			} else {
+				bc.waitForElement(getDisableRadioBtn());
+				getDisableRadioBtn().waitAndClick(10);
+			}
 		} else {
-			bc.waitForElement(getDisableRadioBtn());
-			getDisableRadioBtn().waitAndClick(10);
-		}
-		}else {
 			driver.waitForPageToBeReady();
 			if ("Enable".equals(Value)) {
 				bc.waitForElement(getEnableRadioBtn());
 				getEnableRadioBtn().waitAndClick(10);
-			}else {
-				defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, false, false, false, false,
-						false, false, false, false);
-				
+			} else {
+				defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, false, false, false, false,
+						false, false, false, false, false);
+
 				bc.waitForElement(getDisableRadioBtn());
 				getDisableRadioBtn().waitAndClick(10);
 			}
@@ -5202,18 +5220,17 @@ public class UserManagement {
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Domain Administrator");
 			String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 			String alertText = getAlertMessageFromRole().getText();
-				
-				if (getConfirmTab().isElementAvailable(5)) {
-					bc.waitForElement(getConfirmTab());
-					getConfirmTab().waitAndClick(5);
-					softAssertion.assertEquals(actualText, alertText);
-					softAssertion.assertAll();
-					bc.passedStep(
-							"Alert message is displayed as: "+alertText+"");
-					
-				} else {
-					bc.failedStep("Alert message is not displayed");
-				} 
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+				softAssertion.assertEquals(actualText, alertText);
+				softAssertion.assertAll();
+				bc.passedStep("Alert message is displayed as: " + alertText + "");
+
+			} else {
+				bc.failedStep("Alert message is not displayed");
+			}
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
@@ -5237,13 +5254,13 @@ public class UserManagement {
 		}
 
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To change role any user id.
 	 * @param role, projectName , securityGroup
 	 */
-	public void changeRoleToAnyUser(String role, String projectName , String securityGroup) {
+	public void changeRoleToAnyUser(String role, String projectName, String securityGroup) {
 		try {
 			driver.waitForPageToBeReady();
 			if (role.contains("Project")) {
@@ -5251,69 +5268,67 @@ public class UserManagement {
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
 				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
 				String alertText = getAlertMessageFromRole().getText();
-				
+
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
 					getConfirmTab().waitAndClick(5);
 					softAssertion.assertEquals(actualText, alertText);
 					softAssertion.assertAll();
-					bc.passedStep(
-							"Alert message is displayed as: "+alertText+"");
+					bc.passedStep("Alert message is displayed as: " + alertText + "");
 				} else {
 					bc.failedStep("Alert message is not displayed");
-				} 
+				}
 				if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
-					}
-					else {
+					} else {
 						bc.stepInfo("The Project is already selected");
 					}
-				}else if (getProjectTextBox().isElementAvailable(5)) {
+				} else if (getProjectTextBox().isElementAvailable(5)) {
 					bc.waitForElement(getProjectTextBox());
 					String selectProject = getProjectTextBox().GetAttribute("class");
 					if (selectProject.contains("valid")) {
-						bc.passedStep("The Project is already selected"); 
-					}
-				else {
+						bc.passedStep("The Project is already selected");
+					} else {
 						bc.stepInfo("The Project is already selected");
+					}
 				}
-			}}else if (role.contains("Reviewer")|| role.contains("Review Manager")) {
+			} else if (role.contains("Reviewer") || role.contains("Review Manager")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText(role);
 				String alertText = getAlertMessageFromRole().getText();
 				String actualText = "The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?";
-				
+
 				if (getConfirmTab().isElementAvailable(5)) {
 					bc.waitForElement(getConfirmTab());
 					getConfirmTab().waitAndClick(5);
 					softAssertion.assertEquals(actualText, alertText);
 					softAssertion.assertAll();
-					bc.passedStep(
-							"Alert message is displayed as: "+alertText+"");
+					bc.passedStep("Alert message is displayed as: " + alertText + "");
 				} else {
 					bc.failedStep("Alert message is not displayed");
-				} 
+				}
 				if (getProjectTextBox().isElementAvailable(5)) {
 					bc.waitForElement(getProjectTextBox());
 					String selectProject = getProjectTextBox().GetAttribute("class");
 					if (selectProject.contains("valid")) {
-						bc.passedStep("The Project is already selected"); 
-					}						
-					}else if (selectProject().isElementAvailable(5)) {
-						bc.waitForElement(selectProject());
-						String selectProject = selectProject().GetAttribute("class");
-						if (selectProject.contains("form")) {
-							bc.waitForElement(selectProject());
-							selectProject().selectFromDropdown().selectByVisibleText(projectName);
-						}else {
-							bc.stepInfo("The Project is already selected");
-						}}else{
-						bc.failedStep("The project is unable to select");
+						bc.passedStep("The Project is already selected");
 					}
+				} else if (selectProject().isElementAvailable(5)) {
+					bc.waitForElement(selectProject());
+					String selectProject = selectProject().GetAttribute("class");
+					if (selectProject.contains("form")) {
+						bc.waitForElement(selectProject());
+						selectProject().selectFromDropdown().selectByVisibleText(projectName);
+					} else {
+						bc.stepInfo("The Project is already selected");
+					}
+				} else {
+					bc.failedStep("The project is unable to select");
+				}
 				bc.waitForElement(userSelectSecurityGroup());
 				userSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
 			}
@@ -5325,7 +5340,7 @@ public class UserManagement {
 			bc.failedStep("User profile is not updated");
 		}
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To edit First Name and Last name in User edit popup
@@ -5347,22 +5362,22 @@ public class UserManagement {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To get the table value present in UserManagement Homepage
 	 * @param tableHeader, cloumnNo
 	 */
 	public String getUserTableValuesFromManageUserTable(String tableHeader, int cloumnNo) {
-		
+
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserTabelDropDownValues(tableHeader, cloumnNo));
 		String tableValue = getUserTabelDropDownValues(tableHeader, cloumnNo).getText();
 		return tableValue;
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To verify Error Meassage When Madatory fields are Blank.
@@ -5373,26 +5388,30 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getSave());
 			getSave().waitAndClick(5);
-			
-			//get all error fields
+
+			// get all error fields
 			bc.waitForElementCollection(getErrorFieldsFromAddNewUser());
 			List<WebElement> errorFields = getErrorFieldsFromAddNewUser().FindWebElements();
 
 			for (int i = 0; i < errorFields.size(); i++) {
 				WebElement errorsPresent = errorFields.get(i);
 				String errorValidations = errorsPresent.getText();
-				//validate when mandatory fields are blank
-				if (errorValidations.contains("You must specify the first name.")||errorValidations.contains("You must specify the last name")||errorValidations.contains("You must specify a specify a role.")||errorValidations.contains("Email Address is required")) {
+				// validate when mandatory fields are blank
+				if (errorValidations.contains("You must specify the first name.")
+						|| errorValidations.contains("You must specify the last name")
+						|| errorValidations.contains("You must specify a specify a role.")
+						|| errorValidations.contains("Email Address is required")) {
 					bc.passedStep("Application displays error message when mandatory fields are blank.");
-				}else {
+				} else {
 					bc.failedStep("Application doesn't displays any error message when mandatory fields are blank.");
 				}
 			}
 		} catch (Exception e) {
-			bc.failedStep("Application doesn't displays any error message when mandatory fields are blank."+Get.class);
+			bc.failedStep(
+					"Application doesn't displays any error message when mandatory fields are blank." + Get.class);
 		}
 	}
-	
+
 	/**
 	 * @author Sakthivel
 	 * @description: verify functionality selected tab is unchecked
@@ -5420,9 +5439,10 @@ public class UserManagement {
 		bc.VerifySuccessMessage("User profile was successfully modified");
 
 	}
+
 	/**
-	 * @Author 
-	 * @Description :  Select role  in access control
+	 * @Author
+	 * @Description : Select role in access control
 	 * @param role
 	 */
 	public void verifySelectedRoleSGAccessControl(String role) throws InterruptedException {
@@ -5432,11 +5452,11 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectRollId());
 		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
-		bc.stepInfo(role+ " User Role is Selected" );
+		bc.stepInfo(role + " User Role is Selected");
 	}
 
 	/**
-	 * @Author 
+	 * @Author
 	 * @Description :Projects Present in access control dropdown
 	 * @param dropDownValues
 	 */
@@ -5490,13 +5510,13 @@ public class UserManagement {
 		getsavedomainuser().waitAndClick(10);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.rani
 	 * @description: userRoleImpersonate
 	 * @param role, impersonateRole
 	 */
-	
+
 	public void userRoleImpersonate(String role, String impersonateRole) throws InterruptedException {
 		if (role.equalsIgnoreCase("SA")) {
 			if (impersonateRole.equalsIgnoreCase("PA")) {
@@ -5518,24 +5538,24 @@ public class UserManagement {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 13/12/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
-	 * @description: this method will enable the ingestion functionality for PA user and verify
+	 * @throws Exception
+	 * @description: this method will enable the ingestion functionality for PA user
+	 *               and verify
 	 */
-	public void EnableIngestionFunctionality(String userName,String project) throws Exception {
-		
+	public void EnableIngestionFunctionality(String userName, String project) throws Exception {
+
 		navigateToUsersPAge();
 		passingUserName(userName);
 		applyFilter();
 		driver.waitForPageToBeReady();
-		for(int i=0;i<5;i++) {
-			if(getSelectUserToEdit(project).isElementAvailable(10)) {
+		for (int i = 0; i < 5; i++) {
+			if (getSelectUserToEdit(project).isElementAvailable(10)) {
 				bc.passedStep("user available");
 				break;
-			}
-			else if(!(getDisabledNextBtn().isElementAvailable(10))) {
+			} else if (!(getDisabledNextBtn().isElementAvailable(10))) {
 				getAssgnPaginationNextButton().waitAndClick(10);
 				bc.waitTime(2);
 				System.out.println("checking next page");
@@ -5545,14 +5565,14 @@ public class UserManagement {
 		getFunctionalityTab().waitAndClick(5);
 		verifyStatusIngestion("true");
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 13/12/2022 Modified by: NA Modified Date: NA
-	 * @throws Exception 
-	 * @description: this method will provide access and enable the ingestion functionality 
-	 * for PA user and verify
+	 * @throws Exception
+	 * @description: this method will provide access and enable the ingestion
+	 *               functionality for PA user and verify
 	 */
-	public void provideAccessToPaAndEnableIngestion(String paUser,String project) throws Exception {
+	public void provideAccessToPaAndEnableIngestion(String paUser, String project) throws Exception {
 
 		navigateToUsersPAge();
 		filterByName(paUser);
@@ -5560,6 +5580,86 @@ public class UserManagement {
 		AssignUserToProject(project, Input.ProjectAdministrator, userName);
 		bc.stepInfo("Enable ingestion functionality and verify access");
 		EnableIngestionFunctionality(paUser, project);
-		
+
 	}
+
+	public void editUserPagination(String projectName) {
+
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		System.out.println(count);
+		for (int i = 1; i <= count; i++) {
+			if (getEditButtonFromUserManagentPage(projectName).isElementAvailable(5)) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+				break;
+			} else {
+				if (i == count) {
+					bc.failedStep("Expected User is not present in the list.");
+				}
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(5);
+				bc.stepInfo("Expected user not found in the page " + i);
+			}
+		}
+
+	}
+
+	public void addNewUserAndVerifyErrorMessageForSameRoleOrDifferentRole(String firstName, String lastName,
+			String role, String emailId, String domain, String project, String loginUser,
+			boolean SameRoleOrDifferentRole,String securitygroup) {
+
+		driver.waitForPageToBeReady();
+		if (getAddUserPopup().isElementAvailable(3)) {
+			bc.stepInfo("Add user Popup is Displayed");
+		} else {
+			bc.waitForElement(getAddUserBtn());
+			getAddUserBtn().Click();
+		}
+
+		bc.waitForElement(getFirstName());
+		getFirstName().SendKeys(firstName);
+		getLastName().SendKeys(lastName);
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+
+		if (role.equalsIgnoreCase(Input.DomainAdministrator)) {
+			getSelectDomain().isElementAvailable(10);
+			getSelectDomain().selectFromDropdown().selectByIndex(1);
+		}
+		bc.waitForElement(getEmail());
+		getEmail().SendKeys(emailId);
+
+		if (loginUser.equalsIgnoreCase("SA")) {
+			if (role.equalsIgnoreCase(Input.ProjectAdministrator) || role.equalsIgnoreCase(Input.ReviewManager)
+					|| role.equalsIgnoreCase(Input.Reviewer)) {
+				bc.waitForElement(getSelectProject());
+				getSelectProject().Click();
+				getSelectProject(project).Click();
+			}
+		}
+
+		if (role.equalsIgnoreCase(Input.ReviewManager) || role.equalsIgnoreCase(Input.Reviewer)) {
+			if (loginUser.equalsIgnoreCase("SA")) {
+				getSecurityDropDown().isElementAvailable(10);
+				getSecurityDropDown().selectFromDropdown().selectByVisibleText(securitygroup);
+			} else {
+				bc.waitForElement(getSGDropDown());
+				getSGDropDown().selectFromDropdown().selectByVisibleText(securitygroup);
+			}
+		}
+		getSave().waitAndClick(10);
+
+		if (SameRoleOrDifferentRole) {
+			if (role.equalsIgnoreCase(Input.ReviewManager) || role.equalsIgnoreCase(Input.Reviewer)) {
+				bc.VerifyErrorMessage(
+						"20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
+			} else {
+				bc.VerifyErrorMessage(
+						"20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+			}
+		} else {
+			bc.VerifyErrorMessage(
+					"20001000023 : The specified user cannot be added, since an identical user already exists in the project, but in a different role.");
+		}
+	}
+
 }

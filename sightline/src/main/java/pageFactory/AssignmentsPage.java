@@ -1394,6 +1394,18 @@ public class AssignmentsPage {
 	}
 
 	// Added by Jeevitha
+	public Element getAssignmentCheckBoxInExistingAssignmentInBulkAssignTab(String assignmentName) {
+		return driver.FindElementByXPath("//div[@id='jstreeComplete']//a[text()='"+assignmentName+"']/i[contains(@class,'file')]/preceding-sibling::i[contains(@class,'checkbox') and not(contains(@style,'none'))]");
+	}
+	
+	public Element getAssignmentGroupFolderIconInExistingAssignmentInBulkAssignTab(String assignmentGroupName) {
+		return driver.FindElementByXPath("//div[@id='jstreeComplete']//a[text()='"+assignmentGroupName+"']/i[contains(@class,'folder')]");
+	}
+	
+	public Element getAssignmentGroupFolderIconInNewAssignmentInBulkAssignTab(String assignmentGroupName) {
+		return driver.FindElementByXPath("//div[@id='jstreeBulkAssignmentGroup']//a[text()='"+assignmentGroupName+"']/i[contains(@class,'folder')]");
+	}
+	
 	public Element getClassificationOptionsFormAssignment(String option) {
 		return driver.FindElementByXPath("//select[@id='SelectedClassification']/option[text()='" + option + "']");
 	}
