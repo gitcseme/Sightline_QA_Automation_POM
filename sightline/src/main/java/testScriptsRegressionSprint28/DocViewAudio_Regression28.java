@@ -28,6 +28,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -392,6 +393,207 @@ public class DocViewAudio_Regression28 {
 		docViewRedact.TraverseForwardAndBackwardOnHits();
 		loginPage.logout();
 		
+	}
+	
+	/**
+	 * Author :  date: NA Modified date: NA Modified by: NA
+	 * Description:Verify that 3 GMT readouts are displayed if the
+	 * TrimmedAudioDuration is null/blank on preview document from doc list
+	 * 
+	 */
+	@Test(description = "RPMXCON-54286", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verify3GmtReadoutsDisplayedTrimmAudioDurationNullInDocList(String username, String password,
+			String role) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54286- DocView Audio");
+		baseClass.stepInfo(
+				"Verify that 3 GMT readouts are displayed if the TrimmedAudioDuration is null/blank on preview document from doc list");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		String audioReady = "AudioPlayerReady";
+		String audioTrimmed = "AudioTrimmedDuration";
+		String[] columnsToSelect = { "AudioTrimmedDuration" };
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		if (role.equalsIgnoreCase(Input.pa1FullName)) {
+			sg.addProjectFieldtoSG(audioReady);
+			sg.addProjectFieldtoSG(audioTrimmed);
+		}
+		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		doclist.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
+		driver.waitForPageToBeReady();
+		String audioTrimmedduration = doclist.getDataInDoclist(1, 4).GetAttribute("td");
+		System.out.println(audioTrimmedduration);
+		softAssertion.assertEquals(audioTrimmedduration, null);
+		softAssertion.assertAll();
+		baseClass.waitForElement(doclist.getDocListPerviewBtn());
+		doclist.getDocListPerviewBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String Audiostarttime = docViewPage.getDocview_Audio_StartTime().getText();
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		if (Audiostarttime.contains("00")) {
+			baseClass.passedStep(Audiostarttime + " Start time is displayed on audio on the left side as expected");
+
+		} else {
+			baseClass.failedStep("Start time is not displayed on audio ");
+
+		}
+		String Audioendtime = docViewPage.getDocview_Audio_EndTime().getText();
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		if (Audiostarttime.equals(Audioendtime)) {
+			baseClass.failedStep("End time is not displayed on audio on the left side");
+
+		} else {
+			baseClass.passedStep(Audioendtime + "End time is displayed on audio on the left side as expected");
+
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		baseClass.waitTime(5);
+		String Audiocurrenttime = docViewPage.getDocviewAudio_StartTime().getText();
+		if (Audiostarttime.equals(Audiocurrenttime)) {
+			baseClass.failedStep("Start Time GMT that is not counting up from Start");
+
+		} else {
+			baseClass.passedStep(Audiocurrenttime + " Start Time GMT that is counting up from Start as expected");
+
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA
+	 * Description:Verify that 3 GMT readouts are displayed if the
+	 * TrimmedAudioDuration is null/blank on audio doc view
+	 * 
+	 */
+	@Test(description = "RPMXCON-51488", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verify3GmtReadoutsDisplayedTrimmAudioDurationNull(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51488- DocView Audio");
+		baseClass.stepInfo(
+				"Verify that 3 GMT readouts are displayed if the TrimmedAudioDuration is null/blank on audio doc view");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		String audioReady = "AudioPlayerReady";
+		String audioTrimmedDuration = "AudioTrimmedDuration";
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		if (role.equalsIgnoreCase(Input.pa1FullName)) {
+			sg.addProjectFieldtoSG(audioReady);
+			sg.addProjectFieldtoSG(audioTrimmedDuration);
+		}
+		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docViewPage.selectSourceDocIdInAvailableField("AudioTrimmedDuration");
+		driver.waitForPageToBeReady();
+		String audioTrimmed = docViewPage.getDocView_MiniDoc_SelectdocAsText(1, 4).GetAttribute("td");
+		System.out.println(audioTrimmed);
+		softAssertion.assertEquals(audioTrimmed, null);
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		String Audiostarttime = docViewPage.getDocview_Audio_StartTime().getText();
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		if (Audiostarttime.contains("00")) {
+			baseClass.passedStep(Audiostarttime + " Start time is displayed on audio on the left side as expected");
+
+		} else {
+			baseClass.failedStep("Start time is not displayed on audio ");
+
+		}
+		String Audioendtime = docViewPage.getDocview_Audio_EndTime().getText();
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		if (Audiostarttime.equals(Audioendtime)) {
+			baseClass.failedStep("End time is not displayed on audio on the left side");
+
+		} else {
+			baseClass.passedStep(Audioendtime + "End time is displayed on audio on the left side as expected");
+
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.audioPlayPauseIcon());
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		softAssertion.assertTrue(docViewPage.getDocview_Audio_StartTime().isDisplayed());
+		baseClass.waitTime(5);
+		String Audiocurrenttime = docViewPage.getDocviewAudio_StartTime().getText();
+		if (Audiostarttime.equals(Audiocurrenttime)) {
+			baseClass.failedStep("Start Time GMT that is not counting up from Start");
+
+		} else {
+			baseClass.passedStep(Audiocurrenttime + " Start Time GMT that is counting up from Start as expected");
+
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :  date: NA Modified date: NA Modified by: NA
+	 * Description:Verify the Redaction for Audio files for International English
+	 * language pack.
+	 * 
+	 * @throws Throwable
+	 */
+	@Test(description = "RPMXCON-51555", enabled = true, groups = { "regression" })
+	public void verifyRedactionAudioFileInternationalEngLanguage() throws InterruptedException, Throwable {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51555- DocView Audio");
+		baseClass.stepInfo("Verify the Redaction for Audio files for International English language pack.");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String remarkText1 = Input.randomText + Utility.dynamicNameAppender();
+		String doccomment = "comment" + Utility.dynamicNameAppender();
+		SoftAssert softassert = new SoftAssert();
+
+		// Login As RMU user
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.rmu1userName + "");
+
+		sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
+		baseClass.stepInfo("User select and  searched  in " + Input.audioLanguage);
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Add redaction in audio doc");
+		docViewPage.audioRedactionUsingAudioRangeWithEditRedactionTag(1, 1, 2);
+		baseClass.passedStep("After add redaction has been able to edit as expected");
+		
+		baseClass.stepInfo("Add Remarks in audio doc");
+		docViewPage.audioRemark(remarkText1);
+		baseClass.stepInfo("Add comment in audio doc");
+		driver.Navigate().refresh();
+		baseClass.waitTime(5);
+		docViewPage.editCodingForm(doccomment);
+		baseClass.waitForElement(docViewPage.getCodingFormSaveBtn());
+		docViewPage.getCodingFormSaveBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		System.out.println(doccomment);
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		String comment = docViewPage.getAudioComment().getText();
+		System.out.println(comment);
+		softassert.assertEquals(doccomment, comment);
+		baseClass.passedStep("User has been able to add remarks and comments in audio documents as expected");
+		softassert.assertAll();
+		
+
 	}
 
 	@DataProvider(name = "AllTheUsers")
