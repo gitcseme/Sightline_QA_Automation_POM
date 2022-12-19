@@ -1194,9 +1194,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
-	
+
 	public Element getAssignmentsDrawPoolInreviewerPg1(String assignmentName) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody//tr/td[1]/a[contains(text(),'" + assignmentName +"')]/parent::td/following-sibling::td[6]/a[contains(text(),'Draw')]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody//tr/td[1]/a[contains(text(),'" + assignmentName
+				+ "')]/parent::td/following-sibling::td[6]/a[contains(text(),'Draw')]");
 	}
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
@@ -1676,20 +1677,18 @@ public class AssignmentsPage {
 				"//h3[text()='Assign/Unassign Documents']//..//button[@class='ui-dialog-titlebar-close']");
 	}
 
-
 	public Element getKeepFamiliesHelpIcon() {
 		return driver.FindElementByXPath("//a[@id='aDateRange']");
 	}
-	
+
 	public Element getKeepFamiliesHelpText() {
-		return driver.FindElementByXPath(
-				"//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
+		return driver.FindElementByXPath("//div[@id='redistrubuteCount']/div/div/div/following-sibling::div");
 	}
 
 	public Element getAssignmentAction(String Assign) {
 		return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='" + Assign + "']");
 	}
-	
+
 	public Element getAssgn_EditReviewerReMarkToggle() {
 		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowReviwerRemarks']/following-sibling::i");
 	}
@@ -2024,10 +2023,8 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().isElementAvailable(10);
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 
-		Assgnwithspecialchars(assignmentName+"<'>&");
-		bc.passedStep("editing of Assignment " + assignmentName+"<'>&" + " failed for special chars");
-		
-
+		Assgnwithspecialchars(assignmentName + "<'>&");
+		bc.passedStep("editing of Assignment " + assignmentName + "<'>&" + " failed for special chars");
 
 	}
 
@@ -2569,9 +2566,8 @@ public class AssignmentsPage {
 
 		getAssgnGrp_Edit().waitAndClick(20);
 
-		Assgnwithspecialchars(assgngrpName+"<'>&");
-		bc.passedStep("editing of Assignment Group " + assgngrpName+"<'>& " + "failed for special chars");
-
+		Assgnwithspecialchars(assgngrpName + "<'>&");
+		bc.passedStep("editing of Assignment Group " + assgngrpName + "<'>& " + "failed for special chars");
 
 	}
 
@@ -2694,7 +2690,7 @@ public class AssignmentsPage {
 		System.out.println(getAssgnnameErrormsg().getText());
 		Assert.assertTrue(getAssgnnameErrormsg().getText()
 				.equalsIgnoreCase("Please enter an assignment name without using special characters"));
-		
+
 	}
 
 	public void deleteAssignment(final String assignmentName) {
@@ -11805,6 +11801,7 @@ public class AssignmentsPage {
 			bc.ValidateElement_Presence(getClassificationOptionsFormAssignment(option), option);
 		}
 	}
+
 	/**
 	 * @author Brundha.T
 	 * @param assignmentName
@@ -11852,7 +11849,7 @@ public class AssignmentsPage {
 			bc.VerifySuccessMessage("All Documents successfully completed.");
 		}
 	}
-	
+
 	/**
 	 * @author Sakthivel date: 12/09/2022 Modified date: Modified by:NA *
 	 * @Description: Assignment creation
@@ -11951,6 +11948,29 @@ public class AssignmentsPage {
 	}
 
 	/**
+	 * @Author 
+	 * @return
+	 */
+	public int oddOrEvenDocumentCountToDistribute(int docCount, String typeOf) {
+		int resultCount = 0;
+		if (typeOf.equalsIgnoreCase("odd")) {
+			if ((docCount % 2) != 0) {
+				resultCount = docCount;
+			} else {
+				resultCount = docCount - 1;
+			}
+		} else if (typeOf.equalsIgnoreCase("even")) {
+			if ((docCount % 2) == 0) {
+				resultCount = docCount;
+			} else {
+				resultCount = docCount - 1;
+			}
+		}
+		return resultCount;
+	}
+
+	
+/**
 	 * @author Brundha.T
 	 * @param
 	 * @description:add reviewer and distribute
@@ -11978,4 +11998,5 @@ public class AssignmentsPage {
 		getDistributeBtn().waitAndClick(5);
 
 	}
+
 }
