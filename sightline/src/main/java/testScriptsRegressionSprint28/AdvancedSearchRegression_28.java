@@ -69,7 +69,7 @@ public class AdvancedSearchRegression_28 {
 		savedSearch = new SavedSearch(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:15/12/2022 RPMXCON-48559
 	 * @throws Exception
@@ -114,7 +114,8 @@ public class AdvancedSearchRegression_28 {
 	/**
 	 * @author Vijaya.Rani ModifyDate:15/12/2022 RPMXCON-48560
 	 * @throws Exception
-	 * @Description Verify that - After impersonation (RMU to Reviewer) - User can search NON-Audio - Remarked documents in Advanced Search.
+	 * @Description Verify that - After impersonation (RMU to Reviewer) - User can
+	 *              search NON-Audio - Remarked documents in Advanced Search.
 	 */
 	@Test(description = "RPMXCON-48560", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonateAddRemarkDocumentsInAdvancedSearch() throws ParseException, Exception {
@@ -123,7 +124,8 @@ public class AdvancedSearchRegression_28 {
 		DocViewPage docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48560");
-		baseClass.stepInfo("Verify that - After impersonation (RMU to Reviewer) - User can search NON-Audio - Remarked documents in Advanced Search.");
+		baseClass.stepInfo(
+				"Verify that - After impersonation (RMU to Reviewer) - User can search NON-Audio - Remarked documents in Advanced Search.");
 
 		// Login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -237,29 +239,30 @@ public class AdvancedSearchRegression_28 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49289
-	 * Description :Verify that information message does not appear above the Tiles and below 
-	 * "Your Search Results" labels in Result Screen when the user Edit search not having any
-	 *  Advanced Search option. 
+	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49289 Description
+	 * :Verify that information message does not appear above the Tiles and below
+	 * "Your Search Results" labels in Result Screen when the user Edit search not
+	 * having any Advanced Search option.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49289",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49289", enabled = true, groups = { "regression" })
 	public void verifyInformationMessageWhenNotHavingOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49289");
 		baseClass.stepInfo("verify information message when the user Edit search not having any option.");
-		String searchName = "search"+Utility.dynamicNameAppender();
-		
-		//Login as PA
+		String searchName = "search" + Utility.dynamicNameAppender();
+
+		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("perform advanced metadata search");
 		sessionSearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.custodianName_Andrew);
 		baseClass.stepInfo("save the search result without selecting any option");
 		sessionSearch.saveSearchadvanced(searchName);
-		System.out.println("saved search"+searchName);
+		System.out.println("saved search" + searchName);
 		baseClass.stepInfo("Select the saved search");
 		savedSearch.navigateToSavedSearchPage();
 		savedSearch.selectSavedSearch(searchName);
@@ -267,29 +270,29 @@ public class AdvancedSearchRegression_28 {
 		baseClass.waitForElement(savedSearch.getSavedSearchEditButton());
 		savedSearch.getSavedSearchEditButton().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getNewSearch());
-		baseClass.verifyUrlLanding(Input.url + "Search/Searches", "Redirected to search page", 
+		baseClass.verifyUrlLanding(Input.url + "Search/Searches", "Redirected to search page",
 				"not redirected to search page");
 		baseClass.stepInfo("verify information message ");
 		baseClass.ValidateElement_Absence(sessionSearch.getInformationMessage(), "Information message");
 		baseClass.passedStep("Information message not displayed when not selected any option");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
-	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49274
-	 * Description :Verify that information message does not appear above the Tiles and below 
-	 * "Your Search Results" labels in Result Screen when the user Select none of 
-	 * Advanced Search option.  
+	 * Author :Arunkumar date: 15/12/2022 TestCase Id:RPMXCON-49274 Description
+	 * :Verify that information message does not appear above the Tiles and below
+	 * "Your Search Results" labels in Result Screen when the user Select none of
+	 * Advanced Search option.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49274",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49274", enabled = true, groups = { "regression" })
 	public void verifyInformationMessageWhenNoSelection() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49274");
 		baseClass.stepInfo("verify information message when the user select none of option.");
-		
-		//Login as PA
+
+		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("configure advanced metadata search query");
@@ -306,57 +309,67 @@ public class AdvancedSearchRegression_28 {
 		baseClass.ValidateElement_Absence(sessionSearch.getInformationMessage(), "Information message");
 		baseClass.passedStep("Information message not displayed when not selected any option");
 		loginPage.logout();
-		
+
 	}
 
 	/**
 	 * @author
-	 * @Description :Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when
-	 *  search goes to BackGround and User elect "When All Results Are Ready" on Advanced Search Screen.RPMXCON-48651
+	 * @Description :Verify that pure hit tile does not get corrupted (CSS Removed)
+	 *              in shopping cart when search goes to BackGround and User elect
+	 *              "When All Results Are Ready" on Advanced Search
+	 *              Screen.RPMXCON-48651
 	 */
-	
+
 	@Test(description = "RPMXCON-48651", enabled = true, groups = { "regression" })
-	public void verifyPureHitTileDoesNotGetCorruptedInShoppingCartAndUserSelectWhenAllResultsAreReadyOnAdvanSearch() throws InterruptedException {
-		
+	public void verifyPureHitTileDoesNotGetCorruptedInShoppingCartAndUserSelectWhenAllResultsAreReadyOnAdvanSearch()
+			throws InterruptedException {
+
 		baseClass.stepInfo("Test case Id: RPMXCON-48651 Advanced Search.");
-		baseClass.stepInfo("Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User elect \"When All Results Are Ready\" on Advanced Search Screen.");
-		
+		baseClass.stepInfo(
+				"Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User elect \"When All Results Are Ready\" on Advanced Search Screen.");
+
 		// login
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
-	    // Configure valid Query and Click on "Search" button
+
+		// Configure valid Query and Click on "Search" button
 		baseClass.stepInfo("Configure valid Query and Click on \"Search\" button.");
 		sessionSearch.AdvContentSearchWithoutPopHandling(Input.searchStringStar);
-		
+
 		// Click on "When All Results Are Ready" button
 		sessionSearch.handleWhenAllResultsBtnInUncertainPopup();
 		baseClass.stepInfo("Click on \"When All Results Are Ready\" button.");
-		//Drag only Pure Hit tile into Shipping cart and wait for other tiles appear (Thread document/Near Duplicate/Family Member)  
-		baseClass.stepInfo("Drag only Pure Hit tile into Shipping cart and wait for other tiles appear (Thread document/Near Duplicate/Family Member).");
+		// Drag only Pure Hit tile into Shipping cart and wait for other tiles appear
+		// (Thread document/Near Duplicate/Family Member)
+		baseClass.stepInfo(
+				"Drag only Pure Hit tile into Shipping cart and wait for other tiles appear (Thread document/Near Duplicate/Family Member).");
 		sessionSearch.addPureHit();
 		sessionSearch.verifyAllTilesResultsinAdvSrcScrn();
-		
-		// Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select "When All Results Are Ready" on Advanced Search Screen
-		baseClass.ValidateElement_Presence(sessionSearch.getPureHitsCount(),"PureHit Tile");
-		baseClass.passedStep("Verified that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select \"When All Results Are Ready\" on Advanced Search Screen.");
-	
+
+		// Verify that pure hit tile does not get corrupted (CSS Removed) in shopping
+		// cart when search goes to BackGround and User Select "When All Results Are
+		// Ready" on Advanced Search Screen
+		baseClass.ValidateElement_Presence(sessionSearch.getPureHitsCount(), "PureHit Tile");
+		baseClass.passedStep(
+				"Verified that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select \"When All Results Are Ready\" on Advanced Search Screen.");
+
 		// logOut
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author
-	 * @Description :Verify that result appears for proximity having
-	 *  2 Phrases within brackets in Advanced Search Query Screen.RPMXCON-57335
+	 * @Description :Verify that result appears for proximity having 2 Phrases
+	 *              within brackets in Advanced Search Query Screen.RPMXCON-57335
 	 */
 	@Test(description = "RPMXCON-57335", enabled = true, groups = { "regression" })
 	public void verifyResultAppearsForProximityHavingTwoPhrasesWithinBracketsInAdvancedSearch() {
-		
+
 		String searchString = "\"(\"development methodology\") (\"money related\")\"~5";
 		String exampleSearchString = "\"(\"development methodology\") (\"money related\")\"~5";
 
 		baseClass.stepInfo("Test case Id: RPMXCON-57335 Advanced Search.");
-		baseClass.stepInfo("Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
+		baseClass.stepInfo(
+				"Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
 
 		// login
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -373,7 +386,8 @@ public class AdvancedSearchRegression_28 {
 		baseClass.waitTime(2);
 		sessionSearch.tallyContinue(5);
 		baseClass.waitTime(2);
-		// Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.
+		// Verify that result appears for proximity having 2 Phrases within brackets in
+		// Advanced Search Query Screen.
 		int searchStringPureHit = sessionSearch.returnPurehitCount();
 		baseClass.passedStep(
 				"Verified that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
@@ -384,16 +398,72 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.tallyContinue(5);
 		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
 
-		// verify that pureHit appear for proximity having 2 Phrases within brackets match with pureHit appear for given example proximity Search Query.
+		// verify that pureHit appear for proximity having 2 Phrases within brackets
+		// match with pureHit appear for given example proximity Search Query.
 		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
 		assertion.assertAll();
-		baseClass.passedStep("verified that pureHit appear for proximity having 2 Phrases within brackets match with pureHit appear for given example proximity Search Query.");
+		baseClass.passedStep(
+				"verified that pureHit appear for proximity having 2 Phrases within brackets match with pureHit appear for given example proximity Search Query.");
 
 		// logOut
 		loginPage.logout();
-  		
+
 	}
-	
+
+	/**
+	 * @author
+	 * @Description :Verify that - Application returns all the documents which are
+	 *              available under Assignments - Distributed To in search
+	 *              result.RPMXCON-48112
+	 */
+	@Test(description = "RPMXCON-48112", enabled = true, groups = { "regression" })
+	public void verifyApplicationReturnsAllDocumentsAvailableUnderAssignments() throws InterruptedException {
+
+		AssignmentsPage assignment = new AssignmentsPage(driver);
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48112");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under Assignments - Distributed To in search result.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		// performing basic search and bulkAssign
+		baseClass.stepInfo("performing basic search and bulkAssign.");
+		int pureHit = sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// creating Assignment
+		assignment.assignmentCreationAsPerCf(assignmentName, Input.codeFormName);
+		int docDistributeCount = Math.round(pureHit / 2);
+
+		// adding Reviewer and Distributing the documents to the Reviewer
+		baseClass.stepInfo("adding Reviewer and Distributing the documents to the Reviewer.");
+		assignment.distributeTheGivenDocCountToReviewer(Integer.toString(docDistributeCount));
+
+		// getting Total Documents In Assignment
+		assignment.navigateToAssignmentsPage();
+		int assignmentDocCount = Integer.parseInt(assignment.selectAssignmentToView(assignmentName));
+		baseClass.stepInfo("Total Documents In Assignment '" + assignmentName + "' : " + assignmentDocCount);
+
+		// performing Assignment work product search.
+		baseClass.stepInfo("performing Assignment work product search.");
+		baseClass.selectproject();
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.workProductSearch("assignments", assignmentName, true);
+		int WPAssignPureHitCount = sessionSearch.serarchWP();
+
+		// Verify that - Application returns all the documents which are available under
+		// Assignments - Distributed To in search result.
+		baseClass.digitCompareEquals(assignmentDocCount, WPAssignPureHitCount,
+				"Verified that Application returns all the documents which are available under Assignments - Distributed To  in search result.",
+				"pureHit doesn't match with Assignment Document count.");
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -415,5 +485,4 @@ public class AdvancedSearchRegression_28 {
 		System.out.println("**Executed Advanced search Regression2_21**");
 	}
 
-	
 }
