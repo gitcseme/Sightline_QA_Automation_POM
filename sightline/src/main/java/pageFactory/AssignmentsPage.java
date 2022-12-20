@@ -11314,18 +11314,24 @@ public class AssignmentsPage {
 			bc.waitForElementCollection(getMultipleCodingForm());
 			int noOfCodingForm = getMultipleCodingForm().size();
 			if (noOfCodingForm > 15) {
+				bc.waitForElement(getSelectAllCodingForm());
+				getSelectAllCodingForm().waitAndClick(5);
+				getSelectAllCodingForm().waitAndClick(5);
 				for (int i = 1; i < 15; i++) {
+					bc.waitForElement(getCodingFormBasedOnIndex(i));
 					getCodingFormBasedOnIndex(i).waitAndClick(5);
 				}
+				bc.waitTime(3);
+				bc.waitForElement(getSelectCF_CheckBox(setDefaultCodingForm));
 				getSelectCF_CheckBox(setDefaultCodingForm).waitAndClick(5);
 			} else {
 				bc.waitForElement(getSelectAllCodingForm());
 				getSelectAllCodingForm().ScrollTo();
 				getSelectAllCodingForm().waitAndClick(5);
 			}
-			bc.waitTime(1);
+			bc.waitTime(2);
 			getSelectCodeFormRadioBtn(setDefaultCodingForm).waitAndClick(5);
-			bc.waitTime(1);
+			bc.waitTime(2);
 			try {
 				sortOrderNxtBtn().ScrollTo();
 			} catch (Exception e) {
