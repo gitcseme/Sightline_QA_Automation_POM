@@ -576,7 +576,7 @@ public class Ingestion_Regression_10 {
 		baseClass.stepInfo("select columns");
 		docList.SelectColumnDisplayByRemovingAddNewValues(field);
 		driver.waitForPageToBeReady();
-		String attachDocIds =docList.getDoclistMetaDataValue(count);
+		String attachDocIds =docList.getDoclistMetaDataValue(count,4);
 		if(attachDocIds.contains(";")) {
 			String[] attachid = attachDocIds.split(";");
 			searchId = attachid[0];
