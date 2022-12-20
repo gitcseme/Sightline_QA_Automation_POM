@@ -63,6 +63,78 @@ public class Doclist_Regression28 {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:17/12/2022 RPMXCON-66469
+	 * @throws AWTException
+	 * @Description Verify that on mouse hover of the small list icon on the bottom
+	 *              left of the thumbnail should present metadata and if the list of
+	 *              metadata is more than 150px, then a vertical scrollbar should
+	 *              appear..
+	 */
+	@Test(description = "RPMXCON-66469", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyThumbnailsViewMetadataListOfMetaDataInpx(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-66469");
+		baseClass.stepInfo(
+				"Verify that on mouse hover of the small list icon on the bottom left of the thumbnail should present metadata and if the list of metadata is more than 150px, then a vertical scrollbar should appear.");
+
+		DocListPage docList = new DocListPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		baseClass.stepInfo("DocList Page is get displayed");
+
+		driver.waitForPageToBeReady();
+		softAssert.assertTrue(docList.getTileView().isDisplayed());
+		softAssert.assertTrue(docList.getGridViewIcon().isDisplayed());
+		softAssert.assertTrue(docList.SelectColumnBtn().isDisplayed());
+		softAssert.assertTrue(docList.getSaveToProfileBtn().isDisplayed());
+		baseClass.passedStep(
+				" \"List View\" and \"Tile View\" icon is displayed the same row of \"Select Column\" , \"Save to Profile\" button.");
+		softAssert.assertAll();
+		docList.getTileView().waitAndClick(5);
+		baseClass.stepInfo("Verify that thumbnail generation is attempted and Viewed");
+		driver.waitForPageToBeReady();
+		docList.SelectColumnDisplay(docList.getSelectEmailAuthorName());
+		docList.SelectColumnDisplay(docList.getSelectEmailAuthorDomain());
+		driver.waitForPageToBeReady();
+		docList.getTileView().waitAndClick(5);
+		for (int i = 1; i < docList.getInfoBtn().size(); i++) {
+			driver.waitForPageToBeReady();
+			docList.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
+			baseClass.waitForElement(docList.getMetaDataBoxInDocList());
+		    String metadataDimat= docList.getMetaDataBoxInDocList().GetAttribute("style").trim();
+		    System.out.println(metadataDimat);
+		    String[] metadataBox = metadataDimat.split(" ");
+			String BoxDim = metadataBox[1];
+			String[] metadataBoxSplit = BoxDim.split("p");
+			String boxDimens = metadataBoxSplit[0];
+			int metadataDimentions= Integer.parseInt(boxDimens);
+			System.out.println(metadataDimentions);
+			driver.waitForPageToBeReady();
+			if (metadataDimentions > 150 ) {
+				baseClass.passedStep("metadata and if the list of metadata is more than 150px");
+			} else {
+				baseClass.failedStep("No such Metadataboxs");
+			}
+			driver.waitForPageToBeReady();
+			driver.scrollingToElementofAPage(docList.getMetaDataAuthorName());
+			if (docList.getMetaDataAuthorName().isDisplayed()) {
+				baseClass.passedStep("vertical scrollbar is appear");
+			} else {
+				baseClass.failedStep("No such scrollbar");
+			}
+		}
+		loginPage.logout();
+		
+	}
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
