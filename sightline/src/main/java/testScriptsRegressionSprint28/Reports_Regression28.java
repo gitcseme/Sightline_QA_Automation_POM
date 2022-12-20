@@ -382,7 +382,6 @@ public class Reports_Regression28 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * @author NA Testcase No:RPMXCON-56568
 	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'
@@ -471,26 +470,25 @@ public class Reports_Regression28 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.metaDataName));
 		tally.metaDataFilterForTallyBy(Input.metaDataName).waitAndClick(10);
-		float beforeCustName = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
+		float beforeCustName = System.currentTimeMillis();
 		tally.FilterInputTextBoxTallyBy().waitAndClick(10);
 		base.waitForElementCollection(tally.getAllValueinCustNameFilter());
 		float afterCustName = System.currentTimeMillis();
 		base.waitForElement(tally.getCloseByCNFilterPopUp());
 		tally.getCloseByCNFilterPopUp().waitAndClick(5);
 		float totalSecCustName = afterCustName - beforeCustName;
+		System.out.println(totalSecCustName);
 		asserts.assertTrue(totalSecCustName < 4000);
-		asserts.assertAll();
-
 		driver.waitForPageToBeReady();
-		tally.applyFilterToTallyBy(Input.metaDataName, "exclude", Input.custodianName_Andrew);
+		tally.applyFilterToTallyByIndex(Input.metaDataName, "exclude", 1);
 		driver.waitForPageToBeReady();
 
 		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).ScrollTo();
 		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
-		float beforeEmailAuthor = System.currentTimeMillis();
 		base.waitForElement(tally.FilterInputTextBoxTallyBy());
+		float beforeEmailAuthor = System.currentTimeMillis();
 		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
 		base.waitForElementCollection(tally.getAllValueinEmailAuthorFilter());
 		float afterEmailAuthor = System.currentTimeMillis();
@@ -498,15 +496,16 @@ public class Reports_Regression28 {
 		tally.getCloseByEAFilterPopUp().waitAndClick(5);
 		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
 		asserts.assertTrue(totalSecEmailAuthor < 4000);
-		asserts.assertAll();
-
 		driver.waitForPageToBeReady();
-		tally.applyFilterToTallyBy(Input.MetaDataEAName, "exclude", Input.EmailAuthourName);
+		tally.applyFilterToTallyByIndex(Input.MetaDataEAName, "exclude", 1);
 		driver.waitForPageToBeReady();
 
 		base.waitForElement(tally.getTally_btnTallyApply());
 		base.waitTillElemetToBeClickable(tally.getTally_btnTallyApply());
-		tally.getTally_btnTallyApply().Click();
+		tally.getTally_btnTallyApply().waitAndClick(5);;
+		if(tally.getPopupYesBtn().isElementAvailable(30)) {
+			tally.getPopupYesBtn().waitAndClick(5);
+		}
 		tally.verifyTallyChart();
 		base.passedStep("Executed - the tally report with CustodianName & EmailAuthorName filters selected");
 		loginPage.logout();
