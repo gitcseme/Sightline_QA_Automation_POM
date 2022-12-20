@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -121,7 +123,7 @@ public class AdvancedSearchRegression_28 {
 	 */
 	@Test(description = "RPMXCON-48560", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonateAddRemarkDocumentsInAdvancedSearch() throws ParseException, Exception {
-		int remarkCount1 = 1;
+		int remarkCount1 = 0;
 		String selectField = "Remark";
 		DocViewPage docView = new DocViewPage(driver);
 
@@ -139,6 +141,7 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.viewInDocView();
 
 		// adding remark and performing search using remark
+		driver.waitForPageToBeReady();
 		docView.verifyRemarkIsAdded(Input.reviewed);
 		baseClass.stepInfo("adding Remark to document");
 
@@ -468,56 +471,69 @@ public class AdvancedSearchRegression_28 {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @Description Verify that New search/Advance Search/Modify Search should be responsive when 10 session searches are in session search panel and new search is removed from session search panel
+	 * @Description Verify that New search/Advance Search/Modify Search should be
+	 *              responsive when 10 session searches are in session search panel
+	 *              and new search is removed from session search panel
 	 */
-	@Test(description = "RPMXCON-48616", enabled = true,dataProvider = "Users", groups = { "regression" })
-	public void veriyPgResponsiveAfter10SeacrchesInAdvSearch(String username,String password,String role) throws InterruptedException {
+	@Test(description = "RPMXCON-48616", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void veriyPgResponsiveAfter10SeacrchesInAdvSearch(String username, String password, String role)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48616");
 		baseClass.stepInfo(
 				"Verify that New search/Advance Search/Modify Search should be responsive when 10 session searches are in session search panel and new search is removed from session search panel");
 		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		ProductionPage page = new ProductionPage(driver);
 		SoftAssert sa = new SoftAssert();
-		String productionname =null;
+		String productionname = null;
 		// login
-		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		page.navigateToProductionPage();
 		baseClass.waitForElementCollection(page.getProductionItem());
 		List<String> availableProduction = baseClass.availableListofElements(page.getProductionItem());
-		String pName=availableProduction.get(0);
-		if(pName!=null) {
-			productionname=pName;
-		}else {     
-			productionname = "prod"+Utility.dynamicNameAppender();
-			page.navigateToProductionPage();
-			page.addANewProduction(productionname);
-		    baseClass.stepInfo("Created a Production "+productionname);
+		String pName = availableProduction.get(0);
+		if (pName != null) {
+			productionname = pName;
+		} else {
+			productionname = "ASprod" + Utility.dynamicNameAppender();
+			String PrefixID = "A_" + Utility.dynamicNameAppender();
+			String SuffixID = "_P" + Utility.dynamicNameAppender();
+			;
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String Tagname = "Tag" + Utility.dynamicNameAppender();
+			driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagPage.CreateFolder(foldername, Input.securityGroup);
+			tagPage.CreateTagwithClassification(Tagname, "Privileged");
+			baseClass.selectproject();
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
+			baseClass.stepInfo("Created a Production " + productionname);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(username,password);
+		loginPage.loginToSightLine(username, password);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
 		sessionSearch.getAdvancedSearchLink().waitAndClick(10);
 		sessionSearch.advancedSearchConceptual("test");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew,"Adv");
+		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew, "Adv");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType,"Adv");
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType, "Adv");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls","Adv");
+		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls", "Adv");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1,"Adv");
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1, "Adv");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount","Adv");
+		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount", "Adv");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.emailAllDomain, Input.filterDataInput3,"Adv");
-		if(role=="PA") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
+		sessionSearch.contentMetadataSearch(Input.emailAllDomain, Input.filterDataInput3, "Adv");
+		if (role == "PA") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
 		}
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -533,22 +549,22 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
 		String pureHits = sessionSearch.getPureHit_UsingLast().getText();
-		if(role!="REV") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectProductionstInASwp(productionname);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
+		if (role != "REV") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectProductionstInASwp(productionname);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
 		}
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
 		sessionSearch.getContentAndMetaDatabtn().waitAndClick(3);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.removeBtn());
 		sessionSearch.removeBtn().waitAndClick(10);
-		if(sessionSearch.contentBtnPanel().isElementAvailable(5)==false) {
+		if (sessionSearch.contentBtnPanel().isElementAvailable(5) == false) {
 			baseClass.passedStep("Search panel is removed successfully");
-		}else {
+		} else {
 			baseClass.passedStep("Search panel is not removed successfully");
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -563,62 +579,77 @@ public class AdvancedSearchRegression_28 {
 		sa.assertAll();
 		baseClass.passedStep("Page is responsive after the ten searches and removed the panel successfully");
 		loginPage.logout();
-		
+
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @Description Verify that New search/Advance Search/Modify Search should be responsive when 10 basic & advance session searches are in session search panel and new search is removed from session search panel
+	 * @Description Verify that New search/Advance Search/Modify Search should be
+	 *              responsive when 10 basic & advance session searches are in
+	 *              session search panel and new search is removed from session
+	 *              search panel
 	 */
-	@Test(description = "RPMXCON-48617", enabled = true,dataProvider = "Users",groups = { "regression" })
-	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearch(String username,String password,String role) throws InterruptedException {
+	@Test(description = "RPMXCON-48617", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearch(String username, String password, String role)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48617");
 		baseClass.stepInfo(
 				"Verify that New search/Advance Search/Modify Search should be responsive when 10 basic & advance session searches are in session search panel and new search is removed from session search panel");
 		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		ProductionPage page = new ProductionPage(driver);
 		SoftAssert sa = new SoftAssert();
-		String productionname =null;
+		String productionname = null;
 		// login
-		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		page.navigateToProductionPage();
 		baseClass.waitForElementCollection(page.getProductionItem());
 		List<String> availableProduction = baseClass.availableListofElements(page.getProductionItem());
-		String pName=availableProduction.get(0);
-		if(pName!=null) {
-			productionname=pName;
-		}else {
-			productionname = "prod"+Utility.dynamicNameAppender();
-			page.navigateToProductionPage();
-			page.addANewProduction(productionname);
-		    baseClass.stepInfo("Created a Production "+productionname);
+		String pName = availableProduction.get(0);
+		if (pName != null) {
+			productionname = pName;
+		} else {
+			productionname = "ASprod" + Utility.dynamicNameAppender();
+			String PrefixID = "A_" + Utility.dynamicNameAppender();
+			String SuffixID = "_P" + Utility.dynamicNameAppender();
+			;
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String Tagname = "Tag" + Utility.dynamicNameAppender();
+			driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagPage.CreateFolder(foldername, Input.securityGroup);
+			tagPage.CreateTagwithClassification(Tagname, "Privileged");
+			baseClass.selectproject();
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
+			baseClass.stepInfo("Created a Production " + productionname);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(username,password);
+		loginPage.loginToSightLine(username, password);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
 		sessionSearch.getAdvancedSearchLink().waitAndClick(10);
 		sessionSearch.advancedSearchConceptual("test");
 		sessionSearch.getNewSearch().waitAndClick(10);
 		sessionSearch.getBasicSearchLink().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew,"Basic");
+		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew, "Basic");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType,"Basic");
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType, "Basic");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls","Basic");
+		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls", "Basic");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1,"Basic");
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1, "Basic");
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount","Basic");
+		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount", "Basic");
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLinkCurrent());
 		sessionSearch.getAdvancedSearchLinkCurrent().waitAndClick(10);
-		if(role=="PA") {
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.getNewSearch().waitAndClick(10);
+		if (role == "PA") {
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
+			sessionSearch.getNewSearch().waitAndClick(10);
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
@@ -633,22 +664,22 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
 		String pureHits = sessionSearch.getPureHit_UsingLast().getText();
-		if(role!="REV") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectProductionstInASwp(productionname);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
+		if (role != "REV") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectProductionstInASwp(productionname);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
 		}
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
 		sessionSearch.getContentAndMetaDatabtn().waitAndClick(3);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.removeBtn());
 		sessionSearch.removeBtn().waitAndClick(10);
-		if(sessionSearch.contentBtnPanel().isElementAvailable(5)==false) {
+		if (sessionSearch.contentBtnPanel().isElementAvailable(5) == false) {
 			baseClass.passedStep("Search panel is removed successfully");
-		}else {
+		} else {
 			baseClass.passedStep("Search panel is not removed successfully");
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -663,14 +694,18 @@ public class AdvancedSearchRegression_28 {
 		sa.assertAll();
 		baseClass.passedStep("Page is responsive after the ten searches and removed the panel successfully");
 		loginPage.logout();
-		
+
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @Description Verify that Advance Search/Modify Search should be responsive when more than 10 advance saved searches are edited in session search panel
+	 * @Description Verify that Advance Search/Modify Search should be responsive
+	 *              when more than 10 advance saved searches are edited in session
+	 *              search panel
 	 */
-	@Test(description = "RPMXCON-48575", enabled = true,dataProvider = "Users", groups = { "regression" })
-	public void veriyPgResponsiveAfter10SeacrchesInAdvSearchSS(String username,String password,String role) throws InterruptedException {
+	@Test(description = "RPMXCON-48575", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void veriyPgResponsiveAfter10SeacrchesInAdvSearchSS(String username, String password, String role)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48575");
 		baseClass.stepInfo(
 				"Verify that Advance Search/Modify Search should be responsive when more than 10 advance saved searches are edited in session search panel");
@@ -678,24 +713,34 @@ public class AdvancedSearchRegression_28 {
 		ProductionPage page = new ProductionPage(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		SoftAssert sa = new SoftAssert();
-		String savedSearchName = "ss"+Utility.dynamicNameAppender();
-		String productionname =null;
+		String savedSearchName = "ss" + Utility.dynamicNameAppender();
+		String productionname = null;
 		// login
-		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		page.navigateToProductionPage();
 		baseClass.waitForElementCollection(page.getProductionItem());
 		List<String> availableProduction = baseClass.availableListofElements(page.getProductionItem());
-		String pName=availableProduction.get(0);
-		if(pName!=null) {
-			productionname=pName;
-		}else {
-			productionname = "prod"+Utility.dynamicNameAppender();
-			page.navigateToProductionPage();
-			page.addANewProduction(productionname);
-		    baseClass.stepInfo("Created a Production "+productionname);
+		String pName = availableProduction.get(0);
+		if (pName != null) {
+			productionname = pName;
+		} else {
+			productionname = "ASprod" + Utility.dynamicNameAppender();
+			String PrefixID = "A_" + Utility.dynamicNameAppender();
+			String SuffixID = "_P" + Utility.dynamicNameAppender();
+			;
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String Tagname = "Tag" + Utility.dynamicNameAppender();
+			driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagPage.CreateFolder(foldername, Input.securityGroup);
+			tagPage.CreateTagwithClassification(Tagname, "Privileged");
+			baseClass.selectproject();
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
+			baseClass.stepInfo("Created a Production " + productionname);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(username,password);
+		loginPage.loginToSightLine(username, password);
 		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "Yes");
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
@@ -703,28 +748,28 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.advancedSearchConceptual("test");
 		sessionSearch.saveSearchInNewNode(savedSearchName, newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew,"Adv");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew, "Adv");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType,"Adv");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType, "Adv");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls","Adv");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls", "Adv");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1,"Adv");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1, "Adv");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount","Adv");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
-		if(role=="PA") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount", "Adv");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
+		if (role == "PA") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
+			sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		}
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -732,7 +777,7 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.selectRedactioninWPS(Input.defaultRedactionTag);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
 		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
@@ -741,27 +786,25 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
 		String pureHits = sessionSearch.getPureHit_UsingLast().getText();
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
-		if(role!="REV") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectProductionstInASwp(productionname);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
+		if (role != "REV") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectProductionstInASwp(productionname);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
+			sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		}
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearchEdit(savedSearchName);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
 		sessionSearch.getContentAndMetaDatabtn().waitAndClick(3);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.removeBtn());
 		sessionSearch.removeBtn().waitAndClick(10);
-		if(sessionSearch.contentBtnPanel().isElementAvailable(5)==false) {
+		if (sessionSearch.contentBtnPanel().isElementAvailable(5) == false) {
 			baseClass.passedStep("Search panel is removed successfully");
-		}else {
+		} else {
 			baseClass.passedStep("Search panel is not removed successfully");
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -773,18 +816,22 @@ public class AdvancedSearchRegression_28 {
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
 		String pureHits1 = sessionSearch.getPureHit_UsingLast().getText();
 		sa.assertEquals(pureHits, pureHits1);
-		sa.assertAll();		
+		sa.assertAll();
 		baseClass.passedStep("Page is responsive after the ten searches and removed the panel successfully");
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
-		
-		loginPage.logout();		
+
+		loginPage.logout();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @Description Verify that New search/Advance Search/Modify Search should be responsive when 10 basic & advance searches edited from saved search and new search is removed from session search panel
+	 * @Description Verify that New search/Advance Search/Modify Search should be
+	 *              responsive when 10 basic & advance searches edited from saved
+	 *              search and new search is removed from session search panel
 	 */
-	@Test(description = "RPMXCON-48620", enabled = true,dataProvider = "Users", groups = { "regression" })
-	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearchSS(String username,String password,String role) throws InterruptedException {
+	@Test(description = "RPMXCON-48620", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearchSS(String username, String password, String role)
+			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48620");
 		baseClass.stepInfo(
 				"Verify that New search/Advance Search/Modify Search should be responsive when 10 basic & advance searches edited from saved search and new search is removed from session search panel");
@@ -792,24 +839,34 @@ public class AdvancedSearchRegression_28 {
 		ProductionPage page = new ProductionPage(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		SoftAssert sa = new SoftAssert();
-		String productionname =null;
-		String savedSearchName = "ss"+Utility.dynamicNameAppender();
+		String productionname = null;
+		String savedSearchName = "ss" + Utility.dynamicNameAppender();
 		// login
-		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		page.navigateToProductionPage();
 		baseClass.waitForElementCollection(page.getProductionItem());
 		List<String> availableProduction = baseClass.availableListofElements(page.getProductionItem());
-		String pName=availableProduction.get(0);
-		if(pName!=null) {
-			productionname=pName;
-		}else {
-			productionname = "prod"+Utility.dynamicNameAppender();
-			page.navigateToProductionPage();
-			page.addANewProduction(productionname);
-		    baseClass.stepInfo("Created a Production "+productionname);
+		String pName = availableProduction.get(0);
+		if (pName != null) {
+			productionname = pName;
+		} else {
+			productionname = "ASprod" + Utility.dynamicNameAppender();
+			String PrefixID = "A_" + Utility.dynamicNameAppender();
+			String SuffixID = "_P" + Utility.dynamicNameAppender();
+			;
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String Tagname = "Tag" + Utility.dynamicNameAppender();
+			driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagPage.CreateFolder(foldername, Input.securityGroup);
+			tagPage.CreateTagwithClassification(Tagname, "Privileged");
+			baseClass.selectproject();
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
+			baseClass.stepInfo("Created a Production " + productionname);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(username,password);
+		loginPage.loginToSightLine(username, password);
 		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "Yes");
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLink());
@@ -818,39 +875,39 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.saveSearchInNewNode(savedSearchName, newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		sessionSearch.getBasicSearchLink().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew,"Basic");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.metaDataName, Input.custodianName_Andrew, "Basic");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType,"Basic");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.searchDocFileType, "Basic");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls","Basic");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileExt, ".xls", "Basic");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1,"Basic");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileType, Input.filterDataInput1, "Basic");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
-		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount","Basic");
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.contentMetadataSearch(Input.docFileName, "AttachCount", "Basic");
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getAdvancedSearchLinkCurrent());
 		sessionSearch.getAdvancedSearchLinkCurrent().waitAndClick(10);
-		if(role=="PA") {
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
-		sessionSearch.getNewSearch().waitAndClick(10);
+		if (role == "PA") {
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
+			sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
+			sessionSearch.getNewSearch().waitAndClick(10);
 		}
-		
+
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
 		sessionSearch.selectRedactioninWPS(Input.defaultRedactionTag);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
 		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
@@ -859,27 +916,25 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
 		String pureHits = sessionSearch.getPureHit_UsingLast().getText();
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
-		if(role!="REV") {
-		sessionSearch.getNewSearch().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
-		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectProductionstInASwp(productionname);
-		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
-		sessionSearch.searchBtn().waitAndClick(10);
-		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
+		sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
+		if (role != "REV") {
+			sessionSearch.getNewSearch().waitAndClick(10);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
+			sessionSearch.getWorkproductBtn().waitAndClick(5);
+			sessionSearch.selectProductionstInASwp(productionname);
+			baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
+			sessionSearch.searchBtn().waitAndClick(10);
+			sessionSearch.saveSearchInNewNode("ss" + Utility.dynamicNameAppender(), newNode);
 		}
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearchEdit(savedSearchName);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
 		sessionSearch.getContentAndMetaDatabtn().waitAndClick(3);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.removeBtn());
 		sessionSearch.removeBtn().waitAndClick(10);
-		if(sessionSearch.contentBtnPanel().isElementAvailable(5)==false) {
+		if (sessionSearch.contentBtnPanel().isElementAvailable(5) == false) {
 			baseClass.passedStep("Search panel is removed successfully");
-		}else {
+		} else {
 			baseClass.passedStep("Search panel is not removed successfully");
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
@@ -895,9 +950,9 @@ public class AdvancedSearchRegression_28 {
 		baseClass.passedStep("Page is responsive after the ten searches and removed the panel successfully");
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:19/12/2022 RPMXCON-50025
 	 * @throws Exception
@@ -914,7 +969,7 @@ public class AdvancedSearchRegression_28 {
 
 		String searchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder";
 
-		String exampleSearchString = "(\"ProximitySearch Iterative\"~15 OR m0ney) OR TruthFinder ";
+		String exampleSearchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder ";
 
 		// login
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -963,9 +1018,9 @@ public class AdvancedSearchRegression_28 {
 
 	@DataProvider(name = "proximityHavingPhrasesAndTerm")
 	public Object[][] proximityHavingPhrasesAndTerm() {
-		return new Object[][] { { "(\"Truthful Recall \"~5) AND (\"requirements money\"~5)" },
-				{ "(“Truthful Recall ”~5) AND (“requirements money”~5)" },
-				{ "(“Truthful Recall ”~5) AND (“requirements money”~5)" } };
+		return new Object[][] { { "(\"Truthful Recall\"~5) AND (\"requirements collaboration\"~5)" },
+				{ "(\"Truthful Recall\"~5) AND (\"requirements collaboration\"~5)" },
+				{ "(\"Truthful Recall\"~5) AND (\"requirements collaboration\"~5)" } };
 	}
 
 	/**
@@ -996,7 +1051,7 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.SearchBtnAction();
 
 		// verify that application displays Proximity warning message
-		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.waitTime(2);
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
@@ -1078,12 +1133,11 @@ public class AdvancedSearchRegression_28 {
 
 		loginPage.logout();
 	}
-	
+
 	@DataProvider(name = "Users")
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.rev1userName, Input.rev1password,"REV"} };
+				{ Input.rmu1userName, Input.rmu1password, "RMU" }, { Input.rev1userName, Input.rev1password, "REV" } };
 		return users;
 	}
 
