@@ -60,7 +60,7 @@ public class UserManagement {
 	}
 
 	public Element getSecurityGroup() {
-		return driver.FindElementByXPath("(//*[@tabindex='8'])");
+		return driver.FindElementByXPath("(//*[@tabindex='8'])[2]");
 	}
 
 	public Element getSave() {
