@@ -514,7 +514,7 @@ public class Assignment_Regression22_23_24_25 {
 		assignment.SelectAssignmentByReviewer(assignmentName);
 
 		// Keyword should be highlighted on the DocView
-		docView.verifyKeywordsOnDocView(allKeywords);
+		docView.verifyKeywordsOnDocView(allKeywords,null);
 		baseClass.ValidateElementCollection_Presence(docView.getAnnotations(), "Highlights in Document");
 		baseClass.passedStep("verified that Keywords are highlighted on the DocView.");
 

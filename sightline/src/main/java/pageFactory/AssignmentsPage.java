@@ -12042,5 +12042,20 @@ public class AssignmentsPage {
 
 	}
 
+	public void verifyKeywordsAvailabilityInAssignment(List<String > keywords) {
+		bc.waitForElement(getAssgn_Keywordsbutton());
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
 
+		for (int i = 0; i < keywords.size(); i++) {
+			if (getKeywordCheckBox(keywords.get(i)).isElementAvailable(5)) {
+				bc.passedStep("Added keyword available" + keywords.get(i));
+			} else {
+				bc.failedStep("Added keyword not available" + keywords.get(i));
+			}
+		}
+		bc.waitForElement(getKeywordPopUpCancelBtn());
+		getKeywordPopUpCancelBtn().waitAndClick(10);
+
+	}
 }

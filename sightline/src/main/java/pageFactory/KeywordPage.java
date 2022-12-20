@@ -922,6 +922,40 @@ public class KeywordPage {
 	}
 
 
-	
+	public List<String> addMultipleKeywords(String[][] keywordName, boolean securityGroup, String selectSecurityGroup)
+			throws AWTException {
+		if (securityGroup) {
+			base.waitForElement(getKeywordSecurityGroupList());
+			getKeywordSecurityGroupList().selectFromDropdown().selectByVisibleText(selectSecurityGroup);
+		}
+		List<String> keywordGroupName = new ArrayList<>();
+		for (int i = 0; i < keywordName.length; i++) {
+			int j = 0;
+			String keyword = keywordName[i][j];
+			j++;
+			String color = keywordName[i][j];
+
+			String keywordGroup =keyword + Utility.dynamicNameAppender();
+			base.waitForElement(getNewKeywordButton());
+			getNewKeywordButton().waitAndClick(5);
+			base.waitForElement(getKeywordName());
+			getKeywordName().SendKeys(keywordGroup);
+			keywordGroupName.add(keywordGroup);
+			base.waitForElement(getDescription());
+			getDescription().SendKeys(keyword);
+			base.waitForElement(getKeywords());
+			getKeywords().SendKeys(keyword);
+			getSelectColor().selectFromDropdown().selectByVisibleText(color);
+			getIntoFullScreen();
+			base.waitForElement(getSaveBtn());
+			getSaveBtn().waitAndClick(5);
+			base.waitForElement(getYesButton());
+			getYesButton().waitAndClick(5);
+			getExitFullScreen();
+			base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
+			base.CloseSuccessMsgpopup();
+		}
+		return keywordGroupName;
+	}
 
 }
