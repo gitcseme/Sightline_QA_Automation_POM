@@ -282,8 +282,7 @@ public class DocListPage {
 	}
 
 	public Element getSelectFolderExisting(String folderName) {
-		return driver.FindElementByXPath(
-				"//div[@id='divBulkFolderJSTree']//a[text()='" + folderName + "']");
+		return driver.FindElementByXPath("//div[@id='divBulkFolderJSTree']//a[text()='" + folderName + "']");
 	}
 
 	public Element getContinueCount() {
@@ -337,8 +336,7 @@ public class DocListPage {
 	public Element getSelectTagExisting(String tagname) {
 		// return
 		// driver.FindElementByXPath("//div[@id='divBulkFolderJSTree']//a[text()='FolderProd2462676']/i[contains(@class,'checkbox')]");
-		return driver.FindElementByXPath(
-				"//*[@id='divBulkTagJSTree']//a[contains(.,'"+tagname+"')]");
+		return driver.FindElementByXPath("//*[@id='divBulkTagJSTree']//a[contains(.,'" + tagname + "')]");
 	}
 
 	public Element getContinueButton() {
@@ -1305,7 +1303,7 @@ public class DocListPage {
 		return driver.FindElementByXPath(
 				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
 	}
-	
+
 	public Element getDocList_FamilyMemberCount() {
 		return driver.FindElementById("CountTextFamilyMem");
 
@@ -1416,56 +1414,63 @@ public class DocListPage {
 	public Element getDocListNoRestultData() {
 		return driver.FindElementByXPath("//ul[@id='select2-EmailRecipientNames-results']/li");
 	}
-	
+
 	public Element getClearAllBtn() {
 		return driver.FindElementById("btnClearAllBits");
 
 	}
-	
+
 	public Element getEmailAuthorNameNoRestultData() {
 		return driver.FindElementByXPath("//ul[@id='select2-EmailAuthorName-results']/li");
 	}
-	
+
 	public Element getAudioDownloadIcon() {
 		return driver.FindElementByXPath("//li[@id='liAudioDocumentTypeDropDown']//i");
 	}
-	
+
 	public Element getAudioOptionToDownload() {
 		return driver.FindElementByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
 	}
-	
+
 	public Element getPreviewAudioDocCloseButton() {
-		return driver
-				.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
+
 	public Element getTileView() {
-        return driver.FindElementByXPath("//*[@id='TileView']");
-    }
-    public Element getSelectAllCheckBox() {
-        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
-    }
-    public Element getSelectAllOk() {
-        return driver.FindElementByXPath("//*[@id='bot1-Msg1']");
-    }
-    public Element getUnSelectAllCheckBox() {
-        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']//following-sibling::label//input");
-    }
-    public Element getFirstCheckBox() {
-        return driver.FindElementByXPath("//*[@id='chkDoc_1']");
-    }
-    public Element getTileViewSelectAll() {
-        return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']");
-    }
-    public Element getTileViewUnSelectAll() {
-        return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']");
+		return driver.FindElementByXPath("//*[@id='TileView']");
+	}
 
-    }
-    public Element getThumbnailbar() {
-        return driver.FindElementByXPath("//*[@id='infos']/a/i");
+	public Element getSelectAllCheckBox() {
+		return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
+	}
 
-    }
+	public Element getSelectAllOk() {
+		return driver.FindElementByXPath("//*[@id='bot1-Msg1']");
+	}
 
-   
+	public Element getUnSelectAllCheckBox() {
+		return driver
+				.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']//following-sibling::label//input");
+	}
+
+	public Element getFirstCheckBox() {
+		return driver.FindElementByXPath("//*[@id='chkDoc_1']");
+	}
+
+	public Element getTileViewSelectAll() {
+		return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']");
+	}
+
+	public Element getTileViewUnSelectAll() {
+		return driver.FindElementByXPath("//*[@id='selectText'][text()='Unselect All']");
+
+	}
+
+	public Element getThumbnailbar() {
+		return driver.FindElementByXPath("//*[@id='infos']/a/i");
+
+	}
+
 	public Element getThumbnailsView() {
 		return driver.FindElementByXPath("//*[@id='docgrid']");
 	}
@@ -1477,29 +1482,29 @@ public class DocListPage {
 	public Element getDocListViewsInRow() {
 		return driver.FindElementByXPath(
 				"//a[@id='TileView']/preceding-sibling::a/../../../a[@id='btnSaveProfile']/preceding-sibling::a");
-  }
-    public ElementCollection getInfoBtn() {
-		return driver
-				.FindElementsById("infos");
 	}
+
+	public ElementCollection getInfoBtn() {
+		return driver.FindElementsById("infos");
+	}
+
 	public Element getThumbnailBoxValue() {
-		return driver
-				.FindElementByXPath("//*[text()='CustodianName: ']/..//following-sibling::td");
+		return driver.FindElementByXPath("//*[text()='CustodianName: ']/..//following-sibling::td");
 	}
+
 	public Element getInfoBtnInThumbnailBoxes(int i) {
-		return driver
-				.FindElementByXPath("(//div[@id='infos'])["+i+"]");
+		return driver.FindElementByXPath("(//div[@id='infos'])[" + i + "]");
 	}
+
 	public Element getDocIdTileView() {
-		return driver
-				.FindElementByXPath("//*[contains(text(),'DocID:')]/..//following-sibling::td");
+		return driver.FindElementByXPath("//*[contains(text(),'DocID:')]/..//following-sibling::td");
 
 	}
-	
+
 	public Element getSeleColumDocFileSize() {
 		return driver.FindElementByXPath("//label//strong[text()='DocFileSize']");
 	}
-	
+
 	public Element getDocListDocFileSizeValue() {
 		return driver.FindElementByXPath(
 				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[7]");
@@ -1512,17 +1517,19 @@ public class DocListPage {
 	public Element getMetaDataAuthorName() {
 		return driver.FindElementByXPath("//td//Strong[contains(text(),'EmailAuthorName')]");
 	}
-	
+
 	public Element getSaveToProfileBtn() {
 		return driver.FindElementById("btnSaveProfile");
 	}
+
 	public Element getThumbNailOfFirstDocInDocList() {
 		return driver.FindElementByXPath("(//table[@id='dtDocList']//tr[@class='odd']//td[@class='image'])[1]");
 	}
-	
+
 	public Element getMetaDataBoxInDocList() {
 		return driver.FindElementByXPath("//div[@class='popover-content']/div");
 	}
+
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -1909,7 +1916,7 @@ public class DocListPage {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSelectFolderExisting(folderName));
-		getSelectFolderExisting(folderName).waitAndClick(5);
+		getSelectFolderExisting(folderName).waitAndClick(15);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1943,6 +1950,7 @@ public class DocListPage {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
+
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
 
 		if (getPureHitAddButton().isDisplayed()) {
@@ -2114,7 +2122,7 @@ public class DocListPage {
 
 		// click on Bulk Tag
 		base.waitForElement(getBulkTagAction());
-		getBulkTagAction().Click();
+		getBulkTagAction().waitAndClick(10);
 
 		base.waitForElement(getTagUntagDocumentsDialogBox());
 		getTagUntagDocumentsDialogBox().waitAndClick(5);
@@ -2122,10 +2130,10 @@ public class DocListPage {
 		driver.Manage().window().fullscreen();
 
 		base.waitForElement(getNewTagBtn());
-		getNewTagBtn().Click();
+		getNewTagBtn().waitAndClick(10);
 
 		base.waitForElement(getAction_Bulktag_AllTag());
-		getAction_Bulktag_AllTag().Click();
+		getAction_Bulktag_AllTag().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
 		getNameField().SendKeys(tagname);
@@ -2140,7 +2148,7 @@ public class DocListPage {
 		base.waitForElement(getTotalSelectedDocuments());
 
 		base.waitForElement(getFinalizeButton());
-		getFinalizeButton().Click();
+		getFinalizeButton().waitAndClick(10);
 
 		if (getPopUpOkBtn().isElementAvailable(5)) {
 			getPopUpOkBtn().waitAndClick(10);
@@ -2320,7 +2328,8 @@ public class DocListPage {
 				if (random1 != 0) {
 					base.waitForElement(getSelectAllDocCheckBox());
 					base.waitTillElemetToBeClickable(getDocCheckBox(random1));
-					getDocCheckBox(random1).waitAndClick(10);;
+					getDocCheckBox(random1).waitAndClick(10);
+					;
 					arList.add(getDocID(random1).getText().trim());
 				} else if (random1 == 0) {
 					i--;
@@ -4038,7 +4047,8 @@ public class DocListPage {
 			SelectColumnBtn().waitAndClick(10);
 			base.waitForElement(ele);
 			ele.ScrollTo();
-			ele.Click();
+			driver.waitForPageToBeReady();
+			ele.waitAndClick(10);
 			base.waitForElement(getAddToSelect());
 			getAddToSelect().waitAndClick(10);
 			base.waitForElement(getUpdateColumnBtn());
@@ -4810,7 +4820,6 @@ public class DocListPage {
 		return arList;
 	}
 
-	
 	/**
 	 * @author Gopinath
 	 * @Description: method to verify sequence of parent and child docs
@@ -6350,7 +6359,7 @@ public class DocListPage {
 	}
 
 	/**
-	 * @Author Jeevitha  @Modified date: 23/09/2022
+	 * @Author Jeevitha @Modified date: 23/09/2022
 	 * @Description : ignore DocType which is not downloadable format and add
 	 *              remaining to the list
 	 * @param docIdOrName
@@ -6445,7 +6454,7 @@ public class DocListPage {
 	 * @author Vijaya.Rani
 	 * @Description:methoad excludeDoclist
 	 *
-	 * @param data(Domain        name )
+	 * @param data(Domain name )
 	 */
 	public void excludeDoclist(String data) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -6462,10 +6471,11 @@ public class DocListPage {
 			e.printStackTrace();
 		}
 		getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
-		
+
 	}
+
 	/**
-	 * @author 
+	 * @author
 	 * @Description: verify selectall doc is present to all check box
 	 *
 	 */
@@ -6475,20 +6485,19 @@ public class DocListPage {
 				return getTileView().Visible();
 			}
 		}), Input.wait60);
-	    getTileView().waitAndClick(5);
-	    base.waitForElement(getSelectAllCheckBox());
-	    if (getSelectAllCheckBox().isElementPresent()) {
-	    	base.waitForElement(getSelectAllCheckBox());
-			getSelectAllCheckBox().waitAndClick(5);	
+		getTileView().waitAndClick(5);
+		base.waitForElement(getSelectAllCheckBox());
+		if (getSelectAllCheckBox().isElementPresent()) {
+			base.waitForElement(getSelectAllCheckBox());
+			getSelectAllCheckBox().waitAndClick(5);
 			base.passedStep("selectall checkbox is displayed in tileview");
-		}else {
+		} else {
 			base.failedStep("check box is not present");
 		}
 		base.waitForElement(getSelectAllOk());
-		getSelectAllOk().waitAndClick(5);		
-}
+		getSelectAllOk().waitAndClick(5);
+	}
 
-	
 	/**
 	 * @author Vijaya.rani
 	 * @Description: verify select pageLength
@@ -6514,19 +6523,18 @@ public class DocListPage {
 
 	/**
 	 * @author Brundha.T
-	 * @param CompareString
-	 * Description: verifying applied filter in tile view
+	 * @param CompareString Description: verifying applied filter in tile view
 	 */
-	public void verifyingThumbnailBoxesValues(String CompareString ) {
-		for(int i=1;i<getInfoBtn().size();i++) {
+	public void verifyingThumbnailBoxesValues(String CompareString) {
+		for (int i = 1; i < getInfoBtn().size(); i++) {
 			driver.waitForPageToBeReady();
 			getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
-			String ActualString=getThumbnailBoxValue().getText();
-			base.compareTextViaContains(ActualString,CompareString, "Filter are applied for thumbnail boxes",
+			String ActualString = getThumbnailBoxValue().getText();
+			base.compareTextViaContains(ActualString, CompareString, "Filter are applied for thumbnail boxes",
 					"Filters are not applied for thumbnail boxes");
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.rani
 	 * @Description :addding docfilesize column in doclist page.
@@ -6544,13 +6552,14 @@ public class DocListPage {
 		base.waitForElement(getUpdateColumnBtn());
 		getUpdateColumnBtn().Click();
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will select all the docs in doclist page and perform new bulk tag
+	 * @description: this method will select all the docs in doclist page and
+	 *               perform new bulk tag
 	 */
 	public void selectAllDocsAndBulkTagFromDoclist(String tagName) {
-		
+
 		selectAllDocs();
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
@@ -6560,7 +6569,7 @@ public class DocListPage {
 		getDocList_Bulktag().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getTagUntagDocumentsDialogBox());
-		base.ValidateElement_Presence(getTagUntagDocumentsDialogBox(),"tag/untag popup");
+		base.ValidateElement_Presence(getTagUntagDocumentsDialogBox(), "tag/untag popup");
 		base.waitForElement(getNewTagBtn());
 		getNewTagBtn().waitAndClick(10);
 		base.waitForElement(getAction_Bulktag_AllTag());
@@ -6572,34 +6581,35 @@ public class DocListPage {
 		getContinueButtonUntag().waitAndClick(10);
 		base.waitTillElemetToBeClickable(getFinalizeButton());
 		getFinalizeButton().waitAndClick(10);
-		if(getPopUpOkBtn().isElementAvailable(10)) {
+		if (getPopUpOkBtn().isElementAvailable(10)) {
 			getPopUpOkBtn().waitAndClick(10);
 		}
 		base.VerifySuccessMessage("Records saved successfully");
 	}
-	
+
 	/**
-	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date: 20/12/2022
-	 * @description: this method will return the single metadata value from doclist when search result under 500
+	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date:
+	 *          20/12/2022
+	 * @description: this method will return the single metadata value from doclist
+	 *               when search result under 500
 	 */
-	public String getDoclistMetaDataValue(int count,int column) {
-			
-			String metadataValue=null;
-			base.waitForElement(getDocList_SelectLenthtobeshown());
-			getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
-			driver.waitForPageToBeReady();
-			base.waitForElement(getDataInDoclist(1,column));
-			for(int i=1;i<=count;i++) {
-				metadataValue = getDataInDoclist(i,column).getText();
-				if(!(metadataValue.isEmpty())) {
-					base.passedStep("metadata value"+metadataValue);
-					break;
-				}
-				else {
-					System.out.println("checking next row");
-				}
+	public String getDoclistMetaDataValue(int count, int column) {
+
+		String metadataValue = null;
+		base.waitForElement(getDocList_SelectLenthtobeshown());
+		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataInDoclist(1, column));
+		for (int i = 1; i <= count; i++) {
+			metadataValue = getDataInDoclist(i, column).getText();
+			if (!(metadataValue.isEmpty())) {
+				base.passedStep("metadata value" + metadataValue);
+				break;
+			} else {
+				System.out.println("checking next row");
 			}
-			return metadataValue;
 		}
+		return metadataValue;
+	}
 
 }
