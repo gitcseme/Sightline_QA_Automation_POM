@@ -595,6 +595,105 @@ public class DocViewAudio_Regression28 {
 		
 
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/12/2022 RPMXCON-51791
+	 * @throws Exception
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with same term and different/same threshold are
+	 *              assigned to assignment from session search > Doc List.
+	 */
+
+	@Test(description = "RPMXCON-51791", enabled = true, groups = { "regression" })
+	public void verifyAudioHitIsDisplayedWithAssignment() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51791");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with same term and different/same threshold are assigned to assignment from session search > Doc List.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		DocListPage docListPage = new DocListPage(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rmu1userName + "'");
+
+		// audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocList();
+
+		docListPage.selectAllDocumentsInCurrentPageOnly();
+
+		baseClass.stepInfo("Assignment Creation");
+		assignmentPage.assignmentCreationWithPersistantHitDocList(assign, Input.codingFormName);
+
+		baseClass.stepInfo("Toggle Coding Stamp Enabled");
+		assignmentPage.toggleCodingStampEnabled();
+
+		baseClass.stepInfo("Assignment Distributing To Reviewer");
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+
+		// Login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rev1userName + "'");
+
+		// Select the Assignment from dashboard
+		assignment.SelectAssignmentByReviewer(assign);
+
+		docView.clickOnPersistantHitEyeIcon();
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docView.getAudioPersistantHitEyeIcon());
+		docView.getAudioPersistantHitEyeIcon().Click();
+		docView.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+		loginPage.logout();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rmu1userName + "'");
+
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString1, Input.language, "max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		// second audio search with same term and min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString1, Input.language, "min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		// view All audio Docs in DocList
+		sessionSearch.ViewInDocList();
+
+		docListPage.selectAllDocumentsInCurrentPageOnly();
+
+		baseClass.stepInfo("Assignment Creation");
+		assignmentPage.assignmentCreationWithPersistantHitDocList(assign, Input.codingFormName);
+
+		baseClass.stepInfo("Toggle Coding Stamp Enabled");
+		assignmentPage.toggleCodingStampEnabled();
+
+		baseClass.stepInfo("Assignment Distributing To Reviewer");
+		assignmentPage.assignmentDistributingToReviewer();
+
+		loginPage.logout();
+
+		// Login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rev1userName + "'");
+
+		// Select the Assignment from dashboard
+		assignment.SelectAssignmentByReviewer(assign);
+
+		docView.clickOnPersistantHitEyeIcon();
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docView.getAudioPersistantHitEyeIcon());
+		docView.getAudioPersistantHitEyeIcon().Click();
+		docView.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+		loginPage.logout();
+
+	}
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {

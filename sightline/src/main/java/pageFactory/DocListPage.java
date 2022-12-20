@@ -6579,18 +6579,18 @@ public class DocListPage {
 	}
 	
 	/**
-	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 10/12/2022 Modified by: NA Modified Date: 20/12/2022
 	 * @description: this method will return the single metadata value from doclist when search result under 500
 	 */
-	public String getDoclistMetaDataValue(int count) {
+	public String getDoclistMetaDataValue(int count,int column) {
 			
 			String metadataValue=null;
 			base.waitForElement(getDocList_SelectLenthtobeshown());
 			getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
 			driver.waitForPageToBeReady();
-			base.waitForElement(getDataInDoclist(1,4));
+			base.waitForElement(getDataInDoclist(1,column));
 			for(int i=1;i<=count;i++) {
-				metadataValue = getDataInDoclist(i,4).getText();
+				metadataValue = getDataInDoclist(i,column).getText();
 				if(!(metadataValue.isEmpty())) {
 					base.passedStep("metadata value"+metadataValue);
 					break;

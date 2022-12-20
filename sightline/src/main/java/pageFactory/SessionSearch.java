@@ -2253,6 +2253,12 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//div[@id='Adv']//ol[@id='coreList']/li[@lang='contentmetadata']");
 	}
 	
+	public Element getAdvancedWaringMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+
+	}
+
+	
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

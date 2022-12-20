@@ -1139,6 +1139,13 @@ public class UserManagement {
 	}
 
 	// added by sowndarya
+	public Element getEditAttorneyCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsAttorneyProfileEdit']//following-sibling::i");
+	}
+	public Element getAttorneyStatusCheck() {
+		return driver.FindElementByXPath("//input[@id='IsAttorneyProfileEdit'][@checked='checked']");
+	}
+	
 	public Element getRightAssignErrorMessage() {
 		return driver.FindElementById("RightAssignErrorMessage");
 	}
@@ -5660,6 +5667,55 @@ public class UserManagement {
 			bc.VerifyErrorMessage(
 					"20001000023 : The specified user cannot be added, since an identical user already exists in the project, but in a different role.");
 		}
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 17/12/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will open the functionality tab for editing
+	 */
+	public void NavigateToEditUserFunctionalityTab(String userName,String project) throws Exception {
+		
+		navigateToUsersPAge();
+		passingUserName(userName);
+		applyFilter();
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++) {
+			if(getSelectUserToEdit(project).isElementAvailable(10)) {
+				bc.passedStep("user available");
+				break;
+			}
+			else if(!(getDisabledNextBtn().isElementAvailable(10))) {
+				getAssgnPaginationNextButton().waitAndClick(10);
+				bc.waitTime(2);
+				System.out.println("checking next page");
+			}
+		}
+		editFunctionality(project);
+		getFunctionalityTab().waitAndClick(10);
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 17/12/2022 Modified by: NA Modified Date: NA
+	 * @throws Exception 
+	 * @description: this method will check the search functionality status
+	 */
+	public String verifySearchFunctionalityStatus() throws Exception {
+		String status=null;
+		
+		driver.waitForPageToBeReady();
+		boolean flag = getSearchStatusCheck().isElementAvailable(5);
+		bc.passedStep("Status--"+flag);
+		if (flag == false) {
+			bc.passedStep("Search checkbox is unchecked");
+			status="Disabled";
+		}
+		else if (flag == true) {
+			bc.passedStep("Search checkbox is checked");
+			status="Enabled";
+		}
+		return status;
+
 	}
 
 }

@@ -1855,4 +1855,86 @@ public class SecurityGroupsPage {
 			}
 		}
 	}
+	
+	/**
+	 * @author: Arun Created Date: 19/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will start regenerate analytics at SG level
+	 */
+	public void startRegenerateAnalyticsAtSgLevel(String securityGroup) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSecurityGroupList());
+		getSecurityGroupList().selectFromDropdown().selectByVisibleText(securityGroup);
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		// start the regenerate analytics
+		bc.waitForElement(getAnalyticsSGLevel());
+		getAnalyticsSGLevel().waitAndClick(10);
+		bc.waitForElement(getSG_GenerateEmailButton());
+		getSG_GenerateEmailButton().waitAndClick(10);
+		if (getYesButton().isElementAvailable(10)) {
+			getYesButton().waitAndClick(10);
+			bc.VerifySuccessMessage(
+					"Process Regenerate Email Inclusive and Email Duplicate data has started successfully.");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 19/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify completion status of regenerate analytics at SG level
+	 */
+	public void verifyRegenerateAnalyticsStatus() {
+		
+		String statuses ="sending data to threading engine,running sub-analyses,updating database,"
+				+ "re-indexing Elastic Search,complete";
+		// verify the status
+		bc.stepInfo("navigate to background task page and verify");
+		bc.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+		for (int i = 0; i < 500; i++) {
+			bc.waitTime(2);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			String status = getBackGroundTaskStatus(1, 8).getText();
+			System.out.println(status);
+			String message =getBackGroundTaskStatus(1, 9).getText();
+			if(statuses.contains(message)) {
+				System.out.println("current status--"+message);
+			}
+			if (status.contains("ERROR")) {
+				bc.failedStep("Regenerate Analytics failed, need to contact admin/retry");
+			} else if (status.contains("COMPLETED")) {
+				bc.stepInfo("status--"+status);
+				bc.passedStep("Regenerate analytics completed successfully at SG level");
+				break;
+			}
+		}
+				
+	}
+	
+	/**
+	 * @author: Arun Created Date: 19/12/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify failed status of regenerate analytics at SG level
+	 */
+	public void verifyRegenerateAnalyticsFailedStatus() {
+		
+		// verify the status
+		bc.stepInfo("navigate to background task page and verify");
+		bc.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+		for (int i = 0; i < 500; i++) {
+			bc.waitTime(2);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			String status = getBackGroundTaskStatus(1, 8).getText();
+			System.out.println(status);
+			String message =getBackGroundTaskStatus(1, 9).getText();
+			System.out.println(message);
+			if (status.contains("ERROR")) {
+				bc.passedStep("Regenerate Analytics failed");
+				break;
+			} else if (status.contains("COMPLETED")) {
+				bc.failedStep("Regenerate analytics completed successfully at SG level");
+			}
+		}
+	}
+	
 }
