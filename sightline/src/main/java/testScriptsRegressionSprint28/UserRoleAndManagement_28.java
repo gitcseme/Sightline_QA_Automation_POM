@@ -19,6 +19,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -190,6 +191,121 @@ public class UserRoleAndManagement_28 {
 		loginPage.logout();
 	}
 
+	@DataProvider(name = "Users")
+	public Object[][] users() {
+		Object[][] users = {{ Input.pa1userName, Input.pa1password }, { Input.da1userName, Input.da1password }, 
+		                    { Input.sa1userName, Input.sa1password }, { Input.rmu1userName, Input.rmu1password }};
+		return users;
+	}
+	
+	/**
+	 * @author NA
+	 * @Description :To Verify that user can remove attorney profile from an RMU user who is set with attorney profile.[RPMXCON-53251]
+	 */
+	@Test(description = "RPMXCON-53251", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyRemoveAttorneyFromRMU(String username, String password) throws Exception {
+		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
+		UserManagement user = new UserManagement(driver);
+		
+		String firstName1 = "User01";
+		String lastName1 = "RMU";
+		String email1 = "user1"+Utility.dynamicNameAppender()+"@consilio.com";
+		String role = Input.ReviewManager;
+		String firstName2 = "User02";
+		String lastName2 = "RMU";
+		String email2 = "user2"+Utility.dynamicNameAppender()+"@consilio.com";
+		String sgName = "Security Group" + Utility.dynamicNameAppender();	
+		
+		baseClass.stepInfo("RPMXCON-53251");
+		baseClass.stepInfo("To Verify that user can remove attorney profile from an RMU user who is set with attorney profile");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sgPage.navigateToSecurityGropusPageURL();
+		sgPage.createSecurityGroups(sgName);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.createNewUser(firstName1, lastName1, role, email1, Input.domainName, Input.projectName);
+		user.createNewUser(firstName2, lastName2, role, email2, Input.domainName, Input.projectName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.filterByName(email1);
+		user.editSelectedUser(Input.projectName);
+		baseClass.waitForElement(user.getEditAttorneyCheckBox());
+		user.getEditAttorneyCheckBox().waitAndClick(5);
+		baseClass.waitForElement(user.getSubmitChanges());
+		user.getSubmitChanges().waitAndClick(5);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.filterByName(email2);
+		user.editSelectedUser(Input.projectName);
+		baseClass.waitForElement(user.getEditAttorneyCheckBox());
+		user.getEditAttorneyCheckBox().waitAndClick(5);
+		user.addingSGToUser(Input.securityGroup, sgName);
+		baseClass.waitForElement(user.getSubmitChanges());
+		user.getSubmitChanges().waitAndClick(5);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(username, password);
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		if(username.equalsIgnoreCase(Input.pa1userName) || username.equalsIgnoreCase(Input.rmu1userName)) {
+			user.filterByName(email1);
+			user.editSelectedUser(Input.securityGroup);
+		} else {
+			user.filterByName(email1);
+		    user.editSelectedUser(Input.projectName);
+		}
+		baseClass.waitForElement(user.getEditAttorneyCheckBox());
+		user.getEditAttorneyCheckBox().waitAndClick(5);
+		baseClass.waitForElement(user.getSubmitChanges());
+		user.getSubmitChanges().waitAndClick(5);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.filterByName(email1);
+		user.editSelectedUser(Input.projectName);
+		boolean status1 = user.getAttorneyStatusCheck().isElementAvailable(5);
+		SoftAssert aserts = new SoftAssert();
+		aserts.assertFalse(status1);
+		aserts.assertAll();
+		
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		if(username.equalsIgnoreCase(Input.pa1userName) || username.equalsIgnoreCase(Input.rmu1userName)) {
+			user.filterByName(email2);
+			user.editSelectedUser(Input.securityGroup);
+		} else {
+		user.filterByName(email2);
+		user.editSelectedUser(Input.projectName);
+		}
+		baseClass.waitForElement(user.getEditAttorneyCheckBox());
+		user.getEditAttorneyCheckBox().waitAndClick(5);
+		baseClass.waitForElement(user.getSubmitChanges());
+		user.getSubmitChanges().waitAndClick(5);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		user.filterByName(email1);
+		user.editSelectedUser(Input.projectName);
+		boolean status2 = user.getAttorneyStatusCheck().isElementAvailable(5);
+		aserts.assertFalse(status2);	
+		aserts.assertAll();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.filterByName(email1);
+		user.verifyDeleteUserPopup(true, Input.projectName);
+		user.filterByName(email2);
+		user.verifyDeleteUserPopup(true, Input.projectName);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sgPage.navigateToSecurityGropusPageURL();
+		sgPage.deleteSecurityGroups(sgName);
+		baseClass.passedStep("Verified - that user can remove attorney profile from an RMU user who is set with attorney profile");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

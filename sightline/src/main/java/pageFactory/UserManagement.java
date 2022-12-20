@@ -1139,6 +1139,13 @@ public class UserManagement {
 	}
 
 	// added by sowndarya
+	public Element getEditAttorneyCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsAttorneyProfileEdit']//following-sibling::i");
+	}
+	public Element getAttorneyStatusCheck() {
+		return driver.FindElementByXPath("//input[@id='IsAttorneyProfileEdit'][@checked='checked']");
+	}
+	
 	public Element getRightAssignErrorMessage() {
 		return driver.FindElementById("RightAssignErrorMessage");
 	}
