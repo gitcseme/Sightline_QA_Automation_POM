@@ -629,7 +629,9 @@ public class BatchPrintPage {
 	public Element getDocCountInAnalysisPage() {
 		return driver.FindElementByXPath("//p//span[last()]");
 	}
-
+	public Element getBasisProduction(String ProdName) {
+		return driver.FindElementByXPath("//select[@id='ProductionDropDown']//option[text()='"+ProdName+"']");
+	}
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
