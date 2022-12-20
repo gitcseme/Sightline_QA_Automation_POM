@@ -414,7 +414,7 @@ public class ExportRegression27 {
 		String exportName = "E" + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
