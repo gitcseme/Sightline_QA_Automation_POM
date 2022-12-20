@@ -4301,10 +4301,12 @@ public class DocExplorerPage {
 		SelectingAllDocuments(value);
 		if (action.equalsIgnoreCase("doclist")) {
 			docExpViewInDocList();
+			bc.waitTime(5); //app sync
 			driver.waitForPageToBeReady();
 			bc.waitForElement(doclist.SelectColumnBtn());
 		} else if (action.equalsIgnoreCase("docview")) {
 			docExpViewInDocView();
+			bc.waitTime(5);
 			driver.waitForPageToBeReady();
 		}
 		return count;

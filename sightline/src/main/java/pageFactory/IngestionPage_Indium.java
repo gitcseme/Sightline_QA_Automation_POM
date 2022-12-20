@@ -5732,6 +5732,9 @@ public class IngestionPage_Indium {
 				if(status.contains("FAILED")) {
 					base.failedStep("Analytics ingestion failed, need to contact admin/retry");
 				}
+				else if(status.contains("IN PROGRESS") && i==200) {
+					base.failedStep("Analytics ingestion failed, need to contact admin/retry");
+				}
 				publishButton().isElementAvailable(15);
 				if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
 					driver.waitForPageToBeReady();
@@ -9121,10 +9124,10 @@ public class IngestionPage_Indium {
 				}
 			}), Input.wait30);
 			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.documentKey);
-			//there is a spelling difference in mapping section in pt and qa, will faill in pt
-			performMapping(6,"EmailBCCNamesAndAddresses",Input.email,"EmailBCCNamesAndAddresses");
-			performMapping(7,"EmailCCNamesAndAddresses",Input.email,"EmailCCNamesAndAddresses");
-			performMapping(8,"EmailToNamesAndAddresses",Input.email,Input.emailToNamesAndAddresses);
+			//there is a spelling difference in mapping section in pt and qa, will faill in qa
+			performMapping(6,"EmailBCCNameAndBCCAddress",Input.email,"EmailBCCNamesAndAddresses");
+			performMapping(7,"EmailCCNamAndCCAddress",Input.email,"EmailCCNamesAndAddresses");
+			performMapping(8,"EmailToNameAndAddress",Input.email,Input.emailToNamesAndAddresses);
 			clickOnPreviewAndRunButton();
 			base.stepInfo("Ingestion started");
 			

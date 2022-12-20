@@ -75,7 +75,7 @@ public class Ingestion_Regression_11 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-49072", enabled = true, groups = { "regression" })
-	public void verifyIngestionOverlaywithUpdatedDatOnly() throws InterruptedException {
+	public void TCA1verifyIngestionOverlaywithUpdatedDatOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49072");
 		baseClass.stepInfo("To verify that Ingestion overlay with DAT only.");
@@ -123,7 +123,7 @@ public class Ingestion_Regression_11 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68079", enabled = true, groups = { "regression" })
-	public void verifyUnreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
+	public void TCA2verifyUnreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68079");
 		baseClass.stepInfo("Unrelease only few of the documents from user created SG and run security group analytics");
@@ -143,8 +143,8 @@ public class Ingestion_Regression_11 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, 
-					Input.specialCjkDat);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem, Input.datLoadFile2,
+					Input.nativeLoadFile2, Input.textLoadFile2);
 			baseClass.stepInfo("Publish docs");
 			ingestionName= ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -173,11 +173,15 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(userSG);
 		baseClass.stepInfo("verify project fields should be searchable");
+		baseClass.selectproject();
 		for(int j=0;j<metadata.length;j++) {
-			int result = sessionSearch.metaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
-			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
-			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			sessionSearch.addNewSearch();
+			if((!metaValue.get(j).isEmpty())){
+				
+				int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
+				sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
+				baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
+				baseClass.selectproject();
+			}
 		}
 		baseClass.stepInfo("verify analytics SG completed");
 		securityGroup.verifyRegenerateAnalyticsStatus();
@@ -191,7 +195,7 @@ public class Ingestion_Regression_11 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68077", enabled = true, groups = { "regression" })
-	public void verifyUnreleaseAllDocsAndPerformAnalytics() throws InterruptedException {
+	public void TCA3verifyUnreleaseAllDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68077");
 		baseClass.stepInfo("Unrelease all the documents from user created SG and run security group analytics");
@@ -212,8 +216,8 @@ public class Ingestion_Regression_11 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, 
-					Input.specialCjkDat);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem, Input.datLoadFile2,
+					Input.nativeLoadFile2, Input.textLoadFile2);
 			baseClass.stepInfo("Publish docs");
 			ingestionName= ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -242,11 +246,14 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(userSG);
 		baseClass.stepInfo("verify project fields should be searchable");
+		baseClass.selectproject();
 		for(int j=0;j<metadata.length;j++) {
+			if((!metaValue.get(j).isEmpty())){
 			int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			sessionSearch.addNewSearch();
+			baseClass.selectproject();
+			}
 		}
 		baseClass.stepInfo("verify analytics SG failed");
 		securityGroup.verifyRegenerateAnalyticsFailedStatus();
@@ -260,7 +267,7 @@ public class Ingestion_Regression_11 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-67981", enabled = true, groups = { "regression" })
-	public void verifyreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
+	public void TCA4verifyreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-67981");
 		baseClass.stepInfo("Unrelease all the documents from user created SG and run security group analytics");
@@ -277,8 +284,8 @@ public class Ingestion_Regression_11 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, 
-					Input.specialCjkDat);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem, Input.datLoadFile2,
+					Input.nativeLoadFile2, Input.textLoadFile2);
 			baseClass.stepInfo("Publish docs");
 			ingestionName= ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -306,10 +313,12 @@ public class Ingestion_Regression_11 {
 		securityGroup.startRegenerateAnalyticsAtSgLevel(Input.securityGroup);
 		baseClass.stepInfo("verify project fields should be searchable");
 		for(int j=0;j<metadata.length;j++) {
+			if((!metaValue.get(j).isEmpty())){
 			int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			sessionSearch.addNewSearch();
+			baseClass.selectproject();
+			}
 		}
 		baseClass.stepInfo("verify analytics SG completed");
 		securityGroup.verifyRegenerateAnalyticsStatus();
@@ -324,7 +333,7 @@ public class Ingestion_Regression_11 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68078", enabled = true, groups = { "regression" })
-	public void verifyUnreleaseFewDocsFromDefaultSGAndPerformAnalytics() throws InterruptedException {
+	public void TCA5verifyUnreleaseFewDocsFromDefaultSGAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68078");
 		baseClass.stepInfo("Unrelease only few of the documents from default SG and run security group analytics");
@@ -342,8 +351,8 @@ public class Ingestion_Regression_11 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, 
-					Input.specialCjkDat);
+			ingestionPage.performGD_994NativeFolderIngestion(Input.sourceSystem, Input.datLoadFile2,
+					Input.nativeLoadFile2, Input.textLoadFile2);
 			baseClass.stepInfo("Publish docs");
 			ingestionName= ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
@@ -373,11 +382,14 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(Input.securityGroup);
 		baseClass.stepInfo("verify project fields should be searchable");
+		baseClass.selectproject();
 		for(int j=0;j<metadata.length;j++) {
-			int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
-			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
-			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			sessionSearch.addNewSearch();
+			if((!metaValue.get(j).isEmpty())){
+				int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
+				sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
+				baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
+				baseClass.selectproject();
+			}	
 		}
 		baseClass.stepInfo("verify analytics SG completed");
 		securityGroup.verifyRegenerateAnalyticsStatus();
