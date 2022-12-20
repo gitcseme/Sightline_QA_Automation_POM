@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint28;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -928,6 +929,188 @@ public class AdvancedSearchRegression_28 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/12/2022 RPMXCON-50025
+	 * @throws Exception
+	 * @Description Verify that correct result appears for Proximity Queries
+	 *              containing Boolean components OR in Advanced Search Query
+	 *              Screen.
+	 */
+	@Test(description = "RPMXCON-50025", enabled = true, groups = { "regression" })
+	public void verifyResultAppearsForProximityQueriesContainingBooleanComponentsORinAdvanSearch() {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50025");
+		baseClass.stepInfo(
+				"Verify that correct result appears for Proximity Queries containing Boolean components OR in Advanced Search Query Screen.");
+
+		String searchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder";
+
+		String exampleSearchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder ";
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully logged in as '" + Input.rmu1userName + "'");
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button
+		baseClass.waitTime(2);
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		// Verify that correct result appears for Proximity Queries containing Boolean
+		// components OR in Advanced Search Query Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep(
+				"Verified that result appears for Proximity Queries containing Boolean components OR in Advanced Search Query Screen.");
+
+		// performing search for given example proximity search query.
+		baseClass.stepInfo("performing search for given example proximity search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// Verify that correct result appears for Proximity Queries containing Boolean
+		// components OR in Advanced Search Query Screen. example ("ProximitySearch
+		// Iterative"~15 OR m0ney) OR TruthFinder This query returns documents having -
+		// term ProximitySearch and Iterative" within 15 words OR M0ney OR truthFinder.
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"verified that pureHit appear for Proximity Queries containing Boolean components OR match with pureHit appear for given example proximity Search Query.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "proximityHavingPhrasesAndTerm")
+	public Object[][] proximityHavingPhrasesAndTerm() {
+		return new Object[][] { { "(\"Truthful Recall \"~5) AND (\"requirements money\"~5)" },
+				{ "(“Truthful Recall ”~5) AND (“requirements money”~5)" },
+				{ "(“Truthful Recall ”~5) AND (“requirements money”~5)" } };
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/12/2022 RPMXCON-49591
+	 * @throws Exception
+	 * @Description Verify that result appears for proximity having AND operator
+	 *              between 2 Proximity Searches in Advanced Search Query Screen.
+	 */
+	@Test(description = "RPMXCON-49591", dataProvider = "proximityHavingPhrasesAndTerm", enabled = true, groups = {
+			"regression" })
+	public void verifyResultAppearsForProximityHavingPhrasesANDTermInAdvancedSearchQuery(String searchString) {
+
+		String exampleSearchString = "(\"Truthful Recall\"~5) AND (\"requirements collaboration\"~5)";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49591 Advanced Search.");
+		baseClass.stepInfo(
+				"Verify that result appears for proximity having AND operator between 2 Proximity Searches in Advanced Search Query Screen.");
+
+		// login
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// configure search Query
+		sessionSearch.advanedContentDraftSearch(searchString);
+		baseClass.stepInfo("Search Query configured.");
+
+		// Click on "Search" button
+		baseClass.stepInfo("Clicking on 'Search' button.");
+		sessionSearch.SearchBtnAction();
+
+		// verify that application displays Proximity warning message
+		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.passedStep("verified that application displays Proximity warning message.");
+
+		// Click on "Yes" button
+		sessionSearch.tallyContinue(5);
+		// Verify that result appears for proximity having Phrases and Term in Advanced
+		// Search Query Screen.
+		int searchStringPureHit = sessionSearch.returnPurehitCount();
+		baseClass.passedStep(
+				"Verified that  result appears for proximity having  Phrases and Term in Advanced Search Query Screen.");
+
+		// performing search for given example proximity search query.
+		baseClass.stepInfo("performing search for given example proximity search query.");
+		sessionSearch.advancedNewContentSearchNotPureHit(exampleSearchString);
+		sessionSearch.tallyContinue(5);
+		baseClass.waitTime(2);
+		int exampleSearchStringPureHit = sessionSearch.returnPurehitCount();
+
+		// Verify that Result should appear for proximity having Phrases and Term in
+		// Advanced Search Query Screen. example ("Truthful Recall"~5) AND
+		// ("requirements collaboration"~5) Documents that contain both Truthful within
+		// 5 words of Recall and requirements within 5 of collaboration
+		assertion.assertEquals(searchStringPureHit, exampleSearchStringPureHit);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"verified that pureHit appear for test Data proximity Search Query match with pureHit appear for given example proximity Search Query.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:20/12/2022 RPMXCON-57370
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify belly band message appears when configured query without
+	 *              enclosed parantheses "(" and ")" in Advanced Search Query
+	 *              screen(Warning message 40001000008).
+	 */
+	@Test(description = "RPMXCON-57370", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyApplicationAdvancedSearchDisplayWarningMsg(String username, String password, String role)
+			throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57370");
+		baseClass.stepInfo(
+				"Verify belly band message appears when configured query without enclosed parantheses \"(\" and \")\" in Advanced Search Query screen(Warning message 40001000008).");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String searchTerm = "(test test";
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Go to Advanced Search page enter the Searchterm");
+		sessionSearch.getAdvancedSearchLink().Click();
+		driver.waitForPageToBeReady();
+		sessionSearch.getContentAndMetaDatabtn().Click();
+		sessionSearch.getAdvancedContentSearchInput().SendKeys(searchTerm);
+		// Click on Search button
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		String actualMsg = sessionSearch.getAdvancedWaringMsg().getText();
+		System.out.println(actualMsg);
+		baseClass.stepInfo(actualMsg);
+		String expectedMsg = "Parentheses are missing in your search query.";
+		driver.waitForPageToBeReady();
+		if (actualMsg.contains(expectedMsg)) {
+			baseClass.passedStep("Observe that application warning message displayed successfully");
+		} else {
+			baseClass.failedStep("No such message display");
+		}
+		sessionSearch.getYesQueryAlert().waitAndClick(3);
+		if (sessionSearch.getNewSearch().isDisplayed()) {
+			baseClass.passedStep("It should redirect to Search page ");
+		} else {
+			baseClass.failedStep("It should not redirect to Search page ");
+		}
+
+		loginPage.logout();
+	}
+	
 	@DataProvider(name = "Users")
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
