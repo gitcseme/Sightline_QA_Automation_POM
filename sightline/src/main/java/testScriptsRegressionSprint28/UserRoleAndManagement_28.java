@@ -206,7 +206,7 @@ public class UserRoleAndManagement_28 {
 	public void verifyRemoveAttorneyFromRMU(String username, String password) throws Exception {
 		SecurityGroupsPage sgPage = new SecurityGroupsPage(driver);
 		UserManagement user = new UserManagement(driver);
-		
+
 		String firstName1 = "User01";
 		String lastName1 = "RMU";
 		String email1 = "user1"+Utility.dynamicNameAppender()+"@consilio.com";
@@ -215,7 +215,7 @@ public class UserRoleAndManagement_28 {
 		String lastName2 = "RMU";
 		String email2 = "user2"+Utility.dynamicNameAppender()+"@consilio.com";
 		String sgName = "Security Group" + Utility.dynamicNameAppender();	
-		
+
 		baseClass.stepInfo("RPMXCON-53251");
 		baseClass.stepInfo("To Verify that user can remove attorney profile from an RMU user who is set with attorney profile");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -229,7 +229,8 @@ public class UserRoleAndManagement_28 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		user.filterByName(email1);
-		user.editSelectedUser(Input.projectName);
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
 		baseClass.waitForElement(user.getEditAttorneyCheckBox());
 		user.getEditAttorneyCheckBox().waitAndClick(5);
 		baseClass.waitForElement(user.getSubmitChanges());
@@ -238,26 +239,25 @@ public class UserRoleAndManagement_28 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		user.filterByName(email2);
-		user.editSelectedUser(Input.projectName);
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
 		baseClass.waitForElement(user.getEditAttorneyCheckBox());
 		user.getEditAttorneyCheckBox().waitAndClick(5);
+
 		user.addingSGToUser(Input.securityGroup, sgName);
 		baseClass.waitForElement(user.getSubmitChanges());
 		user.getSubmitChanges().waitAndClick(5);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(username, password);
 		user.navigateToUsersPAge();
 		driver.waitForPageToBeReady();
-		if(username.equalsIgnoreCase(Input.pa1userName) || username.equalsIgnoreCase(Input.rmu1userName)) {
-			user.filterByName(email1);
-			user.editSelectedUser(Input.securityGroup);
-		} else {
-			user.filterByName(email1);
-		    user.editSelectedUser(Input.projectName);
-		}
+		user.filterByName(email1);
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
+			
 		baseClass.waitForElement(user.getEditAttorneyCheckBox());
 		user.getEditAttorneyCheckBox().waitAndClick(5);
 		baseClass.waitForElement(user.getSubmitChanges());
@@ -265,7 +265,8 @@ public class UserRoleAndManagement_28 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		user.filterByName(email1);
-		user.editSelectedUser(Input.projectName);
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
 		boolean status1 = user.getAttorneyStatusCheck().isElementAvailable(5);
 		SoftAssert aserts = new SoftAssert();
 		aserts.assertFalse(status1);
@@ -273,13 +274,10 @@ public class UserRoleAndManagement_28 {
 		
 		user.navigateToUsersPAge();
 		driver.waitForPageToBeReady();
-		if(username.equalsIgnoreCase(Input.pa1userName) || username.equalsIgnoreCase(Input.rmu1userName)) {
-			user.filterByName(email2);
-			user.editSelectedUser(Input.securityGroup);
-		} else {
 		user.filterByName(email2);
-		user.editSelectedUser(Input.projectName);
-		}
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
+			
 		baseClass.waitForElement(user.getEditAttorneyCheckBox());
 		user.getEditAttorneyCheckBox().waitAndClick(5);
 		baseClass.waitForElement(user.getSubmitChanges());
@@ -287,12 +285,13 @@ public class UserRoleAndManagement_28 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		user.filterByName(email1);
-		user.editSelectedUser(Input.projectName);
+		driver.waitForPageToBeReady();
+		user.editLoginUser();
 		boolean status2 = user.getAttorneyStatusCheck().isElementAvailable(5);
 		aserts.assertFalse(status2);	
 		aserts.assertAll();
-		loginPage.logout();
-		
+		loginPage.logout();		
+
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		user.filterByName(email1);
 		user.verifyDeleteUserPopup(true, Input.projectName);

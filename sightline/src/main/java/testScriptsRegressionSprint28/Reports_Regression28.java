@@ -31,6 +31,7 @@ import pageFactory.ReviewerCountsReportPage;
 import pageFactory.ReviewerReviewProgressReport;
 import pageFactory.SessionSearch;
 import pageFactory.TallyPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -352,7 +353,8 @@ public class Reports_Regression28 {
 		report.getHourlyRadio().waitAndClick(5);
 		base.waitForElement(report.getExpandDateRange());
 		report.getExpandDateRange().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		
 		String actFromDate = report.getSelectFromDateTime().Value();
 		base.stepInfo("By Default Date and Time From Range : " + actFromDate);
 		String actToDate = report.getSelectToDateTime().Value();
@@ -380,17 +382,18 @@ public class Reports_Regression28 {
 		loginPage.logout();
 	}
 
+	
 	/**
 	 * @author NA Testcase No:RPMXCON-56568
-	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch
-	 *                 Docs' in 'reviewer progress report'
+	 * @Description:To verify that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'
 	 **/
 	@Test(description = "RPMXCON-56568", enabled = true, groups = { "regression" })
 	public void verifyDocDistriMyBatchDocs() throws Exception {
 		AssignmentsPage assignment = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		ReviewerReviewProgressReport rrpr = new ReviewerReviewProgressReport(driver);
-
+		UserManagement user = new UserManagement(driver);
+		
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		String assignmentGrpName = "AssignmentGrp" + Utility.dynamicNameAppender();
 		String expMsg = "Total no of Docs distributed should be displayed on 'My Batch Docs' column";
@@ -402,6 +405,14 @@ public class Reports_Regression28 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Logged in As : " + Input.rmu1userName);
 
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+        user.passingUserName(Input.rev1userName);
+        user.applyFilter();
+        String firstName = user.getTableData("FIRST NAME", 1);
+        String lastName = user.getTableData("LAST NAME", 1);
+        String userName = firstName + " " + lastName;
+        
 		assignment.navigateToAssignmentsPage();
 		assignment.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
 		driver.Navigate().refresh();
@@ -426,43 +437,13 @@ public class Reports_Regression28 {
 		driver.waitForPageToBeReady();
 		rrpr.navigateToReviewerReviewProgressReport();
 		driver.waitForPageToBeReady();
-		rrpr.generateRRPreport(assignmentGrpName, Input.rev1FullName);
+		rrpr.generateRRPreport(assignmentGrpName, userName);
 		driver.waitForPageToBeReady();
 		String actMyBatchDogs = rrpr.getColoumnValue(rrpr.reviewerColumnNameHeader(), "My Batch Docs", assignmentName);
 		base.textCompareEquals(actMyBatchDogs, String.valueOf(6), expMsg, failMsg);
 		base.passedStep(
 				"Verified - that 'Docs Distributed' should appear as 'My Batch Docs' in 'reviewer progress report'");
 		loginPage.logout();
-	}
-
-	/**
-	 * @author sowndarya Testcase No:RPMXCON-56254
-	 * @Description: To verify that User is able to view RUs in Reviewer Selection
-	 *               on Reviewer Counts by Day/Hour Report
-	 **/
-	@Test(description = "RPMXCON-56254", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
-	public void verifyReviewerSelection(String username,String password) throws Exception {
-
-		ReviewerCountsReportPage rcrp = new ReviewerCountsReportPage(driver);
-		base.stepInfo("RPMXCON - 56254");
-		base.stepInfo(
-				"To verify that User is able to view RUs in Reviewer Selection on Reviewer Counts by Day/Hour Report");
-		loginPage.loginToSightLine(username,password);
-		base.stepInfo("Logged in As : " + Input.pa1userName);
-		
-		rcrp.navigateTOReviewerCountsReportPage();
-		driver.waitForPageToBeReady();
-		base.waitForElement(rcrp.getReviewerExpandButton());
-		rcrp.getReviewerExpandButton().waitAndClick(10);
-		if (rcrp.getReviewersList().isElementAvailable(5)) {
-			driver.waitForPageToBeReady();
-			List<String> reviewersList = base.availableListofElements(rcrp.getReviewersList());
-			System.out.println("Reviewer names available in Reviewer selection : " + reviewersList);
-		}
-
-		else {
-			System.out.println("Reviewerlist is empty");
-		}
 	}
 	/**
 	 * @author NA Testcase No:RPMXCON-56722

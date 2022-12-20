@@ -178,8 +178,6 @@ public class Reports_Regression27 {
 
 	}
 
-	
-
 	/**
 	 * @author NA Testcase No:RPMXCON-56721
 	 * @Description: Executing the tally report with EmailAuthorName filters
@@ -216,7 +214,6 @@ public class Reports_Regression27 {
 		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
 		System.out.println(totalSecEmailAuthor);
 		asserts.assertTrue(totalSecEmailAuthor < 4000);
-		asserts.assertAll();
 
 		driver.waitForPageToBeReady();
 		tally.applyFilterToTallyByIndex(Input.MetaDataEAName, "exclude", 1);
@@ -225,6 +222,9 @@ public class Reports_Regression27 {
 		base.waitForElement(tally.getTally_btnTallyApply());
 		base.waitTillElemetToBeClickable(tally.getTally_btnTallyApply());
 		tally.getTally_btnTallyApply().Click();
+		if(tally.getPopupYesBtn().isElementAvailable(30)) {
+			tally.getPopupYesBtn().waitAndClick(5);
+		}
 		tally.verifyTallyChart();
 
 		base.passedStep("Executed - the tally report with EmailAuthorName filters selected");

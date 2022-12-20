@@ -115,7 +115,7 @@ public class UserManagement {
 	}
 
 	public Element getSubmitChanges() {
-		return driver.FindElementById("/btnsubmit");
+		return driver.FindElementById("btnsubmit");
 	}
 
 	// Search user
