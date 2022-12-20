@@ -306,6 +306,50 @@ public class UserRoleAndManagement_28 {
 		baseClass.passedStep("Verified - that user can remove attorney profile from an RMU user who is set with attorney profile");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 17/12/2022 TestCase Id:RPMXCON-52485
+	 * Description :To verify user rights of user for all roles who is assigned to different projects 
+	 * with different roles after saving user rights for any of the role of any project
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-52485",enabled = true, groups = { "regression" })
+	public void verifyUserRightOverWriteFunctionality() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52485");
+		baseClass.stepInfo("Verify User rights for all roles assigned to different projects");
+		
+		String[] role = {Input.ProjectAdministrator,Input.ReviewManager,Input.Reviewer};
+		String[] project = {Input.projectName,Input.additionalDataProject,Input.highVolumeProject};
+		String email = "QaUser"+Utility.dynamicNameAppender()+"@consilio.com";
+				
+		//login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		//pre-requisite
+		baseClass.stepInfo("assign valid user to different project with different role");
+		for(int i=0;i<role.length;i++) {
+			userManage.addNewUserAsDifferentUsers("SA", "QA", "user", role[i], email, 
+					null, project[i]);
+		}
+		baseClass.stepInfo("edit pa role");
+		userManage.NavigateToEditUserFunctionalityTab(email, project[0]);
+		baseClass.stepInfo("edit search functionality(uncheck) and save");
+		userManage.verifyStatusSearch("false");
+		baseClass.stepInfo("verify overwrite functionality in Rmu and Rev");
+		for(int k=1;k<role.length;k++) {
+			userManage.NavigateToEditUserFunctionalityTab(email, project[k]);
+			String status =userManage.verifySearchFunctionalityStatus();
+			baseClass.compareTextViaContains(status, "Enabled", "Edited Functionality not overwrited for role--"+role[k], 
+					"edited Functionality overwrited for role--"+role[k]);
+		}
+		//delete created user
+		userManage.navigateToUsersPAge();
+		userManage.filterByName(email);
+		userManage.deleteUser();
+		loginPage.logout();	
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
