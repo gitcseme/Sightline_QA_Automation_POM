@@ -84,12 +84,6 @@ public class ExportRegression28 {
 		base.stepInfo(
 				"Verify that after Pre-gen checks is in progress, it will displays status on Production Grid view");
 
-		String FolderName = "FolderName" + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-		String exportName = "Export" + Utility.dynamicNameAppender();
-		String subBates = page.getRandomNumber(2);
-
 		String[] Username = { Input.pa1userName, Input.rmu1userName };
 		String[] Password = { Input.pa1password, Input.rmu1password };
 
@@ -98,6 +92,11 @@ public class ExportRegression28 {
 			loginPage.loginToSightLine(Username[i], Password[i]);
 			base.stepInfo("Logged in as" + Username[i]);
 
+			String FolderName = "FolderName" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			String exportName = "Export" + Utility.dynamicNameAppender();
+			String subBates = page.getRandomNumber(2);
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
 
@@ -128,7 +127,7 @@ public class ExportRegression28 {
 			driver.waitForPageToBeReady();
 			page.getGridView().waitAndClick(10);
 			base.stepInfo("verifying Pre-gen checks status in grid view");
-			page.verifyProductionStatusInHomePageGridView(" Pre-Gen Checks - 0/"+purehit+" Docs", exportName);
+			page.verifyProductionStatusInHomePageGridView("Pre-Gen Checks -", exportName);
 
 			loginPage.logout();
 		}
