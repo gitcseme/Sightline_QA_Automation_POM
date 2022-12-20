@@ -693,11 +693,18 @@ public class TallyPage {
 		}), Input.wait30);
 		getTally_btnTallyApply().Click();
 
-		BaseClass bc = new BaseClass(driver);
-		// pop up may appear multiple times depends on app response
-		bc.yesPopUp();
-		bc.yesPopUp();
+	
+	
+		if(getPopupYesBtn().isDisplayed()) {
+			BaseClass bc = new BaseClass(driver); // pop up may appear multiple time depends on app response
+			  bc.yesPopUp(); 
+			  bc.yesPopUp();
+		}
+		else {
+			getTally_btnTallyApply().Click();
 
+		}
+		 	
 	}
 
 	public void tallyActions() {

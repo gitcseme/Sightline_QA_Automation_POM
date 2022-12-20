@@ -30,8 +30,9 @@ public class Reports_Consilio {
 	   public void beforeClass() throws ParseException, InterruptedException, IOException{
 		  
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		 Input in = new Input();
-			in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		driver = new Driver();
 	    lp = new LoginPage(driver);
 	    bc=new BaseClass(driver);
@@ -71,10 +72,13 @@ public class Reports_Consilio {
 		
 		//Bulk Tag
 		tally.validateTally();
+		bc.stepInfo("Tally Report is Generated");
 		tally.tallyActions();
 		tally.bulkTagSpecialChars(bulkName,1);
+		bc.passedStep("Bulk Tag Name with Special Chars are created");
+		System.out.println(bulkName);
+		bc.passedStep("Error Message Displayed with Special chars in Bulk Tag Name");
 		
-	
 	}
 	@Test(description ="RPMXCON-69056",groups={"regression"})
 	public void BulkFolderWithSpecialChars() throws InterruptedException {
@@ -90,12 +94,12 @@ public class Reports_Consilio {
 		
 		//Bulk Folder
 		tally.validateTally();
+		bc.stepInfo("Tally Report is Generated");
 		tally.tallyActions();
 		tally.bulkFolderSpecialChars(bulkName,1);
-	
+		bc.passedStep("Bulk Tag Name with Special Chars are created");
+		bc.passedStep("Error Message Displayed with Special chars in Bulk Folder Name");
 		
 	}
 	
-		
-
 }
