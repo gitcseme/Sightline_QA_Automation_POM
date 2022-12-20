@@ -11641,6 +11641,18 @@ public class IngestionPage_Indium {
 			getSpecifyLocation().waitAndClick(10);
 			base.ValidateElement_Presence(getingestionpath(expectedPath), "expected ingestion folder path");
 		}
+		/**
+		 * @author: Arunkumar Created Date: 17/12/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will update the mapping field row
+		 */
+		public void updateMappingSection(int row,String source,String category,String destination) {
+			
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMappingSourceField(row));
+			getMappingSourceField(row).selectFromDropdown().selectByVisibleText(source);
+			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(category);
+			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(destination);
+		}
 		
 		
 }
