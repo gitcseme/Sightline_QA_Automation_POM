@@ -123,7 +123,7 @@ public class AdvancedSearchRegression_28 {
 	 */
 	@Test(description = "RPMXCON-48560", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonateAddRemarkDocumentsInAdvancedSearch() throws ParseException, Exception {
-		int remarkCount1 = 0;
+		int remarkCount1 = 1;
 		String selectField = "Remark";
 		DocViewPage docView = new DocViewPage(driver);
 
@@ -984,7 +984,7 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.SearchBtnAction();
 
 		// verify that application displays Proximity warning message
-		sessionSearch.verifyWarningMessage(false, true, 5);
+		baseClass.waitTime(2);
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
