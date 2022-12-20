@@ -803,15 +803,15 @@ public class TallyPage {
 		System.out.println("Bulk Tag is done, Tag is : " + TagName);
 
 	}
-	public void bulkTagSpecialChars(String folderName, final int tally1subtally2) throws InterruptedException {
+	public void bulkTagSpecialChars(String tagName, final int tally1subtally2) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getBulkFolderAction(tally1subtally2).Visible();
+				return getBulkTagAction(tally1subtally2).Visible();
 			}
 		}), Input.wait60);
 
-		getBulkFolderAction(tally1subtally2).waitAndClick(20);
+		getBulkTagAction(tally1subtally2).waitAndClick(20);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -823,23 +823,26 @@ public class TallyPage {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getEnterFolderName().Visible();
+				return getEnterTagName().Visible();
 			}
 		}), Input.wait60);
-		getEnterFolderName().SendKeys(folderName);
+		getEnterTagName().SendKeys(tagName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFolderAllRoot().Visible();
+				return getTagsAllRoot().Visible();
 			}
 		}), Input.wait60);
-		getFolderAllRoot().Click();
+		getTagsAllRoot().Click();
  
 		getContinueButton().waitAndClick(30);
-		
-		String errorMsg=getFolderNameWithSpecialChars().getText();
+		base.stepInfo("Tag Name is Created with Special Chars");
+		String errorMsg=getTagNameWithSpecialChars().getText();
 		System.out.println("errorMsg"+errorMsg);
 		  Assert.assertEquals(errorMsg,"Special characters are not allowed.");
+		  base.stepInfo("Error Message Displayed with Special chars in Bulk Tag Name,\n"+errorMsg);
+		  
+
 	
 	}
 
@@ -935,13 +938,13 @@ public class TallyPage {
 		getFolderAllRoot().Click();
  
 		getContinueButton().waitAndClick(30);
-		
+		base.stepInfo("Folder Name is Created,"+folderName);
+
 		String errorMsg=getFolderNameWithSpecialChars().getText();
 		System.out.println("errorMsg"+errorMsg);
 		  Assert.assertEquals(errorMsg,"Special characters are not allowed.");
-
-		
-		
+		  base.stepInfo("Error Message Displayed with Special chars in Bulk Folder Name"+errorMsg);
+	
 	}
 	public void validateSubTally() throws InterruptedException {
 
