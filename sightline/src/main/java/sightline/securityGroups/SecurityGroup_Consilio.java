@@ -37,8 +37,8 @@ public class SecurityGroup_Consilio {
 	   public void beforeClass() throws ParseException, InterruptedException, IOException{
 		  
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		 Input in = new Input();
-			in.loadEnvConfig();
+		//Input in = new Input();
+			//in.loadEnvConfig();
 		
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
@@ -83,17 +83,20 @@ public class SecurityGroup_Consilio {
 	baseClass.stepInfo("Login as in  " + Input.pa1FullName);
 	baseClass.stepInfo("navigated to security group as expected");
 	sgpage.createSecurityGroups(SGname);
-	baseClass.stepInfo("new Security group is created");
+	baseClass.stepInfo("new Security group is created" +SGname);
 	baseClass.waitTime(5);
 	baseClass.waitForElement(sgpage.selectSGFromDropdown(SGname));
 	sgpage.selectSGFromDropdown(SGname).waitAndClick(10);
     sgpage.getRenameBtn().waitAndClick(10);
     sgpage.getSecurityGroupNameUpdate().SendKeys(Sgnameedit);
     sgpage.getSecurityGroupUpdateButton().waitAndClick(10);
+	baseClass.stepInfo("Security group name is updated" +Sgnameedit);
+
     baseClass.waitTime(5);
     String errorMsg=sgpage.getEditMsg().getText();
 	System.out.println("errorMsg"+errorMsg);
-	  Assert.assertEquals(errorMsg,"The security group name is invalid.");    
+	  Assert.assertEquals(errorMsg,"The security group name is invalid.");   
+	  baseClass.passedStep("Error Message is Displayed");
 }
 	
 	}
