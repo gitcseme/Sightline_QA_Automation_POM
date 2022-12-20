@@ -185,15 +185,12 @@ public class BatchPrint_Regression28 {
 		baseClass.stepInfo("Test case Id: RPMXCON-50733 Batch Print");
 		baseClass.stepInfo("Validate printing an EXCEL file type and has native and text file");
 
-		// create folder in Default SG
-		tagsAndFolderPage.CreateTagwithClassification(Tag, Input.tagNamePrev);
-
 		// configure query for native and text file & view in doclist
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, Input.TextSourceDocId, null);
 		int index = baseClass.getIndex(session.getDetailsTable(), "DOCID");
 		String docId = session.getValueFromTable(index).getText();
 		System.out.println(docId);
-		session.bulkTagExisting(Tag);
+		session.bulkTag(Tag);
 
 		boolean[] selectPdfRadio = { false, true };
 		for (int i = 0; i < selectPdfRadio.length; i++) {
@@ -620,12 +617,10 @@ public class BatchPrint_Regression28 {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : Validate Batch Print Sorting docs by LastSaveDate [Prior
-	 *              Productions (TIFFs/PDFs)]with one PDF for all docs in ascending
-	 *              order [RPMXCON-49185]
+	 * @Description : Validate Batch Print Sorting docs by CustodianName [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order [RPMXCON-49191]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-49185", dataProvider = "Users", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49191", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void validateSortProdByCustodian(String username, String password) throws Exception {
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String Folder = "Folder" + Utility.dynamicNameAppender();
@@ -636,9 +631,9 @@ public class BatchPrint_Regression28 {
 		// Login As User
 		loginPage.loginToSightLine(username, password);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-49185 Batch Print");
+		baseClass.stepInfo("Test case Id: RPMXCON-49191 Batch Print");
 		baseClass.stepInfo(
-				"Validate Batch Print Sorting docs by LastSaveDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order");
+				"Validate Batch Print Sorting docs by CustodianName [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order");
 
 		// create folder in Default SG
 		tagsAndFolderPage.CreateFolder(Folder, Input.securityGroup);

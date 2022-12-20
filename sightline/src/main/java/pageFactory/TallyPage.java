@@ -1290,6 +1290,7 @@ public class TallyPage {
 	}
 
 	/**
+	 * Modified
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
 	 * @Description: Method for selecting tally by meta data field..
 	 * @param fieldName : (fieldName is the name of meta data field)
@@ -1305,6 +1306,9 @@ public class TallyPage {
 			base.waitForElement(getTally_btnTallyApply());
 			base.waitTillElemetToBeClickable(getTally_btnTallyApply());
 			getTally_btnTallyApply().Click();
+			if(getPopupYesBtn().isElementAvailable(30)) {
+				getPopupYesBtn().waitAndClick(5);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
