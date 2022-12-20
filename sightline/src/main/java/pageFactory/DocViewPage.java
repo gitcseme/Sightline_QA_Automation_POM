@@ -28798,7 +28798,7 @@ public class DocViewPage {
 	 * @description : verifyKeywordsOnDocView
 	 * @param keywords
 	 */
-	public void verifyKeywordsOnDocView(List<String> keywords) {
+	public void verifyKeywordsOnDocView(List<String> keywords,String[][]keywordss) {
 		base.waitForElement(getEyeIcon());
 		if (getPersistentPanel().isElementAvailable(3)) {
 			System.out.println("the Persistent Panel is already available.");
@@ -28807,12 +28807,21 @@ public class DocViewPage {
 			getEyeIcon().waitAndClick(5);
 		}
 		base.waitTime(3);
+		if(keywordss == null) {
 		for (String keyword : keywords) {
 			if (getHitPanleVerify(keyword).isElementAvailable(5)) {
 				base.passedStep("keyword '" + keyword + "' is present in the DocView page");
 			} else {
 				base.failedStep("keyword '" + keyword + "' is Not present in the DocView page");
 			}
+		}}else {
+			for(int i=0,j=0;i<keywordss.length;i++) {
+				if (getHitPanleVerify(keywordss[i][j]).isElementAvailable(10)) {
+					base.passedStep("keyword '" + keywordss[i][j] + "' is present in the DocView page");
+				} else {
+					base.failedStep("keyword '" + keywordss[i][j] + "' is Not present in the DocView page");
+				}
+			}	
 		}
 	}
 
