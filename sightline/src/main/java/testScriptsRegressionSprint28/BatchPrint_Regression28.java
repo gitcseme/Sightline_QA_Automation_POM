@@ -652,6 +652,7 @@ public class BatchPrint_Regression28 {
 		doclist.documentSelectionIncludeChildDoc(3);
 
 		// bulk tag selected docs
+		driver.waitForPageToBeReady();
 		doclist.addNewBulkTag(Tag);
 		tagsAndFolderPage.ViewinDocListthrTag(Tag);
 
@@ -659,6 +660,7 @@ public class BatchPrint_Regression28 {
 		// verification
 		driver.waitForPageToBeReady();
 		doclist.selectAllDocs();
+		driver.waitForPageToBeReady();
 		doclist.bulkFolderExisting(Folder);
 		doclist.sortColumn(true, columnName, true);
 
