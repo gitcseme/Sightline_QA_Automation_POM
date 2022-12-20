@@ -486,20 +486,11 @@ public class AdvancedSearchRegression_28 {
 		String pName=availableProduction.get(0);
 		if(pName!=null) {
 			productionname=pName;
-		}else {
-		productionname = "ASprod" + Utility.dynamicNameAppender();
-		String PrefixID = "A_" + Utility.dynamicNameAppender();
-		String SuffixID = "_P" + Utility.dynamicNameAppender();;
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String Tagname = "Tag" + Utility.dynamicNameAppender();		
-		driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
-		tagPage.CreateFolder(foldername, Input.securityGroup);
-		tagPage.CreateTagwithClassification(Tagname, "Privileged");		
-		baseClass.selectproject();
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);	     
-		page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
-		baseClass.stepInfo("Created a Production "+productionname);
+		}else {     
+			productionname = "prod"+Utility.dynamicNameAppender();
+			page.navigateToProductionPage();
+			page.addANewProduction(productionname);
+		    baseClass.stepInfo("Created a Production "+productionname);
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(username,password);
@@ -595,19 +586,10 @@ public class AdvancedSearchRegression_28 {
 		if(pName!=null) {
 			productionname=pName;
 		}else {
-		productionname = "ASprod" + Utility.dynamicNameAppender();
-		String PrefixID = "A_" + Utility.dynamicNameAppender();
-		String SuffixID = "_P" + Utility.dynamicNameAppender();;
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String Tagname = "Tag" + Utility.dynamicNameAppender();		
-		driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
-		tagPage.CreateFolder(foldername, Input.securityGroup);
-		tagPage.CreateTagwithClassification(Tagname, "Privileged");		
-		baseClass.selectproject();
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);	     
-		page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
-		baseClass.stepInfo("Created a Production "+productionname);
+			productionname = "prod"+Utility.dynamicNameAppender();
+			page.navigateToProductionPage();
+			page.addANewProduction(productionname);
+		    baseClass.stepInfo("Created a Production "+productionname);
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(username,password);
@@ -706,19 +688,10 @@ public class AdvancedSearchRegression_28 {
 		if(pName!=null) {
 			productionname=pName;
 		}else {
-		productionname = "ASprod" + Utility.dynamicNameAppender();
-		String PrefixID = "A_" + Utility.dynamicNameAppender();
-		String SuffixID = "_P" + Utility.dynamicNameAppender();;
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String Tagname = "Tag" + Utility.dynamicNameAppender();		
-		driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
-		tagPage.CreateFolder(foldername, Input.securityGroup);
-		tagPage.CreateTagwithClassification(Tagname, "Privileged");		
-		baseClass.selectproject();
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);	     
-		page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
-		baseClass.stepInfo("Created a Production "+productionname);
+			productionname = "prod"+Utility.dynamicNameAppender();
+			page.navigateToProductionPage();
+			page.addANewProduction(productionname);
+		    baseClass.stepInfo("Created a Production "+productionname);
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(username,password);
@@ -777,6 +750,8 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
 		}
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearchEdit(savedSearchName);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());
@@ -827,19 +802,10 @@ public class AdvancedSearchRegression_28 {
 		if(pName!=null) {
 			productionname=pName;
 		}else {
-		productionname = "ASprod" + Utility.dynamicNameAppender();
-		String PrefixID = "A_" + Utility.dynamicNameAppender();
-		String SuffixID = "_P" + Utility.dynamicNameAppender();;
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String Tagname = "Tag" + Utility.dynamicNameAppender();		
-		driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
-		tagPage.CreateFolder(foldername, Input.securityGroup);
-		tagPage.CreateTagwithClassification(Tagname, "Privileged");		
-		baseClass.selectproject();
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);	     
-		page.CreateNewProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
-		baseClass.stepInfo("Created a Production "+productionname);
+			productionname = "prod"+Utility.dynamicNameAppender();
+			page.navigateToProductionPage();
+			page.addANewProduction(productionname);
+		    baseClass.stepInfo("Created a Production "+productionname);
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(username,password);
@@ -902,6 +868,8 @@ public class AdvancedSearchRegression_28 {
 		sessionSearch.searchBtn().waitAndClick(10);
 		sessionSearch.saveSearchInNewNode("ss"+Utility.dynamicNameAppender(), newNode);
 		}
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearchEdit(savedSearchName);
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getContentAndMetaDatabtn());

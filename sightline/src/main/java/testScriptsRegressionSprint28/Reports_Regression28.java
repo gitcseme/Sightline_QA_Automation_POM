@@ -22,6 +22,7 @@ import pageFactory.AssignmentReviewProgressReport;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
+import pageFactory.CommunicationExplorerPage;
 import pageFactory.CustomDocumentDataReport;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -29,6 +30,7 @@ import pageFactory.ReportsPage;
 import pageFactory.ReviewerCountsReportPage;
 import pageFactory.ReviewerReviewProgressReport;
 import pageFactory.SessionSearch;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -461,5 +463,71 @@ public class Reports_Regression28 {
 		else {
 			System.out.println("Reviewerlist is empty");
 		}
+	}
+	/**
+	 * @author NA Testcase No:RPMXCON-56722
+	 * @Description: Executing the tally report with CustodianName & EmailAuthorName
+	 *               filters selected
+	 **/
+	@Test(description = "RPMXCON-56722", dataProvider = "PA & RMU", enabled = true, groups = { "regression" })
+	public void validateTallyReportWithCNandEA(String username, String password) throws Exception {
+		CommunicationExplorerPage commExpl = new CommunicationExplorerPage(driver);
+		TallyPage tally = new TallyPage(driver);
+		SoftAssert asserts = new SoftAssert();
+
+		base.stepInfo("RPMXCON-56722");
+		base.stepInfo("To Executing the tally report with CustodianName & EmailAuthorName filters selected");
+		loginPage.loginToSightLine(username, password);
+		base.stepInfo("Logged in As : " + username);
+
+		commExpl.navigateToCommunicationExpPage();
+		commExpl.generateReportusingDefaultSG();
+		commExpl.clickReport();
+		commExpl.analyzeInTallyAction();
+		driver.waitForPageToBeReady();
+
+		tally.selectTallyByMetaDataField(Input.metaDataName);
+		driver.waitForPageToBeReady();
+		base.waitForElement(tally.metaDataFilterForTallyBy(Input.metaDataName));
+		tally.metaDataFilterForTallyBy(Input.metaDataName).waitAndClick(10);
+		float beforeCustName = System.currentTimeMillis();
+		base.waitForElement(tally.FilterInputTextBoxTallyBy());
+		tally.FilterInputTextBoxTallyBy().waitAndClick(10);
+		base.waitForElementCollection(tally.getAllValueinCustNameFilter());
+		float afterCustName = System.currentTimeMillis();
+		base.waitForElement(tally.getCloseByCNFilterPopUp());
+		tally.getCloseByCNFilterPopUp().waitAndClick(5);
+		float totalSecCustName = afterCustName - beforeCustName;
+		asserts.assertTrue(totalSecCustName < 4000);
+		asserts.assertAll();
+
+		driver.waitForPageToBeReady();
+		tally.applyFilterToTallyBy(Input.metaDataName, "exclude", Input.custodianName_Andrew);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(tally.metaDataFilterForTallyBy(Input.MetaDataEAName));
+		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).ScrollTo();
+		tally.metaDataFilterForTallyBy(Input.MetaDataEAName).waitAndClick(10);
+		float beforeEmailAuthor = System.currentTimeMillis();
+		base.waitForElement(tally.FilterInputTextBoxTallyBy());
+		tally.FilterInputTextBoxTallyBy().waitAndClick(5);
+		base.waitForElementCollection(tally.getAllValueinEmailAuthorFilter());
+		float afterEmailAuthor = System.currentTimeMillis();
+		base.waitForElement(tally.getCloseByEAFilterPopUp());
+		tally.getCloseByEAFilterPopUp().waitAndClick(5);
+		float totalSecEmailAuthor = afterEmailAuthor - beforeEmailAuthor;
+		asserts.assertTrue(totalSecEmailAuthor < 4000);
+		asserts.assertAll();
+
+		driver.waitForPageToBeReady();
+		tally.applyFilterToTallyBy(Input.MetaDataEAName, "exclude", Input.EmailAuthourName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(tally.getTally_btnTallyApply());
+		base.waitTillElemetToBeClickable(tally.getTally_btnTallyApply());
+		tally.getTally_btnTallyApply().Click();
+		tally.verifyTallyChart();
+		base.passedStep("Executed - the tally report with CustodianName & EmailAuthorName filters selected");
+		loginPage.logout();
 	}
 }
