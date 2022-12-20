@@ -146,6 +146,7 @@ public class DocViewAudio_Regression28 {
 		sessionSearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
+		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
 		String defaultSpeed = docViewPage.getAudioSilderValue().getText();
 		System.out.println(defaultSpeed);
 		docViewPage.audioPlayPauseIcon().waitAndClick(10);
@@ -265,6 +266,7 @@ public class DocViewAudio_Regression28 {
 		String defaultRunTime = docViewPage.getDocviewAudio_StartTime().getText();
 		System.out.println(defaultRunTime);
 		baseClass.waitTillElemetToBeClickable(docViewPage.getDocView_ConfigMinidoclist());
+		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
 		String defaultSpeed = docViewPage.getAudioSilderValue().getText();
 		System.out.println(defaultSpeed);
 		docViewPage.audioPlayPauseIcon().waitAndClick(5);
@@ -286,6 +288,7 @@ public class DocViewAudio_Regression28 {
 		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
+		action.moveToElement(docViewPage.getAudioSilderPoint().getWebElement()).build().perform();
 		String defaultSpeed1 = docViewPage.getAudioSilderValue().getText();
 		System.out.println(defaultSpeed1);
 		docViewPage.audioPlayPauseIcon().waitAndClick(5);
@@ -382,14 +385,18 @@ public class DocViewAudio_Regression28 {
 		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.saveSearchQuery(saveName);
 		baseClass.stepInfo("Basic Search is done and query saved successfully");
+		driver.waitForPageToBeReady();
 		savedSearch.savedSearchToDocView(saveName);
 
+		driver.waitForPageToBeReady();
 		docViewRedact.checkingPersistentHitPanel();
 		baseClass.stepInfo("persistent hit panel displayed in docview panel");
+		driver.waitForPageToBeReady();
 		docView.getPersistantHitEyeIcon().Click();
 		docView.VerifyKeywordHit(hitTerms);
 		
 		//hit is displayed with < and >
+		driver.waitForPageToBeReady();
 		docViewRedact.TraverseForwardAndBackwardOnHits();
 		loginPage.logout();
 		
@@ -574,6 +581,7 @@ public class DocViewAudio_Regression28 {
 		baseClass.passedStep("After add redaction has been able to edit as expected");
 		
 		baseClass.stepInfo("Add Remarks in audio doc");
+		baseClass.waitTime(5);
 		docViewPage.audioRemark(remarkText1);
 		baseClass.stepInfo("Add comment in audio doc");
 		driver.Navigate().refresh();
@@ -644,7 +652,6 @@ public class DocViewAudio_Regression28 {
 		// Select the Assignment from dashboard
 		assignment.SelectAssignmentByReviewer(assign);
 
-		docView.clickOnPersistantHitEyeIcon();
 		// verifying the audio hits and triangular arrow Icon
 		baseClass.waitTillElemetToBeClickable(docView.getAudioPersistantHitEyeIcon());
 		docView.getAudioPersistantHitEyeIcon().Click();
@@ -685,8 +692,7 @@ public class DocViewAudio_Regression28 {
 
 		// Select the Assignment from dashboard
 		assignment.SelectAssignmentByReviewer(assign);
-
-		docView.clickOnPersistantHitEyeIcon();
+		
 		// verifying the audio hits and triangular arrow Icon
 		baseClass.waitTillElemetToBeClickable(docView.getAudioPersistantHitEyeIcon());
 		docView.getAudioPersistantHitEyeIcon().Click();
