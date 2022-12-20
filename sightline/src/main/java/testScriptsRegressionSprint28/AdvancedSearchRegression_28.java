@@ -946,7 +946,7 @@ public class AdvancedSearchRegression_28 {
 
 		String searchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder";
 
-		String exampleSearchString = "(\"ProximitySearch Iterative\"~15 OR money) OR TruthFinder ";
+		String exampleSearchString = "(\"ProximitySearch Iterative\"~15 OR m0ney) OR TruthFinder ";
 
 		// login
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
