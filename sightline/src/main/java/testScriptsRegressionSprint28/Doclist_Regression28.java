@@ -363,14 +363,22 @@ public class Doclist_Regression28 {
 
 		// select documents and navigate to export data
 		baseClass.waitForElement(docExplorer.getDocExp_SelectAllDocs());
-		docExplorer.getDocExp_SelectAllDocs().waitAndClick(5);
+		docExplorer.getDocExp_SelectAllDocs().waitAndClick(10);
 		baseClass.passedStep(
 				"Message is displayed to select the documents from current page or from all pages 'Cancel' and 'Ok' buttons is displayed");
-
+		driver.waitForPageToBeReady();
+		if (docList.getPopUpOkBtn().isElementAvailable(10)) {
+			
 		baseClass.waitForElement(docList.getPopUpOkBtn());
-		docList.getPopUpOkBtn().waitAndClick(5);
+		docList.getPopUpOkBtn().waitAndClick(10);
 		baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
-
+		}
+		else {
+			baseClass.waitForElement(docList.getPopUpOkBtn());
+			docList.getPopUpOkBtn().waitAndClick(10);
+			baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
+		}
+		driver.scrollPageToTop();
 		baseClass.waitForElement(docExp.actionDropdown());
 		docExp.actionDropdown().waitAndClick(10);
 		baseClass.waitForElement(docExp.exportDataFromActionDropdown());
