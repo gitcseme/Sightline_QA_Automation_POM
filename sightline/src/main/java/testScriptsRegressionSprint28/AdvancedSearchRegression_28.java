@@ -126,6 +126,7 @@ public class AdvancedSearchRegression_28 {
 		int remarkCount1 = 1;
 		String selectField = "Remark";
 		DocViewPage docView = new DocViewPage(driver);
+		DocViewRedactions docviewRedact = new DocViewRedactions(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48560");
 		baseClass.stepInfo(
@@ -142,17 +143,19 @@ public class AdvancedSearchRegression_28 {
 
 		// adding remark and performing search using remark
 		driver.waitForPageToBeReady();
-		docView.verifyRemarkIsAdded(Input.reviewed);
+		baseClass.waitTime(5);
+		docviewRedact.addremark(Input.reviewed, -10, -10, 40, 50);
+
 		baseClass.stepInfo("adding Remark to document");
 
 		// impersonate RMU to REV
 		baseClass.impersonateRMUtoReviewer();
 
-		int pureHit1 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+		int pureHit = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
 		// verifying the pureHit count with number of remark added
-		baseClass.digitCompareEquals(pureHit1, remarkCount1, "pureHit count match with remark count",
+		baseClass.digitCompareEquals(pureHit, remarkCount1, "pureHit count match with remark count",
 				"pureHit count doesn't match with remark count");
-
+		
 		loginPage.logout();
 	}
 

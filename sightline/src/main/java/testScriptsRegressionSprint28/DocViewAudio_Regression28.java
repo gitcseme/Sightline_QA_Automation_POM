@@ -397,6 +397,7 @@ public class DocViewAudio_Regression28 {
 		
 		//hit is displayed with < and >
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docViewRedact.TraverseForwardAndBackwardOnHits();
 		loginPage.logout();
 		
