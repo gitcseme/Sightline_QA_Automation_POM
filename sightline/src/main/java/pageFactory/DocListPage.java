@@ -5008,6 +5008,7 @@ public class DocListPage {
 			getAddToSelect().waitAndClick(10);
 			base.waitForElement(getUpdateColumnBtn());
 			getUpdateColumnBtn().waitAndClick(10);
+			base.waitTime(5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -5914,6 +5915,7 @@ public class DocListPage {
 			getAddToSelect().waitAndClick(10);
 			base.waitForElement(getUpdateColumnBtn());
 			getUpdateColumnBtn().waitAndClick(10);
+			base.waitTime(5);
 			base.passedStep("Columns is added successfully, the selected Values displayed single quote ");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -6603,6 +6605,10 @@ public class DocListPage {
 		for (int i = 1; i <= count; i++) {
 			metadataValue = getDataInDoclist(i, column).getText();
 			if (!(metadataValue.isEmpty())) {
+				if(metadataValue.contains(";")) {
+					String[] value = metadataValue.split(";");
+					metadataValue = value[0];
+				}
 				base.passedStep("metadata value" + metadataValue);
 				break;
 			} else {
