@@ -32,7 +32,7 @@ public class DocViewRedactions {
 
 	Driver driver;
 	BaseClass base;
-	LoginPage loginPage; 
+	LoginPage loginPage;
 	SoftAssert softAssertion;
 	ProductionPage page;
 	DocViewPage docView;
@@ -1292,20 +1292,25 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//p[starts-with(@id,\"PHitCount\")]");
 	}
 
-public Element hiddenInfoIconToolTip() {
+	public Element hiddenInfoIconToolTip() {
 		return driver.FindElementByXPath("//li[@id='hiddenProperty']/a");
 	}
 
-public Element get_textHighlightedColorOnRectangleSubMenu() {
-	return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class=\"state-active\"]/a");
-}
+	public Element get_textHighlightedColorOnRectangleSubMenu() {
+		return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class=\"state-active\"]/a");
+	}
 
-public Element getRectangleRedactionIconColor() {
-	return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer']//span");
-}
-public Element getHighlightedPageRedactionIconColor() {
-	return driver.FindElementByXPath("//li[@id='highlightCurrentPage_divDocViewer']//span");
-}
+	public Element getRectangleRedactionIconColor() {
+		return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer']//span");
+	}
+
+	public Element getHighlightedPageRedactionIconColor() {
+		return driver.FindElementByXPath("//li[@id='highlightCurrentPage_divDocViewer']//span");
+	}
+
+	public Element getNonAudioRemarkBtn() {
+		return driver.FindElementById("remarks-btn");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -1338,7 +1343,7 @@ public Element getHighlightedPageRedactionIconColor() {
 		}), Input.wait30);
 		base.waitTime(3);
 		rectangleClick().waitAndClick(10);
-		if(deleteRedactioBtn().isElementAvailable(2)) {
+		if (deleteRedactioBtn().isElementAvailable(2)) {
 			deleteRedactioBtn().waitAndClick(5);
 		}
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
@@ -1411,7 +1416,7 @@ public Element getHighlightedPageRedactionIconColor() {
 		}), Input.wait30);
 		redactionSave().isElementAvailable(15);
 		redactionSave().waitAndClick(20);
-		
+
 	}
 
 	/**
@@ -1427,8 +1432,8 @@ public Element getHighlightedPageRedactionIconColor() {
 			}
 		}), Input.wait30);
 		redactionIcon().waitAndClick(20);
-		redactionIcon().waitAndClick(20);	
-	
+		redactionIcon().waitAndClick(20);
+
 	}
 
 	/**
@@ -1567,36 +1572,35 @@ public Element getHighlightedPageRedactionIconColor() {
 	 * @author Mohan 9/06/21 NA Modified date: NA Modified by:NA
 	 * @description To Select Docs From mini doclist for case number 52170
 	 */
-public void selectMiniDocListAndViewInDocView(int docNo) {
-		
+	public void selectMiniDocListAndViewInDocView(int docNo) {
+
 		driver.waitForPageToBeReady();
 		getDocView_MiniDoc_Selectdoc(docNo).waitAndClick(10);
 
-		}
-	
+	}
 
-public void selectRedactionIconAndRedactWholePage() throws Exception {
-	base = new BaseClass(driver);
-	driver.waitForPageToBeReady();
-	base.waitForElement(redactionIcon());
-	redactionIcon().waitAndClick(10);
-	base.waitForElement(thisPageRedaction());
-	thisPageRedaction().waitAndClick(10);
-	base.waitForElement(redactionSave());
-	redactionSave().waitAndClick(10);
-	System.out.println("Current page is Redacted successfully");
-}
+	public void selectRedactionIconAndRedactWholePage() throws Exception {
+		base = new BaseClass(driver);
+		driver.waitForPageToBeReady();
+		base.waitForElement(redactionIcon());
+		redactionIcon().waitAndClick(10);
+		base.waitForElement(thisPageRedaction());
+		thisPageRedaction().waitAndClick(10);
+		base.waitForElement(redactionSave());
+		redactionSave().waitAndClick(10);
+		System.out.println("Current page is Redacted successfully");
+	}
 
-public void popOutCodingFormChildWindow() {
-	base = new BaseClass(driver);
-	Actions actions = new Actions(driver.getWebDriver());
-	base.waitForElement(getGearIcon());
-	driver.waitForPageToBeReady();
-	getGearIcon().waitAndClick(10);
-	actions.moveToElement(getCodingFormStampButton().getWebElement());
-	actions.moveToElement(popoutCodingForm().getWebElement());
-	actions.click().build().perform();
-	base.stepInfo("Coding form child window opened successfully");
+	public void popOutCodingFormChildWindow() {
+		base = new BaseClass(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		base.waitForElement(getGearIcon());
+		driver.waitForPageToBeReady();
+		getGearIcon().waitAndClick(10);
+		actions.moveToElement(getCodingFormStampButton().getWebElement());
+		actions.moveToElement(popoutCodingForm().getWebElement());
+		actions.click().build().perform();
+		base.stepInfo("Coding form child window opened successfully");
 
 	}
 
@@ -1928,27 +1932,27 @@ public void popOutCodingFormChildWindow() {
 	 *                     for redaction dropdown)
 	 */
 	public void addAudioRedaction(String startTime, String endTime, String redactionTag) {
-		
-			base = new BaseClass(driver);
-			clickOnAddRedactionForAudioDocument();
-			List<WebElement> timeTextFields = driver.getWebDriver()
-					.findElements(By.xpath("//table[@id='audioGrid']//input"));
-			timeTextFields.get(0).sendKeys(startTime);
-			timeTextFields.get(1).sendKeys(endTime);
-			base.waitForElement(getAudioRedactDropdown());
-			base.waitTillElemetToBeClickable(getAudioRedactDropdown());
-			getAudioRedactDropdown().selectFromDropdown().selectByVisibleText(redactionTag);
-			getAudioRedactSave().waitAndFind(5);
-			getAudioRedactSave().waitAndClick(5);
-			base.waitForElement(base.getSuccessMsg());
-			base.getSuccessMsg().waitAndFind(10);
-			Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,
-					"Success message is not displayed");
-			if (base.getSuccessMsg().getWebElement().isDisplayed()) {
-				base.passedStep("Success message is displayed successfully");
-				base.passedStep("Audio redaction added successfully");
-			}
-		
+
+		base = new BaseClass(driver);
+		clickOnAddRedactionForAudioDocument();
+		List<WebElement> timeTextFields = driver.getWebDriver()
+				.findElements(By.xpath("//table[@id='audioGrid']//input"));
+		timeTextFields.get(0).sendKeys(startTime);
+		timeTextFields.get(1).sendKeys(endTime);
+		base.waitForElement(getAudioRedactDropdown());
+		base.waitTillElemetToBeClickable(getAudioRedactDropdown());
+		getAudioRedactDropdown().selectFromDropdown().selectByVisibleText(redactionTag);
+		getAudioRedactSave().waitAndFind(5);
+		getAudioRedactSave().waitAndClick(5);
+		base.waitForElement(base.getSuccessMsg());
+		base.getSuccessMsg().waitAndFind(10);
+		Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,
+				"Success message is not displayed");
+		if (base.getSuccessMsg().getWebElement().isDisplayed()) {
+			base.passedStep("Success message is displayed successfully");
+			base.passedStep("Audio redaction added successfully");
+		}
+
 	}
 
 	/**
@@ -2047,6 +2051,7 @@ public void popOutCodingFormChildWindow() {
 
 	/**
 	 * Modified on 05/12/22
+	 * 
 	 * @Author Sowndarya.Velraj
 	 */
 	public void selectingRedactionTag2(String redactiontagname) throws Exception {
@@ -2056,8 +2061,8 @@ public void popOutCodingFormChildWindow() {
 		redactionTag.selectByVisibleText(redactiontagname);
 
 		base.waitForElement(redactionSaveBtn());
-			redactionSaveBtn().waitAndClick(10);
-			base.CloseSuccessMsgpopup();
+		redactionSaveBtn().waitAndClick(10);
+		base.CloseSuccessMsgpopup();
 	}
 
 	/**
@@ -2103,7 +2108,7 @@ public void popOutCodingFormChildWindow() {
 		Thread.sleep(3000); // needed here implicitly
 
 		Robot robot = new Robot();
-		
+
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		base.waitTime(5); // needed here implicitly
@@ -2122,8 +2127,6 @@ public void popOutCodingFormChildWindow() {
 		}
 
 	}
-
-	
 
 	/*
 	 * Jagadeesh.Jana Test Case Id: RPMXCON-51564
@@ -4077,21 +4080,21 @@ public void popOutCodingFormChildWindow() {
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
 
 	}
+
 	public void verifyHighLightingTextInDocView() {
-	    driver.waitForPageToBeReady();
-	    String text = get_textHighlightedColor().getWebElement().getText();
-	    System.out.println(text);
-	    if (text.equalsIgnoreCase("r")) {
-	        base.passedStep("The batch redated text is matching the keyword");
-	    }
-	    String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
-	    String hex = Color.fromString(color).asHex();
-	    System.out.println(hex);
-	    base.passedStep("The text for keyword is highlited in the document");
-	 
+		driver.waitForPageToBeReady();
+		String text = get_textHighlightedColor().getWebElement().getText();
+		System.out.println(text);
+		if (text.equalsIgnoreCase("r")) {
+			base.passedStep("The batch redated text is matching the keyword");
+		}
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex = Color.fromString(color).asHex();
+		System.out.println(hex);
+		base.passedStep("The text for keyword is highlited in the document");
+
 	}
 
-	
 	/**
 	 * @author Krishna
 	 * @Description -- Verify select the ‘Default Redaction Tag’ from the pop up if
@@ -4127,31 +4130,31 @@ public void popOutCodingFormChildWindow() {
 		}
 	}
 
-/**
- * @author Brundha.T
- * @param FieldValue
- * @param Field
- * @throws InterruptedException
- * @Description: selecting highlight icon in docviewpage
- */
-	public void doubleclickingHighlitingIcon(boolean FieldValue,boolean Field) throws InterruptedException {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return HighliteIcon().Visible() && HighliteIcon().Enabled();
-				}
-			}), Input.wait30);
+	/**
+	 * @author Brundha.T
+	 * @param FieldValue
+	 * @param Field
+	 * @throws InterruptedException
+	 * @Description: selecting highlight icon in docviewpage
+	 */
+	public void doubleclickingHighlitingIcon(boolean FieldValue, boolean Field) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return HighliteIcon().Visible() && HighliteIcon().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(HighliteIcon());
+		HighliteIcon().waitAndClick(10);
+
+		if (FieldValue) {
+			thisPageHighlite().waitAndClick(5);
+		}
+		if (Field) {
 			base.waitTillElemetToBeClickable(HighliteIcon());
 			HighliteIcon().waitAndClick(10);
-			
-			if(FieldValue) {
-				thisPageHighlite().waitAndClick(5);	
-			}
-			if(Field) {
-				base.waitTillElemetToBeClickable(HighliteIcon());
-				HighliteIcon().waitAndClick(10);	
-			}
-
 		}
+
+	}
 
 	/**
 	 * @author Brundha.T
@@ -4159,18 +4162,18 @@ public void popOutCodingFormChildWindow() {
 	 * @return
 	 * @description: method to verify revert on or off docview redactions
 	 */
-public String verifyingRevertOffAndOn(Element ele) {
-	String color = ele.getWebElement().getCssValue("color");
-	System.out.println(color);
-	String ActColor = Color.fromString(color).asHex();
-	System.out.println(ActColor);
-	return ActColor;
-}
+	public String verifyingRevertOffAndOn(Element ele) {
+		String color = ele.getWebElement().getCssValue("color");
+		System.out.println(color);
+		String ActColor = Color.fromString(color).asHex();
+		System.out.println(ActColor);
+		return ActColor;
+	}
 
-	
 	/**
 	 * @author Krishna
-	 * @Description -- Verify multi page and all page options is removed from highlighting sub menus
+	 * @Description -- Verify multi page and all page options is removed from
+	 *              highlighting sub menus
 	 * @param Text , Text1
 	 */
 	public void verifyMultiPageandAllpageHighlight(String text, String text1) {
@@ -4190,15 +4193,16 @@ public String verifyingRevertOffAndOn(Element ele) {
 			base.failedStep("Exception occcured while setting this page redaction" + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Krishna
 	 * @Description -- Verify Redaction icon is selected
 	 *
 	 */
 	public void verifyRedactionIconRemain() {
-	    driver.waitForPageToBeReady();
-	    base = new BaseClass(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return redactionIcon().Displayed() && redactionIcon().Enabled();
 			}
@@ -4209,19 +4213,22 @@ public String verifyingRevertOffAndOn(Element ele) {
 		if (status.equals("active")) {
 			base.passedStep("Redaction menu is remain selected as expected");
 		} else {
-			
-			base.failedStep(" not selected");;
+
+			base.failedStep(" not selected");
+			;
 		}
-	 
+
 	}
 
 	/*
-	 * Author:Jagadeesh.Jana Date:NA Modify Author:Vijaya.Rani Modify Date:15/12/2022
+	 * Author:Jagadeesh.Jana Date:NA Modify Author:Vijaya.Rani Modify
+	 * Date:15/12/2022
 	 */
 	public void TraverseForwardAndBackwardOnHits() throws Exception {
 		SoftAssert softAssertion = new SoftAssert();
 		base = new BaseClass(driver);
 
+		base.waitTillElemetToBeClickable(getSearchIcon());
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return getSearchIcon().Visible() && HighliteIcon().Enabled();
@@ -4232,7 +4239,9 @@ public String verifyingRevertOffAndOn(Element ele) {
 		base.passedStep("successfully Clicked the Search Icon");
 
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
 		base.waitForElement(getInputSearchBox());
+		base.waitTillElemetToBeClickable(getInputSearchBox());
 		getInputSearchBox().waitAndClick(30);
 
 		getInputSearchBox().SendKeys("test");
@@ -4259,6 +4268,7 @@ public String verifyingRevertOffAndOn(Element ele) {
 		}
 
 		base.waitForElement(hitBackwardIcon("test"));
+		base.waitTillElemetToBeClickable(hitBackwardIcon("test"));
 		hitBackwardIcon("test").waitAndClick(10);
 		String backwardCount = getHitCount("test").getText();
 		System.out.println("backwardCount :" + backwardCount);
@@ -4273,6 +4283,31 @@ public String verifyingRevertOffAndOn(Element ele) {
 			softAssertion.assertTrue(false);
 		}
 		softAssertion.assertAll();
+	}
+
+	public void addremark(String remark, int x, int y, int offsetx, int offsety) throws InterruptedException {
+
+		base = new BaseClass(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		if(docView.getAddRemarkbtn().isDisplayed()== false) {
+			base.waitForElement(getNonAudioRemarkBtn());
+			getNonAudioRemarkBtn().waitAndClick(10);
+		}
+		Actions actions = new Actions(driver.getWebDriver());
+		Thread.sleep(10000);
+		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold().perform();
+		base.waitTime(2);
+		actions.moveByOffset(offsetx, offsety).release().build().perform();
+		base.waitTime(5);
+		driver.scrollPageToTop();
+		docView.getAddRemarkbtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getRemarkTextArea().Visible();
+			}
+		}), Input.wait30);
+		docView.getRemarkTextArea().SendKeys(remark);
+		docView.getSaveRemark().Click();
 	}
 
 }
