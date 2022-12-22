@@ -135,6 +135,7 @@ public class Doclist_Regression28 {
 		loginPage.logout();
 		
 	}
+	
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
