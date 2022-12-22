@@ -82,7 +82,7 @@ public class Ingestion_Regression_11 {
 		String[] metadata = {Input.metaDataName};
 		String ingestionName = null;
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
@@ -134,7 +134,7 @@ public class Ingestion_Regression_11 {
 		securityGroup = new SecurityGroupsPage(driver);
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");	
 		//Pre-Requisite
 		securityGroup.navigateToSecurityGropusPageURL();
@@ -173,14 +173,14 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(userSG);
 		baseClass.stepInfo("verify project fields should be searchable");
-		baseClass.selectproject();
+		baseClass.selectproject(Input.ingestDataProject);
 		for(int j=0;j<metadata.length;j++) {
 			if((!metaValue.get(j).isEmpty())){
 				
 				int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 				sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 				baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-				baseClass.selectproject();
+				baseClass.selectproject(Input.ingestDataProject);
 			}
 		}
 		baseClass.stepInfo("verify analytics SG completed");
@@ -206,7 +206,7 @@ public class Ingestion_Regression_11 {
 		securityGroup = new SecurityGroupsPage(driver);
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);	
 		baseClass.stepInfo("Logged in as PA");	
 		//Pre-Requisite
 		baseClass.stepInfo("project field created and release to created SG");
@@ -246,13 +246,13 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(userSG);
 		baseClass.stepInfo("verify project fields should be searchable");
-		baseClass.selectproject();
+		baseClass.selectproject(Input.ingestDataProject);
 		for(int j=0;j<metadata.length;j++) {
 			if((!metaValue.get(j).isEmpty())){
 			int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			baseClass.selectproject();
+			baseClass.selectproject(Input.ingestDataProject);
 			}
 		}
 		baseClass.stepInfo("verify analytics SG failed");
@@ -277,7 +277,7 @@ public class Ingestion_Regression_11 {
 		List<String> metaValue = new ArrayList<>();
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");	
 		//Pre-Requisite
 		baseClass.stepInfo("docs should be ingested and no docs release to SG");
@@ -317,7 +317,7 @@ public class Ingestion_Regression_11 {
 			int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 			baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-			baseClass.selectproject();
+			baseClass.selectproject(Input.ingestDataProject);
 			}
 		}
 		baseClass.stepInfo("verify analytics SG completed");
@@ -344,7 +344,7 @@ public class Ingestion_Regression_11 {
 		securityGroup = new SecurityGroupsPage(driver);
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");	
 		//Pre-Requisite
 		baseClass.stepInfo("docs should be ingested and release to SG");
@@ -382,13 +382,13 @@ public class Ingestion_Regression_11 {
 		securityGroup.navigateToSecurityGropusPageURL();
 		securityGroup.startRegenerateAnalyticsAtSgLevel(Input.securityGroup);
 		baseClass.stepInfo("verify project fields should be searchable");
-		baseClass.selectproject();
+		baseClass.selectproject(Input.ingestDataProject);
 		for(int j=0;j<metadata.length;j++) {
 			if((!metaValue.get(j).isEmpty())){
 				int result = sessionSearch.MetaDataSearchInBasicSearch(metadata[j],metaValue.get(j));
 				sessionSearch.verifySearchResultReturnsForConfiguredQuery(result);
 				baseClass.passedStep(metadata[j]+"--Project field is searchable while running analytics");
-				baseClass.selectproject();
+				baseClass.selectproject(Input.ingestDataProject);
 			}	
 		}
 		baseClass.stepInfo("verify analytics SG completed");
