@@ -28,7 +28,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Doclist_Regression28 {
+public class Doclist_Regression28_1 {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;
@@ -82,6 +82,7 @@ public class Doclist_Regression28 {
 		DocListPage docList = new DocListPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
+
 		// Login As user
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
