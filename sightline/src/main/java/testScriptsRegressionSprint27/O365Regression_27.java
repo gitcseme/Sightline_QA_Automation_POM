@@ -528,7 +528,7 @@ public class O365Regression_27 {
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder1 = "Analytics-1";
+		String selectedFolder1 = "Analytics-2";
 		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
 				"Error Status" };
 		String collectionID = "";
@@ -539,7 +539,7 @@ public class O365Regression_27 {
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 
 		base.failedMessage(
-				"Selected \"Analytics-1\" folder To publish only once in a project so make sure that current project doesn't have this dataset ingested");
+				"Selected \"Analytics-2\" folder To publish only once in a project so make sure that current project doesn't have this dataset ingested");
 		base.stepInfo("Test case Id: RPMXCON-61407 - O365");
 		base.stepInfo(
 				"erify that collection process execution should start from collection wizard with automatic initiate processing selection for collection and documents should be published with full analytics");
