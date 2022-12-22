@@ -435,6 +435,7 @@ public class DocViewAudio_Regression28 {
 		}
 		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
 		sessionSearch.ViewInDocList();
+		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		doclist.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		driver.waitForPageToBeReady();
@@ -509,6 +510,7 @@ public class DocViewAudio_Regression28 {
 		}
 		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
 		sessionSearch.ViewInDocView();
+		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		docViewPage.selectSourceDocIdInAvailableField("AudioTrimmedDuration");
 		driver.waitForPageToBeReady();
