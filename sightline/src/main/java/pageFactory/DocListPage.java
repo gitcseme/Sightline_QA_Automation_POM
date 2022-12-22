@@ -1992,8 +1992,8 @@ public class DocListPage {
 		final int Bgcount = bc.initialBgCount();
 
 		base.waitForElement(getContinueButton());
-		getContinueButton().Click();
-		getFinalizeButton().waitAndClick(10);
+		getContinueButton().waitAndClick(10);
+		base.waitForElement(getFinalizeButton());
 		driver.Manage().window().maximize();
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
