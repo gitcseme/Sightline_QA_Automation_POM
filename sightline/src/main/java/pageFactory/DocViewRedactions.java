@@ -4244,7 +4244,7 @@ public class DocViewRedactions {
 		base.waitTillElemetToBeClickable(getInputSearchBox());
 		getInputSearchBox().waitAndClick(30);
 
-		getInputSearchBox().SendKeys("test");
+		getInputSearchBox().SendKeys("in");
 		base.stepInfo("Search input Text completed");
 
 		Thread.sleep(2000); // Implicitly need here
@@ -4252,9 +4252,9 @@ public class DocViewRedactions {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		base.waitForElement(hitForwardIcon("test"));
-		hitForwardIcon("test").waitAndClick(10);
-		String forwardCount = getHitCount("test").getText();
+		base.waitForElement(hitForwardIcon("in"));
+		hitForwardIcon("in").waitAndClick(10);
+		String forwardCount = getHitCount("in").getText();
 		System.out.println("forwardCount: " + forwardCount);
 		base.waitTime(3);
 		if (forwardCount.contains("2 of ")) {
@@ -4267,10 +4267,10 @@ public class DocViewRedactions {
 			softAssertion.assertTrue(false);
 		}
 
-		base.waitForElement(hitBackwardIcon("test"));
-		base.waitTillElemetToBeClickable(hitBackwardIcon("test"));
-		hitBackwardIcon("test").waitAndClick(10);
-		String backwardCount = getHitCount("test").getText();
+		base.waitForElement(hitBackwardIcon("in"));
+		base.waitTillElemetToBeClickable(hitBackwardIcon("in"));
+		hitBackwardIcon("in").waitAndClick(10);
+		String backwardCount = getHitCount("in").getText();
 		System.out.println("backwardCount :" + backwardCount);
 		base.waitTime(3);
 		if (backwardCount.contains("1 of ")) {

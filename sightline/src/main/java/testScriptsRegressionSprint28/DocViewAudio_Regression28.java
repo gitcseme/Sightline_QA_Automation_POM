@@ -431,6 +431,7 @@ public class DocViewAudio_Regression28 {
 
 		if (role.equalsIgnoreCase(Input.pa1FullName)) {
 			sg.addProjectFieldtoSG(audioReady);
+			driver.waitForPageToBeReady();
 			sg.addProjectFieldtoSG(audioTrimmed);
 		}
 		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
@@ -506,6 +507,7 @@ public class DocViewAudio_Regression28 {
 
 		if (role.equalsIgnoreCase(Input.pa1FullName)) {
 			sg.addProjectFieldtoSG(audioReady);
+			driver.waitForPageToBeReady();
 			sg.addProjectFieldtoSG(audioTrimmedDuration);
 		}
 		sessionSearch.basicMetaDataSearch("AudioPlayerReady", null, "1", "");
