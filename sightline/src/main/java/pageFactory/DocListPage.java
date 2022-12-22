@@ -1994,6 +1994,8 @@ public class DocListPage {
 		base.waitForElement(getContinueButton());
 		getContinueButton().waitAndClick(10);
 		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		
 		driver.Manage().window().maximize();
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
