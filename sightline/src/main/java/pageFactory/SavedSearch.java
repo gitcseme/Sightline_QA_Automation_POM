@@ -71,13 +71,25 @@ public class SavedSearch {
 	public Element getSavedSearch_ApplyFilterButton() {
 		return driver.FindElementById("btnApplyFilter");
 	}
+
 	public Element getSavedSearch_name(String serachName) {
-		return driver.FindElementById("//td[contains(text(),'" + serachName +"')]");
+		return driver.FindElementById("//td[contains(text(),'" + serachName + "')]");
 	}
-	
+
+	public Element getSelectWithNameC(String serachName) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + serachName + "')]/parent::tr/td[1]");
+		// return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"
+		// + serachName + "']/td[1]//following::i");
+	}
+
+	// Xpath reverted back
 	public Element getSelectWithName(String serachName) {
-		return driver.FindElementByXPath("//td[contains(text(),'" + serachName +"')]/parent::tr/td[1]");
-		//return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]//following::i");
+	}
+
+	public Element getSSHeader() {
+		return driver.FindElementByXPath("//header[@id='header']");
 	}
 
 	public Element getSavedSearch_ScheduleButton() {
@@ -327,12 +339,27 @@ public class SavedSearch {
 	}
 
 	public Element getShare_SecurityGroup(String securitygroup) {
-		return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'" + securitygroup + "')]/i");
+		return driver.FindElementByXPath("// *[@id='s1']//label[contains(.,'" + securitygroup + "')]/i");
 	}
 
-	public Element getSavedSearchGroupName(String name) {
-		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
+	public Element getShare_SecurityGroupC(String securitygroup) {
+		return driver.FindElementByXPath("// *[@id='s1']//label[normalize-space()='" + securitygroup + "']/i");
 	}
+
+	// *[@id='s1']//label[normalize-space()='Shared with Default Security Group']/i
+	// *[@id='s1']//label[contains(.,'" + securitygroup + "')]/i
+
+	public Element getSavedSearchGroupName(String name) {
+		return driver.FindElementByXPath("// *[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
+	}
+
+	public Element getSavedSearchGroupNameC(String name) {
+		return driver.FindElementByXPath("// *[@id='jsTreeSavedSearch']//a[normalize-space()='" + name + "']");
+	}
+
+	// *[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]
+	// *[@id='jsTreeSavedSearch']//a[normalize-space()='Shared with Default Security
+	// Group']
 
 	// quick batch
 	public Element getSavedSearchQuickBatchButton() {
@@ -805,7 +832,7 @@ public class SavedSearch {
 	public Element getSavedSearchDisplayedSearchRadioButton(int rowNo) {
 		return driver.FindElementByXPath("//table[@id='SavedSearchGrid']//tr[" + rowNo + "]//label//i");
 	}
-	
+
 	public Element getSavedSearchSharedWithProjectAdminExpandButton() {
 		return driver.FindElementByXPath(
 				"//*[@class='jstree-node gp_tc_pashared jstree-closed']//i[contains(@class,'ocl')]");
@@ -860,14 +887,15 @@ public class SavedSearch {
 	}
 
 	// Added By sowndarya.velraj
-	
+
 	public Element getPersistantHitCb_Existing() {
 		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
 	}
+
 	public Element getPersistantHitCheckBox() {
 		return driver.FindElementByXPath("sdz");
 	}
-	
+
 	public Element getLastStatusAs(String status) {
 		return driver.FindElementByXPath("//select[@id='ddlSavedSearchStatus']//option[text()='" + status + "']");
 	}
@@ -1027,27 +1055,27 @@ public class SavedSearch {
 	public Element getExpansionArrow(String groupName) {
 		return driver.FindElementByXPath("//a[text()='" + groupName + "']/parent::li/i");
 	}
-	
+
 	public Element getSavesSreachSharedWithPA() {
 		return driver.FindElementByXPath("//div[@id='jsTreeSavedSearch']/ul/li[2]/a");
 	}
-	
+
 	public Element getUnBulkTagConfirmationButton() {
 		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
 	}
-	
+
 	public Element getSavedSearchSelectRadioButton() {
-		return driver.FindElementByXPath("(//*[@id='SavedSearchGrid']/tbody//td[2])[last()]/../td[@class='sorting_1']/label/i");
+		return driver.FindElementByXPath(
+				"(//*[@id='SavedSearchGrid']/tbody//td[2])[last()]/../td[@class='sorting_1']/label/i");
 	}
-	
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
 	List<String> sgList = new ArrayList<>();
-	
+
 	public ElementCollection getcurrentClickedNode() {
-        return driver.FindElementsByXPath("//a[@class='jstree-anchor jstree-clicked']");
-    }
+		return driver.FindElementsByXPath("//a[@class='jstree-anchor jstree-clicked']");
+	}
 
 	public SavedSearch(Driver driver) {
 
@@ -1487,7 +1515,13 @@ public class SavedSearch {
 				return getShare_SecurityGroup(securitygroupname).Visible();
 			}
 		}), Input.wait30);
-		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
+		if (getShare_SecurityGroup(securitygroupname).isElementAvailable(3)) {
+			base.mouseHoverOnElement(getshareASearchPopup());
+			getShare_SecurityGroup(securitygroupname).waitAndClick(10);
+		} else {
+			base.mouseHoverOnElement(getshareASearchPopup());
+			getShare_SecurityGroupC(securitygroupname).waitAndClick(10);
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1508,7 +1542,12 @@ public class SavedSearch {
 		UtilityLog.info(SearchID);
 
 		// click on share with security group tab
-		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (getSavedSearchGroupName(securitygroupname).isElementAvailable(3)) {
+			getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+		} else {
+			getSavedSearchGroupNameC(securitygroupname).waitAndClick(10);
+		}
 		// Thread sleep added to Execute in cosolidation
 		Thread.sleep(2000);
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
@@ -1664,6 +1703,7 @@ public class SavedSearch {
 	public void savedSearch_Searchandclick(final String searchName) {
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		driver.waitForPageToBeReady();
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -2079,14 +2119,16 @@ public class SavedSearch {
 		selectRootGroupTab(groupName);
 
 		getSavedSearchNewGroupButton().waitAndClick(5);
-		base.waitTime(2);// to handle wait for observing the text
+		driver.waitForPageToBeReady();
+		base.waitTime(3);// to handle wait for observing the text
 //		base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
-		getSavedSearchNewGroupButton().waitAndClick(2);
+		getSavedSearchNewGroupButton().waitAndClick(5);
+//		getSSHeader().waitAndClick(3);// In order to avoid abnormal showstoppers
 
 		driver.waitForPageToBeReady();
-		//base.VerifySuccessMessage("Save search tree node successfully created.");
-		//base.CloseSuccessMsgpopup();
-		//driver.Navigate().refresh();
+		base.VerifySuccessMessage("Save search tree node successfully created.");
+		base.CloseSuccessMsgpopup();
+		// driver.Navigate().refresh();
 
 		// Get created node text
 		String newNode = currentClickedNode().getText();
@@ -2113,29 +2155,8 @@ public class SavedSearch {
 	 * @author Jeevitha Description: Schedules Saved search In Minutes
 	 */
 	public void scheduleSavedSearchInMinute(String searchName, int number) throws ParseException, InterruptedException {
-//		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		// Thread.sleep(3000);
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearch_SearchName().Visible();
-			}
-		}), Input.wait60);
-		getSavedSearch_SearchName().SendKeys(searchName);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearch_ApplyFilterButton().Visible();
-			}
-		}), Input.wait60);
-		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		// Thread.sleep(5000);
-		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectWithName(searchName).Visible();
-			}
-		}), Input.wait60);
-		getSelectWithName(searchName).waitAndClick(30);
+		savedSearch_SearchandSelect(searchName, "Yes");
 		base.waitForElement(getSavedSearch_ScheduleButton());
 		getSavedSearch_ScheduleButton().waitAndClick(20);
 
@@ -2246,10 +2267,12 @@ public class SavedSearch {
 		base.stepInfo(SearchID + " is Saved search ID");
 		UtilityLog.info(SearchID + " is Saved search ID");
 
+		driver.waitForPageToBeReady();
 		getSelectWithName(searchName).waitAndClick(10);
+		driver.waitForPageToBeReady();
 
 		// Again select same search and share with security group
-		getShareSerachBtn().waitAndClick(3);
+		getShareSerachBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
 
@@ -2302,7 +2325,7 @@ public class SavedSearch {
 	public String createNewSearchGrp(String nodeName, int count) throws InterruptedException {
 
 		String childNodeName = null;
-		//driver.Navigate().refresh();
+		// driver.Navigate().refresh();
 		base.waitForElement(getCreatedNodeName(nodeName));
 		selectNode1(nodeName);
 		getCreatedNodeName(nodeName).waitAndClick(10);
@@ -2701,7 +2724,7 @@ public class SavedSearch {
 			// base.waitForElement(getSelectWithName(searchName));
 //			getSelectWithName(searchName).isElementAvailable(5);
 			getSelectWithName(searchName).waitAndClick(6);
-		//	getSelectWithName(searchName).checkIn();
+			getSelectWithName(searchName).checkIn();
 		}
 
 	}
@@ -2984,7 +3007,15 @@ public class SavedSearch {
 		// Share to SG
 		getSavedSearchGroupName(nodeName).waitAndClick(10);
 		getShareSerachBtn().waitAndClick(10);
-		getShare_SecurityGroup(SGtoShare).waitAndClick(10);
+
+		// Updates
+		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(2)) {
+			getShare_SecurityGroup(SGtoShare).waitAndClick(10);
+		} else {
+			getShare_SecurityGroupC(SGtoShare).waitAndClick(10);
+		}
+
+		// Perform Share Action
 		getShareSaveBtnNew().waitAndClick(10);
 		System.out.println("Shared to : " + SGtoShare);
 		base.stepInfo("Shared to : " + SGtoShare);
@@ -3456,7 +3487,7 @@ public class SavedSearch {
 		// get Search ID
 		String searchiD = null;
 		try {
-			//savedSearch_SearchandSelect(searchName, "No");
+			// savedSearch_SearchandSelect(searchName, "No");
 			searchiD = getSelectSearchWithID(searchName).getText();
 			System.out.println(searchiD);
 		} catch (Exception e) {
@@ -4778,23 +4809,20 @@ public class SavedSearch {
 			}
 
 			base.stepInfo("Verify whether the Report Button is getting displayed in Saved Search Page");
-			if(user.equals("PA")||user.equals("RMU"))
-			{
+			if (user.equals("PA") || user.equals("RMU")) {
 				softAssertion.assertEquals(getSavedSearchToTermReport().Displayed().booleanValue(), true);
 				base.passedStep("Report Button is displayed in Saved Search Page");
-			}
-			else if(user.equals("REV"))
-				{
+			} else if (user.equals("REV")) {
 				base.passedStep("Report Button is not displayed in Saved Search Page for reviewer");
-				}
-			
-		
-		base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
-		if(getSavedSearchExecuteButton().Displayed()); {
-			softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
-			base.passedStep("Execute Button is displayed in Saved Search Page");
-		}
-		
+			}
+
+			base.stepInfo("Verify whether the Execute Button is getting displayed in Saved Search Page");
+			if (getSavedSearchExecuteButton().Displayed())
+				;
+			{
+				softAssertion.assertEquals(getSavedSearchExecuteButton().Displayed().booleanValue(), true);
+				base.passedStep("Execute Button is displayed in Saved Search Page");
+			}
 
 			base.stepInfo("Verify whether the Export Button is getting displayed in Saved Search Page");
 			if (getSavedSearchExportButton().Displayed()) {
@@ -4802,17 +4830,14 @@ public class SavedSearch {
 				base.passedStep("Export Button is displayed in Saved Search Page");
 			}
 
-			if(user.equals("PA"))
-			{
+			if (user.equals("PA")) {
 				base.stepInfo("Verify whether the Release Button is getting displayed in Saved Search Page");
 				softAssertion.assertEquals(getReleaseIcon().Displayed().booleanValue(), true);
 				base.passedStep("Release Button is displayed in Saved Search Page");
-			}
-			else if(user.equals("RMU"))
-			{
+			} else if (user.equals("RMU")) {
 				base.stepInfo("Verify whether the Assign Button is getting displayed in Saved Search Page");
-					softAssertion.assertTrue(getSavedSearchToBulkAssign().Displayed());
-					base.passedStep("Assign Button is displayed in Saved Search Page");
+				softAssertion.assertTrue(getSavedSearchToBulkAssign().Displayed());
+				base.passedStep("Assign Button is displayed in Saved Search Page");
 
 			}
 
@@ -4976,11 +5001,10 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 		try {
-			try {
-				Thread.sleep(3000);// to handle wait for observing the text
+			base.waitTime(3);// to handle wait for observing the text
+			if (getSavedSearchSharedWithExpandButton().isElementAvailable(5)) {
 				getSavedSearchSharedWithExpandButton().waitAndClick(10);
-			} catch (Exception e) {
-				Thread.sleep(3000);// to handle wait for observing the text
+			} else {
 				getSavedSearchSharedWithExpandLastButton().waitAndClick(10);
 			}
 
@@ -5644,11 +5668,13 @@ public class SavedSearch {
 				dcPage.getBackToSourceBtn().waitAndClick(10);
 			}
 			driver.waitForPageToBeReady();
-			/*if (selectNode) {
-				base.waitForElement(getSavedSearchNodeWithRespectiveSG(Input.shareSearchDefaultSG, nodeName));
-				getSavedSearchNodeWithRespectiveSG(Input.shareSearchDefaultSG, nodeName).waitAndClick(10);
-				System.out.println("Node clicked again");
-			}*/
+			/*
+			 * if (selectNode) {
+			 * base.waitForElement(getSavedSearchNodeWithRespectiveSG(Input.
+			 * shareSearchDefaultSG, nodeName));
+			 * getSavedSearchNodeWithRespectiveSG(Input.shareSearchDefaultSG,
+			 * nodeName).waitAndClick(10); System.out.println("Node clicked again"); }
+			 */
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
@@ -6015,7 +6041,12 @@ public class SavedSearch {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		driver.Navigate().to(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		getSavedSearchGroupName(shareTo).waitAndClick(10);
+		if (getSavedSearchGroupName(shareTo).isElementAvailable(3)) {
+			getSavedSearchGroupName(shareTo).waitAndClick(10);
+		} else {
+			getSavedSearchGroupNameC(shareTo).waitAndClick(5);
+		}
+
 		verifyDocCountWithResult(purehit);
 
 		login.logout();
@@ -6044,7 +6075,12 @@ public class SavedSearch {
 		base.stepInfo("Back As : " + Input.rmu1FullName);
 		driver.Navigate().to(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		getSavedSearchGroupName(shareTo).waitAndClick(10);
+		if (getSavedSearchGroupName(shareTo).isElementAvailable(2)) {
+			getSavedSearchGroupName(shareTo).waitAndClick(10);
+		} else {
+			getSavedSearchGroupNameC(shareTo).waitAndClick(10);
+		}
+
 		verifyDocCountWithResult(purehit);
 
 		login.logout();
@@ -6081,7 +6117,12 @@ public class SavedSearch {
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		}
 		if (selectGroup) {
-			getSavedSearchGroupName(groupName).waitAndClick(10);
+			if (getSavedSearchGroupName(groupName).isElementAvailable(2)) {
+				getSavedSearchGroupName(groupName).waitAndClick(10);
+			} else {
+				getSavedSearchGroupNameC(groupName).waitAndClick(10);
+			}
+
 		}
 		for (String searchName : SearchListToDelete) {
 			savedSearch_SearchandSelect(searchName, option);
@@ -6875,7 +6916,11 @@ public class SavedSearch {
 			HashMap<String, String> nodeSearchpair) {
 		List<String> list = new ArrayList<>();
 
-		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
+		if (getSavedSearchGroupName(SGtoShare).isElementAvailable(3)) {
+			getSavedSearchGroupName(SGtoShare).waitAndClick(10);
+		} else {
+			getSavedSearchGroupNameC(SGtoShare).waitAndClick(10);
+		}
 
 		rootGroupExpansion();
 		String node = null, searchiD;
@@ -6888,7 +6933,7 @@ public class SavedSearch {
 				softAssertion.assertTrue(getSavedSearchGroupName(node).isDisplayed());
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
-				getSavedSearchGroupName(node).Click();
+				getSavedSearchGroupName(node).waitAndClick(5);
 				if (i >= selectIndex) {
 
 					list = getListFromSavedSearchTable("Search Name");
@@ -7418,6 +7463,7 @@ public class SavedSearch {
 			base.failedMessage("Verification Failed. Warning message appeared");
 		} else {
 			base.stepInfo("Verification Passed. Warning message doesn't appeared");
+			base.CloseSuccessMsgpopup();
 		}
 
 		base.VerifySuccessMessage(
@@ -7799,7 +7845,13 @@ public class SavedSearch {
 
 		if (groupName.equals(Input.shareSearchDefaultSG) || groupName.equals(Input.shareSearchPA)
 				|| groupName.contains("Shared with ") || (groupName.equals(Input.mySavedSearch))) {
-			getSavedSearchGroupName(groupName).waitAndClick(15);
+
+			if (getSavedSearchGroupName(groupName).isElementAvailable(2)) {
+				getSavedSearchGroupName(groupName).waitAndClick(15);
+			} else {
+				getSavedSearchGroupNameC(groupName).waitAndClick(15);
+			}
+
 			System.out.println("Clicked :" + groupName);
 		}
 	}
@@ -8321,7 +8373,7 @@ public class SavedSearch {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 * @description:saveSearch Shared With PA To DocList
@@ -8329,14 +8381,14 @@ public class SavedSearch {
 	 */
 	public void saveSearchSharedWithPAToDocList(final String searchName) {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSavesSreachSharedWithPA().Visible();
 			}
 		}), Input.wait30);
 		getSavesSreachSharedWithPA().waitAndClick(5);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSavedSearch_SearchName().Visible();
@@ -8374,8 +8426,7 @@ public class SavedSearch {
 		}
 		base.stepInfo("Saved search is opened in doc list");
 	}
-	
-	
+
 	/**
 	 * @author Sowndarya.Velraj
 	 * @param searchName
@@ -8385,7 +8436,7 @@ public class SavedSearch {
 		navigateToSavedSearchPage();
 		driver.waitForPageToBeReady();
 		savedSearch_Searchandclick(searchName);
-		
+
 		base.waitForElement(getSavedSearchToBulkAssign());
 		getSavedSearchToBulkAssign().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -8397,12 +8448,12 @@ public class SavedSearch {
 			if (getPersistantHitCb_Existing().isElementAvailable(3))
 				getPersistantHitCb_Existing().waitAndClick(5);
 		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
-			    getPersistantHitCheckBox().waitAndClick(5);
+			getPersistantHitCheckBox().waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
 
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj
 	 * @param searchGroup
@@ -8412,7 +8463,7 @@ public class SavedSearch {
 		navigateToSavedSearchPage();
 		driver.waitForPageToBeReady();
 		selectRootGroupTab(searchGroup);
-		
+
 		base.waitForElement(getSavedSearchToBulkAssign());
 		getSavedSearchToBulkAssign().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -8424,11 +8475,10 @@ public class SavedSearch {
 			if (getPersistantHitCb_Existing().isElementAvailable(3))
 				getPersistantHitCb_Existing().waitAndClick(5);
 		} else if (getPersistantHitCheckBox().isElementAvailable(3)) {
-			    getPersistantHitCheckBox().waitAndClick(5);
+			getPersistantHitCheckBox().waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
 
 	}
-
 
 }

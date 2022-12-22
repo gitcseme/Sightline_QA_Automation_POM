@@ -152,7 +152,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47731",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-47731", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void saveSearchBatchUploadInvalidFileFormat(String username, String password, String fullName)
 			throws InterruptedException {
 		String search = "Search" + Utility.dynamicNameAppender();
@@ -162,10 +163,7 @@ public class SavedSearchRegression_New_Set_01 {
 		login.loginToSightLine(username, password);
 
 		// Create Node
-		saveSearch.createSearchGroupAndReturn("Input.mysavedsearch", "PA", "No");
-		//base.CloseSuccessMsgpopup();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String new_node = saveSearch.getSavedSearchNewNode().getText();
+		String new_node = saveSearch.createSearchGroupAndReturn("Input.mysavedsearch", "PA", "No");
 		driver.waitForPageToBeReady();
 		saveSearch.getCreatedNode(new_node).waitAndClick(20);
 
@@ -183,7 +181,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         validateDAviaPASharingSavedSearchImpersonateAsRMUAndReviewer()
 	 */
 
-	@Test(description ="RPMXCON-49897",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49897", enabled = true, groups = { "regression" })
 	public void validateSAviaPASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
@@ -393,8 +391,8 @@ public class SavedSearchRegression_New_Set_01 {
 		// Search ID collection
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);    
-		saveSearch.rootGroupExpansion();     
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.rootGroupExpansion();
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String RMUNode = newNodeList.get(0);
 
@@ -435,7 +433,7 @@ public class SavedSearchRegression_New_Set_01 {
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -449,8 +447,8 @@ public class SavedSearchRegression_New_Set_01 {
 		// Search ID collection
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);    
-		saveSearch.rootGroupExpansion();     
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.rootGroupExpansion();
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String reviewerNode = newNodeList.get(0);
 
@@ -492,7 +490,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *                   RPMXCON-49898 Sprint 5
 	 */
 
-	@Test(description ="RPMXCON-49898",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49898", enabled = true, groups = { "regression" })
 	public void validateDAviaPASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
@@ -539,10 +537,10 @@ public class SavedSearchRegression_New_Set_01 {
 
 		base.stepInfo("Verifying whether the search saved by PA role is not available for RMU user");
 		try {
-			
+
 			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for RMU user");
-			}                                                                                             
+			}
 		} catch (Exception e) {
 			base.passedStep("Shared with project adminitrator security group is not available for RMU user");
 			UtilityLog.info("Shared with project adminitrator security group is not available for RMU user");
@@ -652,7 +650,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0),SGtoShare);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), PAtoShare);
 		String PANode = newNodeList.get(0);
 
@@ -685,7 +683,7 @@ public class SavedSearchRegression_New_Set_01 {
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
 		// Landed on Saved Search
-		base.selectproject();  
+		base.selectproject();
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		// Multiple Node Creation
@@ -705,7 +703,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0),SGtoShare);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String RMUNode = newNodeList.get(0);
 
 		// Impersonate RMU User to Reviewer
@@ -799,7 +797,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @author jeevitha Description: (RPMXCON-57393)RMU/RU scheduling searches saved
 	 * under My Saved Searches and verify documents
 	 */
-	@Test(description ="RPMXCON-57393",enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" } )
+	@Test(description = "RPMXCON-57393", enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = {
+			"regression" })
 	public void verifySchedulingSearches(String userName, String password, String fullName) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -886,7 +885,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @author jeevitha Description: (RPMXCON-57393)RMU/RU scheduling searches saved
 	 * under My Saved Searches and verify documents
 	 */
-	@Test(description ="RPMXCON-57393",enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" } )
+	@Test(description = "RPMXCON-57393", enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = {
+			"regression" })
 	public void verifySchedulingSearches2(String userName, String password, String fullName) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -984,7 +984,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @author jeevitha Description: (RPMXCON-57396)DAU impersonating down as RMU/RU
 	 * schedule searches saved under MY Saved Searches
 	 */
-	@Test(description ="RPMXCON-57396",enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = { "regression" } )
+	@Test(description = "RPMXCON-57396", enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = {
+			"regression" })
 	public void verifyDASchedulingSearches(String role) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -1076,7 +1077,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * schedule searches saved under MY Saved Searches
 	 * 
 	 */
-	@Test(description ="RPMXCON-57396",enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = { "regression" } )
+	@Test(description = "RPMXCON-57396", enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = {
+			"regression" })
 	public void verifyDASchedulingSearches2(String role) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -1182,7 +1184,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              count should be displayed correctly on saved search after Search
 	 *              completes
 	 */
-	@Test(description ="RPMXCON-49092",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49092", enabled = true, groups = { "regression" })
 	public void validateSecurityGroupCountsThroughBatchFile() throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49092");
 		base.stepInfo(
@@ -1211,7 +1213,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              completes
 	 */
 
-	@Test(description ="RPMXCON-49095",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49095", enabled = true, groups = { "regression" })
 
 	public void validateAssignmentDocCountsThroughBatchFile() throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49095");
@@ -1246,7 +1248,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         when user uploads Batch Search file with Basic and Advanced search
 	 *         queries (RPMXCON-48536)
 	 */
-	@Test(description ="RPMXCON-48536",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-48536", enabled = true, groups = { "regression" })
 	public void verifyBatchUpload() throws Exception {
 		String advanceSearch = "Basic Work Product";
 		String basicsearch = "Basic Content Search without Family Members";
@@ -1277,7 +1279,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         Tags then count should be displayed correctly on saved search after
 	 *         Search completes (RPMXCON-49089) @modified on : 12/4/21
 	 */
-	@Test(description ="RPMXCON-49089",enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = { "regression" } )
+	@Test(description = "RPMXCON-49089", enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = {
+			"regression" })
 	public void validateTagThroughBatchFile(String username, String password) throws Exception {
 		String tag = "WPTag";
 		String File = saveSearch.renameFile(Input.WPbatchFile);
@@ -1323,7 +1326,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         after Search completes (RPMXCON-49090)
 	 * @modified on : 12/4/21 by : Jeevitha
 	 */
-	@Test(description ="RPMXCON-49090",enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = { "regression" } )
+	@Test(description = "RPMXCON-49090", enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = {
+			"regression" })
 	public void validateFolderThroughBatchFile(String username, String password) throws Exception {
 		String folder = "WPFolder";
 		String File = saveSearch.renameFile(Input.WPbatchFile);
@@ -1367,7 +1371,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         Export (RPMXCON-49016)
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49016",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49016", enabled = true, groups = { "regression" })
 	public void verifyExportDocs() throws InterruptedException {
 
 		String SearchName = "Search" + Utility.dynamicNameAppender();
@@ -1442,7 +1446,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         SearchGroups/Searches only within MySearches (RPMXCON-49948)
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49948",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49948", enabled = true, groups = { "regression" })
 	public void verifyMoveActionViaDAU() throws InterruptedException {
 
 		base.stepInfo("RPMXCON-49948 Saved Search - Sprint 05");
@@ -1464,7 +1468,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         datas
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49957",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49957", enabled = true, groups = { "regression" })
 	public void releaseAllTagtoSGviaSS() throws InterruptedException {
 		String TagName = "Tag" + Utility.dynamicNameAppender(), finalCount;
 		int pureHit, finalCountresult;
@@ -1487,7 +1491,7 @@ public class SavedSearchRegression_New_Set_01 {
 		base.stepInfo("Search and saveSearch in the created node");
 		int purehit = session.basicContentSearch(Input.searchString1);
 //		session.saveSearchInNode(SearchName);
-		session.saveSearchInNewNode(SearchName, new_node); 
+		session.saveSearchInNewNode(SearchName, new_node);
 		driver.waitForPageToBeReady();
 		base.selectproject();
 
@@ -1540,7 +1544,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         (RPMXCON-57402) Sprint 05
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-57402",enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" } )
+	@Test(description = "RPMXCON-57402", enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" })
 	public void communicatioNReport(String username, String password, String fullName, String role)
 			throws InterruptedException {
 
@@ -1568,7 +1572,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		// session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
+		session.saveSearchInNewNode(searchName, newNodeFromRMU);
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -1578,7 +1582,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
 		// session.saveSearchInNode(searchName1);
-		session.saveSearchInNewNode(searchName1, newNodeFromRev); 
+		session.saveSearchInNewNode(searchName1, newNodeFromRev);
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU
@@ -1599,7 +1603,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              then count should be displayed correctly on saved search after
 	 *              Search completes
 	 */
-	@Test(description ="RPMXCON-49093",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-49093", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void validateSavedSearchResultsThroughBatchFile(String username, String password, String fullName)
 			throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49093");
@@ -1641,7 +1646,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @description To verify Refresh action on saved search screen under My Saved
 	 *              Search and Shared folders
 	 */
-	@Test(description ="RPMXCON-49960",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-49960", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void validateSavedSearchResultsThroughBatchFileAftreRefreshing(String username, String password,
 			String fullname) throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49960");
@@ -1698,7 +1704,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49854",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49854", enabled = true, groups = { "regression" })
 	public void validateSavedSearchPageProperOptions() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 2;
 		int selectIndex = 1;
@@ -1778,7 +1784,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         documents
 	 * 
 	 */
-	@Test(description ="RPMXCON-57398",enabled = true, dataProvider = "user_Roles", groups = { "regression" } )
+	@Test(description = "RPMXCON-57398", enabled = true, dataProvider = "user_Roles", groups = { "regression" })
 	public void verifySASchedulingSearches_Impersonation(String role) throws Exception {
 		String savedSearch1 = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -1950,7 +1956,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         schedule saved searches and verify documents
 	 * 
 	 */
-	@Test(description ="RPMXCON-57397",enabled = true, dataProvider = "user_Roles", groups = { "regression" } )
+	@Test(description = "RPMXCON-57397", enabled = true, dataProvider = "user_Roles", groups = { "regression" })
 	public void verifyDASchedulingSearches_Impersonation(String role) throws Exception {
 		String savedSearch1 = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -2120,7 +2126,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              count should be displayed correctly on saved search after Search
 	 *              completes
 	 */
-	@Test(description ="RPMXCON-49094",enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = { "regression" } )
+	@Test(description = "RPMXCON-49094", enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = {
+			"regression" })
 	public void validateProductionsCountsThroughBatchFile(String username, String password) throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49094");
 		base.stepInfo(
@@ -2169,7 +2176,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              Searchgroups and Searches, and then runs the Concept Explorer
 	 *              report against My saved searches in PAU role
 	 */
-	@Test(description ="RPMXCON-57403",enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" } )
+	@Test(description = "RPMXCON-57403", enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" })
 	public void validateConceptualReportAgainstMySavedSearch(String username, String password, String name, String role)
 			throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-57403");
@@ -2199,7 +2206,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 //		session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
+		session.saveSearchInNewNode(searchName, newNodeFromRMU);
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -2209,7 +2216,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
 //		session.saveSearchInNode(searchName1);
-		session.saveSearchInNewNode(searchName1, newNodeFromRev); 
+		session.saveSearchInNewNode(searchName1, newNodeFromRev);
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU
@@ -2217,7 +2224,7 @@ public class SavedSearchRegression_New_Set_01 {
 		base.rolesToImp("REV", "RMU");
 
 		// verify the saved searches are present in report page
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		report.navigateToReportsPage();// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		report.VerificationOfConceptualReport(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1,
 				searchName2);
 
@@ -2234,7 +2241,7 @@ public class SavedSearchRegression_New_Set_01 {
 	 *              Searchgroups and Searches, and then runs the STR report against
 	 *              My saved searches in PAU role
 	 */
-	@Test(description ="RPMXCON-57404",enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" } )
+	@Test(description = "RPMXCON-57404", enabled = true, dataProvider = "UserSaUDaUPaU", groups = { "regression" })
 	public void validateSearchTermReportAgainstMySavedSearch(String username, String password, String name, String role)
 			throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-57404");
@@ -2264,7 +2271,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		// session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
+		session.saveSearchInNewNode(searchName, newNodeFromRMU);
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -2295,7 +2302,8 @@ public class SavedSearchRegression_New_Set_01 {
 	 * @author jayanthi ganesan Description:To verify RMU/Reviewer is able to filter
 	 *         saved search based on their status.
 	 */
-	@Test(description ="RPMXCON-49959",dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" } , enabled = true)
+	@Test(description = "RPMXCON-49959", dataProvider = "SavedSearchwithRMUandREV", groups = {
+			"regression" }, enabled = true)
 	public void VerifyStatus(String username, String password, String fullName) throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-49959");
 		base.stepInfo("To verify RMU/Reviewer is able to filter saved search based on their status");
@@ -2378,7 +2386,7 @@ public class SavedSearchRegression_New_Set_01 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		System.out.println("Executed :" );
+		System.out.println("Executed :");
 
 	}
 

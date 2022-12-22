@@ -4014,7 +4014,7 @@ public class SessionSearch {
 		// added on 24/8/21
 		driver.scrollingToElementofAPage(getMetaDataInserQuery());
 		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().Click();
+		getMetaDataInserQuery().waitAndClick(10);
 
 		driver.scrollPageToTop();
 
@@ -12091,10 +12091,11 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(3);
 		// Click on Search button
-		// base.waitForElement(getSecondSearchBtn());
-//		getSecondSearchBtn().waitAndClick(3);
-		SearchBtnAction();
-		base.waitTime(2);
+		base.waitForElement(getSecondSearchBtn());
+		getSecondSearchBtn().waitAndClick(3);
+		if (base.getYesBtn().isElementAvailable(2)) {
+			base.getYesBtn().waitAndClick(10);
+		}
 		base.waitForElement(getPureHitsCount2ndSearch());
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -12205,6 +12206,7 @@ public class SessionSearch {
 			getConceptualCountPlayButton().waitAndClick(5);
 
 			base.waitForElement(getConceptualCountDisplayed());
+			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage("Conceptual Similar search started successfully.");
 			System.out.println("Clicked ConceptualCount button");
 			driver.waitForPageToBeReady();

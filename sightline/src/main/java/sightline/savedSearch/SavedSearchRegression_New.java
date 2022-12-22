@@ -1901,7 +1901,7 @@ public class SavedSearchRegression_New {
 
 		base.waitForElement(saveSearch.getSavedSearchTreeNode(nodeName));
 		saveSearch.getSavedSearchTreeNode(nodeName).waitAndClick(10);
-		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(null);
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV("PA");
 		base.stepInfo("-----------------------------" + nodeName + " Completed--------------------------------");
 
 		// navigate to Doclist and return back to Saved Search page
