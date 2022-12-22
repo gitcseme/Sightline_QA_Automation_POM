@@ -2290,8 +2290,8 @@ public class UserManagement {
 	 */
 	public void saveSecurityGroup() {
 		try {
-			if (getSavePassword().isElementAvailable(3)) {
-				getSavePassword().waitAndClick(3);
+			if (getSavePassword().isElementAvailable(5)) {
+				getSavePassword().waitAndClick(5);
 				driver.waitForPageToBeReady();
 			} else {
 				System.out.println("No Btn");

@@ -302,19 +302,21 @@ public class ReportsPage {
 		return driver.FindElementByXPath("//a[@name='Reports']//i");
 	}
 
-	//added by sowndarya
-	
+	// added by sowndarya
+
 	public Element getSavedCustomReport(String reportName) {
-		return driver.FindElementByXPath("//a[text()='" + reportName +"']");
+		return driver.FindElementByXPath("//a[text()='" + reportName + "']");
 	}
-	
+
 	public ElementCollection getCustomReportList() {
 		return driver.FindElementsByXPath("//div[@id='divReviewCustomTemplate']//table//tbody//tr//td//a");
 	}
+
 	public Element getReportReviewCustom(String reportName) {
-		return driver.FindElementByXPath("//div[@id='divReviewCustomTemplate']//table//tbody//tr//td//a[text()='" + reportName +"']");
+		return driver.FindElementByXPath(
+				"//div[@id='divReviewCustomTemplate']//table//tbody//tr//td//a[text()='" + reportName + "']");
 	}
-	
+
 	public ReportsPage(Driver driver) {
 
 		this.driver = driver;
@@ -325,7 +327,6 @@ public class ReportsPage {
 		softAssertion = new SoftAssert();
 		communicationExplorer = new CommunicationExplorerPage(driver);
 	}
-	
 
 	public void TallyReportButton() {
 		ReportsPage report = new ReportsPage(driver);
@@ -583,6 +584,7 @@ public class ReportsPage {
 			String folderName, String searchName, String searchNmae1, int pureHit) throws InterruptedException {
 		// ReportPage
 		new ReportsPage(driver);
+		navigateToReportsPage();
 		customDataReportMethod();
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "RMU");
 		getSelectSearchCloseBtn().waitAndClick(5);
@@ -597,6 +599,7 @@ public class ReportsPage {
 
 		// Report Page
 		new ReportsPage(driver);
+		navigateToReportsPage();
 		customDataReportMethod();
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "PA", "Yes");
 		customDataReportMethodExport(folderName, true);
@@ -869,6 +872,7 @@ public class ReportsPage {
 			String searchName, String searchNmae1, int pureHit) throws InterruptedException {
 		// ReportPage
 		new CommunicationExplorerPage(driver);
+		navigateToReportsPage();
 		communicationExp();
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "RMU");
 		getSelectSearchCloseBtn().waitAndClick(5);
@@ -880,6 +884,7 @@ public class ReportsPage {
 
 		// Report Page
 		new CommunicationExplorerPage(driver);
+		navigateToReportsPage();
 		communicationExp();
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "PA", "Yes");
 		communnicationReportMethodExport(true);
@@ -1226,14 +1231,30 @@ public class ReportsPage {
 		} else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Communications Explorer")) {
 			getThisLink(componentName).waitAndClick(10);
 			base.verifyPageNavigation("DataAnalysisReport/CommunicationExplorerReport");
-		}else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Search Term Report")) {
+		} else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Search Term Report")) {
 			getThisLink("Search Term Report").waitAndClick(10);
 			base.verifyPageNavigation("DataAnalysisReport/SearchTermReport");
-		}else if(!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Advanced Batch Management Report")) {
+		} else if (!componentName.equalsIgnoreCase("")
+				&& componentName.equalsIgnoreCase("Advanced Batch Management Report")) {
 			getThisLink("Advanced Batch Management Report").waitAndClick(10);
 			base.verifyPageNavigation("Review/AdvancedBatchManagementReport");
 		}
 
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : Navigation to Reports Page Without specific component
+	 */
+	public void navigateToReportsPage() {
+		try {
+			driver.scrollPageToTop();
+			navigateToReports().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.verifyPageNavigation("Report/ReportsLanding");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

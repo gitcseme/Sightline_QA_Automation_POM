@@ -1825,7 +1825,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              13
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48453",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-48453", enabled = true, groups = { "regression" })
 	public void verifyInprogressStatusWithTileSpinningForAdvancedSearch() throws InterruptedException {
 		String highVolumeProject = Input.highVolumeProject;
 		String searchName = "search" + Utility.dynamicNameAppender();
@@ -1853,14 +1853,14 @@ public class SavedSearchRegression_New_Set_05 {
 		session.advancedContentSearchWithSearchChanges(searchString, "No");
 		session.SearchBtnAction();
 		session.handleWhenAllResultsBtnInUncertainPopup();
+
+		// Save Search
+		session.saveSearch(searchName);
 		session.returnPurehitCount();
 
 		// Verify Tile Spinning
 		base.stepInfo("Verifying for one or more related tiles are still spinning .");
 		session.verifyTileSpinning();
-
-		// Save Search
-		session.saveSearch(searchName);
 
 		// Verify Status based on Count
 		saveSearch.navigateToSSPage();

@@ -109,7 +109,7 @@ public class SavedSearchAudio_Regresssion {
 	 * @throws ParseException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-57419,RPMXCON-57420,RPMXCON-57421",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57419,RPMXCON-57420,RPMXCON-57421", enabled = true, groups = { "regression" })
 	public void searchAudioAndSharePA() throws InterruptedException, ParseException {
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -149,7 +149,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         Security group. and schedule the save search(RPMXCON-57420)
 	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
-	@Test(description ="RPMXCON-57420",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57420", enabled = true, groups = { "regression" })
 	public void searchAudioAndShareToDefaultsgRmu() throws InterruptedException, ParseException {
 		// Login as a Rmu
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -181,7 +181,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         Security group. and schedule the save search(RPMXCON-57420)
 	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
-	@Test(description ="RPMXCON-57421",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57421", enabled = true, groups = { "regression" })
 	public void searchAudioAndShareToDefaultsgRev() throws InterruptedException, ParseException {
 		// Login as a Rev
 		login.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -213,7 +213,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         security groups SG1 and SG2 2. SG1 and SG2 has different sub-set of
 	 *         project documents, around 100 in each
 	 */
-	@Test(description ="RPMXCON-49952",groups = { "regression" } )
+	@Test(description = "RPMXCON-49952", groups = { "regression" })
 	public void preRequesties() throws InterruptedException {
 
 		List<String> list = new ArrayList<String>();
@@ -263,7 +263,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         user while saving a search query from session search page
 	 * @param testMethod
 	 */
-	@Test(description ="RPMXCON-49952",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49952", enabled = true, groups = { "regression" })
 	public void verifyAvailableOptionsFromSessionSearch() {
 
 		base.stepInfo("Test case Id: RPMXCON-49952 - Saved Search Sprint 02");
@@ -288,7 +288,7 @@ public class SavedSearchAudio_Regresssion {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-57409",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57409", enabled = true, groups = { "regression" })
 	public void customDataReportAgainstPA() throws InterruptedException {
 
 		String folderName = "Folder" + Utility.dynamicNameAppender();
@@ -348,7 +348,7 @@ public class SavedSearchAudio_Regresssion {
 	 * @param testMethod
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-57414",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57414", enabled = true, groups = { "regression" })
 	public void categorizationAgainstPAsavedSearch() throws InterruptedException {
 
 		String folderName = "Folder" + Utility.dynamicNameAppender();
@@ -410,7 +410,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              the Advanced Batch Management Report against My
 	 *                              saved searches in RMU role (RPMXCON-57417)
 	 */
-	@Test(description ="RPMXCON-57417",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57417", enabled = true, groups = { "regression" })
 	public void advanceBatchManagementReport() throws InterruptedException {
 		String searchName1 = "Search01" + Utility.dynamicNameAppender();
 		String folderName = "Folder01" + Utility.dynamicNameAppender();
@@ -475,7 +475,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              searches in PAU role RPMXCON-57413
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-57413",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57413", enabled = true, groups = { "regression" })
 	public void reviewResultReport() throws InterruptedException {
 		String TagName = "Tag" + Utility.dynamicNameAppender();
 		String folderName = "Folder" + Utility.dynamicNameAppender();
@@ -550,7 +550,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              runs Production against My saved searches in PAU
 	 *                              role successfully RPMXCON-57416
 	 */
-	@Test(description ="RPMXCON-57416",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57416", enabled = true, groups = { "regression" })
 	public void productionManagementReport() throws InterruptedException {
 		String searchGroup = "Group2" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search2" + Utility.dynamicNameAppender();
@@ -595,6 +595,8 @@ public class SavedSearchAudio_Regresssion {
 
 		// To Select & check mySavedSearch and savedNodeSearch
 		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
+		driver.waitForPageToBeReady();
 		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -658,7 +660,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              runs Batch Print against My saved searches in
 	 *                              PAU role RPMXCON-57415
 	 */
-	@Test(description ="RPMXCON-57415",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57415", enabled = true, groups = { "regression" })
 	public void batchPrint() throws InterruptedException {
 		String searchGroup = "Group2" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search2" + Utility.dynamicNameAppender();
@@ -694,6 +696,7 @@ public class SavedSearchAudio_Regresssion {
 
 		// To Select & check mySavedSearch and savedNodeSearch
 		BatchPrintPage batch = new BatchPrintPage(driver);
+		batch.navigateToBatchPrintPage();
 		batch.saveSearchRadiobutton(saveSearch1);
 
 		// impersonate As PA
@@ -702,6 +705,7 @@ public class SavedSearchAudio_Regresssion {
 		base.rolesToImp("RMU", "PA");
 
 		batch = new BatchPrintPage(driver);
+		batch.navigateToBatchPrintPage();
 		batch.saveSearchRadiobutton(saveSearch1);
 
 		// create new searchgroup
@@ -719,7 +723,7 @@ public class SavedSearchAudio_Regresssion {
 	 * saved searches(with audio and non-audio docs) under <My Saved Search> and
 	 * verify documents - RPMXCON-57418 Sprint 03
 	 */
-	@Test(description ="RPMXCON-57418",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57418", enabled = true, groups = { "regression" })
 	public void searchAndShareAsPa() throws InterruptedException, ParseException {
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -753,7 +757,7 @@ public class SavedSearchAudio_Regresssion {
 	 * 
 	 * @Stabilzation - done
 	 */
-	@Test(description ="RPMXCON-57410",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-57410", enabled = true, groups = { "regression" })
 	public void documentAuditReport() throws InterruptedException {
 		String searchGroup = "Group1" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search1" + Utility.dynamicNameAppender();
@@ -815,7 +819,7 @@ public class SavedSearchAudio_Regresssion {
 	 * Validate modifying searches/groups from the shared with <Security Group Name>
 	 * by any other PAU user - RPMXCON-49885 Sprint 03
 	 */
-	@Test(description ="RPMXCON-49885",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49885", enabled = true, groups = { "regression" })
 	public void verifySharedNode() throws InterruptedException {
 		String SearchNamePA = "Search1" + Utility.dynamicNameAppender();
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -850,7 +854,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         modification - RPMXCON-47381 Sprint 03
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-47381",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47381", enabled = true, groups = { "regression" })
 	public void checkBackButton() throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47381 - Saved Search Sprint 03");
@@ -886,7 +890,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         will be able to search all the Users belong to same project
 	 *         RPMXCON-47459- Sprint 03
 	 */
-	@Test(description ="RPMXCON-47459",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47459", enabled = true, groups = { "regression" })
 	public void shareSearchPopup() throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47459 - Saved Search Sprint 03");
