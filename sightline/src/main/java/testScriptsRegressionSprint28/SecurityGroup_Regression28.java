@@ -132,21 +132,21 @@ public class SecurityGroup_Regression28 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		base.stepInfo("Committing the production");
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		for (int i = 0; i < 2; i++) {
+			driver.Navigate().refresh();
+			base.waitTime(2);
+		}
 
-		base.stepInfo("click on commit");
-		base.waitTillElemetToBeClickable(page.getConfirmProductionCommit());
-		page.getConfirmProductionCommit().waitAndClick(10);
-		base.passedStep("Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.");
-		base.CloseSuccessMsgpopup();
-		driver.Navigate().refresh();
-
-		base.stepInfo("click on uncommit");
-		driver.waitForPageToBeReady();
-		base.waitTillElemetToBeClickable(page.getConfirmProductionUnCommit());
-		page.getConfirmProductionUnCommit().waitAndClick(10);
-		base.passedStep("Uncommit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.");
-		base.CloseSuccessMsgpopup();
+		base.stepInfo("Uncommitting the committed production");
+		base.waitForElement(page.getConfirmProductionUnCommit());
+		page.getConfirmProductionUnCommit().waitAndClick(5);
+		for (int i = 0; i < 2; i++) {
+			driver.Navigate().refresh();
+			base.waitTime(2);
+		}
 
 		base.passedStep("Verified - completion of uncommit, notification should be displayed on right top corner");
 		loginPage.logout();

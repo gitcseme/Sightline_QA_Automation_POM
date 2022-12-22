@@ -134,17 +134,21 @@ public class Production_Regression28 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		
-		base.stepInfo("click on commit");
-		base.waitTillElemetToBeClickable(page.getConfirmProductionCommit());
-		page.getConfirmProductionCommit().waitAndClick(10);
-		driver.Navigate().refresh();
-		
-		base.stepInfo("click on uncommit");
-		driver.waitForPageToBeReady();
-		base.waitTillElemetToBeClickable(page.getConfirmProductionUnCommit());
-		page.getConfirmProductionUnCommit().waitAndClick(10);
+		base.stepInfo("Committing the production");
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		for (int i = 0; i < 2; i++) {
+			driver.Navigate().refresh();
+			base.waitTime(2);
+		}
+
+		base.stepInfo("Uncommitting the committed production");
+		base.waitForElement(page.getConfirmProductionUnCommit());
+		page.getConfirmProductionUnCommit().waitAndClick(5);
+		for (int i = 0; i < 2; i++) {
+			driver.Navigate().refresh();
+			base.waitTime(2);
+		}
 		
 		//verify nofication, backgroud task
 		driver.Navigate().refresh();
