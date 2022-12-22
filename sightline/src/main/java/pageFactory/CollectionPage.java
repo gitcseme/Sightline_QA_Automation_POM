@@ -3178,8 +3178,10 @@ public class CollectionPage {
 		// verify create new collection btn is displayed within the screen & clickable
 		if (getNewCollectionBtn().isDisplayed()) {
 			base.passedStep("Create New Collection is displayed within the screen");
+			base.waitForElement(getNewCollectionBtn());
 			getNewCollectionBtn().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitTime(2);
 			base.verifyUrlLanding(Input.url + "en-us/Collection/NewCollection",
 					"Create New collection button is clickable",
 					"Create new collection buttion is not working as expected");
