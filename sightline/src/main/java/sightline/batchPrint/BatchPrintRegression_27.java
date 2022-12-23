@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint27;
+package sightline.batchPrint;
 
 import java.awt.AWTException;
 import java.io.File;
