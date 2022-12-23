@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint27;
+package sightline.batchPrint;
 
 import java.awt.AWTException;
 import java.io.IOException;
@@ -35,7 +35,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchPrintRegression_26 {
+public class BatchPrintRegression_26_1 {
 
 	SoftAssert softassert;
 	Driver driver;
