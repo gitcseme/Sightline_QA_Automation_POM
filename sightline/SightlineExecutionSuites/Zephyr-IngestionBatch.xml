@@ -10,20 +10,13 @@
 	<test name="Sightline.Ingestion">
 		<classes>
 		    <class name="testScriptsSmoke.Input" />
-			<class name ="sightline.ingestion.Ingestion_Regression_2" />
-			<class name ="sightline.ingestion.Ingestion_Regression_3" />
-			<class name ="sightline.ingestion.Ingestion_Regression_4" />
-			<class name ="sightline.ingestion.Ingestion_Regression_5" />
-			<class name ="sightline.ingestion.Ingestion_Regression_6" />
-			<class name ="sightline.ingestion.Ingestion_Regression_7" />
-			<class name ="sightline.ingestion.Ingestion_Regression_8" />
-			<class name ="sightline.ingestion.Ingestion_Regression_9" />
+			<class name ="sightline.ingestion.Ingestion_Phase2_Class_1" />
+			<class name ="sightline.ingestion.Ingestion_Phase2_Class_2" />
 			<class name ="sightline.ingestion.Ingestion_Regression" />
 			<class name ="sightline.ingestion.Ingestion_Regression01" />
 			<class name ="sightline.ingestion.Ingestion_Regression02" />
 			<class name ="sightline.ingestion.IngestionCreationClass01" />
 			<class name ="sightline.ingestion.IngestionCreationClass02" />
-		    <class name ="sightline.ingestion.Regression_Ingestion02" />
 			<class name ="sightline.ingestion.Regression_Ingestion01" />
 			
 		</classes>
