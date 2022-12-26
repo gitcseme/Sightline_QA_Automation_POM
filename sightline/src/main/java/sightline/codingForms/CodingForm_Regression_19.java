@@ -48,7 +48,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class CodingForm_Regression_Sprint19 {
+public class CodingForm_Regression_19 {
 
 	Driver driver;
 	LoginPage loginPage;

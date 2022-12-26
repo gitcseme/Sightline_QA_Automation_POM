@@ -33,7 +33,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Regression1_23_26 {
+public class DocView_Regression21_23_26 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -73,6 +73,71 @@ public class DocView_Regression1_23_26 {
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
 
+	}
+	
+	@DataProvider(name = "userDetails2")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+
+	/**
+	 * @author Sakthivel ModifyDate:02/08/2022 RPMXCON-48811
+	 * @throws Exception
+	 * @Description Verify that "Text Highlighting" functionality is working proper
+	 *              on DocView Screen.
+	 * 
+	 */
+	@Test(description = "RPMXCON-48811", enabled = true, groups = { "regression" })
+	public void verifyHighlightingTextIsWorkingOnDocViewScreen() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48811");
+		baseClass.stepInfo("Verify that \"Text Highlighting\" functionality is working proper on DocView Screen.");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		KeywordPage keywordPage = new KeywordPage(driver);
+		String hitTerms = "Test" + Utility.dynamicNameAppender();;
+		String color = "Red";
+		DocViewPage docView = new DocViewPage(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.addKeywordWithColor(hitTerms, color);
+		baseClass.stepInfo("Text Highlighting option color is in " + color);
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("page is refreshed");
+		driver.scrollPageToTop();
+		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
+		loginPage.logout();
+       
+		//Login AS REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login as REV");
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("page is refreshed");
+		driver.scrollPageToTop();
+		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
+		keywordPage.deleteKeywordByName(hitTerms);
 	}
 	
 	/**

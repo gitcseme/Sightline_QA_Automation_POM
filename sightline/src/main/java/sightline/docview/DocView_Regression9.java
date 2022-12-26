@@ -62,7 +62,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Sprint2_Regression {
+public class DocView_Regression9 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

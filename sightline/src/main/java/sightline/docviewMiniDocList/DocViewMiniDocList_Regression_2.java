@@ -22,7 +22,7 @@ import pageFactory.MiniDocListPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocViewMiniDocList_Regression_2_1 {
+public class DocViewMiniDocList_Regression_2 {
 
 	Driver driver;
 	LoginPage login;
