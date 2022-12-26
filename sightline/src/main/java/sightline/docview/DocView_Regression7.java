@@ -39,7 +39,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 
-public class DocView_Regression3_2 {
+public class DocView_Regression7 {
 
 	
 	Driver driver;

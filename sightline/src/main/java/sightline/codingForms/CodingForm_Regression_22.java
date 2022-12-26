@@ -39,7 +39,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CodingForm_Regression_21_2 {
+public class CodingForm_Regression_22 {
 
 	Driver driver;
 	LoginPage loginPage;
