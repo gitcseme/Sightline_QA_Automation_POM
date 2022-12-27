@@ -33,7 +33,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Regression21_23_26 {
+public class DocView_Phase2_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

@@ -47,7 +47,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Redaction_Regression1 {
+public class DocView_Redactions_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;
