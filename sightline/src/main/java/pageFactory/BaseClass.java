@@ -415,11 +415,7 @@ public class BaseClass {
 			}
 		}), Input.wait90);
 		getChangeRole().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectRole().Visible();
-			}
-		}), Input.wait60);
+		waitForElement(getSelectRole());
 		getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
 		Thread.sleep(3000);
 		driver.WaitUntil((new Callable<Boolean>() {

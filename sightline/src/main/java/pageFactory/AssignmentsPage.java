@@ -2271,13 +2271,8 @@ public class AssignmentsPage {
 	public void SelectAssignmentByReviewer(final String assignmentName) {
 		driver.getWebDriver().get(Input.url + "ReviewerDashboard/Index");
 		driver.waitForPageToBeReady();
-		getSelectAssignmentAsReviewer(assignmentName).WaitUntilPresent().ScrollTo();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectAssignmentAsReviewer(assignmentName).Visible();
-			}
-		}), Input.wait30);
-
+		bc.waitForElement(getSelectAssignmentAsReviewer(assignmentName));
+		getSelectAssignmentAsReviewer(assignmentName).ScrollTo();
 		getSelectAssignmentAsReviewer(assignmentName).waitAndClick(10);
 
 	}
@@ -3882,7 +3877,7 @@ public class AssignmentsPage {
 		driver.scrollPageToTop();
 		bc.waitForElement(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
+//		bc.CloseSuccessMsgpopup();
 	}
 
 	/**
