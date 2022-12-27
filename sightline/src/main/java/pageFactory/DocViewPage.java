@@ -61,6 +61,7 @@ public class DocViewPage {
 	AssignmentsPage assgnpage;
 	ReusableDocViewPage reusableDocView;
 	MiniDocListPage miniDocListpage;
+	CodingForm form;
 	public static String codeSameDocumentid;
 	List<String> docIDlist = new ArrayList<>();
 	List<String> completedDoc = new ArrayList<>();
@@ -901,7 +902,12 @@ public class DocViewPage {
 	public Element getCodingStampSaveBtn() {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save']");
 	}
+	
+	public Element getCodingStampSaveButton() {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save Coding']");
+	}
 
+	
 	public Element getDocview_GearButton() {
 		return driver.FindElementByXPath("//i[@class='fa fa-gear font-xl']");
 	}
@@ -6710,19 +6716,11 @@ public class DocViewPage {
 
 	public void selectAssignmentfromDashborad(String assginmentName) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDashboardButton().Visible() && getDashboardButton().Enabled();
-			}
-		}), Input.wait30);
-		getDashboardButton().waitAndClick(5);
+		base.waitForElement(getDashboardButton());
+		getDashboardButton().waitAndClick(10);
 
-		driver.WaitUntil(new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectAssignmentFromDashborad(assginmentName).Visible()
-						&& getSelectAssignmentFromDashborad(assginmentName).Enabled();
-			}
-		}, Input.wait30);
+		base.waitForElement(getSelectAssignmentFromDashborad(assginmentName));
+		getSelectAssignmentFromDashborad(assginmentName).ScrollTo();
 		getSelectAssignmentFromDashborad(assginmentName).waitAndClick(10);
 
 	}
@@ -7521,6 +7519,8 @@ public class DocViewPage {
 //					getDocView_DocId(docId).ScrollTo();
 					base.waitForElement(getDocView_DocId(docId));
 					getDocView_DocId(docId).waitAndClick(15);
+//					base.waitForElement(getDocView_MiniDoc_SelectRow(1));
+//					getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
 					base.passedStep("Doc is selected from MiniDoclist successfully");
 					break;
 
@@ -16916,7 +16916,7 @@ public class DocViewPage {
 	public void editCodingForm(String comment) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getResponsiveCheked());
-		getResponsiveCheked().waitAndClick(5);
+		getResponsiveCheked().waitAndClick(10);
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().waitAndClick(5);
 		base.waitForElement(getDocument_CommentsTextBox());
