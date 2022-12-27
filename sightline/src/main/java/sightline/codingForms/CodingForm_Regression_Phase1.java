@@ -665,6 +665,7 @@ public class CodingForm_Regression_Phase1 {
 		baseClass.waitForElement(codingForm.getCF_PreviewButton());
 		codingForm.getCF_PreviewButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		String cfPreviewObjectsLabel1 = codingForm.getCFPreviewObjectsLabel(0);
 		softAssertion.assertEquals(fieldName, cfPreviewObjectsLabel1);
 
