@@ -434,6 +434,7 @@ public class DocList_Regression23_24_25_26 {
 
 		// Searching Content document go to docview
 		int Purehit=sessionSearch.basicContentSearch(Input.testData1);
+		baseClass.waitTime(5);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		long start = System.currentTimeMillis();
@@ -721,16 +722,21 @@ public class DocList_Regression23_24_25_26 {
 		sessionSearch.ViewInDocList();
 		docList.verifySelectAllInTileView();
 		baseClass.waitForElement(docList.getUnSelectAllCheckBox());
+		baseClass.waitTillElemetToBeClickable(docList.getUnSelectAllCheckBox());
 		docList.getUnSelectAllCheckBox().waitAndClick(5);
 		baseClass.waitForElement(docList.getSelectAllOk());
+		baseClass.waitTillElemetToBeClickable(docList.getSelectAllOk());
 		docList.getSelectAllOk().waitAndClick(5);
 		baseClass.stepInfo("Unselect all documents in tile view");
 
 		baseClass.waitForElement(docList.getSelectAllCheckBox());
+		baseClass.waitTillElemetToBeClickable(docList.getSelectAllCheckBox());
 		docList.getSelectAllCheckBox().waitAndClick(5);
 		baseClass.waitForElement(docList.getSelectAllOk());
+		baseClass.waitTillElemetToBeClickable(docList.getSelectAllOk());
 		docList.getSelectAllOk().waitAndClick(5);
 		baseClass.waitForElement(docList.getFirstCheckBox());
+		baseClass.waitTillElemetToBeClickable(docList.getFirstCheckBox());
 		docList.getFirstCheckBox().waitAndClick(5);
 		baseClass.stepInfo("single checkbox is unchecked");
 
@@ -883,8 +889,10 @@ public class DocList_Regression23_24_25_26 {
 		doc.getTileView().waitAndClick(5);
 		
 		baseClass.stepInfo("verifying sorting order reflecting in Tile view");
+		baseClass.waitTime(5);
 		for(int i=1;i<=doc.getInfoBtn().size();i++) {
 			driver.waitForPageToBeReady();
+			baseClass.waitTime(5);
 			doc.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
 			baseClass.waitTime(2);
 			String ActualString=doc.getDocIdTileView().getText();
@@ -1044,6 +1052,9 @@ public class DocList_Regression23_24_25_26 {
 		sessionSearch.bulkTagExisting(tagname);
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(5);
+		docList.getTileView().waitAndClick(5);
+		baseClass.waitTime(10);
+		baseClass.waitForElement(docList.getSelectAllCheckBox());
 		if(! docList.getSelectAllCheckBox().Selected()) {
 		baseClass.passedStep("Verify that after performing bulk action, check boxs are unchecked from thumbnail view");
 		}else {
@@ -1735,12 +1746,15 @@ public class DocList_Regression23_24_25_26 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Selecting page length in doclist page");
 		docList.getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(Input.pageLength);
+		baseClass.waitTime(5);
 		driver.scrollingToBottomofAPage();
 		driver.scrollingToElementofAPage(docList.getTableFooterDocListCount());
 		driver.waitForPageToBeReady();
 		String DocListCount = docList.getTableFooterDocListCount().getText();
 		System.out.println(DocListCount);
+		baseClass.waitTime(5);
 		String[] doccount = DocListCount.split(" ");
+		driver.waitForPageToBeReady();
 		String Document = doccount[3];
 		System.out.println("doclist page document count is" + Document);
 		baseClass.textCompareEquals(Input.pageLength, Document, Input.pageLength + "is displayedas expected",

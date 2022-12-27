@@ -243,8 +243,7 @@ public class Doclist_Regression28_1 {
 		softAssert.assertEquals(downloadMsg, expected);
 		baseClass.passedStep(
 				"Notification is displayed and on click of the same download the file  Make sure that in downloaded file is selected all documents from all pages");
-		softAssert.assertAll();
-
+		
 		loginPage.logout();
 
 	}
@@ -331,7 +330,6 @@ public class Doclist_Regression28_1 {
 		softAssert.assertEquals(downloadMsg, expected);
 		baseClass.passedStep(
 				"Notification is displayed and on click of the same download the file  Make sure that in downloaded file is selected all documents from all pages");
-		softAssert.assertAll();
 
 		loginPage.logout();
 

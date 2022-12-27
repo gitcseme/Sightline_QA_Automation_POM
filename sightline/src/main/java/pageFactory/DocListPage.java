@@ -556,7 +556,7 @@ public class DocListPage {
 
 	public Element getPreviedDocCloseButton() {
 		return driver
-				.FindElementByXPath("//span[text()='Preview Document']//..//button[@class='ui-dialog-titlebar-close']");
+				.FindElementByXPath("//h3[text()='Preview Document']/following-sibling::button");
 	}
 
 	public Element getFirstRowDocumentID() {
@@ -4297,16 +4297,21 @@ public class DocListPage {
 			base.waitForElement(getUpdateColumnBtn());
 			getUpdateColumnBtn().Click();
 			String expectedtext = "EMAILAUTHORDOMAIN";
+			base.waitTime(8);
 			List<WebElement> allvalues = getColumnHeader().FindWebElements();
 			System.out.println(allvalues.size());
+			base.waitTime(8);
 			List<String> values = new ArrayList<String>();
 			int j;
 			for (j = 2; j < allvalues.size(); j++) {
 				String counts;
+				base.waitTime(3);
 				counts = allvalues.get(j).getText();
+				base.waitTime(3);
 				values.add(allvalues.get(j).getText());
 				System.out.println(values);
 			}
+			base.waitTime(8);
 			if (values.contains(expectedtext)) {
 
 				base.passedStep("" + expectedtext + " column is successfully added");
@@ -5734,6 +5739,7 @@ public class DocListPage {
 			base.waitForElement(getApplyFilters());
 			base.waitTillElemetToBeClickable(getApplyFilters());
 			getApplyFilters().Click();
+			base.waitTime(8);
 
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep("Documents is filtered based on the applied " + emailvalue + " and " + emailvalue1
@@ -5827,6 +5833,7 @@ public class DocListPage {
 			base.waitForElement(getApplyFilters());
 			base.waitTillElemetToBeClickable(getApplyFilters());
 			getApplyFilters().Click();
+			base.waitTime(8);
 
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep("Documents is filtered based on the applied " + emailvalue + " and " + emailvalue1
@@ -5990,8 +5997,10 @@ public class DocListPage {
 			base.waitForElement(getDocListAddFliterBtn());
 			base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
 			getDocListAddFliterBtn().Click();
+		
 
 			dateFilter("between", "2021/07/01", "2022/02/15");
+			base.waitTime(8);
 
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep(
@@ -6050,6 +6059,7 @@ public class DocListPage {
 			getDocListAddFliterBtn().Click();
 
 			dateFilter("before", "2021/07/01", null);
+			base.waitTime(8);
 
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep(
@@ -6140,7 +6150,7 @@ public class DocListPage {
 			getDocListAddFliterBtn().Click();
 
 			docFileSizeFilter("between", "40", "100");
-
+			base.waitTime(8);
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep(
 						"Documents is filtered based on the applied " + emailvalue + " and DocFileSize is displayed.");
@@ -6198,6 +6208,7 @@ public class DocListPage {
 			getDocListAddFliterBtn().Click();
 
 			docFileSizeFilter("between", "40", "100");
+			base.waitTime(8);
 
 			if (getDocListFilterTable().Displayed()) {
 				base.passedStep(
