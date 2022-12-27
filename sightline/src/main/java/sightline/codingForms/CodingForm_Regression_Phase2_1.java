@@ -165,6 +165,7 @@ public class CodingForm_Regression_Phase2_1 {
 	    driver.waitForPageToBeReady();
 	    baseClass.waitTime(40);
 	    codingForm.editCodingForm(codingform);
+	    driver.waitForPageToBeReady();
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    docViewPage.verifyTagsAreDisabledInPreviewBox(1);
 	    baseClass.stepInfo("Checkbox for required tag is disabled");
@@ -326,6 +327,7 @@ public class CodingForm_Regression_Phase2_1 {
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	   
 		//Add tags
+		driver.waitForPageToBeReady();
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
 		tagsAndFoldersPage.CreateTag(tagTwo, Input.securityGroup);
 		tagsAndFoldersPage.CreateTag(tagThree, Input.securityGroup);
@@ -470,7 +472,7 @@ public class CodingForm_Regression_Phase2_1 {
 	public void validateCfTextBox() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-47210");
 	    baseClass.stepInfo("Shared Steps: Creating a New Coding form");
-	    String codingform = "1LR Coding Form";
+	    String codingform = "1LR Coding Form" + Utility.dynamicNameAppender();
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 		
@@ -584,6 +586,7 @@ public class CodingForm_Regression_Phase2_1 {
 	    driver.waitForPageToBeReady();
 	    baseClass.waitTime(40);
 	    codingForm.editCodingForm(codingform);
+	    driver.waitForPageToBeReady();
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    boolean tagOneTrue=codingForm.selectTagInPreviewBox(2).Enabled();
 	    softAssertion.assertTrue(tagOneTrue);
@@ -631,7 +634,8 @@ public class CodingForm_Regression_Phase2_1 {
 		sessionSearch = new SessionSearch(driver);
 		DocExplorerPage docExplorerPage = new DocExplorerPage(driver);
 		savedSearch = new SavedSearch(driver);
-
+        AssignmentsPage assgnpage = new AssignmentsPage(driver);
+        
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
@@ -656,8 +660,11 @@ public class CodingForm_Regression_Phase2_1 {
 		}
 		codingForm.checkingBelow15CFCheckboxForSG();
 		baseClass.waitTime(1);
-		codingForm.getSelectCodeFormRadioBtn(Input.codeFormName).Click();
+		codingForm.getSelectCodeFormRadioBtn(Input.codeFormName).waitAndClick(5);
 		baseClass.waitTime(1);
+		if(!assgnpage.sortOrderNxtBtn().Enabled()) {
+			assgnpage.getSelectCF_CheckBox(Input.codeFormName).waitAndClick(5);
+		}
 		codingForm.sortOrderNxtBtn().ScrollTo();
 		codingForm.sortOrderNxtBtn().Click();
 //		baseClass.waitForElement(codingForm.getStep2CfPopUp());
@@ -1516,6 +1523,7 @@ public class CodingForm_Regression_Phase2_1 {
 	    cf.editCodingForm(cfName);
 	    
 	    //add comment and save cf
+	    driver.waitForPageToBeReady();
 	    cf.addTwoCheckBox("comment");
 	    cf.updateCodingForm();
 	    
@@ -3156,7 +3164,7 @@ public class CodingForm_Regression_Phase2_1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		List<String> tagAll = new LinkedList<String>();
 		for (int i = 1; i <=3; i++) {
-			String tag = "tag" + Utility.dynamicNameAppender();
+			String tag = "Atag1" + Utility.dynamicNameAppender();
 			tagsAndFoldersPage.CreateTag(tag, Input.codeFormName);
 			baseClass.stepInfo("creating a new tag");
 			tagAll.add(tag);

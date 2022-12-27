@@ -1069,7 +1069,7 @@ public class CodingForm {
 	}
 
 	public Element getCFmetadataTextBox(String objectName) {
-		return driver.FindElementByXPath("//span[text()='" + objectName + "']/ancestor::table//input[@name='FIELD']");
+		return driver.FindElementByXPath("//div[@id='item0']//span[text()='"+objectName+"']/../../..//following-sibling::span//input[@name='FIELD']");
 	}
 
 	public Element getCF_objectName(int i) {
@@ -1147,7 +1147,7 @@ public class CodingForm {
 
 	public Element getCFPreviewPopUpOkBtn() {
 		return driver.FindElementByXPath(
-				"//span[text()='Coding Form Preview']/ancestor::div[@role='dialog']//button[@id='btnYes']");
+				"//input[@id='previewForm']/..//following-sibling::div//button[@id='btnYes']");
 	}
 
 	public Element getCFMetaFirstText() {
@@ -3397,8 +3397,9 @@ public class CodingForm {
 
 //	Reusable method for assig coding form to SG
 	public void assignCodingFormToSG(String cfName) throws InterruptedException {
-		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitTime(2);
 		base.waitForElement(getManageCodingFormButton());
 		base.waitForElement(getSetCodingFormToSG());
 		getSetCodingFormToSG().waitAndClick(15);
@@ -5645,7 +5646,7 @@ public class CodingForm {
 			List<WebElement> element = getCfChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
 			// if more than 15 we can able to configure to sg
-			if (i == 14) {
+			if (i == 13) {
 				break;
 			}
 		}
@@ -5659,6 +5660,7 @@ public class CodingForm {
 
 	}
 
+
 	/**
 	 * @author Malayala.Seenivasan
 	 * @description this method used to default sg
@@ -5666,8 +5668,12 @@ public class CodingForm {
 
 	public void makingDefaultCfToSg(String CFName) {
 		base.waitTime(1);
+		base.waitForElement(assgnpage.getSelectCodeFormRadioBtn(CFName));
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
+		if(!assgnpage.sortOrderNxtBtn().Enabled()) {
+			assgnpage.getSelectCF_CheckBox(CFName).waitAndClick(5);
+		}
 		assgnpage.sortOrderNxtBtn().ScrollTo();
 		base.waitForElement(sortOrderNxtBtn());
 		sortOrderNxtBtn().waitAndClick(5);
@@ -5766,7 +5772,7 @@ public class CodingForm {
 		for (int i = 0; i <= recount; i++) {
 			List<WebElement> element = getCfChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
-			if (i == 14) {
+			if (i == 13) {
 				break;
 
 			}
@@ -5780,6 +5786,7 @@ public class CodingForm {
 		return name;
 
 	}
+
 
 	/**
 	 * @author Aathith.Senthilkumar

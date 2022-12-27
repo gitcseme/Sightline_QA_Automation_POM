@@ -2118,7 +2118,7 @@ public class CodingForm_Regression_Phase2_2 {
 		 baseClass.passedStep("Comment label should be allowed to be upto 255 characters in length");
 		 
 		 //text wrap verification
-		 soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "preview wrap check");
+		 soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>=19, "preview wrap check");
 		 baseClass.passedStep("Comment label should wrap around around properly in cf preview");
 		 
 		 
@@ -2133,18 +2133,18 @@ public class CodingForm_Regression_Phase2_2 {
 		
 	    //validate in docview
 	    driver.waitForPageToBeReady();
-	    soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview parent window check");
+	    soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>=19, "docview parent window check");
 	    baseClass.passedStep("Comment label should wrap around around properly in parent window");
 		
 		//validate in docview child window
 		docview.clickGearIconOpenCodingFormChildWindow();
 		docview.switchToNewWindow(2);
-		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview child window check");
+		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>=19, "docview child window check");
 		baseClass.passedStep("Comment label should wrap around around properly in child window");
 		
 		//stamp check
 		docview.lastAppliedStamp(Input.stampColour);
-		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview check from stamp");
+		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>=19, "docview check from stamp");
 		baseClass.passedStep("Comment label should wrap around around properly for stamp");
 		
 		driver.close();
@@ -2155,11 +2155,12 @@ public class CodingForm_Regression_Phase2_2 {
 		cf.navigateToCodingFormPage();
 		docview.acceptBrowserAlert(true);
 		cf.AssigndefaultCFstoSG(Input.codeFormName);
+		soft.assertAll();
 	    
 		//delete created cf
 		cf.deleteCodingForm(cfName, cfName);
 		
-	    soft.assertAll();
+	    
 	    baseClass.passedStep("Verified that comment label should be allowed to be upto 255 characters in length and should wrap around properly if goes beyond the edge of the box");
 	    loginPage.logout();
 	}
@@ -2657,6 +2658,7 @@ public class CodingForm_Regression_Phase2_2 {
 	    String actionName = "Make this Required";
 	    String codingform = "CF"+Utility.dynamicNameAppender();	
 	    DocViewPage docview = new DocViewPage(driver);
+	    SessionSearch sessionSearch = new SessionSearch(driver);
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -2740,6 +2742,7 @@ public class CodingForm_Regression_Phase2_2 {
 	    String actionName = "Make this Required";
 	    String codingform = "CF"+Utility.dynamicNameAppender();	  
 	    DocViewPage docview = new DocViewPage(driver);
+	    SessionSearch sessionSearch=new SessionSearch(driver);
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -2827,6 +2830,8 @@ public class CodingForm_Regression_Phase2_2 {
 	    String assignCf = "CF"+Utility.dynamicNameAppender();	 
 	    String assignmentName = "assignment"+Utility.dynamicNameAppender();	 
 	    DocViewPage docview = new DocViewPage(driver);
+	    SessionSearch sessionSearch=new SessionSearch(driver);
+	    AssignmentsPage assignPage=new AssignmentsPage(driver);
 	    //Create coding form as per attachment
 	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
