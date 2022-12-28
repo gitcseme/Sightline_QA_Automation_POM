@@ -2364,10 +2364,12 @@ public class DocViewRedactions {
 	/*
 	 * Sai Krishna 8/10/2021
 	 */
-	public void checkinHighlitedText() throws Exception {
+	public void checkinHighlitedText(int count) throws Exception {
 		base = new BaseClass(driver);
-		getDocView_MiniDoc_Selectdoc(4).waitAndClick(20);
+		for(int i=1;i<=count;i++) {
+		getDocView_MiniDoc_Selectdoc(count).waitAndClick(20);
 		driver.waitForPageToBeReady();
+		if(get_textHighlightedColor().isElementAvailable(15)) {
 		String text = get_textHighlightedColor().getWebElement().getText();
 		System.out.println(text);
 		if (text.equalsIgnoreCase("r")) {
@@ -2377,6 +2379,9 @@ public class DocViewRedactions {
 		String hex = Color.fromString(color).asHex();
 		System.out.println(hex);
 		base.passedStep("The text for keyword is highlited in the document");
+		break;
+		}
+	}
 	}
 	/*
 	 * Sai Krishna 12/10/2021 Method for clicking yellow colour icon

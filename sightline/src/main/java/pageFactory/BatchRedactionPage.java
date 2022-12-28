@@ -334,6 +334,11 @@ public class BatchRedactionPage {
 				"//div[contains(text(),'" + ssName + "')]//following::div[contains(text(),'Search Hit Count')]");
 	}
 
+	public Element getSearchHitWithBatchRedacting(String ssName) {
+		return driver.FindElementByXPath(
+				"//div[contains(text(),'" + ssName + "')]//following-sibling::div[contains(text(),'Batch Redacting')]");
+	}
+
 	public Element getSearchToolTip(String ssName) {
 		return driver.FindElementByXPath(
 				"//div[contains(text(),'" + ssName + "')]//following::div[contains(text(),'Search Hit Count')]//div");
@@ -598,7 +603,7 @@ public class BatchRedactionPage {
 			}
 		}), Input.wait60);
 		getMySavedSearchDropDown().waitAndClick(20);
-		getMySavedSearchTextbox(searchname).Selected();
+//		getMySavedSearchTextbox(searchname).Selected();
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
@@ -643,7 +648,7 @@ public class BatchRedactionPage {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
-			getMySavedSearchTextbox(searchname).Selected();
+//			getMySavedSearchTextbox(searchname).Selected();
 			if (getViewReportForSavedSearch(searchname).Displayed()) {
 				getViewReportForSavedSearch(searchname).waitAndClick(10);
 				softassert.assertTrue(true);
@@ -712,7 +717,7 @@ public class BatchRedactionPage {
 			}
 		}), Input.wait60);
 		getMySavedSearchDropDown().Click();
-		getMySavedSearchTextbox(searchname).Selected();
+//		getMySavedSearchTextbox(searchname).Selected();
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
@@ -1137,7 +1142,7 @@ public class BatchRedactionPage {
 			}
 		}), Input.wait60);
 		getMySavedSearchDropDown().Click();
-		getMySavedSearchTextbox(searchname).Selected();
+//		getMySavedSearchTextbox(searchname).Selected();
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
@@ -1180,7 +1185,7 @@ public class BatchRedactionPage {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
-			getMySavedSearchTextbox(searchname).Selected();
+//			getMySavedSearchTextbox(searchname).Selected();
 			getViewReportForSavedSearch(searchname).waitAndClick(20);
 		}
 
@@ -1469,12 +1474,16 @@ public class BatchRedactionPage {
 		if (getInProgressStatus(ssName).isElementAvailable(10)) {
 			System.out.println("New row added in the batch redaction history : Status In-Progress");
 			base.stepInfo("New row added in the batch redaction history : Status In-Progress");
-			String completeTextOfSearchGp = getSearchHitCount(ssName).getText();
-			String searchStatus = completeTextOfSearchGp.substring(completeTextOfSearchGp.indexOf(")") + 1,
-					completeTextOfSearchGp.indexOf("."));
-			if (searchStatus.contains("Batch Redacting")) {
-				System.out.println("search Status Format : " + searchStatus);
-				base.passedStep("search Status Format : " + searchStatus);
+			driver.waitForPageToBeReady();
+			if (getSearchHitWithBatchRedacting(ssName).isElementAvailable(30)) {
+				String completeTextOfSearchGp = getSearchHitCount(ssName).getText();
+				System.out.println(completeTextOfSearchGp);
+				String searchStatus = completeTextOfSearchGp.substring(completeTextOfSearchGp.indexOf(")") + 1,
+						completeTextOfSearchGp.indexOf("."));
+				if (searchStatus.contains("Batch Redacting")) {
+					System.out.println("search Status Format : " + searchStatus);
+					base.passedStep("search Status Format : " + searchStatus);
+				}
 			}
 		}
 
@@ -1560,7 +1569,7 @@ public class BatchRedactionPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getMySavedSearchDropDown());
 		getMySavedSearchDropDown().waitAndClick(20);
-		getMySavedSearchTextbox(searchname).Selected();
+//		getMySavedSearchTextbox(searchname).Selected();
 		final int Bgcount = base.initialBgCount();
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
@@ -1598,8 +1607,8 @@ public class BatchRedactionPage {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
-			getMySavedSearchTextbox(searchname).Selected();
-			if (getViewReportForSavedSearch(searchname).Displayed()) {
+//			getMySavedSearchTextbox(searchname).Selected();
+			if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
 				getViewReportForSavedSearch(searchname).waitAndClick(10);
 				softassert.assertTrue(true);
 				base.passedStep(
@@ -1807,16 +1816,16 @@ public class BatchRedactionPage {
 			base.passedStep(
 					"Analyze Search for Redaction button is VISIBLE for :" + searchname + " under MY SAVED SEARCH TAB");
 			base.stepInfo("Clicked on Analyze report");
-		} else if (getNodeAnalyseBtn(newNode).isDisplayed()) {
+		} else if (getNodeAnalyseBtn(newNode).isElementAvailable(15)) {
 			getNewNode(newNode).waitAndClick(10);
 			base.waitForElement(getSavedSearchNewGroupExpand());
 			getSavedSearchNewGroupExpand().waitAndClick(5);
 			base.stepInfo(newNode + " : is Present");
-			if (getMySavedSearchTextbox(searchname).isDisplayed()) {
+			if (getMySavedSearchTextbox(searchname).isElementAvailable(15)) {
 				base.passedStep(searchname + " Is Present In " + newNode);
 
 				// verify analyse button for search under Node
-				if (getAnalyzeSearchForSavedSearchResult(searchname).isDisplayed()) {
+				if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(15)) {
 					softassert.assertTrue(true);
 					base.passedStep("Analyze Search for Redaction button is visible on Batch Redaction Screen for :"
 							+ searchname + "under MY SAVED SEARCH TAB");

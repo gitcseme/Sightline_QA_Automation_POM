@@ -137,7 +137,7 @@ public class BatchRedactionRegression {
 	 *          "Batch Redaction" screen when User tries to Perform Batch Redaction
 	 *          on Saved Query.(RPMXCON-53523).
 	 */
-	@Test(description = "RPMXCON-53523",groups = { "regression" } )
+	@Test(description = "RPMXCON-53523",enabled = false,groups = { "regression" } )
 	public void verifyBatchRedactYesPopup() throws InterruptedException {
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -190,7 +190,7 @@ public class BatchRedactionRegression {
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Edit Profile Language to English.
-		login.editProfile("English - United States");
+//		login.editProfile("English - United States");
 		base.stepInfo("RPMXCON-53453,RPMXCON-53455,RPMXCON-53454,  Batch Redaction");
 		base.stepInfo("Test case Id:RPMXCON-53452");
 
@@ -556,7 +556,7 @@ public class BatchRedactionRegression {
 	 *         displayed("RPMXCON-53411 batch Redcation");
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-53411",groups = { "regression" } )
+	@Test(description = "RPMXCON-53411",enabled= false,groups = { "regression" } )
 	public void verifyBatchRedaction() throws InterruptedException {
 		String search_Name = "Searchname6" + Utility.dynamicNameAppender();
 
@@ -569,7 +569,7 @@ public class BatchRedactionRegression {
 		session.saveSearch(search_Name);
 
 		saveSearch.savedSearch_Searchandclick(search_Name);
-		saveSearch.getDocView_button().waitAndClick(10);
+		saveSearch.docViewFromSS(search_Name);
 		driver.waitForPageToBeReady();
 
 		// Edit Profile Language to German
@@ -605,8 +605,8 @@ public class BatchRedactionRegression {
 		String str1 = "Search1" + Utility.dynamicNameAppender();
 		String tagName = "TAG" + Utility.dynamicNameAppender();
 
-		// Edit Profile Language to English.
-		login.editProfile("English - United States");
+//		// Edit Profile Language to English.
+//		login.editProfile("English - United States");
 
 		// Create saved search
 		session.basicContentSearch(Input.testData1);
@@ -1736,17 +1736,28 @@ public class BatchRedactionRegression {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		base = new BaseClass(driver);
+	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
 
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			login.switchProjectToEnglish();
-			login.logoutWithoutAssert();
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+//			login.switchProjectToEnglish();
+			try {
+				login.logout();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		login.closeBrowser();
+		try {
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
+			login.clearBrowserCache();
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)

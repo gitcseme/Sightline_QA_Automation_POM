@@ -28,7 +28,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class DocViewMetaDataPage {
- 
+
 	Driver driver;
 	public static int pureHit;
 	BaseClass base;
@@ -383,19 +383,20 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath("//button[contains(text(),'Browse All History')]");
 	}
 
+	// modified By Jeevitha 27/12/2022
 	public Element getTimeStampInAllActivities() {
-		return driver.FindElementByXPath(
-				"//span[text()='All Activities']//..//following-sibling::div//th[contains(text(),'Time Stamp')]");
+		return driver.FindElementByXPath("//div[@id='dtDocumentAllHistory_wrapper']//th[text()='Time Stamp']");
 	}
 
+	// modified By Jeevitha 27/12/2022
 	public Element getFirstRowOfActionColumn() {
-		return driver.FindElementByXPath(
-				"//span[text()='All Activities']//..//following-sibling::div//tbody//tr[1]//td[count(//span[text()='All Activities']//..//following-sibling::div//thead//tr//th[text()='Action']//preceding-sibling::th)+1]");
+		return driver.FindElementByXPath("//table[@id='dtDocumentAllHistory']//tr[1]//td[1]");
 	}
 
+	//modified by Jeevitha
 	public Element getCloseButtonInAllActivities() {
 		return driver.FindElementByXPath(
-				"//span[text()='All Activities']//..//following-sibling::div//button[@type='button']");
+				"//button[@class='ui-dialog-titlebar-close']");
 	}
 
 	public Element getAllRedactionCount() {
@@ -431,7 +432,7 @@ public class DocViewMetaDataPage {
 
 	public Element getCodingNewWindow() {
 		return driver.FindElementByXPath("//option[contains(text(),'Default Project Coding Form')]");
-		
+
 	}
 
 	public Element getDocumentMetaDataMaximizeBtn() {
@@ -587,14 +588,16 @@ public class DocViewMetaDataPage {
 		return driver.FindElementByXPath(
 				"//table[@id='dtDocumentAllHistory']//td[text()='" + remark + "']//..//td[" + index + "]");
 	}
-	//added by arun
-	public Element  getDocLanguageMetadataValue() {
-		return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[contains(text(),'DocLanguages')]//following-sibling::td");
+
+	// added by arun
+	public Element getDocLanguageMetadataValue() {
+		return driver.FindElementByXPath(
+				"//table[@id='MetaDataDT']//td[contains(text(),'DocLanguages')]//following-sibling::td");
 	}
+
 	public Element selectDocument(int row) {
-		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr['"+row+"']");
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody//tr['" + row + "']");
 	}
-	
 
 	public DocViewMetaDataPage(Driver driver) {
 
@@ -905,7 +908,7 @@ public class DocViewMetaDataPage {
 			if (getFolderName(folderNam).Displayed()) {
 				base.passedStep("Folder name is successfully displayed in Folder structure by name :: " + folderNam);
 			}
-			softAssert.assertEquals((boolean)getFolderName(folderNam).Displayed(), true,
+			softAssert.assertEquals((boolean) getFolderName(folderNam).Displayed(), true,
 					"Folder name is not displayed in Folder structure by name :: " + folderNam);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2099,13 +2102,14 @@ public class DocViewMetaDataPage {
 			String presentDocID1 = getPresentDocumentSelectedID().getText().trim();
 			String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
 			getSaveAndNextLink().Click();
-			if(base.getSuccessMsgHeader().getText().toString().contains("Success")) {
+			if (base.getSuccessMsgHeader().getText().toString().contains("Success")) {
 				base.VerifySuccessMessage("Document saved successfully");
 				driver.waitForPageToBeReady();
 				driver.scrollPageToTop();
 				getPresentDocumentSelectedID().isElementAvailable(15);
 				String presentDocID2 = getPresentDocumentSelectedID().getText().trim();
-				if (nextDocIDToPresentDoc.contentEquals(presentDocID2) && !(presentDocID1.contentEquals(presentDocID2))) {
+				if (nextDocIDToPresentDoc.contentEquals(presentDocID2)
+						&& !(presentDocID1.contentEquals(presentDocID2))) {
 					base.passedStep("Navigated to next document of Id :: " + presentDocID2
 							+ " from present document of ID :: " + presentDocID1 + " successfully");
 				} else {
@@ -2447,7 +2451,7 @@ public class DocViewMetaDataPage {
 	 *                   members).
 	 */
 	public void selectDocFromFamilyMembersAndCreateFolder(String docId, String folderName) {
-		try { 
+		try {
 			boolean flag = false;
 			driver.scrollPageToTop();
 			getRowFromMiniDoclist(docId).ScrollTo();
@@ -3054,11 +3058,12 @@ public class DocViewMetaDataPage {
 		getCloseButton().waitAndClick(2);
 		driver.waitForPageToBeReady();
 	}
-	
+
 	/**
 	 * @author Gopianth
 	 * @Description : This method used for impersonate rmu to reviewer.
-	 * @param securityGroup : securityGroup is String value that name of security group.
+	 * @param securityGroup : securityGroup is String value that name of security
+	 *                      group.
 	 */
 	public void impersonateRMUtoReviewer(String securityGroup) throws InterruptedException {
 		getSignoutMenu().waitAndClick(10);
@@ -3089,7 +3094,6 @@ public class DocViewMetaDataPage {
 		System.out.println("Impersnated from RMU to Reviewer");
 		UtilityLog.info("Impersnated from RMU to Reviewer");
 	}
-
 
 	/**
 	 * @author Gopinath Modified by : Gopinath Modified date : NA
@@ -3136,5 +3140,5 @@ public class DocViewMetaDataPage {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
