@@ -2409,7 +2409,7 @@ public class BatchRedactionRegression3 {
 		batch.verifyHistoryStatus(search);
 		SavedSearch savedsearch = new SavedSearch(driver);
 		savedsearch.savedSearchToDocView(search);
-		docViewRedact.checkinHighlitedText();
+		docViewRedact.checkinHighlitedText(purehit);
 		login.logout();
 	}
 
