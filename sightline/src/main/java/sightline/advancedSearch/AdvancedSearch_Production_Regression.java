@@ -30,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvancedSearch_21 {
+public class AdvancedSearch_Production_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;

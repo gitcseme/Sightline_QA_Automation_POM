@@ -29,7 +29,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvancedSearchRegression {
+public class AdvancedSearch_BulkTag2_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;
