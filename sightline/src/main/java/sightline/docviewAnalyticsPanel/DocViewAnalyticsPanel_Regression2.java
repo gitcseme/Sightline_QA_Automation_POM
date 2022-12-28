@@ -31,7 +31,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_NewRegression02 {
+public class DocViewAnalyticsPanel_Regression2 {
 	
 	Driver driver;
 	LoginPage loginPage;

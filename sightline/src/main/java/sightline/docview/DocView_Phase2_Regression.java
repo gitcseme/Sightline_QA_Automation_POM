@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -17,7 +17,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
-import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
@@ -74,13 +73,546 @@ public class DocView_Phase2_Regression {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	@DataProvider(name = "userDetails2")
 	public Object[][] userLoginDetails2() {
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
 
+	@DataProvider(name = "userDetails3")
+	public Object[][] userLoginDetails3() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.pa1FullName, Input.pa1userName, Input.pa1password } };
+	}
+
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51285 To verify that when user select redaction submenu, icons
+	 * should be in On states
+	 */
+
+	@Test(description = "RPMXCON-51285", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyRedactionSubMenuIconsOnStates() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51285");
+		baseClass.stepInfo("To verify that when user select redaction submenu, icons should be in On states");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.verifyPanel();
+		baseClass.waitForElement(docView.getDocView_Text_redact());
+		docView.getDocView_Text_redact().waitAndClick(5);
+		baseClass.waitTime(10);
+		String color = docView.get_textHighlightedColorOnRedactSubMenu().getWebElement().getCssValue("color");
+		System.out.println(color);
+		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		if (Input.iconColor.equalsIgnoreCase(ExpectedColor)) {
+			baseClass.passedStep("Reduction submenu icon is highlighted red color is displayed successfully");
+		} else {
+			baseClass.failedStep("Reduction submenu icon is not highlighted");
+		}
+	}
+
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51744 Verify that all search hit terms should be displayed by
+	 * default on the panel
+	 */
+
+	@Test(description = "RPMXCON-51744", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifySearchHitTermsDisplayedDefault() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51744");
+		baseClass.stepInfo("To verify that when user select redaction submenu, icons should be in On states");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		KeywordPage keywordPage = new KeywordPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as pa");
+		String hitTerms = "The" + Utility.dynamicNameAppender();
+		// Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHit(hitTerms);
+		baseClass.stepInfo("Eye icon clicked to see the persistent hit panel");
+		driver.waitForPageToBeReady();
+		softassertion.assertTrue(docView.getHitPanleVerify(hitTerms).Displayed());
+		baseClass.passedStep("persistent hit terms displayed on docview panel successfully");
+		softassertion.assertAll();
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.deleteKeyword(hitTerms);
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as rmu");
+		String hitTerms1 = "Then" + Utility.dynamicNameAppender();
+		// Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms1, hitTerms1);
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHit(hitTerms1);
+		baseClass.stepInfo("Eye icon clicked to see the persistent hit panel");
+		driver.waitForPageToBeReady();
+		softassertion.assertTrue(docView.getHitPanleVerify(hitTerms1).Displayed());
+		baseClass.passedStep("persistent hit terms displayed on docview panel successfully");
+		softassertion.assertAll();
+		loginPage.logout();
+
+		// Login as Rev
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login as rev");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.getPersistentHit(hitTerms1);
+		baseClass.stepInfo("Eye icon clicked to see the persistent hit panel");
+		driver.waitForPageToBeReady();
+		softassertion.assertTrue(docView.getHitPanleVerify(hitTerms1).Displayed());
+		baseClass.passedStep("persistent hit terms displayed on docview panel successfully");
+		softassertion.assertAll();
+		loginPage.logout();
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.deleteKeyword(hitTerms1);
+
+	}
+
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51743 Verify that on hits panel option should be provided not to
+	 * view the zero hit terms
+	 */
+	@Test(description = "RPMXCON-51743", enabled = true, alwaysRun = true, dataProvider = "userDetails", groups = {
+			"regression" })
+	public void verifyHitsPanelProvidedNotToView(String fullName, String userName, String password) throws Exception {
+
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51743");
+		baseClass.stepInfo("Verify that on hits panel option should be provided not to view the zero hit terms");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+
+		// login as
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("login as" + fullName);
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.getEyeIcon().waitAndClick(10);
+		baseClass.stepInfo("docView Eye Icon is Clicked Successfully");
+		baseClass.passedStep("Persistent hits panel is opened");
+		driver.waitForPageToBeReady();
+		softassertion.assertTrue(docView.getPersistentToogle().isDisplayed());
+		if (docView.getPersistentToogle().isDisplayed()) {
+			baseClass.passedStep("Toggle is provided to view the zero hit terms is displayed successfully");
+
+		} else {
+			baseClass.failedStep("Toggle is provided to view the zero hit terms is not displayed");
+
+		}
+		softassertion.assertAll();
+
+	}
+
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-63735 Verify user can right clicks on the selected text and
+	 * selects Copy action from viewer file and can select paste action in coding
+	 * form field by right clicking
+	 */
+
+	@Test(description = "RPMXCON-63735", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifySelecttheTextRightClickCopyAndPasteInCodingFormField() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-63735");
+		baseClass.stepInfo(
+				"Verify user can right clicks on the selected text and selects Copy action from viewer file and can select paste action in coding form field by right clicking");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
+		baseClass.waitTime(5);
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(5);
+		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		baseClass.waitTime(8);
+		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText = docView.getAddComment1().getText();
+		System.out.println(beforeText);
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(8);
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText = docView.getAddComment1().getText();
+		System.out.println(afterText);
+		softassertion.assertEquals(beforeText, afterText);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on saved doc");
+		driver.Navigate().refresh();
+
+		// verify comment is same on save and next doc
+		docView.ScrollAndSelectDocument(docid);
+		driver.waitForPageToBeReady();
+		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText1 = docView.getAddComment1().getText();
+		System.out.println(beforeText1);
+		driver.waitForPageToBeReady();
+		docView.getSaveAndNextButton().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(8);
+		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText1 = docView.getAddComment1().getText();
+		System.out.println(afterText1);
+		softassertion.assertEquals(beforeText1, afterText1);
+		baseClass.passedStep("After clicked saveandnext with the doc comments is same on saved doc");
+		if (docView.getCopyPasteIcon().Enabled()) {
+			baseClass.passedStep("Copy menu is retained after saved documents");
+		} else {
+			baseClass.failedStep("Copy menu is not retained after saved documents");
+
+		}
+
+		// Create assignment and go to docview
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codingFormName, 0);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(5);
+		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		baseClass.waitForElement(docView.getAddComment1());
+		String beforeText2 = docView.getAddComment1().getText();
+		System.out.println(beforeText2);
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.stepInfo("Document completed successfully");
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(10);
+		baseClass.waitForElement(docView.getAddComment1());
+		String afterText2 = docView.getAddComment1().getText();
+		System.out.println(afterText2);
+		softassertion.assertEquals(beforeText2, afterText2);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
+		driver.Navigate().refresh();
+
+	}
+
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-63805 Verify user can select the text including special characters
+	 * and perform Copy -Paste by using "Ctrl C" from viewer file and "Ctrl V" in to
+	 * coding form field
+	 */
+
+	@Test(description = "RPMXCON-63805", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifySelecttheTextCopyAndPasteFileInViewToCodingFormField() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-63805");
+		baseClass.stepInfo(
+				"Verify user can select the text including special characters and perform Copy -Paste by using \"Ctrl C\" from viewer file and \"Ctrl V\" in to coding form field");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
+		baseClass.waitTime(5);
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(8);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText = docView.getAddComment1().getText();
+		System.out.println(beforeText);
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(8);
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText = docView.getAddComment1().getText();
+		System.out.println(afterText);
+		softassertion.assertEquals(beforeText, afterText);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on saved doc");
+		driver.Navigate().refresh();
+
+		// Create assignment and go to docview
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codeFormName, 0);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(5);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		baseClass.waitForElement(docView.getAddComment1());
+		String beforeText2 = docView.getAddComment1().getText();
+		System.out.println(beforeText2);
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.stepInfo("Document completed successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		baseClass.waitForElement(docView.getAddComment1());
+		String afterText2 = docView.getAddComment1().getText();
+		System.out.println(afterText2);
+		softassertion.assertEquals(beforeText2, afterText2);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
+		driver.Navigate().refresh();
+
+	}
+
+	/**
+	 * Author : date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-63732 Verify user can select the text and perform Copy -Paste by
+	 * using "Ctrl C" from viewer file and "Ctrl V" in to coding form field
+	 */
+
+	@Test(description = "RPMXCON-63732", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifySelecttheTextCopyAndPasteInCodingFormField() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-63732");
+		baseClass.stepInfo(
+				"Verify user can select the text and perform Copy -Paste by using \"Ctrl C\" from viewer file and \"Ctrl V\" in to coding form field");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
+		baseClass.waitTime(5);
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(5);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText = docView.getAddComment1().getText();
+		System.out.println(beforeText);
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(8);
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText = docView.getAddComment1().getText();
+		System.out.println(afterText);
+		softassertion.assertEquals(beforeText, afterText);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on saved doc");
+		driver.Navigate().refresh();
+
+		// verify comment is same on save and next doc
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid);
+		driver.waitForPageToBeReady();
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText1 = docView.getAddComment1().getText();
+		System.out.println(beforeText1);
+		driver.waitForPageToBeReady();
+		docView.getSaveAndNextButton().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		baseClass.waitTime(8);
+		docView.ScrollAndSelectDocument(docid);
+		baseClass.waitTime(10);
+		driver.waitForPageToBeReady();
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText1 = docView.getAddComment1().getText();
+		System.out.println(afterText1);
+		softassertion.assertEquals(beforeText1, afterText1);
+		baseClass.passedStep("After clicked saveandnext with the doc comments is same on saved doc");
+		if (docView.getCopyPasteIcon().Enabled()) {
+			baseClass.passedStep("Copy menu is retained after saved documents");
+		} else {
+			baseClass.failedStep("Copy menu is not retained after saved documents");
+
+		}
+
+		// Create assignment and go to docview
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(5);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		String beforeText2 = docView.getAddComment1().getText();
+		System.out.println(beforeText2);
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.stepInfo("Document completed successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigate to another document in mini doc list");
+		docView.getCodeSameAsLast().waitAndClick(3);
+		baseClass.stepInfo("clicked codesameas");
+		baseClass.waitTime(5);
+		docView.ScrollAndSelectDocument(docid1);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
+		String afterText2 = docView.getAddComment1().getText();
+		System.out.println(afterText2);
+		softassertion.assertEquals(beforeText2, afterText2);
+		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
+		driver.Navigate().refresh();
+
+	}
 
 	/**
 	 * @author Sakthivel ModifyDate:02/08/2022 RPMXCON-48811
@@ -96,7 +628,8 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Verify that \"Text Highlighting\" functionality is working proper on DocView Screen.");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		KeywordPage keywordPage = new KeywordPage(driver);
-		String hitTerms = "Test" + Utility.dynamicNameAppender();;
+		String hitTerms = "Test" + Utility.dynamicNameAppender();
+		;
 		String color = "Red";
 		DocViewPage docView = new DocViewPage(driver);
 
@@ -121,8 +654,8 @@ public class DocView_Phase2_Regression {
 		driver.scrollPageToTop();
 		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
 		loginPage.logout();
-       
-		//Login AS REV
+
+		// Login AS REV
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Login as REV");
 		// document searched and navigated to DocView
@@ -139,7 +672,7 @@ public class DocView_Phase2_Regression {
 		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
 		keywordPage.deleteKeywordByName(hitTerms);
 	}
-	
+
 	/**
 	 * Author : date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-63743 Verify that when Copy menu is selected from doc view then on
@@ -158,98 +691,98 @@ public class DocView_Phase2_Regression {
 		String docid = "ID00000152";
 
 		// login as RMU
-        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-        baseClass.stepInfo("Login as Rmu");
-        docexp = new DocExplorerPage(driver);
-        DocListPage doclist = new DocListPage(driver);
- 
-        // DocExploer to viewindocView Page
-        baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-        this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-        baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
-        docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
-        doclist.getApplyFilter().waitAndClick(10);
-        baseClass.waitTime(3);
-        docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
-        docexp.getDocExp_SelectAllDocs().Click();
-        driver.waitForPageToBeReady();
-        docexp.docExpViewInDocView();
-        driver.waitForPageToBeReady();
-        docView.selectSourceDocIdInAvailableField("SourceDocID");
-        driver.Navigate().refresh();
-        docView.ScrollAndSelectDocument(docid);
-        docView.getDocView_CodingFormlist().waitAndClick(5);
-        docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
-        docView.verifyCopyAndPasteRedacTextOnCommentBox();
-        docView.getCodingFormSaveThisForm().waitAndClick(2);
-        baseClass.stepInfo("Document saved successfully");
- 
-        // verify select icon is loaded
-        baseClass.waitForElement(docView.getDocView_Next());
-        docView.getDocView_Next().waitAndClick(5);
-        driver.waitForPageToBeReady();
-        String docId1 = docView.getDocView_CurrentDocId().getText();
-        String nextDoc = docView.getDocView_Next().GetAttribute("value");
-        System.out.println(nextDoc);
-        baseClass.stepInfo("Navigated to next document is loaded in viewer ");
-        baseClass.waitTime(5);
-        docView.verifyCopyandPasteIconStatus();
-        baseClass.waitForElement(docView.getDocView_Last());
-        docView.getDocView_Last().waitAndClick(5);
-        baseClass.waitTime(5);
-        String docId2 = docView.getDocView_CurrentDocId().getText();
-        System.out.println(docId2);
-        String lastDoc = docView.getDocView_NumTextBox().GetAttribute("value");
-        System.out.println(lastDoc);
-        softassertion.assertEquals(lastDoc, "14");
-        baseClass.stepInfo("Navigated to last document is loaded in viewer ");
-        baseClass.waitTime(5);
-        docView.verifyCopyandPasteIconStatus();
-        baseClass.waitForElement(docView.getDocView_Previous());
-        docView.getDocView_Previous().waitAndClick(5);
-        driver.waitForPageToBeReady();
-        String docId3 = docView.getDocView_CurrentDocId().getText();
-        String previousDoc = docView.getDocView_NumTextBox().GetAttribute("value");
-        softassertion.assertEquals(previousDoc, "13");
-        baseClass.stepInfo("Navigated to previous document is loaded in viewer");
-        baseClass.waitTime(5);
-        docView.verifyCopyandPasteIconStatus();
-        baseClass.waitForElement(docView.getDocView_First());
-        docView.getDocView_First().waitAndClick(5);
-        driver.waitForPageToBeReady();
-        String docId4 = docView.getDocView_CurrentDocId().getText();
-        String FirstDoc = docView.getDocView_NumTextBox().GetAttribute("value");
-        softassertion.assertEquals(FirstDoc, "1");
-        baseClass.stepInfo("Navigated to first document is loaded in viewer ");
-        baseClass.waitTime(5);
-        docView.verifyCopyandPasteIconStatus();
- 
-        // Verify Select docs in History button
-        baseClass.waitTime(5);
-        String[] docids = { docId1, docId2, docId3, docId4 };
-        baseClass.waitForElement(docView.getDocView_HistoryButton());
-        docView.getDocView_HistoryButton().waitAndClick(5);
-        baseClass.passedStep("User clicked clock icon in minidoclist");
-        baseClass.waitTime(5);
-        int count = docView.getselectDocsFromClockIcon().size();
-        ArrayList<String> dataList = new ArrayList<String>();
-        for (int i = 1; i <= count; i++) {
-            String docs = docView.getselectDocHistory(i).getText();
-            System.out.println(docs);
-            dataList.add(docs);
-        }
-        System.out.println(dataList);
-        for (int j = 0; j < docids.length; j++) {
-            baseClass.compareListWithOnlyOneString(dataList, docids[j], docids[j] + "is present in the history",
-                    docids[j]+" is not present in the history");
-        }
- 
-        baseClass.waitForElement(docView.getselectDocFromClckIcon());
-        docView.getselectDocFromClckIcon().waitAndClick(5);
-        baseClass.passedStep("User selected the document from history drop down as expected");
-        baseClass.waitTime(5);
-        docView.verifyCopyandPasteIconStatus();
-        softassertion.assertAll();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		docexp = new DocExplorerPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+
+		// DocExploer to viewindocView Page
+		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
+		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
+		doclist.getApplyFilter().waitAndClick(10);
+		baseClass.waitTime(3);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		driver.Navigate().refresh();
+		docView.ScrollAndSelectDocument(docid);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+
+		// verify select icon is loaded
+		baseClass.waitForElement(docView.getDocView_Next());
+		docView.getDocView_Next().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String docId1 = docView.getDocView_CurrentDocId().getText();
+		String nextDoc = docView.getDocView_Next().GetAttribute("value");
+		System.out.println(nextDoc);
+		baseClass.stepInfo("Navigated to next document is loaded in viewer ");
+		baseClass.waitTime(5);
+		docView.verifyCopyandPasteIconStatus();
+		baseClass.waitForElement(docView.getDocView_Last());
+		docView.getDocView_Last().waitAndClick(5);
+		baseClass.waitTime(5);
+		String docId2 = docView.getDocView_CurrentDocId().getText();
+		System.out.println(docId2);
+		String lastDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+		System.out.println(lastDoc);
+		softassertion.assertEquals(lastDoc, "14");
+		baseClass.stepInfo("Navigated to last document is loaded in viewer ");
+		baseClass.waitTime(5);
+		docView.verifyCopyandPasteIconStatus();
+		baseClass.waitForElement(docView.getDocView_Previous());
+		docView.getDocView_Previous().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String docId3 = docView.getDocView_CurrentDocId().getText();
+		String previousDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+		softassertion.assertEquals(previousDoc, "13");
+		baseClass.stepInfo("Navigated to previous document is loaded in viewer");
+		baseClass.waitTime(5);
+		docView.verifyCopyandPasteIconStatus();
+		baseClass.waitForElement(docView.getDocView_First());
+		docView.getDocView_First().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String docId4 = docView.getDocView_CurrentDocId().getText();
+		String FirstDoc = docView.getDocView_NumTextBox().GetAttribute("value");
+		softassertion.assertEquals(FirstDoc, "1");
+		baseClass.stepInfo("Navigated to first document is loaded in viewer ");
+		baseClass.waitTime(5);
+		docView.verifyCopyandPasteIconStatus();
+
+		// Verify Select docs in History button
+		baseClass.waitTime(5);
+		String[] docids = { docId1, docId2, docId3, docId4 };
+		baseClass.waitForElement(docView.getDocView_HistoryButton());
+		docView.getDocView_HistoryButton().waitAndClick(5);
+		baseClass.passedStep("User clicked clock icon in minidoclist");
+		baseClass.waitTime(5);
+		int count = docView.getselectDocsFromClockIcon().size();
+		ArrayList<String> dataList = new ArrayList<String>();
+		for (int i = 1; i <= count; i++) {
+			String docs = docView.getselectDocHistory(i).getText();
+			System.out.println(docs);
+			dataList.add(docs);
+		}
+		System.out.println(dataList);
+		for (int j = 0; j < docids.length; j++) {
+			baseClass.compareListWithOnlyOneString(dataList, docids[j], docids[j] + "is present in the history",
+					docids[j] + " is not present in the history");
+		}
+
+		baseClass.waitForElement(docView.getselectDocFromClckIcon());
+		docView.getselectDocFromClckIcon().waitAndClick(5);
+		baseClass.passedStep("User selected the document from history drop down as expected");
+		baseClass.waitTime(5);
+		docView.verifyCopyandPasteIconStatus();
+		softassertion.assertAll();
 	}
 
 	/**
@@ -275,8 +808,8 @@ public class DocView_Phase2_Regression {
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String fieldText = "stamp" + Utility.dynamicNameAppender();
 		String docid = "T2541D";
-        String docid1= "T2507D";
-		
+		String docid1 = "T2507D";
+
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
@@ -286,15 +819,15 @@ public class DocView_Phase2_Regression {
 		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
 		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
 		doclist.getApplyFilter().waitAndClick(10);
-		
+
 		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
 		docexp.getDocExp_SelectAllDocs().Click();
 		driver.waitForPageToBeReady();
 		if (doclist.getYesAllPageDocs().isDisplayed()) {
-            doclist.getYesAllPageDocs().waitAndClick(5);
-            doclist.getPopUpOkBtn().waitAndClick(5);           
-        }
-        baseClass.waitTime(5);
+			doclist.getYesAllPageDocs().waitAndClick(5);
+			doclist.getPopUpOkBtn().waitAndClick(5);
+		}
+		baseClass.waitTime(5);
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");

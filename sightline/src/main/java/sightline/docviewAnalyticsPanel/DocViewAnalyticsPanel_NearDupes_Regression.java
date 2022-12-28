@@ -29,7 +29,7 @@ import pageFactory.Utility;
 import scala.math.Integral;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_NearDupes {
+public class DocViewAnalyticsPanel_NearDupes_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

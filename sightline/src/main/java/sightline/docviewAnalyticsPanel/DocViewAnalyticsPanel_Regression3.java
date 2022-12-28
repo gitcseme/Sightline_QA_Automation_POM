@@ -22,7 +22,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_NewRegression03 {
+public class DocViewAnalyticsPanel_Regression3 {
 
 	Driver driver;
 	LoginPage loginPage;

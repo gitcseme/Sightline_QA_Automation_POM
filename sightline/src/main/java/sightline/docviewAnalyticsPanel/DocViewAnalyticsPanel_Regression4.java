@@ -30,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_DataProvider {
+public class DocViewAnalyticsPanel_Regression4 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

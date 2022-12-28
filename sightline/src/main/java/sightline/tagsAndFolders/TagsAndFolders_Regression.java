@@ -27,7 +27,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class TagsAndFolder_Regression {
+public class TagsAndFolders_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
