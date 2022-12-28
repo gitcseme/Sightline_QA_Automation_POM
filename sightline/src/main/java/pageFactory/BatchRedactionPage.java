@@ -639,7 +639,7 @@ public class BatchRedactionPage {
 
 		// verify View report
 		base.waitForElement(getViewReportForSavedSearch(searchname));
-		if (getViewReportForSavedSearch(searchname).isDisplayed()) {
+		if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
 			base.waitForElement(getViewReportForSavedSearch(searchname));
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			System.out.println("Clicked on View Report");
@@ -649,7 +649,7 @@ public class BatchRedactionPage {
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
 //			getMySavedSearchTextbox(searchname).Selected();
-			if (getViewReportForSavedSearch(searchname).Displayed()) {
+			if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
 				getViewReportForSavedSearch(searchname).waitAndClick(10);
 				softassert.assertTrue(true);
 				base.passedStep(
