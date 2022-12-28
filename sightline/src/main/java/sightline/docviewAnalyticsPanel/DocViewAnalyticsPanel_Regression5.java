@@ -28,7 +28,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_Regression {
+public class DocViewAnalyticsPanel_Regression5 {
 
 	Driver driver;
 	LoginPage loginPage;

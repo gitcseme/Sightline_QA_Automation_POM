@@ -32,7 +32,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocViewAnalytics_Regression1_23 {
+public class DocViewAnalyticsPanel_Phase2_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

@@ -29,7 +29,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanel_NewRegression {
+public class DocViewAnalyticsPanel_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

@@ -30,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class TagAndFolder {
+public class TagsAndFolders_Regression2 {
 	Driver driver;
 	LoginPage lp;
 	HomePage hm;

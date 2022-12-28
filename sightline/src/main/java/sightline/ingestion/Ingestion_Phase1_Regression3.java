@@ -39,7 +39,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Ingestion_Phase1_Class_3 {
+public class Ingestion_Phase1_Regression3 {
 
 	Driver driver;
 	LoginPage loginPage;

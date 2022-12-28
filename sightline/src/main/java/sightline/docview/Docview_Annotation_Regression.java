@@ -37,7 +37,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Docview_Annotation_Regression10 {
+public class Docview_Annotation_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

@@ -30,7 +30,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_AnalyticsPanelEmailThreadMap {
+public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
