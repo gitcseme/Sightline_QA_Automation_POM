@@ -192,7 +192,7 @@ public class BatchRedactionRegression3 {
 
 		// Traverse from Saved search To Doc view
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 		DCRedactions.verifyRedactionsSubMenu();
@@ -523,7 +523,7 @@ public class BatchRedactionRegression3 {
 
 		// Traverse from Saved search To Doc view
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 
@@ -1107,7 +1107,7 @@ public class BatchRedactionRegression3 {
 	 *              Redact' [RPMXCON-53386]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53386",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53386",enabled = false, groups = { "regression" } )
 	public void verifyRedactionTag() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1150,7 +1150,7 @@ public class BatchRedactionRegression3 {
 	 *              [Covered localization] [RPMXCON-53404]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53404",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53404",enabled = false, groups = { "regression" } )
 	public void verifyConfirmationMessagelocalized() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1223,8 +1223,8 @@ public class BatchRedactionRegression3 {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
-		// Edit Profile Language to English.
-		login.editProfile("English - United States");
+//		// Edit Profile Language to English.
+//		login.editProfile("English - United States");
 
 		// Create saved search
 		session.basicContentSearch(Input.testData1);
@@ -1276,7 +1276,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53406]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53406",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53406",enabled = false, groups = { "regression" } )
 	public void verifyWarningMessageOnClickingTrashIcon() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1359,7 +1359,7 @@ public class BatchRedactionRegression3 {
 		base.stepInfo(
 				"Verify that batch redaction should be successful when 'View and Redact Searches' is selected for the search group with saved searches");
 
-		login.editProfile("English - United States");
+//		login.editProfile("English - United States");
 
 		// load the saved search page and click on create new search group
 		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "RMU", "Yes");
@@ -1512,7 +1512,7 @@ public class BatchRedactionRegression3 {
 	 *         process is started : RPMXCON-53338 - Sprint 10
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53338",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53338",enabled = false, groups = { "regression" } )
 	public void verfyTheBatchRedactionReportInBackGroundTaskAndDownload() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1704,7 +1704,7 @@ public class BatchRedactionRegression3 {
 	 * @param searchTerm
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53335",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53335",enabled = false, groups = { "regression" } )
 	public void verifyingInformativeErrorMessageInBothLanguage() throws Exception {
 
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
@@ -1778,7 +1778,7 @@ public class BatchRedactionRegression3 {
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		login.editProfile("English - United States");
+//		login.editProfile("English - United States");
 
 		// Create saved search
 		session.basicContentSearch(searchTerm);
@@ -1923,7 +1923,7 @@ public class BatchRedactionRegression3 {
 	 *              on 2 different TABS [RPMXCON-53520]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53520",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53520",enabled = false, groups = { "regression" } )
 	public void verifyRelevantReAnalyzeMsgInGer() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -2006,7 +2006,7 @@ public class BatchRedactionRegression3 {
 				"Verify that Relevant re-analyzed message appears on \"Batch Redaction\" screen when user clicks on \"Analyze Search for Redactions\" - having same document at the same time on 2 different TABS");
 
 		// Edit Profile to English
-		login.editProfile("English - United States");
+//		login.editProfile("English - United States");
 
 		// Create saved search
 		int purehit = session.basicContentSearch(Input.searchString1);
@@ -2039,11 +2039,13 @@ public class BatchRedactionRegression3 {
 		// second tab
 		driver.switchToWindow(secondWindow);
 		base.stepInfo("Switched To Second Window");
+		driver.waitForPageToBeReady();
 		base.waitForElement(batch.getAnalyzeSearchForSavedSearchResult(searchName));
 		batch.getAnalyzeSearchForSavedSearchResult(searchName).waitAndClick(10);
 		base.stepInfo("Analyze Button is clicked On Second Window");
 
 		// verify Error Message
+		driver.waitForPageToBeReady();
 		base.VerifyErrorMessage(
 				"One or more of your selected searches are currently being re-analyzed. Please refresh and try again.");
 
@@ -2276,7 +2278,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53521]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53521",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53521",enabled = false, groups = { "regression" } )
 	public void analyzeSameDocAtSameTime() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String expectedErrorMsg = "DE: One or more of your selected searches are currently being redacted. Please refresh and try again.";
@@ -2389,20 +2391,20 @@ public class BatchRedactionRegression3 {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
-		int purehit = sessionsearch.basicContentSearch("crammer");
+		int purehit = sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.saveSearch(search);
 		BatchRedactionPage batch = new BatchRedactionPage(driver);
 		// Verify Analyze Report and View Report
 		driver.waitForPageToBeReady();
 		batch.savedSearchBatchRedaction(search);
 		// verify Popup Yes Button
-		batch.getPopupYesBtn().Click();
+		batch.getPopupYesBtn().waitAndClick(10);
 		base.stepInfo("Clicked Yes Button");
 		// verify History status
 		batch.verifyHistoryStatus(search);
 		SavedSearch savedsearch = new SavedSearch(driver);
 		savedsearch.savedSearchToDocView(search);
-		docViewRedact.checkinHighlitedText();
+		docViewRedact.checkinHighlitedText(purehit);
 		login.logout();
 	}
 
@@ -2577,7 +2579,7 @@ public class BatchRedactionRegression3 {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53522",enabled = true, groups = { "regression" } )
+	@Test(description ="RPMXCON-53522",enabled = false, groups = { "regression" } )
 	public void verfifyRollBackMsgFromduptabInGerman() throws InterruptedException, ParseException, AWTException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
@@ -2833,13 +2835,19 @@ public class BatchRedactionRegression3 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			login.switchProjectToEnglish();
-			login.logoutWithoutAssert();
+//			login.switchProjectToEnglish();
+			try {
+				login.logout();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		try {
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
+			login.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
@@ -2849,7 +2857,7 @@ public class BatchRedactionRegression3 {
 	public void close() {
 		System.out.println("******TEST CASES FOR Batch Redactions EXECUTED******");
 		try {
-//			login.clearBrowserCache();
+			login.clearBrowserCache();
 		} catch (Exception e) {
 			// no session avilable
 

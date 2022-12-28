@@ -526,8 +526,9 @@ public class SavedSearch {
 				"//*[@id='SavedSearchGrid']/tbody//tr[td='" + search_name + "']/td[1]/descendant::i");
 	}
 
+	//modified By jeevitha 27/12/2022
 	public Element getDocView_button() {
-		return driver.FindElementByXPath("//a[@id='document-btn']/i");
+		return driver.FindElementByXPath("//span[contains(text(),'Doc View')]");
 	}
 
 	public Element getSelect_redact() {
