@@ -305,6 +305,7 @@ public class DocList_Regression3 {
 
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
+		baseClass.waitTime(5);
 		docList.VerifyPerviewDocumentAndPrintAndDownload();
 
 		loginPage.logout();

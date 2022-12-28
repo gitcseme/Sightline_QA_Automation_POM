@@ -110,16 +110,16 @@ public class Doclist_Regression28_1 {
 			driver.waitForPageToBeReady();
 			docList.getInfoBtnInThumbnailBoxes(i).waitAndClick(2);
 			baseClass.waitForElement(docList.getMetaDataBoxInDocList());
-		    String metadataDimat= docList.getMetaDataBoxInDocList().GetAttribute("style").trim();
-		    System.out.println(metadataDimat);
-		    String[] metadataBox = metadataDimat.split(" ");
+			String metadataDimat = docList.getMetaDataBoxInDocList().GetAttribute("style").trim();
+			System.out.println(metadataDimat);
+			String[] metadataBox = metadataDimat.split(" ");
 			String BoxDim = metadataBox[1];
 			String[] metadataBoxSplit = BoxDim.split("p");
 			String boxDimens = metadataBoxSplit[0];
-			int metadataDimentions= Integer.parseInt(boxDimens);
+			int metadataDimentions = Integer.parseInt(boxDimens);
 			System.out.println(metadataDimentions);
 			driver.waitForPageToBeReady();
-			if (metadataDimentions > 150 ) {
+			if (metadataDimentions > 150) {
 				baseClass.passedStep("metadata and if the list of metadata is more than 150px");
 			} else {
 				baseClass.failedStep("No such Metadataboxs");
@@ -133,9 +133,9 @@ public class Doclist_Regression28_1 {
 			}
 		}
 		loginPage.logout();
-		
+
 	}
-	
+
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
@@ -180,7 +180,7 @@ public class Doclist_Regression28_1 {
 		DataSets data = new DataSets(driver);
 		DocExplorerPage docExp = new DocExplorerPage(driver);
 		String folderName = "Folder" + Utility.dynamicNameAppender();
-		
+
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
@@ -189,7 +189,7 @@ public class Doclist_Regression28_1 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(folderName, Input.securityGroup);
-		
+
 		// navigate to doc explorer
 		docExp.navigateToDocExplorerPage();
 
@@ -210,40 +210,47 @@ public class Doclist_Regression28_1 {
 		baseClass.stepInfo("selected documents and navigated to export data");
 
 		// verify sticky notes 'Add to selected' position - Before scrolling
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docExp.exportWindow_AddToSelectedButton());
 		String beforeScrolling = docExp.exportWindow_AddToSelectedButton().GetAttribute("style");
+		baseClass.waitTime(8);
 		if (beforeScrolling.contains("text-align: center")) {
 			baseClass.passedStep("“Add to Selected” btn  of Available Objects appears with a fixed position");
 		}
-
+		baseClass.waitTime(8);
 		docExp.SelectExportDataWithMetadataAndWorkproduct(Input.sortDataBy, folderName);
 
 		driver.scrollingToBottomofAPage();
 		// verify sticky notes 'Add to selected' position - After scrolling
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docExp.exportWindow_AddToSelectedButton());
 		String afterScrolling = docExp.exportWindow_AddToSelectedButton().GetAttribute("style");
 		if (afterScrolling.contains("text-align: center")) {
 			baseClass.passedStep("“Add to Selected” btn  of Available Objects appears with a fixed position");
 		}
-
+		baseClass.waitTime(8);
 		baseClass.textCompareEquals(beforeScrolling, afterScrolling, "success", "Failure");
 
 		// run report
 		driver.scrollPageToTop();
 		baseClass.waitForElement(docExp.exportWindow_RunExport());
+		baseClass.waitTime(8);
 		docExp.exportWindow_RunExport().waitAndClick(10);
 
 		baseClass.waitForElement(docExp.exportWindow_closeButton());
+		baseClass.waitTime(8);
 		docExp.exportWindow_closeButton().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(8);
 		data.getBullHornIcon().waitAndClick(10);
 		String downloadMsg = data.getNotificationMsg().getText();
 		String expected = "Your export is ready please click here to download";
+		baseClass.waitTime(8);
 		softAssert.assertEquals(downloadMsg, expected);
 		baseClass.passedStep(
 				"Notification is displayed and on click of the same download the file  Make sure that in downloaded file is selected all documents from all pages");
-		
+
 		loginPage.logout();
 
 	}
@@ -296,37 +303,45 @@ public class Doclist_Regression28_1 {
 		baseClass.stepInfo("selected documents and navigated to export data");
 
 		// verify sticky notes 'Add to selected' position - Before scrolling
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docExp.exportWindow_AddToSelectedButton());
 		String beforeScrolling = docExp.exportWindow_AddToSelectedButton().GetAttribute("style");
+		baseClass.waitTime(8);
 		if (beforeScrolling.contains("text-align: center")) {
 			baseClass.passedStep("“Add to Selected” btn  of Available Objects appears with a fixed position");
 		}
 
+		baseClass.waitTime(8);
 		docExp.SelectExportDataWithMetadataAndWorkproduct(Input.sortDataBy, folderName);
 
 		driver.scrollingToBottomofAPage();
 		// verify sticky notes 'Add to selected' position - After scrolling
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docExp.exportWindow_AddToSelectedButton());
 		String afterScrolling = docExp.exportWindow_AddToSelectedButton().GetAttribute("style");
 		if (afterScrolling.contains("text-align: center")) {
 			baseClass.passedStep("“Add to Selected” btn  of Available Objects appears with a fixed position");
 		}
-
+		baseClass.waitTime(8);
 		baseClass.textCompareEquals(beforeScrolling, afterScrolling, "success", "Failure");
 
 		// run report
 		driver.scrollPageToTop();
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docExp.exportWindow_RunExport());
 		docExp.exportWindow_RunExport().waitAndClick(10);
 
 		baseClass.waitForElement(docExp.getBtnCloseWindow());
+		baseClass.waitTime(8);
 		docExp.getBtnCloseWindow().waitAndClick(10);
 
 		baseClass.waitForElement(data.getBullHornIcon());
+		baseClass.waitTime(8);
 		data.getBullHornIcon().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		String downloadMsg = data.getNotificationMsg().getText();
 		String expected = "Your export is ready please click here to download";
+		baseClass.waitTime(8);
 		softAssert.assertEquals(downloadMsg, expected);
 		baseClass.passedStep(
 				"Notification is displayed and on click of the same download the file  Make sure that in downloaded file is selected all documents from all pages");
@@ -367,12 +382,11 @@ public class Doclist_Regression28_1 {
 				"Message is displayed to select the documents from current page or from all pages 'Cancel' and 'Ok' buttons is displayed");
 		driver.waitForPageToBeReady();
 		if (docList.getPopUpOkBtn().isElementAvailable(10)) {
-			
-		baseClass.waitForElement(docList.getPopUpOkBtn());
-		docList.getPopUpOkBtn().waitAndClick(10);
-		baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
-		}
-		else {
+
+			baseClass.waitForElement(docList.getPopUpOkBtn());
+			docList.getPopUpOkBtn().waitAndClick(10);
+			baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
+		} else {
 			baseClass.waitForElement(docList.getPopUpOkBtn());
 			docList.getPopUpOkBtn().waitAndClick(10);
 			baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
