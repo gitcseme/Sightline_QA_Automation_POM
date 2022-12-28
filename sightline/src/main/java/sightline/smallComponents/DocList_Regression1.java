@@ -687,7 +687,7 @@ public class DocList_Regression1 {
 		baseClass.stepInfo("Selecting document in doclist page");
 		docList.selectAllDocumentsInCurrentPageOnly();
 		docList.addNewBulkTag(tagName);
-		docList.addBulkTagAcceptRequestOnPopup(true);
+		//docList.addBulkTagAcceptRequestOnPopup(true);
 
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Select all documents in current page for removing tags");
@@ -741,7 +741,7 @@ public class DocList_Regression1 {
 		docList.addNewBulkTag(tagName);
 
 		baseClass.stepInfo("Accept add bulk tag request");
-		docList.addBulkTagAcceptRequestOnPopup(true);
+		//docList.addBulkTagAcceptRequestOnPopup(true);
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 
