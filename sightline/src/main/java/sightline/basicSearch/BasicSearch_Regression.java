@@ -26,7 +26,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BasicSearchRegression {
+public class BasicSearch_Regression {
 
 	Driver driver;
 	LoginPage login;

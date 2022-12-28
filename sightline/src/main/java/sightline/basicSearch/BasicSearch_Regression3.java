@@ -20,7 +20,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class PerformanceTest_Regression {
+public class BasicSearch_Regression3 {
 
 	Driver driver;
 	LoginPage lp;

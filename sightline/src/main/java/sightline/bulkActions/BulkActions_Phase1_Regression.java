@@ -36,7 +36,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BulkActions_Regression {
+public class BulkActions_Phase1_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
