@@ -665,7 +665,7 @@ public class DocListPage {
 	}
 
 	public Element getSelctActivity() {
-		return driver.FindElementByXPath("//span[@id='activity']/i");
+		return driver.FindElementByXPath("//*[@id='activity']//i");
 	}
 
 	public Element getViewAllBtn() {
@@ -2898,6 +2898,9 @@ public class DocListPage {
 				}
 			}
 			driver.Manage().window().maximize();
+			if (getPopUpOkBtn().isElementAvailable(5)) {
+                getPopUpOkBtn().waitAndClick(10);
+            }
 			base.VerifySuccessMessage("Records saved successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -4464,6 +4467,7 @@ public class DocListPage {
 				getUpdateColumnBtn().Click();
 			}
 
+			base.waitTime(5);
 			String DocFileSize = getDocFileSizeColumn().getText();
 			System.out.println("" + DocFileSize + " column is displayed");
 			if (getDocFileSizeColumn().Displayed()) {
