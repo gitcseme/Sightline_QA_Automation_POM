@@ -7,8 +7,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -19,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
@@ -29,7 +28,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BasicSearchRegression_21_25_26 {
+public class BasicSearch_Phase2_Regression {
 
 	Driver driver;
 	LoginPage login;
@@ -47,6 +46,179 @@ public class BasicSearchRegression_21_25_26 {
 		in.loadEnvConfig();
 
 	}
+	
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (exclamation mark ! ) embedded within a
+	 *              Regular Expression query.[RPMXCON-61593]
+	 */
+	@Test(description = "RPMXCON-61593", enabled = true, groups = { "regression" })
+	public void verifyApplicationWithExclamationMark() {
+
+		String searchString = "\"##U\\!C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61593 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (exclamation mark ! ) embedded within Regular Expression query.");
+
+		// configure search with exclamation mark & get purehit count
+		base.stepInfo("Navigating to Basic search page");
+		int purehit = session.basicContentSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query. : " + searchString);
+
+		// verify exclamation mark ! should treat as whitespace and it should return all
+		// documents having word mentioned "U and C Tester "
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"Query is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logOut
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that Application is not displaying warning message when
+	 *              white-space character (ampersand & ) embedded within a Regular
+	 *              Expression query.[RPMXCON-61591]
+	 */
+	@Test(description = "RPMXCON-61591", enabled = true, groups = { "regression" })
+	public void verifyApplicationWithAmpersand() {
+
+		String searchString = "\"##U\\&C Tester\"";
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-61591 Basic Search");
+		base.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (ampersand & ) embedded within a Regular Expression query.");
+
+		// configure search with ampersand & get purehit count
+		base.stepInfo("Navigating to Basic search page");
+		int purehit = session.basicContentSearch(searchString);
+		base.stepInfo("Configuring the Search with given search Query. : " + searchString);
+
+		// verify ampersand & should treat as whitespace and it should return all
+		// documents having word mentioned "U and C Tester "
+		session.addNewSearch();
+		int purehit2 = session.multipleBasicContentSearch("\"U&C Tester\"");
+		base.digitCompareEquals(purehit, purehit2,
+				"Query is returning all documents  having word mentioned 'U and C Tester'",
+				"returnig Document is not as expected");
+
+		// logout
+		login.logout();
+	}
+
+	@DataProvider(name = "SearchQueryWithSpace")
+	public Object[][] SearchQueryWithSpace() {
+		return new Object[][] { { "“stock investment” ~5", "7" }, { "\"stock investment\" ~5", "7" },
+				{ "“stock investment” ~5", "7" }, { "\"stock investment\" ~5 OR stock", "8" } };
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that result appears for proximity search having spaces
+	 *              between the proximity query in Basic Search Query
+	 *              Screen.[RPMXCON-57288]
+	 */
+	@Test(description = "RPMXCON-57288", dataProvider = "SearchQueryWithSpace", enabled = true, groups = {
+			"regression" })
+	public void verifyResultAppearsForProximitySearchWithSpace(String searchString, String warningMsg) {
+
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-57288 Basic Search");
+		base.stepInfo(
+				"Verify that result appears for proximity search having spaces between the proximity query in Basic Search Query Screen.");
+
+		// configure search & fetch Query inserted in search box
+		base.stepInfo("Navigating to Basic search page");
+		session.basicContentDraftSearch(searchString);
+		driver.waitForPageToBeReady();
+		base.hitEnterKey(1);
+		base.waitForElement(session.getQueryFromTextBox());
+		String configuredquery = session.getQueryFromTextBox().getText();
+		base.stepInfo("Configuring the Search with given search Query. : " + configuredquery);
+
+		// verify expected warning message is displayed
+		session.verifyWarningMessage(true, true, Integer.parseInt(warningMsg));
+		session.getYesQueryAlert().waitAndClick(10);
+
+		// Verify that result appears for proximity search having spaces between the
+		// proximity query in Basic Search Query Screen.
+		int purehit = session.returnPurehitCount();
+		base.waitTime(2);
+		base.compareTextViaContains(configuredquery, " ",
+				"Result displayed for search having spaces between the proximity query",
+				"Displayed Result query is not as expecting");
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @author
+	 * @Description :Verify that User can run [Execute] - Drafted Basic search
+	 *  with Comments from Saved Search Screen. RPMXCON-48954
+	 */
+	
+	@Test(description = "RPMXCON-48954", enabled = true,groups = { "regression" })
+	public void verifyUserRunDraftedBasicSearchWithCommentsFromSavedSearchScreen() throws InterruptedException, AWTException {
+		
+		String savedSearchName = "savedSearch"+Utility.dynamicNameAppender();
+		String comment = "Reviewed";
+		String expectedLastStatus = "COMPLETED";
+		DocViewPage docView = new DocViewPage(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-48954");
+		base.stepInfo("Verify that User can run [Execute] - Drafted Basic search with Comments from Saved Search Screen.");
+  		
+  	    // login
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+  		
+  		// Configure Documents_Comments: Reviewed and Save it without execute
+  		base.stepInfo("Configure Documents_Comments: Reviewed and Save it without execute.");
+  		session.remarksOrCommentFields_DraftBS(Input.documentComments,comment);
+  		session.saveSearch(savedSearchName);
+  		
+  		//getting count before adding comment
+  		base.selectproject();
+  		int countBeforeAddingComment = session.getCommentsOrRemarksCount(Input.documentComments,comment);
+  		
+  		// performing metaData search 
+  		base.selectproject();
+  		session.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCustodianNameInput,null);
+  		
+  		// viewing the Resultant documents in the docView
+  		base.stepInfo("viewing the Resultant documents in the docView.");
+  		session.ViewInDocView();
+  		
+  		// adding comment 'Reviewed' to document in docView
+  		base.stepInfo("adding comment 'Reviewed' to document in docView.");
+  		docView.editingCodingFormAndEnteringToNextDocument(comment);
+  		
+  	    
+  		//verify that User should run [Execute] - Drafted Basic search with comment from Saved Search Screen. and correct "Count Of Result"" column should get updated which satisfied criteria in Saved Search Screen.
+  		int expectedCountOfResult = countBeforeAddingComment+1;
+  		saveSearch.savedSearchExecute(savedSearchName,expectedCountOfResult);
+  		base.passedStep("verified that User run [Execute] - Drafted Basic search with comment from Saved Search Screen. and correct \"Count Of Result\"\" column should get updated which satisfied criteria in Saved Search Screen.");
+  		
+  		//Verify that Last Status column status should  get displayed as "COMPLETED"
+  		base.ValidateElement_Presence(saveSearch.getSearchStatus(savedSearchName,expectedLastStatus), "Last Status 'COMPLETED'");
+  		base.passedStep("Verified that Last Status column status  get displayed as \"COMPLETED\".");
+  		
+  		// Deleting the SavedSearch
+  		session.ViewInDocView();
+  		docView.editingCodingFormAndEnteringToNextDocument("");
+  		saveSearch.deleteSearch(savedSearchName,Input.mySavedSearch,"Yes");
+  		
+  	// logOut
+  		login.logout();
+	}
 
 	@DataProvider(name = "data")
 	public Object[][] data() {
@@ -54,7 +226,329 @@ public class BasicSearchRegression_21_25_26 {
 				{ "“”development methodology” “money related””~5" },
 				{ "\"\"development methodology” “money related””~5" }, };
 	}
-	
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:1/12/2022 RPMXCON-57118
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that application displays warning A message on Advanced
+	 *              Search if user enters "2009/09/20" without wrapper quotations.
+	 */
+	@Test(description = "RPMXCON-57118", enabled = true, groups = { "regression" })
+	public void verifyApplicationAdvancedSearchDisplayWarningMsg() throws InterruptedException, AWTException {
+
+		base.stepInfo("Test case Id: RPMXCON-57118");
+		base.stepInfo(
+				"Verify that application displays warning A message on Advanced Search if user enters \"2009/09/20\" without wrapper quotations.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String searchTerm = "2009-09-20";
+
+		// Login As PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		base.stepInfo("Go to Advanced Search page enter the Searchterm");
+		sessionSearch.getAdvancedSearchLink().Click();
+		driver.waitForPageToBeReady();
+		sessionSearch.getContentAndMetaDatabtn().Click();
+		sessionSearch.getAdvancedContentSearchInput().SendKeys(searchTerm);
+		// Click on Search button
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		String actualMsg = sessionSearch.getWarningMsg().getText();
+		System.out.println(actualMsg);
+		base.stepInfo(actualMsg);
+		String expectedMsg = "Your query contains an argument that may be intended to look for dates within any body content or metadata attribute. Please be advised that the search engine interprets dash - or slash / characters in non-fielded arguments as implied OR statement. For example, 1980/01/02 is treated by the search engine as 1980 OR 01 OR 02. The same is true of 1980-01-02. You can add quotation marks around a query to treat the dash or slash argument as a string. For example, \"1980/01/02\" is treated as is. The same is true of \"1980-01-02\".";
+		driver.waitForPageToBeReady();
+		if (actualMsg.contains(expectedMsg)) {
+			base.passedStep("Observe that application warning message displayed successfully");
+		} else {
+			base.failedStep("No such message display");
+		}
+
+		login.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:1/12/2022 RPMXCON-49650
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that warning and pure hit result appears for
+	 *              EmailBCCNames Metadata search having phrase included in the
+	 *              query without wrapping in quotes on Basic Search Screen.
+	 */
+	@Test(description = "RPMXCON-49650", enabled = true, groups = { "regression" })
+	public void verifyApplicationAdvancedMetadataSearchDisplayWarningMsg() throws InterruptedException, AWTException {
+
+		base.stepInfo("Test case Id: RPMXCON-49650");
+		base.stepInfo(
+				"Verify that warning and pure hit result appears for EmailBCCNames Metadata search having phrase included in the query without wrapping in quotes on Basic Search Screen.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String searchTerm = "@testdata";
+
+		// Login As PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		base.stepInfo("Go to Advanced Search page enter the Searchterm");
+		sessionSearch.getAdvancedSearchLink().Click();
+		driver.waitForPageToBeReady();
+		sessionSearch.getContentAndMetaDatabtn().Click();
+		sessionSearch.getAdvancedContentSearchInput().SendKeys(searchTerm);
+		sessionSearch.getAdvanceSearch_MetadataBtn().waitAndClick(3);
+		sessionSearch.getSelectMetaData().selectFromDropdown().selectByVisibleText("EmailBCCNames");
+		base.waitForElement(sessionSearch.getMetaDataSearchText1());
+		sessionSearch.getMetaDataSearchText1().SendKeys(searchTerm);
+		base.waitForElement(sessionSearch.getMetaDataInserQuery());
+		sessionSearch.getMetaDataInserQuery().Click();
+		// Click on Search button
+		sessionSearch.getQuerySearchButton().waitAndClick(10);
+		String actualMsg = sessionSearch.getWarningMsg().getText();
+		System.out.println(actualMsg);
+		base.stepInfo(actualMsg);
+		String expectedMsg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).";
+		driver.waitForPageToBeReady();
+		if (actualMsg.contains(expectedMsg)) {
+			base.passedStep("Observe that application warning message displayed successfully");
+		} else {
+			base.failedStep("No such message display");
+		}
+
+		login.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/12/2022 RPMXCON-49763
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that user should be able to search with the field
+	 *              EmailCCNamesAndAddresses from basic search.
+	 */
+	@Test(description = "RPMXCON-49763", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyUserSearchWithEmailBCCNamesAndAddressesInBasicSearch(String username, String password,
+			String role) {
+
+		base.stepInfo("Test case Id: RPMXCON-49763 ");
+		base.stepInfo(
+				"Verify that user should be able to search with the field EmailCCNamesAndAddresses from basic search.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String metaDataField = "EmailBCCNamesAndAddresses";
+		String searchStringWithDoubleQuotes = "\"" + Input.emailAllDomainOption + "\"";
+		String searchStringWithOutDoubleQuotes = Input.emailAllDomainOption;
+
+		// Login As user
+		login.loginToSightLine(username, password);
+		base.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		// Configure the query to search with Metadata EmailBCCNamesAndAddresses with
+		// double quotes
+		base.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses with double quotes.");
+		sessionSearch.basicMetaDataDraftSearch(metaDataField, null, searchStringWithDoubleQuotes, null);
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses with
+		// double quote in Search Query Screen with exact match.
+		sessionSearch.SearchBtnAction();
+		sessionSearch.returnPurehitCount();
+		base.waitForElement(sessionSearch.contentAndMetaDataResultBasicSearch());
+		base.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResultBasicSearch().getText()
+				+ " in Basic Search Query Screen.");
+		base.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses with double quote in Search Query Screen with exact match.");
+
+		// click add new search button
+		sessionSearch.addNewSearch();
+
+		// EmailBCCNamesAndAddresses without double quotes
+		driver.waitForPageToBeReady();
+		base.stepInfo("Configuring the query to search with Metadata EmailBCCNamesAndAddresses without double quotes.");
+		sessionSearch.getContentAndMetaDatabtnC().waitAndClick(10);
+		sessionSearch.newMetaDataSearchInBasicSearch(metaDataField, searchStringWithOutDoubleQuotes);
+		driver.waitForPageToBeReady();
+
+		// verify that Result should appear for entered EmailBCCNamesAndAddresses
+		// without double quote in Search Query Screen.
+		base.stepInfo("Resultant Search Query : " + sessionSearch.contentAndMetaDataResultBasicSearch().getText()
+				+ " in Basic Search Query Screen.");
+		base.passedStep(
+				"verified that Result appear for entered EmailBCCNamesAndAddresses without double quote in  Search Query Screen");
+
+		// logOut
+		login.logout();
+	}
+
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that error message should be displayed when save search
+	 *              name entered with < > * ; ‘ / ( ) # & from Basic search.
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-65052", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgForSaveSearchWithSpclChar() throws InterruptedException {
+		String searchName = "Search<>*;/()";
+		String expectedMsg = "Special characters are not allowed.";
+
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-65052 Basic Search");
+		base.stepInfo(
+				"Verify that error message should be displayed when save search name entered with < > * ; ‘ / ( ) # & from Basic search");
+
+		// Configure content query
+		session.basicContentSearch(Input.searchString5);
+		session.saveSearchQuery(searchName);
+
+		// verify error Message
+		session.verifyErrorMsgInSavePopUp(expectedMsg);
+
+		login.logout();
+	}
+
+	@DataProvider(name = "Users")
+	public Object[][] Users() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
+		return users;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application does not display warning B message on
+	 *              Advanced Search if user enters "bi-weekly" with quotations.
+	 *              [RPMXCON-57121]
+	 * @throws InterruptedException
+	 */
+
+	@Test(description = "RPMXCON-57121", enabled = true, groups = { "regression" })
+	public void verifyWarningMsgOnAdvPage() throws InterruptedException {
+		String search = "\"bi-weekly\"";
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57121 Basic Search");
+		base.stepInfo(
+				"Verify that application does not display warning B message on Advanced Search if user enters \"bi-weekly\" with quotations.");
+
+		// configure Query with Double Quotes
+		session.navigateToAdvancedSearchPage();
+		session.advancedContentSearchConfigure(search);
+		session.addNewSearch();
+
+		// verify warning message is not displayed
+		String expectedMsg = "Warning message containing YOUR QUERY CONTAINS A HYPHEN CHARACTER is Not Displayed";
+		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
+		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application does not display warning A message on
+	 *              Advanced Search if user enters "2009/09/20" with quotations.
+	 *              [RPMXCON-57119]
+	 * @throws InterruptedException
+	 */
+
+	@Test(description = "RPMXCON-57119", enabled = true, groups = { "regression" })
+	public void verifyWarningMsgForDateOnAdvPage() throws InterruptedException {
+		String search = "\"2009/09/20\"";
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57119 Basic Search");
+		base.stepInfo(
+				"Verify that application does not display warning A message on Advanced Search if user enters \"2009/09/20\" with quotations.");
+
+		// configure Query with Double Quotes
+		session.navigateToAdvancedSearchPage();
+		session.advancedContentSearchConfigure(search);
+		session.addNewSearch();
+
+		// verify warning message is not displayed
+		String expectedMsg = "Warning message containing YOUR QUERY CONTAINS AN ARGUMENT is Not Displayed";
+		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
+		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application does not display warning B message on
+	 *              Basic Search if user enters "bi-weekly" with quotations.
+	 *              [RPMXCON-57112]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57112", enabled = true, groups = { "regression" })
+	public void verifyWarningMsgOnBsPage() throws InterruptedException {
+		String search = "\"bi-weekly\"";
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57112 Basic Search");
+		base.stepInfo(
+				"Verify that application does not display warning B message on Basic Search if user enters \"bi-weekly\" with quotations.");
+
+		// configure Query with Double Quotes
+		session.basicContentDraftSearch(search);
+		session.addNewSearch();
+
+		// verify warning message is not displayed
+		String expectedMsg = "Warning message containing YOUR QUERY CONTAINS A HYPHEN CHARACTER is Not Displayed";
+		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
+		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that Basic Search works properly - for MasterDate time
+	 *              metadata - Provide only dates (not times) with "Is" operator
+	 *              [RPMXCON-57220]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57220", enabled = true, groups = { "regression" })
+	public void verifyMasterdateWorksProperly() throws InterruptedException {
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57220 Basic Search");
+		base.stepInfo(
+				"Verify that Basic Search works properly - for MasterDate time metadata - Provide only dates (not times) with \"Is\" operator");
+
+		// configure Query with Double Quotes
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		session.basicMetaDataSearch(Input.masterDateText, "IS", dateFormat.format(date), null);
+		String query = session.configuredQuery();
+
+		String passMsg = "Basic Search works properly - for MasterDate time metadata - Provide only dates (not times) with \"Is\" operator  ";
+		String failMsg = "Basic Search doesnot work as expected";
+		base.textCompareEquals(query,
+				"MasterDate: [" + dateFormat.format(date) + " TO " + dateFormat.format(date) + "]", passMsg, failMsg);
+
+		login.logout();
+	}
+
 	/**
 	 * @author
 	 * @Modified date:N/A
@@ -503,7 +997,7 @@ public class BasicSearchRegression_21_25_26 {
 
 		login.logout();
 	}
-	
+
 	/**
 	 * @author
 	 * @Modified date:N/A
