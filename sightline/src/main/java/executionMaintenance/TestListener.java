@@ -1,8 +1,6 @@
 package executionMaintenance;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,8 +19,6 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.Status;
 import com.thed.zephyr.cloud.rest.ZFJCloudRestClient;
-
-import testScriptsSmoke.Input;
 
 
 
@@ -38,22 +33,7 @@ public class TestListener implements ITestListener {
 	static final String NEW_LINE_SEPARATOR = "\n";
 	static final String fileName = "F:\\cycleExecutionReport.csv";
 	static String API_GETCURRENTEXECUTIONS = "{SERVER}/public/rest/api/1.0/execution/";
-	
-//	public static String versionId = "-1";
-//	public static String projectId = "10000";
-//	public static String projectName = "ZTEST";
-//	public static String versionName = "Unscheduled";
-//	public static String cycleName = "Test Cycle";
-//	public static String cycleDescription = "Created by ZAPI CLOUD API";
-//	public static String cycleID = "";
-//	
-//	static String zephyrBaseUrl = "https://prod-api.zephyr4jiracloud.com/connect";
-//	// zephyr accessKey , we can get from Addons >> zapi section
-//	static String accessKey = "MDMyNDM3NjMtZDViMi0zZTYyLWEwYTktNDk1Y2M0ZDZiMmJkIDYxZWZhM2M0NzhiN2ZkMDA3MmQ3MmMzNSBVU0VSX0RFRkFVTFRfTkFNRQ";
-//	// zephyr secretKey , we can get from Addons >> zapi section
-//	static String secretKey = "lrtlquTOgzHQhuiFgLPybeBlNDDCHrwsx0mXbW_b9Xo";
-//	// Jira accountId
-//	static String accountId = "61efa3c478b7fd0072d72c35";
+
 
 	public static String versionId = "13146";
 	public static String projectId = "10500";
@@ -251,19 +231,6 @@ public class TestListener implements ITestListener {
 	public void onTestFailure(ITestResult result) {
 					
 			System.out.println("*** Test execution " + result.getMethod().getMethodName() + " failed...");
-//			ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
-//			ExtentTestManager.getTest().log(Status.FAIL,"TEST CASE FAILED IS " + result.getThrowable().getMessage());
-		
-//			System.out.println("Verify whether this is a bug: "+ Input.logJiraTicket);
-//		if(Input.logJiraTicket) {
-//			
-//			JiraServiceProvider jiraSp = new JiraServiceProvider(Input.jiraUrl,Input.jiraUserName,Input.jiraToken,Input.jiraProject);
-//			String issueSummary = result.getMethod().getConstructorOrMethod().getMethod() + "Got failed due to some automation assertion or exception";
-//			String issueDescription =result.getThrowable().getMessage()+"\n";
-//			issueDescription.concat(ExceptionUtils.getFullStackTrace(result.getThrowable()));
-//			
-//			jiraSp.createJiraTicket("Bug", issueSummary, issueDescription, "Srinivas Anand");
-			//}
 			
 			String issueID = result.getMethod().getDescription();
 			

@@ -1,12 +1,8 @@
 package executionMaintenance;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,21 +36,7 @@ public class ZapiScripts {
 	static final String fileName = "F:\\cycleExecutionReport.csv";
 	static String API_GETCURRENTEXECUTIONS = "{SERVER}/public/rest/api/1.0/execution/";
 	
-//	public static String versionId = "-1";
-//	public static String projectId = "10000";
-//	public static String projectName = "ZTEST";
-//	public static String versionName = "Unscheduled";
-//	public static String cycleName = "Test Cycle";
-//	public static String cycleDescription = "Created by ZAPI CLOUD API";
-//	public static String cycleId = "b2e24bbb-34b4-4070-bbad-cb17ae390978";
-//	
-//	static String zephyrBaseUrl = "https://prod-api.zephyr4jiracloud.com/connect";
-//	// zephyr accessKey , we can get from Addons >> zapi section
-//	static String accessKey = "MDMyNDM3NjMtZDViMi0zZTYyLWEwYTktNDk1Y2M0ZDZiMmJkIDYxZWZhM2M0NzhiN2ZkMDA3MmQ3MmMzNSBVU0VSX0RFRkFVTFRfTkFNRQ";
-//	// zephyr secretKey , we can get from Addons >> zapi section
-//	static String secretKey = "lrtlquTOgzHQhuiFgLPybeBlNDDCHrwsx0mXbW_b9Xo";
-//	// Jira accountId
-//	static String accountId = "61efa3c478b7fd0072d72c35";
+
 	
 	
 	public static String versionId = "13099";

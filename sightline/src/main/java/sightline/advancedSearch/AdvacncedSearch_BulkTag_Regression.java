@@ -26,7 +26,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvacncedSearch_Regression_2_8 {
+public class AdvacncedSearch_BulkTag_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
