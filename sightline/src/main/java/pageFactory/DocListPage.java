@@ -5862,8 +5862,10 @@ public class DocListPage {
 		String mainWindow = driver.getWebDriver().getWindowHandle();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getPrintIcon());
+		base.waitTime(5);
 		getPrintIcon().waitAndClick(5);
 
+		base.waitTime(5);
 		base.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		closePreviewedDocument();
@@ -5871,10 +5873,12 @@ public class DocListPage {
 		Thread.sleep(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocListBullhornIcon());
+		base.waitTime(5);
 		getDocListBullhornIcon().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocListNotifiMsg());
+		base.waitTime(10);
 		getDocListNotifiMsg().waitAndClick(5);
 
 		// open a new tab
@@ -5887,6 +5891,7 @@ public class DocListPage {
 		}
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		System.out.println(currentURL);
+		base.waitTime(5);
 		if (currentURL.contains("pdf")) {
 			base.passedStep("PDF file downloded by name :: " + currentURL + " as expected");
 		} else {

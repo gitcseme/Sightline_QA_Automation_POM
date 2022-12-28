@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -147,6 +148,14 @@ public class DocList_Regression28 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+	
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	@AfterClass(alwaysRun = true)

@@ -982,10 +982,12 @@ public class DocList_Regression23_24_25_26 {
 		String[] pageLen= {"10","50","100","500"};
 		for(int i=0;i<pageLen.length;i++) {
 			driver.waitForPageToBeReady();
+			baseClass.waitTime(5);
 			docList.getTileView().waitAndClick(5);
 			docList.selectPageLengthInDocList(pageLen[i]);
 			baseClass.stepInfo("thumbnails view is displayed with pagination of"+pageLen[i]);
 			docList.getGridViewIcon().waitAndClick(5);
+			baseClass.waitTime(5);
 			docList.selectPageLengthInDocList(pageLen[i]);
 			baseClass.stepInfo("List view is displayed with pagination of"+pageLen[i]);
 		}
@@ -993,9 +995,11 @@ public class DocList_Regression23_24_25_26 {
 		// one view and switches to the other view for PageLength
 		for(int j=0;j<pageLen.length;j++) {
 			driver.waitForPageToBeReady();
+			baseClass.waitTime(5);
 			docList.getGridViewIcon().waitAndClick(5);
 			docList.selectPageLengthInDocList(pageLen[j]);
 			baseClass.stepInfo("List view is displayed with pagination of"+pageLen[j]);
+			baseClass.waitTime(5);
 			docList.getTileView().waitAndClick(5);
 			docList.selectPageLengthInDocList(pageLen[j]);
 			baseClass.stepInfo("thumbnails view is displayed with pagination of"+pageLen[j]);
@@ -1705,9 +1709,12 @@ public class DocList_Regression23_24_25_26 {
 		baseClass.stepInfo("Navigating to doclist page");
 		sessionSearch.ViewInDocList();
 		baseClass.ValidateElement_Presence(docList.getBackToSourceBtn(), "DocList Page");
+		baseClass.waitTime(5);
 		docList.documentSelection(3);
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Unfoldering the Document");
+		baseClass.waitTime(5);
 		sessionSearch.bulkUnFolder(foldername);
 
 		loginPage.logout();
