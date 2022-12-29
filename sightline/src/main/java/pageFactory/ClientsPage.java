@@ -294,9 +294,9 @@ public class ClientsPage {
 				return project.getIngestionserverpath().Visible();
 			}
 		}), Input.wait30);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
-
+//		project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
+//		project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+		project.getIngestionserverpath().waitAndClick(10);
 		project.getProductionserverpath().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {

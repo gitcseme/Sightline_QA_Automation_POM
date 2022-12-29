@@ -105,7 +105,9 @@ public class SourceLocationPage {
 	public Element getNewSrcLocationBtn() {
 		return driver.FindElementByXPath("//input[@id='btnAddSourceLocaiton']");
 	}
-	
+	public Element getOpenSightlineConnectToONNABtn() {
+        return driver.FindElementByXPath("//input[@id='btnOpenSightlineCollect']");
+    }
 	
 	
 	
@@ -340,6 +342,83 @@ public class SourceLocationPage {
 			base.CloseSuccessMsgpopup();
 		
 	}
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA
+     * @param dataSrcName
+     * @param edit
+     * @param editElement
+     * @param editText
+     * @throws InterruptedException 
+     */
+    public void verifySightlineConnectONNAbutton(boolean Scbpoflag) throws InterruptedException {
+    	if(Scbpoflag) {
+    		base.ValidateElement_Presence(getOpenSightlineConnectToONNABtn(), "Open sightline connect button");
+    		
+    	}else {
+    		base.ValidateElement_Absence(getOpenSightlineConnectToONNABtn(), "Open sightline connect button");
+    		
+    	}
+    	
+    }
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA
+     * @param dataSrcName
+     * @param edit
+     * @param editElement
+     * @param editText
+     * @throws InterruptedException 
+     */
+    public void verifyConnectToONNAbeforeclickingbtn(String ONNAdirectURL) throws InterruptedException {
+            driver.waitForPageToBeReady();
+            base.openNewTab();
+            driver.waitForPageToBeReady();
+            driver.waitForPageToBeReady();
+            base.switchTab(1);
+            driver.get(ONNAdirectURL);
+            driver.waitForPageToBeReady();
+            try {
+            	String expectedError="AccessDenied";
+            	base.verifyPageNavigation(expectedError);  
+                driver.close();
+            }catch(Exception e) {
+               e.printStackTrace();
+            }
+            
+
+
+    }
+    
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA
+     * @param dataSrcName
+     * @param edit
+     * @param editElement
+     * @param editText
+     * @throws InterruptedException 
+     */
+    public void verifyConnectToONNAAfterclickingbtn(String ONNAURL) throws InterruptedException {
+    	LoginPage login=new LoginPage(driver);
+    	base.switchTab(0);
+        base.waitForElement(getOpenSightlineConnectToONNABtn());
+        getOpenSightlineConnectToONNABtn().waitAndClick(5);
+        base.switchTab(1);
+        driver.waitForPageToBeReady();
+        try {
+        	driver.waitForPageToBeReady();
+        	base.verifyPageNavigation(ONNAURL);
+        	base.switchTab(0);
+        	login.logout();
+        	base.switchTab(1);
+        	driver.waitForPageToBeReady();
+        	base.verifyPageNavigation(ONNAURL);
+        	}catch(Exception e) {
+        			e.printStackTrace();
+        	}
+     
+    }
 
 
 }
