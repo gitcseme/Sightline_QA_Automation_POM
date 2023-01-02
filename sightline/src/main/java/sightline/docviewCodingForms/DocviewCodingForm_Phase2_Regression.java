@@ -40,7 +40,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocviewCodingForm_Regression {
+public class DocviewCodingForm_Phase2_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

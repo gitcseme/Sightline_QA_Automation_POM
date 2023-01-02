@@ -47,7 +47,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class DocView_CodingForm_IndiumRegression2 {
+public class DocViewCodingForm_Regression2 {
 	Driver driver;
 	LoginPage loginPage;
 	SoftAssert softAssertion;
