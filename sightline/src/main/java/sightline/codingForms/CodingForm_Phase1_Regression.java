@@ -34,7 +34,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import pageFactory.CodingForm;
 
-public class CodingForm_Regression_Phase1 {
+public class CodingForm_Phase1_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	SoftAssert softAssertion;

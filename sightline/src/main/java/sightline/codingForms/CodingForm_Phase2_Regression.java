@@ -41,7 +41,7 @@ import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 
-public class CodingForm_Regression_Phase2_1 {
+public class CodingForm_Phase2_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	SoftAssert softAssertion;
