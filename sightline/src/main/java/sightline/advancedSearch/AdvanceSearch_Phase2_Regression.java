@@ -34,7 +34,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvanceSearchRegression20_21_22_23_24 {
+public class AdvanceSearch_Phase2_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;
