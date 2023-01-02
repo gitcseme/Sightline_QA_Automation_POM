@@ -47,7 +47,7 @@ import testScriptsSmoke.Input;
 
 
 
-public class DocView_MiniDocList_Regression1 {
+public class DocViewMiniDocList_Regression1 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
