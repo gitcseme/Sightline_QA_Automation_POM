@@ -42,7 +42,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class DocView_MiniDocList_Regression {
+public class DocViewMiniDocList_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
