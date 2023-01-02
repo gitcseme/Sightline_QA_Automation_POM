@@ -43,7 +43,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvancedSearchRegression_28 {
+public class AdvancedSearch_Phase2_Regression1 {
 	Driver driver;
 	LoginPage loginPage;
 	SessionSearch sessionSearch;
