@@ -37,7 +37,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CodingForm_Regression_Phase2_2 {
+public class CodingForm_Phase2_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;
