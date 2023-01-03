@@ -91,9 +91,6 @@ public class DocListPage {
 		return driver.FindElementByXPath("//td[contains(text(),'Your query returned no data')]");
 	}
 	 
-	public Element getDocList_ColumnHeader() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr[1]");
-	}
 	public Element getEmailAuthNameFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]");
 	}
@@ -1091,7 +1088,7 @@ public class DocListPage {
 	}
 
 	public ElementCollection getColumnHeader() {
-		return driver.FindElementsByXPath("//table[@id='dtDocList']/thead/tr/th");
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//thead//tr//th");
 	}
 
 	public Element getLastRow() {
