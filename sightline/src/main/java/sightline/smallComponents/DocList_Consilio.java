@@ -153,7 +153,7 @@ public class DocList_Consilio {
 		String custodianactual = docList.AfterFilterverifyCustodianName(Input.custodianName_Andrew);
 		softAssertion.assertEquals(custodianexp,custodianactual);
 		System.out.println(custodianactual);
-		baseClass.passedStep("Filteration is performed with Custodian Name : "+custodianexp);
+		baseClass.passedStep("Filter is performed with Custodian Name : "+custodianexp);
 		baseClass.passedStep("Filter is applied and Verified");
 		softAssertion.assertAll();
 		loginPage.logout();
@@ -193,7 +193,7 @@ public class DocList_Consilio {
 			String actualFiletype = docList.AfterFilterverifyDocFileType(fileType);
 			softAssertion.assertEquals(fileType,actualFiletype);
 			System.out.println(actualFiletype);
-			baseClass.passedStep("Filteration is performed with Custodian Name : "+custodianexp+" and DocFiletype : "+actualFiletype);
+			baseClass.passedStep("Filter is performed with Custodian Name : "+custodianexp+" and DocFiletype : "+actualFiletype);
 			baseClass.passedStep("Filter is applied and Verified");
 			softAssertion.assertAll();
 			loginPage.logout();
