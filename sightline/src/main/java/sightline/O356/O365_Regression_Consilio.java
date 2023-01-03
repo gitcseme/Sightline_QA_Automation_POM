@@ -1,9 +1,11 @@
 package sightline.O356;
 
 import java.io.IOException;
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.HashMap;
+
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -16,6 +18,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import junit.framework.Assert;
 import pageFactory.BaseClass;
 import pageFactory.ClientsPage;
 import pageFactory.CollectionPage;
@@ -70,7 +73,7 @@ public class O365_Regression_Consilio {
 		};
 		return users;
 	}
-	@DataProvider(name = "PaAndRmuUseWithFullNamer")
+	@DataProvider(name = "PaAndRmuUseWithFullName")
 	public Object[][] PaAndRmuUseWithFullNamer() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator",Input.pa1FullName },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager",Input.rmu1FullName },
@@ -237,6 +240,7 @@ public class O365_Regression_Consilio {
 		collection.performAddNewSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);
 		
 	}
+	
 	@Test(description = "RPMXCON-70320",dataProvider="PaAndRmuUser",enabled = true, groups = { "regression" })
     public void verifySCpbOToggleONForExistingProjectCanClickOnSPCbtn(String userName,String password,String role) throws Exception {
         base.stepInfo("Verify when (SCpbO) toggle is ON for existing project,Open Sightline Collect button should be displayed under a new section in source location page");
@@ -265,52 +269,17 @@ public class O365_Regression_Consilio {
         source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
 
     }
+	
 	@Test(description = "RPMXCON-70319",dataProvider="PaAndRmuUser",enabled = true, groups = { "regression" })
     public void verifySCpbOToggleOFFForExistingProjectCanClickOnSPCbtn(String userName,String password,String role) throws Exception {
-        base.stepInfo("Verify when (SCpbO) toggle is ON for existing project,Open Sightline Collect button should be displayed under a new section in source location page");
-        base.stepInfo("Test case Id:RPMXCON-70320");
+        base.stepInfo("Verify when “Sightline Collect, Powered by Onna” (SCpbO) toggle is OFF for existing project, 'Open Sightline Collect' button should not be displayed under a new section in source location page");
+        base.stepInfo("Test case Id:RPMXCON-70319");
         boolean SCpbOToggle=false;
         String directUrl=Input.OnnaDirectUrl;
         String[][] userRolesData = { { userName, role, "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
         ProjectPage p=new ProjectPage(driver);
         p.DisableSightlineOnnaToggle(Input.projectName);
-        login.logout();
-
-
-        // Login and Pre-requesties
-        base.stepInfo("**Step-1 Login as Project Admin/RMU **");
-        login.loginToSightLine(userName, password);
-        base.stepInfo("logged in as "+role+" user");
-        base.stepInfo("User Role : " + role);
-        userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-
-        // navigate to source location page
-        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
-        source.verifySightlineConnectONNAbutton(SCpbOToggle);
-        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
-
-    }
-	@Test(description = "RRPMXCON-70318",dataProvider="PaAndRmuUseWithFullNamer",enabled = true, groups = { "regression" })
-    public void verifySCpbOToggleOFFForNewlyCreatedProjectCanClickOnSPCbtn(String userName,String password,String role,String fullName) throws Exception {
-        base.stepInfo("Verify when “Sightline Collect, Powered by Onna” (SCpbO) toggle is OFF for newly created project, 'Open Sightline Collect' button should not be displayed under a new section in source location page");
-        base.stepInfo("Test case Id:RPMXCON-70318");
-        boolean SCpbOToggle=false;
-        String directUrl=Input.OnnaDirectUrl;
-        String DomainId="DomainId" + Utility.dynamicNameAppender();
-        String ClientName="C" + Utility.dynamicNameAppender();
-        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
-        String[][] userRolesData = { { userName, role, "SA" } };
-        login.loginToSightLine(Input.sa1userName, Input.sa1password);
-        ProjectPage project=new ProjectPage(driver);
-        ClientsPage client=new ClientsPage(driver);
-        client.AddDomainClient(ClientName, DomainId);
-        project.navigateToProductionPage();
-        project.AddDomainProject(ProjectName, ClientName);
-        UserManagement user=new UserManagement(driver);
-        user.navigateToUsersPAge();
-        user.AssignUserToProject(ProjectName, role, fullName);
-        project.DisableSightlineOnnaToggle(ProjectName);
         login.logout();
 
 
