@@ -74,7 +74,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	@DataProvider(name = "PaAndRmuUseWithFullName")
-	public Object[][] PaAndRmuUseWithFullNamer() {
+	public Object[][] PaAndRmuUseWithFullName() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator",Input.pa1FullName },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager",Input.rmu1FullName },
 
