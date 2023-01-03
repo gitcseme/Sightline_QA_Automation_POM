@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -107,6 +108,9 @@ public class SourceLocationPage {
 	}
 	public Element getOpenSightlineConnectToONNABtn() {
         return driver.FindElementByXPath("//input[@id='btnOpenSightlineCollect']");
+    }
+	public Element getOpenSightlineConnectToONNAHeaderText() {
+        return driver.FindElementByXPath("//[@id='content']/div[2]/div/div[3]/h1");
     }
 	
 	
@@ -344,12 +348,28 @@ public class SourceLocationPage {
 	}
 	/**
      * @Author Hema MJ
-     * @Description : verify sightline connect to ONNA
-     * @param dataSrcName
-     * @param edit
-     * @param editElement
-     * @param editText
-     * @throws InterruptedException 
+     * @Description : verify sightline connect to ONNA button
+     * @param Scbpoflag
+     */
+    public void verifySightlineConnectONNAText(boolean Scbpoflag) throws InterruptedException {
+    	if(Scbpoflag) {
+    		String text=getOpenSightlineConnectToONNAHeaderText().getText();
+    		text.trim();
+    		Assert.assertEquals("Sightline Collect (Powered by Onna©)",text);
+    		base.passedStep("Sightline Collect (Powered by Onna©) text is displayed");		
+    		
+    	}else {
+    		base.ValidateElement_Absence(getOpenSightlineConnectToONNAHeaderText(), "Open sightline connect Text");
+    		base.passedStep("Open sightline connect Text is not present" );
+    		
+    	}
+    	
+    }
+    /**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA Text
+     * @param Scbpoflag
+   
      */
     public void verifySightlineConnectONNAbutton(boolean Scbpoflag) throws InterruptedException {
     	if(Scbpoflag) {
@@ -374,8 +394,9 @@ public class SourceLocationPage {
     public void verifyConnectToONNAbeforeclickingbtn(String ONNAdirectURL) throws InterruptedException {
             driver.waitForPageToBeReady();
             base.openNewTab();
-            driver.waitForPageToBeReady();
-            driver.waitForPageToBeReady();
+            for(int i=0;i<=5;i++) {
+            	driver.waitForPageToBeReady();
+            }
             base.switchTab(1);
             driver.get(ONNAdirectURL);
             driver.waitForPageToBeReady();
@@ -412,9 +433,13 @@ public class SourceLocationPage {
         	base.verifyPageNavigation(ONNAURL);
         	base.switchTab(0);
         	login.logout();
+        	base.passedStep("logged Out Of Sightline Successfully");
         	base.switchTab(1);
-        	driver.waitForPageToBeReady();
+        	for(int i=0;i<=5;i++) {
+        		driver.waitForPageToBeReady();
+        	}
         	base.verifyPageNavigation(ONNAURL);
+        	base.passedStep("Onna Is Still logged in");
         	}catch(Exception e) {
         			e.printStackTrace();
         	}
