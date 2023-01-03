@@ -1529,6 +1529,38 @@ public class DocListPage {
 	public Element getMetaDataBoxInDocList() {
 		return driver.FindElementByXPath("//div[@class='popover-content']/div");
 	}
+	
+	public Element getFilterFileds() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr[2]");
+	}
+	
+	public Element CustodianNameFilterFileds() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr[2]/th[5]/input[@id='CustodianName']");
+	}
+	
+	public Element CustodianNameAfterFilter(String CustodianName) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + CustodianName + "')]");
+	}
+	
+	public Element DocFileTypeFilterFileds() {
+		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/thead/tr[2]/th[7]/input[@id='DocFileType']");
+	}
+	
+	public Element DocFileTypeAfterFilter(String type) {
+		return driver.FindElementByXPath("//td[contains(text(),'" + type + "')]");
+	}
+	
+	public String AfterFilterverifyDocFileType(String type ) {
+		DocFileTypeAfterFilter(type).isDisplayed();
+		System.out.println(type);
+		return type;
+	}
+	
+	public String AfterFilterverifyCustodianName(String CustodianName ) {
+		CustodianNameAfterFilter(CustodianName).isDisplayed();
+		System.out.println(CustodianName);
+		return CustodianName;
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -1579,6 +1611,28 @@ public class DocListPage {
 
 	}
 
+	public void custodianFilter(String CustodianName) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return CustodianNameFilterFileds().Visible();
+			}
+		}), Input.wait30);
+		CustodianNameFilterFileds().waitAndClick(10);
+		CustodianNameFilterFileds().SendKeys(CustodianName);		
+		driver.waitForPageToBeReady();
+	}
+	
+	public void docfiletypeFilter(String type) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return DocFileTypeFilterFileds().Visible();
+			}
+		}), Input.wait30);
+		DocFileTypeFilterFileds().waitAndClick(10);
+		DocFileTypeFilterFileds().SendKeys(type);		
+		driver.waitForPageToBeReady();
+	}
+	
 	public void dateFilter(String option, String fromDate, String toDate) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
