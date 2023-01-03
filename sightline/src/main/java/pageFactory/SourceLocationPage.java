@@ -357,6 +357,7 @@ public class SourceLocationPage {
     		
     	}else {
     		base.ValidateElement_Absence(getOpenSightlineConnectToONNABtn(), "Open sightline connect button");
+    		base.passedStep("Open sightline connect button is not present" );
     		
     	}
     	
