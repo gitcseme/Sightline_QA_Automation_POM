@@ -452,6 +452,11 @@ public class ProjectPage {
 	public Element getNoOfDocError() {
 		return driver.FindElementById("txtMaxNoOfDocs-error");
 	}
+	
+    public Element getSightlineOnnaToggle(){
+        return driver.FindElementByCssSelector("i[id='IsEnabledSightlineOnna']");
+
+    }
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -461,6 +466,8 @@ public class ProjectPage {
 		driver.waitForPageToBeReady();
 		bc = new BaseClass(driver);
 	}
+	
+	
 
 	public void AddDomainProjectWithDefaultSetting(String projectname, String clientname) {
 
@@ -577,7 +584,7 @@ public class ProjectPage {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
 			}
-		}), Input.wait120 + Input.wait60);
+		}), Input.wait120 + Input.wait60 + Input.wait120);
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
 
@@ -2202,5 +2209,56 @@ public class ProjectPage {
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
 	}
+	public boolean EnableSightlineOnnaToggle(String projectName) {
+        selectProjectAndEdit(projectName);
+        bc.waitForElement(getSightlineOnnaToggle());
+        driver.scrollingToBottomofAPage();
+        bc.waitForElement(getSightlineOnnaToggle());
+        String red="rgba(229, 64, 54, 1)";
+        String color=getSightlineOnnaToggle().GetCssValue("background-color");        
+        if(color.equalsIgnoreCase(red)) {
+            getSightlineOnnaToggle().waitAndClick(5);
+            driver.waitForPageToBeReady();
+            bc.waitForElement(getButtonSaveProject());
+            getButtonSaveProject().waitAndClick(10);
+            bc.VerifySuccessMessage("Project updated successfully");
+        }
+        else {
+            getButtonSaveProject().waitAndClick(10);
+            bc.VerifySuccessMessage("Project updated successfully");
+            bc.passedStep("The Toggle is already Enabled");
+        }
+
+        return true;
+
+    }
+
+    /**
+     * @author: Hema Created Date: 12/27/2022 Modified by: NA Modified Date: NA
+     * @description: this method will disable on Sightline powered by Onna toggle button 
+     * 
+     */
+    public void DisableSightlineOnnaToggle(String projectName) {
+        selectProjectAndEdit(projectName);
+        bc.waitForElement(getSightlineOnnaToggle());
+        driver.scrollingToBottomofAPage();
+        String green="rgba(169, 201, 129, 1)";
+        String color=getSightlineOnnaToggle().GetCssValue("background-color");
+        if(color.equalsIgnoreCase(green)) {
+            getSightlineOnnaToggle().waitAndClick(5);
+            driver.waitForPageToBeReady();
+            bc.waitForElement(getButtonSaveProject());
+            getButtonSaveProject().waitAndClick(10);
+            bc.VerifySuccessMessage("Project updated successfully");
+        }
+        else {
+            getButtonSaveProject().waitAndClick(10);
+            bc.VerifySuccessMessage("Project updated successfully");
+            bc.passedStep("The Toggle is already Disabled");
+        }
+
+ 
+
+    }
 
 }

@@ -1,9 +1,11 @@
 package sightline.O356;
 
 import java.io.IOException;
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.HashMap;
+
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -16,10 +18,13 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import junit.framework.Assert;
 import pageFactory.BaseClass;
+import pageFactory.ClientsPage;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SourceLocationPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -64,6 +69,14 @@ public class O365_Regression_Consilio {
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" },
+
+		};
+		return users;
+	}
+	@DataProvider(name = "PaAndRmuUseWithFullName")
+	public Object[][] PaAndRmuUseWithFullName() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator",Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager",Input.rmu1FullName },
 
 		};
 		return users;
@@ -228,6 +241,107 @@ public class O365_Regression_Consilio {
 		
 	}
 	
+	@Test(description = "RPMXCON-70318",dataProvider="PaAndRmuUseWithFullName",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleOFFForNewlyCreatedProjectCanClickOnSPCbtn(String userName,String password,String role,String fullName) throws Exception {
+        base.stepInfo("Verify when “Sightline Collect, Powered by Onna” (SCpbO) toggle is OFF for newly created project, 'Open Sightline Collect' button should not be displayed under a new section in source location page");
+        base.stepInfo("Test case Id:RPMXCON-70318");
+        boolean SCpbOToggle=false;
+        boolean toggleIsDisabled=false;
+        String directUrl=Input.OnnaDirectUrl;
+        String DomainId="DomainId" + Utility.dynamicNameAppender();
+        String ClientName="C" + Utility.dynamicNameAppender();
+        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
+        String[][] userRolesData = { { userName, role, "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        ProjectPage project=new ProjectPage(driver);
+        ClientsPage client=new ClientsPage(driver);
+        client.AddDomainClient(ClientName, DomainId);
+        project.navigateToProductionPage();
+        project.AddDomainProject(ProjectName, ClientName);
+        UserManagement user=new UserManagement(driver);
+        user.navigateToUsersPAge();
+        user.AssignUserToProject(ProjectName, role, fullName);
+        toggleIsDisabled=project.DisableSightlineOnnaToggle(ProjectName,toggleIsDisabled);
+        login.logout();
+
+
+        // Login and Pre-requesties
+        base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+        login.loginToSightLine(userName, password);
+        base.stepInfo("logged in as "+role+" user");
+        base.stepInfo("User Role : " + role);
+        base.stepInfo("Navigated to Manage Users page for User Role " +role);
+        userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Disabled when toggle is off for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is not Displayed when toggle is off for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        base.switchTab(0);
+        driver.waitForPageToBeReady();  
+        
+        if(toggleIsDisabled) {
+        	login.logout();
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was disabled as part of this TC");
+        	project.navigateToProductionPage();
+        	project.EnableSightlineOnnaToggle(ProjectName,toggleIsDisabled);
+        	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
+        	
+        }
+    }
+	
+	@Test(description = "RPMXCON-70319",dataProvider="PaAndRmuUser",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleOFFForExistingProjectCanClickOnSPCbtn(String userName,String password,String role) throws Exception {
+        base.stepInfo("Verify when “Sightline Collect, Powered by Onna” (SCpbO) toggle is OFF for existing project, 'Open Sightline Collect' button should not be displayed under a new section in source location page");
+        base.stepInfo("Test case Id:RPMXCON-70319");
+        boolean SCpbOToggle=false;
+        boolean toggleIsDisabled=false;
+        String directUrl=Input.OnnaDirectUrl;
+        String[][] userRolesData = { { userName, role, "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        ProjectPage p=new ProjectPage(driver);
+        toggleIsDisabled=p.DisableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
+        login.logout();
+
+
+        // Login and Pre-requesties
+        base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+        login.loginToSightLine(userName, password);
+        base.stepInfo("logged in as "+role+" user");
+        base.stepInfo("User Role : " + role);
+        base.stepInfo("Navigated to Manage Users page for User Role " +role);
+        userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Disabled when toggle is off for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is not Displayed when toggle is off for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        base.switchTab(0);
+        driver.waitForPageToBeReady();
+       
+        if(toggleIsDisabled) {
+        	login.logout();
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was disabled as part of this TC");
+        	p.navigateToProductionPage();
+        	p.EnableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
+        	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
+        	
+        }
+       
+	}
+
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -244,7 +358,7 @@ public class O365_Regression_Consilio {
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
-	@AfterClass(alwaysRun = true)
+//	@AfterClass(alwaysRun = true)
 	public void close() {
 
 		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");

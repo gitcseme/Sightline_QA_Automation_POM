@@ -946,5 +946,7 @@ public class TestData {
     public String Datasets;
     public String ManageDomainProjects;
     public String Ingestions;
+    public String OnnaUrl;
+    public String OnnaDirectUrl;
 	
 }

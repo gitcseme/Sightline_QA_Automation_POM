@@ -64,7 +64,8 @@ public class Input {
 	public static String additionalDataProject;
 	public static String ingestDataProject;
 	public static String largeVolDataProject;
-
+	public static String OnnaUrl;
+	public static String OnnaDirectUrl;
 	// Environment data---------------------------------------------
 
 	public static String url;
@@ -1356,7 +1357,8 @@ public class Input {
 		ProjectAdministrator = testData.getProjectAdministrator();
 		ReviewManager = testData.getReviewManager();
 		Reviewer = testData.getReviewer();
-
+		OnnaUrl=testData.getOnnaUrl();
+		OnnaDirectUrl=testData.getOnnaDirectUrl();
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
 		 */

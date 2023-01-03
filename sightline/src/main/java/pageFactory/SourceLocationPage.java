@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -105,7 +106,12 @@ public class SourceLocationPage {
 	public Element getNewSrcLocationBtn() {
 		return driver.FindElementByXPath("//input[@id='btnAddSourceLocaiton']");
 	}
-	
+	public Element getOpenSightlineConnectToONNABtn() {
+        return driver.FindElementByXPath("//input[@id='btnOpenSightlineCollect']");
+    }
+	public Element getOpenSightlineConnectToONNAHeaderText() {
+        return driver.FindElementByXPath("//[@id='content']/div[2]/div/div[3]/h1");
+    }
 	
 	
 	
@@ -340,6 +346,105 @@ public class SourceLocationPage {
 			base.CloseSuccessMsgpopup();
 		
 	}
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA button
+     * @param Scbpoflag
+     */
+    public void verifySightlineConnectONNAText(boolean Scbpoflag) throws InterruptedException {
+    	if(Scbpoflag) {
+    		String text=getOpenSightlineConnectToONNAHeaderText().getText();
+    		text.trim();
+    		Assert.assertEquals("Sightline Collect (Powered by Onna©)",text);
+    		base.passedStep("Sightline Collect (Powered by Onna©) text is displayed");		
+    		
+    	}else {
+    		base.ValidateElement_Absence(getOpenSightlineConnectToONNAHeaderText(), "Open sightline connect Text");
+    		base.passedStep("Open sightline connect Text is not present" );
+    		
+    	}
+    	
+    }
+    /**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA Text
+     * @param Scbpoflag
+   
+     */
+    public void verifySightlineConnectONNAbutton(boolean Scbpoflag) throws InterruptedException {
+    	if(Scbpoflag) {
+    		base.ValidateElement_Presence(getOpenSightlineConnectToONNABtn(), "Open sightline connect button");
+    		
+    	}else {
+    		base.ValidateElement_Absence(getOpenSightlineConnectToONNABtn(), "Open sightline connect button");
+    		base.passedStep("Open sightline connect button is not present" );
+    		
+    	}
+    	
+    }
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA
+     * @param dataSrcName
+     * @param edit
+     * @param editElement
+     * @param editText
+     * @throws InterruptedException 
+     */
+    public void verifyConnectToONNAbeforeclickingbtn(String ONNAdirectURL) throws InterruptedException {
+            driver.waitForPageToBeReady();
+            base.openNewTab();
+            for(int i=0;i<=5;i++) {
+            	driver.waitForPageToBeReady();
+            }
+            base.switchTab(1);
+            driver.get(ONNAdirectURL);
+            driver.waitForPageToBeReady();
+            try {
+            	String expectedError="AccessDenied";
+            	base.verifyPageNavigation(expectedError);  
+                driver.close();
+            }catch(Exception e) {
+               e.printStackTrace();
+            }
+            
+
+
+    }
+    
+	/**
+     * @Author Hema MJ
+     * @Description : verify sightline connect to ONNA
+     * @param dataSrcName
+     * @param edit
+     * @param editElement
+     * @param editText
+     * @throws InterruptedException 
+     */
+    public void verifyConnectToONNAAfterclickingbtn(String ONNAURL) throws InterruptedException {
+    	LoginPage login=new LoginPage(driver);
+    	base.switchTab(0);
+        base.waitForElement(getOpenSightlineConnectToONNABtn());
+        getOpenSightlineConnectToONNABtn().waitAndClick(5);
+        base.switchTab(1);
+        driver.waitForPageToBeReady();
+        try {
+        	driver.waitForPageToBeReady();
+        	base.verifyPageNavigation(ONNAURL);
+        	base.switchTab(0);
+        	login.logout();
+        	base.passedStep("logged Out Of Sightline Successfully");
+        	base.switchTab(1);
+        	for(int i=0;i<=5;i++) {
+        		driver.waitForPageToBeReady();
+        	}
+        	base.verifyPageNavigation(ONNAURL);
+        	base.passedStep("Onna Is Still logged in");
+        	}catch(Exception e) {
+        			e.printStackTrace();
+        	}
+     
+    }
 
 
 }
