@@ -153,12 +153,53 @@ public class DocList_Consilio {
 		String custodianactual = docList.AfterFilterverifyCustodianName(Input.custodianName_Andrew);
 		softAssertion.assertEquals(custodianexp,custodianactual);
 		System.out.println(custodianactual);
-		baseClass.passedStep("Filteration is performed successfully and Verified");
+		baseClass.passedStep("Filteration is performed with Custodian Name : "+custodianexp);
+		baseClass.passedStep("Filter is applied and Verified");
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
 	
-
+	@Test(description = "RPMXCON-70310", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyApplyFilterWithTWoFieldsInDocList(String username, String password, String role) throws InterruptedException {
+	        String custodianexp= Input.metaDataCN;
+	        String fileType= "Text File";
+			baseClass.stepInfo("Test case Id: RPMXCON-70310: Verify that User can filter across multiple field names.This action should be treated as an ‘AND’ operator to filter the documents.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			baseClass.stepInfo("Navigated to DocList page");
+			driver.waitForPageToBeReady();
+			docList.custodianFilter(Input.metaDataCN);
+			docList.docfiletypeFilter(fileType);
+			docList.getApplyFilter().waitAndClick(3);
+			
+			driver.waitForPageToBeReady();
+			String custodianactual = docList.AfterFilterverifyCustodianName(Input.metaDataCN);
+			softAssertion.assertEquals(custodianexp,custodianactual);
+			System.out.println(custodianactual);
+			
+			String actualFiletype = docList.AfterFilterverifyDocFileType(fileType);
+			softAssertion.assertEquals(fileType,actualFiletype);
+			System.out.println(actualFiletype);
+			baseClass.passedStep("Filteration is performed with Custodian Name : "+custodianexp+" and DocFiletype : "+actualFiletype);
+			baseClass.passedStep("Filter is applied and Verified");
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+	
+	
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
