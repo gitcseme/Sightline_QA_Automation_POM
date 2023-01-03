@@ -1,5 +1,6 @@
 package sightline.manage;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -10,14 +11,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
-import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
-import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
@@ -29,13 +29,13 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ManageComments_Regression4 {
-
+public class ManageComments_Regression {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
 	Input ip;
 	Utility utility;
+	SessionSearch sessionSearch;
 	SecurityGroupsPage securityGroupsPage;
 	UserManagement userManage;
 	DocExplorerPage docexp;
@@ -43,6 +43,7 @@ public class ManageComments_Regression4 {
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
 	ProjectPage projectPage;
+	CommentsPage commentsPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -67,6 +68,55 @@ public class ManageComments_Regression4 {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:16/08/2022 RPMXCON-52535
+	 * @throws Exception
+	 * @Description To verify whether user is able to create comment after changing
+	 *              role to RMU from Project Admin by Project Admin.
+	 * 
+	 */
+	@Test(description = "RPMXCON-52535", enabled = true, groups = { "regression" })
+	public void verifyAbleToCreateCommentAfterChangingRole() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52535");
+		baseClass.stepInfo(
+				"To verify whether user is able to create comment after changing role to RMU from Project Admin by Project Admin.");
+		userManage = new UserManagement(driver);
+		CommentsPage comments = new CommentsPage(driver);
+		String commentName1 = "comment" + Utility.dynamicNameAppender();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Navigate to users Page");
+		userManage.navigateToUsersPAge();
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(userManage.getFunctionalityTab());
+		userManage.getFunctionalityTab().waitAndClick(5);
+		if (userManage.getManageRole_Functionality_Manage().Enabled()) {
+			baseClass.passedStep("By Default Manage rights is checked successfullly");
+		} else {
+			baseClass.failedStep("By Default Manage rights is Not checked");
+		}
+		userManage.saveButtonOfFunctionTab();
+		baseClass.stepInfo("Manage Check Box is Verified");
+
+		baseClass.stepInfo("Impersonate PA to RMU");
+		baseClass.impersonatePAtoRMU();
+
+		comments.navigateToCommentsPage();
+		comments.AddComments(commentName1);
+		driver.waitForPageToBeReady();
+		comments.DeleteComments(commentName1);
+		baseClass.passedStep("Manage > Comments page is able to create, modify and delete comment.");
+		loginPage.logout();
+
+	}
+	
 	/**
 	 * @author Vijaya.Rani ModifyDate:01/07/2022 RPMXCON-52723
 	 * @Description Verify that special characters should not be allowed to add
@@ -207,6 +257,137 @@ public class ManageComments_Regression4 {
 	}
 	
 	/**
+	 * @author Mohan.Venugopal Created Date:12/07/2022 RPMXCON-52514
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify when RMU deletes the comment
+	 */
+	@Test(description = "RPMXCON-52514", enabled = true, groups = { "regression" })
+	public void verifyDeleteOptionForCommentsInRMU() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52514");
+		baseClass.stepInfo("To verify when RMU deletes the comment");
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.sa1userName + "");
+		
+		//Navigate to Comments Page
+		String commentName = "Doc_Comment"+Utility.dynamicNameAppender();
+		commentsPage.navigateToCommentsPage();
+		commentsPage.addComments(commentName);
+		commentsPage.deleteCommentsAndClickOnCancelButton(commentName);
+		commentsPage.DeleteComments(commentName);
+		loginPage.logout();
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		commentsPage.navigateToCommentsPage();
+		
+		if (commentsPage.getCommentname(commentName).isDisplayed()) {
+			baseClass.failedStep("Comment is present in PA User");
+		}else {
+			baseClass.passedStep("Comments is not present in CommentsPage when user logged in as PA");
+		}
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:12/07/2022 RPMXCON-52508
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify when RMU click to edit the comment [RPMXCON-11149]
+	 */
+	@Test(description = "RPMXCON-52508", enabled = true, groups = { "regression" })
+	public void verifyRMUClicksEditForComments() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52508");
+		baseClass.stepInfo("To verify when RMU click to edit the comment [RPMXCON-11149]");
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.sa1userName + "");
+		
+		//Navigate to Comments Page
+		commentsPage.EditCommentsIsDisabled();
+		
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:12/07/2022 RPMXCON-52725
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that comment name should not accept more than 128 characters
+	 */
+	@Test(description = "RPMXCON-52725", enabled = true, groups = { "regression" })
+	public void verifyCommentsNameMoreThan128CharaTerms() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52725");
+		baseClass.stepInfo("Verify that comment name should not accept more than 128 characters");
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		String commentsName = "@hotmail.com"+ Utility.randomCharacterAppender(129);
+		
+		
+		// Navigate to Comments and create CommentsName more than 128
+		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		baseClass.passedStep("Error message is displayed when comment name entered with more than 128 characters.");
+		loginPage.logout();
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		// Navigate to Comments and create CommentsName more than 128
+		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		baseClass.passedStep("Error message is displayed when comment name entered with more than 128 characters.");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:12/07/2022 RPMXCON-52724
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that after impersonation space, special characters should not be allowed to add comment
+	 */
+	@Test(description = "RPMXCON-52724", enabled = true, groups = { "regression" })
+	public void verifyCommentsNameWithSpecialCharacters() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52724");
+		baseClass.stepInfo("Verify that after impersonation space, special characters should not be allowed to add comment");
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		String commentsName = "@,* ";
+		
+		baseClass.impersonateSAtoPA();
+		// Navigate to Comments and create CommentsName more than 128
+		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		baseClass.passedStep("Error message is displayed as 'Only alphanumeric characters and underscore are allowed successfully.'");
+		loginPage.logout();
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		
+		baseClass.impersonateSAtoRMU();
+		// Navigate to Comments and create CommentsName more than 128
+		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		baseClass.passedStep("Error message is displayed as 'Only alphanumeric characters and underscore are allowed successfully.'");
+		loginPage.logout();
+	}
+	
+
+	
+	/**
 	 * @author Mohan.Venugopal Created Date:07/07/2022 RPMXCON-52507
 	 * @throws InterruptedException
 	 * @Description To verify when RMU creates new comment.
@@ -322,6 +503,8 @@ public class ManageComments_Regression4 {
 		
 	}
 
+	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -343,5 +526,4 @@ public class ManageComments_Regression4 {
 		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
 
 	}
-
 }
