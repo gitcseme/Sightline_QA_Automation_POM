@@ -241,17 +241,26 @@ public class O365_Regression_Consilio {
 		
 	}
 	
-	@Test(description = "RPMXCON-70320",dataProvider="PaAndRmuUser",enabled = true, groups = { "regression" })
-    public void verifySCpbOToggleONForExistingProjectCanClickOnSPCbtn(String userName,String password,String role) throws Exception {
-        base.stepInfo("Verify when (SCpbO) toggle is ON for existing project,Open Sightline Collect button should be displayed under a new section in source location page");
-        base.stepInfo("Test case Id:RPMXCON-70320");
-        boolean SCpbOToggle=true;
+	@Test(description = "RPMXCON-70318",dataProvider="PaAndRmuUseWithFullName",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleOFFForNewlyCreatedProjectCanClickOnSPCbtn(String userName,String password,String role,String fullName) throws Exception {
+        base.stepInfo("Verify when “Sightline Collect, Powered by Onna” (SCpbO) toggle is OFF for newly created project, 'Open Sightline Collect' button should not be displayed under a new section in source location page");
+        base.stepInfo("Test case Id:RPMXCON-70318");
+        boolean SCpbOToggle=false;
         String directUrl=Input.OnnaDirectUrl;
-        String OnnaUrl=Input.OnnaUrl;
+        String DomainId="DomainId" + Utility.dynamicNameAppender();
+        String ClientName="C" + Utility.dynamicNameAppender();
+        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
         String[][] userRolesData = { { userName, role, "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
-        ProjectPage p=new ProjectPage(driver);
-        p.EnableSightlineOnnaToggle(Input.projectName);
+        ProjectPage project=new ProjectPage(driver);
+        ClientsPage client=new ClientsPage(driver);
+        client.AddDomainClient(ClientName, DomainId);
+        project.navigateToProductionPage();
+        project.AddDomainProject(ProjectName, ClientName);
+        UserManagement user=new UserManagement(driver);
+        user.navigateToUsersPAge();
+        user.AssignUserToProject(ProjectName, role, fullName);
+        project.DisableSightlineOnnaToggle(ProjectName);
         login.logout();
 
 
@@ -266,7 +275,6 @@ public class O365_Regression_Consilio {
         dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
         source.verifySightlineConnectONNAbutton(SCpbOToggle);
         source.verifyConnectToONNAbeforeclickingbtn(directUrl);
-        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
 
     }
 	
