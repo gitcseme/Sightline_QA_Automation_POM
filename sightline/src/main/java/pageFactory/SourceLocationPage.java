@@ -353,10 +353,15 @@ public class SourceLocationPage {
      */
     public void verifySightlineConnectONNAText(boolean Scbpoflag) throws InterruptedException {
     	if(Scbpoflag) {
-    		String text=getOpenSightlineConnectToONNAHeaderText().getText();
-    		text.trim();
-    		Assert.assertEquals("Sightline Collect (Powered by Onna©)",text);
-    		base.passedStep("Sightline Collect (Powered by Onna©) text is displayed");		
+    		if(base.ValidateElement_PresenceReturn(getOpenSightlineConnectToONNAHeaderText())) {
+    			String text=getOpenSightlineConnectToONNAHeaderText().getText();
+    			text.trim();
+    			Assert.assertEquals("Sightline Collect (Powered by Onna©)",text);
+    			base.passedStep("Sightline Collect (Powered by Onna©) text is displayed");	
+    		}
+    		else {
+    			base.failedStep("Sightline Collect (Powered by Onna©) text is not displayed");	
+    		}
     		
     	}else {
     		base.ValidateElement_Absence(getOpenSightlineConnectToONNAHeaderText(), "Open sightline connect Text");
