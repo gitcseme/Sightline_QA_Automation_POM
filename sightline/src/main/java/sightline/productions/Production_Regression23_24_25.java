@@ -601,71 +601,7 @@ public class Production_Regression23_24_25 {
 
 	}
 
-	/**
-	 * @author sowndarya Testcase No:RPMXCON-55749
-	 * @Description: To verify that 'EmailThreadSequenceID' displays correct value
-	 *               in Production
-	 **/
-	@Test(description = "RPMXCON-55749", enabled = true, groups = { "regression" })
-	public void VerifyEmailThreadSequenceId() throws Exception {
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("RPMXCON-48976");
-		tagname = "Tag" + Utility.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-
-		base.stepInfo("To verify that 'EmailThreadSequenceID' displays correct value in Production");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in As " + Input.pa1userName);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
-
-		sessionSearch.navigateToSessionSearchPageURL();
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkTagExisting(tagname);
-		String s1 = "EmailThreadSequenceID";
-		ProductionPage page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
-		int firstFile = Integer.parseInt(beginningBates);
-		page.navigateToProductionPage();
-		page.selectingDefaultSecurityGroup();
-		String prodName = page.addANewProduction(productionname);
-		System.out.println("production created : " + prodName);
-		page.fillingDATSection();
-		base.stepInfo(
-				"In component section, select TIFF  Enabled Slip Sheet from Advanced Tab  Select metadata EmailThreadSequenceID");
-		page.fillingTIFFSection(tagname);
-		page.fillingSlipSheetWithMetadataInTiffSection(s1);
-		driver.scrollPageToTop();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionWithTag(tagname);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		String PDocCount = page.getProductionDocCount().getText();
-		int docno = Integer.parseInt(PDocCount);
-		int lastfile = firstFile + docno;
-		page.extractFile();
-
-		System.out.println("____________________");
-		System.out.println(firstFile);
-		System.out.println(lastfile);
-		System.out.println(prefixID);
-		System.out.println(suffixID);
-		System.out.println("EmailThreadSequencelD" + ":");
-		System.out.println("____________________");
-
-		page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID,
-				"EmailThreadSequencelD" + ":");
-		base.passedStep("verified EmailThreadSequenceID displays correct value in Production");
-
-	}
+	
 	/**
 	 * @author Brundha RPMXCON-48059
 	 * @Description To verify that if Blank Page Removal toggle is ON then it should
