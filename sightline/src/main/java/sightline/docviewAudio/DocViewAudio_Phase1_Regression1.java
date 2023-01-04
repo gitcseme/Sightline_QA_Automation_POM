@@ -57,7 +57,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class DocViewAudio_IndiumRegression {
+public class DocViewAudio_Phase1_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;
