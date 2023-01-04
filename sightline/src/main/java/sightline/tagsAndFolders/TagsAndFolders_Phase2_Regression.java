@@ -114,6 +114,321 @@ public class TagsAndFolders_Phase2_Regression {
 	}
 
 	/**
+	 * @author Vijaya.Rani ModifyDate:09/08/2022 RPMXCON-65047
+	 * @throws Exception
+	 * @Description Verify that error message does not display and application
+	 *              accepts - when new Folder name entered with < > * ; ‘ / ( ) # &
+	 *              ” from Doc Explorer > bulk Folder.
+	 */
+	@Test(description = "RPMXCON-65047", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgNotDisplayedFoldernameWithSpicalCharacters() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-65047");
+		base.stepInfo(
+				"Verify that error message does not display and application accepts - when new Folder name entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > bulk Folder.");
+		sessionSearch = new SessionSearch(driver);
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		String foldername = "fol" + Utility.dynamicNameAppender();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		base.stepInfo("Navigate to DocExplorer select bulk folder");
+		docExplorer.newBulkFolderExisting(foldername);
+		base.passedStep(
+				"Error message is NOT displayed on click of 'Continue' when folder name entered with characters as-> < > * ; ‘ / ( ) # & ");
+
+		driver.Navigate().refresh();
+		base.stepInfo("verify bulk folder name");
+		docExplorer.bulkFolderExistingInDocExplorer(foldername);
+		base.passedStep("New Folder name is get created  with < > * ; ‘ / ( ) # & ” from Doc Explorer > bulk Folder");
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/08/2022 RPMXCON-52475
+	 * @throws Exception
+	 * @Description To verify RMU user can create, delete, modify, a new tag Group.
+	 */
+	@Test(description = "RPMXCON-52475", enabled = true, groups = { "regression" })
+	public void verifyRMUCreateTagGroupDeleteModify() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52475");
+		base.stepInfo("To verify RMU user can create, delete, modify, a new tag Group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String strtag = "Tag";
+		String renamedTag = "renamedTag" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		base.stepInfo("Go to Tags and FolderPage Create tag Group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallTagRoot();
+		tagsAndFolderPage.createTagGroup(Input.securityGroup, strtag, "Success", null);
+		base.passedStep("New Tag Group is created successfully.");
+
+		base.stepInfo("Go to Tags and FolderPage Create tag and cancel");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallTagRoot();
+		tagsAndFolderPage.createTagGroupAndCancel(Input.securityGroup, strtag, null);
+		base.passedStep("New tag group is not be saved. Popup is closed.");
+
+		base.stepInfo("Go to Tags and FolderPage Create tag");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallTagRoot();
+		tagsAndFolderPage.createDuplicateTagGroup(Input.securityGroup, strtag, "Failure-Error", null);
+
+		base.stepInfo("Edit Tag");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.editTagGroup(Input.securityGroup, strtag, renamedTag, "Success", null);
+		base.passedStep("Updated tag group is displayed.");
+
+		base.stepInfo("Remove The Tag Group Click no btn");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllTagsGroupsClickNo(renamedTag);
+		base.passedStep("Tag Group is not  deleted.");
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllTagsGroups(renamedTag, "Success");
+		base.passedStep("Tag Group is deleted..");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:09/08/2022 RPMXCON-52486
+	 * @throws Exception
+	 * @Description To verify that RMU user can create, delete, modify new Folder
+	 *              Group.
+	 */
+	@Test(description = "RPMXCON-52486", enabled = true, groups = { "regression" })
+	public void verifyRMUCreateFolderGroupDeleteModify() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52486");
+		base.stepInfo("To verify that RMU user can create, delete, modify new Folder Group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderGroup = "FolderGroup";
+		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		base.stepInfo("Go to Tags and FolderPage Create folder Group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallFolderRoot();
+		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+		base.passedStep("New Folder Group is created successfully.");
+
+		base.stepInfo("Go to Tags and FolderPage Create folder and cancel");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallFolderRoot();
+		tagsAndFolderPage.createFolderGroupAndCancel(Input.securityGroup, folderGroup, null);
+		base.passedStep("New folder group is not be saved. Popup is closed.");
+
+		base.stepInfo("Go to Tags and FolderPage Create folder");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallFolderRoot();
+		tagsAndFolderPage.createDuplicateFolderGroup(Input.securityGroup, folderGroup, "Failure-Error", null);
+
+		base.stepInfo("Edit folder");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.editFolderGroup(Input.securityGroup, folderGroup, renamedFolder, "Success", null);
+		base.passedStep("Updated folder group is displayed.");
+
+		base.stepInfo("Remove The folder Group Click no btn");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllFolderGroupClickNo(renamedFolder);
+		base.passedStep("folder Group is not  deleted.");
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllFolderGroup(renamedFolder, "Success");
+		base.passedStep("folder Group is deleted.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:10/08/2022 RPMXCON-53278
+	 * @throws Exception
+	 * @Description Verify that RMU should be able to delete the Tag Group from
+	 *              application if created by him and associated to only one
+	 *              security group.
+	 */
+	@Test(description = "RPMXCON-53278", enabled = true, groups = { "regression" })
+	public void verifyRMUCreateTagGroupAndDelete() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-53278");
+		base.stepInfo(
+				"Verify that RMU should be able to delete the Tag Group from application if created by him and associated to only one security group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String strtag = "Tag" + Utility.dynamicNameAppender();
+		;
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		base.stepInfo("Go to Tags and FolderPage Create tag Group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallTagRoot();
+		tagsAndFolderPage.createTagGroup(Input.securityGroup, strtag, "Success", null);
+		base.passedStep("Newly created Tag Group is displayed on the Tag tab .");
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllTagsGroups(strtag, "Success");
+		base.passedStep(
+				"Tag Group is deleted from the application Deleted Tag Group is not displayed on Manage Tags tab for RMU.");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:10/08/2022 RPMXCON-52641
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is OFF then document counts
+	 *              is not displayed on the Tags tab.
+	 */
+	@Test(description = "RPMXCON-52641", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsOFFTagDocsCountNotDisplay() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52641");
+		base.stepInfo(
+				"To verify that if 'Show Docs Counts' is OFF then document counts is not displayed on the Tags tab.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisOFFTags();
+		base.passedStep("Document counts is not displayed for Tag Group and tags.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:10/08/2022 RPMXCON-52642
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is ON then document counts
+	 *              is shoul be displayed on the Tag Group and Tag tab.
+	 */
+	@Test(description = "RPMXCON-52642", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsONTagDocsCountIsDisplay() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52642");
+		base.stepInfo(
+				"To verify that if 'Show Docs Counts' is ON then document counts is shoul be displayed on the Tag Group and Tag tab.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisONTags();
+		base.passedStep("document count is displayed on Tag Group and Tag.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-52643
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is ON then document counts
+	 *              is shoul be displayed on the Folder Group and Folder.
+	 */
+	@Test(description = "RPMXCON-52643", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsONFolderDocsCountIsDisplay() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52643");
+		base.stepInfo(
+				"To verify that if 'Show Docs Counts' is ON then document counts is shoul be displayed on the Folder Group and Folder.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisONFolder();
+		base.passedStep("document count is displayed on Folder Group and Folder.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-52644
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is OFF then document counts
+	 *              is not displayed on the Folder tab.
+	 */
+	@Test(description = "RPMXCON-52644", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsOFFFolderDocsCountNotDisplay() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52644");
+		base.stepInfo(
+				"To verify that if 'Show Docs Counts' is OFF then document counts is not displayed on the Folder tab.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisOFFFolder();
+		base.passedStep("Document counts is not displayed for Folder Group and Folder.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-53279
+	 * @throws Exception
+	 * @Description Verify that RMU should be able to delete the Folder Group from
+	 *              application if created by him and associated to only one
+	 *              security group.
+	 */
+	@Test(description = "RPMXCON-53279", enabled = true, groups = { "regression" })
+	public void verifyRMUCreateFolderGroupAndDelete() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-53279");
+		base.stepInfo(
+				"Verify that RMU should be able to delete the Folder Group from application if created by him and associated to only one security group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderGroup = "FolderGroup" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		base.stepInfo("Go to Tags and FolderPage Create folder Group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallFolderRoot();
+		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+		base.passedStep("Newly created Folder Group is displayed on the Folder tab");
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllFolderGroup(folderGroup, "Success");
+		base.passedStep(
+				"Folder Group is deleted from the application Deleted Folder Group is not displayed on Manage Folder tab for RMU/PAU ");
+		loginPage.logout();
+	}
+
+	/**
 	 * @author Sowndarya Testcase No:RPMXCON-53192
 	 * @Description:To verify that if Tag contains Zero document and select action
 	 *                 'View in Doc List', message should be displayed 'Your query

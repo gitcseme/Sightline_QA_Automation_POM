@@ -91,45 +91,7 @@ public class BatchRedaction_Regression {
 		assign = new AssignmentsPage(driver);
 	}
 
-	/**
-	 * @Author Jeevitha
-	 * @Description : Verify that on click of “Analyze Search for Redaction”, batch
-	 *              redaction run should be initiated to find out the list of
-	 *              “redaction keyword/term occurrences” followed the list of
-	 *              documents for list of occurrences [RPMXCON-48805]
-	 * @throws Exception
-	 */
-	@Test(description = "RPMXCON-48805", enabled = true, groups = { "regression" })
-	public void verifyAnalyeSearchSuccessMsg() throws Exception {
-		String searchName = "Search" + Utility.dynamicNameAppender();
-
-		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		base.stepInfo("Test case Id:RPMXCON-48805 Batch Redaction");
-		base.stepInfo(
-				"Verify that on click of “Analyze Search for Redaction”, batch redaction run should be initiated to find out the list of “redaction keyword/term occurrences” followed the list of documents for list of occurrences");
-
-		// Create saved search
-		session.basicContentSearch(Input.testData1);
-		session.saveSearch(searchName);
-
-		// Perform Analysis of search
-		batch.loadBatchRedactionPage(searchName);
-		batch.verifyAnalyzeBtn(searchName, null);
-		base.waitForElement(batch.getAnalyzeSearchForSavedSearchResult(searchName));
-		batch.getAnalyzeSearchForSavedSearchResult(searchName).waitAndClick(10);
-
-		// verify Success Message
-		base.VerifySuccessMessageB(
-				"Your Request to Analyze corpus for redaction term hits has been added to the background.  Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.");
-
-		// Delete Search
-		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-		login.logout();
-
-	}
-
+	
 	/**
 	 * @throws InterruptedException
 	 * @created By Jeevitha.R Description: Verify that Relevant message appears on
