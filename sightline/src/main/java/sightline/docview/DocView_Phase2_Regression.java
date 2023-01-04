@@ -1,5 +1,6 @@
 package sightline.docview;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -19,15 +20,18 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -918,6 +922,234 @@ public class DocView_Phase2_Regression {
 		docView.deleteStampColour(Input.stampColours);
 		docView.deleteStampColour(Input.stampSelection);
 		docView.deleteStampColour(Input.stampColour);
+	}
+	/**
+	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
+	 * comments entered with < > * ; ‘ / ( ) # & from DocView
+	 * 
+	 */
+	@Test(description = "RPMXCON-65057", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyErrorMsgDisplayedDocCommentEnteredFromDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-65057");
+		baseClass.stepInfo(
+				"Verify that error message does not display and application accepts - when document comments entered with  < > * ; ‘ / ( ) # & ”  from DocView");
+		DocViewPage docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String Specialchar = "< > * ; ‘ / ( ) #";
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		docexp = new DocExplorerPage(driver);
+		// DocExploer to viewindocView Page
+		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+		docexp.selectAllDocumentsFromCurrentPage();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docView.editCodingForm(Specialchar);
+		baseClass.stepInfo("edit codingform and Clicked save button");
+		docView.getCodingFormSaveThisForm().waitAndClick(3);
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
+		driver.Navigate().refresh();
+		baseClass.handleAlert();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docView.editCodingForm(Specialchar);
+		baseClass.stepInfo("edit codingform and clicked save and next button");
+		docView.getSaveAndNextButton().waitAndClick(3);
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
+		loginPage.logout();
+
+		// Create assignment and go to docview
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviewer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		docView.editCodingForm(Specialchar);
+		baseClass.stepInfo("edit codingform and clicked completed button");
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
+
+	}
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51985 Verify in-doc search highlighting is working for Searchable
+	 * PDF (with Uploaded Data set)
+	 * 
+	 */
+	@Test(description = "RPMXCON-51985", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyDocHighlightingForSearchablePdfDataSet() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51985");
+		baseClass.stepInfo("Verify in-doc search highlighting  is working for Searchable PDF (with Uploaded Dataset)");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		DataSets dataset = new DataSets(driver);
+		String text = "T";
+		String Dataset = "ExtendedCharacters";
+		DocListPage doc = new DocListPage(driver);
+		String tagName = "tag" + Utility.dynamicNameAppender();
+		TagsAndFoldersPage	tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as PA");
+		dataset.navigateToDataSetsPage();
+		baseClass.stepInfo("Navigating to dataset page");
+		dataset.SelectingUploadedDataSets();
+		baseClass.passedStep("Dataset is successfully published");
+		driver.waitForPageToBeReady();
+		dataset.SearchDataSetsInDocView(Dataset);
+		baseClass.stepInfo("Selecting uploaded dataset and navigating to docview page");
+		
+		// verifying a corresponding text and highlighting a document.
+		baseClass.waitTime(3);
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+		tagsAndFoldersPage.CreateTag(tagName, Input.securityGroup);
+		driver.waitForPageToBeReady();
+		dataset.navigateToDataSetsPage();
+		driver.waitForPageToBeReady();
+		dataset.SelectingUploadedDataSets();
+		driver.waitForPageToBeReady();
+		dataset.SearchDataSetsInDocList(Dataset);
+		doc.selectAllDocs();
+		doc.docListToBulkRelease(Input.securityGroup);
+		doc.bulkTagExistingFromDoclist(tagName);
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+		sessionsearch.switchToWorkproduct();
+		sessionsearch.selectTagInASwp(tagName);
+		baseClass.waitForElement(sessionsearch.getQuerySearchButton());
+		sessionsearch.getQuerySearchButton().waitAndClick(3);
+		sessionsearch.ViewInDocViews();
+		
+		// verifying a corresponding text and highlighting a document.
+		baseClass.waitTime(3);
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+		loginPage.logout();
+
+		// login as REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login as REV");
+		sessionsearch.switchToWorkproduct();
+		sessionsearch.selectTagInASwp(tagName);
+		sessionsearch.getQuerySearchButton().waitAndClick(3);
+		sessionsearch.ViewInDocViews();
+		
+		// verifying a corresponding text and highlighting a document.
+		baseClass.waitTime(3);
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+	}
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-63768 Verify Production should generated without comments if user
+	 * saved Comments in the documents with 'Copy' menu in DocView
+	 * 
+	 * 
+	 */
+	@Test(description="RPMXCON-63768",enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyProductionGenerateWithoutCommentsDocsWithCopMenu() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-63768");
+		baseClass.stepInfo(
+				"Verify Production should generated without comments if user saved Comments in the documents with 'Copy' menu in DocView");
+		DocViewPage docView = new DocViewPage(driver);
+		String docid = "ID00003432";
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		docexp = new DocExplorerPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+		// DocExploer to viewindocView Page
+		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+		baseClass.waitForElement(docexp.getDocIdColumnTextField());
+		docexp.getDocIdColumnTextField().SendKeys(docid);
+		doclist.getApplyFilter().waitAndClick(10);
+		baseClass.waitTime(3);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		baseClass.waitTime(3);
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
+		baseClass.waitTime(3);
+		docView.getAddComment1().isElementAvailable(5);
+		String Commenttext = docView.getAddComment1().getText();
+		System.out.println(Commenttext);
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int FirstFile = Integer.valueOf(beginningBates);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionPrivDocs(tagname, Input.tagNamePrev);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		int LastFile = PureHit + FirstFile;
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+		File TiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.isfileisExists(TiffFile);
+		page.OCR_Verification_In_Generated_Tiff_tess4jNotDisplayed(FirstFile, LastFile, prefixID, suffixID,Commenttext);
 	}
 
 	@AfterMethod(alwaysRun = true)
