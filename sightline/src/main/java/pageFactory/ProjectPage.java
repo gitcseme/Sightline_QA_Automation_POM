@@ -2209,7 +2209,7 @@ public class ProjectPage {
 		System.out.println(bc.initialBgCount());
 		UtilityLog.info(bc.initialBgCount());
 	}
-	public boolean EnableSightlineOnnaToggle(String projectName) {
+	public boolean EnableSightlineOnnaToggle(String projectName,boolean flag) {
         selectProjectAndEdit(projectName);
         bc.waitForElement(getSightlineOnnaToggle());
         driver.scrollingToBottomofAPage();
@@ -2222,14 +2222,16 @@ public class ProjectPage {
             bc.waitForElement(getButtonSaveProject());
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
+            flag=true;
         }
         else {
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
             bc.passedStep("The Toggle is already Enabled");
+            flag=false;
         }
 
-        return true;
+        return flag;
 
     }
 
@@ -2238,7 +2240,7 @@ public class ProjectPage {
      * @description: this method will disable on Sightline powered by Onna toggle button 
      * 
      */
-    public void DisableSightlineOnnaToggle(String projectName) {
+    public boolean DisableSightlineOnnaToggle(String projectName,boolean flag) {
         selectProjectAndEdit(projectName);
         bc.waitForElement(getSightlineOnnaToggle());
         driver.scrollingToBottomofAPage();
@@ -2250,14 +2252,16 @@ public class ProjectPage {
             bc.waitForElement(getButtonSaveProject());
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
+            flag=true;
         }
         else {
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
             bc.passedStep("The Toggle is already Disabled");
+            flag=false;
         }
 
- 
+        return flag;
 
     }
 
