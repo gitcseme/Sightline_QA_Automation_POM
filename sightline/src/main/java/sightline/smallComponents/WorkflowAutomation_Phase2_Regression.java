@@ -35,7 +35,7 @@ import pageFactory.Utility;
 import pageFactory.WorkflowPage;
 import testScriptsSmoke.Input;
 
-public class WorkflowAutomation_IndiumRegressionPhase2 {
+public class WorkflowAutomation_Phase2_Regression {
 	
 	Driver driver;
 	LoginPage loginPage;

@@ -26,7 +26,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ICE_Regression27 {
+public class ICE_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -156,54 +156,6 @@ public class ICE_Regression27 {
 		loginPage.logout();
 	}
 	
-	/**
-	 * Author :Arunkumar date: 09/12/2022 TestCase Id:RPMXCON-50076
-	 * Description:SL-ICE Integration:Verify that Metadata EmailAuthorAddress works correctly in Basic Search screen.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-50076",enabled = true, groups = { "regression" })
-	public void verifyEmailAuthorAddressMetadataQuery() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-50076");
-		baseClass.stepInfo("Verify that Metadata EmailAuthorAddress works correctly in Basic Search screen.");
-		String[] value = {"gouri.dhavalikar@consilio.com","Swapnal.Sonawane@consilio.com"};
-		String[] field = {"EmailAuthorAddress"};
-		String configQuery = null;
-		
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
-		baseClass.stepInfo("Logged in as PA");
-		DataSets dataSet = new DataSets(driver);
-		softAssert.assertTrue(dataSet.getDatasetBtn().isDisplayed());
-		baseClass.passedStep("User have dataset menu access");
-		baseClass.stepInfo("perform metadata search with query");
-		for(int i=0;i<value.length;i++) {
-			int count =sessionSearch.MetaDataSearchInBasicSearch(field[0],value[i]);
-			if(count>0) {
-				baseClass.passedStep("Docs returned for the configured query"+count);
-				configQuery=value[i];
-				break;
-			}
-			else {
-				baseClass.stepInfo("no docs returned for the query"+value[i]);
-				//performing search for next query
-				baseClass.selectproject();
-			}
-		}
-		baseClass.stepInfo("verify docs returned satisfied the configured query");
-		sessionSearch.ViewInDocList();
-		docList = new DocListPage(driver);
-		docList.SelectColumnDisplayByRemovingExistingOnes(field);
-		driver.waitForPageToBeReady();
-		String returnQuery = docList.getDataInDoclist(1,4).getText();
-		if(configQuery.equalsIgnoreCase(returnQuery)) {
-			baseClass.passedStep("return documents satisfied configured query");
-		}
-		else {
-			baseClass.failedStep("return docs not satisfied configured query");
-		}
-		loginPage.logout();
-	}
 
 	
 	@AfterMethod(alwaysRun = true)
