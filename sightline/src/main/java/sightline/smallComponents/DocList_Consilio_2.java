@@ -50,7 +50,7 @@ public class DocList_Consilio_2 {
 	@Test(description = "RPMXCON-70311", enabled = true, groups = { "regression" })
 	public void verifyextinfieldwithnodata() throws Exception {
 
-		baseClass.stepInfo("Verify that when user enters a text in the field which doesnot have respective documents to filter it should show "
+		baseClass.stepInfo("RPMXCON-70311-Verify that when user enters a text in the field which doesnot have respective documents to filter it should show "
 				+ "\"Your query returned no data\" message with zero document.");
 		
 
@@ -85,7 +85,7 @@ public class DocList_Consilio_2 {
 	@Test(description = "RPMXCON-70309", enabled = true, groups = { "regression" })
 	public void verifyClearAllAfterFilters() throws Exception {
 
-		baseClass.stepInfo("Verify that after applying filter When user selects Clear All, all the new filters on the page will be "
+		baseClass.stepInfo("RPMXCON-70309-Verify that after applying filter When user selects Clear All, all the new filters on the page will be "
 				+ "reset (along with the green bubble filters)");
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
