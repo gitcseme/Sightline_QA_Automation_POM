@@ -36,7 +36,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocExplorer_Regression1 {
+public class DocExplorer_Phase1_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
