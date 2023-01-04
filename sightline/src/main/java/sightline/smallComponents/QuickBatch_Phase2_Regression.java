@@ -21,7 +21,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class QuickBatchAssignmentRegression2_1 {
+public class QuickBatch_Phase2_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

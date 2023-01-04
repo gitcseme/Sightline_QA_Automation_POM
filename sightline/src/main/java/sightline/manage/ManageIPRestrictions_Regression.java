@@ -1,4 +1,4 @@
-package sightline.smallComponents;
+package sightline.manage;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
