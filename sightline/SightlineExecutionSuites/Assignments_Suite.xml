@@ -13,14 +13,8 @@
 <class name= "sightline.assignments.Assignment_Regression2" />
 <class name= "sightline.assignments.Assignment_Regression3" />
 <class name= "sightline.assignments.ClientsPage_Regression" />
-<class name= "sightline.assignments.Assignments_Regression_2_1" />
-<class name= "sightline.assignments.Assignments_Regression_2_2" />
-<class name= "sightline.assignments.Assignments_Regression2_3" />
-<class name= "sightline.assignments.Assignments_Regression2_4" />
-<class name= "sightline.assignments.Assignments_Regression_2_5" />
-<class name= "sightline.assignments.Assignment_Regression22_23_24_25" />
-
-
+<class name= "sightline.assignments.Assignment_Phase2_Regression" />
+<class name= "sightline.assignments.Assignment_Regression_Consilio" />
 
 </classes>
 </test>

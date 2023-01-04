@@ -10,10 +10,8 @@
 <classes>
 <class name="testScriptsSmoke.Input" />
 <class name= "sightline.batchPrint.BatchPrint_Regression1" />
-<class name= "sightline.batchPrint.BatchPrintRegression" />
-<class name= "sightline.batchPrint.BatchPrintRegression2" />
-<class name= "sightline.batchPrint.BatchPrintRegression_25" />
-<class name= "sightline.batchPrint.BatchPrintRegression_20_21_22_24" />
+<class name= "sightline.batchPrint.BatchPrint_Phase2_Regression" />
+<class name= "sightline.batchPrint.BatchPrint_Phase2_Regression1" />
 
 
 
