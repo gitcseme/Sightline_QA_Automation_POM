@@ -40,7 +40,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression {
+public class BatchRedaction_Regression {
 	Driver driver;
 	LoginPage login;
 	SavedSearch saveSearch;
