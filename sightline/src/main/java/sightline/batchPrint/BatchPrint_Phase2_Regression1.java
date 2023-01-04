@@ -36,7 +36,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchPrint_Phase2_2Regression1 {
+public class BatchPrint_Phase2_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;

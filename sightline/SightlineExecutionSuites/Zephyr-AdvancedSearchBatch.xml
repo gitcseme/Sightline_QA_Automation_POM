@@ -10,22 +10,14 @@
 <classes>
 
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression1" />
-<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_6" />
-<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_7" />
-<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_8" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression2" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression3" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression4" />
-<class name= "sightline.advancedSearch.AdvancedSearch_Regression5_2" />
-<class name= "sightline.advancedSearch.AdvancedSearch_Regression5" />
-<class name= "sightline.advancedSearch.AdvancedSearchRegression1" />
-<class name= "sightline.advancedSearch.AdvancedSearchRegression2" />
-<class name= "sightline.advancedSearch.AdvancedSearchRegression" />
 <class name= "sightline.advancedSearch.ModifySearchInAdvancedSearch_Regression" />
-<class name= "sightline.advancedSearch.AdvancedSearch_21" />
-<class name= "sightline.advancedSearch.AdvancedSearchRegression_2_19" />
-<class name= "sightline.advancedSearch.AdvacncedSearch_Regression_2_8" />
-<class name= "sightline.advancedSearch.AdvanceSearchRegression20_21_22_23_24" />
+<class name= "sightline.advancedSearch.AdvacncedSearch_BulkTag_Regression" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Production_Regression" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Phase2_Regression1" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Phase2_Regression" />
 
 </classes>
 </test>
