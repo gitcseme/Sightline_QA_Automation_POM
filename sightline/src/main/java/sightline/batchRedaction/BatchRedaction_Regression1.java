@@ -46,7 +46,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression2 {
+public class BatchRedaction_Regression1 {
 
 	Driver driver;
 	LoginPage login;

@@ -30,7 +30,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression_20_21_22 {
+public class BatchRedaction_Phase2_Regression {
 
 	Driver driver;
 	LoginPage login;

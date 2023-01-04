@@ -35,7 +35,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CloningProject_Regression1 {
+public class CloningProject_Phase2_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -63,44 +63,42 @@ public class CloningProject_Regression1 {
 
 		Input in = new Input();
 		in.loadEnvConfig();
-		
-		//Initialization
+
+		// Initialization
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
 		data = new DataSets(driver);
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		savedsearch = new SavedSearch(driver);
 		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
-		securityName = "Security_Group"+ Utility.dynamicNameAppender();
+		securityName = "Security_Group" + Utility.dynamicNameAppender();
 		savedsearch.navigateToSSPage();
 		treeNodeCount = savedsearch.verifyTreeNodeCount();
-		if (treeNodeCount>4) {
+		if (treeNodeCount > 4) {
 			if (sessionSearch.getSavedSearchTreeNode().isElementAvailable(5)) {
 				savedSearchTreeNode = sessionSearch.getSavedSearchTreeNode().getText();
 				System.out.println(savedSearchTreeNode);
 				driver.waitForPageToBeReady();
 				sessionSearch.verifySavedSearchTermsForCloningProject(savedSearchTreeNode);
-			}else {
+			} else {
 				baseClass.failedStep("Count is miss match");
 			}
-		}
-		else if (treeNodeCount<4) {
-			
-		
+		} else if (treeNodeCount < 4) {
+
 			securityGroupsPage.navigateToSecurityGropusPageURL();
 			securityGroupsPage.AddSecurityGroup(securityName);
 			driver.waitForPageToBeReady();
-			
+
 			savedsearch.navigateToSSPage();
 			sessionSearch.validateSavedSearchNode();
 			sessionSearch.verifySavedSearchTermsForCloningProject(securityName);
-			
+
 		}
-		
+
 		baseClass.selectproject();
 		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
@@ -115,16 +113,15 @@ public class CloningProject_Regression1 {
 		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
 		sessionSearch.verifySavedSearchTermsForCloningProject(Input.shareSearchDefaultSG);
-		
-		
+
 		loginPage.logout();
-		
+
 		projectName = "DemoCloneProject" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-	
+
 		data.getNotificationMessage(0, projectName);
 
 		UserManagement users = new UserManagement(driver);
@@ -143,13 +140,15 @@ public class CloningProject_Regression1 {
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
 		data = new DataSets(driver);
-		
 
 	}
 
 	/**
 	 * @author Mohan.Venugopal Created on : 21/06/2022 Modified On:NA
-	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding 'Shared With Project Administrator' are copied from the source template project to the newly created Project.
+	 * @description: Verify that when User creates a new Domain Project Using
+	 *               template project then corresponding 'Shared With Project
+	 *               Administrator' are copied from the source template project to
+	 *               the newly created Project.
 	 * @throws AWTException
 	 */
 	@Test(description = "RPMXCON-54905", enabled = true, groups = { "regression" })
@@ -168,11 +167,12 @@ public class CloningProject_Regression1 {
 
 	}
 
-	
-
 	/**
 	 * @author Mohan.Venugopal Created on : 22/06/2022 Modified On:NA
-	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding 'My Saved Search' hierarchy copied from the source template project to the newly created Project.
+	 * @description: Verify that when User creates a new Domain Project Using
+	 *               template project then corresponding 'My Saved Search' hierarchy
+	 *               copied from the source template project to the newly created
+	 *               Project.
 	 * @throws AWTException
 	 */
 	@Test(description = "RPMXCON-54843", enabled = true, groups = { "regression" })
@@ -193,7 +193,10 @@ public class CloningProject_Regression1 {
 
 	/**
 	 * @author Mohan.Venugopal Created on : 22/06/2022 Modified On:NA
-	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding \"My Saved Search\" are copied from the source template project to the newly created Project.
+	 * @description: Verify that when User creates a new Domain Project Using
+	 *               template project then corresponding \"My Saved Search\" are
+	 *               copied from the source template project to the newly created
+	 *               Project.
 	 * @throws AWTException
 	 */
 	@Test(description = "RPMXCON-54836", enabled = true, groups = { "regression" })
@@ -211,8 +214,6 @@ public class CloningProject_Regression1 {
 		loginPage.logout();
 
 	}
-
-	
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:22/06/2022 RPMXCON-54838
@@ -255,15 +256,14 @@ public class CloningProject_Regression1 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
-		
-		if (treeNodeCount>4) {
+
+		if (treeNodeCount > 4) {
 			saveSearch.navigateToSSPage();
 			saveSearch.verifySavedSearchDetailsForCloningProject(savedSearchTreeNode);
-		}else if (treeNodeCount<4) {
+		} else if (treeNodeCount < 4) {
 			saveSearch.navigateToSSPage();
 			saveSearch.verifySavedSearchDetailsForCloningProject(securityName);
 		}
-		
 
 		loginPage.logout();
 
@@ -271,9 +271,10 @@ public class CloningProject_Regression1 {
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:23/06/2022 RPMXCON-54805
-	 * @throws InterruptedException 
-	 * @Description Verify that when User creates a new Domain Project Using template project then corresponding Export template are copied from the source 
-	 * template project to the newly created Project.
+	 * @throws InterruptedException
+	 * @Description Verify that when User creates a new Domain Project Using
+	 *              template project then corresponding Export template are copied
+	 *              from the source template project to the newly created Project.
 	 */
 	@Test(description = "RPMXCON-54805", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainProjectUsingProduction() throws InterruptedException {
@@ -287,7 +288,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		ProductionPage prodPage = new ProductionPage(driver);
 		prodPage.navigateToProductionPage();
-		
+
 		prodPage.selectingDefaultSecurityGroup();
 		prodPage.addANewProduction(productionname);
 		prodPage.fillingDATSection();
@@ -304,9 +305,11 @@ public class CloningProject_Regression1 {
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:23/06/2022 RPMXCON-54804
-	 * @throws InterruptedException 
-	 * @Description Verify that when User creates a new Domain Project Using template project then corresponding Productions template are copied from the source template project to
-	 * the newly created Project.
+	 * @throws InterruptedException
+	 * @Description Verify that when User creates a new Domain Project Using
+	 *              template project then corresponding Productions template are
+	 *              copied from the source template project to the newly created
+	 *              Project.
 	 */
 	@Test(description = "RPMXCON-54804", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainProjectUsingExportTemplate() throws InterruptedException {
@@ -316,12 +319,11 @@ public class CloningProject_Regression1 {
 				"Verify that when User creates a new Domain Project Using template project then corresponding Productions template are copied from the source template project to the newly created Project.");
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String TempName = "Clone1" + Utility.dynamicNameAppender();
-		
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		ProductionPage prodPage = new ProductionPage(driver);
 		prodPage.navigateToProductionPage();
-		
+
 		prodPage.selectingDefaultSecurityGroup();
 		prodPage.addANewProduction(productionname);
 		prodPage.fillingDATSection();
@@ -335,9 +337,7 @@ public class CloningProject_Regression1 {
 		loginPage.logout();
 
 	}
-	
-	
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

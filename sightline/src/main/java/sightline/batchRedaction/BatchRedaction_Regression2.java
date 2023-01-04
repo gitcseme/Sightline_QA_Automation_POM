@@ -50,7 +50,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression3 {
+public class BatchRedaction_Regression2 {
 
 	Driver driver;
 	LoginPage login;
