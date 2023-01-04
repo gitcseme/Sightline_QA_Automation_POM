@@ -78,7 +78,19 @@ public class DocListPage {
 	public Element getGetDocFIleTypeFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileType')]");
 	}
-
+	//Doclist Inline Filters
+	public Element getDocList_DocfiletypeFilter() {
+		return driver.FindElementByXPath("//input[@id='DocFileType']");
+	}
+	
+	public Element getDocList_DocId() {
+		return driver.FindElementByXPath("//input[@id='DocID']");
+	}
+	
+	public Element getDocList_NoDataFilterResult() {
+		return driver.FindElementByXPath("//td[contains(text(),'Your query returned no data')]");
+	}
+	 
 	public Element getEmailAuthNameFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]");
 	}
