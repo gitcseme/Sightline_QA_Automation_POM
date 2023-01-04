@@ -6,23 +6,28 @@ import java.text.ParseException;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
+import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class DocList_Consilio_2 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
-    DocExplorerPage docexp;
     DocListPage docList;
-	DocExplorerPage docExplorer = new DocExplorerPage(driver);
+	DocExplorerPage docExplorer;
+	SoftAssert softAssertion;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -30,9 +35,9 @@ public class DocList_Consilio_2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		/*
-		 * Input in = new Input(); in.loadEnvConfig();
-		 */
+		
+		 // Input in = new Input(); in.loadEnvConfig();
+		 
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -45,10 +50,11 @@ public class DocList_Consilio_2 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		docList = new DocListPage(driver);
-		docexp=new DocExplorerPage(driver);
+		docExplorer=new DocExplorerPage(driver);
+		softAssertion = new SoftAssert();
 	}
 	@Test(description = "RPMXCON-70311", enabled = true, groups = { "regression" })
-	public void verifyextinfieldwithnodata() throws Exception {
+	public void verifyInfieldWithNodata() throws Exception {
 
 		baseClass.stepInfo("RPMXCON-70311-Verify that when user enters a text in the field which doesnot have respective documents to filter it should show "
 				+ "\"Your query returned no data\" message with zero document.");
@@ -114,11 +120,86 @@ public class DocList_Consilio_2 {
 		docList.clearAllAppliedFilters();
 		
 		baseClass.passedStep("Cleared all applied filters");
-	   Assert.assertEquals(docList.getDocList_DocfiletypeFilter().getText(),"" );
+	    Assert.assertEquals(docList.getDocList_DocfiletypeFilter().getText(),"" );
 		baseClass.passedStep("Page got refreshed with no text values in it");
 
 		loginPage.logout();
 
-
 }
+	
+	@Test(description = "RPMXCON-70309", enabled = true, groups = { "regression" })
+	public void verifyInlineFilterAndFilterDocsBy() throws Exception {
+
+		baseClass.stepInfo("RPMXCON-70407-Verify 'Inline filter' and filter in 'Filter Documents By'  working as Expected)");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+	
+		baseClass.stepInfo("Select all docs from docexplorer and navigate to Doc List");
+		docExplorer.SelectingAllDocuments("Yes");
+		baseClass.stepInfo("Navigate to Doc list page from Doc Explorer");
+		docExplorer.docExpViewInDocList();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Enter Text under Docfile type");
+		docList.getDocList_DocfiletypeFilter().SendKeys("Doc");
+		
+		baseClass.stepInfo("Apply Filter in Doc filters by with Custodian Name P Allen");
+        docList.applyCustodianNameFilter("P Allen");
+		
+		docList.getApplyFilter().Click();
+		baseClass.passedStep("Filterapplied");
+		
+		softAssertion.assertEquals(docList.getDocList_DocfilenameFirstRowValue().getText(),"P Allen" );
+		softAssertion.assertEquals(docList.getDocList_DocfiletypeFirstRowValue().getText(),"Document" );
+		baseClass.passedStep("Docs returned matching with given filter");
+
+		loginPage.logout();
+	
+	}
+	
+	
+	@Test(description = "RPMXCON-70406", enabled = true, groups = { "regression" })
+	public void verifyMasterDateFilter() throws Exception {
+
+		baseClass.stepInfo("RPMXCON-70406-Verify field value text containing DateTime type is returning correct result as per filter)");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+	
+		baseClass.stepInfo("Select all docs from docexplorer and navigate to Doc List");
+		docExplorer.SelectingAllDocuments("Yes");
+		baseClass.stepInfo("Navigate to Doc list page from Doc Explorer");
+		docExplorer.docExpViewInDocList();
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Select Master Date Value from first row");
+		String date=docList.getDocList_MasterDateFilterValue().getText().substring(0, 10);
+		System.out.println(date);
+		baseClass.stepInfo("Giving Master Date value in field");
+		docList.getDocList_MasterDateFilter().SendKeys(date);
+		
+		docList.getApplyFilter().Click();
+		baseClass.passedStep("Filterapplied");
+		
+		softAssertion.assertEquals(docList.getDocList_MasterDateFilterValue().getText(),"2010/04/06 22:18:00");
+		baseClass.passedStep("Docs returned matching filter values");
+
+		loginPage.logout();
+	
+	}
+	@AfterMethod(alwaysRun = true)
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
+	}
+	
 }
