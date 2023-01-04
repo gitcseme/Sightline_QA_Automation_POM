@@ -29,7 +29,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ScheduleRegression_27 {
+public class Scheduling_Phase2_Regression {
 
 	Driver driver;
 	LoginPage loginPage;

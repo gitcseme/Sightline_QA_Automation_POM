@@ -41,7 +41,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class UsersAndRoleManagement_Regression23 {
+public class UsersAndRoleManagement_Phase2_Regression2 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
