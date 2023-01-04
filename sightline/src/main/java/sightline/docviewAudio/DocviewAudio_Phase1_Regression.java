@@ -53,7 +53,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class DocviewAudio_Regression {
+public class DocviewAudio_Phase1_Regression {
 
 	Driver driver;
 	LoginPage loginPage;
