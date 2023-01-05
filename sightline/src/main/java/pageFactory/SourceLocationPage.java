@@ -110,7 +110,7 @@ public class SourceLocationPage {
         return driver.FindElementByXPath("//input[@id='btnOpenSightlineCollect']");
     }
 	public Element getOpenSightlineConnectToONNAHeaderText() {
-        return driver.FindElementByXPath("//[@id='content']/div[2]/div/div[3]/h1");
+        return driver.FindElementByXPath("//div[@id='content']/div[2]/div/div[3]/h1");
     }
 	
 	
@@ -356,6 +356,7 @@ public class SourceLocationPage {
     		if(base.ValidateElement_PresenceReturn(getOpenSightlineConnectToONNAHeaderText())) {
     			String text=getOpenSightlineConnectToONNAHeaderText().getText();
     			text.trim();
+    			System.out.println("text :-"+text);
     			Assert.assertEquals("Sightline Collect (Powered by Onna©)",text);
     			base.passedStep("Sightline Collect (Powered by Onna©) text is displayed");	
     		}
@@ -445,6 +446,9 @@ public class SourceLocationPage {
         	}
         	base.verifyPageNavigation(ONNAURL);
         	base.passedStep("Onna Is Still logged in");
+        	driver.close();
+        	base.switchTab(0);
+        	base.waitTime(5);
         	}catch(Exception e) {
         			e.printStackTrace();
         	}
