@@ -97,7 +97,7 @@ public class BaseClass {
 	}
 
 	public Element getSelectRole() {
-		return driver.FindElementByXPath("//select[@name='Role']");
+		return driver.FindElementByXPath("//label[contains(text(),'Impersonate To: ')]//following::select[@name='Role']");
 	}
 
 	public Element getSelectDomain() {
