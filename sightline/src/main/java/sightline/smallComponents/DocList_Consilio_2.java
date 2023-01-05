@@ -158,6 +158,42 @@ public class DocList_Consilio_2 {
 
 	}
 	
+	@Test(description = "RPMXCON-70370", enabled = true, groups = { "regression" })
+	public void verifyInlineFilterWithAlpha() throws Exception {
+
+		baseClass.stepInfo(
+				"RPMXCON-70370-Verify field value text containing alpha is returning correct result as per filter");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Select all docs from docexplorer and navigate to Doc List");
+		docExplorer.SelectingAllDocuments("Yes");
+		baseClass.stepInfo("Navigate to Doc list page from Doc Explorer");
+		docExplorer.docExpViewInDocList();
+		
+		driver.waitForPageToBeReady();
+		
+
+		baseClass.stepInfo("Apply Filter in Doc filters by with Custodian Name P Allen");
+		docList.getDocList_MasterDateFilter().SendKeys("Allen");
+
+		docList.getApplyFilter().Click();
+		baseClass.passedStep("Filterapplied");
+
+		
+         driver.waitForPageToBeReady();
+
+
+		Assert.assertEquals(docList.getDocList_CustodianFirstRowValue().getText(),"P Allen");
+		
+		
+		baseClass.passedStep("Docs returned matching with given filter");
+
+		loginPage.logout();
+
+	}
+	
 
 	@Test(description = "RPMXCON-70406", enabled = true, groups = { "regression" })
 	public void verifyMasterDateFilter() throws Exception {

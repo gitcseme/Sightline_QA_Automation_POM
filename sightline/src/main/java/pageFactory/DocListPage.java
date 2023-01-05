@@ -87,6 +87,10 @@ public class DocListPage {
 		return driver.FindElementByXPath("//input[@id='MasterDate']");
 	}
 	
+	public Element getDocList_CustodianName() {
+		return driver.FindElementByXPath("//input[@id='CustodianName']");
+	}
+	
 	public Element getDocList_DocId() {
 		return driver.FindElementByXPath("//input[@id='DocID']");
 	}
