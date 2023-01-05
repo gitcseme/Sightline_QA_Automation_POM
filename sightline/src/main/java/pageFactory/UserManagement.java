@@ -4276,7 +4276,7 @@ public class UserManagement {
 	 * @throws InterruptedException 
 	 * @Desctiption Assign user to that project
 	 */
-	public void AssignUserToProject(String projectName, String role, String unAssigedUserName) throws InterruptedException {
+	public void AssignUserToProject(String projectName, String role, String unAssigedUserName) {
 
 		openAssignUser();
 		goToProjectTabInAssignUser();
@@ -4288,14 +4288,15 @@ public class UserManagement {
 		}
 
 		bc.waitForElement(getUnAssignedDomainUser());
-	
+		bc.waitTime(5);
+		
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		bc.waitForElement(getDomainUserRightArrow());
 
 		getDomainUserRightArrow().waitAndClick(10);
 		
 		driver.Manage().window().fullscreen();
-		getsavedomainuser().Click();
+		getsavedomainuser().waitAndClick(10);
 		
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
