@@ -14652,6 +14652,49 @@ public class SessionSearch {
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
+// Function to perform bulk tag with existing tag with out save 
+			public void bulkTagExistingWithOutSave(final String tagName) throws InterruptedException {
+
+				if (getRemovePureHit().isElementAvailable(3)) {
+					System.out.println("Pure hit block already moved to action panel");
+					UtilityLog.info("Pure hit block already moved to action panel");
+				} else if (getPureHitAddButton().isElementAvailable(2)) {
+					getPureHitAddButton().waitAndClick(10);
+				}
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getBulkActionButton());
+				getBulkActionButton().waitAndClick(10);
+
+				base.waitForElement(getBulkTagAction());
+				getBulkTagAction().waitAndClick(10);
+
+				base.waitForElement(getSelectTagExisting(tagName));
+				driver.waitForPageToBeReady();
+				getSelectTagExisting(tagName).waitAndClick(5);
+
+				driver.Manage().window().fullscreen();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+					}
+				}), Input.wait60);
+				getContinueButton().waitAndClick(10);
+
+				driver.Manage().window().maximize();
+
+				final BaseClass bc = new BaseClass(driver);
+				final int Bgcount = bc.initialBgCount();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+					}
+				}), Input.wait60);
+				getFinalizeButton().Click();
+
+	}
 
 	
 }
