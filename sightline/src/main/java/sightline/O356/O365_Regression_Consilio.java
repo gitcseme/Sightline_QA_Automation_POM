@@ -561,59 +561,7 @@ public class O365_Regression_Consilio {
         }
        
 	}
-	@Test(description = "RPMXCON-70378",enabled = true, groups = { "regression" })
-    public void verifySCpbOToggleONExistingProjectbyPAUserImpersonatedToRMU() throws Exception {
-        base.stepInfo("Verify when (SCpbO) toggle is OFF for newly created project, \"Open Sightline Collect\" button should not be displayed under a new section in source location page  for PA user when impersonated as RMU role");
-        base.stepInfo("Test case Id:RPMXCON-70378");
-        boolean SCpbOToggle=false;
-        boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
-        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
-        String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
-        login.loginToSightLine(Input.sa1userName, Input.sa1password);
-        base.stepInfo("logged In  as SA user");
-        ProjectPage project=new ProjectPage(driver);
-        project.navigateToProductionPage();
-        project.AddDomainProject(ProjectName, Input.domainName);
-        UserManagement user=new UserManagement(driver);
-        user.navigateToUsersPAge();
-        user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa1FullName);
-        project.DisableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
-        login.logout();
-        base.stepInfo("logged Out  as SA user");
-
-
-        // Login and Pre-requesties
-        login.loginToSightLine(Input.pa1userName, Input.pa1password);
-        base.stepInfo(" logged In as PA user");
-        base.stepInfo("User Role : Project Administrator");
-        
-        base.impersonatePAtoRMU(ProjectName);
-        base.stepInfo("Impersonated as Review Manager user");
-        base.stepInfo("User Role : Review Manager");
-        base.stepInfo("Navigated to Manage Users page for User Role Review Manager");
-        userManagement.verifyCollectionAccess(userRolesDataRMU, Input.sa1userName, Input.sa1password, Input.rmu1password);
-        // navigate to source location page
-        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
-        source.verifySightlineConnectONNAbutton(SCpbOToggle);
-        base.stepInfo("Onna button is Disabled when toggle is OFF for the project");
-        source.verifySightlineConnectONNAText(SCpbOToggle);
-        base.stepInfo("Onna Text is not Displayed when toggle is OFF for the project");
-        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
-        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
-       
-        if(toggleIsDisabled) {
-     
-            login.loginToSightLine(Input.sa1userName, Input.sa1password);
-            base.stepInfo("logged out and logged In as SA user");
-        	base.stepInfo("Toggle was Disabled as part of this TC");
-        	project.navigateToProductionPage();
-        	project.EnableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
-        	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
-        	
-        }
-       
-	}
+	
 	@Test(description = "RPMXCON-70377",enabled = true, groups = { "regression" })
     public void verifySCpbOToggleOFFNewlyCreatedProjectbySAUserImpersonatedToPA_RMU() throws Exception {
         base.stepInfo("Verify when (SCpbO) toggle is OFF for newly created project, \"Open Sightline Collect\" button should not be displayed under a new section in source location page  for SA user when impersonated as PA/RMU rolee");
@@ -632,7 +580,7 @@ public class O365_Regression_Consilio {
         UserManagement user=new UserManagement(driver);
         user.navigateToUsersPAge();
         user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa1FullName);
-        toggleIsDisabled=project.DisableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
+        toggleIsDisabled=project.DisableSightlineOnnaToggle(ProjectName,toggleIsDisabled);
      
 
 
@@ -681,6 +629,122 @@ public class O365_Regression_Consilio {
         	project.navigateToProductionPage();
         	project.EnableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
         	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
+        	
+        }
+       
+	}
+	@Test(description = "RPMXCON-70382",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleONExistingProjectbyPAUserImpersonatedToRMU() throws Exception {
+        base.stepInfo("Verify when  (SCpbO) toggle is ON for existing project, \"Open Sightline Collect\" button should be displayed under a new section in source location page  for PA user when impersonated as RMU role");
+        base.stepInfo("Test case Id:RPMXCON-70382");
+        boolean SCpbOToggle=true;
+        boolean toggleIsEnabled=false;
+        String directUrl=Input.OnnaDirectUrl;
+        String OnnaUrl=Input.OnnaUrl;
+        String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("logged In  as SA user");
+        ProjectPage project=new ProjectPage(driver);
+        toggleIsEnabled=project.EnableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+        login.logout();
+        base.stepInfo("logged Out  as SA user");
+        
+
+
+        // Login and Pre-requesties
+        login.loginToSightLine(Input.pa1userName, Input.pa1password);
+        base.stepInfo(" logged In as PA user");
+        base.stepInfo("User Role : Project Administrator");
+        
+        base.impersonatePAtoRMU(Input.projectName);
+        base.stepInfo("Impersonated as Review Manager user");
+        base.stepInfo("User Role : Review Manager");
+        base.stepInfo("Navigated to Manage Users page for User Role Review Manager");
+        userManagement.verifyCollectionAccess(userRolesDataRMU, Input.sa1userName, Input.sa1password, Input.rmu1password);
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is not Enplayed when toggle is ON for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+        if(toggleIsEnabled) {
+        	
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was enabled as part of this TC");
+        	project.navigateToProductionPage();
+        	project.DisableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+        	base.stepInfo("Toggle is now made Disabled for the project "+Input.projectName);
+        	
+        }
+
+       
+	}
+	@Test(description = "RPMXCON-70381",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleONExistingProjectbySAUserImpersonatedToPA_RMU() throws Exception {
+        base.stepInfo("Verify when (SCpbO) toggle is ON for existing project, \"Open Sightline Collect\" button should be displayed under a new section in source location page  when clicked should navigate to ONNA page for SA user when impersonated as PA/RMU role");
+        base.stepInfo("Test case Id:RPMXCON-70381");
+        boolean SCpbOToggle=true;
+        boolean toggleIsEnabled=false;
+        String directUrl=Input.OnnaDirectUrl;
+        String OnnaUrl=Input.OnnaUrl;
+        String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
+        String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("logged In  as SA user");
+        ProjectPage p=new ProjectPage(driver);
+        toggleIsEnabled=p.EnableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+     
+
+
+        // Login and Pre-requesties
+        base.impersonateSAtoPA(Input.projectName);
+        base.stepInfo("Impersonated as PA user");
+        base.stepInfo("User Role : Project Administrator");
+        base.stepInfo("Navigated to Manage Users page for User Role Project Administrator");
+        
+        userManagement.verifyCollectionAccess(userRolesDataPA, Input.sa1userName, Input.sa1password, Input.pa1password);
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is Displayed when toggle is ON for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+        
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("logged Out and logged In  as SA user");
+        base.impersonateSAtoRMU();
+        base.stepInfo("Impersonated as Review Manager user");
+        base.stepInfo("User Role : Review Manager");
+        base.stepInfo("Navigated to Manage Users page for User Role Review Manager");
+        userManagement.verifyCollectionAccess(userRolesDataRMU, Input.sa1userName, Input.sa1password, Input.rmu1password);
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is Displayed when toggle is ON for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+       
+        if(toggleIsEnabled) {
+        	
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was Enabled as part of this TC");
+        	p.navigateToProductionPage();
+        	p.EnableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+        	base.stepInfo("Toggle is now made Disabled for the project "+Input.projectName);
         	
         }
        
