@@ -99,8 +99,8 @@ public class DocListPage {
 		return driver.FindElementByXPath("//input[@id='DocFileName']");
 	}
 	
-	public Element getDocList_DocfilenameFirstRowValue() {
-		return driver.FindElementByXPath("//td[contains(text(),'P Allen')]");
+	public Element getDocList_CustodianFirstRowValue() {
+		return driver.FindElementByXPath("(//td[contains(text(),'P Allen')])[1]");
 	
 	}
 	public Element getDocList_DocfiletypeFirstRowValue(){
