@@ -176,7 +176,7 @@ public class DocList_Consilio_2 {
 		
 
 		baseClass.stepInfo("Apply Filter in Doc filters by with Custodian Name P Allen");
-		docList.getDocList_MasterDateFilter().SendKeys("Allen");
+		docList.getDocList_CustodianName().SendKeys("Allen");
 
 		docList.getApplyFilter().Click();
 		baseClass.passedStep("Filterapplied");
