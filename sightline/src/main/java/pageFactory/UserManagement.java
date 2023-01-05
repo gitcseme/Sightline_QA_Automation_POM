@@ -4288,17 +4288,16 @@ public class UserManagement {
 		}
 
 		bc.waitForElement(getUnAssignedDomainUser());
-		bc.waitTime(5);
+	
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		bc.waitForElement(getDomainUserRightArrow());
 
 		getDomainUserRightArrow().waitAndClick(10);
-		bc.waitTime(5);
+		
 		driver.Manage().window().fullscreen();
 		getsavedomainuser().Click();
-//		bc.waitTime(2);
-//		bc.VerifySuccessMessage("User Mapping Successful");
-		Thread.sleep(4000);
+		
+		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
