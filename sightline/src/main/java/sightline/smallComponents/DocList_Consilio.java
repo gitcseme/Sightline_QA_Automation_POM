@@ -78,7 +78,7 @@ public class DocList_Consilio {
 		savedSearch = new SavedSearch(driver);
 	}
 
-	@Test(description = "RPMXCON-70306", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70306", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterfieldsInDocList(String username, String password, String role) throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String searchnameA = Input.randomText + Utility.dynamicNameAppender();
@@ -126,7 +126,7 @@ public class DocList_Consilio {
 		loginPage.logout();
 	}
 	
-	@Test(description = "RPMXCON-70307", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70307", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyApplyFilterInDocList(String username, String password, String role) throws InterruptedException {
         String custodianexp= Input.custodianName_Andrew;
 		baseClass.stepInfo("Test case Id: RPMXCON-70307: Verify that to apply the filters, user can either hit the ‘Apply Filter’ button or hit the ‘enter’ key on the keyboard. ");
@@ -159,7 +159,7 @@ public class DocList_Consilio {
 		loginPage.logout();
 	}
 	
-	@Test(description = "RPMXCON-70310", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70310", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyApplyFilterWithTWoFieldsInDocList(String username, String password, String role) throws InterruptedException {
 	        String custodianexp= Input.metaDataCN;
 	        String fileType= "Text File";
@@ -199,7 +199,80 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 	
-	
+		//@Test(description = "RPMXCON-70308", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyAfterApplyFilterInDocListandClearField(String username, String password, String role) throws InterruptedException {
+	        String custodianexp= Input.custodianName_Andrew;
+			baseClass.stepInfo("Test case Id: RPMXCON-70308: Verify that When user deletes text from field and hits apply/enter, the DocList grid should refresh and load the default view of the page/List");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			baseClass.stepInfo("Navigated to DocList page");
+			driver.waitForPageToBeReady();
+			docList.custodianFilter(Input.custodianName_Andrew);
+			docList.getApplyFilter().waitAndClick(3);
+			String custodianactual = docList.AfterFilterverifyCustodianName(Input.custodianName_Andrew);
+			softAssertion.assertEquals(custodianexp,custodianactual);
+			System.out.println(custodianactual);
+			baseClass.passedStep("Filter is performed with Custodian Name : "+custodianexp);
+			baseClass.passedStep("Filter is applied and Verified");
+			softAssertion.assertAll();
+			
+			driver.waitForPageToBeReady();
+			docList.CustodianNameFilterFileds().Clear();
+			docList.getApplyFilter().waitAndClick(3);
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.getDocListDefaultTable().isDisplayed(),true);
+			baseClass.passedStep("Removed applied text from the filter fields and Verified the Default view of the page/List");
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+		
+		@Test(description = "RPMXCON-70335", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyCJKFilterInDocList(String username, String password, String role) throws InterruptedException {
+	        String custodianexp= "新华社记者吴晶";
+			baseClass.stepInfo("Test case Id: RPMXCON-70335: Verify that filter is working with the CJK text in DocList page.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			baseClass.selectprojectCjk();
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			baseClass.stepInfo("Navigated to DocList page");
+			driver.waitForPageToBeReady();
+			docList.custodianFilter(custodianexp);
+			docList.getApplyFilter().waitAndClick(3);
+			String custodianactual = docList.AfterFilterverifyCustodianName(custodianexp);
+			softAssertion.assertEquals(custodianexp,custodianactual);
+			System.out.println(custodianactual);
+			baseClass.passedStep("Filter is performed with Custodian Name : "+custodianexp);
+			baseClass.passedStep("Filter is applied and Verified");
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },

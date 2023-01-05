@@ -129,6 +129,10 @@ public class BaseClass {
 	public Element getSelectProject() {
 		return driver.FindElementByXPath("//a[@title='" + Input.projectName + "']");
 	}
+	
+	public Element getSelectProjectCjk() {
+		return driver.FindElementByXPath("//a[@title='" + Input.projectNameCjk + "']");
+	}
 
 	public Element getPopupYesBtn() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
@@ -577,6 +581,23 @@ public class BaseClass {
 		driver.waitForPageToBeReady();
 		UtilityLog.info("Project is successfully selected");
 
+	}
+	
+	public void selectprojectCjk() {
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectNames().Visible();
+			}
+		}), Input.wait3);
+
+		// closepopupMsg();
+		// Select project if required one is not seletced
+		driver.scrollPageToTop();
+		getProjectNames().waitAndClick(3);
+
+	 	getSelectProjectCjk().waitAndClick(3);
+		driver.waitForPageToBeReady();
 	}
 
 	/**
