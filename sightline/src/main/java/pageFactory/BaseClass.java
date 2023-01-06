@@ -405,6 +405,46 @@ public class BaseClass {
 		}
 
 	}
+	public void impersonatePAtoRMU(String ProjectName) throws InterruptedException {
+		waitForElement(getSignoutMenu());
+		waitTillElemetToBeClickable(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait60);
+		getChangeRole().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		Thread.sleep(3000);
+		getAvlProject().selectFromDropdown().selectByVisibleText(ProjectName);
+		Thread.sleep(3000);
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+		getSaveChangeRole().waitAndClick(10);
+		this.stepInfo("Impersnated from PA to RMU");
+		UtilityLog.info("Impersnated from PA to RMU");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
+	}
 
 //  Modified by baskar
 	public void impersonateRMUtoReviewer() throws InterruptedException {
