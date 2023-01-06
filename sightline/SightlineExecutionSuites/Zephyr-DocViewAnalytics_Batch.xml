@@ -9,15 +9,15 @@
 <test name="Sightline_Jenkins-DocviewAnalyticsPanel">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_DataProvider" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NearDupes" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression01" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression02" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression03" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_Regression" />
-<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanelEmailThreadMap" />
-<class name= "sightline.docviewAnalyticsPanel.DocViewAnalytics_Regression1_23" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_EmailThreadMap_Regression" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_NearDupes_Regression" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Phase2_Regression" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression1" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression2" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression3" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression4" />
+<class name= "sightline.docviewAnalyticsPanel.DocViewAnalyticsPanel_Regression5" />
 
 </classes>
 </test>

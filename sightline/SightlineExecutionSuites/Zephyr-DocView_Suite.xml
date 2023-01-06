@@ -11,18 +11,16 @@
 <classes>
 <class name="testScriptsSmoke.Input"></class>
 <class name="sightline.docview.DocView_ProductionFlow_Regression"></class>
-<class name="sightline.docview.DocView_Regression_21"></class>
-<class name="sightline.docview.DocView_Regression1_23"></class>
 <class name="sightline.docview.DocView_Regression1"></class>
 <class name="sightline.docview.DocView_Regression2"></class>
-<class name="sightline.docview.DocView_Regression3_2"></class>
 <class name="sightline.docview.DocView_Regression3"></class>
 <class name="sightline.docview.DocView_Regression4"></class>
 <class name="sightline.docview.DocView_Regression5"></class>
 <class name="sightline.docview.DocView_Regression6"></class>
-<class name="sightline.docview.DocView_Regression8"></class>
-<class name="sightline.docview.DocView_Sprint2_Regression"></class>
-<class name="sightline.docview.DocviewAnnotation"></class>	
+<class name="sightline.docview.DocView_Regression7"></class>
+<class name="sightline.docview.DocView_Regression9"></class>
+<class name="sightline.docview.DocView_Phase2_Regression"></class>
+<class name="sightline.docview.Docview_Annotation_Regression"></class>	
 
 </classes>
 </test>

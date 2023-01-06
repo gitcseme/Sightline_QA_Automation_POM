@@ -8,32 +8,26 @@
 <!-- *******************************************Projects Component********************************** -->
 <test name="Sightline.SmallComponents">
 <classes>
- <class name="testScriptsSmoke.Input" />
-<class name= "sightline.projects.ProjectField_Regression" />
-<class name= "sightline.projects.ProjectField_Regression22" />
-<class name= "sightline.projects.ProjectFields_IndiumRegression2" />
-<class name= "sightline.projects.Projects_Regression" />
-<class name= "sightline.projects.Projects_Regression23" />
-<class name= "sightline.projects.Projects_Regresssion" />
-<class name= "sightline.batchPrint.BatchPrint_Regression1" />
-<class name= "sightline.batchPrint.BatchPrintRegression" />
-<class name= "sightline.batchPrint.BatchPrintRegression2" />
-<class name= "sightline.batchPrint.BatchPrintRegression_20_21_22" />
-<class name= "sightline.cloningProject.CloningProject_Regression01_Sprint19" />
-<class name= "sightline.cloningProject.CloningProject_Regression01" />
-<class name= "sightline.cloningProject.CloningProject_Regression1" />
-<class name= "sightline.cloningProject.CloningProject_Regression2" />
-<class name= "sightline.cloningProject.CloningProject_Regression3_2" />
-<class name= "sightline.cloningProject.CloningProject_Regression3" />
-<class name= "sightline.proview.Proview_Regression" />
-<class name= "sightline.proview.ProviewRegression_20" />
-<class name= "sightline.bulkActions.BulkAction_IndiumRegressionPhase2" />
-<class name= "sightline.bulkActions.BulkAction_IndiumRegression2" />
-<class name= "sightline.bulkActions.BulkActions_Regression" />
-<class name= "sightline.bulkActions.BulkActions_sprint21_22_23" />
-<class name="sightline.smallComponents.QuickBatchAssignmentRegression2_1"/>
-<class name="sightline.smallComponents.ManageIPRestrictions_Regression"/>
-<class name="sightline.iceComponent.ICE_SL_Regression_1"/>
+<class name="testScriptsSmoke.Input" />
+<class name="sightline.smallComponents.DashBoard_Phase2_Regression"/>
+<class name="sightline.smallComponents.DocExplorer_Phase1_Regression"/>
+<class name="sightline.smallComponents.DocExplorer_Phase2_Regression"/>
+<class name="sightline.smallComponents.DocList_Consilio_2"/>
+<class name="sightline.smallComponents.DocList_Consilio"/>
+<class name="sightline.smallComponents.DocList_Regression_Consilio"/>
+<class name="sightline.smallComponents.Notification_Phase2_Regression"/>
+<class name="sightline.smallComponents.Notification_Phase2_Regression1"/>
+<class name="sightline.smallComponents.QuickBatch_Phase2_Regression"/>
+<class name="sightline.smallComponents.RedactionTags_Phase2_Regression"/>
+<class name="sightline.smallComponents.ReportEngine_Phase2_Regression"/>
+<class name="sightline.smallComponents.Scheduling_Phase2_Regression"/>
+<class name="sightline.smallComponents.SystemLevelTemplate_Phase2_Regression"/>
+<class name="sightline.smallComponents.UserAndRoleManagement_Phase2_Regression"/>
+<class name="sightline.smallComponents.UserAndRoleManagement_Phase2_Regression1"/>
+<class name="sightline.smallComponents.UsersAndRoleManagement_Phase2_Regression2"/>
+<class name="sightline.smallComponents.UsersAndRoleManagement_Regression"/>
+<class name="sightline.smallComponents.WorkflowAutomation_Phase2_Regression"/>
+<class name="sightline.smallComponents.WorkFlowAutomation_Regression"/>
 
 </classes>
 </test>

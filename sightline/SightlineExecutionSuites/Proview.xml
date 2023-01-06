@@ -10,9 +10,7 @@
 <classes>
  <class name="testScriptsSmoke.Input" />
 <class name= "sightline.proview.Proview_Regression" />
-<class name= "sightline.proview.Proview_Regression26" />
-<class name= "sightline.proview.ProviewRegression_20" />
-<class name= "sightline.proview.ProviewRegression_24_25_26" />
+<class name= "sightline.proview.Proview_Phase2_Regression" />
 
 </classes>
 </test>
