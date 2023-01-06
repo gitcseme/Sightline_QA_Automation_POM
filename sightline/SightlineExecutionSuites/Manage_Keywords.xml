@@ -10,14 +10,10 @@
 	<test name="Sightline.Manage">
 		<classes>
 		    <class name="testScriptsSmoke.Input" />
-			<class name ="sightline.manage.ManageCommects_Regression" />
 			<class name ="sightline.manage.ManageComments_Regression_Consilio" />
-			<class name ="sightline.manage.ManageComments_Regression1" />
-			<class name ="sightline.manage.ManageComments_Regression2" />
-			<class name ="sightline.manage.ManageComments_Regression4" />
+			<class name ="sightline.manage.ManageComments_Regression" />
+			<class name ="sightline.manage.ManageIPRestrictions_Regression" />
 			<class name ="sightline.manage.ManageKeywords_Regression" />
-			<class name ="sightline.manage.ManageKeywords_Regression1" />
-			<class name ="sightline.manage.ManageKeywords_Regression2" />
 		</classes>
 	</test>
 </suite>
