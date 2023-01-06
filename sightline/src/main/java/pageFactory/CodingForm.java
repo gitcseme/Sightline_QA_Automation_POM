@@ -326,6 +326,7 @@ public class CodingForm {
 	public Element getRootClick() {
 		return driver.FindElementByXPath("//li[@id='0']");
 	}
+
 	public Element getRootClickDownarrow() {
 		return driver.FindElementByXPath("//li[@id='0']//following-sibling::i[2]");
 	}
@@ -421,14 +422,15 @@ public class CodingForm {
 	public Element getInstructionText() {
 		return driver.FindElementByXPath("//input[@id='HelpText_1']");
 	}
+
 	public Element getInstructionText0() {
 		return driver.FindElementByXPath("//input[@id='HelpText_0']");
 	}
 
-
 	public Element getErrorMessage() {
 		return driver.FindElementByXPath("//input[@id='ErrorMessage_1']");
 	}
+
 	public Element getErrorMessage0() {
 		return driver.FindElementByXPath("//input[@id='ErrorMessage_0']");
 	}
@@ -1069,7 +1071,8 @@ public class CodingForm {
 	}
 
 	public Element getCFmetadataTextBox(String objectName) {
-		return driver.FindElementByXPath("//div[@id='item0']//span[text()='"+objectName+"']/../../..//following-sibling::span//input[@name='FIELD']");
+		return driver.FindElementByXPath("//div[@id='item0']//span[text()='" + objectName
+				+ "']/../../..//following-sibling::span//input[@name='FIELD']");
 	}
 
 	public Element getCF_objectName(int i) {
@@ -1146,8 +1149,7 @@ public class CodingForm {
 	}
 
 	public Element getCFPreviewPopUpOkBtn() {
-		return driver.FindElementByXPath(
-				"//input[@id='previewForm']/..//following-sibling::div//button[@id='btnYes']");
+		return driver.FindElementByXPath("//input[@id='previewForm']/..//following-sibling::div//button[@id='btnYes']");
 	}
 
 	public Element getCFMetaFirstText() {
@@ -1736,7 +1738,7 @@ public class CodingForm {
 	public Element sortOrderNxtDisableBtn() {
 		return driver.FindElementByXPath("//*[@id='btnSortOrderNext'][@disabled='disabled']");
 	}
-	
+
 	public Element ValidationErrormsg() {
 		return driver.FindElementByXPath("//*[@id='bigBox3']");
 	}
@@ -1746,56 +1748,59 @@ public class CodingForm {
 	}
 
 	public Element getCodingForm_BackButton() {
-        return driver.FindElementById("btnCodingFormBack");
-    }
-    public Element checkCodingFormIsSelected(String Cfname) {
-        return driver.FindElementByXPath("//input[@value='" + Cfname + "']");
-    }
-    public Element checkCodingFormRadioBtnIsSelected(String Cfname) {
-        return driver.FindElementByXPath("//input[@value='" + Cfname + "']/../../following-sibling::td//input");
-    }
-    public Element getCodingForm_Name(int i) {
-        return driver.FindElementByXPath("(//table[@id='CodingFormDataTable']//tr//td)[" + i + "]");
-    }
-    public Element getCodingForm_SgName(int i) {
-        return driver.FindElementByXPath("(//table[@id='dtCodingFormList']//tr//td)[" + i + "]");
-    }
-    public Element getCodingForm_SgNameCheckBox(String name) {
-        return driver.FindElementByXPath(
-                "//table[@id='dtCodingFormList']//input[@value='" + name + "']/following-sibling::i");
-    }
+		return driver.FindElementById("btnCodingFormBack");
+	}
 
-    public Element getCodingFormOrder() {
-        return driver.FindElementByXPath("//*[@id='ui-id-1']");
-    }
+	public Element checkCodingFormIsSelected(String Cfname) {
+		return driver.FindElementByXPath("//input[@value='" + Cfname + "']");
+	}
 
- 
+	public Element checkCodingFormRadioBtnIsSelected(String Cfname) {
+		return driver.FindElementByXPath("//input[@value='" + Cfname + "']/../../following-sibling::td//input");
+	}
 
-    public Element getCodingFormOrderXIcon() {
-        return driver.FindElementByXPath("//button[@type='button'][@class='ui-dialog-titlebar-close']");
-    }
+	public Element getCodingForm_Name(int i) {
+		return driver.FindElementByXPath("(//table[@id='CodingFormDataTable']//tr//td)[" + i + "]");
+	}
 
-	
+	public Element getCodingForm_SgName(int i) {
+		return driver.FindElementByXPath("(//table[@id='dtCodingFormList']//tr//td)[" + i + "]");
+	}
+
+	public Element getCodingForm_SgNameCheckBox(String name) {
+		return driver.FindElementByXPath(
+				"//table[@id='dtCodingFormList']//input[@value='" + name + "']/following-sibling::i");
+	}
+
+	public Element getCodingFormOrder() {
+		return driver.FindElementByXPath("//*[@id='ui-id-1']");
+	}
+
+	public Element getCodingFormOrderXIcon() {
+		return driver.FindElementByXPath("//button[@type='button'][@class='ui-dialog-titlebar-close']");
+	}
+
 	public Element getCodingFormNote() {
 		return driver.FindElementByXPath("//div[@id='codingFormMsg']//label");
 	}
+
 	public ElementCollection getColumnsPresentInAddCfPopup() {
 		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//th");
 	}
-	public Element getCFNameOrSetDefaultColumnSelectionType(int row,int col) {
-		return driver.FindElementByXPath("//tbody[@id='tbodyCodingForm']//tr['"+row+"']//td["+col+"]//label");
+
+	public Element getCFNameOrSetDefaultColumnSelectionType(int row, int col) {
+		return driver.FindElementByXPath("//tbody[@id='tbodyCodingForm']//tr['" + row + "']//td[" + col + "]//label");
 	}
 
-
-	public void CFnameErrormsg(String errormsg)throws InterruptedException {
+	public void CFnameErrormsg(String errormsg) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return FromnameErrormsg().Visible();
 			}
 		}), Input.wait30);
-		String errorMsg=FromnameErrormsg().getText();
-		System.out.println("errorMsg"+errorMsg);
-		  Assert.assertEquals(errorMsg,errormsg);
+		String errorMsg = FromnameErrormsg().getText();
+		System.out.println("errorMsg" + errorMsg);
+		Assert.assertEquals(errorMsg, errormsg);
 	}
 
 	public CodingForm(Driver driver) {
@@ -3420,9 +3425,13 @@ public class CodingForm {
 				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
 				base.waitForElement(getManageCodingFormButton());
 				if (getManageCodingFormButton().Displayed()) {
-					base.waitForElement(getCodingForm_Search());
+					driver.waitForPageToBeReady();
+					base.waitTillElemetToBeClickable(getCodingForm_Search());
 					getCodingForm_Search().SendKeys(cfName);
+					base.waitTime(5);
+					base.waitForElement(getSFFormCol(cfName));
 					System.out.println(getSFFormCol(cfName).getText());
+					base.waitTime(5);
 					softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
 					softAssertion.assertAll();
 					base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
@@ -3874,11 +3883,11 @@ public class CodingForm {
 			}
 		}
 	}
-	
+
 	public void select_CheckGroup(String checkgrouplabel, String instructionText, String ErrorMsg) {
 		driver.waitForPageToBeReady();
-		
-		if(getRootClick().isElementAvailable(1)){
+
+		if (getRootClick().isElementAvailable(1)) {
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(checkgrouplabel);
 			base.stepInfo("Expected string values are entered in CHECKGROUP Label fields");
@@ -3888,12 +3897,11 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-			if (ValidationErrormsg().Visible()){	
-			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			}	
-			
-	}
-		else {
+			if (ValidationErrormsg().Visible()) {
+				base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}
+
+		} else {
 			base.waitForElement(getCF_CheckGrpObject());
 			getCF_CheckGrpObject().waitAndClick(5);
 			base.stepInfo("Check Group is slected from Special Objects");
@@ -3909,15 +3917,14 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-				}
-	
-			}
+		}
 
-	
+	}
+
 	public void select_RadioGroup(String Radiogrouplabel, String instructionText, String ErrorMsg) {
 		driver.waitForPageToBeReady();
-		
-		if(getRootClick().isElementAvailable(1)){
+
+		if (getRootClick().isElementAvailable(1)) {
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(Radiogrouplabel);
 			base.stepInfo("Expected string values are entered in RADIOGROUP Label fields");
@@ -3927,35 +3934,34 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-			if (ValidationErrormsg().Visible()){	
-			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			}	
-			
+			if (ValidationErrormsg().Visible()) {
+				base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}
+
+		} else {
+			base.waitForElement(getCF_RadioGrpObject());
+			getCF_RadioGrpObject().waitAndClick(5);
+			base.stepInfo("Radio Group is slected from Special Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(Radiogrouplabel);
+			base.stepInfo("Expected string values are entered in RADIOGROUP Label fields");
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Instruction Text fields");
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
+		}
+
 	}
-			else {
-				base.waitForElement(getCF_RadioGrpObject());
-				getCF_RadioGrpObject().waitAndClick(5);
-				base.stepInfo("Radio Group is slected from Special Objects");
-				base.waitForElement(getCodingForm_AddToFormButton());
-				getCodingForm_AddToFormButton().waitAndClick(5);
-				base.stepInfo("Radio Group is slected from Special Objects and added to Codign form editor");
-				base.waitForElement(getStaticText());
-				getStaticText().SendKeys(Radiogrouplabel);
-				base.stepInfo("Expected string values are entered in RADIOGROUP Label fields");
-				base.waitForElement(getInstructionText0());
-				getInstructionText0().SendKeys(instructionText);
-				base.stepInfo("Expected string values are entered in Instruction Text fields");
-				base.waitForElement(getErrorMessage0());
-				getErrorMessage0().SendKeys(ErrorMsg);
-				base.stepInfo("Expected string values are entered in Error Message fields");
-					}
-		
-				}
-	
+
 	public void select_EditableMetaDataObject(String FIELDLabel, String HelpText, String ErrorMessage) {
 		driver.waitForPageToBeReady();
-		
-		if(getRootClick().isElementAvailable(1)){
+
+		if (getRootClick().isElementAvailable(1)) {
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(FIELDLabel);
 			base.stepInfo("Expected string values are entered in FIELD Label fields");
@@ -3965,35 +3971,34 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMessage);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-			if (ValidationErrormsg().Visible()){	
-			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			}	
-			
+			if (ValidationErrormsg().Visible()) {
+				base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}
+
+		} else {
+			base.waitForElement(getCF_RadioGrpObject());
+			getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(5);
+			getCF_Metadata().waitAndClick(5);
+			base.stepInfo("Metadata is selected from available Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Metadata is selected from available Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(FIELDLabel);
+			base.stepInfo("Expected string values are entered in FIELD Label fields");
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(HelpText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMessage);
+			base.stepInfo("Expected string values are entered in Error Message fields");
+		}
 	}
-			else {
-				base.waitForElement(getCF_RadioGrpObject());
-				getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(5);
-				getCF_Metadata().waitAndClick(5);
-				base.stepInfo("Metadata is selected from available Objects");
-				base.waitForElement(getCodingForm_AddToFormButton());
-				getCodingForm_AddToFormButton().waitAndClick(5);
-				base.stepInfo("Metadata is selected from available Objects and added to Codign form editor");
-				base.waitForElement(getStaticText());
-				getStaticText().SendKeys(FIELDLabel);
-				base.stepInfo("Expected string values are entered in FIELD Label fields");
-				base.waitForElement(getInstructionText0());
-				getInstructionText0().SendKeys(HelpText);
-				base.stepInfo("Expected string values are entered in Help Text fields");
-				base.waitForElement(getErrorMessage0());
-				getErrorMessage0().SendKeys(ErrorMessage);
-				base.stepInfo("Expected string values are entered in Error Message fields");
-				}
-				}
 
 	public void select_TagObject(String FIELDLabel, String HelpText, String ErrorMessage) {
 		driver.waitForPageToBeReady();
-		
-		if(getRootClick().isElementAvailable(1)){
+
+		if (getRootClick().isElementAvailable(1)) {
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(FIELDLabel);
 			base.stepInfo("Expected string values are entered in TAG Label fields");
@@ -4003,35 +4008,34 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMessage);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-			if (ValidationErrormsg().Visible()){	
-			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			}	
-			
+			if (ValidationErrormsg().Visible()) {
+				base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}
+
+		} else {
+			base.waitForElement(getCodingForm_FirstTag());
+			getCodingForm_FirstTag().waitAndClick(5);
+			base.stepInfo("Tag is selected from available Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Tag is selected from available Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(FIELDLabel);
+			base.stepInfo("Expected string values are entered in TAG Label fields");
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(HelpText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMessage);
+			base.stepInfo("Expected string values are entered in Error Message fields");
+		}
+
 	}
-			else {
-				base.waitForElement(getCodingForm_FirstTag());
-				getCodingForm_FirstTag().waitAndClick(5);
-				base.stepInfo("Tag is selected from available Objects");
-				base.waitForElement(getCodingForm_AddToFormButton());
-				getCodingForm_AddToFormButton().waitAndClick(5);
-				base.stepInfo("Tag is selected from available Objects and added to Codign form editor");
-				base.waitForElement(getStaticText());
-				getStaticText().SendKeys(FIELDLabel);
-				base.stepInfo("Expected string values are entered in TAG Label fields");
-				base.waitForElement(getInstructionText0());
-				getInstructionText0().SendKeys(HelpText);
-				base.stepInfo("Expected string values are entered in Help Text fields");
-				base.waitForElement(getErrorMessage0());
-				getErrorMessage0().SendKeys(ErrorMessage);
-				base.stepInfo("Expected string values are entered in Error Message fields");
-					}
-		
-				}
-	
+
 	public void select_CommentObject(String COMMENTLabel, String instructionText, String ErrorMsg) {
 		driver.waitForPageToBeReady();
-		
-		if(getRootClick().isElementAvailable(1)){
+
+		if (getRootClick().isElementAvailable(1)) {
 			base.waitForElement(getStaticText());
 			getStaticText().SendKeys(COMMENTLabel);
 			base.stepInfo("Expected string values are entered in COMMENTLabel fields");
@@ -4041,33 +4045,32 @@ public class CodingForm {
 			base.waitForElement(getErrorMessage0());
 			getErrorMessage0().SendKeys(ErrorMsg);
 			base.stepInfo("Expected string values are entered in Error Message fields");
-			if (ValidationErrormsg().Visible()){	
-			base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
-			}	
-			
+			if (ValidationErrormsg().Visible()) {
+				base.VerifyErrorMessage("Special characters(<,>) are not allowed.");
+			}
+
+		} else {
+			base.waitForElement(getCodingForm_CommentTab());
+			getCodingForm_CommentTab().waitAndClick(5);
+			base.waitForElement(getCodingForm_FirstComment());
+			getCodingForm_FirstComment().waitAndClick(5);
+			base.stepInfo("Comment tab Group is slected from Special Objects");
+			base.waitForElement(getCodingForm_AddToFormButton());
+			getCodingForm_AddToFormButton().waitAndClick(5);
+			base.stepInfo("Comment tab Group is slected from Special Objects and added to Codign form editor");
+			base.waitForElement(getStaticText());
+			getStaticText().SendKeys(COMMENTLabel);
+			base.stepInfo("Expected string values are entered in COMMENTLabel fields");
+			base.waitForElement(getInstructionText0());
+			getInstructionText0().SendKeys(instructionText);
+			base.stepInfo("Expected string values are entered in Help Text fields");
+			base.waitForElement(getErrorMessage0());
+			getErrorMessage0().SendKeys(ErrorMsg);
+			base.stepInfo("Expected string values are entered in Error Message fields");
+		}
+
 	}
-			else {
-				base.waitForElement(getCodingForm_CommentTab());
-				getCodingForm_CommentTab().waitAndClick(5);
-				base.waitForElement(getCodingForm_FirstComment());
-				getCodingForm_FirstComment().waitAndClick(5);
-				base.stepInfo("Comment tab Group is slected from Special Objects");
-				base.waitForElement(getCodingForm_AddToFormButton());
-				getCodingForm_AddToFormButton().waitAndClick(5);
-				base.stepInfo("Comment tab Group is slected from Special Objects and added to Codign form editor");
-				base.waitForElement(getStaticText());
-				getStaticText().SendKeys(COMMENTLabel);
-				base.stepInfo("Expected string values are entered in COMMENTLabel fields");
-				base.waitForElement(getInstructionText0());
-				getInstructionText0().SendKeys(instructionText);
-				base.stepInfo("Expected string values are entered in Help Text fields");
-				base.waitForElement(getErrorMessage0());
-				getErrorMessage0().SendKeys(ErrorMsg);
-				base.stepInfo("Expected string values are entered in Error Message fields");
-					}
-		
-				}
-	
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @Description : this method used for to verify the deleted coding form is not
@@ -5660,7 +5663,6 @@ public class CodingForm {
 
 	}
 
-
 	/**
 	 * @author Malayala.Seenivasan
 	 * @description this method used to default sg
@@ -5671,7 +5673,7 @@ public class CodingForm {
 		base.waitForElement(assgnpage.getSelectCodeFormRadioBtn(CFName));
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
-		if(!assgnpage.sortOrderNxtBtn().Enabled()) {
+		if (!assgnpage.sortOrderNxtBtn().Enabled()) {
 			assgnpage.getSelectCF_CheckBox(CFName).waitAndClick(5);
 		}
 		assgnpage.sortOrderNxtBtn().ScrollTo();
@@ -5786,7 +5788,6 @@ public class CodingForm {
 		return name;
 
 	}
-
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -6380,64 +6381,64 @@ public class CodingForm {
 		}
 	}
 
-	public boolean verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar() { 
+	public boolean verifyAddRemoveCodingFormSecurityGroupPopUpScrollBar() {
 		driver.waitForPageToBeReady();
 		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
-		boolean flag = (boolean) jse.executeScript("return document.querySelector('.dataTables_scrollBody').scrollHeight>"
-				+ "document.querySelector('.dataTables_scrollBody').clientHeight;");
+		boolean flag = (boolean) jse
+				.executeScript("return document.querySelector('.dataTables_scrollBody').scrollHeight>"
+						+ "document.querySelector('.dataTables_scrollBody').clientHeight;");
 		System.out.println(flag);
 
 		return flag;
 	}
-	
-	
+
 	/**
 	 * @author:sowndarya
 	 * @description:To save a coding form with group associate
 	 */
-	public void saveCodingForm2TagsWithGrpAssociat(String cfName, String tagname1, String tagname2) throws InterruptedException {
-		
+	public void saveCodingForm2TagsWithGrpAssociat(String cfName, String tagname1, String tagname2)
+			throws InterruptedException {
+
 		driver.waitForPageToBeReady();
-		addNewCodingFormButton();		
+		addNewCodingFormButton();
 		addTwoCheckBox("tag", tagname1, tagname2);
-		specialObjectsBox("radio");	
+		specialObjectsBox("radio");
 		addcodingFormAddButton();
 		passingCodingFormName(cfName);
 		selectTagTypeByIndex("radio item", 1, 0);
 		selectTagTypeByIndex("radio item", 1, 1);
-        driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
 		saveCodingForm();
 	}
 
-
 	/**
 	 * @author: Arun Created Date: 07/12/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the buttons functionality present in add/remove CF popup
+	 * @description: this method will verify the buttons functionality present in
+	 *               add/remove CF popup
 	 */
 	public void verifyButtonsFunctionalityInAddCFPopup(String button) {
 		base.waitForElement(getStep1CfPopUp());
-		//verify after clicking cancel button
-		if(button.equalsIgnoreCase("cancel")) {
+		// verify after clicking cancel button
+		if (button.equalsIgnoreCase("cancel")) {
 			base.waitForElement(getCfPopUpCancel());
 			getCfPopUpCancel().waitAndClick(10);
 		}
-		//verify after clicking 'X' icon
-		else if(button.equalsIgnoreCase("X")) {
+		// verify after clicking 'X' icon
+		else if (button.equalsIgnoreCase("X")) {
 			base.waitForElement(getPopUpCloseBtn());
 			getPopUpCloseBtn().waitAndClick(10);
-			
+
 		}
 		driver.waitForPageToBeReady();
-		if(getStep1CfPopUp().isDisplayed()) {
+		if (getStep1CfPopUp().isDisplayed()) {
 			base.failedStep("coding form popup displayed");
+		} else {
+			base.passedStep("coding form popup removed/cancelled after clicking button-" + button);
 		}
-		else {
-			base.passedStep("coding form popup removed/cancelled after clicking button-"+button);
-		}	
 	}
 
 	/**
-	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @author: Created Date: 08/12/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify the Selected coding form is saved in
 	 *               popup
 	 */
@@ -6455,7 +6456,7 @@ public class CodingForm {
 	}
 
 	/**
-	 * @author:  Created Date: 08/12/2022 Modified by: NA Modified Date: NA
+	 * @author: Created Date: 08/12/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will Selected the coding form in popup
 	 */
 	public void verifyAddSelectedCodingFormOnDefault(String Cfname) {
@@ -6471,41 +6472,38 @@ public class CodingForm {
 			base.failedStep("Codingform popup is not opened to select");
 		}
 
-		}
+	}
 
-
-	
 	/**
 	 * @author: Arun Created Date: 09/12/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the elements present in add/remove CF popup
+	 * @description: this method will verify the elements present in add/remove CF
+	 *               popup
 	 */
 	public void verifyElementsPresentInAddCFPopup() {
-		String[] expectedColumn = {"Coding Form Name","Set As Default (Required)"};
-		String[] expectedType = {"checkbox","radio"};
-		
-		//verify number of column present in table
+		String[] expectedColumn = { "Coding Form Name", "Set As Default (Required)" };
+		String[] expectedType = { "checkbox", "radio" };
+
+		// verify number of column present in table
 		int columns = getColumnsPresentInAddCfPopup().size();
-		base.stepInfo("number of columns present in the table-"+columns);
-		base.digitCompareEquals(columns, expectedColumn.length, "expected number of columns present in table", 
+		base.stepInfo("number of columns present in the table-" + columns);
+		base.digitCompareEquals(columns, expectedColumn.length, "expected number of columns present in table",
 				"expected number of columns not present");
 		base.ValidateElement_Presence(getPopUpCheckBox(), expectedColumn[0]);
 		base.ValidateElement_Presence(getSetAsDefaultHelpIcon(), expectedColumn[1]);
-		
-		//verify selection type(checkbox/radio) of column
-		for(int i=1;i<=columns;i++) {
-			String actualType = getCFNameOrSetDefaultColumnSelectionType(1,i).GetAttribute("class");
-			base.stepInfo(expectedColumn[i-1]+"column selection type is"+actualType);
-			base.textCompareEquals(actualType, expectedType[i-1], 
-					"selection type matched for"+expectedColumn[i-1], 
-					"selection type not matched for"+expectedColumn[i-1]);
+
+		// verify selection type(checkbox/radio) of column
+		for (int i = 1; i <= columns; i++) {
+			String actualType = getCFNameOrSetDefaultColumnSelectionType(1, i).GetAttribute("class");
+			base.stepInfo(expectedColumn[i - 1] + "column selection type is" + actualType);
+			base.textCompareEquals(actualType, expectedType[i - 1],
+					"selection type matched for" + expectedColumn[i - 1],
+					"selection type not matched for" + expectedColumn[i - 1]);
 		}
-		
 
 	}
-	
 
 	/**
-	 * @author:  Created Date:NA Modified by: NA Modified Date: NA
+	 * @author: Created Date:NA Modified by: NA Modified Date: NA
 	 * @description: this method will Add expected coding form
 	 */
 	public void verifyAddExpectedCf(int Cfcount) {
@@ -6564,6 +6562,53 @@ public class CodingForm {
 		base.stepInfo(Cf + " Coding Form are draggable to sort the order");
 	}
 
+	/**
+	 * @author: Created Date:NA Modified by: NA Modified Date: NA
+	 * @description: this method will un select on select coding form and assign
+	 *               Selected default coding form
+	 */
+	public void selectDefaultCodingFormAsDefault() {
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		base.waitTime(2);
+		base.waitForElement(getSetCFButton());
+		getSetCFButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getPopUpCheckBox());
+		getPopUpCheckBox().waitAndClick(5);
+		base.waitForElement(getPopUpCheckBox());
+		getPopUpCheckBox().waitAndClick(5);
+		if (checkDefaultCodingFormIsSelected().GetAttribute("checked") == null) {
+			getDefaultCodingFormInputBox().waitAndClick(5);
+		}
+		if (checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked") == null) {
+			getDefaultCodingFormRadioBtn().waitAndClick(5);
+		}
+		base.stepInfo("Select Default coding form as expected");
+		base.waitForElement(sortOrderNxtBtn());
+		sortOrderNxtBtn().waitAndClick(5);
+		base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp("Default Project Coding Form"));
+		if (assgnpage.getSelectedCodeForm_inSortingPopUp("Default Project Coding Form").isElementAvailable(2)) {
+			assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
+			base.waitTime(5);
+			base.waitForElement(getManageCodingFormButton());
+			if (getManageCodingFormButton().Displayed()) {
+				driver.waitForPageToBeReady();
+				base.waitTillElemetToBeClickable(getCodingForm_Search());
+				getCodingForm_Search().SendKeys("Default Project Coding Form");
+				base.waitTime(5);
+				base.waitForElement(getSFFormCol("Default Project Coding Form"));
+				System.out.println(getSFFormCol("Default Project Coding Form").getText());
+				base.waitTime(5);
+				softAssertion.assertEquals("YES (Default)", getSFFormCol("Default Project Coding Form").getText());
+				softAssertion.assertAll();
+				base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+			} else {
+				base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+			}
+		} else {
+			base.failedStep(" Sort CodeForm Pop Up Not displayed.");
+		}
+
+	}
 }
-
-
