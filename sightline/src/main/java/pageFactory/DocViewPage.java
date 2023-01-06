@@ -7506,7 +7506,7 @@ public class DocViewPage {
 	 * @author Mohan 9/02/21 NA Modified date: NA Modified by:NA
 	 * @description To Select DocId From mini doclist
 	 */
-	public void selectDocIdInMiniDocList(String docId) {
+	public void selectDocIdInMiniDocList(String Document) {
 
 		try {
 			driver.waitForPageToBeReady();
@@ -7517,8 +7517,8 @@ public class DocViewPage {
 				try {
 					driver.waitForPageToBeReady();
 //					getDocView_DocId(docId).ScrollTo();
-					base.waitForElement(getDocView_DocId(docId));
-					getDocView_DocId(docId).waitAndClick(15);
+					base.waitForElement(getDocView_DocId(Document));
+					getDocView_DocId(Document).waitAndClick(15);
 //					base.waitForElement(getDocView_MiniDoc_SelectRow(1));
 //					getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
 					base.passedStep("Doc is selected from MiniDoclist successfully");
@@ -7567,8 +7567,9 @@ public class DocViewPage {
 				System.out.println("The available field " + filterName + " is already added.");
 			}
 
-			base.waitTime(2);
-			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+			base.waitForElement(getCodingStampSaveBtn());
+			base.waitTillElemetToBeClickable(getCodingStampSaveBtn());
+			getCodingStampSaveBtn().waitAndClick(5);
 			driver.waitForPageToBeReady();
 
 		} catch (Exception e) {
@@ -23181,6 +23182,7 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		base.waitTime(5);
 		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 		System.out.println(color);
 		if (get_textHighlightedColor().isDisplayed()) {
