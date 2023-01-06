@@ -9,11 +9,9 @@
 <test name="BulkActions_suite">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.bulkActions.BulkAction_IndiumRegressionPhase2" />
-<class name= "sightline.bulkActions.BulkAction_IndiumRegression2" />
-<class name= "sightline.bulkActions.BulkActions_Regression" />
-<class name= "sightline.bulkActions.BulkActions_Regression25" />
-<class name= "sightline.bulkActions.BulkActions_sprint21_22_23_24" />
+<class name= "sightline.bulkActions.BulkAction_Regression_Consilio" />
+<class name= "sightline.bulkActions.BulkActions_Phase1_Regression" />
+<class name= "sightline.bulkActions.BulkActions_Phase2_Regression" />
 
 
 

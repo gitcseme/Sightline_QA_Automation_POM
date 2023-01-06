@@ -9,12 +9,9 @@
 <test name="CloningProject_Suite">
 <classes>
  <class name="testScriptsSmoke.Input" />
-<class name= "sightline.cloningProject.CloningProject_Regression01_Sprint19" />
-<class name= "sightline.cloningProject.CloningProject_Regression01" />
-<class name= "sightline.cloningProject.CloningProject_Regression1" />
-<class name= "sightline.cloningProject.CloningProject_Regression2" />
-<class name= "sightline.cloningProject.CloningProject_Regression3_2" />
-<class name= "sightline.cloningProject.CloningProject_Regression3" />
+<class name= "sightline.cloningProject.CloningProject_Phase2_Regression" />
+<class name= "sightline.cloningProject.CloningProject_Phase2_Regression1" />
+<class name= "sightline.cloningProject.CloningProject_Phase2_Regression2" />
 
 </classes>
 </test>
