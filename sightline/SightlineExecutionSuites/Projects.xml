@@ -11,15 +11,11 @@
  <class name="testScriptsSmoke.Input" />
 <class name= "sightline.projects.ProjectField_Regression_Consilio" />
 <class name= "sightline.projects.ProjectField_Regression" />
-<class name= "sightline.projects.ProjectField_Regression22" />
+<class name= "sightline.projects.ProjectFields_Phase2_Regression" />
 <class name= "sightline.projects.ProjectFileds_Regression_Consilio" />
-<class name= "sightline.projects.ProjectFields_IndiumRegression2" />
+<class name= "sightline.projects.Projects_Phase2_Regression" />
 <class name= "sightline.projects.Projects_Regression" />
-<class name= "sightline.projects.Projects_Regression23" />
-<class name= "sightline.projects.Projects_Regression24" />
-<class name= "sightline.projects.Projects_Regression25_26" />
-<class name= "sightline.projects.Projects_Regresssion" />
-
+<class name= "sightline.projects.Projects_ToggleOnna_Consilio" />
 
 </classes>
 </test>
