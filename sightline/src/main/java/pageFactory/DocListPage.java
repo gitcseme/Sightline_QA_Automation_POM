@@ -83,6 +83,14 @@ public class DocListPage {
 		return driver.FindElementByXPath("//input[@id='DocFileType']");
 	}
 	
+	public Element getDocList_MasterDateFilter() {
+		return driver.FindElementByXPath("//input[@id='MasterDate']");
+	}
+	
+	public Element getDocList_CustodianName() {
+		return driver.FindElementByXPath("//input[@id='CustodianName']");
+	}
+	
 	public Element getDocList_DocId() {
 		return driver.FindElementByXPath("//input[@id='DocID']");
 	}
@@ -90,7 +98,26 @@ public class DocListPage {
 	public Element getDocList_NoDataFilterResult() {
 		return driver.FindElementByXPath("//td[contains(text(),'Your query returned no data')]");
 	}
-	 
+	
+	public Element getDocList_DocfilenameFilter() {
+		return driver.FindElementByXPath("//input[@id='DocFileName']");
+	}
+	
+	public Element getDocList_CustodianFirstRowValue() {
+		return driver.FindElementByXPath("(//td[contains(text(),'P Allen')])[1]");
+	
+	}
+	public Element getDocList_DocfiletypeFirstRowValue(){
+		return driver.FindElementByXPath("//td[contains(text(),'Document')]");
+	
+	}
+	
+	public Element getDocList_MasterDateFilterValue(){
+		return driver.FindElementByXPath("//td[contains(text(),	'2010/04/06 22:18:00')]");
+	
+	}
+	
+	
 	public Element getEmailAuthNameFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]");
 	}
