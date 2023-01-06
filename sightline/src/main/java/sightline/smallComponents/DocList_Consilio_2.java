@@ -33,7 +33,7 @@ public class DocList_Consilio_2 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 		
-		  Input in = new Input(); in.loadEnvConfig();
+		 // Input in = new Input(); in.loadEnvConfig();
 		 
 
 	}

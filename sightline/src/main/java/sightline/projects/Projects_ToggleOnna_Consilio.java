@@ -31,9 +31,9 @@ public class Projects_ToggleOnna_Consilio {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		/*
-		 * Input input = new Input(); input.loadEnvConfig();
-		 */
+		
+		  //Input input = new Input(); input.loadEnvConfig();
+		 
 
 
 		driver = new Driver();
@@ -80,6 +80,11 @@ public class Projects_ToggleOnna_Consilio {
 			
 			Assert.assertTrue(false);
 		}
+		
+		baseClass.stepInfo("Checking Status of toggle button");
+		Assert.assertFalse(projects.getSightlineOnnaToggleStatus().Selected());
+			
+		baseClass.passedStep("Checked default status of toggle");
 	
 		baseClass.stepInfo("Sightline Collect, powered by Onna” (SCpbO) with an ON/OFF toggle option appears at the bottom of Project screen ");
 		loginPage.logout();
