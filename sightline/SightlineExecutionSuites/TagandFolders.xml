@@ -9,14 +9,8 @@
 <test name="Sightline_TagAndFolders">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.tagsAndFolders.TagAndFolder" />
-<class name= "sightline.tagsAndFolders.TagsAndFolder_Regression" />
-<class name= "sightline.tagsAndFolders.TagsAndFolders_22" />
-<class name= "sightline.tagsAndFolders.TagsAndFolders_23" />
-<class name= "sightline.tagsAndFolders.TagsAndFolders_Regression24_25" />
-
-
-
+<class name= "sightline.tagsAndFolders.TagsAndFolders_Phase2_Regression" />
+<class name= "sightline.tagsAndFolders.TagsAndFolders_Regression2" />
 
 </classes>
 </test>

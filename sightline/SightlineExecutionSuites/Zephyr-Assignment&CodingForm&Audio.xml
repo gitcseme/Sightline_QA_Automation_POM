@@ -9,21 +9,23 @@
 <test name="Sightline-Jenkins-Assignment-CodingForm-Audio">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression2" />
-<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression1" />
-<class name= "sightline.docviewCodingForms.DocviewCodingForm_Phase2_Regression" />
 <class name= "sightline.assignments.Assignment_Regression1" />
 <class name= "sightline.assignments.Assignment_Regression2" />
 <class name= "sightline.assignments.Assignment_Regression3" />
 <class name= "sightline.assignments.ClientsPage_Regression" />
 <class name= "sightline.assignments.Assignment_Phase2_Regression" />
 <class name= "sightline.assignments.Assignment_Regression_Consilio" />
-<class name= "sightline.docviewAudio.Docview_Audio_IndiumRegression" />
-<class name= "sightline.docviewAudio.Docview_Audio_Sprint2_2Regression" />
-<class name= "sightline.docviewAudio.Docview_Audio_Sprint2Regression" />
-<class name= "sightline.docviewAudio.DocViewAudio_IndiumRegression" />
-<class name= "sightline.docviewAudio.DocviewAudio_Regression" />
-<class name= "sightline.docviewAudio.DocViewAudio_IndiumRegression" />
+<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression2" />
+<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression1" />
+<class name= "sightline.docviewCodingForms.DocviewCodingForm_Phase2_Regression" />
+<class name= "sightline.codingForms.CodingForm_Phase1_Regression" />
+<class name= "sightline.codingForms.CodingForm_Phase2_Regression" />
+<class name= "sightline.codingForms.CodingForm_Phase2_Regression1" />
+<class name= "sightline.codingForms.CodingForm_Consilio" />
+<class name= "sightline.docviewAudio.DocviewAudio_Phase1_Regression" />
+<class name= "sightline.docviewAudio.DocviewAudio_Phase1_Regression1" />
+<class name= "sightline.docviewAudio.DocViewAudio_Phase2_Regression" />
+<class name= "sightline.docviewAudio.DocViewAudio_Phase2_Regression1" />
 
 
 </classes>

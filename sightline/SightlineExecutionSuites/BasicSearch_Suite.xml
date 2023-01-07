@@ -10,12 +10,10 @@
 <classes>
 <class name="testScriptsSmoke.Input" />
 <class name= "sightline.basicSearch.BasicSearch_Regression1" />
-<class name= "sightline.basicSearch.BasicSearchRegression" />
-<class name= "sightline.basicSearch.BasicSearchRegression_18" />
-<class name= "sightline.basicSearch.BasicSearchRegression_20" />
-<class name= "sightline.basicSearch.BasicSearchRegression_21_25" />
-<class name= "sightline.basicSearch.BasicSearchRegression2" />
-<class name= "sightline.basicSearch.PerformanceTest_Regression" />
+<class name= "sightline.basicSearch.BasicSearch_Regression3" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression2" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression1" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression" />
 
 
 

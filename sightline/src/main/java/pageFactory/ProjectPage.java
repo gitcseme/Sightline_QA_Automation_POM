@@ -457,6 +457,11 @@ public class ProjectPage {
         return driver.FindElementByCssSelector("i[id='IsEnabledSightlineOnna']");
 
     }
+    
+    public Element getSightlineOnnaToggleStatus(){
+        return driver.FindElementById("chkIsEnabledSightlineOnna");
+
+    }
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {

@@ -8,20 +8,21 @@
 <test name="Sightline-Jenkins-Doclist-Docexplorer-usermanagement_Batch">
 <classes>
 <class name="testScriptsSmoke.Input"></class>
-<class name="sightline.smallComponents.DocExplorer_Regression1"/>
-<class name="sightline.smallComponents.DocList_Regression1"/>
-<class name="sightline.smallComponents.DocList_Regression2"/>
-<class name="sightline.smallComponents.DocList_Regression3"/>
-<class name="sightline.smallComponents.DocList_Regression4"/>
-<class name="sightline.smallComponents.DomainDashBoard_ProjectCreation_Regression_01"/>
-<class name="sightline.smallComponents.DomainDashBoard_Regression_01"/>
-<class name="sightline.smallComponents.DomainManagement_IndiumRegression"/>
-<class name="sightline.smallComponents.DomainManagement_Regression_01"/>
-<class name="sightline.smallComponents.DomainManagement_Regression_02"/>
-<class name="sightline.smallComponents.DomainManagement_Regression_03"/>
-<class name="sightline.smallComponents.UsersAndRoleManagement_Regression" />
-<class name="sightline.smallComponents.WorkflowAutomation_IndiumRegressionPhase2"/>
-<class name="sightline.smallComponents.WorkFlow_IndiumRegression" />
+<class name="sightline.smallComponents.DocExplorer_Phase1_Regression"/>
+<class name="sightline.smallComponents.DocExplorer_Phase2_Regression"/>
+<class name="sightline.smallComponents.DocList_Consilio_2"/>
+<class name="sightline.smallComponents.DocList_Consilio"/>
+<class name="sightline.smallComponents.DocList_Regression_Consilio"/>
+<class name="sightline.smallComponents.DomainDashBoard_Phase2_Regression"/>
+<class name="sightline.smallComponents.DomainManagement_Phase1_Regression"/>
+<class name="sightline.smallComponents.DomainManagement_Phase2_Regression"/>
+<class name="sightline.smallComponents.DomainManagement_Phase2_Regression1"/>
+<class name="sightline.smallComponents.UserAndRoleManagement_Phase2_Regression"/>
+<class name="sightline.smallComponents.UserAndRoleManagement_Phase2_Regression1"/>
+<class name="sightline.smallComponents.UsersAndRoleManagement_Phase2_Regression2"/>
+<class name="sightline.smallComponents.UsersAndRoleManagement_Regression"/>
+<class name="sightline.smallComponents.WorkflowAutomation_Phase2_Regression"/>
+<class name="sightline.smallComponents.WorkFlowAutomation_Regression"/>
 
 
 </classes>

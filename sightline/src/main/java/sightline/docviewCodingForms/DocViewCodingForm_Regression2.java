@@ -487,7 +487,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              outside of reviewers batch, then on mouse hover tool tip should
 	 *              be displayed for the stamp icon. 'RPMXCON-51577'
 	 */
-//	@Test(description = "RPMXCON-51577",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51577",enabled = true, groups = { "regression" })
 	public void assignmentCannotCompleteDocsOutsideBatchCodingStamp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51577");
 		baseClass.stepInfo(
@@ -768,6 +768,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Coding form created all object along with check item");
 
 		// Assign to security group
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
 
@@ -997,6 +998,7 @@ public class DocViewCodingForm_Regression2 {
 			codingForm.commentRequired(cfName);
 			baseClass.stepInfo("Coding form created as per default selection");
 			// Assign to security group
+			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(cfName);
 			driver.waitForPageToBeReady();
 			baseClass.stepInfo("Coding form assigned to security group");
@@ -1036,6 +1038,7 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(username, password);
 		// Session search to doc view Coding Form
 		if (fullname.contains("RMU")) {
+			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(Input.codeFormName);
 		}
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -1144,6 +1147,7 @@ public class DocViewCodingForm_Regression2 {
 		// Creating Coding Form
 		codingForm.createCommentAndMetadata(projectFieldINT, addComment, cfName);
 		baseClass.stepInfo("Project field added to coding form in Doc view");
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 
 		// Session search to doc view Coding Form
@@ -1158,6 +1162,7 @@ public class DocViewCodingForm_Regression2 {
 		int pureHitCount = sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment,
 				commentText);
 
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(Input.codingFormName);
 		codingForm.deleteCodingForm(cfName, cfName);
 
@@ -1258,6 +1263,7 @@ public class DocViewCodingForm_Regression2 {
 		String expectedSecondObjectName = codingForm.getCFObjectsLabel(1);
 		System.out.println(expectedSecondObjectName);
 		codingForm.saveCodingForm();
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(codingform);
 		// create assignment
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -1365,6 +1371,10 @@ public class DocViewCodingForm_Regression2 {
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
+        driver.scrollPageToTop();
+        docViewPage.getDocView_CodingFormlist().waitAndClick(5);
+        docViewPage.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		driver.waitForPageToBeReady();
 		reusableDocView.stampColourSelection(Input.searchString1, Input.stampColour);
 		reusableDocView.getDocView_MiniDocListIds(2).waitAndClick(10);
 		reusableDocView.lastAppliedStamp(Input.stampColour);
@@ -1377,6 +1387,10 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Moved to other document in mini doclist successfully");
 		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		driver.waitForPageToBeReady();
+        driver.scrollPageToTop();
+        docViewPage.getDocView_CodingFormlist().waitAndClick(5);
+        docViewPage.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		reusableDocView.deleteStampColour(Input.stampColour);
 		loginPage.logout();
 	}
@@ -1432,6 +1446,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Impersonated as RMU");
 		
 		// assign default coding form
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(Input.codeFormName);
 		// Session search to doc view Coding Form
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -1825,6 +1840,7 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		
 		codingForm.assignCodingFormToSG("Default Project Coding Form");
 
 		// Searching audio document with different term
@@ -1957,6 +1973,7 @@ public class DocViewCodingForm_Regression2 {
 		if (roll.equalsIgnoreCase(rmu)) {
 //			 searching document for assignment creation
 			codingForm.commentRequired(cf);
+			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(cf);
 		}
 		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
@@ -2326,6 +2343,7 @@ public class DocViewCodingForm_Regression2 {
 			// Creating Coding Form
 			codingForm.commentRequired(cf);
 			// Assign to security group
+			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(cf);
 			System.out.println(cf);
 			baseClass.stepInfo("Coding form assigned to security group");
@@ -2353,6 +2371,7 @@ public class DocViewCodingForm_Regression2 {
 			baseClass.VerifySuccessMessage("Document saved successfully");
 		}
 		if (roll == "assgnCf") {
+			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
@@ -2480,6 +2499,7 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Assign coding form
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(Input.codingFormName);
 		baseClass.passedStep(Input.codingFormName + "Coding form assigned to context of security group");
 
@@ -2566,6 +2586,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// creating long coding form
 		codingForm.codingFormLarge(cfLarge);
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfLarge);
 
 		// navigation to docview page from session search page
@@ -4115,7 +4136,7 @@ public class DocViewCodingForm_Regression2 {
 	 *                in context of security group
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52086",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52086",enabled = true, groups = { "regression" })
 	public void  createCodingFormWithTwotags() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52086");
 		String codingfrom = "CF"+Utility.dynamicNameAppender();
@@ -4135,6 +4156,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Coding form saved with the two tags along with radio button");
 		
 		// Assign to security group
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(codingfrom);
 		baseClass.stepInfo("Coding form assigned to security group");
 		
@@ -5880,7 +5902,7 @@ public class DocViewCodingForm_Regression2 {
 	 *                for Editable Metadata objects
 	 */
 	
-//	@Test(description = "RPMXCON-52102",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52102",enabled = true, groups = { "regression" })
 	public void  verifyEditableMetaDataWithOptional() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52102");
 		baseClass.stepInfo("Verify on click of 'Save and Next' coding form should be "
@@ -5898,6 +5920,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Coding form saved with Editable metadata value with optional mode");
 		
 		// Assign to security group
+		codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
 		
@@ -6974,6 +6997,7 @@ public class DocViewCodingForm_Regression2 {
 	 	baseClass.stepInfo("Comment Coding form created with Display but Not Selectable");
 		
 		// Assign to security group
+	 	codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
 		
@@ -6994,7 +7018,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getAttachCountTextBox().SendKeys("Edit document comment And Save");
 		baseClass.stepInfo("text box is editble");
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -7290,6 +7314,7 @@ public class DocViewCodingForm_Regression2 {
 	 	baseClass.stepInfo("Coding form created all object along with radio item");
 		
 		// Assign to security group
+	 	codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
 		
@@ -7331,7 +7356,7 @@ public class DocViewCodingForm_Regression2 {
 	 * 			RPMXCON-51187
 	 * @Description : Verify on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment
 	 */
-//	@Test(description = "RPMXCON-51187",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-51187",enabled = true,groups = { "regression" })
 	public void verifyDefaultCodingforminDocView() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-51187");
 	    baseClass.stepInfo("Verify on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment");
@@ -7355,6 +7380,7 @@ public class DocViewCodingForm_Regression2 {
 	 	baseClass.stepInfo("default coding form should be created");
 		
 		// Assign to security group
+	 	codingForm.selectDefaultCodingFormAsDefault();
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
 		
@@ -7370,7 +7396,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.CloseSuccessMsgpopup();
 		docViewPage.getAddComment1().SendKeys("Document commemnt added");
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -7388,7 +7414,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.CloseSuccessMsgpopup();
 		docViewPage.getAddComment1().SendKeys("Document commemnt added");
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		baseClass.passedStep("Verified on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment");
 		
 		// logout

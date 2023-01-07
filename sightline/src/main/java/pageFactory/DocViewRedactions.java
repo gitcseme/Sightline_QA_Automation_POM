@@ -2107,16 +2107,17 @@ public class DocViewRedactions {
 		set_searchText().getWebElement().sendKeys("S");
 		Thread.sleep(3000); // needed here implicitly
 
+
 		Robot robot = new Robot();
 
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		base.waitTime(5); // needed here implicitly
+		base.waitTime(7); // needed here implicitly
 
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex = Color.fromString(color).asHex(); // #dc5252
 		System.out.println(hex);
-
+		base.waitTime(5); 
 		if (hex.equalsIgnoreCase(Input.colorCodeHighlight)) // #dc5252
 		{
 			System.out.println("The color for the Highlighted texts is verfied- Successfully");

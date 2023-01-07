@@ -136,9 +136,11 @@ public class DocView_Regression2 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.impersonatePAtoRMU();
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.ViewInDocView();
+		baseClass.waitTime(2);
 		docViewRedact.clickingThumbnailIcon();
+		docViewRedact.thumbNailsPanel().isElementAvailable(3);
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
 			baseClass.passedStep("The thumbnails panel is clicked and menu is visible");
 		} else {
@@ -228,7 +230,7 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.basicContentSearch(Input.testData1);
 		baseClass.stepInfo("Search with text input - TEST completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
@@ -291,7 +293,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingImagesTab();
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardToLastDoc());
 		actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
 		actions.click().build().perform();
@@ -328,7 +330,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingImagesTab();
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardToLastDoc());
 		actions.moveToElement(docViewRedact.forwardToLastDoc().getWebElement()).click();
 		actions.click().build().perform();
@@ -409,6 +411,7 @@ public class DocView_Regression2 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingImagesTab();
 		driver.scrollPageToTop();
+		baseClass.waitTime(2);
 		docViewRedact.forwardToLastDoc().waitAndClick(5);
 		docViewRedact.backwardPriviousDocBtn().waitAndClick(5);
 		baseClass.stepInfo("Clicked on images tab");
@@ -481,6 +484,7 @@ public class DocView_Regression2 {
 		docViewRedact.clickingImagesTab();
 		DocViewPage docviewpage = new DocViewPage(driver);
 		docviewpage.editingCodingFormWithSaveAndNextButton();
+		baseClass.waitTime(5);
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
 		if (status.equalsIgnoreCase("true")) {
@@ -716,7 +720,10 @@ public class DocView_Regression2 {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		docViewRedact = new DocViewRedactions(driver);
+		DocViewPage DocViewpage = new DocViewPage(driver);
 		docViewRedact.clickingImagesTab();
+		driver.waitForPageToBeReady();
+		DocViewpage.getDocView_ImageNumBox().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomOut());
 		docViewRedact.imagesTabZoomOut().Click();
 		if (docViewRedact.imagesTabZoomOut().isDisplayed()) {
@@ -943,7 +950,9 @@ public class DocView_Regression2 {
 		sessionSearch.basicContentSearch(Input.testTenthDocId);
 		sessionSearch.ViewInDocView();
 		docViewRedact = new DocViewRedactions(driver);
+		baseClass.waitTime(3);
 		docViewRedact.clickingRedactionIcon();
+		baseClass.waitTime(3);
 		docViewRedact.thisPageRedaction().waitAndClick(3);
 		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.CloseSuccessMsgpopup();
@@ -1052,8 +1061,10 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingRemarksIcon();
 		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
+		baseClass.waitTime(2);
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		baseClass.waitTime(2);
 		if (docViewRedact.addRemarksBtn().isDisplayed()) {
 			assertTrue(true);
 			baseClass.passedStep(
@@ -1097,7 +1108,7 @@ public class DocView_Regression2 {
 			public Boolean call() throws Exception {
 				return docView.getDocView_Last().Visible() && docView.getDocView_Last().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_Last());
 		docView.getDocView_Last().waitAndClick(30);
 
@@ -1106,7 +1117,7 @@ public class DocView_Regression2 {
 		String selectedId = docView.getDocView_SelectedDocID().getText();
 
 		// getting doc id in minidoclist
-
+		driver.waitForPageToBeReady();
 		String activeDocumentId = docViewRedact.activeDocId().getText();
 		// Verifying the Docids
 		if (selectedId.equalsIgnoreCase(activeDocumentId)) {
@@ -1239,8 +1250,11 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingAudioRemarksIcon();
+		baseClass.waitTime(1);
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
+		baseClass.waitTime(3);
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		driver.waitForPageToBeReady();
 		if (docViewRedact.addAudioRemarks().isDisplayed()) {
 			assertTrue(true);
 			baseClass.passedStep("The remarks panel is visible for audio documents After navigating from child window");
@@ -1399,14 +1413,14 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
-		sessionsearch.basicContentSearch(Input.randomText);
+		int Purehit=sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		String verifydocsCountInAssgnPage = assignmentspage.verifydocsCountInAssgnPage(assignmentName);
 
-		if (verifydocsCountInAssgnPage.equalsIgnoreCase("201")) {
+		if (Integer.valueOf(verifydocsCountInAssgnPage).equals(Purehit)) {
 			baseClass.passedStep("The doc count has been verified");
 		} else {
 			baseClass.failedStep("The doc count is not verified");
@@ -1476,16 +1490,19 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
-		docViewRedact.getDocView_PageNumber().SendKeys("4");
+		docViewRedact.getDocView_PageNumber().SendKeys("2");
+		baseClass.waitTime(2);
 		docViewRedact.getSearchIcon().waitAndClick(5);
 		docViewRedact.clickingRemarksIcon();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
 		Thread.sleep(4000);
 		// Thread sleep added for the page to adjust resolution
 		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10).clickAndHold()
+				.moveByOffset(50,40).release().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
 		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
@@ -1497,96 +1514,97 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Remarks added successfully");
 		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
 		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+		baseClass.waitTime(2);
 		String id = docView.getRemarksId(remarksName).GetAttribute("id");
 		if (docView.getRemarksInPg(id).isElementAvailable(5)) {
 			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
 		} else {
 			baseClass.failedStep("The page is not loaded where the remarks is added");
 		}
-		docViewRedact.clickingRemarksIcon();
+		driver.waitForPageToBeReady();
 		docView.deleteReamark(remarksName);
 		loginPage.logout();
 	}
 
 	/**
-	 * Author : Iyappan.Kasinathan Description : Verify on click of the reviewer
-	 * remark respective page should be scrolled in doc view when redirecting from
-	 * my assignment
-	 */
-	@Test(description ="RPMXCON-51082",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" })
-	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName)
-			throws Exception {
-		baseClass.stepInfo("Test case Id: RPMXCON-51082");
-		baseClass.stepInfo(
-				"Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
-		baseClass = new BaseClass(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		docView = new DocViewPage(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
-		String remarksName = "remarks" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(userName, password);
-		System.out.println(assignmentName);
-		// create assignment
-		if (fullName.contains("RMU")) {
-			sessionsearch.basicContentSearch("null");
-			sessionsearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
-			assignmentPage.add2ReviewerAndDistribute();
-			// Impersonate to reviewer
-			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-			assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
-			assignmentPage.assgnViewInAllDocView();
-			baseClass.stepInfo("Navigated to docview from assignment page successfully");
-			driver.waitForPageToBeReady();
-		} else {
-			assignmentPage.SelectAssignmentByReviewer(assignmentName);
-			baseClass.stepInfo("User on the doc view after selecting the assignment");
-		}
-		baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
-		docViewRedact.getDocView_PageNumber().SendKeys("4");
-		docViewRedact.getSearchIcon().waitAndClick(5);
-		docViewRedact.clickingRemarksIcon();
-		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
-		baseClass.waitTime(4);
-		// Thread sleep added for the page to adjust resolution
-		Actions actions = new Actions(driver.getWebDriver());
-		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
-		docViewRedact.getDocView_Redactrec_textarea().waitAndClick(5);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, 10).clickAndHold()
-				.moveByOffset(200, 90).release().build().perform();
-		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksBtn());
-		docViewRedact.addRemarksBtn().waitAndClick(10);
-		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
-		docViewRedact.addRemarksTextArea().waitAndClick(10);
-		docViewRedact.addRemarksTextArea().SendKeys(remarksName);
-		baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
-		docViewRedact.saveRemarksBtn().waitAndClick(10);
-		baseClass.stepInfo("Remarks added successfully");
-		baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
-		docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
-		String id = docView.getRemarksId(remarksName).GetAttribute("id");
-		if (docView.getRemarksInPg(id).isElementAvailable(5)) {
-			baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
-		} else {
-			baseClass.failedStep("The page is not loaded where the remarks is added");
-		}
-		docViewRedact.clickingRemarksIcon();
-		docView.deleteReamark(remarksName);
-		if (fullName.contains("REV")) {
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
-		}
-		loginPage.logout();
-	}
+     * Author : Iyappan.Kasinathan Description : Verify on click of the reviewer
+     * remark respective page should be scrolled in doc view when redirecting from
+     * my assignment
+     */
+    @Test(description ="RPMXCON-51082",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" })
+    public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName)
+            throws Exception {
+        baseClass.stepInfo("Test case Id: RPMXCON-51082");
+        baseClass.stepInfo(
+                "Verify on click of the reviewer remark respective page should be scrolled in doc view when redirecting from my assignment");
+        baseClass = new BaseClass(driver);
+        DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        docView = new DocViewPage(driver);
+        SessionSearch sessionsearch = new SessionSearch(driver);
+        AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+        String remarksName = "remarks" + Utility.dynamicNameAppender();
+        loginPage.loginToSightLine(userName, password);
+        System.out.println(assignmentName);
+        // create assignment
+        if (fullName.contains("RMU")) {
+            sessionsearch.basicContentSearch("null");
+            sessionsearch.bulkAssign();
+            assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+            assignmentPage.add2ReviewerAndDistribute();
+            // Impersonate to reviewer
+            driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+            assignmentPage.viewSelectedAssgnUsingPagination(assignmentName);
+            assignmentPage.assgnViewInAllDocView();
+            baseClass.stepInfo("Navigated to docview from assignment page successfully");
+            driver.waitForPageToBeReady();
+        } else {
+            assignmentPage.SelectAssignmentByReviewer(assignmentName);
+            baseClass.stepInfo("User on the doc view after selecting the assignment");
+        }
+        baseClass.waitForElement(docViewRedact.getDocView_PageNumber());
+        docViewRedact.getDocView_PageNumber().SendKeys("4");
+        docViewRedact.getSearchIcon().waitAndClick(5);
+        docViewRedact.clickingRemarksIcon();
+        baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+        baseClass.waitTime(4);
+        // Thread sleep added for the page to adjust resolution
+        Actions actions = new Actions(driver.getWebDriver());
+        baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+        docViewRedact.getDocView_Redactrec_textarea().waitAndClick(5);
+        actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, 10).clickAndHold()
+                .moveByOffset(50,40).release().build().perform();
+        baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksBtn());
+        docViewRedact.addRemarksBtn().waitAndClick(10);
+        baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
+        docViewRedact.addRemarksTextArea().waitAndClick(10);
+        docViewRedact.addRemarksTextArea().SendKeys(remarksName);
+        baseClass.waitTillElemetToBeClickable(docViewRedact.saveRemarksBtn());
+        docViewRedact.saveRemarksBtn().waitAndClick(10);
+        baseClass.stepInfo("Remarks added successfully");
+        baseClass.waitForElement(docView.getDocView_SelectRemarks(remarksName));
+        docView.getDocView_SelectRemarks(remarksName).waitAndClick(10);
+        String id = docView.getRemarksId(remarksName).GetAttribute("id");
+        if (docView.getRemarksInPg(id).isElementAvailable(5)) {
+            baseClass.passedStep("The page is loaded sucessfully where the remarks is added");
+        } else {
+            baseClass.failedStep("The page is not loaded where the remarks is added");
+        }
+        docViewRedact.clickingRemarksIcon();
+        docView.deleteReamark(remarksName);
+        if (fullName.contains("REV")) {
+            loginPage.logout();
+            loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+            assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+        }
+        loginPage.logout();
+    }
 
-	@DataProvider(name = "UsersWithoutPA")
-	public Object[][] UsersWithoutPA() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
-		return users;
-	}
+    @DataProvider(name = "UsersWithoutPA")
+    public Object[][] UsersWithoutPA() {
+        Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+                { Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+        return users;
+    }
 
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
@@ -1777,9 +1795,10 @@ public class DocView_Regression2 {
 			public Boolean call() throws Exception {
 				return docViewRedact.thumbNailsIcon().Visible() && docViewRedact.thumbNailsIcon().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.thumbNailsIcon());
 		docViewRedact.HighliteIcon().waitAndFind(30);
+		baseClass.waitTime(4);
 		if (docViewRedact.HighliteIcon().isDisplayed()) {
 			baseClass.passedStep("Thumbnails icon visible in DocView");
 		} else {
@@ -1974,6 +1993,7 @@ public class DocView_Regression2 {
 		sessionsearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCustodianNameInput);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docView");
+		baseClass.waitTime(2);
 		docView.verifyMetaDataTermDisplayingOnPersistentPanel(Input.metaDataCustodianNameInput);
 		loginPage.logout();
 	}
@@ -2001,6 +2021,7 @@ public class DocView_Regression2 {
 		sessionsearch.advancedContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to docView");
+		baseClass.waitTime(2);
 		docView.verifyTermHitsHighlightingInDocumentWithoutClickingEyeIcon(Input.searchString1);
 		loginPage.logout();
 	}
@@ -2063,8 +2084,8 @@ public class DocView_Regression2 {
 		savedsearch = new SavedSearch(driver);
 		keywordPage = new KeywordPage(driver);
 
-		String keywordGroupName1 = "firstGroup" + utility.dynamicNameAppender();
-		String keywordGroupName2 = "secondGroup" + utility.dynamicNameAppender();
+		String keywordGroupName1 = "firstGroup" + Utility.dynamicNameAppender();
+		String keywordGroupName2 = "secondGroup" + Utility.dynamicNameAppender();
 		String assignmentName = "Atestassignment" + Utility.dynamicNameAppender();
 		String[] Color = { Input.keywordColor1, Input.KeyWordColour };
 		String[] keywordGroupName = { keywordGroupName1, keywordGroupName2 };
@@ -2084,6 +2105,7 @@ public class DocView_Regression2 {
 		assignPage.mappingKeywordToAssignment(keywordGroupName2);
 		driver.waitForPageToBeReady();
 		assignPage.addReviewerAndDistributeDocs();
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().Click();
 		loginPage.logout();
@@ -2389,7 +2411,7 @@ public class DocView_Regression2 {
 			public Boolean call() throws Exception {
 				return docViewRedact.doclistTable(3).Visible() && docViewRedact.doclistTable(3).Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		docViewRedact.doclistTable(3).waitAndFind(10);
 		docViewRedact.doclistTable(3).Click();
 		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
@@ -2705,6 +2727,7 @@ public class DocView_Regression2 {
 			assignmentsPage.assignmentCreation(assignmentName, Input.codingFormName);
 			assignmentsPage.add2ReviewerAndDistribute();
 			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+			baseClass.waitTime(3);
 			assignmentsPage.viewSelectedAssgnUsingPagination(assignmentName);
 			baseClass.waitTillElemetToBeClickable(assignmentsPage.getAssignmentActionDropdown());
 			assignmentsPage.getAssignmentActionDropdown().waitAndClick(10);
@@ -2715,7 +2738,7 @@ public class DocView_Regression2 {
 			baseClass.stepInfo("Logined as Reviewer");
 			assignmentsPage.SelectAssignmentByReviewer(assignmentName);
 		}
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(4);
 		// validations on displaying panels in docview page
 		baseClass.waitForElement(docView.getDocView_CodingFormPanel());
 		if (docView.getDocView_CodingFormPanel().isDisplayed()) {
@@ -2831,7 +2854,7 @@ public class DocView_Regression2 {
 			public Boolean call() throws Exception {
 				return docViewRedact.pageNumberTextBox().Visible() && docViewRedact.pageNumberTextBox().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		docViewRedact.pageNumberTextBox().waitAndClick(10);
 		docViewRedact.pageNumberTextBox().getWebElement().clear();
 		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
@@ -2894,6 +2917,7 @@ public class DocView_Regression2 {
 		assignPage.selectAssignmentToViewinDocView(assignmentName);
 		baseClass.stepInfo("Selected assignment and navigated to docview");
 		// Verifying the menu bar option in docView page
+		baseClass.waitTime(5);
 		docView.verifyMenuBarOptionFromDocviewPanel();
 	}
 
@@ -2928,6 +2952,7 @@ public class DocView_Regression2 {
 		// document searched and navigated to docview
 		sessionsearch.basicContentSearch(Input.excelProtectedHiddenDocId);
 		sessionsearch.ViewInDocView();
+		baseClass.waitTime(3);
 		baseClass.stepInfo("Navigated to docview page from search engine");
 		// validate the warning message contains hidden properties
 		baseClass.VerifyWarningMessage(
@@ -3340,12 +3365,13 @@ public class DocView_Regression2 {
 		assignPage.addReviewerAndDistributeDocs();
 		driver.waitForPageToBeReady();
 		assignPage.Assignment_ManageRevtab_ViewinDocView();
+		baseClass.waitTime(3);
 		docView.verifyDocsPresentWithPersistentHits(Input.testData1);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		baseClass.stepInfo("Select assigned assignment and Navigated to docview");
 		docView.verifyDocsPresentWithPersistentHits(Input.testData1);
 	}
@@ -3396,6 +3422,7 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();
+		baseClass.waitTime(1);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
 		docViewRedact.forwardNextDocBtn().waitAndClick(5);
 		baseClass.stepInfo("navigated to Document with hidden content");
@@ -3521,7 +3548,7 @@ public class DocView_Regression2 {
 			public Boolean call() throws Exception {
 				return docView.getDocView_RedactIcon().Visible() && docView.getDocView_RedactIcon().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait90);
 		baseClass.waitTillElemetToBeClickable(docView.getDocView_RedactIcon());
 		docView.getDocView_RedactIcon().Click();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
@@ -3538,7 +3565,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Logged in as RMU");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docView.verifyDocumentDownloadInPdfFormat();
 		loginPage.logout();
 		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
@@ -3546,7 +3573,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Logged in as Reviewer");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docView.verifyDocumentDownloadInPdfFormat();	
 		
 	}
@@ -3571,7 +3598,7 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
-		driver.waitForPageToBeReady();	
+		baseClass.waitTime(2);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
@@ -3581,7 +3608,8 @@ public class DocView_Regression2 {
 		String expectedMessage5 = "Protected Excel Sheets";
 		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
 		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");	
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
+		baseClass.waitTime(2);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
 		loginPage.logout();
 		
@@ -3911,6 +3939,7 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();
+		baseClass.waitTime(3);
 		DocViewPage docviewpage = new DocViewPage(driver);	
 //Selecting Doc that contains comments
 		docviewpage.selectDocIdInMiniDocList("ID00000173");
@@ -4190,8 +4219,8 @@ public class DocView_Regression2 {
 		// Thread sleep added for the page to adjust resolution
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
 		docViewRedact.getDocView_Redactrec_textarea().waitAndClick(5);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, 10).clickAndHold()
-				.moveByOffset(200, 90).release().build().perform();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10).clickAndHold()
+				.moveByOffset(50,40).release().build().perform();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksBtn());
 		docViewRedact.addRemarksBtn().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());

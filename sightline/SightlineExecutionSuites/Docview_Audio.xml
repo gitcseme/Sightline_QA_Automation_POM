@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sightline-Jenkins-Assignment-CodingForm-Audio" preserve-order="true">
+<suite name="Sightline-Docview-Audio" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Sightline-Jenkins-Assignment-CodingForm-Audio">
+<test name="Sightline-Docview-Audio">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.docviewAudio.Docview_Audio_IndiumRegression" />
-<class name= "sightline.docviewAudio.Docview_Audio_Sprint2_2Regression" />
-<class name= "sightline.docviewAudio.Docview_Audio_Sprint2Regression" />
-<class name= "sightline.docviewAudio.DocViewAudio_IndiumRegression" />
-<class name= "sightline.docviewAudio.DocviewAudio_Regression" />
-<class name= "sightline.docviewAudio.DocViewAudio_IndiumRegression" />
+<class name= "sightline.docviewAudio.DocviewAudio_Phase1_Regression" />
+<class name= "sightline.docviewAudio.DocviewAudio_Phase1_Regression1" />
+<class name= "sightline.docviewAudio.DocViewAudio_Phase2_Regression" />
+<class name= "sightline.docviewAudio.DocViewAudio_Phase2_Regression1" />
 
 
 </classes>
