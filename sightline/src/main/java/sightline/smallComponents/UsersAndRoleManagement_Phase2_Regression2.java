@@ -33,6 +33,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.MiniDocListPage;
+import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -97,6 +98,52 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 				{ Input.da1userName, Input.da1password, Input.DomainAdministrator},
 				{ Input.pa1userName, Input.pa1password, Input.ProjectAdministrator },
 				{ Input.rmu1userName, Input.rmu1password, Input.ReviewManager}};
+	}
+	
+	/**
+	 * @author NA Testcase No:RPMXCON-53222
+	 * @Description:To Validate SystemAdmin modifying assigned billable/internal users for a Domain"
+	 **/
+	@Test(description = "RPMXCON-53222", enabled = true, groups = { "regression" })
+	public void validateSAModifAssigUser() throws Exception {
+		ProjectPage project = new ProjectPage(driver);
+		UserManagement user = new UserManagement(driver);
+		
+		String clientName = "" + Utility.dynamicNameAppender();
+		String shrtType = "" + Utility.randomCharacterAppender(4);
+		
+		baseClass.stepInfo("RPMXCON-53222");
+		baseClass.stepInfo("To Validate SystemAdmin modifying assigned billable/internal users for a Domain");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
+
+		project.navigateToClientFromHomePage();
+		driver.waitForPageToBeReady();
+		project.addNewClient(clientName, shrtType, "Domain");
+		
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		user.AssignUserToDomain(clientName, Input.pa1FullName);	
+		user.AssignUserToDomain(clientName, Input.rmu1FullName);
+		user.unAssignUserToDomain(clientName, Input.pa1FullName);
+		user.AssignUserToDomain(clientName, Input.rev1FullName);
+		
+		baseClass.waitForElement(user.getAssignUserButton());
+		user.getAssignUserButton().waitAndClick(10);
+		baseClass.waitForElement(user.getSelectDomainname());
+		user.getSelectDomainname().selectFromDropdown().selectByVisibleText(clientName);
+		if(user.getAssignedDomain(Input.rmu1FullName).isElementAvailable(15) && user.getAssignedDomain(Input.rev1FullName).isElementAvailable(15)) {
+			baseClass.passedStep("Modified user changes successfully saved for the selected Domain");
+		} else {
+			baseClass.failedStep("Modified user changes not saved for the selected Domain As Expected");
+		}
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		user.unAssignUserToDomain(clientName, Input.rmu1FullName);
+		user.unAssignUserToDomain(clientName, Input.rev1FullName);
+		baseClass.passedStep("To Validate SystemAdmin modifying assigned billable/internal users for a Domain");
+		loginPage.logout();
+
 	}
 
 	/**
