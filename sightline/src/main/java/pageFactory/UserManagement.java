@@ -840,7 +840,7 @@ public class UserManagement {
 	}
 	
 	public Element NavigateToManage() {
-		return driver.FindElementByXPath("//a[@id='2']/label");
+		return driver.FindElementByXPath("//a[@title='Manage']/label");
 	}
 
 	public Element getLastPageNum() {
