@@ -71,6 +71,7 @@ public class Input {
 	public static String url;
 	public static String prodPath;
 	public static String projectName;
+	public static String projectNameCjk;
 	public static String sa1password;
 	public static String sa1userName;
 	public static String da1password;
@@ -1114,6 +1115,7 @@ public class Input {
 
 		// Environment data-------------------------------------------------------------
 		url = envConfig.getUrl();
+		projectNameCjk = envConfig.getProjectNameCjk();
 		pa1FullName = envConfig.getPa1FullName();
 		rmu1FullName = envConfig.getRmu1FullName();
 		rev1FullName = envConfig.getRev1FullName();
@@ -1125,6 +1127,7 @@ public class Input {
 
 		if (mode) {
 			projectName = System.getProperty("projectName");
+			projectNameCjk = System.getProperty("projectNameCjk");
 			ICEProjectName = System.getProperty("ICEProjectName");
 			domainName = System.getProperty("domainName");
 			da1userName = System.getProperty("da1userName");
@@ -1150,6 +1153,7 @@ public class Input {
 
 		} else {
 			projectName = envConfig.getProjectName();
+			projectNameCjk = envConfig.getProjectNameCjk();
 			ICEProjectName = envConfig.getICEProjectName();
 			domainName = envConfig.getDomainName();
 			da1userName = envConfig.getDa1userName();

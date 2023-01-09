@@ -14,6 +14,7 @@ import lombok.Setter;
 public class Environment {
 	public String url;
 	public String projectName;
+	public String projectNameCjk;
 	public String domainName;
 	public String sa1userName;
 	public String sa1password;

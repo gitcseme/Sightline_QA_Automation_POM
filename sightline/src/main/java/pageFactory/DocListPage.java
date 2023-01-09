@@ -1396,6 +1396,9 @@ public class DocListPage {
 	public Element getDocListFilterTable() {
 		return driver.FindElementByXPath("//table[@id='dtDocList']/tbody/tr");
 	}
+	public Element getDocListDefaultTable() {
+		return driver.FindElementByXPath("//table[@id='dtDocList']/tbody");
+	}
 
 	public Element getMakeSureSelectedValue() {
 		return driver.FindElementByXPath("//input[@class='select2-search__field']");
