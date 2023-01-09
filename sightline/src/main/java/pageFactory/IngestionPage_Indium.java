@@ -1713,7 +1713,7 @@ public class IngestionPage_Indium {
 			// Below called function handles all the stages of ingestion from catalog to
 			// publish!
 			IngestionCatlogtoIndexing(dataset);
-
+			approveAndPublishIngestion(dataset);
 		}
 
 	}
@@ -1744,7 +1744,7 @@ public class IngestionPage_Indium {
 		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
 
 		if (getSpecifySourceSystem().Enabled()) {
-			base.failedStep("Sorce System is Enabled");
+			base.failedStep("Source System is Enabled");
 
 		} else {
 			base.passedStep("'Source System' is disabled on add new Ingestion");
@@ -2147,10 +2147,10 @@ public class IngestionPage_Indium {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getPreviewRun().isElementAvailable(15);
-			getPreviewRun().Click();
+			getPreviewRun().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			if(getApproveMessageOKButton().isElementAvailable(15)) {
-			getApproveMessageOKButton().Click();
+			getApproveMessageOKButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			}
 			if(previewRecordPopup().isElementAvailable(10)) {
@@ -2415,15 +2415,8 @@ public class IngestionPage_Indium {
 			}
 		}
 		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+		
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getSourceSelectionDATLoadFile());
@@ -2527,13 +2520,6 @@ public class IngestionPage_Indium {
 			getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile);
 		}
 
-		/*
-		 * if( dataset.contains("27MarSinglePageTIFF")) {
-		 * base.stepInfo("*******Selecing TIFF files***************");
-		 * base.waitForElement(getTIFFCheckBox()); getTIFFCheckBox().waitAndClick(20);
-		 * base.waitForElement(getSourceSelectionTextLoadFile());
-		 * getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile1); }
-		 */
 		driver.scrollingToBottomofAPage();
 
 		if (dataset.contains("0002_H13696_1_Latest") || dataset.contains("SSAudioSpeech_Transcript")
@@ -2617,24 +2603,11 @@ public class IngestionPage_Indium {
 	public void verifyDateFormateInCatalogeAndDraft() {
 
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
 
 		for (int i = 0; i < 5; i++) {
@@ -2651,7 +2624,6 @@ public class IngestionPage_Indium {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
 			}
-
 			String dateFormate1 = getIngestionWizardDateFormat().getText();
 			System.out.println(dateFormate1);
 			if (dateFormate1.length() > 11) {
@@ -2660,13 +2632,11 @@ public class IngestionPage_Indium {
 			} else {
 				base.failedStep("Date & time formate is not valid");
 			}
-
 		}
-
 	}
 
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arun Modified Date: 09/01/2023
 	 * @description: Add new ingestion with selecting Date Formate
 	 */
 	public void IngestionRegressionForDateFormate(String dataset, String dateFormate, String datDateFormate,
@@ -2686,133 +2656,26 @@ public class IngestionPage_Indium {
 		base.waitForElement(getSpecifyLocation());
 		base.waitTime(2);
 		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
-
-		base.waitForElement(getSpecifySourceFolder());
-		base.waitTime(2);
 		base.stepInfo("Select Folder");
-		for (int i = 0; i < 30; i++) {
-
-			if (dataset.contains("Collection1K_Tally")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
-			} else if (dataset.contains("20Family_20Threaded")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
-			} else if (dataset.contains("AllSources")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
-			} else if (dataset.contains("0002_H13696_1_Latest")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
-			} else if (dataset.contains("16JanMultiPTIFF")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
-			} else if (dataset.contains("27MarSinglePageTIFF")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
-			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
-			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
-			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
-			} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
-			} else if (dataset.contains("HiddenProperties_IngestionData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
-			} else if (dataset.contains("UniCodeFiles")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
-			} else if (dataset.contains("IngestionEmailData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
-			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-			}
-		}
+		base.waitForElement(getSpecifySourceFolder());
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+			
 		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-
+		addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getSourceSelectionDATLoadFile());
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATGermanFile);
-		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATJapneseFile);
-		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+		 if (dataset.contains("HiddenProperties_IngestionData")) {
 			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(datDateFormate);
-		} else {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATFile);
-		}
+		} 
 		base.waitForElement(getSourceSelectionDATKey());
 		base.waitTime(2);
 
-		if (dataset.contains("Collection1K_Tally")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("20Family_20Threaded")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("AllSources")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
-		} else if (dataset.contains("0002_H13696_1_Latest")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
-		} else if (dataset.contains("16JanMultiPTIFF")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-		} else if (dataset.contains("27MarSinglePageTIFF")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
-		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+		if (dataset.contains("HiddenProperties_IngestionData")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-		} else if (dataset.contains("HiddenProperties_IngestionData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-		} else if (dataset.contains("UniCodeFiles")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("IngestionEmailData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
-		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		}
+		} 
 
-		if (dataset.contains("20Family_20Threaded") || dataset.contains("AllSources")
-				|| dataset.contains("16JanMultiPTIFF") || dataset.contains("QA_EmailConcatenatedData_SS")
-				|| dataset.contains("GD_994_Native_Text_ForProduction")
-				|| dataset.contains("GNon_searchable_PDF_Load_file") || dataset.contains("IngestionEmailData")) {
-			base.stepInfo("*******Selecing text files***************");
-			base.waitForElement(getSourceSelectionText());
-			getSourceSelectionText().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
-
-			base.stepInfo("*******Selecing Native files***************");
-			base.waitForElement(getNativeCheckBox());
-			getNativeCheckBox().waitAndClick(10);
-			base.waitForElement(getNativeLST());
-			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
-		}
-
-		if (dataset.contains("Collection1K_Tally") || dataset.contains("UniCodeFiles")) {
-			base.stepInfo("*******Selecing text files***************");
-			base.waitForElement(getSourceSelectionText());
-			getSourceSelectionText().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
-		}
-
-		if (dataset.contains("0002_H13696_1_Latest")) {
-			base.stepInfo("*******Selecing Native files***************");
-			base.waitForElement(getNativeCheckBox());
-			getNativeCheckBox().waitAndClick(10);
-			base.waitForElement(getNativeLST());
-			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
-		}
 		if (dataset.contains("HiddenProperties_IngestionData")) {
 			base.stepInfo("*******Selecing Native files***************");
 			base.waitForElement(getNativeCheckBox());
@@ -2820,97 +2683,11 @@ public class IngestionPage_Indium {
 			base.waitForElement(getNativeLST());
 			getNativeLST().selectFromDropdown().selectByVisibleText(nativeDateFormate);
 		}
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing PDF files***************");
-			base.waitForElement(getPDFCheckBoxButton());
-			getPDFCheckBoxButton().waitAndClick(20);
-			base.waitForElement(getPDFLST());
-			getPDFLST().selectFromDropdown().selectByVisibleText(Input.PDFFile);
-		}
-
+		
 		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("AllSources") || dataset.contains("16JanMultiPTIFF")) {
-			base.stepInfo("*******Selecing TIFF files***************");
-			base.waitForElement(getTIFFCheckBox());
-			getTIFFCheckBox().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile);
-		}
-
-		/*
-		 * if( dataset.contains("27MarSinglePageTIFF")) {
-		 * base.stepInfo("*******Selecing TIFF files***************");
-		 * base.waitForElement(getTIFFCheckBox()); getTIFFCheckBox().waitAndClick(20);
-		 * base.waitForElement(getSourceSelectionTextLoadFile());
-		 * getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile1); }
-		 */
-		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("0002_H13696_1_Latest") || dataset.contains("SSAudioSpeech_Transcript")
-				|| dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3File);
-		}
-
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3GermanFile);
-		}
-
-		if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3JapneseFile);
-		}
-
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptFile);
-		}
-
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptGermanFile);
-		}
-
-		if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptJapneseFile);
-		}
-		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing Other files***************");
-			base.waitForElement(getOtherCheckBox());
-			getOtherCheckBox().waitAndClick(15);
-			base.waitForElement(getOtherLoadFile());
-			getOtherLoadFile().selectFromDropdown().selectByVisibleText(Input.TranslationFile);
-		}
 
 		base.stepInfo("Select Date Format");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDateFormat());
 		getDateFormat().selectFromDropdown().selectByVisibleText(dateFormate);
 
 		driver.scrollPageToTop();
@@ -2919,313 +2696,30 @@ public class IngestionPage_Indium {
 		getNextButton().waitAndClick(20);
 		base.passedStep("Clicked on Next button");
 
-		base.stepInfo("Pop up messgae for Ingestion without text file");
-		if (getApproveMessageOKButton().isElementAvailable(5)) {
+		base.stepInfo("Pop up message for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
 
 		base.waitForElement(getMappingSourceField(2));
-		if (dataset.contains("Collection1K_Tally")) {
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
-		}
-
-		else if (dataset.contains("20Family_20Threaded")) {
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(9));
-			getMappingCategoryField(9).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(9).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-			base.waitForElement(getMappingCategoryField(10));
-			getMappingCategoryField(10).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(10).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-
-			base.waitForElement(getMappingCategoryField(13));
-			getMappingCategoryField(13).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(13).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("FamilyRelationship");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(29));
-			getMappingCategoryField(29).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(29).selectFromDropdown().selectByVisibleText("DocFileType");
-
-			base.waitForElement(getMappingCategoryField(31));
-			getMappingCategoryField(31).selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDestinationField(31).selectFromDropdown().selectByVisibleText("FamilyID");
-
-			base.waitForElement(getMappingCategoryField(49));
-			getMappingCategoryField(49).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(49).selectFromDropdown().selectByVisibleText("EmailReceivedDate");
-
-			base.waitForElement(getMappingCategoryField(51));
-			getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-		}
-
-		else if (dataset.contains("AllSources")) {
-
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
-		}
-
-		else if (dataset.contains("0002_H13696_1_Latest")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DOCID");
-		} else if (dataset.contains("16JanMultiPTIFF")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
-		}
-
-		else if (dataset.contains("27MarSinglePageTIFF")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
-			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-		}
-
-		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BatesNumber");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DataSource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
-
-		}
-
-		else if (dataset.contains("SSAudioSpeech_Transcript")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
-
-		}
-
-		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DocID");
-
-			base.waitForElement(getMappingCategoryField(5));
-			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-			getAddButton().waitAndClick(15);
-			base.waitTime(2);
-
-			base.waitForElement(getMappingCategoryField(6));
-			getMappingSourceField(6).selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-			getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-
-			getAddButton().waitAndClick(15);
-			base.waitTime(2);
-
-			base.waitForElement(getMappingCategoryField(7));
-			getMappingSourceField(7).selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-			getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-
-			getAddButton().waitAndClick(15);
-			base.waitTime(2);
-
-			base.waitForElement(getMappingCategoryField(8));
-			getMappingSourceField(8).selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-			getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-		}
-
-		else if (dataset.contains("GNon searchable PDF Load file")) {
+		if (dataset.contains("HiddenProperties_IngestionData")) {
 
 			base.waitForElement(getMappingSourceField(2));
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
-		}
-
-		else if (dataset.contains("HiddenProperties_IngestionData")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
-		}
-
-		else if (dataset.contains("UniCodeFiles")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-		}
-
-		else if (dataset.contains("IngestionEmailData")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustID");
-
-			base.waitForElement(getMappingCategoryField(76));
-			getMappingCategoryField(76).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(76).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(73));
-			getMappingCategoryField(73).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(73).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(75));
-			getMappingCategoryField(75).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(75).selectFromDropdown().selectByVisibleText("DocFileType");
-		} else if (dataset.contains("CJK_GermanAudioTestData")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
-
-		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
-
-			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
-
-			base.waitForElement(getMappingCategoryField(25));
-			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-			base.waitForElement(getMappingCategoryField(26));
-			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
-
-			base.waitForElement(getMappingCategoryField(27));
-			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
-
-			base.waitForElement(getMappingCategoryField(28));
-			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		driver.scrollPageToTop();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getApproveMessageOKButton());
 		getApproveMessageOKButton().waitAndClick(10);
 
 		base.stepInfo("'Preview Documents' pop up is opened successfully");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnRunIngestion().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getbtnRunIngestion());
 		getbtnRunIngestion().waitAndClick(10);
 
 		softAssertion = new SoftAssert();
@@ -3244,24 +2738,14 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(10);
 		base.waitTime(5);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionSettingGearIcon().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getIngestionSettingGearIcon());
 		getIngestionSettingGearIcon().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionRollbackbutton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getIngestionRollbackbutton());
 		getIngestionRollbackbutton().waitAndClick(10);
 		base.waitTime(3);
 		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(5);
 		}
-
 		base.VerifySuccessMessage(
 				"Rollback of this ingestion has been started. Refresh the page to view for updated status.");
 		base.passedStep("Rollback Done Successfully");
@@ -3273,26 +2757,12 @@ public class IngestionPage_Indium {
 	 * @description: Verify ingestion at catalog status
 	 */
 	public void ingestionAtCatlogState(String dataset) {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		//applying filter for verifyin catalog stage
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
 
 		// catlogging
@@ -3375,15 +2845,7 @@ public class IngestionPage_Indium {
 		}
 			
 		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-
+		addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getSourceSelectionDATLoadFile());
@@ -3427,12 +2889,8 @@ public class IngestionPage_Indium {
 		driver.scrollingToBottomofAPage();
 
 		base.stepInfo("Select Date Format");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		driver.scrollPageToTop();
 
@@ -3469,7 +2927,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
-
 		else if (dataset.contains("20Family_20Threaded")) {
 			base.waitForElement(getMappingSourceField(2));
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
@@ -3520,7 +2977,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
-
 		else if (dataset.contains("AllSources")) {
 
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
@@ -3543,7 +2999,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
-
 		else if (dataset.contains("0002_H13696_1_Latest")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3557,7 +3012,6 @@ public class IngestionPage_Indium {
 			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
 			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
 		}
-
 		else if (dataset.contains("27MarSinglePageTIFF")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3568,7 +3022,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
 		}
-
 		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3577,7 +3030,6 @@ public class IngestionPage_Indium {
 			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
 
 		}
-
 		else if (dataset.contains("SSAudioSpeech_Transcript")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3602,7 +3054,6 @@ public class IngestionPage_Indium {
 			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		}
-
 		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3614,7 +3065,6 @@ public class IngestionPage_Indium {
 			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
 			
 			base.waitTime(2);
 
@@ -3623,7 +3073,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-			
 			base.waitTime(2);
 
 			base.waitForElement(getMappingCategoryField(7));
@@ -3631,7 +3080,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-			
 			base.waitTime(2);
 
 			base.waitForElement(getMappingCategoryField(8));
@@ -3639,19 +3087,16 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
-
 		else if (dataset.contains("GNon searchable PDF Load file")) {
 
 			base.waitForElement(getMappingSourceField(2));
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
-
 		else if (dataset.contains("HiddenProperties_IngestionData")) {
 
 			base.waitForElement(getMappingSourceField(2));
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
-
 		else if (dataset.contains("UniCodeFiles")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3659,7 +3104,6 @@ public class IngestionPage_Indium {
 			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
 			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
-
 		else if (dataset.contains("IngestionEmailData")) {
 
 			base.waitForElement(getMappingSourceField(2));
@@ -3734,26 +3178,14 @@ public class IngestionPage_Indium {
 
 		driver.scrollPageToTop();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getApproveMessageOKButton());
 		if(getApproveMessageOKButton().isElementAvailable(5)) {
 		getApproveMessageOKButton().waitAndClick(10);
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnRunIngestion().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getbtnRunIngestion());
 		getbtnRunIngestion().waitAndClick(10);
 
 	}
@@ -3780,7 +3212,6 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
-
 	}
 
 	/**
@@ -3818,7 +3249,6 @@ public class IngestionPage_Indium {
 				base.failedStep("Ingestion Failed");
 			}
 		}
-
 		// apply filter for copying status
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
@@ -3872,7 +3302,6 @@ public class IngestionPage_Indium {
 	public void verifyCatalogigErrorForDatSelectDateFormate() {
 
 		driver.waitForPageToBeReady();
-
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getIngestionErrorNumber());
 		getIngestionErrorNumber().waitAndClick(5);
@@ -3905,7 +3334,6 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("Date & time formate is not valid");
 		}
-
 	}
 
 	/**
@@ -3984,7 +3412,6 @@ public class IngestionPage_Indium {
 					driver.scrollingToBottomofAPage();
 				}
 			}
-
 			if (status.contains("Cataloged")) {
 				driver.waitForPageToBeReady();
 				getIngestionLinkByName(ingestionName).isElementAvailable(15);
@@ -4018,7 +3445,6 @@ public class IngestionPage_Indium {
 	 * @description: Method to check next button status when date is selected and
 	 *               not selected
 	 */
-
 	public void VerifyNextButtonStatusBasedOnDateTimeFormatSelection() {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
@@ -4033,15 +3459,9 @@ public class IngestionPage_Indium {
 		base.stepInfo("Select Folder");
 
 		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.TiffImagesFolder);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-
+		
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+		
 		base.waitForElement(getSourceSelectionDATKey());
 
 		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
@@ -4053,12 +3473,8 @@ public class IngestionPage_Indium {
 			base.passedStep("Next button is enabled if date format is not selected");
 		}
 		base.stepInfo("Select Date Format");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		driver.scrollPageToTop();
 		base.waitForElement(getNextButton());
@@ -4080,7 +3496,7 @@ public class IngestionPage_Indium {
 	 */
 	public int verifyMissedDocValuePresentInCopyTableColumn(String term) {
 		getRefreshButton().waitAndClick(10);
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		getIngestionDetailPopup(1).waitAndClick(10);
 
 		driver.scrollingToElementofAPage(getRunIndexing());
 		base.waitForElement(getRunIndexing());
@@ -4154,7 +3570,6 @@ public class IngestionPage_Indium {
 
 		} else if (status.contains("Cataloged")) {
 			base.failedStep("No Errors and Selected Date format is same as in DAT");
-
 		}
 
 	}
@@ -4212,7 +3627,6 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify ingestion status after ignoring all the
 	 *               errors
 	 */
-
 	public void verifyIgnoringErrorsAndContinueIngestion() {
 
 		getIngestionDetailPopup(1).waitAndClick(10);
@@ -4322,14 +3736,7 @@ public class IngestionPage_Indium {
 			}
 		}
 		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 		driver.scrollingToBottomofAPage();
 
@@ -4369,14 +3776,9 @@ public class IngestionPage_Indium {
 		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 		}
-
 		base.stepInfo("Select Date Format");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		driver.scrollPageToTop();
 
@@ -4389,7 +3791,6 @@ public class IngestionPage_Indium {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
-
 	}
 
 	/**
@@ -4411,19 +3812,16 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("Configure mapping section not enabled");
 		}
-
 		if (sourceSystemStatus.equalsIgnoreCase("true") && ingestionTypeStatus.equalsIgnoreCase("true")) {
 			base.passedStep("Source and overwrite setting page disabled");
 		} else {
 			base.failedStep("Source and overwrite setting page not disabled");
 		}
-
 		if (nextButtonStatus.equalsIgnoreCase("true")) {
 			base.passedStep("Next button in source section is disabled and in non editable state");
 		} else {
 			base.failedStep("Next button is enabled");
 		}
-
 	}
 
 	/**
@@ -4434,11 +3832,10 @@ public class IngestionPage_Indium {
 	public void verifyHeaderCountInPreviewRecordPopupPage() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getPreviewRun());
-		getPreviewRun().waitAndClick(2);
+		getPreviewRun().waitAndClick(5);
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
-			getApproveMessageOKButton().Click();
+			getApproveMessageOKButton().waitAndClick(5);
 		}
-
 		base.stepInfo("'Preview Documents' pop up is opened successfully");
 		driver.waitForPageToBeReady();
 		int headerSectionCount = previewRecordPopupHeaderFields().size();
@@ -4462,8 +3859,6 @@ public class IngestionPage_Indium {
 			base.failedStep(
 					"Headers in preview record popup page count not matched with mapped field in configuring section");
 		}
-		
-
 	}
 
 	/**
@@ -4575,7 +3970,6 @@ public class IngestionPage_Indium {
 				driver.waitForPageToBeReady();
 			}
 		}
-
 	}
 
 	/**
@@ -4583,21 +3977,11 @@ public class IngestionPage_Indium {
 	 * @description: this method willverify ingestion details status after rollback
 	 *               the ingestion at indexing stage
 	 */
-
 	public void verifyIngestionDetailsTillIndexingAfterRollback() {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(10);
@@ -4631,7 +4015,6 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("Cataloging,Copying and Indexing field is not blank");
 		}
-
 	}
 
 	/**
@@ -4649,24 +4032,14 @@ public class IngestionPage_Indium {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to save as draft");
 		}
-
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
 		navigateToIngestionPage();
 
 		driver.waitForPageToBeReady();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(10);
@@ -4688,28 +4061,17 @@ public class IngestionPage_Indium {
 		}
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionDetailActionDropdown().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(ingestionDetailActionDropdown());
 		ingestionDetailActionDropdown().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return deleteActionButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(deleteActionButton());
 		deleteActionButton().waitAndClick(10);
 
 		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to Delete the ingestion");
 		}
-
 		base.VerifySuccessMessage("Ingestion deleted successfully.");
-
 	}
 
 	/**
@@ -4717,7 +4079,6 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify mapping field selection after clicking
 	 *               back button
 	 */
-
 	public void verifyMappingFiledPriorSelection(String Field1, String Field2, String Field3) {
 
 		driver.waitForPageToBeReady();
@@ -4728,20 +4089,12 @@ public class IngestionPage_Indium {
 		getMappingSourceField(3).selectFromDropdown().selectByVisibleText(Field2);
 		getMappingSourceField(4).selectFromDropdown().selectByVisibleText(Field3);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getApproveMessageOKButton());
 		getApproveMessageOKButton().waitAndClick(10);
-
+		base.waitForElement(goBackButton());
 		goBackButton().waitAndClick(5);
 
 		String mappedParentDocID = getMappingSourceField(2).selectFromDropdown().getFirstSelectedOption().getText();
@@ -4760,18 +4113,16 @@ public class IngestionPage_Indium {
 	 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify ingestion status after saving as draft
 	 */
-
 	public void verifyIngestionStatusAfterSaveAsDraft() {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		base.waitForElement(getIngestion_SaveAsDraft());
 		getIngestion_SaveAsDraft().waitAndClick(5);
 
-		if (getApproveMessageOKButton().isElementAvailable(5)) {
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to save as draft");
 		}
-
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
 		navigateToIngestionPage();
 
@@ -4811,7 +4162,6 @@ public class IngestionPage_Indium {
 			base.failedMessage("Rollback button not disabled in draft mode");
 		}
 		getRefreshButton().waitAndClick(10);
-
 	}
 
 	/**
@@ -4823,18 +4173,9 @@ public class IngestionPage_Indium {
 
 		rollBackIngestion();
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(10);
@@ -4867,21 +4208,13 @@ public class IngestionPage_Indium {
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
-		getActionDropdownArrow().waitAndClick(5);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionOpenWizard().Visible();
-			}
-		}), Input.wait30);
+		getActionDropdownArrow().waitAndClick(10);
+		base.waitForElement(getActionOpenWizard());
 
-		getActionOpenWizard().waitAndClick(5);
+		getActionOpenWizard().waitAndClick(10);
 		base.waitTime(3);
 		base.stepInfo("Starting ingestion again from draft mode");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(10);
 		base.passedStep("Clicked on Next button");
 
@@ -4891,28 +4224,14 @@ public class IngestionPage_Indium {
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getApproveMessageOKButton().Visible();
-				}
-			}), Input.wait30);
 			getApproveMessageOKButton().waitAndClick(10);
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnRunIngestion().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getbtnRunIngestion());
 		getbtnRunIngestion().waitAndClick(10);
-
 	}
 
 	/**
@@ -4920,14 +4239,9 @@ public class IngestionPage_Indium {
 	 * @description: this method will perform catalogging and copying for two
 	 *               ingestion
 	 */
-
 	public void multipleIngestionCopying(int numberOfIngestion) {
 		base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 
 		base.waitForElement(getFilterByFAILED());
@@ -4987,7 +4301,6 @@ public class IngestionPage_Indium {
 			}), Input.wait30);
 			getCloseButton().waitAndClick(10);
 		}
-
 		
 		for (int k = 1; k <= numberOfIngestion; k++) {
 			for (int i = 0; i < 50; i++) {
@@ -5102,18 +4415,10 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getIngestionDetailPopup(1).waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionDetailActionDropdown().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(ingestionDetailActionDropdown());
 		ingestionDetailActionDropdown().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return rollbackOptionInPopup().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(rollbackOptionInPopup());
 		rollbackOptionInPopup().waitAndClick(10);
 		base.waitTime(2);
 		String warningMessage = getRollbackWarningMessage().getText();
@@ -5123,7 +4428,7 @@ public class IngestionPage_Indium {
 		} else {
 			base.passedStep("Indexing warning message not prompted when rollingback add only ingestion");
 		}
-		if (getApproveMessageOKButton().isElementAvailable(5)) {
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(5);
 		}
 
@@ -5163,7 +4468,6 @@ public class IngestionPage_Indium {
 			base.passedStep("Information displayed on Tiles view");
 		} else {
 			base.failedMessage("Information displayed on grid view");
-
 		}
 
 		if (getStatus(1).isElementPresent()) {
@@ -5211,19 +4515,11 @@ public class IngestionPage_Indium {
 
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionDetailActionDropdown().Visible();
-			}
-		}), Input.wait30);
+		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitForElement(ingestionDetailActionDropdown());
 		ingestionDetailActionDropdown().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return rollbackOptionInPopup().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(rollbackOptionInPopup());
 		rollbackOptionInPopup().waitAndClick(10);
 		base.waitTime(2);
 		if (getRollbackWarningMessage().isElementAvailable(5)) {
@@ -5302,12 +4598,10 @@ public class IngestionPage_Indium {
 					base.failedStep("After clicking page number ,particular page not displayed");
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while navigating page in ingestion home page");
 		}
-
 	}
 
 	/**
@@ -5315,7 +4609,6 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify the contents present in the ingestion
 	 *               tiles
 	 */
-
 	public void verifyContentOnIngestionTiles() {
 
 		getRefreshButton().waitAndClick(5);
@@ -5387,18 +4680,9 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCOPIED());
 		getFilterByCOPIED().waitAndClick(10);
 
 		// copying
@@ -5477,7 +4761,6 @@ public class IngestionPage_Indium {
 		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(10);
 		
-
 		for (int i = 0; i < 40; i++) {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
@@ -5508,14 +4791,11 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(5);
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(5);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionDetailActionDropdown().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(ingestionDetailActionDropdown());
 		ingestionDetailActionDropdown().waitAndClick(10);
 
 		String status = rollbackButtonStatus().GetAttribute("class").trim();
+		base.stepInfo("rollback button status--"+status);
 		if (status.contains("disable")) {
 			base.passedStep("Rollback option not available for approved ingestion");
 		} else {
@@ -5557,14 +4837,14 @@ public class IngestionPage_Indium {
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
 			getIngestionLinkByName(ingestionName).isElementAvailable(15);
-			getIngestionLinkByName(ingestionName).Click();
+			getIngestionLinkByName(ingestionName).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
 			errorsCount().ScrollTo();
 			errorsCount().isElementAvailable(15);
-			errorsCount().Click();
+			errorsCount().waitAndClick(5);
 			ignoreAllButon().isElementAvailable(15);
-			ignoreAllButon().Click();
+			ignoreAllButon().waitAndClick(5);
 			base.waitTime(2);
 			getApproveMessageOKButton().isElementAvailable(10);
 			getApproveMessageOKButton().Click();
@@ -5576,10 +4856,10 @@ public class IngestionPage_Indium {
 			driver.waitForPageToBeReady();
 			startCoping().ScrollTo();
 			startCoping().isElementAvailable(10);
-			startCoping().Click();
+			startCoping().waitAndClick(5);
 			driver.scrollPageToTop();
 			getCloseButton().isElementAvailable(15);
-			getCloseButton().Click();
+			getCloseButton().waitAndClick(5);
 			base.waitTime(2);
 			for (int i = 0; i < 8000; i++) {
 				driver.scrollPageToTop();
@@ -5717,11 +4997,11 @@ public class IngestionPage_Indium {
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
 			fullAnalysisRadioButton().isElementAvailable(15);
-			fullAnalysisRadioButton().Click();
+			fullAnalysisRadioButton().waitAndClick(5);
 			driver.waitForPageToBeReady();
 			runButton().isElementAvailable(10);
 			if (runButton().getWebElement().isEnabled()) {
-				runButton().Click();
+				runButton().waitAndClick(5);
 			}
 			for (int i = 0; i < 10000; i++) {
 				driver.Navigate().refresh();
@@ -5739,7 +5019,7 @@ public class IngestionPage_Indium {
 				if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
 					driver.waitForPageToBeReady();
 					publishButton().ScrollTo();
-					publishButton().Click();
+					publishButton().waitAndClick(5);
 					break;
 				}
 			}
@@ -5798,7 +5078,6 @@ public class IngestionPage_Indium {
 					}
 					break;
 				}
-
 			}
 			driver.Navigate().refresh();
 			for (int i = 0; i < 1000; i++) {
@@ -5830,26 +5109,16 @@ public class IngestionPage_Indium {
 	 */
 
 	public void verifySizeOfIngestionGrid() {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		//apply filter
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByPUBLISHED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
-		getIngestion_GridView().Click();
+		base.waitForElement(getIngestion_GridView());
+		getIngestion_GridView().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
 		String gridsizeBefore = gridTable().GetAttribute("style");
@@ -5864,7 +5133,6 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("Size of the grid resized");
 		}
-
 	}
 
 	/**
@@ -5874,15 +5142,7 @@ public class IngestionPage_Indium {
 	 */
 	public void tiffImagesIngestion(String DATfile, String TIFFfile, String genSearchPDFCheckBox) {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.TiffImagesFolder);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(DATfile, "ProdBeg");
 		getTIFFLST().ScrollTo();
@@ -5894,13 +5154,8 @@ public class IngestionPage_Indium {
 			getTIFFSearchablePDFCheckBox().isElementAvailable(10);
 			getTIFFSearchablePDFCheckBox().Click();
 		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
@@ -5913,7 +5168,7 @@ public class IngestionPage_Indium {
 	 */
 
 	public void ignoreErrorsAndCatlogging() {
-		
+		// applying filter
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
@@ -5980,7 +5235,6 @@ public class IngestionPage_Indium {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -6070,7 +5324,6 @@ public class IngestionPage_Indium {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -6150,14 +5403,7 @@ public class IngestionPage_Indium {
 	public void selectPdfInPathFileAndSaveAsDraft(String ingestionName, String datFile, String datKey, String pdfKey) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.stepInfo("Selecting DAT source");
 		selectDATSource(datFile, datKey);
 
@@ -6180,12 +5426,8 @@ public class IngestionPage_Indium {
 			base.failedStep("Exception occured while selecting PDF source." + e.getLocalizedMessage());
 		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 		driver.scrollPageToTop();
 
 		base.waitForElement(getIngestion_SaveAsDraft());
@@ -6200,29 +5442,16 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify error message for duplicate ingestion
 	 */
 	public void verifyDuplicateIngestionErrorMessage() {
+		//applying filter
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
 
-		getRefreshButton().waitAndClick(5);
+		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 50; i++) {
 			base.waitTime(2);
@@ -6253,7 +5482,6 @@ public class IngestionPage_Indium {
 			}
 		}
 		getCloseButton().waitAndClick(10);
-
 	}
 
 	/**
@@ -6275,7 +5503,6 @@ public class IngestionPage_Indium {
 			base.failedStep(
 					"Exception occured while checking available option in draft state." + e.getLocalizedMessage());
 		}
-
 	}
 
 	/**
@@ -6313,7 +5540,6 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
-
 	}
 
 	/**
@@ -6322,16 +5548,9 @@ public class IngestionPage_Indium {
 	 *               folder
 	 */
 	public void unicodeFilesIngestion(String datFile, String textFile, String datKey) {
+		
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.UniCodeFilesFolder);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
@@ -6339,13 +5558,8 @@ public class IngestionPage_Indium {
 		getSourceSelectionText().waitAndClick(20);
 		base.waitForElement(getSourceSelectionTextLoadFile());
 		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -6393,25 +5607,13 @@ public class IngestionPage_Indium {
 	 */
 
 	public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName, String datFile, String datKey) {
+		
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 	}
 
@@ -6420,27 +5622,14 @@ public class IngestionPage_Indium {
 	 * @description: this method will enter overlay ingestion data with enabling
 	 *               mapping field
 	 */
-
 	public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName, String datFile, String datKey) {
+		
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 		clickOnNextButton();
 		base.waitTime(2);
 		base.stepInfo("mapping field section enabled");
@@ -6454,32 +5643,17 @@ public class IngestionPage_Indium {
 	 */
 
 	public void OverlayForNativeWithoutIngestion(String ingestionName, String nativeFile) {
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return datCheckboxStatus().Visible();
-			}
-		}), Input.wait30);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+		
+		base.waitForElement(datCheckboxStatus());
 		datCheckboxStatus().waitAndClick(5);
 		base.waitTime(2);
 		selectNativeSource(nativeFile, false);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 	}
 
@@ -6493,16 +5667,11 @@ public class IngestionPage_Indium {
 			String datFile, String docKey) {
 
 		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(5);
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
-		getActionDropdownArrow().waitAndClick(5);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionCopy().Visible();
-			}
-		}), Input.wait30);
-
-		getActionCopy().waitAndClick(5);
+		getActionDropdownArrow().waitAndClick(10);
+		base.waitForElement(getActionCopy());
+		getActionCopy().waitAndClick(10);
 		base.waitTime(3);
 		base.stepInfo("Starting ingestion again from draft mode using copy option");
 
@@ -6523,11 +5692,7 @@ public class IngestionPage_Indium {
 			e.printStackTrace();
 		}
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(10);
 		base.passedStep("Clicked on Next button");
 
@@ -6536,25 +5701,15 @@ public class IngestionPage_Indium {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			base.waitForElement(getApproveMessageOKButton());
 			getApproveMessageOKButton().waitAndClick(5);
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnRunIngestion().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getbtnRunIngestion());
 		getbtnRunIngestion().waitAndClick(10);
-
 	}
 
 	/**
@@ -6690,7 +5845,6 @@ public class IngestionPage_Indium {
 				base.stepInfo("Ingestion not found");
 				break;
 			}
-
 			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
@@ -6698,12 +5852,10 @@ public class IngestionPage_Indium {
 				getIngestionPaginationNextButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
 				base.stepInfo("Expected Ingestion not found in the page " + i);
-
 			}
 
 		}
 		return status;
-
 	}
 
 	/**
@@ -6714,15 +5866,7 @@ public class IngestionPage_Indium {
 	public void performAKNativeFolderIngestion(String datFile) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AK_NativeFolder);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
@@ -6739,12 +5883,8 @@ public class IngestionPage_Indium {
 		base.stepInfo("Selecting Transcript file");
 		selectAudioTranscriptSource(Input.TranscriptFile, false);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -6831,15 +5971,7 @@ public class IngestionPage_Indium {
 	public void mediaAndTranscriptIngestion(String sourceFolder, String datFile) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, sourceFolder);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
@@ -6855,12 +5987,8 @@ public class IngestionPage_Indium {
 		base.stepInfo("Selecting Transcript file");
 		selectAudioTranscriptSource(Input.TranscriptFile, false);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -6880,14 +6008,10 @@ public class IngestionPage_Indium {
 			String docKey1, String docKey2) {
 		driver.waitForPageToBeReady();
 
-		getIngestionDetailPopup(1).waitAndClick(5);
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
-		getActionDropdownArrow().waitAndClick(5);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionCopy().Visible();
-			}
-		}), Input.wait30);
+		getActionDropdownArrow().waitAndClick(10);
+		base.waitForElement(getActionCopy());
 
 		getActionCopy().waitAndClick(5);
 		driver.waitForPageToBeReady();
@@ -6926,19 +6050,11 @@ public class IngestionPage_Indium {
 		warningMessageCancelButton().waitAndClick(10);
 
 		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(docKey2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(10);
 		base.passedStep("Clicked on Next button");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getPreviewRun());
 		getPreviewRun().waitAndClick(10);
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(10);
@@ -7026,14 +6142,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getSpecifySourceFolder());			
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(dataset);
 			base.waitTime(2);
-			base.waitForElement(getDATDelimitersFieldSeparator());
-			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-			base.waitForElement(getDATDelimitersTextQualifier());
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			driver.scrollingToBottomofAPage();
 
@@ -7529,15 +6638,9 @@ public class IngestionPage_Indium {
 	 */
 
 	public void OverlayIngestionWithoutDat(String ingestionName, String type, String file) {
+		
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDATDelimitersNewLine().Visible();
-			}
-		}), Input.wait30);
-
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.waitForElement(datCheckboxStatus());
 		datCheckboxStatus().waitAndClick(5);
@@ -7575,12 +6678,8 @@ public class IngestionPage_Indium {
 			selectOtherSource(type, file, false);
 		}
 		base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -7659,18 +6758,12 @@ public class IngestionPage_Indium {
 
 	/**
 	 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the status of overlay ingestion till
-	 *               approving stage
+	 * @description: this method will verify the docs count available after the ingestion published
 	 */
 	public void verifyDocAvailability() {
-		driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		
+		navigateToIngestionHomePageAndVerifyUrl();
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
@@ -7701,11 +6794,7 @@ public class IngestionPage_Indium {
 
 		driver.waitForPageToBeReady();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(5);
@@ -7748,16 +6837,9 @@ public class IngestionPage_Indium {
 	 */
 	public void unicodeFilesIngestionWithDifferentSourceSystem(String source, String datFile, String textFile,
 			String datKey) {
+		
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.sourceLocation, Input.UniCodeFilesFolder);
-		base.waitTime(2);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
@@ -7767,12 +6849,8 @@ public class IngestionPage_Indium {
 		base.waitForElement(getSourceSelectionTextLoadFile());
 		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -7788,21 +6866,12 @@ public class IngestionPage_Indium {
 	 */
 	public void verifyTotalDocsIngestedWithPurehitCount() {
 
-		driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		driver.waitForPageToBeReady();
+		navigateToIngestionHomePageAndVerifyUrl();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByPUBLISHED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
@@ -7839,42 +6908,25 @@ public class IngestionPage_Indium {
 	public void performNewAddOnlyIngestionUsingCopyOption(String sourceSystem, String sourceFolder, String datFile,
 			String docKey) {
 		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(5);
+		getIngestionDetailPopup(1).waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionDropdownArrow().Visible();
-			}
-		}), Input.wait30);
-		getActionDropdownArrow().waitAndClick(5);
+		base.waitForElement(getActionDropdownArrow());
+		getActionDropdownArrow().waitAndClick(10);
 
 		if (getActionCopy().Displayed() && getActionApprove().Displayed() && getActionOpenWizard().Displayed()
 				&& rollbackOptionInPopup().Displayed()) {
 			base.passedStep("All available options displayed in action drop down");
 		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionCopy().Visible();
-			}
-		}), Input.wait30);
-
-		getActionCopy().waitAndClick(5);
+		base.waitForElement(getActionCopy());
+		getActionCopy().waitAndClick(10);
 		base.waitTime(3);
 		base.stepInfo("performing new ingestion using copy option");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceSystem().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSpecifySourceSystem());
 		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceFolder().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSpecifySourceFolder());
 		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
 
 		base.stepInfo("Selected source system and source folder");
@@ -7883,11 +6935,7 @@ public class IngestionPage_Indium {
 		selectDATSource(datFile, docKey);
 
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(10);
 		base.passedStep("Clicked on Next button");
 
@@ -7944,14 +6992,7 @@ public class IngestionPage_Indium {
 
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation,
 				Input.AK_NativeFolder);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
 		base.stepInfo("Selecting Native file");
@@ -7965,12 +7006,8 @@ public class IngestionPage_Indium {
 		base.stepInfo("Selecting Transcript file");
 		selectAudioTranscriptSource(Input.TranscriptFile, false);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		base.waitForElement(getDateFormat());
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
 		base.waitTime(2);
@@ -7985,26 +7022,13 @@ public class IngestionPage_Indium {
 	 *               in database
 	 */
 	public void verifyNonExistingDatasetErrorMessage() {
+		// applying filter for failed and cataloged
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
@@ -8044,26 +7068,13 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify error message for duplicate ingestion
 	 */
 	public void verifyingErrorMsgInOverLayMethod() {
+		// applying filter for failed and cataloged
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
@@ -8116,9 +7127,7 @@ public class IngestionPage_Indium {
 				}
 				break;
 			}
-
 		}
-
 	}
 	
 	/**
@@ -8127,23 +7136,12 @@ public class IngestionPage_Indium {
 	 */
 	public int getIngestedUniqueCount() {
 
-		driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		navigateToIngestionHomePageAndVerifyUrl();
+		// applying filter
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByPUBLISHED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(10);
-
 		getRefreshButton().waitAndClick(5);
 		base.waitTime(5);
 
@@ -8170,12 +7168,7 @@ public class IngestionPage_Indium {
 	public void performAudio96DocsIngestion(String datFile, String docKey) {
 		
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.audio96DocsFolder);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDATDelimitersNewLine().Visible();
-			}
-		}), Input.wait30);
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile,docKey );
@@ -8188,11 +7181,7 @@ public class IngestionPage_Indium {
 		base.stepInfo("Selecting Mp3 file");
 		selectMP3VarientSource(Input.selectMp3File, false);
 		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDateFormat());
 		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
@@ -8211,27 +7200,13 @@ public class IngestionPage_Indium {
 	public String selectPublishedFromFilterDropDown(String dataset) {
 
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByINPROGRESS().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByINPROGRESS());
 		getFilterByINPROGRESS().waitAndClick(10);
 		
-		
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByPUBLISHED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(10);
 		
 		getRefreshButton().waitAndClick(10);
@@ -8246,15 +7221,11 @@ public class IngestionPage_Indium {
 				if (ingestionName.contains(dataset)) {
 					base.passedStep("Expected Ingestion is found successfully");
 					break;
-					
-					
 				}else {
 					base.stepInfo("The Ingestion Name is not there in this project");
 				}
 					
 				}
-			
-		
 	return ingestionName;
 	}
 	
@@ -8266,13 +7237,7 @@ public class IngestionPage_Indium {
 	public void OverlayIngestionWithDat(String ingestionName,String datFile,String datKey,String type,String file) {
 		
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDATDelimitersNewLine().Visible();
-			}
-		}), Input.wait30);
-
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		
@@ -8311,11 +7276,7 @@ public class IngestionPage_Indium {
 		}
 		
 		base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDateFormat());
 		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 		clickOnNextButton();
@@ -8325,96 +7286,6 @@ public class IngestionPage_Indium {
 
 	}
 
-	/**
-	 * @author Aathith.Senthilkumar
-	 * @throws InterruptedException
-	 */
-	public void getIngestionSatatusAndPerform() throws InterruptedException {
-		
-		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
-		getRefeshBtn().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		base.waitForElement(getStatus(1));
-		String status = getStatus(1).getText().trim();
-		driver.waitForPageToBeReady();
-		
-		if(status.contains("In Progress")){
-			base.waitTime(5);
-			getRefeshBtn().waitAndClick(5);
-			getIngestionSatatusAndPerform();
-		}else if(status.contains("failed")) {
-			base.failedStep("ingestion failed");
-		}else if(status.contains("Cataloged")) {
-			base.stepInfo("cataloged stage is reached");
-			clickCopied();
-			getIngestionSatatusAndPerform();
-		}else if(status.contains("Copied")) {
-			base.stepInfo("copied stage is reached");
-			clickIndex();
-			getIngestionSatatusAndPerform();
-		}else if(status.contains("Indexed")) {
-			base.stepInfo("Indexed stage is reached");
-			clickApprove();
-			getIngestionSatatusAndPerform();
-		}else if(status.contains("Approved")) {
-			driver.Navigate().refresh();
-			driver.Manage().window().maximize();
-			runFullAnalysisAndPublish();
-		}else {
-			base.failedStep("failed to get ingestion status");
-		}
-		
-	}
-	/**
-	 * @author Aathith.Senthilkumar
-	 */
-	public void clickCopied() {
-		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(10);
-		driver.Manage().window().fullscreen();
-		base.waitTime(2);
-		driver.scrollingToElementofAPage(getRunCopying());
-		base.waitForElement(getRunCopying());
-		driver.waitForPageToBeReady();
-		base.waitForElement(getRunCopying());
-		getRunCopying().waitAndClick(10);
-		getCloseButton().waitAndClick(10);
-		base.stepInfo("copied button is clicked");
-	}
-	/**
-	 * @author Aathith.Senthilkumar
-	 */
-	public void clickIndex() {
-		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-		driver.Manage().window().fullscreen();
-		base.waitTime(2);
-		driver.scrollingToElementofAPage(getRunIndexing());
-		driver.waitForPageToBeReady();
-		base.waitForElement(getRunIndexing());
-		getRunIndexing().waitAndClick(10);
-		getCloseButton().waitAndClick(10);
-		base.stepInfo("Index button is clicked");
-	}
-	/**
-	 * @author Aathith.Senthilkumar
-	 */
-	public void clickApprove() {
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-		driver.waitForPageToBeReady();
-		base.waitForElement(ingestionDetailActionDropdown());
-		ingestionDetailActionDropdown().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		if(getActionApprove().isElementAvailable(2)) {
-		getActionApprove().waitAndClick(3);
-		if(getApproveMessageOKButton().isElementAvailable(1)) {
-		getApproveMessageOKButton().waitAndClick(3);}}
-		getCloseButton().waitAndClick(10);
-		base.stepInfo("Ingestion is approved");
-	}
-
-	
 	/**
 	*@author Gopinath
 	*@description : Method to navigate data sets page.
@@ -8486,22 +7357,15 @@ public class IngestionPage_Indium {
 		}
 	}
 	
-	
-	
 	 /**
 		 * @author: Mohan Created Date: 05/05/2022 Modified by: NA Modified Date: NA
 		 * @description: verify Ingestion publish
 		 */
 		public boolean verifyIngestionpublishWithAdditionalOptions(String dataset, String ingestionType) throws InterruptedException {
 			
-		
 			base.stepInfo("Validating whether the ingestion is done for particular project");
 			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getFilterByButton());
 			getFilterByButton().waitAndClick(10);
 			base.waitForElement(getFilterByPUBLISHED());
 			getFilterByPUBLISHED().waitAndClick(5);
@@ -8542,42 +7406,10 @@ public class IngestionPage_Indium {
 					base.stepInfo("The Ingestion is not found in this project");
 
 				}
-
 			}	
 			return status;
-
-
-
 		}
 
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @throws InterruptedException
-		 * @Description perform ingestion upto copied stage
-		 */
-		public void getIngestionSatatusAndPerformUptoCopiedStage() throws InterruptedException {
-			
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			getRefeshBtn().waitAndClick(5);
-			driver.waitForPageToBeReady();
-			String status = getStatus(1).getText().trim();
-			
-			if(status.contains("In Progress")){
-				base.waitTime(5);
-				getRefeshBtn().waitAndClick(5);
-				getIngestionSatatusAndPerformUptoCopiedStage();
-			}else if(status.contains("failed")) {
-				base.failedStep("ingestion failed");
-			}else if(status.contains("Cataloged")) {
-				base.stepInfo("cataloged stage is reached");
-				clickCopied();
-				getIngestionSatatusAndPerformUptoCopiedStage();
-			}else if(status.contains("Copied")) {
-				base.stepInfo("copied stage is reached");
-			}
-			
-		}
 		/**
 		 * @author Aathith.Senthilkumar
 		 * @param Language
@@ -8824,12 +7656,7 @@ public class IngestionPage_Indium {
 		
 		public void allSourcesIngestionWithText(String datFile,String docKey) {
 			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersNewLine().Visible();
-				}
-			}), Input.wait30);
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile,docKey );
@@ -8837,11 +7664,7 @@ public class IngestionPage_Indium {
 			base.stepInfo("Selecting Text file");
 			selectTextSource(Input.TextFile, false);
 			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDateFormat().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getDateFormat());
 			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 			clickOnNextButton();
@@ -8975,12 +7798,8 @@ public class IngestionPage_Indium {
 			getAddanewIngestionButton().waitAndClick(5);
 			driver.waitForPageToBeReady();
 			driver.scrollingToBottomofAPage();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getTIFFCheckBox().Visible();
-				}
-			}), Input.wait30);
-			getTIFFCheckBox().waitAndClick(5);
+			base.waitForElement(getTIFFCheckBox());
+			getTIFFCheckBox().waitAndClick(10);
 			
 			if(getTIFFSearchablePDFCheckBox().isElementAvailable(10)) {
 				base.passedStep("Generate searchable pdf option available in Tiff Section");
@@ -8996,18 +7815,12 @@ public class IngestionPage_Indium {
 		 */
 		
 		public void performAutomationAllsourcesIngestion(String system,String datFile,String docKey) {
+			
 			selectIngestionTypeAndSpecifySourceLocation("Add Only", system, Input.sourceLocation, Input.AllSourcesFolder);
-			base.waitTime(2);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersNewLine().Visible();
-				}
-			}), Input.wait30);
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile,docKey );
-			base.waitTime(2);
 			base.stepInfo("Selecting Native file");
 			selectNativeSource(Input.NativeFile, false);
 			base.waitTime(2);
@@ -9016,24 +7829,18 @@ public class IngestionPage_Indium {
 			base.waitTime(2);
 			base.stepInfo("Selecting Pdf file");
 			selectPDFSource(Input.PDFFile, false);
-			base.waitTime(2);
 			base.stepInfo("Selecting Tiff file");
 			selectTIFFSource(Input.TIFFFile, false,false);
 			base.waitTime(2);
 			base.stepInfo("Selecting Mp3 file");
 			selectMP3VarientSource(Input.MP3File, false);
-			base.waitTime(2);
 			base.stepInfo("Selecting Transcript file");
 			selectAudioTranscriptSource(Input.TranscriptFile, false);
 			base.waitTime(2);
 			base.stepInfo("Selecting Translation file");
 			selectOtherSource("Translation", Input.TranslationFile, false);
 			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDateFormat().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getDateFormat());
 			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 
 			clickOnNextButton();
@@ -9106,8 +7913,7 @@ public class IngestionPage_Indium {
 		 */
 		public void performGD_994NativeFolderIngestion(String sourceSystem,String datFile,String nativeFile,String textFile) {
 			selectIngestionTypeAndSpecifySourceLocation("Add Only", sourceSystem, Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
-			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile, Input.documentKey);
@@ -9118,11 +7924,6 @@ public class IngestionPage_Indium {
 			base.waitForElement(getDateFormat());
 			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 			clickOnNextButton();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDateFormat().Visible();
-				}
-			}), Input.wait30);
 			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.documentKey);
 			//there is a spelling difference in mapping section in pt and qa, will faill in qa
 			performMapping(6,"EmailBCCNameAndBCCAddress",Input.email,"EmailBCCNamesAndAddresses");
@@ -9137,7 +7938,6 @@ public class IngestionPage_Indium {
 		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will perform mapping in Mapping section
 		 */
-		
 		public void performMapping(int row,String source,String category,String destination) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMappingSourceField(row));
@@ -9166,17 +7966,12 @@ public class IngestionPage_Indium {
 		
 		/**
 		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the default value of delimiter
-		 *               
+		 * @description: this method will verify the default value of delimiter           
 		 */
 		public void verifyDefaultValueOfDelimiter() {
 			driver.waitForPageToBeReady();
 			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersNewLine().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getDATDelimitersNewLine());
 			String newLineDelimiter=getDATDelimitersNewLine().selectFromDropdown().getFirstSelectedOption().getText();
 			if(newLineDelimiter.equalsIgnoreCase(Input.defaultNewLineDelimiter)) {
 				base.passedStep("New line delimiter have default value selected");
@@ -9190,30 +7985,20 @@ public class IngestionPage_Indium {
 		 * @author: Arun Created Date: 24/06/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will perform ingestion using open in wizard option
 		 */
-
 		public void IngestionFromDraftModeWithOpenWizardOption(String type ,String file) {
 
 			driver.waitForPageToBeReady();
 			getIngestionDetailPopup(1).waitAndClick(5);
 			base.waitForElement(getActionDropdownArrow());
-			getActionDropdownArrow().waitAndClick(5);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getActionOpenWizard().Visible();
-				}
-			}), Input.wait30);
-
-			getActionOpenWizard().waitAndClick(5);
+			getActionDropdownArrow().waitAndClick(10);
+			base.waitForElement(getActionOpenWizard());
+			getActionOpenWizard().waitAndClick(10);
 			base.waitTime(3);
 			
 			if (type.equalsIgnoreCase("Native")) {
 				selectNativeSource(file, false);
 			}
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getNextButton().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getNextButton());
 			getNextButton().waitAndClick(10);
 			base.passedStep("Clicked on Next button");
 			if (getPreviewRun().Enabled()) {
@@ -9253,7 +8038,6 @@ public class IngestionPage_Indium {
 		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will verify the value of metadata
 		 */
-
 		public void addMetadatAndVerifyValue(String metadata ,String value) {
 			DocListPage docList = new DocListPage(driver);
 			docList.selectingSingleValueInCoumnAndRemovingExistingOne(metadata);
@@ -9268,21 +8052,15 @@ public class IngestionPage_Indium {
 					System.out.println("value for metdata 'DocPrimaryLanguage' not displayed");
 				}
 		   }
-			
 		}
 		
 		/**
 		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will verify options available under source system dropdown
 		 */
-
 		public void verifyOptionAvailableInSourceSystem() {
 			base.stepInfo("Click on add new ingestion button");
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAddanewIngestionButton().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getAddanewIngestionButton());
 			getAddanewIngestionButton().waitAndClick(10);
 			if(getSpecifySourceSystem().isElementAvailable(15)) {
 			 List<WebElement> availableOptions =getSpecifySourceSystem().selectFromDropdown().getOptions();
@@ -9307,7 +8085,6 @@ public class IngestionPage_Indium {
 			else {
 				base.failedStep("Selecting source system option not available");
 			}
-			
 		}
 		
 		/**
@@ -9317,11 +8094,7 @@ public class IngestionPage_Indium {
 
 		public void verifyIngestionDetailPopupAndActionDropDown() {
 			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionDetailPopup(1).Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getIngestionDetailPopup(1));
 			getIngestionDetailPopup(1).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			if(getActionDropdownArrow().isElementAvailable(10) && getRunCopying().isElementAvailable(10)) {
@@ -9353,24 +8126,11 @@ public class IngestionPage_Indium {
 		 */
 
 		public void deleteIngestion() {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionDetailPopup(1).Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getIngestionDetailPopup(1));
 			getIngestionDetailPopup(1).waitAndClick(5);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getActionDropdownArrow().Visible();
-				}
-			}), Input.wait30);
-			getActionDropdownArrow().waitAndClick(5);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getActionDelete().Visible();
-				}
-			}), Input.wait30);
-
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(10);
+			base.waitForElement(getActionDelete());
 			getActionDelete().waitAndClick(5);
 			
 			if (getApproveMessageOKButton().isElementAvailable(5)) {
@@ -9458,7 +8218,6 @@ public class IngestionPage_Indium {
 			base.waitForElement(getPreviewRun());
 			getPreviewRun().waitAndClick(5);
 			base.VerifyErrorMessage(Input.mandatoryMappingError);
-			
 		}
 		
 		/**
@@ -9646,11 +8405,9 @@ public class IngestionPage_Indium {
 				}else {
 					base.failedStep("Audio transcript options not available");
 				}
-			}
-			
+			}	
 		}
-		
-
+	
 		/**
 		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will verify the options for other file type
@@ -9744,12 +8501,7 @@ public class IngestionPage_Indium {
 			
 			selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation, dataset);
 			base.waitTime(2);
-			base.waitForElement(getDATDelimitersFieldSeparator());
-			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-			base.waitForElement(getDATDelimitersTextQualifier());
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile, dockey);
@@ -9921,15 +8673,7 @@ public class IngestionPage_Indium {
 			base.stepInfo("Add new ingestion");
 			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,source, Input.sourceLocation, 
 					Input.Collection1KFolder);
-			base.waitTime(2);
-			base.waitForElement(getDATDelimitersFieldSeparator());
-			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
-
-			base.waitForElement(getDATDelimitersTextQualifier());
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
-
-			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile, Input.docId);
@@ -10084,7 +8828,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getActionDropdownArrow());
 			getActionDropdownArrow().waitAndClick(5);
 			base.waitForElement(getActionRollBack());
-			getActionRollBack().waitAndClick(5);
+			getActionRollBack().waitAndClick(10);
 			if (getApproveMessageOKButton().isElementAvailable(5)) {
 				getApproveMessageOKButton().waitAndClick(10);
 				base.passedStep("Clicked on OK button to rollback ingestion");
@@ -10514,7 +9258,6 @@ public class IngestionPage_Indium {
 			}
 		}
 			 
-		
 		/**
 		 * @author: Arun Created Date: 26/08/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will ignore errors and perform indexing
@@ -10769,7 +9512,6 @@ public class IngestionPage_Indium {
 			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(value2);
 			base.waitForElement(getMappingDestinationField(row));
 			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(value3);
-			
 		}
 		
 		/**
@@ -11021,7 +9763,6 @@ public class IngestionPage_Indium {
 			else {
 				base.failedStep("Tiff,Mp3,Audio transcript,other file options not available");
 			}
-			
 		}
 		
 		/**
