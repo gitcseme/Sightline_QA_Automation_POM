@@ -27,7 +27,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SavedSearch_Regression1 {
+public class SavedSearch_Phase1_Regression5 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;

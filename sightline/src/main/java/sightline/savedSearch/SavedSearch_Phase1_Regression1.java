@@ -35,7 +35,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SavedSearchRegression_New_Set_03 {
+public class SavedSearch_Phase1_Regression1 {
 
 	Driver driver;
 	LoginPage login;
