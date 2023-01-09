@@ -838,6 +838,10 @@ public class UserManagement {
 	public Element NavigateToDataSets(String componentName) {
 		return driver.FindElementByXPath("//a[@name='" + componentName + "']//i");
 	}
+	
+	public Element NavigateToManage() {
+		return driver.FindElementByXPath("//a[@title='Manage']/label");
+	}
 
 	public Element getLastPageNum() {
 		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
@@ -3768,6 +3772,61 @@ public class UserManagement {
 			getPopUpCloseBtn().waitAndClick(10);
 		}
 	}
+	
+	/**
+	 * @author Hema.M J
+	 * @Date: 01/05/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param userRolesData
+	 * @throws Exception
+	 * @Description : verify manage Domain Project Access For Users
+	 */
+//	String[][] userRolesDataRMU = { { Input.dau1userName,"Domain Manager", "SA" } };
+	public void verifyManageDomainProjectAccessForDomainUsers(String[][] userRolesData, Boolean ManageDomainProjects,
+			Boolean collectionsAccess, String checkUpdateCollections) throws Exception {
+		for (int i = 0; i < userRolesData.length; i++) {
+
+			String actionUser = userRolesData[i][2];
+			// Select the respective user
+			bc.stepInfo("Checking for the role : " + userRolesData[i][1]);
+			passingUserName(userRolesData[i][0]);
+			applyFilter();
+			if (actionUser.equalsIgnoreCase("Domain Administrator")) {
+				editLoginUser();
+			} else {
+				selectEditUserUsingPagination(Input.domainName, false, "");
+			}
+
+			// Launch functionality pop-up
+			getFunctionalityTab().waitAndClick(5);
+
+			// Access validations
+			if (userRolesData[i][1].equalsIgnoreCase("Domain Administrator")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Manage Domain Projects")),
+						"Manage Domain Projects has access", "Manage Domain Projects is blocked", "Fail");
+
+				// Check-In or Check-Out datasets
+				Boolean action = verifyStatusForComponents(getComponentCheckBoxStatus("Manage Domain Projects"), "Manage Domain Projects",
+						ManageDomainProjects);
+				driver.waitForPageToBeReady();
+
+				if (checkUpdateCollections.equals("Yes") && action == true) {
+					if (actionUser.equalsIgnoreCase("Domain Administrator")) {
+						editLoginUser();
+					} else {
+						selectEditUserUsingPagination(Input.domainName, false, "");
+					}
+
+					// Launch functionality pop-up
+					getFunctionalityTab().waitAndClick(5);
+				}
+			}
+
+			// Close pop-up
+			getPopUpCloseBtn().waitAndClick(10);
+				}
+	}
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -4214,6 +4273,7 @@ public class UserManagement {
 	 * @param projectName
 	 * @param role
 	 * @param unAssigedUserName
+	 * @throws InterruptedException 
 	 * @Desctiption Assign user to that project
 	 */
 	public void AssignUserToProject(String projectName, String role, String unAssigedUserName) {
@@ -4229,13 +4289,15 @@ public class UserManagement {
 
 		bc.waitForElement(getUnAssignedDomainUser());
 		bc.waitTime(5);
+		
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		bc.waitForElement(getDomainUserRightArrow());
 
 		getDomainUserRightArrow().waitAndClick(10);
+		
 		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
-
+		
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
@@ -4412,7 +4474,47 @@ public class UserManagement {
 
 		}
 	}
+	/**
+	 * @Author Hema
+	 * @Description : verify Domain Project access
+	 * @param userRolesData
+	 * @param accessUser
+	 * @param accessPwd
+	 * @param loginPwd
+	 * @throws Exception
+	 */
+	public void verifyDomainProjectsAccess(String[][] userRolesData, String accessUser, String accessPwd, String loginPwd)
+			throws Exception {
+		LoginPage login = new LoginPage(driver);
+		boolean action = false;
+		action = bc.ValidateElement_PresenceReturn(NavigateToDataSets("Manage"));
+		if (action) {
+			NavigateToDataSets("Manage").waitAndClick(10);
+			bc.stepInfo("Manage access is Enabled");
+			action = bc.ValidateElement_PresenceReturn(NavigateToDataSets("Project"));
+			if (action) {
+				bc.stepInfo("Manage Project access is Enabled");
 
+				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+			} else {
+				login.logout();
+			}
+		} else {
+			login.logout();
+		}
+
+		if (!action) {
+			// Login as User
+			login.loginToSightLine(accessUser, accessPwd);
+			navigateToUsersPAge();
+			verifyManageDomainProjectAccessForDomainUsers(userRolesData, true, true, "Yes");
+			login.logout();
+
+			login.loginToSightLine(userRolesData[0][0], loginPwd);
+
+		}
+	}
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Role dropdown is Present or absent
