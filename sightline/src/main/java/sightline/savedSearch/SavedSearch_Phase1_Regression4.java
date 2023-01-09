@@ -38,7 +38,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SavedSearchRegression_New {
+public class SavedSearch_Phase1_Regression4 {
 
 	Driver driver;
 	LoginPage login;
@@ -139,12 +139,12 @@ public class SavedSearchRegression_New {
 				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "REV", 0 } };
 		return users;
 	}
-	
+
 	@DataProvider(name = "SavedSearchwithUsersandrole")
 	public Object[][] SavedSearchwithUsersandrole() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName,"PA" },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName ,"RMU"},
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName ,"REV"} };
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName, "PA" },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "RMU" },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "REV" } };
 		return users;
 	}
 
@@ -157,7 +157,8 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done - new imp - done
 	 */
-	@Test(description ="RPMXCON-47735",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-47735", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void verifyExport_TagDelimiter(String userName, String password, String fullName)
 			throws InterruptedException {
 		String SearchName = "comments" + Utility.dynamicNameAppender();
@@ -197,7 +198,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done - new imp - done
 	 */
-	@Test(description ="RPMXCON-47953",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47953", enabled = true, groups = { "regression" })
 	public void verifyBasic_bulkReleaseCount() throws InterruptedException {
 		String SearchName = "comments" + Utility.dynamicNameAppender();
 		String SecGroup = Input.securityGroup;
@@ -241,7 +242,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done - new imp - done
 	 */
-	@Test(description ="RPMXCON-47955",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47955", enabled = true, groups = { "regression" })
 	public void savedQuerySSverify() throws InterruptedException {
 
 		String SearchName1 = "test" + Utility.dynamicNameAppender();
@@ -282,7 +283,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done - new imp - done
 	 */
-	@Test(description ="RPMXCON-47959",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47959", enabled = true, groups = { "regression" })
 	public void veridyCountFromBulkTagviaADS() throws InterruptedException {
 
 		String SearchName1 = "test" + Utility.dynamicNameAppender();
@@ -326,7 +327,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done - new imp - done
 	 */
-	@Test(description ="RPMXCON-47958",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47958", enabled = true, groups = { "regression" })
 	public void veridyCountFromBulkFolderviaADS() throws InterruptedException {
 
 		String SearchName1 = "test" + Utility.dynamicNameAppender();
@@ -370,7 +371,8 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-49954",enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" } )
+	@Test(description = "RPMXCON-49954", enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = {
+			"regression" })
 	public void verfiyShareforRMUandREV(String userName, String password, String fullName) throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-49954 - Saved Search Sprint 04");
@@ -398,7 +400,8 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-49956",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-49956", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void verifyBSpageNavigationViaSS(String userName, String password, String fullName)
 			throws InterruptedException {
 
@@ -427,7 +430,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 * @Stabilize -- done - new imp - done
 	 */
-	@Test(description ="RPMXCON-49070",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49070", enabled = true, groups = { "regression" })
 	public void aggregateResultWhileBulkAssignment() throws InterruptedException, ParseException {
 		int latencyCheckTime = 5;
 		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
@@ -494,7 +497,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @Stabilization- done - new imp - done
 	 */
-	@Test(description ="RPMXCON-49889",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49889", enabled = true, groups = { "regression" })
 	public void verifySearchs() throws InterruptedException {
 		String search1 = "Search4" + Utility.dynamicNameAppender();
 		String search2 = "Search4" + Utility.dynamicNameAppender();
@@ -540,7 +543,8 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @Stabilization - Done - new imp
 	 */
-	@Test(description ="RPMXCON-57395",enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = { "regression" } )
+	@Test(description = "RPMXCON-57395", enabled = true, dataProvider = "userRolesOnlyrmuAndRev", groups = {
+			"regression" })
 	public void verifyDocument2(String role) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -640,7 +644,8 @@ public class SavedSearchRegression_New {
 	 * @Stabilization - Done - new imp
 	 */
 
-	@Test(description ="RPMXCON-57394",enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = { "regression" } )
+	@Test(description = "RPMXCON-57394", enabled = true, dataProvider = "SavedSearchwithRMUandREV", groups = {
+			"regression" })
 	public void verifyDocument1(String userName, String password, String fullName) throws Exception {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
@@ -755,7 +760,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @S changes - Done - new imp
 	 */
-	@Test(description ="RPMXCON-49892",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49892", enabled = true, groups = { "regression" })
 	public void validateModifyingSearch() throws InterruptedException {
 		String search = "Search0" + Utility.dynamicNameAppender();
 
@@ -844,7 +849,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @S changes - Done - new imp
 	 */
-	@Test(description ="RPMXCON-49858",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49858", enabled = true, groups = { "regression" })
 	public void validateSavingExecutedSearch() throws InterruptedException {
 		String search = "Search00" + Utility.dynamicNameAppender();
 		String search1 = "Search01" + Utility.dynamicNameAppender();
@@ -931,7 +936,7 @@ public class SavedSearchRegression_New {
 	 *         user(RPMXCON-49887)
 	 * @throws InterruptedException S changes - Done - new imp
 	 */
-	@Test(description ="RPMXCON-49887",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49887", enabled = true, groups = { "regression" })
 	public void validateSavingExecutedSearch1() throws InterruptedException {
 		int noOfNodesToCreate = 3;
 		int selectIndex = 0;
@@ -1018,7 +1023,8 @@ public class SavedSearchRegression_New {
 	 *         imp
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49893",enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRole", groups = { "regression" } )
+	@Test(description = "RPMXCON-49893", enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRole", groups = {
+			"regression" })
 	public void shareSearchSS(String userName, String password, String fullName, String role, String verifyUserName,
 			String verifyPassword) throws InterruptedException, ParseException {
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -1059,7 +1065,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49008",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49008", enabled = true, groups = { "regression" })
 	public void aggregateResultWhileBulkAssignmentWithSecurityGrp() throws InterruptedException, ParseException {
 		List<String> newNodeList = new ArrayList<>();
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
@@ -1145,7 +1151,8 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 */
 
-	@Test(description ="RPMXCON-49009",enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRoleANDshareType", groups = {"regression" } )
+	@Test(description = "RPMXCON-49009", enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRoleANDshareType", groups = {
+			"regression" })
 	public void showHideFieldsVIaSHared(String userName, String password, String fullName, String role, int type)
 			throws InterruptedException, ParseException {
 		String SGtoShare = Input.shareSearchDefaultSG;
@@ -1167,7 +1174,7 @@ public class SavedSearchRegression_New {
 	 *         search after impersonating down as Reviewer RPMXCON-49919 Sprint 05
 	 */
 
-	@Test(description ="RPMXCON-49919",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49919", enabled = true, groups = { "regression" })
 	public void validateRMUSharingSavedSearchImpersonateAsReviewer() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49919 - Saved Search Sprint 05");
@@ -1214,7 +1221,7 @@ public class SavedSearchRegression_New {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-49899",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49899", enabled = true, groups = { "regression" })
 	public void validatePASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
@@ -1235,7 +1242,7 @@ public class SavedSearchRegression_New {
 		// Login as RMU
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("User successfully logged into slightline webpage as PA with" + Input.pa2userName);
-		
+
 		// Searching documents based on search string and saving the search
 
 		base.stepInfo("Searching documents based on search string and saving the search");
@@ -1403,7 +1410,7 @@ public class SavedSearchRegression_New {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
-		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5);     // added my sampath
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5); // added my sampath
 		saveSearch.verifySharedNode(newNodeList.get(0));
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
@@ -1457,7 +1464,7 @@ public class SavedSearchRegression_New {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
-		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5);     // added my sampath
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5); // added my sampath
 		saveSearch.verifySharedNode(PANode);
 		saveSearch.verifySharedGroupSearch1(PANode, PANodeSearchName, true);
 
@@ -1520,14 +1527,13 @@ public class SavedSearchRegression_New {
 
 	}
 
-
 	/**
 	 * @author Mohan A Date: 10/18/21 Modified date:N/A Modified by: Description :
 	 *         For RMU - Validate saving edited search (executed or draft) under My
 	 *         Searches or Shared Searches - RPMXCON-49891 Sprint 04
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-49891",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49891", enabled = true, groups = { "regression" })
 	public void validateSavingEditedSearch() throws InterruptedException, AWTException {
 
 		base.stepInfo("Test case Id: RPMXCON-49891");
@@ -1595,7 +1601,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49884",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49884", enabled = true, groups = { "regression" })
 	public void validateSpecificSearchToSecurityGroup() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 5;
 		int selectIndex = 2;
@@ -1657,7 +1663,8 @@ public class SavedSearchRegression_New {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48582",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-48582", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void basicAdvances_WorkProduct(String username, String password, String fullName)
 			throws InterruptedException {
 		String SearchName = "test" + Utility.dynamicNameAppender();
@@ -1695,7 +1702,8 @@ public class SavedSearchRegression_New {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48614",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description = "RPMXCON-48614", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
 	public void Basic_docViewAction(String username, String password, String fullName) throws InterruptedException {
 		String SearchName = "test" + Utility.dynamicNameAppender();
 		String text = Input.zeroPureHitString;
@@ -1726,7 +1734,7 @@ public class SavedSearchRegression_New {
 	 *         SearchGroups/Searches only within MySearches (RPMXCON-49947)
 	 * @throws InterruptedException - new imp - done
 	 */
-	@Test(description ="RPMXCON-49947",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49947", enabled = true, groups = { "regression" })
 	public void verifyMoveActionAsRev() throws InterruptedException {
 		String searchName = "SavedSearch" + Utility.dynamicNameAppender();
 		String search = "Search02" + Utility.dynamicNameAppender();
@@ -1778,7 +1786,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(description ="RPMXCON-49946",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49946", enabled = true, groups = { "regression" })
 	public void verifyMoveActionAsRMU() throws InterruptedException {
 		String searchName = "SavedSearch" + Utility.dynamicNameAppender();
 		String search = "Search02" + Utility.dynamicNameAppender();
@@ -1857,7 +1865,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49037",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-49037", enabled = true, groups = { "regression" })
 	public void validateSavedSearchPageProperOptions() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 5;
 		String nodeName = Input.shareSearchPA;
@@ -1922,9 +1930,10 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49038",enabled = true, dataProvider = "SavedSearchwithUsersandrole", groups = { "regression" } )
-	public void validateSavedSearchPageProperOptionsSharedWith(String username, String password, String fullName,String role)
-			throws InterruptedException, ParseException {
+	@Test(description = "RPMXCON-49038", enabled = true, dataProvider = "SavedSearchwithUsersandrole", groups = {
+			"regression" })
+	public void validateSavedSearchPageProperOptionsSharedWith(String username, String password, String fullName,
+			String role) throws InterruptedException, ParseException {
 
 		int noOfNodesToCreate = 5;
 		int selectIndex = 2;
