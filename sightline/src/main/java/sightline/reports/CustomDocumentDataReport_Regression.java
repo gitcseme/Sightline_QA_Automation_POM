@@ -34,7 +34,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CustomDocumentDataReport_Regression1 {
+public class CustomDocumentDataReport_Regression {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;

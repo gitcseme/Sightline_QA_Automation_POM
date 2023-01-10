@@ -28,7 +28,7 @@ import pageFactory.TimelineReportPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ReportRegression_25 {
+public class Reports_Phase2_Regression1 {
 
 	Driver driver;
 	LoginPage loginPage;

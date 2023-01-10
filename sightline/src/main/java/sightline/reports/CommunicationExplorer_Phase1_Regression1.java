@@ -28,7 +28,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CommunicationExplorer_Regression1 {
+public class CommunicationExplorer_Phase1_Regression1 {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;
