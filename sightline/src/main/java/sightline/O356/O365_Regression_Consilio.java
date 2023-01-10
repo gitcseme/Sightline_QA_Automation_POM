@@ -48,6 +48,7 @@ public class O365_Regression_Consilio {
 		in.loadEnvConfig();
 
 	}
+	
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
