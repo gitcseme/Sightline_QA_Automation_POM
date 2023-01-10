@@ -83,7 +83,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
 		base.stepInfo("Verify that error message does not display and application accepts - when edit Source location name in collection is entered with special characters < > & ‘");
 		base.stepInfo("Test case Id:RPMXCON-69262");
@@ -934,7 +934,7 @@ public class O365_Regression_Consilio {
         	base.stepInfo("Toggle was Disabled as part of this TC");
         	project.navigateToProductionPage();
         	project.EnableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
-        	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
+        	base.stepInfo("Toggle is now made Enabled for the project "+ProjectName);
         	
         }
        
@@ -993,11 +993,12 @@ public class O365_Regression_Consilio {
 				base.stepInfo("Toggle was Enabled as part of this TC");
 				project.navigateToProductionPage();
 				project.EnableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
-				base.stepInfo("Toggle is now made Disabled for the project "+Input.projectName);
+				base.stepInfo("Toggle is now made Disabled for the project "+ProjectName);
 			
 			}
 	}
 
+	
 
 
 	
