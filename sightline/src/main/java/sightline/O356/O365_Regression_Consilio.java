@@ -134,6 +134,7 @@ public class O365_Regression_Consilio {
 		source.performEditSource(null, SourcelocationWithSplChars, TenantIDWithSplChars, ApplicationIDWithSplChars, ApplicationKeyWithSplChars);		
 		
 	}
+	
 	@Test(description = "RPMXCON-69186",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifyCollectionIsSuccessfulWithDirectoryNameWhiteSpaces(String userName, String password, String role) throws Exception {
 		base.stepInfo("Verify Collection if directory name contains leading and trailing white spaces");
