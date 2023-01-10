@@ -1592,6 +1592,10 @@ public class DocListPage {
 		return driver.FindElementByXPath("//td[contains(text(),'" + type + "')]");
 	}
 	
+	public Element eyeballIconColPosition() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']//thead/tr[1]/th[3]");
+	}
+	
 	public String AfterFilterverifyDocFileType(String type ) {
 		DocFileTypeAfterFilter(type).isDisplayed();
 		System.out.println(type);
