@@ -25,7 +25,7 @@ import pageFactory.LoginPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ConceptExplorerRegression{
+public class ConceptExplorer_Phase1_Regression{
 	Driver driver;
 	LoginPage lp;
 	BaseClass bc;

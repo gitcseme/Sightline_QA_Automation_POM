@@ -26,7 +26,7 @@ import pageFactory.UserReviewActivityReport;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DayHourReport_Regression2_1 {
+public class DayHourReport_Regression {
 	Driver driver;
 	LoginPage lp;
 	SoftAssert softAssertion;
