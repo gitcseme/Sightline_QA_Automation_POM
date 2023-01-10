@@ -968,5 +968,5 @@
     
     <!-- Added By Hema ONNA Connect -->
     <OnnaUrl>https://enterprise.onna.com/oneconsilio/</OnnaUrl>
-    <OnnaDirectUrl>https://sightlineqa.consiliotest.com/Collection/Initiate</OnnaDirectUrl>
+    <OnnaDirectUrl>Collection/Initiate</OnnaDirectUrl>
 </TestData>

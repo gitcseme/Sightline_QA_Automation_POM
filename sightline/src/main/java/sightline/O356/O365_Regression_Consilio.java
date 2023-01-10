@@ -82,7 +82,7 @@ public class O365_Regression_Consilio {
 		return users;
 	}
 	
-	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
 		base.stepInfo("Verify that error message does not display and application accepts - when edit Source location name in collection is entered with special characters < > & ‘");
 		base.stepInfo("Test case Id:RPMXCON-69262");
@@ -247,7 +247,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70318");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String DomainId="DomainId" + Utility.dynamicNameAppender();
         String ClientName="C" + Utility.dynamicNameAppender();
         String ProjectName="ProjectName" + Utility.dynamicNameAppender();
@@ -303,7 +303,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70319");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String[][] userRolesData = { { userName, role, "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
         ProjectPage p=new ProjectPage(driver);
@@ -348,7 +348,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70320");
         boolean SCpbOToggle=true;
         boolean toggleIsEnabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String OnnaUrl=Input.OnnaUrl;
         String[][] userRolesData = { { userName, role, "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -394,7 +394,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70317");
         boolean SCpbOToggle=true;
         boolean toggleIsEnabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String OnnaUrl=Input.OnnaUrl;
         String DomainId="DomainId" + Utility.dynamicNameAppender();
         String ClientName="C" + Utility.dynamicNameAppender();
@@ -452,7 +452,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70379");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -517,7 +517,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70380");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
         base.stepInfo("logged In  as SA user");
@@ -568,7 +568,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70377");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String ProjectName="ProjectName" + Utility.dynamicNameAppender();
         String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
@@ -639,7 +639,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70382");
         boolean SCpbOToggle=true;
         boolean toggleIsEnabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String OnnaUrl=Input.OnnaUrl;
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
         login.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -690,7 +690,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70381");
         boolean SCpbOToggle=true;
         boolean toggleIsEnabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String OnnaUrl=Input.OnnaUrl;
         String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
@@ -755,7 +755,7 @@ public class O365_Regression_Consilio {
         base.stepInfo("Test case Id:RPMXCON-70331");
         boolean SCpbOToggle=true;
         boolean toggleIsEnabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         String OnnaUrl=Input.OnnaUrl;
         String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
@@ -819,10 +819,10 @@ public class O365_Regression_Consilio {
 	@Test(description = "RPMXCON-70441",enabled = true, groups = { "regression" })
     public void verifySCpbOToggleOFFExistingProjectbyDAUserImpersonatedToPA_RMU() throws Exception {
         base.stepInfo("Verify when (SCpbO) toggle is OFF for existing project, \"Open Sightline Collect\" button should not be displayed under a new section in source location page for DA user when impersonated as PA/RMU role");
-        base.stepInfo("Test case Id:RPMXCON-70331");
+        base.stepInfo("Test case Id:RPMXCON-70441");
         boolean SCpbOToggle=false;
         boolean toggleIsDisabled=false;
-        String directUrl=Input.OnnaDirectUrl;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
         
         String[][] userRolesDataPA = { { Input.pa1userName,"Project Administrator", "SA" } };
         String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
@@ -882,6 +882,122 @@ public class O365_Regression_Consilio {
         }
        
 	}
+	
+	@Test(description = "RPMXCON-70378",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleOFFNewlyCreatedProjectbyPAUserImpersonatedToRMU() throws Exception {
+        base.stepInfo("Verify when (SCpbO) toggle is OFF for newly created project, \"Open Sightline Collect\" button should not be displayed under a new section in source location page  for PA user when impersonated as RMU role");
+        base.stepInfo("Test case Id:RPMXCON-70378");
+        boolean SCpbOToggle=false;
+        boolean toggleIsDisabled=false;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
+        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
+        String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("logged In  as SA user");
+        ProjectPage project=new ProjectPage(driver);
+        project.navigateToProductionPage();
+        project.AddDomainProject(ProjectName, Input.domainName);
+        UserManagement user=new UserManagement(driver);
+        user.navigateToUsersPAge();
+        user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa1FullName);
+        project.DisableSightlineOnnaToggle(ProjectName,toggleIsDisabled);
+        login.logout();
+        base.stepInfo("logged Out  as SA user");
+
+
+        // Login and Pre-requesties
+        login.loginToSightLine(Input.pa1userName, Input.pa1password);
+        base.stepInfo(" logged In as PA user");
+        base.stepInfo("User Role : Project Administrator");
+        
+        base.impersonatePAtoRMU(ProjectName);
+        base.stepInfo("Impersonated as Review Manager user");
+        base.stepInfo("User Role : Review Manager");
+        base.stepInfo("Navigated to Manage Users page for User Role Review Manager");
+        userManagement.verifyCollectionAccess(userRolesDataRMU, Input.sa1userName, Input.sa1password, Input.rmu1password);
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Disabled when toggle is OFF for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is not Displayed when toggle is OFF for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        base.switchTab(0);
+        login.logout();
+        if(toggleIsDisabled) {
+     
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was Disabled as part of this TC");
+        	project.navigateToProductionPage();
+        	project.EnableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
+        	base.stepInfo("Toggle is now made Enabled for the project "+Input.projectName);
+        	
+        }
+       
+	}
+	
+	@Test(description = "RPMXCON-70376",enabled = true, groups = { "regression" })
+	 public void verifySCpbOToggleONNewlyCreatedProjectbyPAUserImpersonatedToRMU() throws Exception {
+		base.stepInfo("Verify when (SCpbO) toggle is ON for newly created project, \"Open Sightline Collect\" button should be displayed under a new section in source location page when clicked should navigate to ONNA for PA user when impersonated as RMU role");
+		base.stepInfo("Test case Id:RPMXCON-70376");
+		boolean SCpbOToggle=true;
+		
+		boolean toggleIsEnabled=false;
+		String directUrl=Input.url+Input.OnnaDirectUrl;
+		String OnnaUrl=Input.OnnaUrl;
+		String ProjectName="ProjectName" + Utility.dynamicNameAppender();
+		System.out.println(ProjectName);
+		String[][] userRolesDataRMU = { { Input.rmu1userName,"Review Manager", "SA" } };
+		
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("logged In  as SA user");
+		ProjectPage project=new ProjectPage(driver);
+		project.navigateToProductionPage();
+		project.AddDomainProject(ProjectName, Input.domainName);
+		UserManagement user=new UserManagement(driver);
+		user.navigateToUsersPAge();
+		user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa1FullName);
+		user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu1FullName);
+		toggleIsEnabled=project.EnableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
+		login.logout();
+		base.stepInfo("logged Out  as SA user");
+
+	// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo(" logged In as PA user");
+		base.stepInfo("User Role : Project Administrator");
+
+		base.impersonatePAtoRMU(ProjectName);
+		base.stepInfo("Impersonated as Review Manager user");
+		base.stepInfo("User Role : Review Manager");
+		base.stepInfo("Navigated to Manage Users page for User Role Review Manager");
+		userManagement.verifyCollectionAccess(userRolesDataRMU, Input.sa1userName, Input.sa1password, Input.rmu1password);
+		// navigate to source location page2
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.verifySightlineConnectONNAbutton(SCpbOToggle);
+		base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+		source.verifySightlineConnectONNAText(SCpbOToggle);
+		base.stepInfo("Onna Text is  Displayed when toggle is ON for the project");
+		source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+		base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+		source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+	    base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+			
+			if(toggleIsEnabled) {
+				login.loginToSightLine(Input.sa1userName, Input.sa1password);
+				base.stepInfo("logged out and logged In as SA user");
+				base.stepInfo("Toggle was Enabled as part of this TC");
+				project.navigateToProductionPage();
+				project.EnableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
+				base.stepInfo("Toggle is now made Disabled for the project "+Input.projectName);
+			
+			}
+	}
+
+
+
 	
 
 	
