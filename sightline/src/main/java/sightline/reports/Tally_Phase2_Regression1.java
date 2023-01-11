@@ -26,7 +26,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Tally_Regression_sprint22 {
+public class Tally_Phase2_Regression1 {
 	Driver driver;
 	LoginPage lp;
 	BaseClass bc;

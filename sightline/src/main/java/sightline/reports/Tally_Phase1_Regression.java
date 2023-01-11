@@ -29,7 +29,7 @@ import pageFactory.SessionSearch;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
-public class Tally_Regression1 {
+public class Tally_Phase1_Regression {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;
