@@ -9,23 +9,15 @@
 	<test name="SavedSearch_Suite">
 		<classes>
 		    <class name="testScriptsSmoke.Input"></class>			
-			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_02"></class>
-			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_03"></class>
-			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_04"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_AudioRegresssion"></class>
 			<class name="sightline.savedSearch.SavedSearch_Consilio"></class>
-			<class name="sightline.savedSearch.SavedSearch_Regression_Set_01"></class>			
-			<class name="sightline.savedSearch.SavedSearch_Regression1"></class>
-			<class name="sightline.savedSearch.SavedSearchAudio_Regresssion"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_01"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_2_20"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_01"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_02"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_03"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_04"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_05"></class>
-			<class name="sightline.savedSearch.SavedsearchRegression_New_Set_06"></class>
-			<class name="sightline.savedSearch.SavedSearchRegression_New"></class>
-		    <class name="sightline.savedSearch.SavedSearchRegression2"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression1"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression2"></class>			
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression3"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression4"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase1_Regression5"></class>
+			<class name="sightline.savedSearch.SavedSearch_Phase2_Regression"></class>
 			</classes>
 	</test> 
 </suite>

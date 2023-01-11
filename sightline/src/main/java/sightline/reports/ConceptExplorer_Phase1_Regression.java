@@ -1,6 +1,4 @@
 
-
-
 package sightline.reports;
 
 import java.awt.AWTException;
@@ -25,12 +23,11 @@ import pageFactory.LoginPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ConceptExplorer_Phase1_Regression{
+public class ConceptExplorer_Phase1_Regression {
 	Driver driver;
 	LoginPage lp;
 	BaseClass bc;
 	ConceptExplorerPage CEPage;
-	
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -41,37 +38,34 @@ public class ConceptExplorer_Phase1_Regression{
 //		in.loadEnvConfig();
 
 	}
-/**
- * @author Jayanthi.ganesan
- * @param username
- * @param password
- * @param role
- * @throws InterruptedException
- */
-	 @Test(description ="RPMXCON-56386",dataProvider = "Users_PARMU", groups = { "regression" })
-	public void conceptExplorerDisplay(String username, String password, String role)
-			throws InterruptedException{
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-56386", dataProvider = "Users_PARMU", groups = { "regression" })
+	public void conceptExplorerDisplay(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56386");
 		bc.stepInfo("To verify that Users are able to view filters on Concept Explorer Page");
 		lp.loginToSightLine(username, password);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -" + role);
-	     CEPage=new ConceptExplorerPage(driver);
-	     CEPage.navigateToConceptExplorerPage();
+		CEPage = new ConceptExplorerPage(driver);
+		CEPage.navigateToConceptExplorerPage();
 		bc.waitForElement(CEPage.getfilterDocumentsBy());
-		SoftAssert	softAssertion = new SoftAssert();
-		if(CEPage.getTally_SelectSource().isDisplayed() && CEPage.getfilterDocumentsBy().isDisplayed() ) {
+		SoftAssert softAssertion = new SoftAssert();
+		if (CEPage.getTally_SelectSource().isDisplayed() && CEPage.getfilterDocumentsBy().isDisplayed()) {
 			softAssertion.assertTrue(CEPage.getfilterOptions().isDisplayed());
 			bc.passedStep("Select Source and filter documents by option is displayed in Concept Explorer Report Page");
-		}
-		else {
+		} else {
 			bc.failedStep("Select source and filter documents option is not displayed");
 			softAssertion.assertTrue(false);
 		}
 		softAssertion.assertAll();
 	}
-
-
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -80,7 +74,7 @@ public class ConceptExplorer_Phase1_Regression{
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
-		
+
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -109,7 +103,7 @@ public class ConceptExplorer_Phase1_Regression{
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		
+
 		System.out.println("Executed :Concept Explorer Regression ");
 	}
 }

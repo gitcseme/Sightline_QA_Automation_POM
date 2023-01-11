@@ -1,5 +1,4 @@
 
-
 package sightline.reports;
 
 import java.awt.AWTException;
@@ -26,11 +25,10 @@ import pageFactory.SchedulesPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ReviewResultReport_Regression{
+public class ReviewResultReport_Regression {
 	Driver driver;
 	LoginPage lp;
 	BaseClass bc;
-	
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -41,41 +39,6 @@ public class ReviewResultReport_Regression{
 //		in.loadEnvConfig();
 
 	}
-/**
- * @author Jayanthi.ganesan
- * @param username
- * @param password
- * @param role
- * @throws InterruptedException
- */
-	 @Test(description ="RPMXCON-56422",dataProvider = "Users_PARMU", groups = { "regression" })
-	public void reviewerResultDisplay(String username, String password, String role)
-			throws InterruptedException{
-		bc.stepInfo("Test case Id: RPMXCON-56422");
-		bc.stepInfo("To verify that  Review Result Report should be displayed as per the selected criteria");
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(username, password);
-		driver.waitForPageToBeReady();
-		bc.stepInfo("Logged in as -" + role);
-		ReviewerResultReportPage revResultpage=new ReviewerResultReportPage(driver);
-		revResultpage.navigateToReviewerResultReportPage();
-		SoftAssert	softAssertion = new SoftAssert();
-		driver.waitForPageToBeReady();
-		ArrayList<String> list = new ArrayList<String>(Arrays.asList("Date Range","Document Types","Tag Action Types","Tags","Redaction Tags","Comment Types","Productions"));
-		for(String ele:list) {
-			driver.scrollingToElementofAPage(revResultpage.getExpandButton(ele));
-		if(revResultpage.getExpandButton(ele).isDisplayed()) {
-			softAssertion.assertTrue(true);
-			bc.passedStep(ele+" is displayed");
-			
-		}else {
-			softAssertion.assertTrue(false);
-			bc.failedStep(ele+" is not displayed");
-		}
-		}
-		softAssertion.assertAll();
-		lp.logout();
-		}
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -84,7 +47,43 @@ public class ReviewResultReport_Regression{
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56451",dataProvider = "Users_PARMU", groups = { "regression" })
+	@Test(description = "RPMXCON-56422", dataProvider = "Users_PARMU", groups = { "regression" })
+	public void reviewerResultDisplay(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56422");
+		bc.stepInfo("To verify that  Review Result Report should be displayed as per the selected criteria");
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		ReviewerResultReportPage revResultpage = new ReviewerResultReportPage(driver);
+		revResultpage.navigateToReviewerResultReportPage();
+		SoftAssert softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		ArrayList<String> list = new ArrayList<String>(Arrays.asList("Date Range", "Document Types", "Tag Action Types",
+				"Tags", "Redaction Tags", "Comment Types", "Productions"));
+		for (String ele : list) {
+			driver.scrollingToElementofAPage(revResultpage.getExpandButton(ele));
+			if (revResultpage.getExpandButton(ele).isDisplayed()) {
+				softAssertion.assertTrue(true);
+				bc.passedStep(ele + " is displayed");
+
+			} else {
+				softAssertion.assertTrue(false);
+				bc.failedStep(ele + " is not displayed");
+			}
+		}
+		softAssertion.assertAll();
+		lp.logout();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-56451", dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyReviewerResultReportShare(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56451");
@@ -110,21 +109,21 @@ public class ReviewResultReport_Regression{
 		lp.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
 	 * @param password
 	 * @param role
 	 * @throws InterruptedException
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-56455",groups = { "regression" })
-	public void verifyReviewerResultReportShedule()
-			throws InterruptedException, ParseException {
+	@Test(description = "RPMXCON-56455", groups = { "regression" })
+	public void verifyReviewerResultReportShedule() throws InterruptedException, ParseException {
 		bc.stepInfo("Test case Id: RPMXCON-56455");
 		bc.stepInfo("To verify that users can schedule the Review Result Report.");
 		lp = new LoginPage(driver);
-		lp.loginToSightLine( Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -PA");
 		ReviewerResultReportPage revResultpage = new ReviewerResultReportPage(driver);
@@ -133,7 +132,7 @@ public class ReviewResultReport_Regression{
 		revResultpage.generateReport();
 		revResultpage.getScheduleBtn().Click();
 		revResultpage.scheduleReport();
-		SchedulesPage sp =new SchedulesPage(driver);
+		SchedulesPage sp = new SchedulesPage(driver);
 		sp.verifyScheduledTime_Reports(1);
 		sp.checkStatusComplete_reports();
 		lp.logout();
@@ -145,7 +144,7 @@ public class ReviewResultReport_Regression{
 		System.out.println("Executing method : " + testMethod.getName());
 		driver = new Driver();
 		bc = new BaseClass(driver);
-		
+
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -173,7 +172,7 @@ public class ReviewResultReport_Regression{
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		
+
 		System.out.println("Executed :Reviewer Result Report Regression ");
 	}
 }
