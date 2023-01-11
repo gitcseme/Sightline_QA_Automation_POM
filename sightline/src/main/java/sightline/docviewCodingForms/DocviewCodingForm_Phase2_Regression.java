@@ -116,69 +116,69 @@ public class DocviewCodingForm_Phase2_Regression {
 
 		// creating codingform
 		if (roll == "rmu") {
-            this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-            driver.waitForPageToBeReady();
-            codingForm.createWithOneMetaData(codingform);
-            baseClass.waitTime(5);
-            cfName = codingForm.checkingBelow15CFCheckboxForSG();
-            codingForm.makingDefaultCfToSg(Input.codingFormName);
-            codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
-        }
-        // navigating to docview page
-        sessionSearch.basicContentSearch(Input.searchString1);
-        sessionSearch.ViewInDocView();
-        baseClass.stepInfo("Navigating to docview page");
- 
-        // clicking cf panel dropdown
-        List<String> expected = new ArrayList<String>();
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-        docViewPage.getDocViewDrpDwnCf().waitAndClick(5);
-        baseClass.waitTime(5);
-        List<WebElement> cfDocviewPnael = docViewPage.getDocViewDrpDwnCf().selectFromDropdown().getOptions();
-        for (WebElement webElement : cfDocviewPnael) {
-            expected.add(webElement.getText().trim().toString());
-        }
-        Collections.sort(expected);
-        Collections.sort(cfName);
-        baseClass.waitTime(5);
-        softAssertion.assertEquals(cfName, expected);
-        baseClass.stepInfo("Assigned coding form to sg are displaying in cf panel dropdown");
-        // selecting different codingform
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-        docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(codingform);
-        // navigating to otherdocument
-        baseClass.waitForElement(docViewPage.getClickDocviewID(2));
-        docViewPage.getClickDocviewID(2).waitAndClick(5);
-        driver.waitForPageToBeReady();
-        baseClass.waitTime(5);
-        // validating when navigating to other docs default cf should assign
-        String currentDRp = baseClass.getCurrentDropdownValue(docViewPage.getDocViewDrpDwnCf());
-        System.out.println(currentDRp);
-        baseClass.compareTextViaContains(currentDRp, Input.codeFormName, "pass", "fail");
-        baseClass.passedStep("Default coding form assigned in cf panel,when navigate to other docs");
- 
-        // validating for child window
-        docViewPage.clickGearIconOpenCodingFormChildWindow();
-        docViewPage.switchToNewWindow(2);
-        // selecting different codingform
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
-        docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(codingform);
-        // navigating to otherdocument
-        docViewPage.switchToNewWindow(1);
-        baseClass.waitForElement(docViewPage.getClickDocviewID(2));
-        docViewPage.getClickDocviewID(2).waitAndClick(5);
-        driver.waitForPageToBeReady();
-        docViewPage.switchToNewWindow(2);
-        baseClass.waitTime(5);
-        // validating when navigating to other docs default cf should assign
-        String currentDRpChild = baseClass.getCurrentDropdownValue(docViewPage.getDocViewDrpDwnCfChild());
-        System.out.println(currentDRpChild);
-        baseClass.compareTextViaContains(currentDRpChild, Input.codeFormName, "pass", "fail");
-        baseClass.passedStep("Default coding form assigned in cf panel,when navigate to other docs");
-        docViewPage.closeWindow(1);
-        docViewPage.switchToNewWindow(1);
-        driver.waitForPageToBeReady();
-        loginPage.logout();
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.createWithOneMetaData(codingform);
+			baseClass.waitTime(5);
+			cfName = codingForm.checkingBelow15CFCheckboxForSG();
+			codingForm.makingDefaultCfToSg(Input.codingFormName);
+			codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
+		}
+		// navigating to docview page
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview page");
+
+		// clicking cf panel dropdown
+		List<String> expected = new ArrayList<String>();
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
+		docViewPage.getDocViewDrpDwnCf().waitAndClick(5);
+		baseClass.waitTime(5);
+		List<WebElement> cfDocviewPnael = docViewPage.getDocViewDrpDwnCf().selectFromDropdown().getOptions();
+		for (WebElement webElement : cfDocviewPnael) {
+			expected.add(webElement.getText().trim().toString());
+		}
+		Collections.sort(expected);
+		Collections.sort(cfName);
+		baseClass.waitTime(5);
+		softAssertion.assertEquals(cfName, expected);
+		baseClass.stepInfo("Assigned coding form to sg are displaying in cf panel dropdown");
+		// selecting different codingform
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(codingform);
+		// navigating to otherdocument
+		baseClass.waitForElement(docViewPage.getClickDocviewID(2));
+		docViewPage.getClickDocviewID(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		// validating when navigating to other docs default cf should assign
+		String currentDRp = baseClass.getCurrentDropdownValue(docViewPage.getDocViewDrpDwnCf());
+		System.out.println(currentDRp);
+		baseClass.compareTextViaContains(currentDRp, Input.codeFormName, "pass", "fail");
+		baseClass.passedStep("Default coding form assigned in cf panel,when navigate to other docs");
+
+		// validating for child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		docViewPage.switchToNewWindow(2);
+		// selecting different codingform
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
+		docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(codingform);
+		// navigating to otherdocument
+		docViewPage.switchToNewWindow(1);
+		baseClass.waitForElement(docViewPage.getClickDocviewID(2));
+		docViewPage.getClickDocviewID(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.switchToNewWindow(2);
+		baseClass.waitTime(5);
+		// validating when navigating to other docs default cf should assign
+		String currentDRpChild = baseClass.getCurrentDropdownValue(docViewPage.getDocViewDrpDwnCfChild());
+		System.out.println(currentDRpChild);
+		baseClass.compareTextViaContains(currentDRpChild, Input.codeFormName, "pass", "fail");
+		baseClass.passedStep("Default coding form assigned in cf panel,when navigate to other docs");
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		loginPage.logout();
 	}
 
 	/**
@@ -189,8 +189,7 @@ public class DocviewCodingForm_Phase2_Regression {
 	 *              warning or any save changes.
 	 */
 	@Test(description = "RPMXCON-65507", enabled = true, dataProvider = "rmuRev", groups = { "regression" })
-	public void validationNonErrorMsg(String roll, String username, String password, String fullName)
-			throws Exception {
+	public void validationNonErrorMsg(String roll, String username, String password, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-65507");
 		baseClass.stepInfo(
 				"Verify that when the user switches to a different coding form and if the currently presented "
@@ -211,112 +210,112 @@ public class DocviewCodingForm_Phase2_Regression {
 
 		// creating codingform
 		if (roll == "rmu") {
-            this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-            driver.waitForPageToBeReady();
-            codingForm.createWithOneMetaData(cfTwo);
-            baseClass.waitTime(5);
-            cfName = codingForm.checkingBelow15CFCheckboxForSG();
-            System.out.println(cfName);
-            codingForm.makingDefaultCfToSg(Input.codingFormName);
-            codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
-            // navigating to docview page
-            sessionSearch.basicContentSearch(Input.searchString1);
-            sessionSearch.ViewInDocView();
-            baseClass.stepInfo("Navigating to docview page");
-        }
-        if (roll == "rev") {
-            sessionSearch.basicContentSearch(Input.searchString1);
-            sessionSearch.saveSearch(saveSearch);
-            savedSearch.savedSearchToDocView(saveSearch);
-        }
-        // clicking cf panel dropdown
-        List<String> expected = new ArrayList<String>();
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-        docViewPage.getDocViewDrpDwnCf().waitAndClick(5);
-        List<WebElement> cfDocviewPnael = docViewPage.getDocViewDrpDwnCf().selectFromDropdown().getOptions();
-        for (WebElement webElement : cfDocviewPnael) {
-            expected.add(webElement.getText().trim().toString());
-        }
-        Collections.sort(expected);
-        Collections.sort(cfName);
-        System.out.println(cfName);
-        baseClass.waitTime(5);
-        for (int i = 1; i < expected.size(); i++) {
-            baseClass.compareListWithOnlyOneString(cfName, expected.get(i), "pass", "fail");
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			driver.waitForPageToBeReady();
+			codingForm.createWithOneMetaData(cfTwo);
+			baseClass.waitTime(5);
+			cfName = codingForm.checkingBelow15CFCheckboxForSG();
+			System.out.println(cfName);
+			codingForm.makingDefaultCfToSg(Input.codingFormName);
+			codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
+			// navigating to docview page
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewInDocView();
+			baseClass.stepInfo("Navigating to docview page");
+		}
+		if (roll == "rev") {
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.saveSearch(saveSearch);
+			savedSearch.savedSearchToDocView(saveSearch);
+		}
+		// clicking cf panel dropdown
+		List<String> expected = new ArrayList<String>();
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
+		docViewPage.getDocViewDrpDwnCf().waitAndClick(5);
+		List<WebElement> cfDocviewPnael = docViewPage.getDocViewDrpDwnCf().selectFromDropdown().getOptions();
+		for (WebElement webElement : cfDocviewPnael) {
+			expected.add(webElement.getText().trim().toString());
+		}
+		Collections.sort(expected);
+		Collections.sort(cfName);
+		System.out.println(cfName);
+		baseClass.waitTime(5);
+		for (int i = 1; i < expected.size(); i++) {
+			baseClass.compareListWithOnlyOneString(cfName, expected.get(i), "pass", "fail");
 
-        }
-        baseClass.stepInfo("Assigned coding form to sg are displaying in cf panel dropdown");
-        // selecting different codingform
-        baseClass.waitTime(5);
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-        docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(expected.get(1));
- 
-        // popup message without changes in cf panel
-        boolean popUPCf = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
-        softAssertion.assertFalse(popUPCf);
-        baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf");
- 
-        // validating for child window
-        docViewPage.clickGearIconOpenCodingFormChildWindow();
-        String parentWindow = docViewPage.switchTochildWindow();
-        // selecting different codingform
-        baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
-        docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText((expected.get(1)));
-        // poup in child window
-        boolean popUPCfChild = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
-        softAssertion.assertFalse(popUPCfChild);
-        baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf in child");
-        docViewPage.childWindowToParentWindowSwitching(parentWindow);
-        driver.waitForPageToBeReady();
-        driver.getWebDriver().navigate().refresh();
-        driver.switchTo().alert().accept();
-        driver.waitForPageToBeReady();
- 
-        // from docexplorer
-        if (roll == "rmu") {
-            this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-            for (int i = 1; i < 3; i++) {
-                baseClass.waitForElement(docExplorerPage.getClickDocExplorerID(i));
-                docExplorerPage.getClickDocExplorerID(i).waitAndClick(5);
-            }
-            docExplorerPage.docExpViewInDocView();
-            driver.waitForPageToBeReady();
-            baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-            docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText((expected.get(1)));
- 
-            // popup message without changes in cf panel
-            boolean popUPCfEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
-            softAssertion.assertFalse(popUPCfEX);
-            baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf");
- 
-            // validating for child window
-            docViewPage.clickGearIconOpenCodingFormChildWindow();
-            String parentWindowDoc = docViewPage.switchTochildWindow();
-            // selecting different codingform
-            baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
-            docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText((expected.get(1)));
-            // poup in child window
-            boolean popUPCfChildEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
-            softAssertion.assertFalse(popUPCfChildEX);
-            baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf in child");
-            docViewPage.childWindowToParentWindowSwitching(parentWindowDoc);
-            driver.waitForPageToBeReady();
-        }
- 
-        softAssertion.assertAll();
-        loginPage.logout();
+		}
+		baseClass.stepInfo("Assigned coding form to sg are displaying in cf panel dropdown");
+		// selecting different codingform
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(expected.get(1));
+
+		// popup message without changes in cf panel
+		boolean popUPCf = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
+		softAssertion.assertFalse(popUPCf);
+		baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf");
+
+		// validating for child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		String parentWindow = docViewPage.switchTochildWindow();
+		// selecting different codingform
+		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
+		docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText((expected.get(1)));
+		// poup in child window
+		boolean popUPCfChild = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
+		softAssertion.assertFalse(popUPCfChild);
+		baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf in child");
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
+		driver.waitForPageToBeReady();
+		driver.getWebDriver().navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+
+		// from docexplorer
+		if (roll == "rmu") {
+			this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+			for (int i = 1; i < 3; i++) {
+				baseClass.waitForElement(docExplorerPage.getClickDocExplorerID(i));
+				docExplorerPage.getClickDocExplorerID(i).waitAndClick(5);
+			}
+			docExplorerPage.docExpViewInDocView();
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
+			docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText((expected.get(1)));
+
+			// popup message without changes in cf panel
+			boolean popUPCfEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
+			softAssertion.assertFalse(popUPCfEX);
+			baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf");
+
+			// validating for child window
+			docViewPage.clickGearIconOpenCodingFormChildWindow();
+			String parentWindowDoc = docViewPage.switchTochildWindow();
+			// selecting different codingform
+			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
+			docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText((expected.get(1)));
+			// poup in child window
+			boolean popUPCfChildEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
+			softAssertion.assertFalse(popUPCfChildEX);
+			baseClass.passedStep("PopUp message not appeared when cf not get editing and changing cf in child");
+			docViewPage.childWindowToParentWindowSwitching(parentWindowDoc);
+			driver.waitForPageToBeReady();
+		}
+
+		softAssertion.assertAll();
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author :Indium-Baskar
-	 * @Description : Verify that we have combo box in "Coding Form" panel when we view Doc in DocView.
+	 * @Description : Verify that we have combo box in "Coding Form" panel when we
+	 *              view Doc in DocView.
 	 */
 	@Test(description = "RPMXCON-65423", enabled = true, dataProvider = "rmuRev", groups = { "regression" })
 	public void validationDropDownAvailable(String roll, String username, String password, String fullName)
 			throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-65423");
-		baseClass.stepInfo(
-				"Verify that we have combo box in \"Coding Form\" panel when we view Doc in DocView.");
+		baseClass.stepInfo("Verify that we have combo box in \"Coding Form\" panel when we view Doc in DocView.");
 		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
 		softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
@@ -330,15 +329,15 @@ public class DocviewCodingForm_Phase2_Regression {
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		
+
 		// clicking cf panel dropdown
 		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-		boolean flag=docViewPage.getDocViewDrpDwnCf().isElementAvailable(2);
+		boolean flag = docViewPage.getDocViewDrpDwnCf().isElementAvailable(2);
 		softAssertion.assertTrue(flag);
 
 		// validating for child window
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
-		String parentWindow=docViewPage.switchTochildWindow();
+		String parentWindow = docViewPage.switchTochildWindow();
 		// clicking cf panel dropdown
 		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
 		boolean flagTwo = docViewPage.getDocViewDrpDwnCfChild().isElementAvailable(2);
@@ -363,10 +362,10 @@ public class DocviewCodingForm_Phase2_Regression {
 			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
 			boolean flagEX = docViewPage.getDocViewDrpDwnCf().isElementAvailable(2);
 			softAssertion.assertTrue(flagEX);
-			
+
 			// validating for child window
 			docViewPage.clickGearIconOpenCodingFormChildWindow();
-			String parentWindowDoc=docViewPage.switchTochildWindow();
+			String parentWindowDoc = docViewPage.switchTochildWindow();
 			// clicking cf panel dropdown
 			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
 			boolean flagEXCF = docViewPage.getDocViewDrpDwnCfChild().isElementAvailable(2);
@@ -379,14 +378,14 @@ public class DocviewCodingForm_Phase2_Regression {
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author :Indium-Baskar
-	 * @Description : In Doc view upon selected Default Coding Form we should
-	 *                 see Complete and Code same as Button in Coding Panel
+	 * @Description : In Doc view upon selected Default Coding Form we should see
+	 *              Complete and Code same as Button in Coding Panel
 	 */
 
-	@Test(description = "RPMXCON-65197",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-65197", enabled = true, groups = { "regression" })
 	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-65197");
 		baseClass.stepInfo("In Doc view upon selected Default Coding Form we should see Complete and "
@@ -415,10 +414,10 @@ public class DocviewCodingForm_Phase2_Regression {
 		// Assignment Selection
 		assignmentPage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		
-		boolean sameLast=docViewPage.getCodeSameAsLast().Enabled();
+
+		boolean sameLast = docViewPage.getCodeSameAsLast().Enabled();
 		softAssertion.assertTrue(sameLast);
-		boolean complete=docViewPage.getCompleteDocBtn().Enabled();
+		boolean complete = docViewPage.getCompleteDocBtn().Enabled();
 		softAssertion.assertTrue(complete);
 		baseClass.passedStep("Code same as and complete button is clickable");
 		softAssertion.assertAll();
@@ -427,9 +426,9 @@ public class DocviewCodingForm_Phase2_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 	}
-	
+
 	/**
-	 * @author  Date:NA ModifyDate:NA RPMXCON-50967
+	 * @author Date:NA ModifyDate:NA RPMXCON-50967
 	 * @throws Exception
 	 * @Description Verify when user navigates from Basic Search/Saved search/Doc
 	 *              List and coding form is assigned to security group, custom
