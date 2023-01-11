@@ -22,7 +22,7 @@ import pageFactory.UserLoginActivityReport;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class ReviewerTimeOnlineReport2_1 {
+public class ReviewerTimeOnlineReport_Regression {
 	Driver driver;
 	LoginPage lp;
 	SoftAssert softAssertion;

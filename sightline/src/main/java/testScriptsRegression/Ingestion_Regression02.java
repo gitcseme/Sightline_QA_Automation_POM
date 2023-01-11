@@ -427,7 +427,7 @@ public class Ingestion_Regression02 {
 			baseClass.stepInfo("Select all options from filter by dropdown.");
 			ingetion.selectAllOptionsFromFilterByDropdown();
 
-			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
+	//		ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
 
 			ingetion.verifyLanguageIsSelectable("International English");
 
@@ -518,7 +518,7 @@ public class Ingestion_Regression02 {
 			ingestionPage.selectAllOptionsFromFilterByDropdown();
 
 			ingestionPage.removeCatalogError();
-			ingestionPage.getIngestionSatatusAndPerform();
+	//		ingestionPage.getIngestionSatatusAndPerform();
 		}
 		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
 		String docId1 = docList.getDocumetId();

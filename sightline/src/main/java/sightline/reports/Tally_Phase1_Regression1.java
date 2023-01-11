@@ -4,10 +4,8 @@ package sightline.reports;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.List;
 
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -16,20 +14,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
-import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
-import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Tally_Regression2 {
+public class Tally_Phase1_Regression1 {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;
@@ -60,7 +57,7 @@ public class Tally_Regression2 {
 		lp = new LoginPage(driver);
 	}
 
-	@Test(description ="RPMXCON-48694",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-48694", dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void tallyEndToEnd(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-48694");
 		bc.stepInfo("To Verify Tally End to End Flow.");
@@ -71,14 +68,14 @@ public class Tally_Regression2 {
 		lp.loginToSightLine(username, password);
 		if (role.equalsIgnoreCase("PA")) {
 			// Pre-requesites block
-		//	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			// lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 			securityPage.AddSecurityGroup(secGrpName);
 			ss.basicContentSearch(Input.TallySearch);
 			hitsCount = Integer.parseInt(ss.verifyPureHitsCount());
 			ss.bulkRelease(secGrpName);
 			bc.stepInfo("Created a security group" + secGrpName + "Bulk Relaese is done");
-		//	lp.logout();
+			// lp.logout();
 		}
 		if (role.equalsIgnoreCase("RMU")) {
 			// Pre-requesites block
@@ -118,9 +115,12 @@ public class Tally_Regression2 {
 			ss.bulkFolder(folderName2);
 			bc.stepInfo("Created a Folder " + folderName2);
 		}
-	/*	String[][] sourceNames = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
-				{ secGrpName, Input.securityGroup }, { Input.projectName, null } };*/
-		String[][] sourceNames = null ;
+		/*
+		 * String[][] sourceNames = { { SearchName2, SearchName1 }, { folderName1,
+		 * folderName2 }, { secGrpName, Input.securityGroup }, { Input.projectName, null
+		 * } };
+		 */
+		String[][] sourceNames = null;
 		String[][] sourceNames_PA = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
 				{ secGrpName, Input.securityGroup }, { Input.projectName, null } };
 		String[][] sourceNames_RMU = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
@@ -133,11 +133,11 @@ public class Tally_Regression2 {
 				{ "folder", "tag", "assignment", "metadata" }, { "tag", "assignment", "folder", "metadata" } };
 		SoftAssert assertion = new SoftAssert();
 		TallyPage tp = new TallyPage(driver);
-		if(role.equalsIgnoreCase("PA")) {
-			sourceNames=sourceNames_PA;
+		if (role.equalsIgnoreCase("PA")) {
+			sourceNames = sourceNames_PA;
 		}
-		if(role.equalsIgnoreCase("RMU")) {
-			sourceNames=sourceNames_RMU;
+		if (role.equalsIgnoreCase("RMU")) {
+			sourceNames = sourceNames_RMU;
 		}
 		for (int k = 0; k < sourceNames.length; k++) {
 
@@ -150,8 +150,8 @@ public class Tally_Regression2 {
 				tp.selectTallyBy(tallyType[i][0], tallyByName[i][0]);
 				List<String> ListOfMetaData = tp.verifyTallyChart();
 				assertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
-				String actualValue=tallyByName[i][0].trim().toUpperCase();
-				String expValue=ListOfMetaData.get(0).trim();
+				String actualValue = tallyByName[i][0].trim().toUpperCase();
+				String expValue = ListOfMetaData.get(0).trim();
 				System.out.println(actualValue);
 				System.out.println(expValue);
 				if (actualValue.equalsIgnoreCase(expValue)) {
@@ -175,7 +175,7 @@ public class Tally_Regression2 {
 			assertion.assertAll();
 			bc.stepInfo("Sucessfully Verified Tally End to End Flow.");
 		}
-		
+
 	}
 
 	@BeforeMethod
