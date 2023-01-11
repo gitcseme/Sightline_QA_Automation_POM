@@ -273,6 +273,64 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 		
+		@Test(description = "RPMXCON-70313", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyFilterfieldsPresentOnlyInListView(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70313: Verify that Filters fields are only present in list view. Filters should not be present in image/tile view. This filter bar should be hidden.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+			baseClass.passedStep("Verified that filter box is present in DocList page");
+					
+			driver.waitForPageToBeReady();
+	        docList.getTileView().waitAndClick(5);
+	        driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),false);
+			baseClass.passedStep("Verified that Filters fields are only present in list view it is not present in image/tile view");
+			
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+		@Test(description = "RPMXCON-70314", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyEyeballIconposition(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70314: Verify that eyeball icon should be present next to the column to the right of the checkbox by default.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.eyeballIconColPosition().isDisplayed(),true);
+			baseClass.passedStep("Verified that eyeball icon column is present next to the column to the right of the checkbox by default.");
+			
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
