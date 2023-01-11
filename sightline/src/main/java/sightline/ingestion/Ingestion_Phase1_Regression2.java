@@ -154,7 +154,6 @@ public class Ingestion_Phase1_Regression2 {
 		// perform add only ingestion
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
-		System.out.println(status);
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("TRUE", Input.datLoadFile1, Input.textFile1,
 					Input.documentKey);
@@ -166,7 +165,6 @@ public class Ingestion_Phase1_Regression2 {
 		// Verify error message for overlay ingestion if docid not available
 		ingestionPage.navigateToIngestionPage();
 		boolean ingestStatus = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
-		System.out.println(ingestStatus);
 		if (ingestStatus == false) {
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
@@ -199,7 +197,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
-		System.out.println(status);
 		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
 			ingestionPage.ingestionCatalogging();
@@ -235,14 +232,12 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		loginPage.logout();
-
 	}
 	
 	/**
 	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-48147 Description :To Verify User is able to Ingest MP3 File
 	 * Variant along with native
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48147",enabled = true, groups = { "regression" } )
@@ -264,7 +259,6 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		loginPage.logout();
-
 	}
 	
 	/**
@@ -464,7 +458,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -493,31 +486,16 @@ public class Ingestion_Phase1_Regression2 {
 		// Verify analytic status when overlay without text
 		baseClass.stepInfo("Perform overlay ingestion without text file");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, "source", Input.sourceLocation, Input.UniCodeFilesFolder);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionPage.getDATDelimitersNewLine().Visible();
-			}
-		}), Input.wait30);
-		ingestionPage.getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionPage.getSourceSelectionDATLoadFile().Visible();
-			}
-		}), Input.wait30);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.waitForElement(ingestionPage.getSourceSelectionDATLoadFile());
 		ingestionPage.selectDATSource(Input.datLoadFile1, Input.documentKey);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionPage.getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		ingestionPage.getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
 		ingestionPage.clickOnNextButton();
 		ingestionPage.clickOnPreviewAndRunButton();
 		baseClass.stepInfo("Ingestion started");
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -551,7 +529,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -583,7 +560,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -622,8 +598,6 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.logout();
 		
 	}
-	
-
 	
 	/**
 	 * Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test
@@ -732,8 +706,6 @@ public class Ingestion_Phase1_Regression2 {
 
 	}
 
-	
-
 	/**
 	 * Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-48263 Description :To Verify Ingestion Overlay Without DAT
@@ -798,8 +770,6 @@ public class Ingestion_Phase1_Regression2 {
 
 	}
 	
-	
-	
 	/**
 	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-48203 
 	 * Description :To Verify Ingestion overlay of Others without Unpublish
@@ -831,8 +801,6 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.logout();
 	}
 	
-	
-	
 	/**
 	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48597 
 	 * Description :Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.
@@ -863,14 +831,12 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		loginPage.logout();
-		
 	}
 
 	/**
 	 * Author :Arunkumar date: 08/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-49260 Description :To verify that total unique ingested
 	 * document count displays unique count if user perform only TIFF overlay
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49260",enabled = true, groups = { "regression" } )
@@ -917,7 +883,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-48264 Description :To Verify Ingestion Overlay Without DAT
 	 * for TIFF.
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48264",enabled = true, groups = { "regression" } )
@@ -944,7 +909,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
-
 	}
 
 	/**
@@ -974,7 +938,6 @@ public class Ingestion_Phase1_Regression2 {
 			baseClass.passedStep("Ingestion already performed in this project successfully with New Line delimiter other than ASCII(59)");
 		}
 		loginPage.logout();
-
 	}
 	
 	/**
@@ -1007,8 +970,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.IngestionFromDraftMode();
 		ingestionPage.ingestionCatalogging();
 		loginPage.logout();
-		
-
 	}
 
 	/**
@@ -1160,14 +1121,11 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyIngestionDetails();
 		loginPage.logout();
 	}
-
-	
 	
 	/**
 	 * Author :Arunkumar date: 08/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-49022 Description :Verify two ingestions with step (Indexing
 	 * , Approval ) having ingestion type add only must run simultaneously
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49022",enabled = true, groups = { "regression" } )
@@ -1194,7 +1152,6 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.multipleIngestionCopying(2);
 		ingestionPage.multipleIngestionIndexing(dataset, 2);
 		ingestionPage.approveIngestion(2);
-		
 		}
 		loginPage.logout();
 	}
@@ -1202,7 +1159,6 @@ public class Ingestion_Phase1_Regression2 {
 	/**
 	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-47588 
 	 * Description :Ingestion with Overlay mode with only load files for PDF or TIFF or Native file type
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47588",enabled = true, groups = { "regression" } )
@@ -1228,14 +1184,12 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Pdf", Input.PDFFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		loginPage.logout();
-		
 	}
 
 	/**
 	 * Author :Arunkumar date: 08/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-47594 Description :To Verify for Approved ingestions, there
 	 * should not have any option for Rollback.
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47594",enabled = true, groups = { "regression" } )
@@ -1246,22 +1200,14 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47594");
 		baseClass.stepInfo("To Verify for Approved ingestions, there should not have any option for Rollback.");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionPage.getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		baseClass.waitForElement(ingestionPage.getFilterByButton());
 		ingestionPage.getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionPage.getFilterByAPPROVED().Visible();
-			}
-		}), Input.wait30);
+		baseClass.waitForElement(ingestionPage.getFilterByAPPROVED());
 		ingestionPage.getFilterByAPPROVED().waitAndClick(10);
 		ingestionPage.getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		// Verify rollback option for approved ingestion
-		if (ingestionPage.getIngestionDetailPopup(1).isElementAvailable(5)) {
+		if (ingestionPage.getIngestionDetailPopup(1).isElementAvailable(20)) {
 			baseClass.stepInfo("Ingestion already present in approved stage");
 			ingestionPage.verifyRollbackOptionForApprovedIngestion();
 		} else {
@@ -1279,7 +1225,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Description :Verify when user ingest only metadata, message like 'No files
 	 * associated with this document' should be displayed on
 	 * text/Images/Translations view.'RPMXCON-51236'
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-51236",enabled = true, groups = { "regression" })
@@ -1293,14 +1238,11 @@ public class Ingestion_Phase1_Regression2 {
 				"Verify when user ingest only metadata, message like 'No files associated with this document' should be displayed on text/Images/Translations view");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
-
+	
 		if (status == false) {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select",null, null, null);
 		}
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
 		sessionSearch.viewInDocView();
@@ -1342,14 +1284,12 @@ public class Ingestion_Phase1_Regression2 {
 		String ingestionType="Add Only";
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
 
 		if (status == false) {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
 		sessionSearch.viewInDocView();
@@ -1386,7 +1326,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Author: Vijaya.Rani date: 02/05/2022 Modified date: NA Modified by: NA
 	 * Description :Verify when user ingest only metadata, error PDF should be
 	 * displayed on Images view.'RPMXCON-51237'
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-51237",enabled = true, groups = { "regression" })
@@ -1407,7 +1346,6 @@ public class Ingestion_Phase1_Regression2 {
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
 		sessionSearch.viewInDocView();
@@ -1445,7 +1383,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
 	 * Description :Verify when user ingest only dat file, only metadata should get
 	 * ingested.'RPMXCON-51238'
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-51238",enabled = true, groups = { "regression" })
@@ -1465,8 +1402,6 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
 		sessionSearch.viewInDocView();
@@ -1501,7 +1436,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		DocListPage docList= new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView=new DocViewPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 		
@@ -1596,7 +1530,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocListPage docList= new DocListPage(driver);
 		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
 
@@ -1662,7 +1595,6 @@ public class Ingestion_Phase1_Regression2 {
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		DocListPage docList = new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1749,7 +1681,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49511");
@@ -1790,7 +1721,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49498");
@@ -1845,7 +1775,6 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49510");
@@ -1889,7 +1818,6 @@ public class Ingestion_Phase1_Regression2 {
 				"###  To Verify unpublish for Overlay ingestionPage. ###");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 
@@ -1964,7 +1892,6 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49499");
@@ -2026,7 +1953,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49500");
@@ -2137,7 +2063,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49501");
@@ -2198,10 +2123,8 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-49545");
 		baseClass.stepInfo("Verify that value for all the metadata fields having DATETIME/DATE data type.");
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocListPage docList = new DocListPage(driver);
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
@@ -2234,7 +2157,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		savedSearch = new SavedSearch(driver);
 		dataSets = new DataSets(driver);
 		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
@@ -2274,7 +2196,6 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 		
@@ -2325,7 +2246,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocListPage doclist = new DocListPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
@@ -2395,7 +2315,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		String BasicSearchName = "Test" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48084");

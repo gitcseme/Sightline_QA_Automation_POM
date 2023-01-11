@@ -2721,7 +2721,7 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getbtnRunIngestion());
 		getbtnRunIngestion().waitAndClick(10);
-
+		driver.waitForPageToBeReady();
 		softAssertion = new SoftAssert();
 		softAssertion.assertTrue(getAddanewIngestionButton().isElementAvailable(5));
 		base.passedStep("Run Ingestion done successfully");
@@ -2883,7 +2883,7 @@ public class IngestionPage_Indium {
 		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 		} else if (dataset.contains("Tiff_Images")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
 		}
 
 		driver.scrollingToBottomofAPage();
@@ -3171,7 +3171,7 @@ public class IngestionPage_Indium {
 		} else if (dataset.contains("Tiff_Images")) {
 
 			base.waitForElement(getMappingSourceField(2));
-			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
 			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
 			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
