@@ -2355,7 +2355,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Mohan Created Date: 24/02/2022 Modified by:Arun  Modified Date: 11/01/2023
 	 * @description: verify Source System tobe disabled when we add overlay in the
 	 *               Ingestion
 	 */
@@ -2365,11 +2365,9 @@ public class IngestionPage_Indium {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
-
 		base.stepInfo("Select Source system");
 		base.waitForElement(getSpecifySourceSystem());
 		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
-
 		base.stepInfo("Select Location");
 		base.waitForElement(getSpecifyLocation());
 		base.waitTime(2);
@@ -2378,122 +2376,26 @@ public class IngestionPage_Indium {
 		base.waitForElement(getSpecifySourceFolder());
 		base.waitTime(2);
 		base.stepInfo("Select Folder");
-		for (int i = 0; i < 30; i++) {
-
-			if (dataset.contains("Collection1K_Tally")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
-			} else if (dataset.contains("20Family_20Threaded")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
-			} else if (dataset.contains("AllSources")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
-			} else if (dataset.contains("0002_H13696_1_Latest")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.H1369Folder);
-			} else if (dataset.contains("16JanMultiPTIFF")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.MultiPTIFFFolder);
-			} else if (dataset.contains("27MarSinglePageTIFF")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
-			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
-			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
-			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
-			} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
-			} else if (dataset.contains("HiddenProperties_IngestionData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
-			} else if (dataset.contains("UniCodeFiles")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
-			} else if (dataset.contains("IngestionEmailData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
-			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-			}
-		}
+		
+		if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
+		} 
 		base.waitTime(2);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getSourceSelectionDATLoadFile());
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATGermanFile);
-		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATJapneseFile);
-		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+		 if (dataset.contains("HiddenProperties_IngestionData")) {
 			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSDat);
-		} else {
-			getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.DATFile);
-		}
+		} 
 		base.waitForElement(getSourceSelectionDATKey());
 		base.waitTime(2);
 
-		if (dataset.contains("Collection1K_Tally")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("20Family_20Threaded")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("AllSources")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
-		} else if (dataset.contains("0002_H13696_1_Latest")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
-		} else if (dataset.contains("16JanMultiPTIFF")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-		} else if (dataset.contains("27MarSinglePageTIFF")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
-		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+		 if (dataset.contains("HiddenProperties_IngestionData")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-		} else if (dataset.contains("HiddenProperties_IngestionData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-		} else if (dataset.contains("UniCodeFiles")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		} else if (dataset.contains("IngestionEmailData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
-		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
-			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-		}
+		} 
 
-		if (dataset.contains("20Family_20Threaded") || dataset.contains("AllSources")
-				|| dataset.contains("16JanMultiPTIFF") || dataset.contains("QA_EmailConcatenatedData_SS")
-				|| dataset.contains("GD_994_Native_Text_ForProduction")
-				|| dataset.contains("GNon_searchable_PDF_Load_file") || dataset.contains("IngestionEmailData")) {
-			base.stepInfo("*******Selecing text files***************");
-			base.waitForElement(getSourceSelectionText());
-			getSourceSelectionText().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
-
-			base.stepInfo("*******Selecing Native files***************");
-			base.waitForElement(getNativeCheckBox());
-			getNativeCheckBox().waitAndClick(10);
-			base.waitForElement(getNativeLST());
-			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
-		}
-
-		if (dataset.contains("Collection1K_Tally") || dataset.contains("UniCodeFiles")) {
-			base.stepInfo("*******Selecing text files***************");
-			base.waitForElement(getSourceSelectionText());
-			getSourceSelectionText().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.TextFile);
-		}
-
-		if (dataset.contains("0002_H13696_1_Latest")) {
-			base.stepInfo("*******Selecing Native files***************");
-			base.waitForElement(getNativeCheckBox());
-			getNativeCheckBox().waitAndClick(10);
-			base.waitForElement(getNativeLST());
-			getNativeLST().selectFromDropdown().selectByVisibleText(Input.NativeFile);
-		}
 		if (dataset.contains("HiddenProperties_IngestionData")) {
 			base.stepInfo("*******Selecing Native files***************");
 			base.waitForElement(getNativeCheckBox());
@@ -2501,138 +2403,51 @@ public class IngestionPage_Indium {
 			base.waitForElement(getNativeLST());
 			getNativeLST().selectFromDropdown().selectByVisibleText(Input.YYYYMMDDHHMISSLst);
 		}
-
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing PDF files***************");
-			base.waitForElement(getPDFCheckBoxButton());
-			getPDFCheckBoxButton().waitAndClick(20);
-			base.waitForElement(getPDFLST());
-			getPDFLST().selectFromDropdown().selectByVisibleText(Input.PDFFile);
-		}
-
-		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("AllSources") || dataset.contains("16JanMultiPTIFF")) {
-			base.stepInfo("*******Selecing TIFF files***************");
-			base.waitForElement(getTIFFCheckBox());
-			getTIFFCheckBox().waitAndClick(20);
-			base.waitForElement(getSourceSelectionTextLoadFile());
-			getTIFFLST().selectFromDropdown().selectByVisibleText(Input.TIFFFile);
-		}
-
-		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("0002_H13696_1_Latest") || dataset.contains("SSAudioSpeech_Transcript")
-				|| dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3File);
-		}
-
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3GermanFile);
-		}
-
-		if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			base.stepInfo("*******Selecing MP3 files***************");
-			base.waitForElement(getMP3CheckBoxButton());
-			getMP3CheckBoxButton().waitAndClick(15);
-			base.waitForElement(getMP3LST());
-			getMP3LST().selectFromDropdown().selectByVisibleText(Input.MP3JapneseFile);
-		}
-
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptFile);
-		}
-
-		if (dataset.contains("CJK_GermanAudioTestData")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptGermanFile);
-		}
-
-		if (dataset.contains("CJK_JapaneseAudioTestData")) {
-			base.stepInfo("*******Selecing Audio Transcript files***************");
-			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-			base.waitForElement(getAudioTranscriptLST());
-			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(Input.TranscriptJapneseFile);
-		}
-		driver.scrollingToBottomofAPage();
-
-		if (dataset.contains("AllSources")) {
-			base.stepInfo("*******Selecing Other files***************");
-			base.waitForElement(getOtherCheckBox());
-			getOtherCheckBox().waitAndClick(15);
-			base.waitForElement(getOtherLoadFile());
-			getOtherLoadFile().selectFromDropdown().selectByVisibleText(Input.TranslationFile);
-		}
-
 		base.stepInfo("Select Date Format");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDateFormat());
 		getDateFormat().selectFromDropdown().selectByVisibleText(dateFormate);
-
 		driver.scrollPageToTop();
-
 		base.waitForElement(getIngestion_SaveAsDraft());
-		getIngestion_SaveAsDraft().waitAndClick(20);
+		getIngestion_SaveAsDraft().waitAndClick(10);
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
 		base.passedStep("Clicked on SaveAsDraft");
 	}
 
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arun Modified Date: 11/01/2023
 	 * @description: verify Date Formate in Draft section
 	 */
-	public void verifyDateFormateInCatalogeAndDraft() {
+	public void verifyDateFormatInDraftStage() {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
-		base.waitForElement(getFilterByFAILED());
-		getFilterByFAILED().waitAndClick(10);
 
-		for (int i = 0; i < 5; i++) {
-			if (getDraftIngestionStatus().isElementAvailable(5)) {
+		for (int i = 0; i < 20; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Draft")) {
 				base.passedStep("Draft completed");
 				break;
-			} else if (getFailedIngestionStatus().isElementAvailable(5)) {
-				System.out.println("Execution aborted!");
-				UtilityLog.info("Execution aborted!");
-				System.out.println("dataset is failed in catalog stage. Take a look and continue!");
-				UtilityLog.info("dataset is failed in catalog stage. Take a look and continue!");
-				System.exit(1);
-			} else {
+			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
-			}
-			String dateFormate1 = getIngestionWizardDateFormat().getText();
-			System.out.println(dateFormate1);
-			if (dateFormate1.length() > 11) {
-				base.passedStep(
-						"When Ingestion in draft mode is opened Ingestion Wizard is retain with the selected 'Date & Time Format'");
 			} else {
-				base.failedStep("Date & time formate is not valid");
+				base.failedStep("Draft failed");
 			}
 		}
+		//verifying date format
+		String dateFormate1 = getIngestionWizardDateFormat().getText();
+		System.out.println(dateFormate1);
+		if (dateFormate1.length() > 11) {
+			base.passedStep(
+					"When Ingestion in draft mode is opened Ingestion Wizard is retain with the selected 'Date & Time Format'");
+		} else {
+			base.failedStep("Date & time format is not valid");
+		}	
 	}
 
 	/**
@@ -4117,7 +3932,7 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		base.waitForElement(getIngestion_SaveAsDraft());
-		getIngestion_SaveAsDraft().waitAndClick(5);
+		getIngestion_SaveAsDraft().waitAndClick(10);
 
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(10);

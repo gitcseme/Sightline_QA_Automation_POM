@@ -74,7 +74,7 @@ public class Regression_Ingestion01 {
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
 		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		ingestionPage.verifyDateFormatInDraftStage();
 		loginPage.logout();
 		
 	}
@@ -95,7 +95,7 @@ public class Regression_Ingestion01 {
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.rollBackIngestion();
-		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		ingestionPage.verifyDateFormatInDraftStage();
 		loginPage.logout();
 		
 	}
