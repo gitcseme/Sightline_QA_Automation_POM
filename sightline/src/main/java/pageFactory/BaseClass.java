@@ -873,6 +873,47 @@ public class BaseClass {
 			}
 		}
 	}
+	
+	public void impersonateDAtoPA(String projectName,String domainName) {
+		getSignoutMenu().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait30);
+		getChangeRole().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait30);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectTo().Visible();
+			}
+		}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(domainName);
+
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(projectName);
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from DA to PA");
+		UtilityLog.info("Impersnated from DA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
 
 	public void selectdomain(final String domain) {
 		driver.scrollPageToTop();
@@ -2008,6 +2049,46 @@ public class BaseClass {
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 			waitForElement(getAvlProject());
 			getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+			waitForElement(getSelectSecurityGroup());
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			waitForElement(getSaveChangeRole());
+			getSaveChangeRole().waitAndClick(10);
+			System.out.println("Impersonated from DA to RMU");
+			UtilityLog.info("Impersonated from DA to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+	}
+	public void impersonateDAtoRMU(String projectName,String domainName) {
+		try {
+			waitForElement(getSignoutMenu());
+			getSignoutMenu().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait60);
+			getChangeRole().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait60);
+			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+			Thread.sleep(3000);
+			waitForElement(getAvlDomain());
+			getAvlDomain().selectFromDropdown().selectByVisibleText(domainName);
+			waitForElement(getAvlProject());
+			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
 			waitForElement(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 			waitForElement(getSaveChangeRole());
