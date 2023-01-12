@@ -40,11 +40,8 @@ public class Ingestion_Phase1_Regression2 {
 	DocListPage docList;
 	DataSets dataSets;
 	Input ip;
-	TallyPage tally;
 	DocExplorerPage docExplorer;
 	ProjectPage project;
-	UserManagement userManage;
-	SecurityGroupsPage securityGroup;
 	SavedSearch savedSearch;
 	DocViewPage docView;
 
@@ -92,10 +89,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data", Input.datLoadFile1,
 					Input.textFile1, Input.documentKey);
-			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		ingestionPage.verifyTotalDocsIngestedWithPurehitCount();
 		loginPage.logout();
@@ -105,7 +99,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-49467 Description :Verify error message displays if adding
 	 * same source Doc ID which is already exists in the DB
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49467",enabled = true, groups = { "regression" } )
@@ -122,10 +115,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		// Verify error message for overlay ingestion if docid is already available
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
@@ -157,10 +147,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("TRUE", Input.datLoadFile1, Input.textFile1,
 					Input.documentKey);
-			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		// Verify error message for overlay ingestion if docid not available
 		ingestionPage.navigateToIngestionPage();
@@ -199,11 +186,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.audio96DocsFolder);
 			loginPage.logout();
 		}
 	}
@@ -225,11 +208,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.audio96DocsFolder);
 		}
 		loginPage.logout();
 	}
@@ -252,11 +231,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
 		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.audio96DocsFolder);
 		}
 		loginPage.logout();
 	}
@@ -277,10 +252,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		// Verify error message for ingesting duplicate files
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
@@ -311,11 +283,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// getting unique ingested count before overlay
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
@@ -356,11 +324,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// getting unique ingested count before overlay
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
@@ -401,11 +365,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// getting unique ingested count before overlay
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
@@ -446,11 +406,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// perform overlay ingestion with dat along with native
 		baseClass.stepInfo("Performing overlay ingestion with Dat along with Native");
@@ -478,10 +434,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
-		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-		ingestionPage.approveIngestion(1);
-		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		// Verify analytic status when overlay without text
 		baseClass.stepInfo("Perform overlay ingestion without text file");
@@ -516,11 +469,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// Verify analytic status when pdf overlay without text
 		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
@@ -549,10 +498,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 		}
 		// Verify analytic status when overlay with text
 		baseClass.stepInfo("Perform overlay ingestion with text file");
@@ -580,11 +526,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		//Verify analytic status when mp3 overlay without text
 		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
@@ -603,7 +545,6 @@ public class Ingestion_Phase1_Regression2 {
 	 * Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-48267 Description :To Verify Ingestion Overlay Without DAT
 	 * for Translation.
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48267",enabled = true, groups = { "regression" } )
@@ -620,11 +561,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for translation without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Translation", Input.TranslationFile);
@@ -655,10 +592,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for transcript without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Transcript", Input.TranscriptFile);
@@ -689,10 +623,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for mp3 without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
@@ -724,10 +655,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for Pdf without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Pdf", Input.PDFFile);
@@ -756,10 +684,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for Native without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Native", Input.NativeFile);
@@ -787,11 +712,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// perform other overlay
 		baseClass.stepInfo("Performing overlay ingestion with Others");
@@ -819,11 +740,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 		// Verify analytic status when Tiff overlay without text
 		baseClass.stepInfo("Perform Tiff overlay ingestion without text file");
@@ -852,11 +769,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
 			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 		// getting unique ingested count before overlay
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
@@ -897,11 +810,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 		// Perform overlay ingestion for Tiff without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
@@ -928,10 +837,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 			baseClass.passedStep("Ingestion performed in this project successfully with New Line delimiter other than ASCII(59)");
 		}
 		else {
@@ -956,10 +862,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		// perform overlay ingestion without mapping	
 		ingestionPage.OverlayIngestionForDATWithoutMappingFieldSection(Input.HiddenPropertiesFolder,
@@ -988,10 +891,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		// perform overlay ingestion with mapping field section
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
@@ -1023,10 +923,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
 		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
@@ -1054,10 +951,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
@@ -1088,10 +982,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
 		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
@@ -1173,11 +1064,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		// perform pdf overlay
 		baseClass.stepInfo("Performing overlay ingestion with PDF");
@@ -1232,7 +1119,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		String ingestionType="Add Only";
 		baseClass.stepInfo("Test case Id: RPMXCON-51236");
 		baseClass.stepInfo(
 				"Verify when user ingest only metadata, message like 'No files associated with this document' should be displayed on text/Images/Translations view");
@@ -1240,7 +1126,7 @@ public class Ingestion_Phase1_Regression2 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 	
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select",null, null, null);
 		}
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
@@ -1281,12 +1167,11 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo(
 				"Verify when user ingest only metadata, 'No files associated with this document' message should be displayed on default view");
 
-		String ingestionType="Add Only";
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 
@@ -1336,13 +1221,12 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51237");
 		baseClass.stepInfo("Verify when user ingest only metadata, error PDF should be displayed on Images view");
 
-		String ingestionType="Add Only";
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 
@@ -1393,13 +1277,12 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51238");
 		baseClass.stepInfo("Verify when user ingest only dat file, only metadata should get ingested.");
 
-		String ingestionType="Add Only";
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
@@ -1438,20 +1321,18 @@ public class Ingestion_Phase1_Regression2 {
 		DocListPage docList= new DocListPage(driver);
 		DocViewPage docView=new DocViewPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
-		
-		
+				
 		baseClass.stepInfo("Test case Id: RPMXCON-48607");
 		baseClass.stepInfo(
 				"To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and Text will reflect the overlaid text.");
 
-		String ingestionType=Input.ingestionType;
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
 		if (status == false) {
 
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 			
 		}
@@ -1474,18 +1355,14 @@ public class Ingestion_Phase1_Regression2 {
 
 		baseClass.stepInfo("Select DAT delimiters.");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
 		baseClass.stepInfo("Select DAT source.");
 		ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
 
 		ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
-
 		baseClass.stepInfo("Select Date and Time format.");
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
-
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
-
 		baseClass.stepInfo("Click on preview and run button.");
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
@@ -1543,8 +1420,7 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 
 		if (status == false) {
-			String ingestionType="Add Only";
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 		// getting unique ingested count before overlay
@@ -1561,8 +1437,8 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.unpublish(BasicSearchName);
 		// perform overlay only ingestion with source system as Mapped data
 		ingestionPage.navigateToIngestionPage();
-		String ingestionType="Overlay Only";
-		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE",  Input.DATPPPDF10Docs, null,
+		
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.overlayOnly, "TRUE",  Input.DATPPPDF10Docs, null,
 				Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		
 		// getting unique ingested count after overlay
@@ -1602,14 +1478,13 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo(
 				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
 
-		String ingestionType = "Add Only";
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
 		if (status == false) {
 
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, Input.ingestionType, "TRUE",
 					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
 					null, null);
 
@@ -1622,8 +1497,6 @@ public class Ingestion_Phase1_Regression2 {
 		// Go to UnpublishPage
 		ingestionPage.navigateToUnPublishPage();
 		ingestionPage.unpublish(BasicSearchName);
-
-		baseClass = new BaseClass(driver);
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingestionPage.navigateToIngestionPage();
@@ -1679,7 +1552,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 		
@@ -1719,7 +1591,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 
@@ -1814,9 +1685,7 @@ public class Ingestion_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-48277 ");
-		baseClass.stepInfo(
-				"###  To Verify unpublish for Overlay ingestionPage. ###");
-		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("###  To Verify unpublish for Overlay ingestionPage. ###");
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
@@ -1910,10 +1779,7 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
-			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.JanMultiPTIFF);
 			
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
@@ -1951,7 +1817,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 		
@@ -1970,10 +1835,7 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
-			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.JanMultiPTIFF);
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
 		if (ingestionFullName != null) {
@@ -2003,7 +1865,6 @@ public class Ingestion_Phase1_Regression2 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		DocViewPage docview = new DocViewPage(driver);
 		
@@ -2022,10 +1883,7 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
-			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.JanMultiPTIFF);
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
 		if (ingestionFullName != null) {
@@ -2061,7 +1919,6 @@ public class Ingestion_Phase1_Regression2 {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 		
@@ -2079,10 +1936,7 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
-			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.JanMultiPTIFF);
 			
 		}
 		
@@ -2132,11 +1986,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		baseClass.stepInfo("Search the documents and Save");
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.HiddenPropertiesFolder);
@@ -2169,11 +2019,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		baseClass.stepInfo("Search the documents and Save");
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.HiddenPropertiesFolder);
@@ -2206,20 +2052,13 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
-			
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
 		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.AK_NativeFolder);
 		if(ingestionFullName!=null) {
 			// Search ingestionName
 			sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
-			sessionSearch.getPureHitAddButton().isElementAvailable(2);
-			sessionSearch.getPureHitAddButton().waitAndClick(5);
 			// Saved the My SavedSearch
 			sessionSearch.saveSearch(BasicSearchName);
 			// Go to UnpublishPage
@@ -2253,7 +2092,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo(
 				"To verify that the total unique count should not include the docs that have been unpublished.");
 
-		
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		
 		boolean status = ingestionPage.verifyIngestionpublish(Input.SinglePageTIFFFolder);
@@ -2266,12 +2104,7 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
-			
+			ingestionPage.publishAddonlyIngestion(Input.SinglePageTIFFFolder);	
 		}
 		
 		// getting before unique count
@@ -2321,7 +2154,6 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo(
 				"To Verify Full Analytics run successfully in Ingestion for Overlays Mode and all the Metadata Updated in Overlays should get displayed after Overlay's Successful.");
 
-
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
@@ -2330,11 +2162,7 @@ public class Ingestion_Phase1_Regression2 {
 		if (status == false) {
 
 			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 			
 		}
 		int beforeOverlayCount = ingestionPage.getIngestedUniqueCount();

@@ -80,13 +80,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48073",enabled = true, groups = { "regression" })
-	public void TCA1verifyEmailDateSentTimeOnlyInTallyAndSearch() throws InterruptedException {
+	public void verifyEmailDateSentTimeOnlyInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48073");
 		baseClass.stepInfo("Verify EmailDateSentTimeOnly in tally and in Search.");
 		String field = "EmailDateSentTimeOnly";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("go to search and check field availability in metadata");
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -115,13 +115,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48080",enabled = true, groups = { "regression" })
-	public void TCB9verifyExcelProtectedWorkbookInTallyAndSearch() throws InterruptedException {
+	public void verifyExcelProtectedWorkbookInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48080");
 		baseClass.stepInfo("Verify ExcelProtectedWorkbook in Tally and Search.");
 		String field = "ExcelProtectedWorkbook";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
@@ -174,7 +174,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48074",enabled = true, groups = { "regression" })
-	public void TCC1verifyFileDescriptionInTallyAndSearch() throws InterruptedException {
+	public void verifyFileDescriptionInTallyAndSearch() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48074");
 		baseClass.stepInfo("Verify FileDescription in Tally and Search.");
@@ -210,13 +210,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49554",enabled = true, groups = { "regression" })
-	public void TCA2verifyEmailCcMetadataAvailability() throws InterruptedException {
+	public void verifyEmailCcMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49554");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is available");
 		String data ="EmailCCNamesAndAddresses";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		//add dataset details and click next
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
@@ -246,13 +246,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49555",enabled = true, groups = { "regression" })
-	public void TCA3verifyEmailBccMetadataAvailability() throws InterruptedException {
+	public void verifyEmailBccMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49555");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available");
 		String data ="EmailBCCNamesAndAddresses";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		//add dataset details and click next
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
@@ -282,13 +282,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49504",enabled = true, groups = { "regression" })
-	public void TCA4verifyToolTipForDateFormat() throws InterruptedException {
+	public void verifyToolTipForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49504");
 		baseClass.stepInfo("Verify that tooltip should be displayed for 'Date & Time Format' field");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
@@ -310,13 +310,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49503",enabled = true, groups = { "regression" })
-	public void TCA5verifyToolTipAndDefaultSelectionForDateFormat() throws InterruptedException {
+	public void verifyToolTipAndDefaultSelectionForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49503");
 		baseClass.stepInfo("Verify that different formats present in 'Date & Time Format' field");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
@@ -337,13 +337,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47363",enabled = true, groups = { "regression" })
-	public void TCA6verifyGridAndTileviewOptions() throws InterruptedException {
+	public void verifyGridAndTileviewOptions() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47363");
 		baseClass.stepInfo("To verify that user is able to view two buttons of Grid and Tile view.");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
@@ -365,13 +365,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47307",enabled = true, groups = { "regression" })
-	public void TCA7verifyIngestionCountOnHomePage() throws InterruptedException {
+	public void verifyIngestionCountOnHomePage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47307");
 		baseClass.stepInfo("To verify that Ingestion Count on Ingested Home page is displayed correctly");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
@@ -391,13 +391,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47458",enabled = true, groups = { "regression" })
-	public void TCA8verifyBackButtonFunctionality() throws InterruptedException {
+	public void verifyBackButtonFunctionality() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47458");
 		baseClass.stepInfo("To verify that Back button functionality on Configure Mapping page.");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
@@ -430,13 +430,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60818",enabled = true, groups = { "regression" })
-	public void TCB8verifyAbsolutePathInTranscript() throws InterruptedException {
+	public void verifyAbsolutePathInTranscript() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60818");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the Transcript LST.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
@@ -481,14 +481,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60819",enabled = true, groups = { "regression" })
-	public void TCB7verifyAbsolutePathInTranslation() throws InterruptedException {
+	public void verifyAbsolutePathInTranslation() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60819");
 		baseClass.stepInfo("To verify that Absolute path is present in the Translation LST.");
 		String ingestionName = null;
 
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
@@ -532,13 +532,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-58507",enabled = true, groups = { "regression" })
-	public void TCB5verifyAddOnlyForDifferentSourceSystem() throws InterruptedException {
+	public void verifyAddOnlyForDifferentSourceSystem() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58507");
 		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.verifyUrlLanding(Input.url + "Ingestion/Home", "Ingestion home page displayed", 
@@ -563,7 +563,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48615",enabled = true, groups = { "regression" })
-	public void TCB6verifyTextOverlayCountUnderIndexingSection() throws InterruptedException {
+	public void verifyTextOverlayCountUnderIndexingSection() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48615");
 		baseClass.stepInfo("Verify overlay text files count reflecting under indexing section");
@@ -571,7 +571,7 @@ public class Ingestion_Phase2_Regression2 {
 		String searchName = "Search"+Utility.dynamicNameAppender();
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//add new ingestion with text files
@@ -605,13 +605,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47290",enabled = true, groups = { "regression" })
-	public void TCB4verifyMandatoryFieldsInSourceAndSettingsOption() throws InterruptedException {
+	public void verifyMandatoryFieldsInSourceAndSettingsOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47290");
 		baseClass.stepInfo("verify the mandatory fields in source and overwrite settings option");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion link");
@@ -637,13 +637,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48605",enabled = true, groups = { "regression" })
-	public void TCB3verifyTextFilesSearchConsideration() throws InterruptedException {
+	public void verifyTextFilesSearchConsideration() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48605");
 		baseClass.stepInfo("Verify that users should be able to successfully conduct searches");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//add new ingestion with text files
@@ -681,13 +681,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47286",enabled = true, groups = { "regression" })
-	public void TCB1verifyVariousOptionsInIngestionWizard() throws InterruptedException {
+	public void verifyVariousOptionsInIngestionWizard() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47286");
 		baseClass.stepInfo("verify 'Source Selection & Ingestion Type' Sections for various Options");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion link");
@@ -708,13 +708,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-58522",enabled = true, groups = { "regression" })
-	public void TCB2verifyDifferentSourceSystemFromDraft() throws InterruptedException {
+	public void verifyDifferentSourceSystemFromDraft() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58522");
 		baseClass.stepInfo("Verify add only ingestion for same dataset with different source system.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -750,13 +750,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47457",enabled = true, groups = { "regression" })
-	public void TCA9verifyNavigatingToMappingPageWithBlankFields() throws InterruptedException {
+	public void verifyNavigatingToMappingPageWithBlankFields() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47457");
 		baseClass.stepInfo("Verify user is not allowed to go to Mapping Page unless mandatory fields are entered.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.ClickOnAddNewIngestionLink();
@@ -795,13 +795,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60813",enabled = true, groups = { "regression" })
-	public void TCC2verifyAbsolutePathInDat() throws InterruptedException {
+	public void verifyAbsolutePathInDat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60813");
 		baseClass.stepInfo("verify the ingestion status if DAT file contain the Absolute path.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with transcript");
@@ -852,12 +852,12 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47411",enabled = true, groups = { "regression" })
-	public void TCA1verifyPaginationOptionInErrorDetailPopup() throws InterruptedException {
+	public void verifyPaginationOptionInErrorDetailPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47411");
 		baseClass.stepInfo("To verify that pagination is provide to Error details pop");
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
@@ -894,14 +894,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60821",enabled = true, groups = { "regression" })
-	public void TCA2verifyAbsolutePathIngestionOverlay() throws InterruptedException {
+	public void verifyAbsolutePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60821");
 		baseClass.stepInfo("verify the ingestion status if DAT file contain the Absolute path.");
 		String ingestionName = null;
 		docExplorer = new DocExplorerPage(driver);
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
@@ -965,14 +965,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60826",enabled = true, groups = { "regression" })
-	public void TCA3verifyAbsoluteRelativePathIngestionOverlay() throws InterruptedException {
+	public void verifyAbsoluteRelativePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60826");
 		baseClass.stepInfo("verify the ingestion status of overlay with Dat relative path");
 		String ingestionName = null;
 		docExplorer = new DocExplorerPage(driver);
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
@@ -1036,14 +1036,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60825",enabled = true, groups = { "regression" })
-	public void TCA4verifyRelativeAbsolutePathIngestionOverlay() throws InterruptedException {
+	public void verifyRelativeAbsolutePathIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60825");
 		baseClass.stepInfo("verify the ingestion status of overlay with Dat absolute path");
 		String ingestionName = null;
 		docExplorer = new DocExplorerPage(driver);
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
@@ -1105,13 +1105,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47390",enabled = true, groups = { "regression" })
-	public void TCA5verifyIngestionHomePageTiles() throws InterruptedException {
+	public void verifyIngestionHomePageTiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47390");
 		baseClass.stepInfo("verify that on Ingestion Home page displays default 10 tiles");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Select all filters");
@@ -1134,14 +1134,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48078",enabled = true, groups = { "regression" })
-	public void TCA6verifyTallyReportForExceptionResolution() throws InterruptedException {
+	public void verifyTallyReportForExceptionResolution() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48078");
 		baseClass.stepInfo("verify Tally report should be generated with Metadata 'ExceptionResolution'");
 		String metadata ="ExceptionResolution";
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Navigate to report-tally");
 		tally = new TallyPage(driver);
@@ -1158,14 +1158,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48081",enabled = true, groups = { "regression" })
-	public void TCA7verifyTallyReportForAllCustodians() throws InterruptedException {
+	public void verifyTallyReportForAllCustodians() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48081");
 		baseClass.stepInfo("To Verify AllCustodians in Tally and Search");
 		String metadata ="AllCustodians";
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Navigate to report-tally");
 		tally = new TallyPage(driver);
@@ -1185,7 +1185,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60822",enabled = true, groups = { "regression" })
-	public void TCB1verifyAbsolutePathTextFileIngestionOverlay() throws InterruptedException {
+	public void verifyAbsolutePathTextFileIngestionOverlay() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60822");
 		baseClass.stepInfo("verify the ingestion status of overlay with text file contain absolute path");
@@ -1193,7 +1193,7 @@ public class Ingestion_Phase2_Regression2 {
 		String searchName = "search"+ Utility.dynamicNameAppender();
 		docExplorer = new DocExplorerPage(driver);
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
@@ -1263,14 +1263,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48082",enabled = true, groups = { "regression" })
-	public void TCA8verifyTallyReportForReviewExportID() throws InterruptedException {
+	public void verifyTallyReportForReviewExportID() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48082");
 		baseClass.stepInfo("To Verify ReviewExportID in Tally and Search.");
 		String metadata ="ReviewExportID";
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Navigate to report-tally");
 		tally = new TallyPage(driver);
@@ -1289,14 +1289,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48270",enabled = true, groups = { "regression" })
-	public void TCA9verifyNuixCreatedDataIngestion() throws InterruptedException {
+	public void verifyNuixCreatedDataIngestion() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48270");
 		baseClass.stepInfo("verify that Ingestion should not failed In Approve stage");
 		String ingestionName = null;
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
@@ -1331,13 +1331,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54550",enabled = true, groups = { "regression" })
-	public void TCB2verifySearchablePdfCountInCopyingStage() throws InterruptedException {
+	public void verifySearchablePdfCountInCopyingStage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54550");
 		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field is blank");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
@@ -1367,13 +1367,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54549",enabled = true, groups = { "regression" })
-	public void TCB3verifyRequiredPdfGenerationWithFalse() throws InterruptedException {
+	public void verifyRequiredPdfGenerationWithFalse() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54549");
 		baseClass.stepInfo("verify that if docs have 'Require PDF Generation' field set to FALSE");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
@@ -1402,7 +1402,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48633",enabled = true, groups = { "regression" })
-	public void TCB1verifyRerunAnalyticsAtSecurityGroup() throws InterruptedException {
+	public void verifyRerunAnalyticsAtSecurityGroup() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48633");
 		baseClass.stepInfo("verify that after text overlay PA can rerun the analytics at security group successfully");
@@ -1410,10 +1410,8 @@ public class Ingestion_Phase2_Regression2 {
 		String BasicSearchName = "Search"+ Utility.dynamicNameAppender();
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with text files");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
@@ -1454,16 +1452,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54551",enabled = true, groups = { "regression" })
-	public void TCB2verifyErrorDisplayedOnCopyingStage() throws InterruptedException {
+	public void verifyErrorDisplayedOnCopyingStage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54551");
 		baseClass.stepInfo("verify error if document is set to TRUE for ‘Require PDF Generation’.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with ice source system");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
@@ -1491,16 +1487,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54560",enabled = true, groups = { "regression" })
-	public void TCB3verifyRollbackOnceCopyCompleted() throws InterruptedException {
+	public void verifyRollbackOnceCopyCompleted() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54560");
 		baseClass.stepInfo("To verify that PA can Rollback the Ingestion once copy is completed");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
@@ -1531,16 +1525,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60815",enabled = true, groups = { "regression" })
-	public void TCB5verifyAbsolutePathInPdf() throws InterruptedException {
+	public void verifyAbsolutePathInPdf() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60815");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the PDF LST.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with PDF");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -1585,16 +1577,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60814",enabled = true, groups = { "regression" })
-	public void TCB4verifyAbsolutePathInNative() throws InterruptedException {
+	public void verifyAbsolutePathInNative() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60814");
 		baseClass.stepInfo("To verify that if the Absolute path is present in the Native LST.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with Native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -1639,16 +1629,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60820",enabled = true, groups = { "regression" })
-	public void TCB6verifyAbsoluteAndRelativePathFile() throws InterruptedException {
+	public void verifyAbsoluteAndRelativePathFile() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60820");
 		baseClass.stepInfo("To verify that if the Absolute path in Native and Relative in Native LST.");
 		String ingestionName = null;
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with Pdf and Native");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.uncPath);
@@ -1694,16 +1682,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49553",enabled = true, groups = { "regression" })
-	public void TCA5verifyEmailAuthorMetadataAvailability() throws InterruptedException {
+	public void verifyEmailAuthorMetadataAvailability() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49553");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is available");
 		String data ="EmailAuthorNameAndAddress";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		//add dataset details and click next
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Adding ingestion details");
@@ -1732,16 +1718,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47427",enabled = true, groups = { "regression" })
-	public void TCA6verifySectionAvailableInIngestionWizard() throws InterruptedException {
+	public void verifySectionAvailableInIngestionWizard() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47427");
 		baseClass.stepInfo("To Verify Add New Ingestion in Ingestion Wizard.");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Click on add new ingestion in home page");
 		ingestionPage.ClickOnAddNewIngestionLink();
@@ -1755,16 +1739,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49505",enabled = true, groups = { "regression" })
-	public void TCA7verifyDefaultSelectionForDateFormat() throws InterruptedException {
+	public void verifyDefaultSelectionForDateFormat() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49505");
 		baseClass.stepInfo("Verify the default value for the 'Date & Time Format' field");
 	
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
@@ -1783,15 +1765,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63250",enabled = true, groups = { "regression" })
-	public void TCA8verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
+	public void verifySimilarSourceFieldErrorWhenAddOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-63250");
 		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -1814,14 +1794,12 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63245",enabled = true, groups = { "regression" })
-	public void TCA1verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
+	public void verifyDatFieldsInMappingWhenAddOnly() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-63245");
 		baseClass.stepInfo("Verify DAT fields in configure mapping page.");
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with type as 'add only'");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -1844,14 +1822,12 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63249",enabled = true, groups = { "regression" })
-	public void TCA2verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
+	public void verifySimilarDestinationFieldErrorWhenAddOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-63249");
 		baseClass.stepInfo("Verify error message when similar destination field mapped twice.");
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, 
@@ -1874,16 +1850,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48169",enabled = true, groups = { "regression" })
-	public void TCA3verifyAudioPlayerReadyField() throws InterruptedException {
+	public void verifyAudioPlayerReadyField() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48169");
 		baseClass.stepInfo("Verify 'AudioPlayerReady' field default status.");
 		String field = "AudioPlayerReady";
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		baseClass.stepInfo("Navigate to manage-project fields");
 		projectFieldPage = new ProjectFieldsPage(driver);
 		projectFieldPage.navigateToProjectFieldsPage();
@@ -1901,7 +1875,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48930",enabled = true, groups = { "regression" })
-	public void TCB7validateDocLanguagesFieldOnDoclist() throws InterruptedException {
+	public void validateDocLanguagesFieldOnDoclist() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48930");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on DocList");
@@ -1909,10 +1883,8 @@ public class Ingestion_Phase2_Regression2 {
 		String ingestionName = null;
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -1951,7 +1923,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48929",enabled = true, groups = { "regression" })
-	public void TCB8validateDocLanguagesFieldOnDocview() throws InterruptedException {
+	public void validateDocLanguagesFieldOnDocview() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48929");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on DocView");
@@ -1959,10 +1931,8 @@ public class Ingestion_Phase2_Regression2 {
 		String ingestionName = null;
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -2001,16 +1971,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47412",enabled = true, groups = { "regression" })
-	public void TCA9verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
+	public void verifyAdminBrowseAllErrorsUsingNavigation() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47412");
 		baseClass.stepInfo("To verify that Admin is able to browser all the Errors using navigation control");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		ingestionPage.IngestionOnlyForDatFile(Input.attachDocFolder, Input.datFile7);
@@ -2025,17 +1993,15 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48927",enabled = true, groups = { "regression" })
-	public void TCB9validateDocLanguagesFieldOnTally() throws InterruptedException {
+	public void validateDocLanguagesFieldOnTally() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48927");
 		baseClass.stepInfo("Validate new metadata field DocLanguages on Tally report");
 		String metadata="DocLanguages";
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		//publishing docs as pre-requisite
 		baseClass.stepInfo("Perform add only ingestion");
@@ -2070,16 +2036,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47306",enabled = true, groups = { "regression" })
-	public void TCA4verifyCountsDisplayedOnTiles() throws InterruptedException {
+	public void verifyCountsDisplayedOnTiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47306");
 		baseClass.stepInfo("verify Counts displayed on Tiles on Ingestion home page are correct.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("add new ingestion details");
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
@@ -2096,16 +2060,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47400",enabled = true, groups = { "regression" })
-	public void TCA1verifyPreviewRecordIngestionPopup() throws InterruptedException {
+	public void verifyPreviewRecordIngestionPopup() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47400");
 		baseClass.stepInfo("verify Preview Records pop up display.");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion details and click on next");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);
@@ -2137,16 +2099,14 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47567",enabled = true, groups = { "regression" })
-	public void TCA2verifyIngestionStatusInDetailPage() throws InterruptedException {
+	public void verifyIngestionStatusInDetailPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47567");
 		baseClass.stepInfo("To Verify Ingestion Status in Ingestion Detail Page .");
 		
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion with dat and text file");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
@@ -2179,7 +2139,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48926",dataProvider = "users",enabled = true, groups = { "regression" })
-	public void TCB6verifyDocLanguagesMetadata(String userName, String password, String role) throws InterruptedException {
+	public void verifyDocLanguagesMetadata(String userName, String password, String role) throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48926");
 		baseClass.stepInfo("Validate new metadata field DocLanguages");
@@ -2257,17 +2217,15 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48305",enabled = true, groups = { "regression" })
-	public void TCA3verifyEmailConversationIndexNuixValue() throws InterruptedException {
+	public void verifyEmailConversationIndexNuixValue() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48305");
 		baseClass.stepInfo("To verify that 'EmailConversationIndex' value ingested from NUIX.");
 		String ingestionName = null;
 		String[] value = {"EmailConversationIndex"};
 		//Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Perform add only ingestion with PDF");
 		boolean status = ingestionPage.verifyIngestionpublish("EmailConversationIndex_GD");
@@ -2321,15 +2279,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60895",enabled = true, groups = { "regression" })
-	public void TCA4verifyDatIngestionLessThan400Chars() throws InterruptedException {
+	public void verifyDatIngestionLessThan400Chars() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-60895");
 		baseClass.stepInfo("Verify ingestion Dat file data having less than 400 chars.");
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion with less than 400 char dat");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -2357,15 +2313,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48585",enabled = true, groups = { "regression" })
-	public void TCA5verifyUniqueDocIdsCountDisplayAsPA() throws InterruptedException {
+	public void verifyUniqueDocIdsCountDisplayAsPA() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48585");
 		baseClass.stepInfo("Verify count of unique DocIDs present in Project as PA user");
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -2389,15 +2343,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48586",enabled = true, groups = { "regression" })
-	public void TCA6verifyUniqueDocIdsCountDisplayAsRMU() throws InterruptedException {
+	public void verifyUniqueDocIdsCountDisplayAsRMU() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48586");
 		baseClass.stepInfo("Verify count of unique DocIDs present in Project as RMU user");
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Add new ingestion");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -2426,7 +2378,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47391",enabled = true, groups = { "regression" })
-	public void TCB5verifyDefault10TilesAndLoadMoreOption() throws InterruptedException {
+	public void verifyDefault10TilesAndLoadMoreOption() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47391");
 		baseClass.stepInfo("Verify default tiles count in ingestion home page");
@@ -2434,10 +2386,8 @@ public class Ingestion_Phase2_Regression2 {
 		int ingestionCount;
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		driver.waitForPageToBeReady();
 		//pre-requisite -checking number of ingestion tiles is more than 10
@@ -2495,15 +2445,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47301",enabled = true, groups = { "regression" })
-	public void TCA7verifyIngestionRefreshOption() throws InterruptedException {
+	public void verifyIngestionRefreshOption() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47301");
 		baseClass.stepInfo("Verify the reload of the ingestion with the 'Refresh' option.");
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);	
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("try to perform ingestion once");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
@@ -2540,7 +2488,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-54734",enabled = true, groups = { "regression" })
-	public void TCA8verifyEmailAuthorColumnHeader() throws InterruptedException {
+	public void verifyEmailAuthorColumnHeader() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-54734");
 		baseClass.stepInfo("Verify that “EmailAuthor” Column header Filter is working correctly");
@@ -2549,10 +2497,8 @@ public class Ingestion_Phase2_Regression2 {
 				"ŭ","ü","ý","ż","ž","€","£","¥"};
 		
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		if (status == false) {
@@ -2575,7 +2521,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48075",enabled = true, groups = { "regression" })
-	public void TCB2verifyAttachDocIdsInSearch() throws InterruptedException {
+	public void verifyAttachDocIdsInSearch() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48075");
 		baseClass.stepInfo("To Verify SourceAttachDocIDs and AttachDocIDs in Search.");
@@ -2622,7 +2568,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48077",enabled = true, groups = { "regression" })
-	public void TCB1verifyFamilyRelationShipInSearch() throws InterruptedException {
+	public void verifyFamilyRelationShipInSearch() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48077");
 		baseClass.stepInfo("To Verify FamilyRelationship in Tally and Search.");
@@ -2659,15 +2605,13 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-46890",enabled = true, groups = { "regression" })
-	public void TCA9verifyOverlayWithTrimmedAudioDuration() throws InterruptedException {
+	public void verifyOverlayWithTrimmedAudioDuration() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-46890");
 		baseClass.stepInfo("Verify Overlay for Audio Doc with Trimmed audio duration.");
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		//selecting ingestion project
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("perform add only ingestion and publish");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.H13696smallSetFolder);
@@ -2688,7 +2632,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws Exception 
 	 */
 	@Test(description ="RPMXCON-55584",enabled = true, groups = { "regression" })
-	public void TCB3verifyProjectIngestionLimit() throws Exception {
+	public void verifyProjectIngestionLimit() throws Exception {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-55584");
 		baseClass.stepInfo("verify that user cannot Ingest the document beyond the limit.");
@@ -2723,7 +2667,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws Exception 
 	 */
 	@Test(description ="RPMXCON-55873",enabled = true, groups = { "regression" })
-	public void TCB4verifyAddNewPathForIngestionFolder() throws Exception {
+	public void verifyAddNewPathForIngestionFolder() throws Exception {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-55873");
 		baseClass.stepInfo("Verify Add new path using 'Ingestion Folder' option for ingestion");
@@ -2761,7 +2705,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-49072", enabled = true, groups = { "regression" })
-	public void TCA1verifyIngestionOverlaywithUpdatedDatOnly() throws InterruptedException {
+	public void verifyIngestionOverlaywithUpdatedDatOnly() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49072");
 		baseClass.stepInfo("To verify that Ingestion overlay with DAT only.");
@@ -2809,7 +2753,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68079", enabled = true, groups = { "regression" })
-	public void TCA2verifyUnreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
+	public void verifyUnreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68079");
 		baseClass.stepInfo("Unrelease only few of the documents from user created SG and run security group analytics");
@@ -2881,7 +2825,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68077", enabled = true, groups = { "regression" })
-	public void TCA3verifyUnreleaseAllDocsAndPerformAnalytics() throws InterruptedException {
+	public void verifyUnreleaseAllDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68077");
 		baseClass.stepInfo("Unrelease all the documents from user created SG and run security group analytics");
@@ -2953,7 +2897,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-67981", enabled = true, groups = { "regression" })
-	public void TCA4verifyreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
+	public void verifyreleaseFewDocsAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-67981");
 		baseClass.stepInfo("Unrelease all the documents from user created SG and run security group analytics");
@@ -3019,7 +2963,7 @@ public class Ingestion_Phase2_Regression2 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-68078", enabled = true, groups = { "regression" })
-	public void TCA5verifyUnreleaseFewDocsFromDefaultSGAndPerformAnalytics() throws InterruptedException {
+	public void verifyUnreleaseFewDocsFromDefaultSGAndPerformAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-68078");
 		baseClass.stepInfo("Unrelease only few of the documents from default SG and run security group analytics");

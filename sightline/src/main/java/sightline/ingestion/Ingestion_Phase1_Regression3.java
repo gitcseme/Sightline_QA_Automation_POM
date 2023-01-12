@@ -223,22 +223,6 @@ public class Ingestion_Phase1_Regression3 {
 	@Test(description ="RPMXCON-50771",alwaysRun = true, groups = { "regression" })
 	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
 		
-		String sourceFolder = "SSAudioSpeech_Transcript";
-		String datLoadFile = "DAT4_STC_newdateformat.dat";
-		String documentKey = "DocID";
-		String mp3LoadFile = "MP3 Files.LST";
-		String docId = "DocID";
-		String dataSource = "Datasource";
-		String custodian = "Custodian";
-		String fileExt = "FileExt";
-		String fileName = "FileName";
-		String fileSize = "FileSize";
-		String fileType = "FileType";
-		String docBasic = "DOCBASIC";
-		String docFileExt = "DocFileExtension";
-		String docFileName = "DocFileName";
-		String docFileSize = "DocFileSize";
-		String docFileType = "DocFileType";
 		baseClass.stepInfo("Test case Id: RPMXCON-50771 Sprint 12");
 		baseClass.stepInfo(
 				"### Verify that after Re-run the copy process without ignoring the errors, copy should continues ###");
@@ -250,29 +234,24 @@ public class Ingestion_Phase1_Regression3 {
 		ingestionPage.navigateToIngestionPage();
 		baseClass.stepInfo("Select ingestion type and specify source loaction.");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
-				Input.sourceLocation, sourceFolder);
+				Input.sourceLocation, Input.SSAudioSpeechFolder);
 		baseClass.stepInfo("Select DAT delimiters.");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		baseClass.stepInfo("Select DAT source.");
-		ingestionPage.selectDATSource(datLoadFile, documentKey);
+		ingestionPage.selectDATSource(Input.DATFile2, Input.documentKey);
 		baseClass.stepInfo("Select MP3 varient source.");
-		ingestionPage.selectMP3VarientSource(mp3LoadFile, false);
-
+		ingestionPage.selectMP3VarientSource(Input.mp3LoadFile, false);
 		baseClass.stepInfo("Select Date and Time format.");
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
-
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
-
 		baseClass.stepInfo("Select value from first three source DAT fields");
-		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(docId, dataSource, custodian);
-
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.dataSource, Input.custodian);
 		baseClass.stepInfo(" select field catagory and destination field by using source DAT field.");
-		ingestionPage.selectFieldCatagoryDestinationFields(fileExt, docBasic, docFileExt);
-		ingestionPage.selectFieldCatagoryDestinationFields(fileName, docBasic, docFileName);
-		ingestionPage.selectFieldCatagoryDestinationFields(fileSize, docBasic, docFileSize);
-		ingestionPage.selectFieldCatagoryDestinationFields(fileType, docBasic, docFileType);
-
+		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileExt, Input.ingDocBasic, Input.docFileExt);
+		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileName, Input.ingDocBasic, Input.ingDocFileName);
+		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileSize, Input.ingDocBasic, Input.ingDocFileSize);
+		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileType, Input.ingDocBasic, Input.ingDocFileType);
 		baseClass.stepInfo("Click on preview and run button.");
 		ingestionPage.clickOnPreviewAndRunButton();
 		baseClass.stepInfo("Select all options from filter by dropdown.");
@@ -319,7 +298,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Select value from first three source DAT fields");
-		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.docId, Input.dataSource, Input.custodian);
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.dataSource, Input.custodian);
 		baseClass.stepInfo(" select field catagory and destination field by using source DAT field.");
 		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileExt, Input.ingDocBasic, Input.docFileExt);
 		ingestionPage.selectFieldCatagoryDestinationFields(Input.fileName, Input.ingDocBasic, Input.ingDocFileName);
@@ -339,10 +318,8 @@ public class Ingestion_Phase1_Regression3 {
 		ingestionPage.verifyInprogressStatusByclickOnRollback(ingestionName);
 
 		dataSets = new DataSets(driver);
-
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
-
 		baseClass.stepInfo("Verify data sets page is loaded.");
 		dataSets.verifyDatasetsPageIsLoaded();
 		baseClass.stepInfo("Impersonate PA to RMU");
@@ -380,16 +357,12 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Select ingestion type and specify source loaction.");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.iceSourceSystem, 
 				Input.sourceLocation, Input.multiPageTIFFSourceFolder);
-
 		baseClass.stepInfo("Select DAT delimiters.");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
 		baseClass.stepInfo("Select DAT source.");
 		ingestionPage.selectDATSource(Input.multiPageTIFFDATLoadFile, Input.documentKeyBNum);
-
 		baseClass.stepInfo("Select Date and Time format.");
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
-
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
 		baseClass.stepInfo("Select value from first three source DAT fields");
@@ -1401,11 +1374,7 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);	
 		}
 		sessionSearch.SearchMetaData(Input.audioPlayerReady, Input.pageCount);
 		sessionSearch.verifyDocCountForAudioPlayerReady();
@@ -1532,10 +1501,7 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.IgnoreErrorAndIndexing();
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);	
 		}
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
@@ -1574,10 +1540,7 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.IgnoreErrorAndIndexing();
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 		
 		DataSets dataSets=new DataSets(driver);
@@ -1628,10 +1591,7 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.IgnoreErrorAndIndexing();
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 
 		DataSets dataSets=new DataSets(driver);
@@ -1743,10 +1703,7 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
 			ingestionPage.clickOnPreviewAndRunButton();
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.IgnoreErrorAndIndexing();
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 
 		DataSets dataSets=new DataSets(driver);
@@ -1871,11 +1828,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// perform overlay ingestion with pdf
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Pdf", Input.PDFFile);
@@ -1921,11 +1874,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, Input.datFormatFile);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.GD994NativeTextForProductionFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 		}
 		
 		String ingestionName = dataSets.isDataSetisAvailable(Input.GD994NativeTextForProductionFolder);
@@ -1972,11 +1921,7 @@ public class Ingestion_Phase1_Regression3 {
 	if (status == false) {
 		baseClass.stepInfo("Performing add only ingestion");
 		ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, Input.datFormatFile);
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.ingestionIndexing(Input.GD994NativeTextForProductionFolder);
-		ingestionPage.approveIngestion(1);
-		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
 	}
 	
 	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
@@ -2023,11 +1968,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.IngestionOnlyForDatFile(Input.IngestionEmailDataFolder, Input.emailDatFile);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.IngestionEmailDataFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.IngestionEmailDataFolder);
 		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
@@ -2080,11 +2021,7 @@ public class Ingestion_Phase1_Regression3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.IngestionEmailDataFolder);
 		if(status ==false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.IngestionEmailDataFolder, Input.emailDatFile);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.IngestionEmailDataFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.IngestionEmailDataFolder);
 		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
@@ -2177,7 +2114,6 @@ public class Ingestion_Phase1_Regression3 {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		docView = new DocViewPage(driver);
 		
@@ -2190,11 +2126,7 @@ public class Ingestion_Phase1_Regression3 {
 		if(!status) {
 			
 			ingestionPage.IngestionOnlyForDatFile(Input.GNon_searchable_PDF_Load_file, Input.nonSearchablePdfLoadFile);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.GNon_searchable_PDF_Load_file);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.GNon_searchable_PDF_Load_file);
 			
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.GNon_searchable_PDF_Load_file);
@@ -2238,11 +2170,7 @@ public class Ingestion_Phase1_Regression3 {
 		if(!status) {
 			
 			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 			
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.UniCodeFilesFolder);
@@ -2294,11 +2222,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		//perform overlay with mp3
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
@@ -2334,11 +2258,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
 			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		//perform overlay with mp3
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
@@ -2370,11 +2290,7 @@ public class Ingestion_Phase1_Regression3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if(!status) {
 			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 			
 		}
 		// Perform overlay ingestion
@@ -2442,11 +2358,7 @@ public class Ingestion_Phase1_Regression3 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if(!status) {
 			ingestionPage.tiffImagesIngestion("DAT4_STC_NewDateFormat - Copy.dat", Input.tiffLoadFile, "false");
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 			
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
@@ -2545,11 +2457,7 @@ public class Ingestion_Phase1_Regression3 {
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-			ingestionPage.ignoreErrorsAndCatlogging();
-			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
 		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.HiddenPropertiesFolder);

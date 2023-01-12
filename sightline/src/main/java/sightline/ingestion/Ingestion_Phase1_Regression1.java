@@ -20,11 +20,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
-import pageFactory.ProjectPage;
-import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
-import pageFactory.TallyPage;
-import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -38,11 +34,7 @@ public class Ingestion_Phase1_Regression1 {
 	DocListPage docList;
 	DataSets dataSets;
 	Input ip;
-	TallyPage tally;
 	DocExplorerPage docExplorer;
-	ProjectPage project;
-	UserManagement userManage;
-	SecurityGroupsPage securityGroup;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -74,7 +66,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49549",enabled = true, groups = { "regression" })
-	public void verifyDateFormateForIngestionWithSameDATFile() throws Exception {
+	public void verifyDateFormatForIngestionWithSameDATFile() throws Exception {
 		
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
@@ -83,9 +75,11 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify if Ingestion is saved as draft then on Ingestion page, it should retain the selected Date & Time format");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
-		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
+		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, Input.dateFormat);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		ingestionPage.verifyDateFormatInDraftStage();
+		// delete ingestion
+		ingestionPage.deleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -96,7 +90,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49548",enabled = true, groups = { "regression" })
-	public void verifyDateFormateForIngestionWithSameDATFileAndRollBack() throws Exception {
+	public void verifyDateFormatForIngestionWithSameDATFileAndRollBack() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -104,10 +98,12 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify if Ingestion is rollbacked and open in the wizard,On Ingestion page, it should display the default Date & Time format");
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst );
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst );
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.rollBackIngestion();
-		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		ingestionPage.verifyDateFormatInDraftStage();
+		// delete ingestion
+		ingestionPage.deleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -128,8 +124,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
 			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 			ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
-			//rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 		
@@ -148,11 +144,11 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49537");
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/MM/DD HH:MI:SS')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogigErrorForDatSelectDateFormate();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -173,8 +169,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/DD/MM",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -195,8 +191,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MMDDYYYY",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -216,8 +212,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -237,8 +233,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -258,8 +254,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -300,8 +296,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
 			ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
 			ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
-			//rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	
@@ -323,8 +319,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -345,8 +341,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -367,8 +363,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI:SS",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -389,8 +385,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -410,8 +406,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -432,8 +428,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -454,8 +450,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -476,8 +472,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -498,8 +494,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -520,8 +516,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -542,8 +538,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -564,8 +560,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -586,8 +582,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -608,8 +604,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DDMMYYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -629,8 +625,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -655,8 +651,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 			//verify ingestion status after ignoring errors
 			ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
-			//rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 		
@@ -698,8 +694,8 @@ public class Ingestion_Phase1_Regression1 {
 		if (status == false) {
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			// Rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 		
@@ -730,7 +726,7 @@ public class Ingestion_Phase1_Regression1 {
 		}
 	
 	/** 
-     *Author :Arunkumar date: 25/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-46932
+     *Author :Arunkumar date: 25/03/2022 Modified date: 11/01/2023 Modified by: NA Test Case Id:RPMXCON-46932
 	 * Description :To verify that Admin is able to Rollback the ongoing Ingestion process.
 	 */
 	@Test(description ="RPMXCON-46932",enabled = false,  groups = {"regression" } )
@@ -746,16 +742,16 @@ public class Ingestion_Phase1_Regression1 {
 			//Catalogging and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.ingestionCatalogging();
-			ingestionPage.rollBackIngestion();
+			ingestionPage.performRollbackAndDeleteIngestion();
 			//Copying and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.rollBackIngestion();
+			ingestionPage.performRollbackAndDeleteIngestion();
 			//indexing and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.rollBackIngestion();
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		//save as draft and delete
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
@@ -784,7 +780,7 @@ public class Ingestion_Phase1_Regression1 {
 	}
 	
 	/** 
-     *Author :Arunkumar date: 29/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47595
+     *Author :Arunkumar date: 29/03/2022 Modified date: 11/01/2023 Modified by: NA Test Case Id:RPMXCON-47595
 	 * Description :After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.
 	 * @throws InterruptedException 
 	 */
@@ -806,15 +802,21 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 			//Verify ingestion Draft status after Copying
 			ingestionPage.IngestionFromDraftMode();
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 			// Verify ingestion Draft status after indexing
 			ingestionPage.IngestionFromDraftMode();
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 		}
 		loginPage.logout();
 		
@@ -848,7 +850,7 @@ public class Ingestion_Phase1_Regression1 {
 	}
 	
 	/** 
-     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49021
+     *Author :Arunkumar date: 30/03/2022 Modified date: 11/01/2023 Modified by: NA Test Case Id:RPMXCON-49021
 	 * Description :Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously
 	 * @throws InterruptedException 
 	 */
@@ -862,8 +864,13 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49021");
 		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
-		if (status == false) {
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		ingestionPage.navigateToIngestionPage();
+		boolean status2 = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status1 == true || status2 == true) {
+			baseClass.passedStep("As Ingestion already present in the published stage, unable to run add only ingestion till indexing" );
+		}
+		else if (status1 == false && status2 == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			// Perform Copying and indexing for two ingestion
@@ -892,15 +899,21 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 			//Copying and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 			//indexing and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			//delete ingestion
+			ingestionPage.deleteIngestion();
 		}
 		loginPage.logout();
 
@@ -928,18 +941,21 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.verifyRollbackOptionStatus();
-			ingestionPage.rollBackIngestion();
+			// rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 			//Verify rollback option status after Copying stage
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyRollbackOptionStatus();
-			ingestionPage.rollBackIngestion();
+			// rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 			// Verify rollback option status after indexing stage
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyRollbackOptionStatus();	
-			ingestionPage.rollBackIngestion();
+			// rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -962,8 +978,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.verifyContentOnIngestionTiles();
-			//rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 		
@@ -988,8 +1004,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
 			ingestionPage.ingestionCopying();
 			ingestionPage.verifyIgnoreOptionAndCheckbox();
-			//rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1010,8 +1026,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -1081,8 +1097,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "error");
-			// Rollback ingestion
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1105,8 +1121,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "source");
-			// Rollback ingestion
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1183,8 +1199,8 @@ public class Ingestion_Phase1_Regression1 {
 			// verify copy,index and approve status during the ingestion in inprogress state
 			ingestionPage.verifyStatusDuringInProgress();
 			ingestionPage.ingestionCatalogging();
-			// rollback ingestion
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1206,8 +1222,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI:SS",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 		
 	}
@@ -1229,8 +1245,8 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);	
 		//verify the options in error list ingestion details popup
 		ingestionPage.verifyOptionsInErrorDetailsPopup();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		//rollback and delete ingestion
+		ingestionPage.performRollbackAndDeleteIngestion();
 		loginPage.logout();
 	}
 	
@@ -1276,8 +1292,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Copyingblock");
 			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 			ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Indexingblock");
-			// rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1331,8 +1347,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-			// Rollback
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 
@@ -1361,8 +1377,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyTermPositionInCopyColumn(Input.StitchedTIFF);
-			// Rollback Ingestion
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
@@ -1394,8 +1410,8 @@ public class Ingestion_Phase1_Regression1 {
 			for (int i = 0; i <= unselectedTerm.length - 1; i++) {
 				ingestionPage.verifyUnselectedSourceCountInCopySection(unselectedTerm[i]);
 			}
-			// Rollback Ingestion
-			ingestionPage.rollBackIngestion();
+			//rollback and delete ingestion
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
