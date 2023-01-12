@@ -84,7 +84,7 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
 		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.verifyDateFormateInCatalogeAndDraft();
 		loginPage.logout();
 		
@@ -105,12 +105,10 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Login as Project Admin Go to Ingestion and click to Add new ingestion  Prerequisites: Date & time format in DAT file should be 'YYYY/DD/MM' Select Source System  Select Ingestion Type: Add Only  Select 'Date & Time Format as 'YYYY/DD/MM'  and click on Next  Configure field mapping and click 'Preview & Run'");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst );
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.rollBackIngestion();
 		ingestionPage.verifyDateFormateInCatalogeAndDraft();
 		loginPage.logout();
-		
 	}
 	
 	/** 
@@ -125,11 +123,14 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49702");
 		baseClass.stepInfo("Verify that if document has multipage TIFF then in Copying stage of Ingestion ,it should displays the 'Stitched TIFFs' under the Copy column");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
-		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-		ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
-		//rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+			ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
+			//rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 		
 		}
@@ -148,7 +149,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/MM/DD HH:MI:SS')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogigErrorForDatSelectDateFormate();
 		//rollback
@@ -171,7 +171,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/DD/MM' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/DD/MM",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
@@ -194,7 +193,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'MMDDYYYY' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MMDDYYYY",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
@@ -216,7 +214,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
@@ -238,7 +235,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
@@ -260,7 +256,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/MM/DD' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -281,7 +276,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-49506");
 		baseClass.stepInfo("Verify the 'Next' button enable/disable from 'Ingestion Wizard' screen when 'Date & Time Format' selected/not-selected");
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.VerifyNextButtonStatusBasedOnDateTimeFormatSelection();
 		loginPage.logout();
@@ -301,11 +295,14 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49733");
 		baseClass.stepInfo("Verify 'Missed Docs' count is display for 'Stitching TIFF' in Ingestion detail pop up");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
-		ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
-		ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
-		//rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
+			ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
+			//rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	
 		}
@@ -324,7 +321,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY HH:MI' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -347,7 +343,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -370,7 +365,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'DD/MM/YYYY HH:MI:SS' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DD/MM/YYYY HH:MI:SS",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -393,16 +387,13 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
-		
 	}
 	
-
 	/** 
      *Author :Arunkumar date: 18/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49528
 	 * Description :Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY')
@@ -417,7 +408,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_Slash,Input.Natives_DDMMYYYY_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -440,7 +430,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MMDDYYYY')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -463,7 +452,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DDMMYYYY')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -486,7 +474,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/MM/DD')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -509,7 +496,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('YYYY/DD/MM')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_YYYYDDMM_Slash,Input.Natives_YYYYDDMM_Slash);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -532,13 +518,11 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY HH:MI')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
-		
 	}
 	
 	
@@ -556,7 +540,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY HH:MI')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_DDMMYYYY_HHMI,Input.Natives_DDMMYYYY_HHMI);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -579,7 +562,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY HH:MI:SS')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -602,7 +584,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('DD/MM/YYYY HH:MI:SS')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -625,7 +606,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'DDMMYYYY' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "DDMMYYYY",Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -647,7 +627,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, Input.dateFormat,Input.DAT_DDMMYYYY,Input.Natives_DDMMYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
@@ -669,14 +648,16 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49541");
 		baseClass.stepInfo("Verify that Ingestion should be continued if cataloging date time error is displayed for few documents");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
-		//verify ingestion status after ignoring errors
-		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
+			ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
+			//verify ingestion status after ignoring errors
+			ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
+			//rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 		
 	}
@@ -698,7 +679,7 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
 		// verify header section count in popup matched with configure mapping section
 		ingestionPage.verifyHeaderCountInPreviewRecordPopupPage();
-		
+		loginPage.logout();
 	}
 	
 	/** 
@@ -713,10 +694,13 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48176");
 		baseClass.stepInfo("To Verify Rollback in Ingestion after Copy is completed");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		// Rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			// Rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 		
 		}
@@ -733,12 +717,15 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48174");
 		baseClass.stepInfo("To Verify Ingestion details information after rollback");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		// Rollback and verify ingestion details
-		ingestionPage.rollBackIngestion();
-		ingestionPage.verifyIngestionDetailsTillIndexingAfterRollback();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			// Rollback and verify ingestion details
+			ingestionPage.rollBackIngestion();
+			ingestionPage.verifyIngestionDetailsTillIndexingAfterRollback();
+		}
 		loginPage.logout();
 		}
 	
@@ -753,20 +740,23 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-46932");
 		baseClass.stepInfo("To verify that Admin is able to Rollback the ongoing Ingestion process.");
-		//Catalogging and rollback
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.rollBackIngestion();
-		//Copying and rollback
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.rollBackIngestion();
-		//indexing and rollback
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			//Catalogging and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.rollBackIngestion();
+			//Copying and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.rollBackIngestion();
+			//indexing and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.rollBackIngestion();
+		}
 		//save as draft and delete
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionSaveAsDraftAndDelete();
@@ -805,23 +795,27 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-47595");
 		baseClass.stepInfo("After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.");
+		
 		// verify ingestion Draft status after saving as draft
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
-		// Verify ingestion Draft status after Catalogging
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
-		//Verify ingestion Draft status after Copying
-		ingestionPage.IngestionFromDraftMode();
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
-		// Verify ingestion Draft status after indexing
-		ingestionPage.IngestionFromDraftMode();
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();	
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			// Verify ingestion Draft status after Catalogging
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			//Verify ingestion Draft status after Copying
+			ingestionPage.IngestionFromDraftMode();
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			// Verify ingestion Draft status after indexing
+			ingestionPage.IngestionFromDraftMode();
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		}
 		loginPage.logout();
 		
 	}
@@ -841,11 +835,14 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49020");
 		baseClass.stepInfo("Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		// Perform catalog,copy and indexing for two ingestion
-		ingestionPage.multipleIngestionCopying(2);
-		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			// Perform catalog,copy and indexing for two ingestion
+			ingestionPage.multipleIngestionCopying(2);
+			ingestionPage.multipleIngestionIndexing(dataset, 2);
+		}
 		loginPage.logout();
 		
 	}
@@ -865,11 +862,14 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49021");
 		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		// Perform Copying and indexing for two ingestion
-		ingestionPage.multipleIngestionCopying(2);
-		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			// Perform Copying and indexing for two ingestion
+			ingestionPage.multipleIngestionCopying(2);
+			ingestionPage.multipleIngestionIndexing(dataset, 2);
+		}
 		loginPage.logout();
 		
 	}
@@ -885,20 +885,23 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-48861");
 		baseClass.stepInfo("Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)");
-		//Catalogging and rollback
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
-		//Copying and rollback
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
-		//indexing and rollback
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			//Catalogging and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			//Copying and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			//indexing and rollback
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		}
 		loginPage.logout();
 
 		}
@@ -915,26 +918,29 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("Test case Id: RPMXCON-47593");
 		baseClass.stepInfo("As a project admin I will be able to rollback an ingestion - new approach");
-		// verify rollback option after saving ingestion as draft
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
-		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
-		// Verify rollback option status after Catalogging stage
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyRollbackOptionStatus();
-		ingestionPage.rollBackIngestion();
-		//Verify rollback option status after Copying stage
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyRollbackOptionStatus();
-		ingestionPage.rollBackIngestion();
-		// Verify rollback option status after indexing stage
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyRollbackOptionStatus();	
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			// verify rollback option after saving ingestion as draft
+			ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+			ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+			// Verify rollback option status after Catalogging stage
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyRollbackOptionStatus();
+			ingestionPage.rollBackIngestion();
+			//Verify rollback option status after Copying stage
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyRollbackOptionStatus();
+			ingestionPage.rollBackIngestion();
+			// Verify rollback option status after indexing stage
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyRollbackOptionStatus();	
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	}
 	
@@ -951,11 +957,14 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47258");
 		baseClass.stepInfo("To Verify Contents of Ingestion Tiles On Ingestions Home.");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyContentOnIngestionTiles();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyContentOnIngestionTiles();
+			//rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 		
 	}
@@ -972,13 +981,16 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47589");
 		baseClass.stepInfo("Ingestion error list changes for  ignore fields in UI");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
-		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
-		ingestionPage.ingestionCopying();
-		ingestionPage.verifyIgnoreOptionAndCheckbox();
-		//rollback
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
+			ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+			ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
+			ingestionPage.ingestionCopying();
+			ingestionPage.verifyIgnoreOptionAndCheckbox();
+			//rollback
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	}
 	
@@ -1039,12 +1051,15 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49732");
 		baseClass.stepInfo("Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.verifyDataPresentInCopyTableColumn(Input.StitchedTIFF, "source");
-		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
-		ingestionPage.verifyValueInCopyingSectionAfterRollback(Input.StitchedTIFF);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.verifyDataPresentInCopyTableColumn(Input.StitchedTIFF, "source");
+			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+			ingestionPage.verifyValueInCopyingSectionAfterRollback(Input.StitchedTIFF);
+		}
 		loginPage.logout();
 		}
 	
@@ -1060,12 +1075,15 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49497");
 		baseClass.stepInfo("Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "error");
-		// Rollback ingestion
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "error");
+			// Rollback ingestion
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	}
 	
@@ -1081,12 +1099,15 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49496");
 		baseClass.stepInfo("Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "source");
-		// Rollback ingestion
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "source");
+			// Rollback ingestion
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	}
 	
@@ -1156,12 +1177,15 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47406");
 		baseClass.stepInfo("To verify indexing for the Text file from Ingestion details pop up.");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
-		// verify copy,index and approve status during the ingestion in inprogress state
-		ingestionPage.verifyStatusDuringInProgress();
-		ingestionPage.ingestionCatalogging();
-		// rollback ingestion
-		ingestionPage.rollBackIngestion();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if (status == false) {
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
+			// verify copy,index and approve status during the ingestion in inprogress state
+			ingestionPage.verifyStatusDuringInProgress();
+			ingestionPage.ingestionCatalogging();
+			// rollback ingestion
+			ingestionPage.rollBackIngestion();
+		}
 		loginPage.logout();
 	}
 	
@@ -1180,7 +1204,6 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Verify when user selects date & time format 'MM/DD/YYYY HH:MI:SS' for ingestion which is same as in the DAT file");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY HH:MI:SS",Input.DAT_MMDDYYYY_HHMISS,Input.Natives_MMDDYYYY_HHMISS);
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
@@ -1243,21 +1266,20 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47566");
 		baseClass.stepInfo(
 				"To Verify status update in cataloging, copying, and Indexing Section in Ingestion Details Page");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Catalogingblock");
-		ingestionPage.ingestionCopying();
-		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Copyingblock");
-		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Indexingblock");
-		// rollback
-		ingestionPage.rollBackIngestion();
-		loginPage.logout();
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Catalogingblock");
+			ingestionPage.ingestionCopying();
+			ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Copyingblock");
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Indexingblock");
+			// rollback
+			ingestionPage.rollBackIngestion();
 		}
-
+		loginPage.logout();
 	}
 	
 	/**
@@ -1265,7 +1287,6 @@ public class Ingestion_Phase1_Regression1 {
 	 * Case Id:RPMXCON-47404 Description :To verify that if configure mapping is not
 	 * matched the warning message is displayed and as per selection, admin can
 	 * proceed.
-	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47404",enabled = true, groups = { "regression" } )
@@ -1277,16 +1298,16 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47404");
 		baseClass.stepInfo(
 				"verify that if configure mapping is not matched the warning message is displayed and as per selection, admin can proceed.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.verifyWarningMessageForConfigureMappingSection(Input.UniCodeFilesFolder, Input.datLoadFile1,
-				Input.textFile1, Input.prodBeg, Input.documentKey);
-		loginPage.logout();
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.verifyWarningMessageForConfigureMappingSection(Input.UniCodeFilesFolder, Input.datLoadFile1,
+					Input.textFile1, Input.prodBeg, Input.documentKey);
+		
 		}
-
+		loginPage.logout();
 	}
 	
 	/** 
@@ -1303,17 +1324,17 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		baseClass.stepInfo("Test case Id: RPMXCON-48175");
 		baseClass.stepInfo("To Verify Rollback In Ingestion for Files having Read Only Attributes.");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
-		// Rollback
-		ingestionPage.rollBackIngestion();
-		loginPage.logout();
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			// Rollback
+			ingestionPage.rollBackIngestion();
 		}
+		loginPage.logout();
 
 	}
 	
@@ -1333,17 +1354,17 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49703");
 		baseClass.stepInfo(
 				"Verify if 'Generate Searchable PDFs' is True Stitching TIFFs details should display before the Generate Searchable PDFs row on Ingestion details pop up");
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.tiffImagesIngestion(Input.DATFile4, Input.tiffLoadFile, "true");
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.verifyTermPositionInCopyColumn(Input.StitchedTIFF);
-		// Rollback Ingestion
-		ingestionPage.rollBackIngestion();
-		loginPage.logout();
+			ingestionPage.tiffImagesIngestion(Input.DATFile4, Input.tiffLoadFile, "true");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.verifyTermPositionInCopyColumn(Input.StitchedTIFF);
+			// Rollback Ingestion
+			ingestionPage.rollBackIngestion();
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -1363,21 +1384,20 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48194");
 		baseClass.stepInfo("To Verify In Ingestions the pop-up Details Window for media ;audio & Transcript Count.");
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.mediaAndTranscriptIngestion(Input.AllSourcesFolder, Input.DATFile1);
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		for (int i = 0; i <= selectedTerm.length - 1; i++) {
-			ingestionPage.verifyDataPresentInCopyTableColumn(selectedTerm[i], "source");
+			ingestionPage.mediaAndTranscriptIngestion(Input.AllSourcesFolder, Input.DATFile1);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			for (int i = 0; i <= selectedTerm.length - 1; i++) {
+				ingestionPage.verifyDataPresentInCopyTableColumn(selectedTerm[i], "source");
+			}
+			for (int i = 0; i <= unselectedTerm.length - 1; i++) {
+				ingestionPage.verifyUnselectedSourceCountInCopySection(unselectedTerm[i]);
+			}
+			// Rollback Ingestion
+			ingestionPage.rollBackIngestion();
 		}
-		for (int i = 0; i <= unselectedTerm.length - 1; i++) {
-			ingestionPage.verifyUnselectedSourceCountInCopySection(unselectedTerm[i]);
-		}
-		// Rollback Ingestion
-		ingestionPage.rollBackIngestion();
 		loginPage.logout();
-		}
 	}
 	
 	/**
@@ -1397,14 +1417,13 @@ public class Ingestion_Phase1_Regression1 {
 				"To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
-		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-		ingestionPage.ingestionCatalogging();
-		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
-				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
-		loginPage.logout();
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
+					Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		}
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)
