@@ -331,6 +331,62 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 		
+		@Test(description = "RPMXCON-70334", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyFilterfieldsInDocListFor10andMoreColumn(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70334: Verify that a filter box to each column are present below each field adding 10 fields in DocList page/List view screen.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+			docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+			baseClass.passedStep("Verified that filter box to each column are present below each field adding 10 fields in DocList page/List view screen.");
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+		@Test(description = "RPMXCON-70312", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void VerifyNofilterboxInselectallcheckbox(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70312: Verify that there should be no filter box underneath the ‘select all checkbox' or the ‘Action’ header as these are not actionable by a text value.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+
+			docList.FilterBoxUnderNeacthCheckbox().Click();
+			softAssertion.assertTrue(docList.FilterBoxUnderNeacthCheckbox().Enabled());
+			baseClass.passedStep("Verified that there is no filter box underneath the ‘select all checkbox' or the ‘Action’ header.");
+	
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },

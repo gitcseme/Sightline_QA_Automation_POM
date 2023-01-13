@@ -1596,6 +1596,10 @@ public class DocListPage {
 		return driver.FindElementByXPath("//*[@id='dtDocList']//thead/tr[1]/th[3]");
 	}
 	
+	public Element FilterBoxUnderNeacthCheckbox() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']//thead/tr[2]/th[2]");
+	}
+
 	public String AfterFilterverifyDocFileType(String type ) {
 		DocFileTypeAfterFilter(type).isDisplayed();
 		System.out.println(type);
