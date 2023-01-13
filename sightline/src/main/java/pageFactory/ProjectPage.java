@@ -545,6 +545,7 @@ public class ProjectPage {
 
 		bc.waitForElement(getSelectEntityType());
 		getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+		
 
 		bc.waitForElement(getSelectClientName());
 		getSelectClientName().selectFromDropdown().selectByVisibleText(clientname);
@@ -572,6 +573,56 @@ public class ProjectPage {
 		bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60 + Input.wait120);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+
+	}
+	
+	public void AddProjectByDomainUser(String projectname) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProjectBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddProjectBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectName().Visible();
+			}
+		}), Input.wait30);
+		getProjectName().SendKeys(projectname);
+		
+
+		driver.scrollingToBottomofAPage();
+
+		
+
+		driver.scrollPageToTop();
+
+		// temporily added
+//		bc.mouseHoverOnElement(getManageProjectBtn());
+//		bc.mouseHoverOnElement(getSelectClientName());
+
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -2227,12 +2278,14 @@ public class ProjectPage {
             bc.waitForElement(getButtonSaveProject());
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
+            bc.stepInfo("The Toggle is now Enabled for the project");
             flag=true;
         }
         else {
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
             bc.passedStep("The Toggle is already Enabled");
+            bc.stepInfo("The Toggle is already Enabled for the project");
             flag=false;
         }
 
@@ -2257,12 +2310,14 @@ public class ProjectPage {
             bc.waitForElement(getButtonSaveProject());
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
+            bc.stepInfo("The Toggle is now Disabled for the project");
             flag=true;
         }
         else {
             getButtonSaveProject().waitAndClick(10);
             bc.VerifySuccessMessage("Project updated successfully");
             bc.passedStep("The Toggle is already Disabled");
+            bc.stepInfo("The Toggle is already Disabled for the project");
             flag=false;
         }
 
