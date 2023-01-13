@@ -1233,6 +1233,108 @@ public class O365_Regression_Consilio {
        
 	}
 	
+	@Test(description = "RPMXCON-70368",dataProvider="PaAndRmuUseWithFullName",enabled = true, groups = { "regression" })
+    public void verifySCpbOToggleONNewlyCreatedNExistingProjectAfterEditingSLUser(String userName,String password,String role,String fullName) throws Exception {
+        base.stepInfo("Edit the existing PA/RMU user details assign it to a new/existing project, (SCpbO) toggle is ON, \"Open Sightline Collect\" button should be displayed under a new section in source location page, after clicking the button it should authenticate to ONNA.");
+        base.stepInfo("Test case Id:RPMXCON-70368");
+        boolean SCpbOToggle=true;
+        boolean toggleIsEnabled=false;
+        String directUrl=Input.url+Input.OnnaDirectUrl;
+        String OnnaUrl=Input.OnnaUrl;
+        UserManagement userManage = new UserManagement(driver);
+        String ProjectName="ProjectName" + Utility.dynamicNameAppender();
+        System.out.println(ProjectName);
+        String[][] userRolesData = { { userName, role, "SA" } };
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        base.stepInfo("logged In as a SA user");
+        ProjectPage project=new ProjectPage(driver);
+        project.navigateToProductionPage();
+        project.AddDomainProject(ProjectName,Input.domainName);
+        userManage.navigateToUsersPAge();
+        userManage.AssignUserToProject(ProjectName, role, fullName);
+        base.stepInfo("New project is created and users are assigned to it Successfully");
+        userManage.navigateToUsersPAge();
+		userManage.filterByName(userName);
+		String originalUserFirstName = userManage.getUserTableValuesFromManageUserTable("First Name", 1);
+		String originalUserLastName = userManage.getUserTableValuesFromManageUserTable("Last Name", 2);
+		userManage.selectEditUserUsingPagination(ProjectName, null, null);
+		userManage.editFirstAndLastNameInEditUserPopup(originalUserFirstName+"edit", originalUserLastName+"edit");
+		base.stepInfo("users for assigned project are edited Successfully");
+		toggleIsEnabled= project.EnableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
+		 base.stepInfo("Enabled toggle for newly created project");
+        login.logout();
+        base.stepInfo("logged out of SA user successfully");
+
+        // Login and Pre-requesties
+        base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+        login.loginToSightLine(userName, password);
+        base.stepInfo("logged in as "+role+" user");
+        base.stepInfo("User Role : " + role);
+        
+        base.selectproject(ProjectName);
+        base.stepInfo("Navigated to Manage Users page for User Role " +role);
+        userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is  Displayed when toggle is ON for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+        if(toggleIsEnabled) {
+        	
+            login.loginToSightLine(Input.sa1userName, Input.sa1password);
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was enabled as part of this TC");
+        	project.navigateToProductionPage();
+        	project.DisableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
+        	base.stepInfo("Toggle is now made Disabled for the project "+ProjectName);
+        	
+        }
+        toggleIsEnabled= project.EnableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+        base.stepInfo("Enabled toggle for existing project");
+        login.logout();
+        base.stepInfo("logged out of SA user successfully");
+
+        // Login and Pre-requesties
+        base.stepInfo("**Step-1 Login as Project Admin/RMU **");
+        login.loginToSightLine(userName, password);
+        base.stepInfo("logged in as "+role+" user");
+        base.stepInfo("User Role : " + role);
+        
+        base.selectproject(Input.projectName);
+        base.stepInfo("Navigated to Manage Users page for User Role " +role);
+        userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+        // navigate to source location page
+        dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+        source.verifySightlineConnectONNAbutton(SCpbOToggle);
+        base.stepInfo("Onna button is Enabled when toggle is ON for the project");
+        source.verifySightlineConnectONNAText(SCpbOToggle);
+        base.stepInfo("Onna Text is  Displayed when toggle is ON for the project");
+        source.verifyConnectToONNAbeforeclickingbtn(directUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaDirectUrl +" in new tab denied");
+        source.verifyConnectToONNAAfterclickingbtn(OnnaUrl);
+        base.stepInfo("Navigating to following URL "+Input.OnnaUrl +" in new tab & logged In successfully");
+        login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        if(toggleIsEnabled) {
+            base.stepInfo("logged out and logged In as SA user");
+        	base.stepInfo("Toggle was enabled as part of this TC");
+        	project.navigateToProductionPage();
+        	project.DisableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
+        	base.stepInfo("Toggle is now made Disabled for the project "+Input.projectName);	
+        }
+        userManage.navigateToUsersPAge();
+		userManage.filterByName(userName);
+		userManage.selectEditUserUsingPagination(ProjectName, null, null);
+		userManage.editFirstAndLastNameInEditUserPopup(originalUserFirstName, originalUserLastName);
+		base.stepInfo("FirstName & LastName of user is now set back to orginal names");
+		login.logout();
+	}
 
 	
 	
