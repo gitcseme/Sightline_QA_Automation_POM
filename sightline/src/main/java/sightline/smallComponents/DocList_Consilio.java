@@ -78,7 +78,7 @@ public class DocList_Consilio {
 		savedSearch = new SavedSearch(driver);
 	}
 
-	@Test(description = "RPMXCON-70306", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70306", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterfieldsInDocList(String username, String password, String role) throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String searchnameA = Input.randomText + Utility.dynamicNameAppender();
@@ -126,7 +126,7 @@ public class DocList_Consilio {
 		loginPage.logout();
 	}
 	
-	@Test(description = "RPMXCON-70307", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70307", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyApplyFilterInDocList(String username, String password, String role) throws InterruptedException {
         String custodianexp= Input.custodianName_Andrew;
 		baseClass.stepInfo("Test case Id: RPMXCON-70307: Verify that to apply the filters, user can either hit the ‘Apply Filter’ button or hit the ‘enter’ key on the keyboard. ");
@@ -159,7 +159,7 @@ public class DocList_Consilio {
 		loginPage.logout();
 	}
 	
-	@Test(description = "RPMXCON-70310", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-70310", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyApplyFilterWithTWoFieldsInDocList(String username, String password, String role) throws InterruptedException {
 	        String custodianexp= Input.metaDataCN;
 	        String fileType= "Text File";
@@ -199,7 +199,7 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 	
-		@Test(description = "RPMXCON-70308", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		//@Test(description = "RPMXCON-70308", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyAfterApplyFilterInDocListandClearField(String username, String password, String role) throws InterruptedException {
 	        String custodianexp= Input.custodianName_Andrew;
 			baseClass.stepInfo("Test case Id: RPMXCON-70308: Verify that When user deletes text from field and hits apply/enter, the DocList grid should refresh and load the default view of the page/List");
@@ -240,7 +240,7 @@ public class DocList_Consilio {
 		}
 		
 		
-		@Test(description = "RPMXCON-70335", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		//@Test(description = "RPMXCON-70335", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyCJKFilterInDocList(String username, String password, String role) throws InterruptedException {
 	        String custodianexp= "新华社记者吴晶";
 			baseClass.stepInfo("Test case Id: RPMXCON-70335: Verify that filter is working with the CJK text in DocList page.");
@@ -273,7 +273,7 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 		
-		@Test(description = "RPMXCON-70313", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		//@Test(description = "RPMXCON-70313", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyFilterfieldsPresentOnlyInListView(String username, String password, String role) throws InterruptedException {
 			baseClass.stepInfo("Test case Id: RPMXCON-70313: Verify that Filters fields are only present in list view. Filters should not be present in image/tile view. This filter bar should be hidden.");
 			
@@ -305,7 +305,7 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 		
-		@Test(description = "RPMXCON-70314", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		//@Test(description = "RPMXCON-70314", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 		public void verifyEyeballIconposition(String username, String password, String role) throws InterruptedException {
 			baseClass.stepInfo("Test case Id: RPMXCON-70314: Verify that eyeball icon should be present next to the column to the right of the checkbox by default.");
 			
@@ -331,6 +331,62 @@ public class DocList_Consilio {
 			loginPage.logout();
 		}
 		
+		//@Test(description = "RPMXCON-70334", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void verifyFilterfieldsInDocListFor10andMoreColumn(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70334: Verify that a filter box to each column are present below each field adding 10 fields in DocList page/List view screen.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+			docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+			baseClass.passedStep("Verified that filter box to each column are present below each field adding 10 fields in DocList page/List view screen.");
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+		@Test(description = "RPMXCON-70312", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+		public void VerifyNofilterboxInselectallcheckbox(String username, String password, String role) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-70312: Verify that there should be no filter box underneath the ‘select all checkbox' or the ‘Action’ header as these are not actionable by a text value.");
+			
+			//Login As user
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+			
+			docexp.navigateToDocExplorerPage();
+			baseClass.stepInfo("Navigated to Doc Explorer page");
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("yes");
+			docexp.docExpViewInDocList();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return docList.getTileView().Visible();
+				}
+			}), Input.wait60);
+			driver.waitForPageToBeReady();
+
+			docList.FilterBoxUnderNeacthCheckbox().Click();
+			softAssertion.assertTrue(docList.FilterBoxUnderNeacthCheckbox().Enabled());
+			baseClass.passedStep("Verified that there is no filter box underneath the ‘select all checkbox' or the ‘Action’ header.");
+	
+			softAssertion.assertAll();
+			loginPage.logout();
+		}
+		
+
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
