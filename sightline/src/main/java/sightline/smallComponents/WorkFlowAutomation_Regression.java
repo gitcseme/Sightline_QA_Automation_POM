@@ -73,8 +73,9 @@ public class WorkFlowAutomation_Regression {
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		Input in = new Input();
-		in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);

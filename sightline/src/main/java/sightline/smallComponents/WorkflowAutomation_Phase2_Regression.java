@@ -62,8 +62,9 @@ public class WorkflowAutomation_Phase2_Regression {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-	    in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -122,9 +123,7 @@ public class WorkflowAutomation_Phase2_Regression {
 		Id = Integer.parseInt(savedSearch.getSavedSearchID().getText());
 		System.out.println(Id);
 		UtilityLog.info(Id);
-		
-		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		workflow.createNewWorkFlow();
+	    workflow.createNewWorkFlow();
 		workflow.descriptionTab(wfName, wfDesc);
 		driver.waitForPageToBeReady();
 		workflow.nextButton();
