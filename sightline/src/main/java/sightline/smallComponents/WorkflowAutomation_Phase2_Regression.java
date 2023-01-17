@@ -122,9 +122,7 @@ public class WorkflowAutomation_Phase2_Regression {
 		Id = Integer.parseInt(savedSearch.getSavedSearchID().getText());
 		System.out.println(Id);
 		UtilityLog.info(Id);
-		
-		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		workflow.createNewWorkFlow();
+	    workflow.createNewWorkFlow();
 		workflow.descriptionTab(wfName, wfDesc);
 		driver.waitForPageToBeReady();
 		workflow.nextButton();
