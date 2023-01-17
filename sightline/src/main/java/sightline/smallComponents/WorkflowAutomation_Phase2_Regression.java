@@ -62,8 +62,9 @@ public class WorkflowAutomation_Phase2_Regression {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-	    in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 	}
 
 	@BeforeMethod(alwaysRun = true)

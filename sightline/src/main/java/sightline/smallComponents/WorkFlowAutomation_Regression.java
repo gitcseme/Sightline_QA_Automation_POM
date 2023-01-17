@@ -73,8 +73,9 @@ public class WorkFlowAutomation_Regression {
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		Input in = new Input();
-		in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -87,7 +88,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that workflow should run and displays doc count, if
 	 * Source is 'Save Search Selector' and action is'Folder Selector'.
 	 */
-	//@Test(description ="RPMXCON-52633",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52633",enabled = true, groups = { "regression" })
 	public void validationDocsCountSaveSearchAndFolder() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52633");
 		baseClass.stepInfo("To verify that workflow should run and displays doc count, if Source is 'Save "
@@ -159,7 +160,7 @@ public class WorkFlowAutomation_Regression {
 	 * Source is 'Save Search Selector' and action is'Assignment' and select 'First
 	 * family option'.
 	 */
-	//@Test(description ="RPMXCON-52632",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52632",enabled = true, groups = { "regression" })
 	public void validationDocsCountSaveAssgnAndFirstFamily() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52632");
 		baseClass.stepInfo("To verify that workflow should run and displays doc count, if Source "
@@ -234,7 +235,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that confirmation message is displayed if user select
 	 * action as Delete
 	 */
-	//@Test(description ="RPMXCON-52629",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52629",enabled = true, groups = { "regression" })
 	public void validatingPopUpMessageForDelete() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52629");
 		baseClass.stepInfo("To verify that confirmation message is displayed if user select action as Delete");
@@ -272,7 +273,7 @@ public class WorkFlowAutomation_Regression {
 	 * Author : Baskar date: NA Modified date: 24/02/2022 Modified by: Baskar
 	 * Description:To verify that Reset will displayed all the workflow details.
 	 */
-	//@Test(description ="RPMXCON-52658",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52658",enabled = true, groups = { "regression" })
 	public void validatingResetOption() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52658");
 		baseClass.stepInfo("To verify that Reset will displayed all the workflow details.");
@@ -306,7 +307,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that COMPLETE status is displayed in the list if
 	 * workflow process is completed.
 	 */
-	//@Test(description ="RPMXCON-52622",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52622",enabled = true, groups = { "regression" })
 	public void validationDocsCountFolderAction() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52622");
 		baseClass.stepInfo("To verify that COMPLETE status is displayed in the list if workflow process is completed.");
@@ -367,7 +368,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that workflow should be deleted if clicks on Yes.
 	 * 'RPMXCON-52630' Sprint-13
 	 */
-	//@Test(description ="RPMXCON-52630",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52630",enabled = true, groups = { "regression" })
 	public void verifyWorkFlowDeleteClickOnYes() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52630");
 		baseClass.stepInfo("To verify that workflow should be deleted if clicks on Yes.");
@@ -438,7 +439,7 @@ public class WorkFlowAutomation_Regression {
 	 * Author :Vijaya.Rani date: 25/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can sort all coulmn. 'RPMXCON-52648' Sprint-13
 	 */
-	//@Test(description ="RPMXCON-52648",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52648",enabled = true, groups = { "regression" })
 	public void verifyRMUCanSortAllCoulmn() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52648");
 		baseClass.stepInfo("To verify that RMU can sort all coulmn.");
@@ -459,7 +460,7 @@ public class WorkFlowAutomation_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-52650",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52650",enabled = true, groups = { "regression" })
 	public void verifyFilter_WorkflowID() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52650");
 		baseClass.stepInfo("To verify that RMU can filter by Workflow ID");
@@ -495,7 +496,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that CONFIGURED status is displayed in the list if user
 	 * save the workflow.
 	 */
-	//@Test(description ="RPMXCON-52620",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52620",enabled = true, groups = { "regression" })
 	public void validateConfiguredStatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52620");
 		baseClass.stepInfo("To verify that CONFIGURED status is displayed in the list " + "if user save the workflow.");
@@ -547,7 +548,7 @@ public class WorkFlowAutomation_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-52645",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52645",enabled = true, groups = { "regression" })
 	public void verifyHistoryBtn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52645");
 		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
@@ -577,7 +578,7 @@ public class WorkFlowAutomation_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-52657",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52657",enabled = true, groups = { "regression" })
 	public void verifyFilter_CreatedUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52657");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
@@ -617,7 +618,7 @@ public class WorkFlowAutomation_Regression {
 	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can save the record. 'RPMXCON-52591' Sprint-13
 	 */
-	//@Test(description ="RPMXCON-52591",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52591",enabled = true, groups = { "regression" })
 	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52591");
 		baseClass.stepInfo("To verify that RMU can save the record.");
@@ -668,7 +669,7 @@ public class WorkFlowAutomation_Regression {
 	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
 	 * Description:To verify that all details displayed on history.
 	 */
-	//@Test(description ="RPMXCON-52647",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52647",enabled = true, groups = { "regression" })
 	public void validationActionHederValues() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52647");
 		baseClass.stepInfo("To verify that all details displayed on history.");
@@ -712,7 +713,7 @@ public class WorkFlowAutomation_Regression {
 		loginPage.logout();
 	}
 
-	//@Test(description ="RPMXCON-52655",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52655",enabled = true, groups = { "regression" })
 	public void validatestatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52655");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected Status.");
@@ -824,7 +825,7 @@ public class WorkFlowAutomation_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-52646",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52646",enabled = true, groups = { "regression" })
 	public void verifyHistoryBtnEnabled() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52646");
 		baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
@@ -871,7 +872,7 @@ public class WorkFlowAutomation_Regression {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	//@Test(description ="RPMXCON-52618",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52618",enabled = true, groups = { "regression" })
 	public void verifyAllColumnSorting() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52618");
 		baseClass.stepInfo("To verify that RMU can sort by ascending and descending on all columns");
@@ -955,7 +956,7 @@ public class WorkFlowAutomation_Regression {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	//@Test(description ="RPMXCON-52656",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52656",enabled = true, groups = { "regression" })
 	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52656");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Enabled State'.");
@@ -1029,7 +1030,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that Status list should be displayed as Complete or
 	 * Assigned. 'RPMXCON-52605' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52605",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52605",enabled = true, groups = { "regression" })
 	public void verifyRMUStatusListCompleteOptionDisplay() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52605");
 		baseClass.stepInfo("To verify that Status list should be displayed as Complete or Assigned.");
@@ -1052,7 +1053,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that Summary tab will displays all the details.
 	 * 'RPMXCON-52611' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52611",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52611",enabled = true, groups = { "regression" })
 	public void verifySummaryTabWillDisplayAllDetails() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52611");
@@ -1100,7 +1101,7 @@ public class WorkFlowAutomation_Regression {
 	/**
 	 * Author :jayanthi
 	 */
-	//@Test(description ="RPMXCON-52612",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52612",enabled = true, groups = { "regression" })
 	public void verifySummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52612");
@@ -1166,7 +1167,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that selected Source details is displayed in Summary
 	 * tab. 'RPMXCON-52613' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52613",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52613",enabled = true, groups = { "regression" })
 	public void verifySourceInSummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52613");
@@ -1295,7 +1296,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that selected Family options details is displayed in
 	 * Summary tab. 'RPMXCON-52615' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52615",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52615",enabled = true, groups = { "regression" })
 	public void verifyFamilyOptionInSummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52615");
@@ -1365,7 +1366,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify that RMU can view the Family Option tab.
 	 * 'RPMXCON-52575' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52575",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52575",enabled = true, groups = { "regression" })
 	public void verifyRMUInFamilyOptionTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52575");
@@ -1421,7 +1422,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:Create/Edit/Delete workflow with Folder destination.
 	 * 'RPMXCON-52726' Sprint-14
 	 */
-	//@Test(description ="RPMXCON-52726",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52726",enabled = true, groups = { "regression" })
 	public void createEditDeleteTheWorkFlow() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52726");
 		baseClass.stepInfo("Create/Edit/Delete workflow with Folder destination.");
@@ -1486,7 +1487,7 @@ public class WorkFlowAutomation_Regression {
 	 * Author : Aathith date: NA Modified date: 25/04/2022 Modified by: Description:
 	 * To verify that RMU can view the Workflow details.
 	 */
-	//@Test(description ="RPMXCON-52617",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52617",enabled = true, groups = { "regression" })
 	public void verifyRmuWorkflowDetails() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52617");
 		baseClass.stepInfo("To verify that RMU can view the Workflow details.");
@@ -1517,7 +1518,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify the text on Family Option, if source is selected as 
 	 *             'Save Search Selector' and 'Second Family Option' is selected.
 	 */
-    //@Test(description ="RPMXCON-52580",enabled = true, groups = { "regression" })
+    @Test(description ="RPMXCON-52580",enabled = true, groups = { "regression" })
 	public void validatingSecondFamilyOptionText() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52580");
 		baseClass.stepInfo("To verify the text on Family Option, if source is selected as "
@@ -1571,7 +1572,7 @@ public class WorkFlowAutomation_Regression {
 	 * Description:To verify the text on Family Option, if source is selected as 
 	 *             'Save Search Selector' and 'Frist Family Option' is selected.
 	 */
-	//@Test(description ="RPMXCON-52579",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-52579",enabled = true, groups = { "regression" })
 	public void validatingFirstFamilyOptionText() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52579");
 		baseClass.stepInfo("To verify the text on Family Option, if source is selected as "
