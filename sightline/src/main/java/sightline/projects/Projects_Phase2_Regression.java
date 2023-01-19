@@ -78,6 +78,7 @@ public class Projects_Phase2_Regression {
 		softAssert = new SoftAssert();
 		docExplorer = new DocExplorerPage(driver);
 		tally = new TallyPage(driver);
+	    projects = new ProjectPage(driver);
 	}
 
 	/**
@@ -100,7 +101,7 @@ public class Projects_Phase2_Regression {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in As : " + Input.sa1userName);
 
-		ProjectPage project = new ProjectPage(driver);
+		
 		projects.navigateToClientFromHomePage();
 		driver.waitForPageToBeReady();
 		projects.addNewClient(clientName, shrtName, type);
