@@ -1001,9 +1001,12 @@ public class ProjectPage {
 			bc.waitForElement(getProjectFilterButton());
 			bc.waitTillElemetToBeClickable(getProjectFilterButton());
 			getProjectFilterButton().waitAndClick(10);
+			break;
 
 		} while (!getEditProject(projectName).isElementAvailable(10));
+		
 		bc.stepInfo(projectName + " was filtered");
+		
 	}
 
 	/**
