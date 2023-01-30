@@ -178,6 +178,7 @@ public class DocviewCodingForm_Phase2_Regression {
 		docViewPage.closeWindow(1);
 		docViewPage.switchToNewWindow(1);
 		driver.waitForPageToBeReady();
+		codingForm.deleteCodingForm(codingform,codingform);
 		loginPage.logout();
 	}
 
@@ -533,6 +534,7 @@ public class DocviewCodingForm_Phase2_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		cf.assignCodingFormToSG(Input.codeFormName);
+		cf.deleteCodingForm(cfName,cfName);
 		loginPage.logout();
 
 	}
