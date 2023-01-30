@@ -414,7 +414,7 @@ public class WorkflowPage {
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
-//		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		baseClass = new BaseClass(driver);
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
@@ -708,6 +708,7 @@ public class WorkflowPage {
 	 */
 	// Reusable method
 	public void createNewWorkFlow() {
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getWorkFlow_CreateNewWorkFlowBtn());
 		getWorkFlow_CreateNewWorkFlowBtn().waitAndClick(10);
