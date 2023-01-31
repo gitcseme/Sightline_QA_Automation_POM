@@ -1805,11 +1805,11 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getDocList() {
-		return driver.FindElementsByXPath("//tr[@role='row']//td[3]");
+		return driver.FindElementsByXPath("//tr[@role='row']//td[4]");
 	}
 
 	public Element getDocListCheckBox(String docId) {
-		return driver.FindElementByXPath("//tr[@role='row']//td[text()='" + docId + "']//..//td//label");
+		return driver.FindElementByXPath("//tr[@role='row']//td[text()='" + docId + "']//..//td//label/i");
 	}
 
 	public Element getAnalytical_ChckBox(int row) {
@@ -5854,17 +5854,18 @@ public class DocViewPage {
 		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		childWindowToParentWindowSwitching(childWindow);
-		// driver.getWebDriver().navigate().refresh();
-		// driver.switchTo().alert().accept();
-		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
-		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
 		base.waitForElement(getCodingFormSaveBtn());
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
-		getCodingFormSaveBtn().waitAndClick(5);
-		base.waitForElement(getCodeSameAsLast());
-		base.waitTillElemetToBeClickable(getCodeSameAsLast());
-		getCodeSameAsLast().waitAndClick(5);
+		getCodingFormSaveBtn().Click();
 		base.CloseSuccessMsgpopup();
+//		driver.getWebDriver().navigate().refresh();
+//		driver.switchTo().alert().accept();
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
+//		base.waitForElement(getCodeSameAsLast());
+//		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+//		getCodeSameAsLast().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
@@ -10195,7 +10196,7 @@ public class DocViewPage {
 		System.out.println(listOFData.size());
 		for (int i = 0; i <= 2; i++) {
 			String name = listOFData.get(i);
-			getDocListCheckBox(name).waitAndClick(10);
+			getDocListCheckBox(name).waitAndClick(5);
 		}
 		driver.scrollPageToTop();
 		base.waitForElement(getDocList_Action_Drp_Dwn());

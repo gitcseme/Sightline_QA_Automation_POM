@@ -4870,7 +4870,6 @@ public class DocViewCodingForm_Regression1 {
 
 		codingForm.commentRequired(cfName);
 		codingForm.assignCodingFormToSG(cfName);
-		codingForm.deleteCodingForm(cfName, cfName);
 		// search to and go to docview from rmu
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
