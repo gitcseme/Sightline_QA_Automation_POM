@@ -422,11 +422,6 @@ public class CustomDocumentDataReport {
 
 	}
 	
-	public void closeExport() {
-		getExportCloseBtn().Click();
-
-	}
-
 	public void validateSelectedExports(String[] value) {
 		for (int i = 0; i < value.length; i++) {
 			driver.scrollPageToTop();

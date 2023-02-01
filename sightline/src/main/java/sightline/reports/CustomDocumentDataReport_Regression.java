@@ -667,7 +667,7 @@ public class CustomDocumentDataReport_Regression {
 		bc.stepInfo("Saved the Custom report " + report1);
 		cddr.getRunReport().waitAndClick(3);
 		cddr.reportRunSuccessMsg();
-          cddr.closeExport();      
+		search.closeExportDataPopup();
 		// report2
 		bc.selectproject();
 		bc.stepInfo("Basic Content search");
