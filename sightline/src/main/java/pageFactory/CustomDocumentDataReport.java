@@ -410,6 +410,7 @@ public class CustomDocumentDataReport {
 				"Your Report has been added into the Background successfully. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 
 	}
+
 	public void selectExportFieldFormat(String fieldvalue) {
 		getExportFieldBtn().waitAndClick(2);
 		getExportFieldValue(fieldvalue).waitAndClick(2);
@@ -421,7 +422,7 @@ public class CustomDocumentDataReport {
 		getExportTextValue(textvalue).waitAndClick(5);
 
 	}
-	
+
 	public void validateSelectedExports(String[] value) {
 		for (int i = 0; i < value.length; i++) {
 			driver.scrollPageToTop();
