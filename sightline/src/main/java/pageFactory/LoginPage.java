@@ -207,7 +207,7 @@ public class LoginPage {
 		BaseClass bc = new BaseClass(driver);
 		try {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
-			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
+			if (!strUserName.equals(Input.sa1userName) && !strUserName.equals(Input.da1userName) && !strUserName.equals(Input.Onnasa1userName) && !strUserName.equals(Input.Onnada1userName))
 				bc.selectproject();
 			bc.stepInfo(Input.projectName);
 		} catch (Exception e) {
@@ -332,7 +332,8 @@ public class LoginPage {
 //		Assert.assertTrue(getEuserName().Visible());
 //		UtilityLog.info("Logged out successfully!");
 //	}
-
+	
+	
 	public void logout() {
 
 		driver.Navigate().refresh();
