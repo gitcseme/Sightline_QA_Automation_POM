@@ -53,8 +53,8 @@ public class CustomDocumentDataReport_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -667,7 +667,7 @@ public class CustomDocumentDataReport_Regression {
 		bc.stepInfo("Saved the Custom report " + report1);
 		cddr.getRunReport().waitAndClick(3);
 		cddr.reportRunSuccessMsg();
-                search.closeExportDataPopup();
+          cddr.closeExport();      
 		// report2
 		bc.selectproject();
 		bc.stepInfo("Basic Content search");

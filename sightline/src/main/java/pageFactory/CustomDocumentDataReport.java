@@ -106,7 +106,10 @@ public class CustomDocumentDataReport {
 	public Element getExportTextBtn() {
 		return driver.FindElementById("textSelect");
 	}
-
+	
+	public Element getExportCloseBtn() {
+		return driver.FindElementByXPath("/html/body/div[11]/div[1]/button");
+	}
 	public Element getExportTextValue(String value) {
 		return driver.FindElementByXPath("//*[@id='textSelect']/*[contains(text(),'" + value + "')]");
 	}
@@ -407,7 +410,6 @@ public class CustomDocumentDataReport {
 				"Your Report has been added into the Background successfully. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 
 	}
-
 	public void selectExportFieldFormat(String fieldvalue) {
 		getExportFieldBtn().waitAndClick(2);
 		getExportFieldValue(fieldvalue).waitAndClick(2);
@@ -417,6 +419,11 @@ public class CustomDocumentDataReport {
 	public void selectExportTextFormat(String textvalue) {
 		getExportTextBtn().Click();
 		getExportTextValue(textvalue).waitAndClick(5);
+
+	}
+	
+	public void closeExport() {
+		getExportCloseBtn().Click();
 
 	}
 
