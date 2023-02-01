@@ -4295,7 +4295,8 @@ public class UserManagement {
 
 		getDomainUserRightArrow().waitAndClick(10);
 		
-		driver.Manage().window().fullscreen();
+
+//		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		
 		bc.VerifySuccessMessage("User Mapping Successful");

@@ -97,6 +97,16 @@ public class Input {
 	public static String rev2password;
 	public static String domainName;
 	public static String da1FullName;
+	public static String Onnapa1userName;
+	public static String Onnarmu1userName;
+	public static String Onnada1userName;
+	public static String Onnasa1userName;
+	public static String Onnapa1password;
+	public static String Onnarmu1password;
+	public static String Onnada1password;
+	public static String Onnasa1password;
+	public static String Onnarmu1FullName;
+	public static String Onnapa1FullName;
 
 	// Test data------------------------------------------------------
 	public static String searchString1;
@@ -2116,6 +2126,18 @@ public class Input {
 		filterDataInput2=testData.getFilterDataInput2();
         filterDataInput3=testData.getFilterDataInput3();  
         transcriptId=testData.getTranscriptId();
+        
+        Onnapa1userName=testData.getOnnapa1userName();
+        Onnarmu1userName=testData.getOnnarmu1userName();
+        Onnasa1userName=testData.getOnnasa1userName();
+        Onnada1userName=testData.getOnnada1userName();
+        Onnapa1password=testData.getOnnapa1password();
+    	Onnarmu1password=testData.getOnnarmu1password();
+    	Onnada1password=testData.getOnnada1password();
+    	Onnasa1password=testData.getOnnasa1password();
+    	Onnarmu1FullName=testData.getOnnarmu1FullName();
+    	Onnapa1FullName=testData.getOnnapa1FullName();
+    	
 		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
