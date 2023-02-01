@@ -257,7 +257,7 @@ public class RedactionPage {
 	 */
 	public void manageRedactionTagsPage(String Tag) throws InterruptedException {
 
-
+		driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 			driver.waitForPageToBeReady();
 			bc.waitTime(2); 
 			getselectAllRedactionTag().isElementAvailable(15);

@@ -222,7 +222,8 @@ public class Production_Phase1_Regression {
 		base.waitForElement(page.getbtnProductionGenerate());
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
-		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		
 		page.reGenarate(productionname);
 		base.passedStep(
 				"Producion is regnerated  then status should be change on Production progress status bar on Generate page");
@@ -4310,7 +4311,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4378,7 +4379,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4697,7 +4698,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4843,7 +4844,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -5481,7 +5482,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -5528,6 +5529,7 @@ public class Production_Phase1_Regression {
 
 		// document for pdf section
 		ProductionPage page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
@@ -6436,7 +6438,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		int doccount = page.fillingGeneratePageWithContinueGenerationPopup();
@@ -6644,7 +6646,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
