@@ -399,17 +399,28 @@ public class SourceLocationPage {
      */
     public void verifyConnectToONNAbeforeclickingbtn(String ONNAdirectURL) throws InterruptedException {
             driver.waitForPageToBeReady();
-            base.openNewTab();
-            for(int i=0;i<=5;i++) {
-            	driver.waitForPageToBeReady();
+            boolean flag=base.verifyNewTabOpened();
+            driver.waitForPageToBeReady();
+            for(int i=0;i<=10;i++) {
+            	base.openNewTab();
+        		base.waitTime(5);
+        		flag=base.verifyNewTabOpened();
+            	System.out.println(flag);
+            	if(flag==false) {    	
+            		break;
+            	}
             }
+            
             base.switchTab(1);
             driver.get(ONNAdirectURL);
             driver.waitForPageToBeReady();
             try {
             	String expectedError="AccessDenied";
-            	base.verifyPageNavigation(expectedError);  
-                driver.close();
+            	base.verifyPageNavigation(expectedError); 
+            	driver.close();
+            	base.switchTab(0);
+            	
+                
             }catch(Exception e) {
                e.printStackTrace();
             }

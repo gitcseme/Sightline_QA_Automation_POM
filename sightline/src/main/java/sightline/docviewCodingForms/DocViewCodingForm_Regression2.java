@@ -1085,7 +1085,7 @@ public class DocViewCodingForm_Regression2 {
 	 * for the document in security group context
 	 */
 
-//    @Test(description = "RPMXCON-52114",enabled = true, groups = { "regression" })
+    @Test(description = "RPMXCON-52114",enabled = true, groups = { "regression" })
 	public void validateCommentAndMetadataPureHitCountSavedStamp() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -4220,8 +4220,7 @@ public class DocViewCodingForm_Regression2 {
 	 * 
 	 */
 
-	// @Test(description = "RPMXCON-52084",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52084",enabled = true, groups = { "regression" })
 	public void createCodingFormWithComment() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52084");
 		String codingfrom = "CF" + Utility.dynamicNameAppender();
@@ -4329,8 +4328,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              customized coding form using multiple comments elements
 	 */
 
-	// @Test(description = "RPMXCON-52071",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52071",enabled = true, groups = { "regression"})
 	public void createCodingFormWithCommentError() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52071");
 		String tag = "tag";
@@ -4385,8 +4383,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              DocView from child window
 	 */
 
-	// @Test(description = "RPMXCON-51507",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51507",enabled = true, groups = { "regression"})
 	public void appearanceTextParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51507");
 		String tag = "tag";
@@ -4432,8 +4429,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              DocView from parent window
 	 */
 
-	// @Test(description = "RPMXCON-51506",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51506",enabled = true, groups = { "regression"})
 	public void appearanceTextChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51506");
 		String tag = "tag";
@@ -4521,8 +4517,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              security group
 	 */
 
-	// @Test(description = "RPMXCON-52175",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52175",enabled = true, groups = { "regression"})
 	public void verifyThatCustomMetaDataFieldValueWithDATETIMEDatatype() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52175");
 		String codingfrom = "CFDateTime" + Utility.dynamicNameAppender();
@@ -4592,8 +4587,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              of assignment and security group
 	 */
 
-	// @Test(description = "RPMXCON-52178",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52178",enabled = true, groups = { "regression"})
 	public void verifyThatCustomMetaDataFieldValueWithINTDataTypeAssign() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52178");
 		String codingfrom = "CFINTDataType" + Utility.dynamicNameAppender();
@@ -4964,8 +4958,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              retained on click of saved stamp in context of assignment
 	 */
 
-	// @Test(description = "RPMXCON-52185",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52185",enabled = true, groups = { "regression"})
 	public void verifyThatCustomMetaDataFieldValueWithINTDatatypeAssgn() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52185");
 		String codingForms = "CFINT" + Utility.dynamicNameAppender();
@@ -5120,8 +5113,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              group
 	 */
 
-	// @Test(description = "RPMXCON-52174",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52174",enabled = true, groups = { "regression"})
 	public void verifyThatCustomMetaDataFieldValueDATEDataType() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52174");
 		baseClass.stepInfo("Verify that custom metadata field value should be retained "
@@ -5193,8 +5185,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              with metadata field as DateTime on saving of the stamp
 	 */
 
-	// @Test(description = "RPMXCON-51583",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51583",enabled = true, groups = { "regression"})
 	public void validationOfNonDateFormat() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51583");
 		baseClass.stepInfo("Verify validation of coding form when coding form is created "
@@ -5260,8 +5251,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              Static Text elements
 	 */
 
-	// @Test(description = "RPMXCON-51202",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51202",enabled = true, groups = { "regression"})
 	public void staticTextToDisplayInCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51202");
 		baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated "
@@ -5323,8 +5313,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              Metadata elements
 	 */
 
-	// @Test(description = "RPMXCON-51201",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51201",enabled = true, groups = { "regression"})
 	public void metaDataUsingCustomizedCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51201");
 		baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be "
@@ -5548,8 +5537,7 @@ public class DocViewCodingForm_Regression2 {
 	 * @Description : Verify on click of 'Save'/'Complete button coding form should
 	 *              be validated as per the customized coding form using radio group
 	 */
-	// @Test(description = "RPMXCON-51197",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51197",enabled = true, groups = { "regression"})
 	public void verifyCustomizedCodingFormUsingRadioGroup() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51197");
 		baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per "
@@ -5623,8 +5611,7 @@ public class DocViewCodingForm_Regression2 {
 	 * @Description : Verify on click of 'Save'/'Complete button coding form should
 	 *              be validated as per the customized coding form using check group
 	 */
-	// @Test(description = "RPMXCON-51198",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51198",enabled = true, groups = { "regression"})
 	public void verifyCustomizedCodingFormUsingCheckGroup() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51198");
 		baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per "
@@ -5699,8 +5686,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              be validated as per the customized coding form using multiple
 	 *              comments elements
 	 */
-	// @Test(description = "RPMXCON-51200",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51200",enabled = true, groups = { "regression"})
 	public void verifyCustomizedCodingFormUsingMultipleComments() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51200");
 		baseClass.stepInfo(
@@ -5849,8 +5835,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              form created with static text
 	 */
 
-	// @Test(description = "RPMXCON-52147",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52147",enabled = true, groups = { "regression"})
 	public void staticTextWarningMsgUsingSave() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52147");
 		baseClass.stepInfo("Verify that for RMU/Reviewer user 'Code same as last' "
@@ -5939,8 +5924,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              along with Check/Radio Group and Radio Item
 	 */
 
-	// @Test(description = "RPMXCON-52101",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52101",enabled = true, groups = { "regression"})
 	public void verifyCustomizedUsingSaveAndNext() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52101");
 		baseClass.stepInfo("Verify validation of coding form on "
@@ -5984,8 +5968,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              in context of security group
 	 */
 
-	// @Test(description = "RPMXCON-52045",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52045",enabled = true, groups = { "regression"})
 	public void validateChildwindowForRequiredTag() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52045");
 		baseClass.stepInfo("Verify that user should not save the "
@@ -6026,7 +6009,7 @@ public class DocViewCodingForm_Regression2 {
 	 *                 be validated as per the customized coding form for comment
 	 *                 element in context of security group.
 	 */
-	// @Test(description = "RPMXCON-52077",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-52077",enabled = true,groups = { "regression" })
 	public void validateChildwindowErrorMsg() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52077");
 
@@ -6072,7 +6055,7 @@ public class DocViewCodingForm_Regression2 {
 	 *                 be validated as per the customized coding form for editable
 	 *                 metadata fields in context of security group.
 	 */
-	// @Test(description = "RPMXCON-52078",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-52078",enabled = true,groups = { "regression" })
 	public void validateChildwindowErrorMsgInMeta() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52078");
 
@@ -6117,8 +6100,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              doc view screen - Search >> Doc View
 	 */
 
-	// @Test(description = "RPMXCON-51460",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51460",enabled = true, groups = { "regression" })
 	public void validateCodingFormAppear() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51460");
 		baseClass.stepInfo("Verify that a coding form appears correctly "
@@ -6456,8 +6438,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              assignment
 	 */
 
-	// @Test(description = "RPMXCON-51607",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51607",enabled = true, groups = { "regression"})
 	public void validationUsingAlphaAndNonDateFormat() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51607");
 		baseClass.stepInfo("Verify validation of coding form when coding form is created with "
@@ -6515,8 +6496,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              form in context of security group
 	 */
 
-	// @Test(description = "RPMXCON-52074",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52074",enabled = true, groups = { "regression"})
 	public void validateForRequiredTag() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52074");
 		baseClass.stepInfo("Verify on click of 'Save and Next' button coding form "
@@ -6601,7 +6581,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              Comments objects along with "Not Selected" condition in context
 	 *              of security group.
 	 */
-	// @Test(description = "RPMXCON-52090",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-52090",enabled = true,groups = { "regression" })
 	public void verifyCodingFormCommentWithOptionalAndRequired() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52090");
 		baseClass.stepInfo(
@@ -6643,8 +6623,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              security group, document should not be saved.
 	 */
 
-	// @Test(description = "RPMXCON-50989",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-50989",enabled = true, groups = { "regression"})
 	public void validateCodingFormWhenNotAssgn() throws InterruptedException {
 		softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
@@ -6938,7 +6917,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              be validated as per the customized coding form using Comment
 	 *              object on coding form screen.
 	 */
-	// @Test(description = "RPMXCON-51204",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-51204",enabled = true,groups = { "regression" })
 	public void verifySaveCompleteValidateCommentNotSelectableCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51204");
 		baseClass.stepInfo(
@@ -7500,7 +7479,7 @@ public class DocViewCodingForm_Regression2 {
 	 * @Description : Verify on click of 'Complete' button coding form should be
 	 *              validated as per the default selected action for the coding form
 	 */
-	// @Test(description = "RPMXCON-51188",enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-51188",enabled = true,groups = { "regression" })
 	public void verifyDefaultCodingformAssignmentDocView() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51188");
 		baseClass.stepInfo(
@@ -7590,8 +7569,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              group
 	 */
 
-	// @Test(description = "RPMXCON-52176",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52176",enabled = true, groups = { "regression"})
 	public void verifyThatCustomMetaDataFieldValueWithTIMEDatatype() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52176");
 		baseClass.stepInfo("Verify that custom metadata field value should be retained on "
@@ -7762,8 +7740,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              button using Tag/Comments/Metadata objects along with
 	 *              Check/Radio Group and Radio Item
 	 */
-	// @Test(description = "RPMXCON-51210",enabled = true ,groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51210",enabled = true ,groups = { "regression"})
 	public void verifySaveCompleteValidateAllObjectAlongWithCheckRadioItemdCodingForm()
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51210");
@@ -7855,8 +7832,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              with metadata field as DateTime on click of 'Complete'
 	 */
 
-	// @Test(description = "RPMXCON-51582",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51582",enabled = true, groups = { "regression"})
 	public void validationOfNonDateFormatINAssign() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51582");
 		baseClass.stepInfo("Verify validation of coding form when coding form is "
@@ -7936,8 +7912,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              Tag/Comments/Metadata objects along with Check/Radio Group and
 	 *              Check Item in context of security group
 	 */
-	// @Test(description = "RPMXCON-52088",enabled = true ,groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52088",enabled = true ,groups = { "regression"})
 	public void validationUsingSaceAndNextForCheckItemsRequiredTag() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52088");
 		baseClass.stepInfo("Verify on click of 'Save and Next' button coding form should be "
@@ -8028,8 +8003,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              group
 	 */
 
-	// @Test(description = "RPMXCON-52044",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-52044",enabled = true, groups = { "regression"})
 	public void validateChildwindowForRequiredTagCF() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52044");
 		baseClass.stepInfo("Verify that user should not save the coding stamp without "
@@ -8070,8 +8044,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              with metadata field as DateTime on click of 'Save''
 	 */
 
-	// @Test(description = "RPMXCON-51579",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51579",enabled = true, groups = { "regression"})
 	public void validationOfNonDateFormatUsingSave() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51579");
 		baseClass.stepInfo("Verify validation of coding form when coding form is "
@@ -8186,8 +8159,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              coding form then from confirmation navigation message on click
 	 *              of 'Yes' it should redirect to the respective page
 	 */
-	// @Test(description = "RPMXCON-51622",enabled = true,dataProvider =
-	// "UsersWithoutPA", groups = { "regression" })
+	@Test(description = "RPMXCON-51622",enabled = true,dataProvider = "UsersWithoutPA", groups = { "regression" })
 	public void verifyNavigationMsgByClickEditProfile(String role, String username, String password) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51622");
 		baseClass.stepInfo(
@@ -8345,8 +8317,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              document is assigned to two different assignments with same
 	 *              assigned coding form
 	 */
-	// @Test(description = "RPMXCON-50970",enabled = true, dataProvider =
-	// "rmuAndrev", groups = { "regression" })
+	@Test(description = "RPMXCON-50970",enabled = true, dataProvider ="rmuAndrev", groups = { "regression" })
 	public void verifyCfEditableOrNotBasedOnDocStatusWithSameCodingForm(String userName, String password, String user)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50970");
@@ -8415,8 +8386,7 @@ public class DocViewCodingForm_Regression2 {
 	 * @Description :Verify on click of 'Save'/'Complete button coding form should
 	 *              be validated as per the customized coding form for tag element
 	 */
-	// @Test(description = "RPMXCON-51194",enabled = true, groups = { "regression"
-	// })
+	@Test(description = "RPMXCON-51194",enabled = true, groups = { "regression"})
 	public void verifyCfValidationAfterSaveAndCompleteAction() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51194");
 		baseClass.stepInfo(
@@ -8630,8 +8600,8 @@ public class DocViewCodingForm_Regression2 {
 	 *              document is assigned to two different assignments with different
 	 *              assigned coding form
 	 */
-	// @Test(description = "RPMXCON-50971",enabled = true, dataProvider =
-	// "rmuAndrev", groups = { "regression" })
+	@Test(description = "RPMXCON-50971",enabled = true, dataProvider =
+	 "rmuAndrev", groups = { "regression" })
 	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingForms(String userName, String password,
 			String user) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50971");

@@ -1791,6 +1791,10 @@ public class CodingForm {
 	public Element getCFNameOrSetDefaultColumnSelectionType(int row, int col) {
 		return driver.FindElementByXPath("//tbody[@id='tbodyCodingForm']//tr['" + row + "']//td[" + col + "]//label");
 	}
+	
+	public Element selcetUnselectAllCFcheckbox() {
+		return driver.FindElementByXPath("//*[@id='dtCodingFormList_wrapper']//thead/tr[1]/th[1]/label[1]/i[1]");
+	}
 
 	public void CFnameErrormsg(String errormsg) throws InterruptedException {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3408,6 +3412,7 @@ public class CodingForm {
 		base.waitForElement(getManageCodingFormButton());
 		base.waitForElement(getSetCodingFormToSG());
 		getSetCodingFormToSG().waitAndClick(15);
+		UnselectAllCfFromSG();
 		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
 			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
@@ -6610,5 +6615,12 @@ public class CodingForm {
 			base.failedStep(" Sort CodeForm Pop Up Not displayed.");
 		}
 
+	}
+	
+	public void UnselectAllCfFromSG() {
+		driver.waitForPageToBeReady();
+		selcetUnselectAllCFcheckbox().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		selcetUnselectAllCFcheckbox().waitAndClick(3);
 	}
 }
