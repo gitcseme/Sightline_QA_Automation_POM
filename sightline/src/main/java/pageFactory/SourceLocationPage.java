@@ -401,9 +401,9 @@ public class SourceLocationPage {
             driver.waitForPageToBeReady();
             boolean flag=base.verifyNewTabOpened();
             driver.waitForPageToBeReady();
-            for(int i=0;i<=10;i++) {
-            	base.openNewTab();
-        		base.waitTime(5);
+            for(int i=0;i<=20;i++) {
+            	base.openNewTabJs(ONNAdirectURL);
+        		base.waitTime(3);
         		flag=base.verifyNewTabOpened();
             	System.out.println(flag);
             	if(flag==false) {    	
