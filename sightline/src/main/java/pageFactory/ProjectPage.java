@@ -1419,8 +1419,8 @@ public class ProjectPage {
 	 */
 	public void selectProjectAndEdit(String projectName) {
 		filterTheProject(projectName);
-		bc.waitForElement(getEditBtn());
-		getEditBtn().waitAndClick(10);
+//		bc.waitForElement(getEditBtn());
+		getEditProject(projectName).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		if (getProjectName().isElementAvailable(15)) {
 			bc.passedStep("Edit project page section displayed");

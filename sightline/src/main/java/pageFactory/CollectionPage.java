@@ -841,11 +841,11 @@ public class CollectionPage {
 		String collectionID = getCollectionID().getText();
 		colllectionData.put(collectionName, collectionID);
 
-//		// Get Destination Path - latest
-//		driver.waitForPageToBeReady();
-//		base.waitTime(2);
-//		String destinationPath = getDestinationPathLocation().getText();
-//		colllectionData.put("DestinationPath", destinationPath);
+		// Get Destination Path - latest
+		driver.waitForPageToBeReady();
+		base.waitTime(3);
+		String destinationPath = getDestinationPathLocation().getText();
+		colllectionData.put("DestinationPath", destinationPath);
 
 		if (Next) {
 			getNextBtn().waitAndClick(10);
@@ -999,7 +999,8 @@ public class CollectionPage {
 		driver.waitForPageToBeReady();
 
 		// Custodian Retived data
-		base.waitTime(2);
+		base.waitTime(5);
+		base.waitForElement(getDataSetNameTextFIeld());
 		String retrivedData = getDataSetNameTextFIeld().GetAttribute("value");
 		base.stepInfo("Actual populated dataset name : " + retrivedData);
 
@@ -1130,7 +1131,8 @@ public class CollectionPage {
 		if (SubFolder) {
 
 			driver.waitForPageToBeReady();
-			base.waitTime(3);
+//			base.waitTime(7);
+			base.waitForElement(getFolderTree(folderName));
 			getFolderTree(folderName).waitAndClick(10);
 			getSubFolderNameToSelect(folderName, SubFolderName).waitAndClick(10);
 
