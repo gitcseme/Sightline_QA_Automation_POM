@@ -106,10 +106,7 @@ public class CustomDocumentDataReport {
 	public Element getExportTextBtn() {
 		return driver.FindElementById("textSelect");
 	}
-	
-	public Element getExportCloseBtn() {
-		return driver.FindElementByXPath("/html/body/div[11]/div[1]/button");
-	}
+
 	public Element getExportTextValue(String value) {
 		return driver.FindElementByXPath("//*[@id='textSelect']/*[contains(text(),'" + value + "')]");
 	}

@@ -1445,7 +1445,7 @@ public class SessionSearch {
 
 	public Element getExportPopupClose() {
 		return driver
-				.FindElementByXPath("//span[text()='Export']/parent::div/button[@class='ui-dialog-titlebar-close']");
+				.FindElementByXPath("//h3[text()='Export']/parent::div/button[@class='ui-dialog-titlebar-close']");
 
 	}
 
