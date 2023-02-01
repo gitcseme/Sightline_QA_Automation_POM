@@ -34,8 +34,8 @@ public class Input {
 	// Config and test data files---------------------------------//
 	public static ConfigMain config;
 	public static Environment envConfig;
-
 	public static TestData testData;
+	
 	// ConfigMain data---------------------------------------------
 	public static String newProject;
 	public static String ingestion;

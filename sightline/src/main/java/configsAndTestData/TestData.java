@@ -190,16 +190,16 @@ public class TestData {
 	public String ExeTypeSourceDocId;
 	
 	//Added by Hema MJ
-		public  String Onnapa1userName;
-		public  String Onnarmu1userName;
-		public  String Onnada1userName;
-		public  String Onnasa1userName;
-		public  String Onnapa1password;
-		public  String Onnarmu1password;
-		public  String Onnada1password;
-		public  String Onnasa1password;
-		public  String Onnarmu1FullName;
-		public  String Onnapa1FullName;
+	public  String Onnapa1userName;
+	public  String Onnarmu1userName;
+	public  String Onnada1userName;
+	public  String Onnasa1userName;
+	public  String Onnapa1password;
+	public  String Onnarmu1password;
+	public  String Onnada1password;
+	public  String Onnasa1password;
+	public  String Onnarmu1FullName;
+	public  String Onnapa1FullName;
 		
 		
 	// Added by Sai Krishna

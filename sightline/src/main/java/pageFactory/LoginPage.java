@@ -332,7 +332,8 @@ public class LoginPage {
 //		Assert.assertTrue(getEuserName().Visible());
 //		UtilityLog.info("Logged out successfully!");
 //	}
-
+	
+	
 	public void logout() {
 
 		driver.Navigate().refresh();

@@ -4295,7 +4295,6 @@ public class UserManagement {
 
 		getDomainUserRightArrow().waitAndClick(10);
 		
-
 //		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		

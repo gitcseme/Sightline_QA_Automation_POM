@@ -400,7 +400,6 @@ public class SourceLocationPage {
     public void verifyConnectToONNAbeforeclickingbtn(String ONNAdirectURL) throws InterruptedException {
             driver.waitForPageToBeReady();
             boolean flag=base.verifyNewTabOpened();
-            System.out.println(flag);
             driver.waitForPageToBeReady();
             for(int i=0;i<=10;i++) {
             	base.openNewTab();
