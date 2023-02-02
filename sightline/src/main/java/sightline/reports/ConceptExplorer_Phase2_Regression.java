@@ -81,6 +81,13 @@ public class ConceptExplorer_Phase2_Regression {
 		return users;
 	}
 	
+	@DataProvider(name = "paRmu")
+	public Object[][] paRmu() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password} };
+		return users;
+	}
+	
 	
 	/**
 	 * @author Jayanthi.Ganesan
