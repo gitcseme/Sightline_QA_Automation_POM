@@ -3704,12 +3704,12 @@ public class Production_Phase1_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-
+		
 		page.extractFile();
 		driver.waitForPageToBeReady();
 
 		for (int i = number; i < lastfile; i++) {
-			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".pdf");
 			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
 			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
 			if (Native.exists()) {
@@ -4074,7 +4074,7 @@ public class Production_Phase1_Regression {
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4164,7 +4164,22 @@ public class Production_Phase1_Regression {
 		page.extractFile();
 		page.isImageFileExist(firstFile, lastfile, prefixID, suffixID);
 		page.isTextFileExist(firstFile, lastfile, prefixID, suffixID);
-		page.isNativeDocxFileExist(firstFile, lastfile, prefixID, suffixID);
+		String home = System.getProperty("user.home");
+		int number = Integer.parseInt(beginningBates);
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		for (int i = number; i < lastfile; i++) {
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".pdf");
+			
+			if (Native.exists()) {
+				base.passedStep("Native file are generated correctly");
+				System.out.println("passeed");
+			} else {
+				base.failedStep("verification failed");
+				System.out.println("failed");
+			}
+		}
 
 		base.passedStep(
 				"verified that all produced Natives files should be provided by file types for NUIX processed data.");
@@ -4952,6 +4967,7 @@ public class Production_Phase1_Regression {
 
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
@@ -5084,6 +5100,7 @@ public class Production_Phase1_Regression {
 
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
@@ -6213,9 +6230,11 @@ public class Production_Phase1_Regression {
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.SearchMetaData("IngestionName", "B2F9_Automation_AllSources_20211130043120500");
-		sessionSearch.selectOperatorInBasicSearch("AND");
-		sessionSearch.SearchMetaDataWithoutUrlPassing("AudioPlayerReady", "1");
+		//sessionSearch.SearchMetaData("IngestionName", "Automation_AllSource");
+		//sessionSearch.SearchMetaData("IngestionName", "Automation_AllSources_20211130043120500");
+		//sessionSearch.selectOperatorInBasicSearch("AND");
+		//sessionSearch.SearchMetaDataWithoutUrlPassing("AudioPlayerReady", "1");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.addPureHit();
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
@@ -6606,6 +6625,7 @@ public class Production_Phase1_Regression {
 
 		doc.documentSelection(3);
 		doc.docListToBulkRelease(Input.securityGroup);
+		doc.documentSelection(3);
 		doc.bulkTagExistingFromDoclist(tagname);
 		doc.documentSelection(3);
 		doc.bulkFolderExisting(foldername);

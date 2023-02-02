@@ -17957,7 +17957,7 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 			base.waitForElement(getTIFFTab());
 			getTIFFTab().Click();
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			/*getTIFF_EnableforPrivilegedDocs().ScrollTo();
 			// disabling enable for priviledged docs
 			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
@@ -17988,12 +17988,37 @@ public class ProductionPage {
 			getPriveldged_TagTree(tagname).waitAndClick(10);
 			base.waitForElement(getClk_selectBtn());
 			getClk_selectBtn().isDisplayed();
-			getClk_selectBtn().waitAndClick(10);
+			getClk_selectBtn().waitAndClick(10);*/
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().waitAndClick(10);
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+			getClkCheckBox_RedactionTag(tagname).ScrollTo();
+			getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
 			base.waitForElement(gettextRedactionPlaceHolder());
 			gettextRedactionPlaceHolder().isDisplayed();
 			gettextRedactionPlaceHolder().waitAndClick(10);
 			gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
-		} catch (Exception e) {
+			
+				} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep(
 					"Exception occured while filling tiff section with burn redaction tag" + e.getLocalizedMessage());
@@ -20359,7 +20384,7 @@ public class ProductionPage {
 		}), Input.wait60);
 
 		// added thread.sleep to avoid exception while executing in batch
-		Thread.sleep(2000);
+		
 		getConfirmProductionCommit().waitAndClick(10);
 
 		String PDocCount = getProductionDocCount().getText();
@@ -20371,7 +20396,8 @@ public class ProductionPage {
 		Reporter.log("Doc - " + Doc, true);
 		System.out.println(Doc);
 		UtilityLog.info(Doc);
-
+		Thread.sleep(5000);
+		Thread.sleep(3000);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCopyPath().isDisplayed();
@@ -20385,8 +20411,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 
-		getQC_Download().waitAndClick(10);
-		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		getQC_Download().waitAndClick(30);
+		getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		base.stepInfo("Generate production page is filled");
 
