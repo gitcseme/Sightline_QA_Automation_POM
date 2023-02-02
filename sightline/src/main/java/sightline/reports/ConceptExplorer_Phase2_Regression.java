@@ -51,7 +51,7 @@ public class ConceptExplorer_Phase2_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// in = new Input();
-		// in.loadEnvConfig();
+		 //in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -81,13 +81,14 @@ public class ConceptExplorer_Phase2_Regression {
 		return users;
 	}
 	
-	@DataProvider(name = "paRmuUsers")
-	public Object[][] paRmuUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+	@DataProvider(name = "paRmu")
+	public Object[][] paRmu() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password} };
 		return users;
 	}
-
+	
+	
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param User
