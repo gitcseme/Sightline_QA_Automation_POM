@@ -20384,7 +20384,7 @@ public class ProductionPage {
 		}), Input.wait60);
 
 		// added thread.sleep to avoid exception while executing in batch
-		
+		Thread.sleep(2000);
 		getConfirmProductionCommit().waitAndClick(10);
 
 		String PDocCount = getProductionDocCount().getText();
@@ -20397,7 +20397,7 @@ public class ProductionPage {
 		System.out.println(Doc);
 		UtilityLog.info(Doc);
 		Thread.sleep(5000);
-		Thread.sleep(3000);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCopyPath().isDisplayed();
