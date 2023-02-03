@@ -1366,7 +1366,7 @@ public class O365_Regression_Consilio {
 
 	
 	
-//	@AfterMethod(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
