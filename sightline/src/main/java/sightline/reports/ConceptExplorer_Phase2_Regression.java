@@ -383,7 +383,7 @@ public class ConceptExplorer_Phase2_Regression {
 		baseClass.stepInfo("**Select tile to analyze at third level**");
 		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
 		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 0);
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
 
 		// Go to 3rd level
 		conceptExplorer.analyzeAction(analyze3);
