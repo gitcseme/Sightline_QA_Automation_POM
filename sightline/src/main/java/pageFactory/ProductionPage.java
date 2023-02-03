@@ -887,12 +887,11 @@ public class ProductionPage {
 	}
 
 	public Element getPrivPlaceHolder() {
-		return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for natively produced docs']");
+		return driver.FindElementByXPath("//textarea[@id='textPrivDocs']");
 	}
 
 	public Element getNativePlaceHolder() {
-		return driver.FindElementByXPath(
-				"//div[@placeholder='Enter placeholder text for the docs of the selected file types']");
+		return driver.FindElementByXPath("//textarea[@id='TImagePHEditor_0']");
 	}
 
 	public Element getRemoveBtnInSlipSheet() {
@@ -902,7 +901,7 @@ public class ProductionPage {
 	public Element getSelectCloseBtn() {
 		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[@class='close delete-logic']");
 	}
-
+	
 	// added by sowndariya
 	public Element getSecondOptInText() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']");
@@ -3062,7 +3061,7 @@ public class ProductionPage {
 	}
 
 	public Element getSlipSheetWorkProduct() {
-		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']");
+		return driver.FindElementByXPath("//span[contains(text(),'Work Product')]");
 	}
 
 	public Element getSlipSheetMetaDataActiveCheck() {
@@ -3216,7 +3215,7 @@ public class ProductionPage {
 	}
 
 	public Element gotoDAtoRMU(String project) {
-		return driver.FindElementByXPath("//a[text()='" + project + "']/..//a[text()='Go to Project']");
+		return driver.FindElementByXPath("//a[text()='" + project + "']");
 	}
 
 	// added by Aathith
@@ -3250,7 +3249,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgHeader() {
-		return driver.FindElementByXPath("//h1");
+		return driver.FindElementByXPath("//h2");
 	}
 
 	public Element getRdbOcr() {
@@ -5607,7 +5606,8 @@ public class ProductionPage {
 	 * @Modified Indium-Aathith.senthilkumar on 03/15/2022
 	 */
 	public void fillingDATSection() { 
-    boolean checkbox = getDATChkBox().Selected();
+
+		boolean checkbox = getDATChkBox().Selected();
     System.out.println(checkbox);
     if(checkbox==false) {
 		base.waitForElement(getDATChkBox());
@@ -17957,7 +17957,7 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 			base.waitForElement(getTIFFTab());
 			getTIFFTab().Click();
-			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			/*getTIFF_EnableforPrivilegedDocs().ScrollTo();
 			// disabling enable for priviledged docs
 			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
@@ -17988,12 +17988,37 @@ public class ProductionPage {
 			getPriveldged_TagTree(tagname).waitAndClick(10);
 			base.waitForElement(getClk_selectBtn());
 			getClk_selectBtn().isDisplayed();
-			getClk_selectBtn().waitAndClick(10);
+			getClk_selectBtn().waitAndClick(10);*/
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().waitAndClick(10);
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+			getClkCheckBox_RedactionTag(tagname).ScrollTo();
+			getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
 			base.waitForElement(gettextRedactionPlaceHolder());
 			gettextRedactionPlaceHolder().isDisplayed();
 			gettextRedactionPlaceHolder().waitAndClick(10);
 			gettextRedactionPlaceHolder().SendKeys(placeHolderValue);
-		} catch (Exception e) {
+			
+				} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep(
 					"Exception occured while filling tiff section with burn redaction tag" + e.getLocalizedMessage());
@@ -20371,7 +20396,8 @@ public class ProductionPage {
 		Reporter.log("Doc - " + Doc, true);
 		System.out.println(Doc);
 		UtilityLog.info(Doc);
-
+		Thread.sleep(8000);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCopyPath().isDisplayed();
@@ -20385,8 +20411,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 
-		getQC_Download().waitAndClick(10);
-		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		getQC_Download().waitAndClick(30);
+		getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		base.stepInfo("Generate production page is filled");
 
