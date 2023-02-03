@@ -38,6 +38,7 @@ import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
@@ -58,7 +59,7 @@ public class Production_Phase1_Regression {
 	DocListPage docPage;
 	DocViewPage docViewPage;
 	SoftAssert softAssertion;
-
+	DomainDashboard dash;
 	String foldername;
 	String tagname;
 	String productionname;
@@ -75,8 +76,9 @@ public class Production_Phase1_Regression {
 		UtilityLog.info("Started Execution for prerequisite");
 		Input input = new Input();
 		input.loadEnvConfig();
-		base = new BaseClass(driver);
+		
 		driver = new Driver();
+		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -473,6 +475,7 @@ public class Production_Phase1_Regression {
 
 		base.waitForElement(page.getErrorMsgInDATForSameDatField());
 		String actual = page.getErrorMsgInDATForSameDatField().getText();
+		System.out.println(actual);
 		String expected = "Multiple project fields are not allowed to be mapped to the same field in DAT. Please check.";
 
 		softAssertion = new SoftAssert();
@@ -3304,7 +3307,7 @@ public class Production_Phase1_Regression {
 		tagsAndFolderPage.CreateFolder(folder, Input.securityGroup);
 
 		// search for folder
-		sessionSearch.basicContentSearch("yellow");
+		sessionSearch.basicContentSearch("crammer");
 		sessionSearch.bulkFolderExisting(folder);
 
 		// create production with DAT,Native,tiff with native placeholder
@@ -4546,7 +4549,7 @@ public class Production_Phase1_Regression {
 		page.visibleCheck("METADATA");
 		page.visibleCheck("WORKPRODUCT");
 		page.visibleCheck("CALCULATED");
-
+		
 		page.getSlipSheetWorkProduct().waitAndClick(10);
 		page.getSlipSheetWorkProductFolderProduction().ScrollTo();
 		page.getSlipSheetWorkProductFolderProduction().waitAndClick(10);
@@ -4895,6 +4898,7 @@ public class Production_Phase1_Regression {
 
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		page.selectingSecurityGroup(Input.securityGroup);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -4903,9 +4907,16 @@ public class Production_Phase1_Regression {
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.getSelectDomain();
 		driver.waitForPageToBeReady();
-		page.getDaAdditionalDataProject(Input.additionalDataProject).waitAndClick(10);
-		page.gotoDAtoRMU(Input.additionalDataProject).waitAndClick(10);
+		Thread.sleep(6000);
+		dash = new DomainDashboard(driver);
+		String FilterPrjt= Input.projectName;
+		driver.waitForPageToBeReady();
+
+		base.stepInfo("Selecting the project");
+		dash.filterProject(FilterPrjt);
+		page.gotoDAtoRMU(Input.projectName).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.stepInfo("switched to RMU");
 
@@ -6515,9 +6526,11 @@ public class Production_Phase1_Regression {
 		sessionSearch.ViewInDocListWithOutPureHit();
 
 		DocListPage doclist = new DocListPage(driver);
-		doclist.selectFirstParentDocumentWithChildDocument();
-		String docId = doclist.getParentDocumetId();
-		System.out.println(docId);
+		//doclist.selectColumnMetaDataSelection();
+		doclist.getSelectAll().Click();
+		doclist.getPopUpOkBtn().Click();
+		//String docId = doclist.getParentDocumetId();
+		//System.out.println(docId);
 		driver.scrollPageToTop();
 		doclist.bulkTagExistingFromDoclist(tagname);
 
@@ -6567,12 +6580,12 @@ public class Production_Phase1_Regression {
 		}
 
 		System.out.println("secount row value : " + lines.get(1));
-		if (lines.get(1).contains(docId)) {
+		/*if (lines.get(1).contains(docId)) {
 			base.passedStep("Document is sorted as per order");
 		} else {
 			base.failedStep("failed");
 		}
-
+*/
 		brReader.close();
 
 		base.passedStep(

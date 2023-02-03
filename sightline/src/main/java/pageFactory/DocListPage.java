@@ -1259,7 +1259,7 @@ public class DocListPage {
 
 	// added by Aathith
 	public Element getParentDocumentCheckBox() {
-		return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td//i");
+		return driver.FindElementByXPath("//th[contains(text(),'ParentDocID')]");
 	}
 
 	public ElementCollection getTableRowHeader() {
@@ -5332,7 +5332,7 @@ public class DocListPage {
 		SelectColumnBtn().waitAndClick(10);
 		List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
 		System.out.println(availableMetaData.size());
-		String[] eleValue = { "SourceParentDocID", "SourceDocID" };
+		String[] eleValue = { "SourceParentDocID", "SourceDocID" ,"ParentDocID" };
 		for (int j = 0; j < eleValue.length; j++) {
 			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
 			getSelectAvailMetadata(eleValue[j]).ScrollTo();

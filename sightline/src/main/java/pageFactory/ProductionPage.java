@@ -887,12 +887,11 @@ public class ProductionPage {
 	}
 
 	public Element getPrivPlaceHolder() {
-		return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for natively produced docs']");
+		return driver.FindElementByXPath("//textarea[@id='textPrivDocs']");
 	}
 
 	public Element getNativePlaceHolder() {
-		return driver.FindElementByXPath(
-				"//div[@placeholder='Enter placeholder text for the docs of the selected file types']");
+		return driver.FindElementByXPath("//textarea[@id='TImagePHEditor_0']");
 	}
 
 	public Element getRemoveBtnInSlipSheet() {
@@ -902,7 +901,7 @@ public class ProductionPage {
 	public Element getSelectCloseBtn() {
 		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[@class='close delete-logic']");
 	}
-
+	
 	// added by sowndariya
 	public Element getSecondOptInText() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']");
@@ -3062,7 +3061,7 @@ public class ProductionPage {
 	}
 
 	public Element getSlipSheetWorkProduct() {
-		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']");
+		return driver.FindElementByXPath("//span[contains(text(),'Work Product')]");
 	}
 
 	public Element getSlipSheetMetaDataActiveCheck() {
@@ -3216,7 +3215,7 @@ public class ProductionPage {
 	}
 
 	public Element gotoDAtoRMU(String project) {
-		return driver.FindElementByXPath("//a[text()='" + project + "']/..//a[text()='Go to Project']");
+		return driver.FindElementByXPath("//a[text()='" + project + "']");
 	}
 
 	// added by Aathith
@@ -3250,7 +3249,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgHeader() {
-		return driver.FindElementByXPath("//h1");
+		return driver.FindElementByXPath("//h2");
 	}
 
 	public Element getRdbOcr() {
@@ -5607,7 +5606,8 @@ public class ProductionPage {
 	 * @Modified Indium-Aathith.senthilkumar on 03/15/2022
 	 */
 	public void fillingDATSection() { 
-    boolean checkbox = getDATChkBox().Selected();
+
+		boolean checkbox = getDATChkBox().Selected();
     System.out.println(checkbox);
     if(checkbox==false) {
 		base.waitForElement(getDATChkBox());
@@ -20396,7 +20396,7 @@ public class ProductionPage {
 		Reporter.log("Doc - " + Doc, true);
 		System.out.println(Doc);
 		UtilityLog.info(Doc);
-		Thread.sleep(5000);
+		Thread.sleep(8000);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
