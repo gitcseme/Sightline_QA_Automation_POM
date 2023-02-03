@@ -468,7 +468,7 @@ public class ReusableDocViewPage {
 	public void clickCodeSameAsLast() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodeSameAsLast());
-		getCodeSameAsLast().waitAndClick(10);
+		getCodeSameAsLast().waitAndClick(5);
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
@@ -487,6 +487,23 @@ public class ReusableDocViewPage {
 		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingFormStampButton());
+		getCodingFormStampButton().waitAndClick(10);
+		base.waitForElement(getCodingStampTextBox());
+		getCodingStampTextBox().SendKeys(fieldValue);
+		base.waitForElement(getDrp_StampColour());
+		getDrp_StampColour().waitAndClick(5);
+		base.waitForElement(getAssignedColour(colour));
+		getAssignedColour(colour).waitAndClick(5);
+		base.waitForElement(getCodingStampSaveBtn());
+		getCodingStampSaveBtn().waitAndClick(5);
+		base.passedStep("User successfully assigned colour for coding stamp");
+		
+		
+	}
+	
+	public void stampColourSelectionWithoutSelcetingCFrequiredFields(String fieldValue, String colour) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
