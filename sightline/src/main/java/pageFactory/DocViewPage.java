@@ -12725,21 +12725,25 @@ public class DocViewPage {
 	public void saveAndNextWithSavedStamp(String fieldValue, String stampColour) {
 		driver.waitForPageToBeReady();
 		reusableDocView.editCodingFormAndSaveWithStamp(fieldValue, stampColour);
-		driver.waitForPageToBeReady();
-		for (int i = 3; i <= 3; i++) {
-			getClickDocviewID(i).waitAndClick(5);
-		}
+		base.waitForElement(getSaveAndNextButton());
+		getSaveAndNextButton().waitAndClick(5);
+//		for (int i = 3; i <= 3; i++) {
+//			getClickDocviewID(i).waitAndClick(5);
+//		}
 		driver.waitForPageToBeReady();
 		String currentDocId = getVerifyPrincipalDocument().getText().trim();
 		base.stepInfo("Document choose for applying stamp :" + currentDocId + "");
+		System.out.println(currentDocId);
 		base.waitForElement(getCodingStampLastIcon(stampColour));
 		getCodingStampLastIcon(stampColour).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
 		softAssertion.assertEquals("Saved with stamp", getAttribute);
 		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		String afterEditDocId = getVerifyPrincipalDocument().getText().trim();
+		System.out.println(afterEditDocId);
 		softAssertion.assertNotEquals(currentDocId, afterEditDocId);
 		if (currentDocId.equals(afterEditDocId)) {
 			base.failedStep("Cursor not moved to the next document in minidoclist");

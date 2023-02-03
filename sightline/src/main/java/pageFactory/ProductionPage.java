@@ -299,7 +299,7 @@ public class ProductionPage {
 	}
 
 	public Element getDATChkBox() {
-		return driver.FindElementByXPath("//input[@name='IsDATSelected']/following-sibling::i");
+		return driver.FindElementByXPath("//input[@id='chkIsDATSelected']/following-sibling::i");
 	}
 
 	public Element getDATTab() {
@@ -887,7 +887,7 @@ public class ProductionPage {
 	}
 
 	public Element getPrivPlaceHolder() {
-		return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for the privileged docs']");
+		return driver.FindElementByXPath("//div[@placeholder='Enter placeholder text for natively produced docs']");
 	}
 
 	public Element getNativePlaceHolder() {
@@ -3602,9 +3602,6 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//h2[text()=' Advanced Production Components ']/..//following-sibling::div//a[contains(text(),'Archive File')]");
 	}
 
-	public Element getSelectProductionDisabled() {
-		return driver.FindElementByXPath("//select[@id='ProductionSetLst'][@disabled]");
-	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -5609,11 +5606,13 @@ public class ProductionPage {
 	/**
 	 * @Modified Indium-Aathith.senthilkumar on 03/15/2022
 	 */
-	public void fillingDATSection() {
-
+	public void fillingDATSection() { 
+    boolean checkbox = getDATChkBox().Selected();
+    System.out.println(checkbox);
+    if(checkbox==false) {
 		base.waitForElement(getDATChkBox());
 		getDATChkBox().waitAndClick(10);
-
+    }
 		base.waitForElement(getDATTab());
 		getDATTab().waitAndClick(10);
 
@@ -6043,9 +6042,12 @@ public class ProductionPage {
 	 *                Tags" toggle and select the particular tag.
 	 */
 	public void fillingTIFFSectionwithNativelyPlaceholder(String tagname) throws InterruptedException {
-
-		base.waitForElement(getTIFFChkBox());
-		getTIFFChkBox().Click();
+		boolean checkbox = getTIFFChkBox().Selected();
+	    System.out.println(checkbox);
+	    if(checkbox==false) {
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().waitAndClick(5);
+	    }
 
 		driver.scrollingToBottomofAPage();
 
@@ -7233,6 +7235,26 @@ public class ProductionPage {
 		}), Input.wait30);
 
 		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Enabled();
+			}
+		}), Input.wait90);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("production location Page section is filled");
+	}
+	public void fillingProductionLocationPageAdditonal(String productionname) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Enabled();
+			}
+		}), Input.wait30);
+
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.ProductionPathAdditonal);
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11133,10 +11155,12 @@ public class ProductionPage {
 	 * @throws InterruptedException
 	 */
 	public void fillingTiffSectionTechIssueWithEnteringText(String tagname, String Text) throws InterruptedException {
-
+		 boolean checkbox = getTIFFChkBox().Selected();
+		    System.out.println(checkbox);
+		    if(checkbox==false) {
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().waitAndClick(5);
-
+		    }
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getTIFFTab());
@@ -19242,6 +19266,7 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 			base.waitForElement(getTIFFTab());
 			getTIFFTab().Click();
+			
 			driver.scrollPageToTop();
 			base.waitForElement(getTIFF_CenterHeaderBranding());
 			getTIFF_CenterHeaderBranding().Click();
@@ -19251,10 +19276,14 @@ public class ProductionPage {
 			getTIFF_EnableforPrivilegedDocs().Click();
 			base.waitForElement(getTiff_NativeDoc());
 			getTiff_NativeDoc().Click();
+			base.waitForElement(getSelectMultiFileTypeInTifffNative(2, fileType));
+			getSelectMultiFileTypeInTifffNative(2, fileType).Click();
 			base.waitTillElemetToBeClickable(getSelectFileTypeInTifffNative(fileType));
 			getSelectFileTypeInTifffNative(fileType).Click();
 			base.waitForElement(getNativeDocsPlaceholder());
 			getNativeDocsPlaceholder().SendKeys(placeholderText);
+			getSelectCloseBtn().Click();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep(
@@ -19374,7 +19403,7 @@ public class ProductionPage {
 		String home = System.getProperty("user.home");
 		for (int i = firstFile; i < lastFile; i++) {
 			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
-
+             System.out.println(Native);
 			if (Native.exists()) {
 
 				base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".docx");
@@ -19891,6 +19920,7 @@ public class ProductionPage {
 		for (int i = firstFile; i < lastFile; i++) {
 
 			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			System.out.println(imageFile);
 			// ITesseract instance = new Tesseract(); // JNA Interface Mapping
 			ITesseract instance = new Tesseract1(); // JNA Direct Mapping
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data

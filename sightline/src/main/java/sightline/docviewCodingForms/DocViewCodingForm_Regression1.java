@@ -76,14 +76,15 @@ public class DocViewCodingForm_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		Input in = new Input();
-		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -1197,6 +1198,8 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		codingForm.selectDefaultProjectCodingForm();
+		driver.waitForPageToBeReady();
 		// Session search to doc view after creating folder
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkFolderNearDupe(assgnFolder);

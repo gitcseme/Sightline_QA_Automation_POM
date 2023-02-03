@@ -53,6 +53,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -3079,6 +3080,24 @@ public class BaseClass {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}
 	}
+	public void openNewTabJs(String URL) {
+		try {
+			 String a = "window.open('"+URL+"');";
+		        ((JavascriptExecutor)driver.getWebDriver()).executeScript(a);
+			passedStep("New tab is opened successfully");
+		} catch (Exception e) {
+			UtilityLog.info("Failed to open new tab due to following exception " + e);
+		}
+	}
+	public void openNewTabActionClass() {
+		try {
+			Actions act = new Actions(driver.getWebDriver());
+			act.keyDown(Keys.CONTROL).sendKeys("t").keyUp(Keys.CONTROL).build().perform(); 
+			passedStep("New tab is opened successfully");
+		} catch (Exception e) {
+			UtilityLog.info("Failed to open new tab due to following exception " + e);
+		}
+	}
 
 	/*
 	 * This method is to open a unzip file
@@ -3724,6 +3743,7 @@ public class BaseClass {
 			stepInfo("No new Tabs opened.");
 		}
 	}
+	
 
 	/**
 	 * @author Aathith.Senthilkumar
