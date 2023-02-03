@@ -134,6 +134,10 @@ public class BaseClass {
 	public Element getSelectProjectCjk() {
 		return driver.FindElementByXPath("//a[@title='" + Input.projectNameCjk + "']");
 	}
+	
+	public Element getSelectProjectICE() {
+		return driver.FindElementByXPath("//a[@title='" + Input.ICEProjectName + "']");
+	}
 
 	public Element getPopupYesBtn() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
@@ -640,7 +644,30 @@ public class BaseClass {
 	 	getSelectProjectCjk().waitAndClick(3);
 		driver.waitForPageToBeReady();
 	}
+	
+	public void selectprojectICE() {
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectNames().Visible();
+			}
+		}), 10000);
+		driver.scrollPageToTop();
+		// Select project if required one is not seletced
+		getProjectNames().waitAndClick(10);
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectICE().Visible();
+			}
+		}), 10000);
+		getSelectProjectICE().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		UtilityLog.info("Project is successfully selected");
+
+	}
+
+	
 	/**
 	 * Method is to select the project after logging in to application
 	 * 

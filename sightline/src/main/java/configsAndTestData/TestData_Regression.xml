@@ -973,7 +973,7 @@
     
      <!--Added By Hema Onna Test users -->
     <Onnasa1userName>qasa5@consilio.com</Onnasa1userName> 
-    <Onnasa1password>Q@test_1994</Onnasa1password>
+    <Onnasa1password>Q@test_1995</Onnasa1password>
     
     <Onnada1userName>qada7@consilio.com</Onnada1userName> 
     <Onnada1password>Q@test_1994</Onnada1password> 
@@ -985,5 +985,13 @@
   	<Onnarmu1FullName>Hema RMUQA24</Onnarmu1FullName>
   	<Onnarmu1userName>qarmu24@consilio.com</Onnarmu1userName>
     <Onnarmu1password>Q@test_1993</Onnarmu1password> 
+    
+    <Onnaeditpa1FullName>QA PA 27</Onnaeditpa1FullName>
+  	<Onnaeditpa1userName>qapau27@consilio.com</Onnaeditpa1userName>  
+  	<Onnaeditpa1password>Q@test_1993</Onnaeditpa1password>
+  	
+  	<Onnaeditrmu1FullName>QA RMU 27</Onnaeditrmu1FullName>
+  	<Onnaeditrmu1userName>qarmu27@consilio.com</Onnaeditrmu1userName>
+    <Onnaeditrmu1password>Q@test_1993</Onnaeditrmu1password> 
     
 </TestData>
