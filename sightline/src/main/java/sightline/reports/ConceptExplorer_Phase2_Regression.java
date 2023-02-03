@@ -95,7 +95,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @throws Exception
 	 */
 
-	//@Test(description = "RPMXCON-56910", enabled = true, dataProvider = "paRmu", groups = { "regression" })
+	@Test(description = "RPMXCON-56910", enabled = true, dataProvider = "paRmu", groups = { "regression" })
 	public void verifyFilters_EmailAllDomains_DocFileType(String User, String pwd) throws Exception {
 
 		baseClass.stepInfo("Test case Id :RPMXCON-56910");
@@ -322,7 +322,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @Description : Validate onpage filter for CustodianName and Tags on Concept
 	 *              Explorer Report RPMXCON-56907
 	 */
-	//@Test(description = "RPMXCON-56907", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
+	@Test(description = "RPMXCON-56907", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
 	public void verifyConceptExpFiltersFunctionalityEX(String userName, String password, String role) throws Exception {
 
 		baseClass.stepInfo("Test case Id :RPMXCON-56907 ");
@@ -413,7 +413,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @Description : Validate Masterdate range on Concept Explorer report.
 	 *              RPMXCON-56887
 	 */
-	//@Test(description = "RPMXCON-56887", dataProvider = "paRmuUsers", groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-56887", dataProvider = "paRmuUsers", groups = { "regression" }, enabled = true)
 	public void VerifyIncludeExcludeFiltersFunctionality_ConceptExp(String userName, String password, String role)
 			throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56887");
@@ -560,7 +560,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 */
 	
 
-	//@Test(description="RPMXCON-56906",enabled = true, dataProvider = "paRmu", groups = { "regression" })
+	@Test(description="RPMXCON-56906",enabled = true, dataProvider = "paRmu", groups = { "regression" })
 	public void verifyFilters_EmailAllDomains_DocFileType2(String User, String pwd) throws Exception {
 
 		baseClass.stepInfo("Test case Id :RPMXCON-56906");
@@ -694,7 +694,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @Description : Verify that Concept Explorer report is working correctly and
 	 *              properly. RPMXCON-48759
 	 */
-	//@Test(description = "RPMXCON-48759", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48759", enabled = true, groups = { "regression" })
 	public void verifyConceptExplorerAction() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48759 - Concept Explorer");
@@ -796,7 +796,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 *              and Perform bulk tag, bulk folder, bulk assign documents and
 	 *              view in doc list. RPMXCON-48738
 	 */
-	//@Test(description = "RPMXCON-48738", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48738", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
 	public void verifyConceptExplorerActions(String userName, String password, String role)
 			throws InterruptedException {
 
@@ -924,7 +924,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @Description : Validate list for Tags in on page filter on Concept Explorer
 	 *              report. RPMXCON-48738
 	 */
-	//@Test(description = "RPMXCON-56882", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56882", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
 	public void verifyDeletedTagsNotShownInTheFilterOption(String userName, String password, String role)
 			throws InterruptedException {
 
@@ -978,7 +978,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @Description : Validate on Page filter by Tag on Concept Explorer(same
 	 *              documents are part of multiple tags). RPMXCON-56881
 	 */
-	//@Test(description = "RPMXCON-56881", groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-56881", groups = { "regression" }, enabled = true)
 	public void VerifyIncludeExcludeFiltersFunctionality_ConceptExp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56881");
 		baseClass.stepInfo(
@@ -1066,7 +1066,7 @@ public class ConceptExplorer_Phase2_Regression {
 	 * @throws Exception
 	 */
 
-	//@Test(description = "RPMXCON-56962", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
+	@Test(description = "RPMXCON-56962", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
 	public void verifyConceptExp(String User, String pwd, String SearchGroup) throws Exception {
 
 		baseClass.stepInfo("Test case Id : RPMXCON-56962: ");
