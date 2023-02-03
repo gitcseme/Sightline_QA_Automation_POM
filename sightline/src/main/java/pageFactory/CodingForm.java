@@ -3413,10 +3413,11 @@ public class CodingForm {
 		base.waitForElement(getSetCodingFormToSG());
 		getSetCodingFormToSG().waitAndClick(15);
 		UnselectAllCfFromSG();
+		driver.waitForPageToBeReady();
 		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
 			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
-			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == false) {
+			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == true) {
 				assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
 				assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
 			}
