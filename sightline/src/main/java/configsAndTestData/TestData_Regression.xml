@@ -140,6 +140,7 @@
 	<smallSetDat2>loadfile_updated_trimming_n_mp3.DAT</smallSetDat2>
 	<specialCjkDat>DAT4_STC_Special_CJKChar.dat</specialCjkDat>
 	
+	<ProductionPathAdditonal>Productions PT WorkSpace\Automation</ProductionPathAdditonal>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -580,7 +581,7 @@
 	<audioSearchString5>evidence</audioSearchString5>
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
-	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
+	<pdfDataSet>27Mar_SinglePageTIFF</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>

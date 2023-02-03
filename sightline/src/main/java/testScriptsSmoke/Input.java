@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -66,6 +66,7 @@ public class Input {
 	public static String largeVolDataProject;
 	public static String OnnaUrl;
 	public static String OnnaDirectUrl;
+	public static String ProductionPathAdditonal;
 	// Environment data---------------------------------------------
 
 	public static String url;
@@ -1516,6 +1517,8 @@ public class Input {
 		emailGdDat = testData.getEmailGdDat();
 		smallSetDat2 = testData.getSmallSetDat2();
 		specialCjkDat = testData.getSpecialCjkDat();
+		ProductionPathAdditonal = testData.getProductionPathAdditonal();
+		
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
