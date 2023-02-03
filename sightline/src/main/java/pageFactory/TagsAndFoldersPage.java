@@ -343,6 +343,10 @@ public class TagsAndFoldersPage {
 		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//label[contains(text(),'delete')]");
 	}
 
+	public Element getWarningPopupTagname() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//label[contains(text(),'Tags')]");
+	}
+
 	public Element getPropFolderExactDuplic() {
 		return driver.FindElementByXPath("//input[@id='chkFolderExactDuplicates']//following-sibling::i");
 	}
@@ -916,12 +920,16 @@ public class TagsAndFoldersPage {
 		}), Input.wait30);
 		getDeleteTag().waitAndClick(10);
 
-		String expected = "Existing searches using this tag name in their queries may no longer work correctly. Do you still want to delete?";
+		String expected = "Existing searches using this tag name in their queries may no longer work correctly. Do you still want to delete?"
+				+ "\n\nIf AI/CAL is enabled for this tag, the AI Model and any associated data will also be deleted";
+		String expectedtagname="Tags "+strtag;
+		System.out.println(expected);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getWarningPopup());
 		String actual = getWarningPopup().getText();
+		String actualtagname=getWarningPopupTagname().getText();
 		System.out.println(actual);
-		if (actual.equals(expected)) {
+		if (actual.equals(expected)&&actualtagname.equals(expectedtagname) ) {
 
 			base.waitForElement(base.getYesBtn());
 			base.getYesBtn().waitAndClick(10);
