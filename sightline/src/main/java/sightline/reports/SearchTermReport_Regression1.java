@@ -61,8 +61,8 @@ public class SearchTermReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		
 		// Open browser
 		driver = new Driver();

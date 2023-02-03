@@ -727,6 +727,7 @@ public class UserLoginActivityReport_Regression {
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
 		userLoginActivityRptPg = new UserLoginActivityReport(driver);
+		userActivityRptPg=new UserReviewActivityReport(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)

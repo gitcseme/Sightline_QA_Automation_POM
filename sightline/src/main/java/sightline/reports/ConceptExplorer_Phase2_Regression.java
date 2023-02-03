@@ -50,8 +50,8 @@ public class ConceptExplorer_Phase2_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		// in = new Input();
-		 //in.loadEnvConfig();
+		 in = new Input();
+		 in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -87,7 +87,6 @@ public class ConceptExplorer_Phase2_Regression {
 				{ Input.rmu1userName, Input.rmu1password} };
 		return users;
 	}
-	
 	
 	/**
 	 * @author Jayanthi.Ganesan

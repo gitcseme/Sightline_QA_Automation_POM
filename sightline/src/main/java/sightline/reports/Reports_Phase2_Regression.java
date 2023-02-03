@@ -56,14 +56,16 @@ public class Reports_Phase2_Regression {
 	SavedSearch savedSearch;
 	SessionSearch sessionSearch;
 	ReportsPage reports;
-
+	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input input = new Input();
 		input.loadEnvConfig();
+		
 
 	}
 
@@ -72,13 +74,17 @@ public class Reports_Phase2_Regression {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
-
+		
+		
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		base = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 		projects = new ProjectPage(driver);
-
+		sessionSearch=new SessionSearch(driver);
+		reports=new ReportsPage(driver);
+		savedSearch=new SavedSearch(driver);
+		searchterm=new SearchTermReportPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -116,11 +122,6 @@ public class Reports_Phase2_Regression {
 		return users;
 	}
 
-	@DataProvider(name = "PA & RMU")
-	public Object[][] PA_RMU() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
-		return users;
-	}
 
 	/**
 	 * @author NA Testcase No:RPMXCON-56244
