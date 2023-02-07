@@ -229,8 +229,7 @@ public class DocExplorerPage {
 	}
 
 	public Element getselectDoc(int rowno) {
-		return driver
-				.FindElementByXPath("//*[@id='dtDocumentList']//following-sibling::tbody//tr[" + rowno + "]//label");
+		return driver.FindElementByXPath("//*[@id='dtDocumentList']//following-sibling::tbody//tr[" + rowno + "]//label");
 	}
 
 	public Element getBulkFolderCheckBox(String folderName) {
