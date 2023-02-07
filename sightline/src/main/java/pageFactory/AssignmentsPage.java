@@ -1189,10 +1189,11 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//td[contains(text(),'" + username + "')]/parent::tr/td[6]");
 	}
 
-	// modified 14/09/2022
+	// modified 7/02/2022
 	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
-				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,"+assignmentName+")]/../following-sibling::td[6]/a[contains(.,'Draw')]");
+//				"//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
+//				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
 
 	public Element getAssignmentsDrawPoolInreviewerPg1(String assignmentName) {
@@ -4129,6 +4130,7 @@ public class AssignmentsPage {
 		try {
 			SoftAssert softAssertion = new SoftAssert();
 			String expectedMessage = "Existing configuration of the assignment will be overwritten by the new parent assignment group's cascaded settings";
+			bc.waitForElement(getMoveNotificationMessage());
 			softAssertion.assertEquals(getMoveNotificationMessage().getText(), expectedMessage);
 			bc.stepInfo("alert displayed");
 			bc.getYesBtn().Click();
@@ -5273,11 +5275,14 @@ public class AssignmentsPage {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		getAssignment_ManageReviewersTab().waitAndClick(5);
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
+		bc.waitForElement(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).ScrollTo();
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
-		getAssgn_ManageRev_Action().waitAndClick(20);
 		bc.waitTime(2);
+		getAssgn_ManageRev_Action().waitAndClick(20);
 		bc.waitForElement(getAssgn_RedistributeDoc());
 		getAssgn_RedistributeDoc().waitAndClick(20);
 		bc.waitForElement(bc.getYesBtn());
