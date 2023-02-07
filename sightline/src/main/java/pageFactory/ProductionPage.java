@@ -2312,8 +2312,7 @@ public class ProductionPage {
 	}
 
 	public Element getNativeDocsPlaceholder() {
-		return driver
-				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor redactor-placeholder']");
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor']");
 	}
 
 	public Element getPriviledgedDoogle() {
@@ -2764,7 +2763,11 @@ public class ProductionPage {
 		return driver
 				.FindElementByXPath("//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='" + redactTag + "']");
 	}
-
+	
+	public Element getCheckBox_RedactionTag(String redactTag) {
+		return driver
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[text()='" + redactTag + "']");
+	}
 	public Element getPrivPlaceHolderToggleAtPrivGaurdPage() {
 		return driver.FindElementByXPath("//*[@id='chkIsPrivilegedPlaceholderEnabled']/../i");
 	}
@@ -2987,7 +2990,7 @@ public class ProductionPage {
 	}
 
 	public Element templateCloseBtn(String temp) {
-		return driver.FindElementByXPath("//span[text()='" + temp + "']/..//button[@class='ui-dialog-titlebar-close']");
+		return driver.FindElementByXPath("//button[contains(text(),'Close')]");
 	}
 
 	public Element CancelBtn() {
@@ -12303,7 +12306,7 @@ public class ProductionPage {
 	public void fillingNativeSectionWithTags(String Tag) throws InterruptedException {
 		try {
 			base.waitForElement(getNativeChkBox());
-			getNativeChkBox().Click();
+			//getNativeChkBox().Click();
 			base.waitForElement(getNativeTab());
 			getNativeTab().Click();
 			driver.waitForPageToBeReady();
@@ -16500,7 +16503,12 @@ public class ProductionPage {
 		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
-
+		
+		base.waitForElement(getCheckBox_RedactionTag(tagname));
+		getCheckBox_RedactionTag(tagname).ScrollTo();
+		getCheckBox_RedactionTag(tagname).isDisplayed();
+		getCheckBox_RedactionTag(tagname).waitAndClick(10);
+		
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
@@ -16582,6 +16590,10 @@ public class ProductionPage {
 		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+		base.waitForElement(getCheckBox_RedactionTag(tagname));
+		getCheckBox_RedactionTag(tagname).ScrollTo();
+		getCheckBox_RedactionTag(tagname).isDisplayed();
+		getCheckBox_RedactionTag(tagname).waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
@@ -18054,7 +18066,7 @@ public class ProductionPage {
 
 		// clicking enable for natively placeholder
 		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().Click();
+		//getTiff_NativeDoc().Click();
 		base.waitForElement(getclkSelectTag());
 		getclkSelectTag().Click();
 		base.waitForElement(getPriveldged_TagTree(tagname));
