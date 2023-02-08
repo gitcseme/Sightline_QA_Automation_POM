@@ -229,8 +229,7 @@ public class DocExplorerPage {
 	}
 
 	public Element getselectDoc(int rowno) {
-		return driver
-				.FindElementByXPath("//*[@id='dtDocumentList']//following-sibling::tbody//tr[" + rowno + "]//label");
+		return driver.FindElementByXPath("//*[@id='dtDocumentList']//following-sibling::tbody//tr[" + rowno + "]//label");
 	}
 
 	public Element getBulkFolderCheckBox(String folderName) {
@@ -2516,7 +2515,6 @@ public class DocExplorerPage {
 	public void verifyDocExpFolderLevel(String folderName, int folderLevel) {
 		try {
 			driver.waitForPageToBeReady();
-			;
 			getfolderFromTreeByName(folderName).ScrollTo();
 			bc.waitForElement(getDocExpFolderExpandbutton(folderName));
 			getDocExpFolderExpandbutton(folderName).waitAndClick(5);
