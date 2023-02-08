@@ -3417,7 +3417,7 @@ public class CodingForm {
 		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
 			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
-			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == true) {
+			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == false) {
 				assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
 				assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
 			}
