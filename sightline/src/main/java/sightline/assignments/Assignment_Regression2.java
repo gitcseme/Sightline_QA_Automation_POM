@@ -47,8 +47,8 @@ public class Assignment_Regression2 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		//Input in = new Input();
-	  //  in.loadEnvConfig();
+//		Input in = new Input();
+//	    in.loadEnvConfig();
 		searchText = Input.TallySearch;
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}
@@ -1768,7 +1768,7 @@ public class Assignment_Regression2 {
 				+ "which has no documents assigned");
 		bc.stepInfo("Test case Id: RPMXCON-54765");
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
-		agnmt.createAssignment(assignmentName, Input.securityGroup);
+		agnmt.createAssignment(assignmentName, Input.codeFormName);
 		bc.stepInfo("Created assignment with name" + assignmentName);
 		bc.selectproject();
 		search.basicContentSearch(Input.searchString1);

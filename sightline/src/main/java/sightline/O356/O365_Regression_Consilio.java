@@ -97,6 +97,14 @@ public class O365_Regression_Consilio {
 		};
 		return users;
 	}
+	@DataProvider(name = "PaAndRmuOnnaEditUserWithFullName")
+	public Object[][] PaAndRmuOnnaEditUserWithFullName() {
+		Object[][] users = { { Input.Onnaeditpa1userName, Input.Onnaeditpa1password, "Project Administrator",Input.Onnaeditpa1FullName },
+				{ Input.Onnaeditrmu1userName, Input.Onnaeditrmu1password, "Review Manager",Input.Onnaeditrmu1FullName },
+
+		};
+		return users;
+	}
 	
 	@Test(description = "RPMXCON-69262",dataProvider = "PaAndRmuUser",enabled = true, groups = { "regression" })
 	public void verifySplCharsInEditSourceLocName(String userName, String password, String role) throws Exception {
@@ -109,6 +117,7 @@ public class O365_Regression_Consilio {
 		// Login and Pre-requesties
 		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
 		login.loginToSightLine(userName, password);
+		base.selectprojectICE();
 		base.stepInfo("logged in as "+role+" user");
 		base.stepInfo("User Role : " + role);
 		
@@ -178,11 +187,12 @@ public class O365_Regression_Consilio {
 		// Login and Pre-requesties
 				login.loginToSightLine(userName, password);
 				base.stepInfo("User Role : " + role);
+				base.selectprojectICE();
 
 				// Pre-requesties - Access verification
 				base.stepInfo("Collection Access Verification");
-				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-
+				userManagement.verifyCollectionAccess(Input.ICEProjectName,userRolesData, Input.sa1userName, Input.sa1password, password);
+				base.selectprojectICE();
 				// navigate to Collection page
 				dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 
@@ -231,14 +241,15 @@ public class O365_Regression_Consilio {
 		// Login and Pre-requesties
 		base.stepInfo("**Step-1 Login as Project Admin/RMU **");
 		login.loginToSightLine(userName, password);
+		base.selectprojectICE();
 		base.stepInfo("logged in as "+role+" user");
 		base.stepInfo("User Role : " + role);
 		
 
 		// Pre-requesties - Access verification
 		base.stepInfo("**Step-2 Go to Datasets > Collections page **");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-		
+		userManagement.verifyCollectionAccess(Input.ICEProjectName,userRolesData, Input.sa1userName, Input.sa1password, password);
+		base.selectprojectICE();
 		// navigate to source location page
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
 		
@@ -428,7 +439,7 @@ public class O365_Regression_Consilio {
         UserManagement user=new UserManagement(driver);
         user.navigateToUsersPAge();
         user.AssignUserToProject(ProjectName, role, fullName);
-        project.EnableSightlineOnnaToggle(Input.projectName,toggleIsEnabled);
+        toggleIsEnabled=project.EnableSightlineOnnaToggle(ProjectName,toggleIsEnabled);
         login.logout();
 
 
@@ -538,7 +549,7 @@ public class O365_Regression_Consilio {
         boolean toggleIsDisabled=false;
         String directUrl=Input.url+Input.OnnaDirectUrl;
         String[][] userRolesDataRMU = { { Input.Onnarmu1userName,"Review Manager", "SA" } };
-        login.loginToSightLine(Input.Onnasa1userName, Input.sa1password);
+        login.loginToSightLine(Input.Onnasa1userName, Input.Onnasa1password);
         base.stepInfo("logged In  as SA user");
         ProjectPage p=new ProjectPage(driver);
         toggleIsDisabled=p.DisableSightlineOnnaToggle(Input.projectName,toggleIsDisabled);
@@ -1250,7 +1261,7 @@ public class O365_Regression_Consilio {
        
 	}
 	
-	@Test(description = "RPMXCON-70368",dataProvider="PaAndRmuOnnaUserWithFullName",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-70368",dataProvider="PaAndRmuOnnaEditUserWithFullName",enabled = true, groups = { "regression" })
     public void verifySCpbOToggleONNewlyCreatedNExistingProjectAfterEditingSLUser(String userName,String password,String role,String fullName) throws Exception {
         base.stepInfo("Edit the existing PA/RMU user details assign it to a new/existing project, (SCpbO) toggle is ON, \"Open Sightline Collect\" button should be displayed under a new section in source location page, after clicking the button it should authenticate to ONNA.");
         base.stepInfo("Test case Id:RPMXCON-70368");

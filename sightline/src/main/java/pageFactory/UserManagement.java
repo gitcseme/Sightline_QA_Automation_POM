@@ -3772,6 +3772,109 @@ public class UserManagement {
 			getPopUpCloseBtn().waitAndClick(10);
 		}
 	}
+	/**
+	 * @author Hema Mj
+	 * @Date: 02/03/23
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param userRolesData
+	 * @throws Exception
+	 * @Description : verify Collection And Datasets Access For Users with project name as parameter
+	 */
+	public void verifyCollectionAndDatasetsAccessForUsers(String ProjectName,String[][] userRolesData, Boolean dataSetsAccess,
+			Boolean collectionsAccess, String checkUpdateCollections) throws Exception {
+		for (int i = 0; i < userRolesData.length; i++) {
+
+			String actionUser = userRolesData[i][2];
+			// Select the respective user
+			bc.stepInfo("Checking for the role : " + userRolesData[i][1]);
+			passingUserName(userRolesData[i][0]);
+			applyFilter();
+			if (actionUser.equalsIgnoreCase("Project Administrator") || actionUser.equalsIgnoreCase("Review Manager")) {
+				editLoginUser();
+			} else {
+				selectEditUserUsingPagination(ProjectName, false, "");
+			}
+
+			// Launch functionality pop-up
+			getFunctionalityTab().waitAndClick(5);
+
+			// Access validations
+			if (userRolesData[i][1].equalsIgnoreCase("Project Administrator")
+					|| userRolesData[i][1].equalsIgnoreCase("Review Manager")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Datasets")),
+						"DataSets option has access", "Datasets option is blocked", "Fail");
+
+				// Check-In or Check-Out datasets
+				Boolean action = verifyStatusForComponents(getComponentCheckBoxStatus("Datasets"), "Datasets",
+						dataSetsAccess);
+				driver.waitForPageToBeReady();
+
+				if (checkUpdateCollections.equals("Yes") && action == true) {
+					if (actionUser.equalsIgnoreCase("Project Administrator")
+							|| actionUser.equalsIgnoreCase("Review Manager")) {
+						editLoginUser();
+					} else {
+						selectEditUserUsingPagination(ProjectName, false, "");
+					}
+
+					// Launch functionality pop-up
+					getFunctionalityTab().waitAndClick(5);
+				}
+
+				// Check-In or Check-Out Collections
+				Boolean actionTaken = verifyStatusForComponents(getComponentCheckBoxStatus("Collections"),
+						"Collections", collectionsAccess);
+				driver.waitForPageToBeReady();
+
+				if (checkUpdateCollections.equals("Yes") && actionTaken == true) {
+					if (actionUser.equalsIgnoreCase("Project Administrator")
+							|| actionUser.equalsIgnoreCase("Review Manager")) {
+						editLoginUser();
+					} else {
+						// Edit functionality
+						selectEditUserUsingPagination(ProjectName, false, "");
+					}
+
+					// Launch functionality pop-up
+					bc.waitForElement(getFunctionalityTab());
+					getFunctionalityTab().waitAndClick(5);
+
+					bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "
+							+ userRolesData[i][1]
+							+ " - Collections option is available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Enabled] ",
+							"For " + userRolesData[i][1]
+									+ " - Collections option is not available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Disabled]",
+							"Pass");
+
+					verifyStatusForComponents(getComponentCheckBoxStatus("Collections"), "Collections",
+							collectionsAccess);
+
+				} else {
+					bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "
+							+ userRolesData[i][1]
+							+ " - Collections option is available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Enabled] ",
+							"For " + userRolesData[i][1]
+									+ " - Collections option is not available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Disabled]",
+							"Pass");
+				}
+
+			} else if (userRolesData[i][1].equalsIgnoreCase("Reviewer")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Datasets")),
+						"DataSets option is blocked", "Datasets option has Access", "Pass");
+
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "
+						+ userRolesData[i][1]
+						+ " - Collections option is not available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Disabled] ",
+						"For " + userRolesData[i][1]
+								+ " - Collections option is  available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Enabled]",
+						"Fail");
+			}
+
+			// Close pop-up
+			getPopUpCloseBtn().waitAndClick(10);
+		}
+	}
 	
 	/**
 	 * @author Hema.M J
@@ -4468,6 +4571,48 @@ public class UserManagement {
 			login.loginToSightLine(accessUser, accessPwd);
 			navigateToUsersPAge();
 			verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+			login.logout();
+
+			login.loginToSightLine(userRolesData[0][0], loginPwd);
+
+		}
+	}
+	/**
+	 * @Author Hema MJ
+	 * @Description : verify collection access with project name as parameter
+	 * @param userRolesData
+	 * @param accessUser
+	 * @param accessPwd
+	 * @param loginPwd
+	 * @param ProjectName
+	 * @throws Exception
+	 */
+	public void verifyCollectionAccess(String ProjectName,String[][] userRolesData, String accessUser, String accessPwd, String loginPwd)
+			throws Exception {
+		LoginPage login = new LoginPage(driver);
+		boolean action = false;
+		action = bc.ValidateElement_PresenceReturn(NavigateToDataSets());
+		if (action) {
+			NavigateToDataSets().waitAndClick(10);
+			bc.stepInfo("DataSet access is Enabled");
+			action = bc.ValidateElement_PresenceReturn(NavigateToDataSets("Collections"));
+			if (action) {
+				bc.stepInfo("Collection access is Enabled");
+
+				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+			} else {
+				login.logout();
+			}
+		} else {
+			login.logout();
+		}
+
+		if (!action) {
+			// Login as User
+			login.loginToSightLine(accessUser, accessPwd);
+			navigateToUsersPAge();
+			verifyCollectionAndDatasetsAccessForUsers(ProjectName,userRolesData, true, true, "Yes");
 			login.logout();
 
 			login.loginToSightLine(userRolesData[0][0], loginPwd);

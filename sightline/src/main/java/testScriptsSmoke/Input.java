@@ -66,6 +66,7 @@ public class Input {
 	public static String largeVolDataProject;
 	public static String OnnaUrl;
 	public static String OnnaDirectUrl;
+	public static String ProductionPathAdditonal;
 	// Environment data---------------------------------------------
 
 	public static String url;
@@ -107,6 +108,13 @@ public class Input {
 	public static String Onnasa1password;
 	public static String Onnarmu1FullName;
 	public static String Onnapa1FullName;
+	public static String Onnaeditpa1userName;
+	public static String Onnaeditrmu1userName;
+	public static String Onnaeditrmu1FullName;
+	public static String Onnaeditpa1FullName;
+	public static String Onnaeditpa1password;
+	public static String Onnaeditrmu1password;
+	
 
 	// Test data------------------------------------------------------
 	public static String searchString1;
@@ -1526,6 +1534,8 @@ public class Input {
 		emailGdDat = testData.getEmailGdDat();
 		smallSetDat2 = testData.getSmallSetDat2();
 		specialCjkDat = testData.getSpecialCjkDat();
+		ProductionPathAdditonal = testData.getProductionPathAdditonal();
+		
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
@@ -2137,6 +2147,13 @@ public class Input {
     	Onnasa1password=testData.getOnnasa1password();
     	Onnarmu1FullName=testData.getOnnarmu1FullName();
     	Onnapa1FullName=testData.getOnnapa1FullName();
+    	Onnaeditrmu1FullName=testData.getOnnaeditrmu1FullName();
+    	Onnaeditpa1FullName=testData.getOnnaeditpa1FullName();
+    	Onnaeditpa1password=testData.getOnnaeditpa1password();
+    	Onnaeditrmu1password=testData.getOnnaeditrmu1password();
+    	Onnaeditpa1userName=testData.getOnnaeditpa1userName();
+        Onnaeditrmu1userName=testData.getOnnaeditrmu1userName();
+    	
     	
 		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");

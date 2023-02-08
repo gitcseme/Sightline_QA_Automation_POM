@@ -140,6 +140,7 @@
 	<smallSetDat2>loadfile_updated_trimming_n_mp3.DAT</smallSetDat2>
 	<specialCjkDat>DAT4_STC_Special_CJKChar.dat</specialCjkDat>
 	
+	<ProductionPathAdditonal>Productions PT WorkSpace\Automation</ProductionPathAdditonal>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -441,7 +442,7 @@
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
-    <ApplicationKey>Grj8Q~PKtS-NnDFYvGpqNE16MoZgyifvpgwRwbli</ApplicationKey>
+    <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
     <collection2ndEmailId>Jeevitha.Rajendran@consiliotest.com</collection2ndEmailId>
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
@@ -580,7 +581,7 @@
 	<audioSearchString5>evidence</audioSearchString5>
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
-	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
+	<pdfDataSet>27Mar_SinglePageTIFF</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>
@@ -972,7 +973,7 @@
     
      <!--Added By Hema Onna Test users -->
     <Onnasa1userName>qasa5@consilio.com</Onnasa1userName> 
-    <Onnasa1password>Q@test_1994</Onnasa1password>
+    <Onnasa1password>Q@test_1995</Onnasa1password>
     
     <Onnada1userName>qada7@consilio.com</Onnada1userName> 
     <Onnada1password>Q@test_1994</Onnada1password> 
@@ -984,5 +985,13 @@
   	<Onnarmu1FullName>Hema RMUQA24</Onnarmu1FullName>
   	<Onnarmu1userName>qarmu24@consilio.com</Onnarmu1userName>
     <Onnarmu1password>Q@test_1993</Onnarmu1password> 
+    
+    <Onnaeditpa1FullName>QA PA 27</Onnaeditpa1FullName>
+  	<Onnaeditpa1userName>qapau27@consilio.com</Onnaeditpa1userName>  
+  	<Onnaeditpa1password>Q@test_1993</Onnaeditpa1password>
+  	
+  	<Onnaeditrmu1FullName>QA RMU 27</Onnaeditrmu1FullName>
+  	<Onnaeditrmu1userName>qarmu27@consilio.com</Onnaeditrmu1userName>
+    <Onnaeditrmu1password>Q@test_1993</Onnaeditrmu1password> 
     
 </TestData>

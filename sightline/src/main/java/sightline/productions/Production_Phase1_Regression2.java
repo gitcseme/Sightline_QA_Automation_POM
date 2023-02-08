@@ -880,6 +880,7 @@ public class Production_Phase1_Regression2 {
 
 		// Verify archive status on Gen page
 		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
@@ -896,7 +897,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingSummaryAndPreview();
 
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		page.getGridView().waitAndClick(10);
@@ -1534,11 +1535,13 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
 		// Verify
 		ProductionPage page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
@@ -1565,6 +1568,7 @@ public class Production_Phase1_Regression2 {
 
 		// Verify
 		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		productionname = "p" + Utility.dynamicNameAppender();
 		beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
@@ -2156,6 +2160,7 @@ public class Production_Phase1_Regression2 {
 				beginningBates);
 
 		page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		page.filterCompletedProduction();
 		page.getprod_ActionButton_Reusable(productionname).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -2805,6 +2810,7 @@ public class Production_Phase1_Regression2 {
 
 		// create export with TIFF
 		ProductionPage page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		String text = page.getProdExport_ProductionSets().getText();
 		if (text.contains("Export Set")) {
 			page.selectExportSetFromDropDown();
@@ -2828,6 +2834,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		String text1 = page.getProdExport_ProductionSets().getText();
 		if (text1.contains("Export Set")) {
 			page.selectExportSetFromDropDown();
@@ -3798,6 +3805,7 @@ public class Production_Phase1_Regression2 {
 		String Redactiontag;
 		Redactiontag = "FirstRedactionTag" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
@@ -3807,6 +3815,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -4178,8 +4187,9 @@ public class Production_Phase1_Regression2 {
 		base.passedStep("Verified sub bates Null and preview");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
 	}
 
@@ -5113,6 +5123,7 @@ public class Production_Phase1_Regression2 {
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -5654,6 +5665,7 @@ public class Production_Phase1_Regression2 {
 				beginningBates);
 
 		page = new ProductionPage(driver);
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.waitForPageToBeReady();
 		page.getprod_ActionButton_Reusable(productionname).Click();
 		driver.waitForPageToBeReady();
@@ -5661,7 +5673,8 @@ public class Production_Phase1_Regression2 {
 
 		page.saveTemple(TempName);
 		page.getManageTemplates().waitAndClick(10);
-		base.CloseSuccessMsgpopup();
+		try {
+		base.CloseSuccessMsgpopup();}catch(Exception e) {}
 		driver.scrollingToBottomofAPage();
 		page.getNextBtn().waitAndClick(10);
 		driver.scrollingToBottomofAPage();

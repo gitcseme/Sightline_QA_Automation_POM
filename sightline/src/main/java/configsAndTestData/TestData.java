@@ -32,6 +32,7 @@ public class TestData {
 	public int totalNumberOfDocsincludeadvoption;
 	public String MasterPDF1location;
 	public String MasterPDF2location;
+	public String ProductionPathAdditonal;
 
 	// Mohan Indium Docview Analytics
 	public String Panel;
@@ -200,7 +201,12 @@ public class TestData {
 	public  String Onnasa1password;
 	public  String Onnarmu1FullName;
 	public  String Onnapa1FullName;
-		
+	public  String Onnaeditpa1password;
+	public  String Onnaeditrmu1password;
+	public  String Onnaeditrmu1FullName;
+	public  String Onnaeditpa1FullName;
+	public  String Onnaeditpa1userName;
+	public  String Onnaeditrmu1userName;
 		
 	// Added by Sai Krishna
 	public String pageNumber;

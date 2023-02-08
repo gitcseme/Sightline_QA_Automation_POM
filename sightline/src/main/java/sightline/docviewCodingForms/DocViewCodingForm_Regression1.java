@@ -4041,11 +4041,11 @@ public class DocViewCodingForm_Regression1 {
 			codingForm.assignCodingFormToSG(Input.codingFormName);
 		}
 
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.searchStringStar);
 		sessionSearch.ViewInDocView();
 
 		reusableDocView.clearComments();
-		reusableDocView.stampColourSelection(fieldText, Input.stampColour);
+		reusableDocView.stampColourSelectionWithoutSelcetingCFrequiredFields(fieldText, Input.stampColour);
 
 		baseClass.VerifyErrorMessage("Coding Form validation failed");
 		baseClass.passedStep("Application not allowed user to save without editing coding form");
