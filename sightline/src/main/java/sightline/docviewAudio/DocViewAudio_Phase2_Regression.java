@@ -81,7 +81,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass = new BaseClass(driver);
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
-
+		softAssertion=new SoftAssert();
 	}
 
 	@DataProvider(name = "AllTheUsers")
@@ -106,7 +106,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              should move to the next & previous phonetic hit position when
 	 *              mini doc list child window is open
 	 */
-	@Test(description = "RPMXCON-51343", alwaysRun = true, dataProvider = "AllTheUsers", groups = { "regression" })
+	//@Test(description = "RPMXCON-51343", alwaysRun = true, dataProvider = "AllTheUsers", groups = { "regression" })
 	public void verifyIconInDocViewAudioPlayerMoveNextPhoneticHitIsOpenChildWindow(String username, String password,
 			String fullname) throws Exception {
 
@@ -169,7 +169,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @throws Exception
 	 * @Description Verify 3 play counter readouts are displayed on audio doc view
 	 */
-	@Test(description = "RPMXCON-51487", alwaysRun = true, dataProvider = "AllTheUsers", groups = { "regression" })
+	//@Test(description = "RPMXCON-51487", alwaysRun = true, dataProvider = "AllTheUsers", groups = { "regression" })
 	public void verifyPlaycounterReadoutsDisplayedOnDocView(String username, String password, String fullname)
 			throws Exception {
 
@@ -230,7 +230,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              annotation layer, redaction tag is mapped to different security
 	 *              groups.
 	 */
-	@Test(description = "RPMXCON-51073", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51073", enabled = true, groups = { "regression" })
 	public void verifyRedactionTagAudioFileIsMappedDifferentSecurity() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51073");
@@ -345,7 +345,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              on persistent hits panel from saved search [RPMXCON-51796]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51796", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51796", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsNotDisplayPersistentHitInDocViewViaSS(String userName, String password, String fullName)
 			throws Exception {
 
@@ -421,7 +421,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              List> Doc View. [RPMXCON-51797]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51797", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51797", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsNotDisplayPersistentHitInDocView(String userName, String password, String fullName)
 			throws Exception {
 
@@ -484,7 +484,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * coding form child window
 	 */
 
-	@Test(description = "RPMXCON-51820", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51820", enabled = true, groups = { "regression" })
 	public void validatePlayIconInCfChild() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51820");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to Save the document, "
@@ -561,7 +561,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              threshold are assigned to assignment at different time from
 	 *              session search.
 	 */
-	@Test(description = "RPMXCON-51800", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51800", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsHitsDisplayedCommonTermAndDifferent() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51800");
@@ -640,7 +640,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              last.
 	 */
 
-	@Test(description = "RPMXCON-51808", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51808", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsHitSaveSeachesWithCompleteSameAsLast() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51808");
@@ -718,7 +718,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              then it should not display repetitive search term on persistent
 	 *              hits panel.
 	 */
-	@Test(description = "RPMXCON-51779", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51779", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsDifferentSearchsNotDisplayPersistentHitInDocView() throws Exception {
 
 		DocViewPage docview = new DocViewPage(driver);
@@ -782,6 +782,7 @@ public class DocViewAudio_Phase2_Regression {
 				+ "properly inside Doc view screen");
 
 		String volumeActual = "width: 100%;";
+		System.out.println(volumeActual);
 		// Login as
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Successfully login as '" + userName + "'");
@@ -805,7 +806,8 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Audio file max volume button is clicked");
 		baseClass.waitForElement(docViewPage.getVolumeLevel());
 		String volumeExpected = docViewPage.getVolumeLevel().GetAttribute("style");
-		softAssertion.assertEquals(volumeActual, volumeExpected);
+		System.out.println(volumeExpected);
+		softAssertion.assertEquals(volumeActual,volumeExpected);
 		baseClass.passedStep("user can increase the volume button inside docview screen for audio documents");
 
 		softAssertion.assertAll();
@@ -831,7 +833,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51135", dataProvider = "Impersonate", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51135", dataProvider = "Impersonate", enabled = true, groups = { "regression" })
 	public void validateTranscriptTab(String role, String userName, String password, String impuserName,
 			String imppassword, String impersonate) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51135");
@@ -868,7 +870,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51138", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51138", enabled = true, groups = { "regression" })
 	public void verifyTriangularArrowOnAssignment() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51138");
 		baseClass.stepInfo("Verify user after impersonation can see the persistent search on "
@@ -925,7 +927,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51136", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51136", enabled = true, groups = { "regression" })
 	public void verifyTriangularArrow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51136");
 		baseClass.stepInfo("Verify triangular arrow to highlight the position should be displayed at the "
@@ -984,7 +986,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              should load in the default view prior to that document
 	 *              navigation is done from mini doc list child window
 	 */
-	@Test(description = "RPMXCON-51632", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51632", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
 	public void verifyDocumentLoadedFromMiniDocList(String username, String password) throws Exception {
 
 		sessionSearch = new SessionSearch(driver);
@@ -1048,7 +1050,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(description = "RPMXCON-51799", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51799", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1160,7 +1162,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              stamp, then waveform should be loaded [Less than 1 hr audio
 	 *              file] from coding form child window
 	 */
-	@Test(description = "RPMXCON-51824", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51824", enabled = true, groups = { "regression" })
 	public void verifyAudioPlayerClickedApplyStampFromChildWindow() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51824");
@@ -1239,7 +1241,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * document in 4 sec and ready for the user to act up on when navigating from
 	 * Tally/Sub Tally report
 	 */
-	@Test(description = "RPMXCON-51528", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51528", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentNavigationToDocViewIn4Secs() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51528");
 		baseClass.stepInfo(
@@ -1273,7 +1275,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * Description:Verify that when mini doc list is configured then should display
 	 * search term on persistent hits panel
 	 */
-	@Test(description = "RPMXCON-51852", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51852", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyMiniDocListConfiguredDisplaysSearchTermPersistentHitPanel(String username, String password,
 			String role) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51852");
@@ -1321,7 +1323,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              the slider.
 	 */
 
-	@Test(description = "RPMXCON-51251", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51251", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioWaveformSliderZoomInZoomOut(String username, String password, String role)
 			throws InterruptedException {
 
@@ -1376,7 +1378,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document.
 	 */
 
-	@Test(description = "RPMXCON-51684", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51684", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentLoadingSuccessfullyInTextTabPreviousDocsInMiniDocList(String username,
 			String password, String role) throws InterruptedException {
 
@@ -1432,7 +1434,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document.
 	 */
 
-	@Test(description = "RPMXCON-51685", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51685", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentLoadingSuccessfullyInImageTabInMiniDocList(String username, String password,
 			String role) throws InterruptedException {
 
@@ -1487,7 +1489,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document navigation done from Images tab of previous document.
 	 */
 
-	@Test(description = "RPMXCON-51700", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51700", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentImagesTabInMiniDocList(String username, String password, String role)
 			throws InterruptedException {
 
@@ -1559,7 +1561,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document.
 	 */
 
-	@Test(description = "RPMXCON-51696", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51696", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentLoadingSuccessfullyInTextTabInMiniDocList(String username, String password,
 			String role) throws InterruptedException {
 
@@ -1607,7 +1609,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              it should not display repetitive search term on persistent hits
 	 *              panel
 	 */
-	@Test(description = "RPMXCON-51777", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51777", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsDifferentSearchsNotDisplayPersistentHit() throws Exception {
 
 		DocViewPage docview = new DocViewPage(driver);
@@ -1671,7 +1673,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              searches with common term, then it should not display repetitive
 	 *              search term on persistent hits panel
 	 */
-	@Test(description = "RPMXCON-51778", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51778", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsPresentInDifferentSearchsNotDisplay() throws Exception {
 
 		DocViewPage docview = new DocViewPage(driver);
@@ -1727,7 +1729,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              should move to the next & previous phonetic hit position when
 	 *              file is playing
 	 */
-	@Test(description = "RPMXCON-51341", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51341", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioPlayerControlsPhoneticHitIsPlayMode(String userName, String password, String fullName)
 			throws Exception {
 
@@ -1791,7 +1793,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              working properly inside Doc view screen.
 	 */
 
-	@Test(description = "RPMXCON-51096", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51096", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
 	public void verifyAudioClickMoveToNextInDocViewScreen(String username, String password, String role)
 			throws InterruptedException {
 
@@ -1848,7 +1850,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              is playing.
 	 */
 
-	@Test(description = "RPMXCON-51480", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51480", enabled = true, groups = { "regression" })
 	public void verifyAudioDocumentApplyCodingForm() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51480");
@@ -1911,7 +1913,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51125", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51125", enabled = true, groups = { "regression" })
 	public void validateAfterImpersonateTranscriptTabContextAssgn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51125");
 		baseClass.stepInfo(
@@ -1956,7 +1958,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              the assignment should be displayed in the
 	 *              assignment[RPMXCON-51766]
 	 */
-	@Test(description = "RPMXCON-51766", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51766", enabled = true, groups = { "regression" })
 	public void verifyPersistentForAudioReAssignSameRev() throws InterruptedException {
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		String audioSearch = Input.audioSearch.toUpperCase();
@@ -2030,7 +2032,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              assignment," + " any previously saved persistent search hits in
 	 *              the assignment should be displayed in the assignment[51767]
 	 */
-	@Test(description = "RPMXCON-51767", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51767", enabled = true, groups = { "regression" })
 	public void verifyPersisForAudioReAssignSameRevAdvSrc() throws InterruptedException {
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		String audioSearch = Input.audioSearch.toUpperCase();
@@ -2103,7 +2105,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              search hits in the assignment should be displayed in the
 	 *              assignment {RPMXCON-51768]
 	 */
-	@Test(description = "RPMXCON-51768", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51768", enabled = true, groups = { "regression" })
 	public void verifyPersisForAudioReAssignSameRevSrcGrp() throws InterruptedException {
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		String audioSearch = Input.audioSearch.toUpperCase();
@@ -2174,7 +2176,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description :To verify that Remark can be update by other reviewers in same
 	 *              security group in audio doc view.[RPMXCON-51178]
 	 */
-	@Test(description = "RPMXCON-51178", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51178", enabled = true, groups = { "regression" })
 	public void verifyRemarksUpdtByOthrRev() throws InterruptedException, Exception {
 
 		DocViewPage docView = new DocViewPage(driver);
@@ -2254,7 +2256,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description :To Verify that user can add remarks upto 1000 characters in
 	 *              audio doc view..[RPMXCON-51177]
 	 */
-	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	//@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyRemarks1000chars(String username, String password) throws InterruptedException, Exception {
 		DocViewPage docView = new DocViewPage(driver);
 
@@ -2289,7 +2291,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document in 4 sec " + "and ready for the user to act up on when
 	 *              navigating from DocList")[RPMXCON-51527]
 	 */
-	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
+	//@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
 	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2334,7 +2336,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "add a new reviewer remark, when the audio is in stopped
 	 *              state.[RPMXCON-51468]
 	 */
-	@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	//@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangNewReviewWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 
@@ -2385,7 +2387,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "edit/delete a reviewer remark, when the audio is in paused
 	 *              state.[RPMXCON-51467]
 	 */
-	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	//@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangtheAudioInPause(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
@@ -2441,7 +2443,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "edit/delete a reviewer remark, when the audio is in Stopped
 	 *              state.[RPMXCON-51469]
 	 */
-	@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	//@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
 	public void verifyAppNotHangWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
@@ -2500,7 +2502,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              assigned to assignment from saved search with search group > Doc
 	 *              List
 	 */
-	@Test(description = "RPMXCON-51788", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51788", enabled = true, groups = { "regression" })
 	public void verifyAudioHitsDocsSearchedAssignmentSavedSearch() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51788");
@@ -2555,7 +2557,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              searched with common terms and different/same threshold are
 	 *              assigned to assignment from saved search with search group
 	 */
-	@Test(description = "RPMXCON-51789", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51789", enabled = true, groups = { "regression" })
 	public void verifyAudioHitsDocsAssignmentSavedSearchWithSearchGroup() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51789");
@@ -2614,7 +2616,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              assigned to assignment from saved search with search group > Doc
 	 *              List
 	 */
-	@Test(description = "RPMXCON-51790", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51790", enabled = true, groups = { "regression" })
 	public void verifyAudioHitsDocsSearchedAssignmentSavedSearchDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51790");
@@ -2668,7 +2670,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              with common term then, should not display repetitive search term
 	 *              on persistent hits panel on completing the document.
 	 */
-	@Test(description = "RPMXCON-51807", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51807", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsHitSaveSeachesWithCommonTerm() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51807");
@@ -2739,7 +2741,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              audio redaction when Project Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52013", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52013", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsPA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52013 - DocViewAudio");
@@ -2794,7 +2796,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              audio redaction when Domain Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52012", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52012", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsDA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52012 - DocViewAudio");
@@ -2850,7 +2852,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              audio redaction when System Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52011", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52011", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsSA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52011 - DocViewAudio");
@@ -2906,7 +2908,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              redaction
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52003", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52003", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsSA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52003 - DocViewAudio");
@@ -2986,7 +2988,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              redaction
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52004", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52004", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsWithEditAsSA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52004 - DocViewAudio");
@@ -3066,7 +3068,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              redaction
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52005", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52005", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsDA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52005 - DocViewAudio");
@@ -3146,7 +3148,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              redaction
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52007", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-52007", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsPA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52007 - DocViewAudio");
@@ -3226,7 +3228,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              with common term then, should not display repetitive search term
 	 *              on persistent hits panel from assignment.
 	 */
-	@Test(description = "RPMXCON-51794", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51794", enabled = true, groups = { "regression" })
 	public void verifyAudioDocsDifferentSaveSearchWithCommonTerm() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51794");
@@ -3272,7 +3274,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @throws Exception
 	 * @Description Delete the remarks for the audio documents in Docview
 	 */
-	@Test(description = "RPMXCON-51671", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51671", enabled = true, groups = { "regression" })
 	public void verifyDeleteRemarksAudioDocDocview() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51671");
@@ -3329,7 +3331,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @throws Exception
 	 * @Description Verfiy that RMU can view the reviewer remarks in audio doc view.
 	 */
-	@Test(description = "RPMXCON-51176", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51176", enabled = true, groups = { "regression" })
 	public void verifyRmuViewReviewerRemarksInAudio() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51176");
@@ -3385,7 +3387,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51827", dataProvider = "RmuRev", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51827", dataProvider = "RmuRev", enabled = true, groups = { "regression" })
 	public void validateAudioDocsSavedRequest(String userName, String password, String fullName)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51827");
@@ -3423,7 +3425,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51822", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51822", enabled = true, groups = { "regression" })
 	public void validatePlayIconCF() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51822");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to apply the stamp, "
@@ -3508,7 +3510,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description Verify after saving the coding stamp should not add any
 	 *              additional controls for speed up/speed down.
 	 */
-	@Test(description = "RPMXCON-51503", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51503", enabled = true, groups = { "regression" })
 	public void verifyAfterSavingCodingStampNotAddAdditionalControl() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51503");
@@ -3569,7 +3571,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              searched with same term and different/same threshold are
 	 *              assigned to assignment from session search
 	 */
-	@Test(description = "RPMXCON-51784", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51784", enabled = true, groups = { "regression" })
 	public void verifyAudioHitsDisplayedDiffSameThresholdToAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51784");
@@ -3651,7 +3653,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              stamp, then waveform should be loaded [Greater than 1 hr audio
 	 *              file] from coding form child window
 	 */
-	@Test(description = "RPMXCON-51825", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51825", enabled = true, groups = { "regression" })
 	public void verifyAudioFilePlayingApplyStampGreaterThan1hrChildWindow() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51825");
@@ -3745,7 +3747,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @author Aathith Date: 08/17/2022
 	 * @Description Verify user can see the metada for the audio files
 	 */
-	@Test(description = "RPMXCON-51075", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51075", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
 	public void verifyAudioRedactionTagReleasedToSG(String username, String password) throws Exception {
 
 		sessionSearch = new SessionSearch(driver);
@@ -3784,7 +3786,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(description = "RPMXCON-51782", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51782", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdInSessionSearchBulkAssign2() throws InterruptedException {
 
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -3881,7 +3883,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51785", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51785", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3979,7 +3981,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51792", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51792", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdAndSearchTerms_viaDocList() throws InterruptedException {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4095,7 +4097,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51123", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51123", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
 	public void validateTranscriptTabOutSideAssgn(String userName, String password, String fullName)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51123");
@@ -4131,7 +4133,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * 
 	 */
 
-	@Test(description = "RPMXCON-51124", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-51124", enabled = true, groups = { "regression" })
 	public void validateTranscriptTabContextAssgn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51124");
 		baseClass.stepInfo("Verify user can see the transcript in audio doc view in context of an assignment");
