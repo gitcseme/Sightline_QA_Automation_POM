@@ -4083,13 +4083,6 @@ public class DocViewAudio_Phase2_Regression {
 		loginPage.logout();
 	}
 
-	@DataProvider(name = "PaRmuRev")
-	public Object[][] PaRmuRev() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
-		return users;
-	}
 
 	/**
 	 * Author : Baskar date: NA Modified date: 29/09/2022 Modified by: Baskar
