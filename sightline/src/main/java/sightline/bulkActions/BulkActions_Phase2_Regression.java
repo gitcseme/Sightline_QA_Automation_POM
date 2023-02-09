@@ -525,6 +525,8 @@ public class BulkActions_Phase2_Regression {
 		String tag = "Tag" + Utility.dynamicNameAppender();
 		String tagRMU = "Tag" + Utility.dynamicNameAppender();
 		String tagFolder = "TagFolder" + Utility.dynamicNameAppender();
+		String tagFolder2 = "TagFolder2" + Utility.dynamicNameAppender();
+		String tagFolder1 = "TagFolder1" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("To Verify the fluctuation of document count for all the bulk actions in Tally report");
 		baseClass.stepInfo("RPMXCON-54481");
@@ -563,7 +565,7 @@ public class BulkActions_Phase2_Regression {
 		tally.subTallyActions();
 		baseClass.waitForElement(tally.getBulkTagAction(2));
 		tally.getBulkTagAction(2).waitAndClick(5);
-		sessionSearch.bulkTag_FluctuationVerification(tagFolder, count1);
+		sessionSearch.bulkTag_FluctuationVerification(tagFolder1, count1);
 
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -576,7 +578,7 @@ public class BulkActions_Phase2_Regression {
 		tally.subTallyActions();
 		baseClass.waitForElement(tally.getBulkFolderAction(2));
 		tally.getBulkFolderAction(2).waitAndClick(5);
-		sessionSearch.bulkFolder_FluctuationVerification(tagFolder, count2);
+		sessionSearch.bulkFolder_FluctuationVerification(tagFolder2, count2);
 
 		loginPage.logout();
 

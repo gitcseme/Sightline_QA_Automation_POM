@@ -1316,8 +1316,7 @@ public class DocListPage {
 	}
 
 	public Element getDocList_BlankSource(String docBlank, int size) {
-		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='" + docBlank
-				+ "']//following-sibling::td[string-length()=0]//parent::tr/td['" + size + "']//label");
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='"+docBlank+"']//following-sibling::td//parent::tr/td['"+size+"']//label/i");
 
 	}
 
@@ -5356,15 +5355,23 @@ public class DocListPage {
 	public void selectingBlankDocs(String docId, String parentdocId, int size, int pureHit) {
 		SoftAssert assertion = new SoftAssert();
 		driver.waitForPageToBeReady();
+		System.out.println("docId :-"+docId);
+		System.out.println("//table[@id='dtDocList']//tr//td[text()='" + docId
+		+ "']//following-sibling::td[string-length()=0]//parent::tr/td['" + size + "']//label");
 		base.waitForElement(getDocList_BlankSource(docId, size));
-		getDocList_BlankSource(docId, size).waitAndClick(5);
+		Actions act=new Actions(driver.getWebDriver());
+		act.moveToElement(getDocList_BlankSource(docId, size).getWebElement()).build().perform();
+//		getDocList_BlankSource(docId, size).waitAndClick(5);
 		base.waitForElement(getDocList_PlusIcon());
 		getDocList_PlusIcon().waitAndClick(5);
 		int tableSize = base.getIndex(getDocList_ChildHeader(), "DOCID");
 		int childDocCount = getDocList_ChildDocCount(tableSize).FindWebElements().size();
+		System.out.println("childDocCount :-"+childDocCount);
 		base.stepInfo("Parent child document count :" + childDocCount);
 		base.waitForElement(getDocList_BlankSource(parentdocId, size));
 		getDocList_BlankSource(parentdocId, size).waitAndClick(5);
+		base.waitForElement(getDocList_BlankSource(docId, size));
+		getDocList_BlankSource(docId, size).waitAndClick(5);
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(5);
 		base.stepInfo("both child and parent document selected");
@@ -5412,6 +5419,10 @@ public class DocListPage {
 	public void selectingDocsBasedOnSources(String parentdocId, int size, int pureHit) {
 		SoftAssert assertion = new SoftAssert();
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_BlankSource(Input.sourceBlank1, size));
+		Actions act=new Actions(driver.getWebDriver());
+		
+		act.moveToElement(getDocList_BlankSource(Input.sourceBlank1, size).getWebElement()).build().perform();
 		base.waitForElement(getDocList_BlankSource(parentdocId, size));
 		getDocList_BlankSource(parentdocId, size).waitAndClick(5);
 		base.waitForElement(getCancelButton());

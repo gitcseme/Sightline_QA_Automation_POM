@@ -963,15 +963,25 @@ public class TagsAndFoldersPage {
 			// TODO: handle exception
 		}
 
+		for(int i=0;i<2;i++) {
 		driver.scrollingToBottomofAPage();
+		}
+//		driver.scrollingToElementofAPage(getFolderName(strFolder));
 		base.waitForElement(getFolderName(strFolder));
-		getFolderName(strFolder).waitAndClick(10);
-		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderName(strFolder).Visible();
+			}
+		}), Input.wait60);
+		Actions act=new Actions(driver.getWebDriver());
+		act.moveToElement(getFolderName(strFolder).getWebElement()).doubleClick().build().perform();
+			driver.scrollPageToTop();
+			base.waitTime(3);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFolderActionDropDownArrow().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getFolderActionDropDownArrow().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -983,7 +993,7 @@ public class TagsAndFoldersPage {
 
 		String expected = "Existing searches using this folder name in their queries may no longer work correctly. Do you still want to delete?";
 		driver.waitForPageToBeReady();
-		String actual = getWarningPopup().getText();
+		String actual = getWarningPopup().getText().trim();
 		System.out.println(actual);
 		if (actual.equals(expected)) {
 

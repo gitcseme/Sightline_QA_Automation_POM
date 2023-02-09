@@ -980,6 +980,7 @@ public class Input {
 	public static String regressionRun;
 	public static String sourceParentBlank;
 	public static String sourceBlank;
+	public static String sourceBlank1;
 	public static String ingestionLessThanHour;
 	public static String ingestionOneHour;
 
@@ -2069,7 +2070,7 @@ public class Input {
 		regressionRun = testData.getRegressionRun();
 		sourceParentBlank = testData.getSourceParentBlank();
 		sourceBlank = testData.getSourceBlank();
-		sourceBlank = testData.getSourceBlank();
+		sourceBlank1 = testData.getSourceBlank1();
 		ingestionOneHour = testData.getIngestionOneHour();
 		ingestionLessThanHour = testData.getIngestionLessThanHour();
 
