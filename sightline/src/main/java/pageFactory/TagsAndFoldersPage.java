@@ -966,7 +966,7 @@ public class TagsAndFoldersPage {
 		for(int i=0;i<2;i++) {
 		driver.scrollingToBottomofAPage();
 		}
-//		driver.scrollingToElementofAPage(getFolderName(strFolder));
+
 		base.waitForElement(getFolderName(strFolder));
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

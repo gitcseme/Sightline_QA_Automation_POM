@@ -5355,10 +5355,7 @@ public class DocListPage {
 	public void selectingBlankDocs(String docId, String parentdocId, int size, int pureHit) {
 		SoftAssert assertion = new SoftAssert();
 		driver.waitForPageToBeReady();
-		System.out.println("docId :-"+docId);
-		System.out.println("//table[@id='dtDocList']//tr//td[text()='" + docId
-		+ "']//following-sibling::td[string-length()=0]//parent::tr/td['" + size + "']//label");
-		base.waitForElement(getDocList_BlankSource(docId, size));
+		
 		Actions act=new Actions(driver.getWebDriver());
 		act.moveToElement(getDocList_BlankSource(docId, size).getWebElement()).build().perform();
 //		getDocList_BlankSource(docId, size).waitAndClick(5);
@@ -5366,7 +5363,7 @@ public class DocListPage {
 		getDocList_PlusIcon().waitAndClick(5);
 		int tableSize = base.getIndex(getDocList_ChildHeader(), "DOCID");
 		int childDocCount = getDocList_ChildDocCount(tableSize).FindWebElements().size();
-		System.out.println("childDocCount :-"+childDocCount);
+		
 		base.stepInfo("Parent child document count :" + childDocCount);
 		base.waitForElement(getDocList_BlankSource(parentdocId, size));
 		getDocList_BlankSource(parentdocId, size).waitAndClick(5);
