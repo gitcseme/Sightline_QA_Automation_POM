@@ -3246,7 +3246,7 @@ public class DocViewPage {
 	}
 
 	public Element getBackgroundNotificationCountNew() {
-		return driver.FindElementByXPath("//span[@id='activity' and @class='activity-dropdown newRed']");
+		return driver.FindElementByXPath("//*[@id='activity' and @class='activity-dropdown newRed']");
 	}
 
 	public Element getDocViewNotificationBellIcon() {
@@ -25679,7 +25679,7 @@ public class DocViewPage {
 			base.waitTime(3);
 			base.waitForElement(getDocViewNotificationBellIcon());
 			getDocViewNotificationBellIcon().waitAndClick(10);
-			getDocViewNotificationBellIcon().waitAndClick(10);
+			
 			base.waitForElement(getDocView_Print());
 			getDocView_Print().waitAndClick(10);
 
