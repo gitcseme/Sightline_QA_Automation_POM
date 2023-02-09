@@ -2580,7 +2580,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// assign default project coding form
 		codingForm.assignCodingFormToSGAlert(Input.codingFormName);
-
+		codingForm.deleteCodingForm(cfLarge, cfLarge);
 		// logout
 		loginPage.logout();
 	}
@@ -6609,7 +6609,7 @@ public class DocViewCodingForm_Regression2 {
 
 		baseClass.passedStep(
 				" Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form using Comments objects along with \"Not Selected\" condition in context of security group");
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName, cfName);
 
@@ -6647,17 +6647,17 @@ public class DocViewCodingForm_Regression2 {
 		// Assign to security group
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
-		codingForm.deleteCodingForm(cfName, cfName);
+		
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
 		docViewPage.noDefaultCodingForm();
-		softAssertion.assertAll();
+
 
 		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
-
+		codingForm.deleteCodingForm(cfName, cfName);
 		// logout
 		loginPage.logout();
 	}
