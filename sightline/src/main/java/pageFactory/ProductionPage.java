@@ -5537,7 +5537,13 @@ public class ProductionPage {
 	 * @param This           method adds new production in home page
 	 */
 	public String addANewProduction(String productionName) throws InterruptedException {
+String URl = driver.getUrl();
 
+		if(URl.contains("Production/Home")){
+			System.out.println(URl);
+		}
+		else {
+		navigateToProductionPage();}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAddNewProductionbutton().Visible() && getAddNewProductionbutton().Enabled();
@@ -17413,6 +17419,13 @@ public class ProductionPage {
 	 * @Description Choosing security group by it's name
 	 */
 	public void selectingSecurityGroup(String securityGroup) {
+		String URl = driver.getUrl();
+
+		if(URl.contains("Production/Home")){
+			System.out.println(URl);
+		}
+		else {
+		navigateToProductionPage();}
 		base.waitForElement(getSecurityGroupDropDown());
 		getSecurityGroupDropDown().waitAndClick(10);
 		base.waitForElement(getSecurityGroup(securityGroup));
