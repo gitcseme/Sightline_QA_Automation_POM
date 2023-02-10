@@ -41,12 +41,12 @@ public class Tally_Phase2_Regression1 {
 		in.loadEnvConfig();
 	}
 
-	@Test(description = "RPMXCON-56215", groups = { "regression" })
-	public void verifyTally_WorkProduct() throws InterruptedException {
+	@Test(description = "RPMXCON-56215", dataProvider = "Users_PARMU", groups = { "regression" })
+	public void verifyTally_WorkProduct(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56215");
 		bc.stepInfo("To Verify Proper Notification for Not Selecting Any Value from Tally BY in Tally");
 
-		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
+		lp.loginToSightLine(username, password);
 
 		String[] tallyBy = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
 
