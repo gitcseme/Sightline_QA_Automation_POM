@@ -84,7 +84,7 @@ public class Tally_Phase2_Regression1 {
 	 *   @author Jayanthi.ganesan     @throws InterruptedException      
 	 */
 
-	//@Test(description = "RPMXCON-56216", groups = { "regression" })
+	@Test(description = "RPMXCON-56216", groups = { "regression" })
 	public void verifyErrorMsg_BulkAssign() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56216");
 		bc.stepInfo("To Verify Proper Notification for Not Selecting Any documents and "
