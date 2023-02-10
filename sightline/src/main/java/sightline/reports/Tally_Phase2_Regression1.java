@@ -54,7 +54,24 @@ public class Tally_Phase2_Regression1 {
 		for (int i = 0; i < tallyBy.length; i++) {
 			bc.stepInfo("**Navigating to tally Page and Selecting " + tallyBy[i] + " as tally by option.**");
 			tp.navigateTo_Tallypage();
-			tp.selectTallyByMetaDataField(tallyBy[i]);
+			try { 
+				bc.waitForElement(tp.getTally_SelectaTallyFieldtoruntallyon());
+				bc.waitTillElemetToBeClickable(tp.getTally_SelectaTallyFieldtoruntallyon());
+				tp.getTally_SelectaTallyFieldtoruntallyon().Click();
+				bc.waitForElement(tp.getTally_Metadataselect());
+				bc.waitTillElemetToBeClickable(tp.getTally_Metadataselect());
+				tp.getTally_Metadataselect().selectFromDropdown().selectByVisibleText( tallyBy[i]);
+			    bc.waitForElement(tp.getTally_btnTallyApply());
+				bc.waitTillElemetToBeClickable(tp.getTally_btnTallyApply());
+				tp.getTally_btnTallyApply().Click();
+				
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				bc.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
+			}
+
+			
 			bc.VerifyErrorMessage("Please select a source to run the report");
 
 			bc.passedStep("if we select tally by option as " + tallyBy[i] + " with out seelcting any source"
