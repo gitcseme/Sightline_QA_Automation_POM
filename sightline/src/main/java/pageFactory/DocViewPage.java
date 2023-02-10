@@ -15975,10 +15975,10 @@ public class DocViewPage {
 		reusableDocView.switchTochildWindow();
 
 		reusableDocView.switchToNewWindow(1);
-
-		boolean flagOne = getCodingFormValidErrorMeta().Displayed();
+		getSaveAndNextButton().waitAndClick(5);
+		boolean flagOne = getCodingFormValidErrorMeta().isDisplayed();
 		softAssertion.assertTrue(flagOne);
-		if (getCodingFormValidErrorMeta().Displayed()) {
+		if (getCodingFormValidErrorMeta().isDisplayed()) {
 			// base.stepInfo("Coding form validation error message displayed");
 			base.passedStep("Child window error popup message Displayed");
 		} else {
