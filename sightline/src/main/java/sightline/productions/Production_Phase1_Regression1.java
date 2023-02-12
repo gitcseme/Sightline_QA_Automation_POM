@@ -77,8 +77,9 @@ public class Production_Phase1_Regression1 {
 		UtilityLog.info("Started Execution for prerequisite");
 		Input input = new Input();
 		input.loadEnvConfig();
-		base = new BaseClass(driver);
 		driver = new Driver();
+		base = new BaseClass(driver);
+		
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);

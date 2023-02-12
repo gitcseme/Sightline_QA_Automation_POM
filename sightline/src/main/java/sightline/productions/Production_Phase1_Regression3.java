@@ -68,8 +68,9 @@ public class Production_Phase1_Regression3 {
 		UtilityLog.info("Started Execution for prerequisite");
 		Input input = new Input();
 		input.loadEnvConfig();
-		base = new BaseClass(driver);
+		
 		driver = new Driver();
+		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -909,12 +910,13 @@ public class Production_Phase1_Regression3 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
 
 		// To filter In progress state Production
 		page.prodGenerationInProgressStatus(productionname);
-
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
 		// verify Production in Post-Gen QC Checks Complete status
 		if (page.gettxtPostGenCompleted().Displayed()) {
 			String statusText = page.gettxtPostGenCompleted().getText();
@@ -1025,6 +1027,7 @@ public class Production_Phase1_Regression3 {
 		Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 
@@ -1039,7 +1042,7 @@ public class Production_Phase1_Regression3 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFFSectionWithRedactionTags(Redactiontag1);
+		page.fillingTIFFSectionwithBurnRedaction(Redactiontag1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
