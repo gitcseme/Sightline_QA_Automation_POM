@@ -2580,7 +2580,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// assign default project coding form
 		codingForm.assignCodingFormToSGAlert(Input.codingFormName);
-
+		codingForm.deleteCodingForm(cfLarge, cfLarge);
 		// logout
 		loginPage.logout();
 	}
@@ -6609,7 +6609,7 @@ public class DocViewCodingForm_Regression2 {
 
 		baseClass.passedStep(
 				" Verified on click of 'Save and Next' button coding form should be validated as per the customized coding form using Comments objects along with \"Not Selected\" condition in context of security group");
-		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		codingForm.deleteCodingForm(cfName, cfName);
 
@@ -6647,17 +6647,17 @@ public class DocViewCodingForm_Regression2 {
 		// Assign to security group
 		codingForm.assignCodingFormToSG(cfName);
 		baseClass.stepInfo("Coding form assigned to security group");
-		codingForm.deleteCodingForm(cfName, cfName);
+		
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
 		docViewPage.noDefaultCodingForm();
-		softAssertion.assertAll();
+
 
 		codingForm.assignCodingFormToSGAlert("Default Project Coding Form");
-
+		codingForm.deleteCodingForm(cfName, cfName);
 		// logout
 		loginPage.logout();
 	}
@@ -8533,8 +8533,7 @@ public class DocViewCodingForm_Regression2 {
 	 * @Description : Verify after impersonation document not marked as completed in
 	 *              an assignment, custom coding form is editable on doc view page
 	 */
-	@Test(description = "RPMXCON-50969", enabled = true, dataProvider = "ImpersonationOfUsers", groups = {
-			"regression" })
+	@Test(description = "RPMXCON-50969", enabled = true, dataProvider = "ImpersonationOfUsers", groups = {"regression" })
 	public void verifyEditableCfInDocviewPg(String userName, String password, String user) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50969");
 		baseClass.stepInfo(
@@ -8600,8 +8599,7 @@ public class DocViewCodingForm_Regression2 {
 	 *              document is assigned to two different assignments with different
 	 *              assigned coding form
 	 */
-	@Test(description = "RPMXCON-50971",enabled = true, dataProvider =
-	 "rmuAndrev", groups = { "regression" })
+	@Test(description = "RPMXCON-50971",enabled = true, dataProvider ="rmuAndrev", groups = { "regression" })
 	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingForms(String userName, String password,
 			String user) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50971");

@@ -7547,7 +7547,7 @@ public class Production_Phase1_Regression1 {
 	 *                 maintained even when the user has not "checked" the option to
 	 *                 "club family members together".
 	 */
-	@Test(description = "RPMXCON-48301", enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-48301", enabled = true, groups = { "regression" })
 	public void verifyOrderOfDocumentsInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48301 -Production Sprint 11");

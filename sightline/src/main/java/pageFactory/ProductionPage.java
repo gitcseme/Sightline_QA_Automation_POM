@@ -5538,9 +5538,8 @@ public class ProductionPage {
 	 * @param This           method adds new production in home page
 	 */
 	public String addANewProduction(String productionName) throws InterruptedException {
+
 		String URl = driver.getUrl();
-
-
 		if(URl.contains("Production/Home")){
 			System.out.println(URl);
 		}
@@ -17432,7 +17431,6 @@ public class ProductionPage {
 	 */
 	public void selectingSecurityGroup(String securityGroup) {
 		String URl = driver.getUrl();
-
 
 		if(URl.contains("Production/Home")){
 			System.out.println(URl);

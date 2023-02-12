@@ -81,7 +81,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass = new BaseClass(driver);
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
-
+		softAssertion=new SoftAssert();
 	}
 
 	@DataProvider(name = "AllTheUsers")
@@ -114,7 +114,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify >| icon and |< in the DocView Audio Player controls should move to the next & previous phonetic hit position when mini doc list child window is open");
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage = new DocViewPage(driver);
 
 		// Login As User
 		loginPage.loginToSightLine(username, password);
@@ -176,7 +176,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51487");
 		baseClass.stepInfo("Verify 3 play counter readouts are displayed on audio doc view");
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+	  docViewPage = new DocViewPage(driver);
 
 		// Login As User
 		loginPage.loginToSightLine(username, password);
@@ -237,7 +237,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify user can see the redaction, redaction tags of audio file on doc view page in different security group if the same annotation layer, redaction tag is mapped to different security groups.");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage = new DocViewPage(driver);
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
@@ -493,7 +493,7 @@ public class DocViewAudio_Phase2_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		sessionSearch = new SessionSearch(driver);
 
@@ -568,7 +568,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio hits should be displayed when documents searched with common term, different term and different/same threshold are assigned to assignment at different time from session search");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		 docViewPage = new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String Assignname = "Assignment" + Utility.dynamicNameAppender();
@@ -647,8 +647,9 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel on completing the document same as last.");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		 docViewPage = new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		docViewPage=new DocViewPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
@@ -782,6 +783,7 @@ public class DocViewAudio_Phase2_Regression {
 				+ "properly inside Doc view screen");
 
 		String volumeActual = "width: 100%;";
+		System.out.println(volumeActual);
 		// Login as
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Successfully login as '" + userName + "'");
@@ -805,7 +807,8 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Audio file max volume button is clicked");
 		baseClass.waitForElement(docViewPage.getVolumeLevel());
 		String volumeExpected = docViewPage.getVolumeLevel().GetAttribute("style");
-		softAssertion.assertEquals(volumeActual, volumeExpected);
+		System.out.println(volumeExpected);
+		softAssertion.assertEquals(volumeActual,volumeExpected);
 		baseClass.passedStep("user can increase the volume button inside docview screen for audio documents");
 
 		softAssertion.assertAll();
@@ -1167,7 +1170,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that when audio file is playing and clicked to apply the stamp, then waveform should be loaded [Less than 1 hr audio file] from coding form child window");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+	 docViewPage = new DocViewPage(driver);
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String comment = "comment" + Utility.dynamicNameAppender();
@@ -1260,7 +1263,7 @@ public class DocViewAudio_Phase2_Regression {
 		tallyPage.selectBarChartAndNavigateTo("View in DocView");
 
 		// verify the latency of application
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		docViewPage.loadingCountVerify(4, docViewPage.getDocView_CurrentDocId());
 
 		// logout
@@ -1328,7 +1331,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51251");
 		baseClass.stepInfo("Verify user can zoom in/zoom out the audio waveform by moving the slider.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -1384,7 +1387,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Text tab of previous document.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -1440,7 +1443,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Images tab of previous document.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -1495,7 +1498,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio document should be loaded successfully when document navigation done from Images tab of previous document.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -1567,7 +1570,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Text tab of previous document.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -1735,7 +1738,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify >| icon and |< in the DocView Audio Player controls should move to the next & previous phonetic hit position when file is playing");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
 
 		// Login As User
@@ -1799,7 +1802,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio files move to Next hit functionality is working properly inside Doc view screen.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		DocListPage docList = new DocListPage(driver);
@@ -1855,7 +1858,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that application should not hang when the user tries to complete the audio document by applying coding stamp when audio is playing.");
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		String assign = "Assignment" + Utility.dynamicNameAppender();
@@ -1916,7 +1919,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51125");
 		baseClass.stepInfo(
 				"Verify after impersonation user can see the transcript in audio doc view in context of an assignment");
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignPage = new AssignmentsPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
@@ -2510,7 +2513,7 @@ public class DocViewAudio_Phase2_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 
 		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
 				"assgnment2" + Utility.dynamicNameAppender() };
@@ -2564,7 +2567,7 @@ public class DocViewAudio_Phase2_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 
 		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
 				"assgnment2" + Utility.dynamicNameAppender() };
@@ -2623,7 +2626,7 @@ public class DocViewAudio_Phase2_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 
 		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
 				"assgnment2" + Utility.dynamicNameAppender() };
@@ -2675,7 +2678,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel on completing the document.");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -3235,7 +3238,7 @@ public class DocViewAudio_Phase2_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 
 		String assignmentname = "assgnment1" + Utility.dynamicNameAppender();
 		String searchname = "search1" + Utility.dynamicNameAppender();
@@ -3278,7 +3281,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51671");
 		baseClass.stepInfo("Update the Remarks for the existing audio documents");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		String remark = "Remark" + Utility.dynamicNameAppender();
 		SoftAssert softAssertion = new SoftAssert();
 
@@ -3335,7 +3338,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51176");
 		baseClass.stepInfo("Update the Remarks for the existing audio documents");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		String remark = "Remark" + Utility.dynamicNameAppender();
 		String remark1 = "Remark" + Utility.dynamicNameAppender();
 		SoftAssert softAssertion = new SoftAssert();
@@ -3515,7 +3518,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify after saving the coding stamp should not add any additional controls for speed up/speed down.");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
@@ -3576,7 +3579,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that audio hits should be displayed when documents searched with same term and different/same threshold are assigned to assignment from session search");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
 		String assgName = "assgnaudio" + Utility.dynamicNameAppender();
@@ -3658,7 +3661,7 @@ public class DocViewAudio_Phase2_Regression {
 		baseClass.stepInfo(
 				"Verify that when audio file is playing and clicked to apply the stamp, then waveform should be loaded [Greater than 1 hr audio file] from coding form child window");
 		sessionSearch = new SessionSearch(driver);
-		DocViewPage docviewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String comment = "comment" + Utility.dynamicNameAppender();
@@ -3787,7 +3790,7 @@ public class DocViewAudio_Phase2_Regression {
 	@Test(description = "RPMXCON-51782", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdInSessionSearchBulkAssign2() throws InterruptedException {
 
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		savedsearch = new SavedSearch(driver);
 
@@ -3883,7 +3886,7 @@ public class DocViewAudio_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-51785", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException {
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
@@ -3981,7 +3984,7 @@ public class DocViewAudio_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-51792", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdAndSearchTerms_viaDocList() throws InterruptedException {
-		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage= new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		DocListPage docListPage = new DocListPage(driver);
@@ -4080,13 +4083,6 @@ public class DocViewAudio_Phase2_Regression {
 		loginPage.logout();
 	}
 
-	@DataProvider(name = "PaRmuRev")
-	public Object[][] PaRmuRev() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
-		return users;
-	}
 
 	/**
 	 * Author : Baskar date: NA Modified date: 29/09/2022 Modified by: Baskar

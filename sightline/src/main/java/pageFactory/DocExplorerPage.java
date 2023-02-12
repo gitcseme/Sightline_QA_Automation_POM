@@ -2515,7 +2515,6 @@ public class DocExplorerPage {
 	public void verifyDocExpFolderLevel(String folderName, int folderLevel) {
 		try {
 			driver.waitForPageToBeReady();
-			;
 			getfolderFromTreeByName(folderName).ScrollTo();
 			bc.waitForElement(getDocExpFolderExpandbutton(folderName));
 			getDocExpFolderExpandbutton(folderName).waitAndClick(5);

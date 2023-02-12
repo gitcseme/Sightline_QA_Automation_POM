@@ -3246,7 +3246,7 @@ public class DocViewPage {
 	}
 
 	public Element getBackgroundNotificationCountNew() {
-		return driver.FindElementByXPath("//span[@id='activity' and @class='activity-dropdown newRed']");
+		return driver.FindElementByXPath("//*[@id='activity' and @class='activity-dropdown newRed']");
 	}
 
 	public Element getDocViewNotificationBellIcon() {
@@ -15975,10 +15975,10 @@ public class DocViewPage {
 		reusableDocView.switchTochildWindow();
 
 		reusableDocView.switchToNewWindow(1);
-
-		boolean flagOne = getCodingFormValidErrorMeta().Displayed();
+		getSaveAndNextButton().waitAndClick(5);
+		boolean flagOne = getCodingFormValidErrorMeta().isDisplayed();
 		softAssertion.assertTrue(flagOne);
-		if (getCodingFormValidErrorMeta().Displayed()) {
+		if (getCodingFormValidErrorMeta().isDisplayed()) {
 			// base.stepInfo("Coding form validation error message displayed");
 			base.passedStep("Child window error popup message Displayed");
 		} else {
@@ -25679,7 +25679,7 @@ public class DocViewPage {
 			base.waitTime(3);
 			base.waitForElement(getDocViewNotificationBellIcon());
 			getDocViewNotificationBellIcon().waitAndClick(10);
-			getDocViewNotificationBellIcon().waitAndClick(10);
+			
 			base.waitForElement(getDocView_Print());
 			getDocView_Print().waitAndClick(10);
 
