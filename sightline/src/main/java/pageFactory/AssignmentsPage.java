@@ -7636,6 +7636,7 @@ public class AssignmentsPage {
 	 * @throws InterruptedException
 	 * @return it returns the unassigned document count
 	 */
+	
 	public int distributeHalfTheDocsToReviewer(int count) throws InterruptedException {
 
 		bc.waitForElement(getAssignment_ManageReviewersTab());
