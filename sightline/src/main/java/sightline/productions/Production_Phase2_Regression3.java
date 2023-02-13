@@ -86,6 +86,8 @@ public class Production_Phase2_Regression3 {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		 page = new ProductionPage(driver);
+		 base = new BaseClass(driver);
+		 tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
