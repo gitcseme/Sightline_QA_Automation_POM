@@ -66,6 +66,8 @@ public class ConceptExplorer_Phase2_Regression {
 		baseClass = new BaseClass(driver);
 		assertion = new SoftAssert();
 		tagsAndFolder=new TagsAndFoldersPage(driver);
+		miniDocListPage= new MiniDocListPage(driver);
+		assign=new AssignmentsPage(driver);
 	}
 
 	@DataProvider(name = "paRmuUsers")
