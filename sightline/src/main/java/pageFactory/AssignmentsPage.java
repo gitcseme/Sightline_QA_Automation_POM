@@ -7364,7 +7364,7 @@ public class AssignmentsPage {
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 			getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
-			bc.CloseSuccessMsgpopup();
+//			bc.CloseSuccessMsgpopup();
 			getDistributeBtn().waitAndClick(3);
 			bc.stepInfo("Documents are distributed to reviewer successfully");
 			bc.CloseSuccessMsgpopup();
@@ -7651,7 +7651,7 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
+//		bc.CloseSuccessMsgpopup();
 		int Total = (int) Math.ceil(count / 2);
 		int unassignedDocs = count - Total;
 		getAssgn_docsToDistribute().SendKeys(Integer.toString(Total));
@@ -8472,6 +8472,7 @@ public class AssignmentsPage {
 			selectActionsInManageRev(getAssgn_ManageRev_Action_Unassignuser());
 			bc.passedStep("Selected reviewer unassigned successfully");
 			bc.waitForElement(getDistributeTab());
+			driver.Navigate().refresh();
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getEditAggn_Distribute_Unassgndoc());
 			bc.waitTillTextToPresent(getEditAggn_Distribute_Unassgndoc(), Integer.toString(pureHits));
@@ -8528,6 +8529,12 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_UnCompleteAllDocs());
 			bc.VerifySuccessMessage("Documents successfully un-completed for user.");
