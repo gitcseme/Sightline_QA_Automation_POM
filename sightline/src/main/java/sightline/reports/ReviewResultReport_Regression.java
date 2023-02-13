@@ -118,7 +118,7 @@ public class ReviewResultReport_Regression {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-//	@Test(description = "RPMXCON-56455", groups = { "regression" })
+	@Test(description = "RPMXCON-56455", groups = { "regression" })
 	public void verifyReviewerResultReportShedule() throws InterruptedException, ParseException {
 		bc.stepInfo("Test case Id: RPMXCON-56455");
 		bc.stepInfo("To verify that users can schedule the Review Result Report.");
