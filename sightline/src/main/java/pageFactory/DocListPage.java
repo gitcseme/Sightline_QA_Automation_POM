@@ -955,7 +955,7 @@ public class DocListPage {
 	}
 
 	public Element getAssertEmailAuthorName(int colno) {
-		return driver.FindElementByXPath("//th[text()='EmailAuthorName']/following::tr[" + colno + "]//td[8]");
+		return driver.FindElementByXPath("//th[text()='EmailAuthorName']/following::tr[" + colno + "]//td[9]");
 	}
 
 	public Element getActiveFilterInEmailALLDomain(String emailDomainName) {
@@ -4179,7 +4179,7 @@ public class DocListPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getRowCount());
 		String AssertAuthourName = null;
-		for (int D = 1; D <= getRowCount().size(); D++) {
+		for (int D = 2; D <= getRowCount().size(); D++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getAssertEmailAuthorName(D));
 			AssertAuthourName = getAssertEmailAuthorName(D).getText();
