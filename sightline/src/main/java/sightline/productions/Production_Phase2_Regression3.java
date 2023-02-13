@@ -85,6 +85,7 @@ public class Production_Phase2_Regression3 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		 page = new ProductionPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -1199,7 +1200,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyTemplateInSecurityGroup() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
 
 		base.stepInfo("Test case Id:RPMXCON-47847 Production Component Sprint 19");
 		base.stepInfo("To Verify the Create/Display/View of Template with newly created Security Group.");
@@ -1244,7 +1245,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyErrorMessageinDATWithLeadSpc() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-48869");
 		base.stepInfo(
@@ -1273,7 +1274,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-50015", enabled = true, groups = { "regression" })
 	public void verifyHelpTxtForAllProdBateRange() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-50015");
 		base.stepInfo(
@@ -1313,7 +1314,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-49111", enabled = true, groups = { "regression" })
 	public void verifyNativeCount() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49111");
 		base.stepInfo(
@@ -1370,7 +1371,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyMP3Count() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49115 Production Component Sprint 19");
 		base.stepInfo(
@@ -1425,7 +1426,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-49112", enabled = true, groups = { "regression" })
 	public void verifyNativeCountWithPrivTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49112");
 		base.stepInfo(
@@ -1540,7 +1541,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyProductionFromRMU() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49981 Production Component Sprint 19");
 		base.stepInfo("To verify that RMU can view the existing productions in his Security Group");
@@ -1597,7 +1598,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyBatesWithHypensAndSpace() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49816 Production Component Sprint 19");
 		base.stepInfo(
@@ -1649,7 +1650,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyDefaultSelectionInNumbering() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-47896 Production Component Sprint 19");
 		base.stepInfo("To Verify Sorting options from numbering and sorting Section of production wizard");
@@ -1694,7 +1695,7 @@ public class Production_Phase2_Regression3 {
 	public void verifySortingInTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-47938 Production Component Sprint 19");
 		base.stepInfo("To Verify Sorting Based on Tag in Production");
@@ -1740,7 +1741,7 @@ public class Production_Phase2_Regression3 {
 	public void verifySelfProductionWizard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-47719 Production Component Sprint 19");
 		base.stepInfo(
@@ -1780,7 +1781,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyDATWithEmailClassification() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-49101 Production Component Sprint 19");
 		base.stepInfo(
@@ -1846,7 +1847,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47741", enabled = true, groups = { "regression" })
 	public void verifyFilterByINPROGRESS() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47741");
 		base.stepInfo(
@@ -1950,7 +1951,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47739", enabled = true, groups = { "regression" })
 	public void verifySortByinTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47739");
 		base.stepInfo(
@@ -2077,7 +2078,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47816", enabled = true, groups = { "regression" })
 	public void verifyProdGuardCloseOpt() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47816");
 		base.stepInfo("To Verify Production Guard Page option (close) Issue for Tag and Redaction");
@@ -2145,7 +2146,9 @@ public class Production_Phase2_Regression3 {
 	 **/
 	@Test(description = "RPMXCON-47998", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyPrivGuardNotDisWarniMSg(String userName, String password) throws Exception {
-
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(userName, password);
 
@@ -2193,7 +2196,9 @@ public class Production_Phase2_Regression3 {
 	 **/
 	@Test(description = "RPMXCON-63080", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyProdRegeFrDefNatPHTiff(String userName, String password) throws Exception {
-
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 
@@ -2299,7 +2304,9 @@ public class Production_Phase2_Regression3 {
 	 **/
 	@Test(description = "RPMXCON-63084", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyProdRegeFrDefNatPHpdf2(String userName, String password) throws Exception {
-
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 
@@ -2475,7 +2482,7 @@ public class Production_Phase2_Regression3 {
 	public void verifySubBates() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-48001 Production Component Sprint 19");
 		base.stepInfo(
@@ -2529,7 +2536,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyNativeCountInSummaryWithSelectedTags() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-49110");
 		base.stepInfo(
@@ -2637,7 +2644,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyBrandingSorting() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-49120");
 		base.stepInfo(
@@ -2665,7 +2672,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyQCPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47858");
 		base.stepInfo("Verify QC & Result page displays Review Production and Production location details.");
@@ -2725,7 +2732,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyLoadFileGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test case Id:RPMXCON-47805 Production Component Sprint 19");
 		base.stepInfo("To Verify that Load file should be created successfully as part of the production generation");
@@ -2776,7 +2783,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47982", enabled = true, groups = { "regression" })
 	public void verifyBrndOverActualText() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47982");
 		base.stepInfo(
@@ -2846,7 +2853,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47794", enabled = true, groups = { "regression" })
 	public void verifyDefSelecinNativeComp() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47794");
 		base.stepInfo("To Verify the default selections in Production component Native section");
@@ -2910,7 +2917,7 @@ public class Production_Phase2_Regression3 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for tag
@@ -3017,7 +3024,7 @@ public class Production_Phase2_Regression3 {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		// create tag and folder
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -3076,7 +3083,7 @@ public class Production_Phase2_Regression3 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -3121,7 +3128,7 @@ public class Production_Phase2_Regression3 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -3199,7 +3206,7 @@ public class Production_Phase2_Regression3 {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -3273,7 +3280,7 @@ public class Production_Phase2_Regression3 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String brandingString = Input.searchString4;
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -3351,7 +3358,9 @@ public class Production_Phase2_Regression3 {
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		base.stepInfo("Verify that if spreadsheet is redacted and Native placeholder is default enabled from "
 				+ "TIFF/PDF section then PDF should be produced with natively placeholder");
-
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.selectproject(Input.largeVolDataProject);
 
@@ -3459,7 +3468,7 @@ public class Production_Phase2_Regression3 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -3510,7 +3519,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("To verify Production should be failed if Bates Numbers is duplicate");
 		UtilityLog.info(Input.prodPath);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
@@ -3578,7 +3587,7 @@ public class Production_Phase2_Regression3 {
 				"To Verify Project Admin will have the ability to confirm production. Upon confirmation, bates numbers in the documents in the database shall be committed");
 		UtilityLog.info(Input.prodPath);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -3636,7 +3645,7 @@ public class Production_Phase2_Regression3 {
 		int noOfDoc1 = 1;
 		int noOfDoc2 = 4;
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
@@ -3740,7 +3749,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47862", enabled = true, groups = { "regression" })
 	public void verifyRegenProdWithNewLoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47862");
 		base.stepInfo("Verify the regeneration of already produced document with different location");
@@ -3848,7 +3857,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyBatesNoSyncwithProdDoc() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-47970");
 		base.stepInfo("To Verify Bates Number Generated is correct for All Documents in Production");
@@ -3904,7 +3913,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyProdRegeFrDefNatPHPDF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-63081");
 		base.stepInfo("To Verify production regeneration without any change in "
@@ -3999,7 +4008,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyPaginationNextTilesgetLoad() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		base.stepInfo("Test Cases Id : RPMXCON-49819");
 		base.stepInfo("Verify that Pagination the next tiles get loaded on 'Manage Production' screen.");
@@ -4019,7 +4028,7 @@ public class Production_Phase2_Regression3 {
 	@Test(description = "RPMXCON-47863", enabled = true, groups = { "regression" })
 	public void verifyRegenProdOverwritePrePD() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47863");
 		base.stepInfo(
 				"To verify regenerate of production, before commit and confirm bates number, overwrites any previously produced document(s).");
@@ -4222,7 +4231,9 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Test case Id:RPMXCON-48499 Production");
 		base.stepInfo(
 				"To verify that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
-
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 
@@ -4292,7 +4303,7 @@ public class Production_Phase2_Regression3 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base = new BaseClass(driver);
 
 //	Customize Template
@@ -4421,7 +4432,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Verify that new production should be generated with additional placeholder sections "
 				+ "in addition to the default enabled native placeholdering under TIFF/PDF section");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
@@ -4537,7 +4548,7 @@ public class Production_Phase2_Regression3 {
 		int doc = 1;
 		base.stepInfo("To Verify In production, the file-based placeholdering for certain file types");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("SourceDocID", "STC4_00001009");
@@ -4615,7 +4626,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Test Cases Id : RPMXCON-63086");
 		base.stepInfo("Verify that if spreadsheet is priv and Priv, Native placeholder is default enabled "
 				+ "from PDF section then production should be generated for Priv placeholder");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		// create tag
 		base = new BaseClass(driver);
@@ -4681,7 +4692,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Test Cases Id : RPMXCON-63087");
 		base.stepInfo("Verify that if spreadsheet is tech issue and Tech issue, Native placeholder is default "
 				+ "enabled from TIFF/PDF section then production should be generated for Tech placeholder");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		// create tag
 		base = new BaseClass(driver);
@@ -4772,7 +4783,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Add Multiple line branding to all six locations "
 				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a Tiff file");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -4833,6 +4844,9 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("RPMXCON-49820");
 		base.stepInfo("To Verify that from Productions Basic Info tab "
 				+ "\"Disclaimer for Sightline goes here\" should be removed");
+		try {
+			loginPage.logout();
+		}catch(Exception e) {}
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Logged in as" + Input.da1userName);
 		base = new BaseClass(driver);
@@ -4869,7 +4883,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Add Single line branding to all six locations "
 				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a PDF file");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
@@ -4931,7 +4945,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Add Multiple line branding to all six locations "
 				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a PDF file");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
@@ -4993,7 +5007,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Add Single line branding to all six locations "
 				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a Tiff file");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -5060,7 +5074,9 @@ public class Production_Phase2_Regression3 {
 
 		String projectName = Input.randomText + Utility.dynamicNameAppender();
 		String fieldName = "AllProductionBatesRanges";
-
+try {
+	loginPage.logout();
+}catch(Exception e) {}
 //	//login as sa
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("Login as a sa user :" + Input.sa1userName);
@@ -5106,7 +5122,7 @@ public class Production_Phase2_Regression3 {
 		base = new BaseClass(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName);
 
 		page.navigateToProductionPage();
@@ -5136,7 +5152,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo("Verify that branding text should be truncated when Branding text exceeds the "
 				+ "space and no space after wrapping while production for a PDF file");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -5216,7 +5232,7 @@ public class Production_Phase2_Regression3 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		String securityGroup = "Production_Security_Group" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
@@ -5280,7 +5296,7 @@ public class Production_Phase2_Regression3 {
 		base = new BaseClass(driver);
 
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName + "");
 
 		UtilityLog.info(Input.prodPath);
@@ -5362,7 +5378,7 @@ public class Production_Phase2_Regression3 {
 		base = new BaseClass(driver);
 
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName + "");
 
 		String tagname = "Tag" + Utility.dynamicNameAppender();
@@ -5459,7 +5475,7 @@ public class Production_Phase2_Regression3 {
 		base = new BaseClass(driver);
 
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Logged in As " + Input.pa1userName + "");
 
 		UtilityLog.info(Input.prodPath);

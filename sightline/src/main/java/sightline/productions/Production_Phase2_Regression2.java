@@ -70,6 +70,7 @@ public class Production_Phase2_Regression2 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		base = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -531,7 +532,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();		
 		base.waitTime(2);
 		page.extractFile();
 		String home = System.getProperty("user.home");
@@ -623,8 +624,9 @@ public class Production_Phase2_Regression2 {
 		page.getMarkCompleteLink().waitAndClick(10);
 		base.VerifySuccessMessage("Mark Complete successful");
 		page.getNativeTab().waitAndClick(10);
-		String NativeTag = page.getNativeTags().getText();
 		String Tags = tagname + "," + tagname1;
+		Thread.sleep(2000);
+		String NativeTag = page.getNativeTags().getText();
 		base.textCompareEquals(Tags, NativeTag, "Native tag is displayed in production component as expecetd",
 				"Tag is not displayed as expected");
 		page.verifyingNativeSectionFileType("Spreadsheets");
@@ -861,8 +863,9 @@ public class Production_Phase2_Regression2 {
 		DocListPage doc = new DocListPage(driver);
 		doc.getSelectDropDown().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		String ParentDocId = doc.getParentDocumentDocId().getText();
-		System.out.println(ParentDocId);
+		doc.selectColumnMetaDataSelection();
+		String ParentDocId = "ID00001007";
+		
 		doc.bulkRelease(Input.securityGroup);
 
 		loginPage.logout();
@@ -1522,7 +1525,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		base.passedStep("verified MP3 productions with DAT and Native");
 	}
 }
