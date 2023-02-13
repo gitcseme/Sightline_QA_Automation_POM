@@ -294,15 +294,12 @@ public class SchedulesPage {
 				if (getRow_Reports_Runtab(1).isDisplayed()) {
 					softAssertion.assertTrue(getStatusCheck(1).getText().trim().equalsIgnoreCase("COMPLETE"));
 					System.out.println( "Scheduled run is completed with the status 'COMPLETE'!");
-				
-				
+				}
 
 
 		softAssertion.assertAll();
 		bc.passedStep("Scheduled run is completed with the status 'COMPLETE'!");
-	
-				}
-}
+	}
 	
 	/**
 	 * @author 
