@@ -1496,6 +1496,7 @@ public class Assignment_Regression2 {
 		bc.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(3);
 		bc.stepInfo("Modified the assignment and distributed docs to the reviewer");
+		bc.waitForElement(agnmt.getAssignment_BackToManageButton());
 		agnmt.getAssignment_BackToManageButton().Click();
 		driver.waitForPageToBeReady();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
@@ -1795,7 +1796,7 @@ public class Assignment_Regression2 {
 				"To verify that once the documents are reassigned to Pending Reviewers then document counts are correctly displayed "
 						+ "on Manage Reviewer Tab and Manage Assignment Page.");
 		bc.stepInfo("Test case Id: RPMXCON-54766");
-		agnmt.createAssignment(assignmentName, Input.securityGroup);
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
 		bc.stepInfo("Created assignment with name" + assignmentName);
 		search.basicContentSearch(Input.searchString1);
 		search.bulkAssignExisting(assignmentName);
