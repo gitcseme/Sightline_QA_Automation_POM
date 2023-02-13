@@ -399,7 +399,7 @@ public class BasicSearch_Phase2_Regression {
 	@Test(description = "RPMXCON-65052", enabled = true, groups = { "regression" })
 	public void verifyErrorMsgForSaveSearchWithSpclChar() throws InterruptedException {
 		String searchName = "Search<>*;/()";
-		String expectedMsg = "Special characters are not allowed.";
+		String expectedMsg = "Invalid search name";
 
 		// login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -411,8 +411,8 @@ public class BasicSearch_Phase2_Regression {
 		session.basicContentSearch(Input.searchString5);
 		session.saveSearchQuery(searchName);
 
-		// verify error Message
-		session.verifyErrorMsgInSavePopUp(expectedMsg);
+		// verify warning Message
+		base.VerifyWarningMessage(expectedMsg);
 
 		login.logout();
 	}

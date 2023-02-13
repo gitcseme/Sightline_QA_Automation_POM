@@ -1445,7 +1445,7 @@ public class DocListPage {
 	}
 
 	public Element getDocListPerviewBtn() {
-		return driver.FindElementByXPath("//a[text()='Preview Document']");
+		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[3]");
 	}
 
 	public Element getTagEmailDuplicate() {
