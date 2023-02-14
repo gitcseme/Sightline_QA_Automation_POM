@@ -5626,6 +5626,7 @@ public class AssignmentsPage {
 			SelectCodingform(codingForm);
 			driver.scrollPageToTop();
 			bc.waitForElement(getAssignmentSaveButton());
+			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 			getAssignmentSaveButton().Click();
 			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 			bc.passedStep("Assignment " + assignmentName + " created with CF " + codingForm);
@@ -9332,8 +9333,7 @@ public class AssignmentsPage {
 			getParentAssignmentGroupName().Displayed();
 			bc.waitForElement(getSelectedClassification());
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			SelectCodingform(codingForm);
 
 			bc.waitForElement(getAssignmentSaveButton());
 			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
