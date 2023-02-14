@@ -50,7 +50,7 @@ public class ReusableDocViewPage {
 	public Element getResponsiveCheked() {return driver.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
 	public Element getNonPrivilegeRadio() {return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");}
 	public Element getConfidentialRadio() {return driver.FindElementByXPath("//div[@id='item17']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
-	public Element getTechIssueCheked() {return driver.FindElementByXPath("//*[@id=\"0_radiogroup\"]/div[3]/div/label/span");}
+	public Element getTechIssueCheked() {return driver.FindElementByXPath("//*[@id='0_radiogroup']/div[3]/div/label/span");}
 	public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 	public Element getReadOnlyTextBox(String projectFieldName) {return driver.FindElementByXPath("//input[@name='FIELD'][@projectfieldname='" + projectFieldName + "']");}
 	//public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//child::a[@id='Save']");}
