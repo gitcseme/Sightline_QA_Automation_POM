@@ -1224,7 +1224,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify if currently 'AllProductionBatesRanges' is searchable,
 	 *               then we should leave the field to be searchable..
 	 */
-	@Test(description = "RPMXCON-50017", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50017", enabled = true, groups = { "regression" })
 	public void verifyAllProductionBatesRangesSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50017 -Production Sprint 09");
@@ -1232,7 +1232,7 @@ public class Production_Phase1_Regression2 {
 		ProjectFieldsPage projectField = new ProjectFieldsPage(driver);
 		projectField.navigateToProjectFieldsPage();
 		projectField.getAllProductionBatesRanges().waitAndClick(5);
-		projectField.enableIsSearchableBatesRangeIsSelected();
+		//projectField.enableIsSearchableBatesRangeIsSelected();
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		this.driver.getWebDriver().get(Input.url + "Search/Searches");

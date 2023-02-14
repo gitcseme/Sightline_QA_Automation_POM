@@ -2894,6 +2894,7 @@ public class Production_Phase2_Regression1 {
 
 		int Count = 11;
 		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		String totalProduction = page.getProductionItemsTileItems().getText();
 		if (Integer.valueOf(totalProduction) >= Count) {
 			base.stepInfo("Navigating to production grid view");
