@@ -85,10 +85,12 @@ public class Production_Phase2_Regression3 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		 page = new ProductionPage(driver);
 		 base = new BaseClass(driver);
 		 tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		 sessionSearch = new SessionSearch(driver);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
@@ -2451,7 +2453,7 @@ public class Production_Phase2_Regression3 {
 	public void verifyDefaultSelection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47936");
 		base.stepInfo("To Verify Slip Sheet->Work Product Should get saved in Production Component Section");
 
@@ -2598,7 +2600,7 @@ public class Production_Phase2_Regression3 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -4138,7 +4140,7 @@ public class Production_Phase2_Regression3 {
 		int doccount = 1;
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
-
+		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 		base.stepInfo("Test Cases Id : RPMXCON-63085 Production");
@@ -4851,7 +4853,7 @@ public class Production_Phase2_Regression3 {
 		}catch(Exception e) {}
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Logged in as" + Input.da1userName);
-		base = new BaseClass(driver);
+		
 		base.impersonateDAtoPA();
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();

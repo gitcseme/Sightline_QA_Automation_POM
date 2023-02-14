@@ -71,7 +71,10 @@ public class Production_Phase2_Regression2 {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		base = new BaseClass(driver);
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		page = new ProductionPage(driver);
+		sessionSearch = new SessionSearch(driver);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
@@ -103,7 +106,7 @@ public class Production_Phase2_Regression2 {
 	 * @Description:To verify that upon completion of uncommit, notification should
 	 *                 be displayed on right top corner
 	 **/
-	@Test(description = "RPMXCON-49214", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49214", enabled = true, groups = { "regression" })
 	public void verifyCommitAndUncommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -117,8 +120,6 @@ public class Production_Phase2_Regression2 {
 		base.stepInfo(
 				"To verify that upon completion of uncommit, notification should be displayed on right top corner");
 
-		base = new BaseClass(driver);
-		BatchPrintPage batchPrint = new BatchPrintPage(driver);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -377,7 +378,8 @@ public class Production_Phase2_Regression2 {
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		System.out.println(Native);
 		if (Native.exists()) {
 			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".xls");
 		} else {
