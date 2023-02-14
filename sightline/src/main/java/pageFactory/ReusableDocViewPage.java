@@ -50,6 +50,7 @@ public class ReusableDocViewPage {
 	public Element getResponsiveCheked() {return driver.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
 	public Element getNonPrivilegeRadio() {return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");}
 	public Element getConfidentialRadio() {return driver.FindElementByXPath("//div[@id='item17']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
+	public Element getTechIssueCheked() {return driver.FindElementByXPath("//*[@id=\"0_radiogroup\"]/div[3]/div/label/span");}
 	public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 	public Element getReadOnlyTextBox(String projectFieldName) {return driver.FindElementByXPath("//input[@name='FIELD'][@projectfieldname='" + projectFieldName + "']");}
 	//public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//child::a[@id='Save']");}
@@ -104,7 +105,7 @@ public class ReusableDocViewPage {
 	public Element getSaveAndNextButton() {return driver.FindElementByXPath("//a[@id='SaveAndNext']");}
 	public Element getDocListAllDocCheckBox() {return driver.FindElementByXPath("//div[@id='dtDocList_wrapper']//th/label/i");}
 	public Element getYesButtonForAllDoc() {return driver.FindElementByXPath("(//input[@id='Yes'])[1]");}
-	public Element getDocListOkBtn() {return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' OK']");}
+	public Element getDocListOkBtn() {return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' Ok']");}
 	public Element getDocList_Action_Drp_Dwn() {return driver.FindElementByXPath("//button[@id='idAction']");}
 	public Element getDocListViewInDocView() {return driver.FindElementByXPath("//ul[@class='dropdown-menu action-dd']//li//a[@id='ViewInDocView']");}
 	public Element getDocView_HdrAnalytics() {return driver.FindElementByXPath(".//*[@id='HdrAnalytics']/div/div/i");}
@@ -505,6 +506,8 @@ public class ReusableDocViewPage {
 	
 	public void stampColourSelectionWithoutSelcetingCFrequiredFields(String fieldValue, String colour) {
 		driver.waitForPageToBeReady();
+		base.waitForElement(getTechIssueCheked());
+		getTechIssueCheked().waitAndClick(10);
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
 		base.waitForElement(getCodingStampTextBox());

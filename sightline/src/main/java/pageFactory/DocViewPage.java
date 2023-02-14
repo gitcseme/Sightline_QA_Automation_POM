@@ -2187,17 +2187,20 @@ public class DocViewPage {
 	}
 
 	public Element getNavigationMsg() {
-		return driver.FindElementByXPath("//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p");
+		//return driver.FindElementByXPath("//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p");
+		return driver.FindElementByXPath("//*[@id='ui-id-4']/p/text()");
 	}
 
 	public Element getNavigationMsgPopupYesBtn() {
-		return driver.FindElementByXPath(
-				"//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='Yes']");
+//		return driver.FindElementByXPath(
+//				"//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='Yes']");
+		return driver.FindElementByXPath("//body/div[7]/div[3]/div[1]//*[@id='btnYes']");
 	}
 
 	public Element getNavigationMsgPopupNoBtn() {
-		return driver.FindElementByXPath(
-				"//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='No']");
+//		return driver.FindElementByXPath(
+//				"//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='No']");
+		return driver.FindElementByXPath("//body/div[7]/div[3]/div[1]//*[@id='btnNo']");
 	}
 
 	public Element getEditProfile() {
@@ -2981,8 +2984,7 @@ public class DocViewPage {
 	}
 
 	public Element getNavigationMsgPopupYesBtnD() {
-		return driver.FindElementByXPath(
-				"(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//button[text()='Yes'])[last()]");
+		return driver.FindElementByXPath("//*[@id=\"btnYes\"]");
 	}
 
 	public Element getMiniDocList_IterationDocs(int row) {
@@ -10039,6 +10041,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		reusableDocView.VerifyTheDocument();
 		base.stepInfo("Document verified for code same as last button as per the previous docs");
+		driver.waitForPageToBeReady();
 		base.waitForElement(selectCodingFormCheckBoxes("Not_Responsive"));
 		selectCodingFormCheckBoxes("Not_Responsive").waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
