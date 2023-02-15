@@ -1639,7 +1639,7 @@ public class Assignment_Phase2_Regression {
 		assignment.addReviewers(listOfReviewers);
 		baseClass.stepInfo("adding reviewers to assignment");
 		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignment
-				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);//14,2,7
+				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
 		String CountOfDocsAssignToReviewers = Integer
 				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[0]);
 		System.out.println(CountOfDocsAssignToReviewers);

@@ -11207,13 +11207,13 @@ public class AssignmentsPage {
 	 * @return
 	 */
 	public int[] evenlyDistributedDocCountToReviewers(int totalDocs, int noOfReviewers, int modifyDocsCount) {
-		int modifiedTotalDocsCount = totalDocs - modifyDocsCount;//16-1=15
-		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;//15%2=1
-		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;//15-1=14
-		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;//1+1=2
-		int DistributedCountForEachRev = DocCountDistributeToRev / noOfReviewers;//14/2=7
+		int modifiedTotalDocsCount = totalDocs - modifyDocsCount;
+		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;
+		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;
+		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;
+		int DistributedCountForEachRev = DocCountDistributeToRev / noOfReviewers;
 		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = { DocCountDistributeToRev,
-				totalremainingUnAssignDocsCount, DistributedCountForEachRev };//14,2,7
+				totalremainingUnAssignDocsCount, DistributedCountForEachRev };
 		return DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev;
 	}
 
