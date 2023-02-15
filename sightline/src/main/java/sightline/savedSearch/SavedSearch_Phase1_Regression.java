@@ -569,8 +569,7 @@ public class SavedSearch_Phase1_Regression {
 
 		// create new searchGroup and Save Search Audio / Non-Audio
 		pureHits = saveSearch.saveFlowCheckAudioNonaudioWithShare(saveFlow, SearchName, fullName, shareTo);
-		saveSearch.scheduleSavedSearches(SearchName);
-
+		saveSearch.scheduleSavedSearchInMinute(SearchName,1);
 		//// ----- Todo need to continue the script coding as it is failing to Schedule
 		saveSearch.savedSearch_SearchandSelect(SearchName, "Yes");
 		exeDocCount = saveSearch.getSavedSearchCount(SearchName).getText();
@@ -1324,7 +1323,7 @@ public class SavedSearch_Phase1_Regression {
 			throws InterruptedException, ParseException {
 		String searchName = "SS" + Utility.dynamicNameAppender();
 		ElementCollection availableSearchName;
-
+		SchedulesPage schedulePage=new SchedulesPage(driver);
 		// will login to the application by entering RMU credentials
 		login.loginToSightLine(userName, password);
 		base.stepInfo("Tescase ID : RPMXCON-57406 Saved search - Sprint 06");
@@ -4312,7 +4311,9 @@ public class SavedSearch_Phase1_Regression {
 		base.rolesToImp("REV", "RMU");
 
 		// verify the saved searches are present in report page
-		report.navigateToReportsPage();// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		
+//		report.navigateToReportsPage();
+		 this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		report.VerificationOfConceptualReport(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1,
 				searchName2);
 

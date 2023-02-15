@@ -451,7 +451,7 @@ public class Categorization {
 			base.stepInfo("Analyze Select Saved Search Results Sets Result  as : " + currentRole);
 			checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
 //			reportPage.checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1, currentRole);
-
+			base.waitForElement(getSelectSavedSearchPopupCloseBtn());
 			getSelectSavedSearchPopupCloseBtn().waitAndClick(15);
 		}
 	}

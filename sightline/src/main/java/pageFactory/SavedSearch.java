@@ -65,7 +65,7 @@ public class SavedSearch {
 	String childNodeRowDetails;
 
 	public Element getSavedSearch_SearchName() {
-		return driver.FindElementById("txtSearchName");
+		return driver.FindElementByXPath("//input[@id='txtSearchName']");
 	}
 
 	public Element getSavedSearch_ApplyFilterButton() {
@@ -2724,7 +2724,10 @@ public class SavedSearch {
 			base.waitTime(5); // in order to handle abnormal wait activities
 			// base.waitForElement(getSelectWithName(searchName));
 //			getSelectWithName(searchName).isElementAvailable(5);
-			getSelectWithName(searchName).waitAndClick(6);
+			Actions act=new Actions(driver.getWebDriver());
+			act.moveToElement(getSelectWithName(searchName).getWebElement()).click().build().perform();
+//			getSelectWithName(searchName).Click();
+//			getSelectWithName(searchName).waitAndClick(6);
 			getSelectWithName(searchName).checkIn();
 		}
 
@@ -3010,7 +3013,7 @@ public class SavedSearch {
 		getShareSerachBtn().waitAndClick(10);
 
 		// Updates
-		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(2)) {
+		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(15)) {
 			getShare_SecurityGroup(SGtoShare).waitAndClick(10);
 		} else {
 			getShare_SecurityGroupC(SGtoShare).waitAndClick(10);
