@@ -967,6 +967,7 @@ public class ReportsPage {
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "PA", "Yes");
 		checkdataPresent(searchName2, "PA");
 	}
+	
 
 	/**
 	 * @author Iyappan.Kasinathan

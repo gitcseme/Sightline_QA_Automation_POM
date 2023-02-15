@@ -5628,6 +5628,7 @@ public class SavedSearch {
 		return pureHits;
 	}
 
+	
 	/**
 	 * @author Raghuram.A Created on 11/08/2021 Modified date:N/A Modified by:N/A
 	 * @throws InterruptedException
