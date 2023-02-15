@@ -2688,7 +2688,7 @@ public class DocViewPage {
 
 	// Added by Gopinath - 03/01/2022
 	public ElementCollection getPersistantNames() {
-		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
+		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//strong//span[@data-custom-id]");
 	}
 
 	public ElementCollection getPersistantNamesList() {
@@ -19885,12 +19885,15 @@ public class DocViewPage {
 	public void verifyPersistantHitsWithDocView(List<String> keywords) {
 		List<String> persisatantNames = new ArrayList<String>();
 		try {
-			driver.waitForPageToBeReady();
-			base.waitForElement(getPersistantHitEyeIcon());
-			List<WebElement> persistantNames = getPersistantNamesList().FindWebElements();
-			for (WebElement persistantName : persistantNames) {
-				persisatantNames.add(persistantName.getText().trim());
-			}
+			 driver.waitForPageToBeReady();
+             driver.waitForPageToBeReady();
+             base.waitForElement(getPersistantHitEyeIcon());
+             base.waitForElement(getPersistantHitEyeIcon());
+             base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+//             Modify
+             getPersistantHitEyeIcon().waitAndClick(5);
+             base.waitForElementCollection(getPersistantNamesList());
+             persisatantNames = base.availableListofElements(getPersistantNamesList());
 			base.passedStep("Persistant hits are : " + persisatantNames);
 			if (persisatantNames.containsAll(keywords)) {
 				base.passedStep("All keywords are displayed in persistant hit panel");
@@ -24228,7 +24231,7 @@ public class DocViewPage {
 				base.failedStep(
 						"Duplicate redaction/highlighting Warning message is displayed after Add/Edit Highlighting for same document in other tab/browser");
 			}
-			base.waitForElement(getDocView_Annotate_Rectangle());
+			base.waitForElement(getDocView_Redact_Rectangle());
 			getDocView_Redact_Rectangle().waitAndClick(5);
 
 			if (!getDocView_Redact_RectangleActive().isElementAvailable(2)) {
@@ -25150,7 +25153,8 @@ public class DocViewPage {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getImageTab().isElementAvailable(10);
-			getImageTab().Click();
+			getImageTab().waitAndClick(5);
+			base.waitForElement(getImageTabOption(productionName));
 			getImageTabOption(productionName).isElementAvailable(10);
 			if (getImageTabOption(productionName).isDisplayed()) {
 				base.passedStep(productionName + " - Production name displayed on image tab options successfully");
@@ -26553,7 +26557,8 @@ public class DocViewPage {
 		getDocView_NearDupeIcon().ScrollTo();
 		getDocView_NearDupeIcon().waitAndClick(10);
 		String parentWindow = reusableDocView.switchTochildWindow();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		base.waitForElement(getCentralPanelDispaly());
 		if (getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");

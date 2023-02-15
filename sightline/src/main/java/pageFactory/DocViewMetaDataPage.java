@@ -2822,9 +2822,9 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			if (getDownloadButton().isElementAvailable(1)) {
-				base.passedStep("Download button is not displayed successfully");
-			} else {
 				base.failedStep("Download button is displayed");
+			} else {
+				base.passedStep("Download button is not displayed successfully");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
