@@ -1191,7 +1191,7 @@ public class AssignmentsPage {
 
 	// modified 7/02/2022
 	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,"+assignmentName+")]/../following-sibling::td[6]/a[contains(.,'Draw')]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,'"+assignmentName+"')]/../following-sibling::td[2]//a[contains(.,'Draw')]");
 //				"//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 //				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
@@ -2330,6 +2330,7 @@ public class AssignmentsPage {
 				return getAssignment_ManageReviewersTab().Visible();
 			}
 		}), Input.wait60);
+		driver.Navigate().refresh();
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 
 		String count = getAssgn_ManageRev_revdoccount().getText();
@@ -8354,6 +8355,11 @@ public class AssignmentsPage {
 	 */
 	public void verifyDrawPoolToggledisplay(String assignmentName, String type) {
 		if (type.equalsIgnoreCase("enabled")) {
+			try {
+			driver.scrollingToElementofAPage(getAssignmentsDrawPoolInreviewerPg(assignmentName));
+			}catch(Exception e) {
+				
+			}
 			if (getAssignmentsDrawPoolInreviewerPg(assignmentName).isDisplayed() == true) {
 				bc.passedStep("Draw pool link is displayed");
 			} else {
@@ -10771,7 +10777,7 @@ public class AssignmentsPage {
 				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel",
 				"Display Document History Tab", "Allow users to save without completing",
 				"Complete When Coding Stamp Applied",
-				"Save the coding form automatically when switched to different coding form" };
+				"Save the document coding automatically when switching to different coding form" };
 
 		// To Enable All Toogle
 		for (int D = 0; D < elementNamesEnabled.length; D++) {

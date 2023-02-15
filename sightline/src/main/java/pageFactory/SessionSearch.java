@@ -13700,6 +13700,7 @@ public class SessionSearch {
 		getUnassign_ExistingAssignButton().Click();
 		for (int i = 0; i < listOfAssignments.size(); i++) {
 			base.waitForElement(getAssignmentToUnAssign(listOfAssignments.get(i)));
+			driver.scrollingToElementofAPage(getAssignmentToUnAssign(listOfAssignments.get(i)));
 			getAssignmentToUnAssign(listOfAssignments.get(i)).Click();
 		}
 		base.waitForElement(getContinueBulkAssign());
