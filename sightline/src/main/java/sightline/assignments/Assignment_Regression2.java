@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -47,8 +48,8 @@ public class Assignment_Regression2 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-//		Input in = new Input();
-//	    in.loadEnvConfig();
+		Input in = new Input();
+	    in.loadEnvConfig();
 		searchText = Input.TallySearch;
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}
@@ -1042,12 +1043,18 @@ public class Assignment_Regression2 {
 		bc.impersonateRMUtoReviewer();
 		bc.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
+		try {
+			driver.scrollingToElementofAPage(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
+		}catch(Exception e) {
+			
+		}
 		bc.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			bc.passedStep("Draw pool link is displayed");
 			bc.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
 			driver.scrollingToElementofAPage(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
+			Actions act=new Actions(driver.getWebDriver());
+			act.moveToElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).getWebElement()).click().build().perform();
 		} else {
 			bc.failedStep("Draw pool link is not displayed");
 		}

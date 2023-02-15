@@ -1191,10 +1191,12 @@ public class AssignmentsPage {
 
 	// modified 7/02/2022
 	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,'"+assignmentName+"')]/../following-sibling::td[2]//a[contains(.,'Draw')]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,'"+assignmentName+"')]/../..//a[contains(.,'Draw')]");
+		//return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,'"+assignmentName+"')]/../following-sibling::td[2]//a[contains(.,'Draw')]");
 //				"//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 //				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
+	
 
 	public Element getAssignmentsDrawPoolInreviewerPg1(String assignmentName) {
 		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody//tr/td[1]/a[contains(text(),'" + assignmentName
