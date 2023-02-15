@@ -1497,6 +1497,7 @@ public class Assignment_Regression2 {
 		agnmt.getAssignmentSaveButton().waitAndClick(3);
 		bc.stepInfo("Modified the assignment and distributed docs to the reviewer");
 		bc.waitForElement(agnmt.getAssignment_BackToManageButton());
+		bc.waitTime(2);
 		agnmt.getAssignment_BackToManageButton().Click();
 		driver.waitForPageToBeReady();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
