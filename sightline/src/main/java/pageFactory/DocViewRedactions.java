@@ -2507,6 +2507,7 @@ public class DocViewRedactions {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
+		base.VerifySuccessMessage("User profile was successfully modified");
 		base.passedStep("Given access for these SG's " + securityGroup1 + "  for this user" + user);
 	}
 
