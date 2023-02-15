@@ -3740,6 +3740,24 @@ public class CodingForm {
 			System.out.println("Coding form Already deleted");
 		}
 	}
+	
+	public void deleteCodingFormWithAlert(String cfName, String fieldValue) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+		getCodingForm_Search().SendKeys(cfName);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingForm_DeleteButton(fieldValue));
+		getCodingForm_DeleteButton(fieldValue).waitAndClick(10);
+		base.waitTime(4);
+		if (getCodingForm_SGValidation_ButtonYes().isElementAvailable(1)) {
+			base.waitForElement(getCodingForm_SGValidation_ButtonYes());
+			getCodingForm_SGValidation_ButtonYes().waitAndClick(20);
+		} else {
+			System.out.println("Coding form Already deleted");
+		}
+	}
+
 
 	/**
 	 * @author Indium-Baskar date: 24/09/2021 Modified date: NA

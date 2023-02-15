@@ -178,7 +178,7 @@ public class DocviewCodingForm_Phase2_Regression {
 		docViewPage.closeWindow(1);
 		docViewPage.switchToNewWindow(1);
 		driver.waitForPageToBeReady();
-		codingForm.deleteCodingForm(codingform,codingform);
+//		codingForm.deleteCodingFormWithAlert(codingform,codingform);
 		loginPage.logout();
 	}
 
