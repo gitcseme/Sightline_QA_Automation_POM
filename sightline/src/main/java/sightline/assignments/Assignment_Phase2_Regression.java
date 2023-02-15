@@ -1669,7 +1669,7 @@ public class Assignment_Phase2_Regression {
 		driver.Navigate().refresh();
 		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
 				assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
-		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2 //6+2+7=15
+		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2 
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
 		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
