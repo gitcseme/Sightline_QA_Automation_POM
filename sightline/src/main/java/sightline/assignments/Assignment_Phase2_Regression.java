@@ -2714,6 +2714,7 @@ public class Assignment_Phase2_Regression {
 	 *              manually.
 	 * @throws Exception
 	 */
+	
 	@Test(description = "RPMXCON-53888", enabled = true, groups = { "regression" })
 	public void verifyDrawnPoolLinkafterCompleted() throws Exception {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();

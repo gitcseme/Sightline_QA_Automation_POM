@@ -70,8 +70,8 @@ public class Assignment_Regression3 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		ingestionDataName = Input.IngestionName_PT;
 		ingestionMetaData = Input.metadataIngestion;
 	}
