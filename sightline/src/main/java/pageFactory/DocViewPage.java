@@ -2984,7 +2984,7 @@ public class DocViewPage {
 	}
 
 	public Element getNavigationMsgPopupYesBtnD() {
-		return driver.FindElementByXPath("//*[@id=\"btnYes\"]");
+		return driver.FindElementByXPath("//*[@id='btnYes']");
 	}
 
 	public Element getMiniDocList_IterationDocs(int row) {
