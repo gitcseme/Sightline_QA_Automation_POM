@@ -1025,6 +1025,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		boolean flag = ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.readyState")
 				.equals("complete");
 		if (flag) {
@@ -1754,6 +1755,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		Long value = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
 		System.out.println(value);
 
@@ -4663,11 +4665,11 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 		
 		// validating video player docs
-		baseClass.waitTime(3);
+		baseClass.waitTime(10);
 		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeTime);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		Double afterTime=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(afterTime);
         softAssertion.assertNotEquals(Long.toString(beforeTime), Double.toString(afterTime));
@@ -4701,11 +4703,12 @@ public class DocViewAudio_Phase1_Regression1 {
 		driver.waitForPageToBeReady();
 		
 		// validating video player docs
+		baseClass.waitTime(10);
 		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeTime);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
 		baseClass.stepInfo("video file is playing");
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').pause()");
 		baseClass.waitTime(1);
 		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').paused;");
@@ -4752,11 +4755,13 @@ public class DocViewAudio_Phase1_Regression1 {
 		driver.waitForPageToBeReady();
 		
 		// validating video player docs
+		baseClass.waitTime(10);
+
 		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeplay);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
 		baseClass.stepInfo("Video file started playing");
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(afterPlay);
 		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
@@ -4801,11 +4806,12 @@ public class DocViewAudio_Phase1_Regression1 {
 		driver.waitForPageToBeReady();
 		
 		// validating video player docs
+		baseClass.waitTime(10);
 		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeplay);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
 		baseClass.stepInfo("video file is playing");
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(afterPlay);
 		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
@@ -4813,7 +4819,7 @@ public class DocViewAudio_Phase1_Regression1 {
         // muteing the volume button
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').muted=true;");
 		// validating volume button
-		baseClass.waitTime(2);
+		baseClass.waitTime(5);
 		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').muted;");
 		Assert.assertTrue(paused);
         baseClass.passedStep("Video file volume button is muted inside docview screen");
@@ -4845,11 +4851,12 @@ public class DocViewAudio_Phase1_Regression1 {
 		driver.waitForPageToBeReady();
 		
 		// validating video player docs
+        baseClass.waitTime(10);
 		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeplay);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
 		baseClass.stepInfo("Video file started playing");
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(afterPlay);
 		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
@@ -5128,13 +5135,14 @@ public class DocViewAudio_Phase1_Regression1 {
 			// search to docview
 			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
 			sessionSearch.ViewInDocView();
+			baseClass.waitTime(10);
 			boolean defaultSpeed = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').defaultPlaybackRate==1;");
 			softAssertion.assertTrue(defaultSpeed);
 			baseClass.stepInfo("Default play back speed Normal");
 			baseClass.stepInfo("Selecting any one of option and checking as per selection");
-			baseClass.waitTime(1);
+			baseClass.waitTime(10);
 			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').playbackRate=1.75;");
-			baseClass.waitTime(1);
+			baseClass.waitTime(10);
 			boolean playBackSpeedModified = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').playbackRate==1.75;");
 			softAssertion.assertTrue(playBackSpeedModified);
 			baseClass.passedStep("Video file playing as per the play back speed modified");
@@ -5348,13 +5356,13 @@ public class DocViewAudio_Phase1_Regression1 {
 			// search to docview
 			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
 			sessionSearch.ViewInDocViews();
-			baseClass.waitTime(2);
+			baseClass.waitTime(10);
 			long currentTime = (long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 			Double durationTime = (Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').duration;");
 			int size=(int) (durationTime-100);
 			System.out.println(size);
 			// moving the player head
-			baseClass.waitTime(2);
+			baseClass.waitTime(10);
 			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').currentTime="+size+";");
 			long playerMoved = (long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 			if (currentTime!=playerMoved) {
