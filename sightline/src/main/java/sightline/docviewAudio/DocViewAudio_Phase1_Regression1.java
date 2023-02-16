@@ -1025,7 +1025,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
+		baseClass.waitTime(10);
 		boolean flag = ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.readyState")
 				.equals("complete");
 		if (flag) {
@@ -1755,7 +1755,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
+		baseClass.waitTime(10);
 		Long value = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
 		System.out.println(value);
 
