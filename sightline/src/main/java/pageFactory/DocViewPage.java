@@ -1450,7 +1450,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_MetaDataPanel_BrowseAllMetaDataPanel_PopupField() {
-		return driver.FindElementByXPath("//span[text()='All Metadata for Document']");
+		return driver.FindElementByXPath("//h3[text()='All Metadata for Document']");
 	}
 
 	public ElementCollection getAssgnPaginationCount() {
