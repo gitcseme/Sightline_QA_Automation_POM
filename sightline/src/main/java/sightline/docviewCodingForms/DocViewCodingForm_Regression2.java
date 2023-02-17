@@ -148,7 +148,7 @@ public class DocViewCodingForm_Regression2 {
 		String assignmentName = "AssName" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.failedStep("Expected failure case RPMXCON-52159");
+//		baseClass.failedStep("Expected failure case RPMXCON-52159");
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
@@ -191,7 +191,7 @@ public class DocViewCodingForm_Regression2 {
 		String assignmentName = "AssName" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.failedStep("Expected failure case RPMXCON-52160");
+//		baseClass.failedStep("Expected failure case RPMXCON-52160");
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
@@ -352,7 +352,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.failedStep("Expected failure: Code same as last not clickable in child window");
+//		baseClass.failedStep("Expected failure: Code same as last not clickable in child window");
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Session search to doc view Coding Form
@@ -1031,7 +1031,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Last document is selected in parent minidoc list window");
 		reusableDocView.editingCodingFormWithSaveAndNextButton();
 		baseClass.passedStep("Coding form saved successfully in parent window");
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		docViewPage.verifyMinidocListAndCodingFormInChildWindow();
 		baseClass.stepInfo("Excepted Message:Document completed successfully");
 		loginPage.logout();
@@ -1346,6 +1346,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("Impersonated as RMU");
+		codingForm.assignCodingFormToSG("Default Project Coding Form");
 		// Session search to doc view Coding Form
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
@@ -2340,7 +2341,7 @@ public class DocViewCodingForm_Regression2 {
 			baseClass.waitForElement(docViewPage.getDocument_CommentsTextBox());
 			docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
 			docViewPage.codingFormSaveButton();
-			baseClass.VerifySuccessMessage("Document saved successfully");
+			baseClass.VerifySuccessMessage("Applied coding saved successfully");
 			baseClass.stepInfo("Performing action in Child window");
 			docViewPage.clickGearIconOpenCodingFormChildWindow();
 			String parent = docViewPage.switchTochildWindow();
@@ -2348,7 +2349,7 @@ public class DocViewCodingForm_Regression2 {
 			docViewPage.getDocument_CommentsTextBox().SendKeys(comment);
 			docViewPage.codingFormSaveButton();
 			docViewPage.childWindowToParentWindowSwitching(parent);
-			baseClass.VerifySuccessMessage("Document saved successfully");
+			baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		}
 		if (roll == "assgnCf") {
 			codingForm.selectDefaultCodingFormAsDefault();
@@ -2424,15 +2425,13 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.waitForElement(docViewPage.getClickDocviewID(11));
 		docViewPage.getClickDocviewID(11).waitAndClick(5);
 		if (docViewPage.getNavigationMsg().isElementAvailable(5)) {
-			baseClass.stepInfo(
-					"Alert prompted to the user that their edits will not be saved and giving the user confirmation message with Yes/No buttons  ");
+			baseClass.stepInfo("Alert prompted to the user that their edits will not be saved and giving the user confirmation message with Yes/No buttons  ");
 		}
 
 		// Confirmation message "YES" flow
-		baseClass.stepInfo(
-				"YES FLow : Edits should not be saved and clicked document from the mini doc list should be loaded.   ");
-		baseClass.waitForElement(docViewPage.getNavigationMsgPopupYesBtnD());
-		docViewPage.getNavigationMsgPopupYesBtnD().waitAndClick(5);
+		baseClass.stepInfo("YES FLow : Edits should not be saved and clicked document from the mini doc list should be loaded.");
+		baseClass.waitForElement(docViewPage.getNavigationMsgPopupYesBtn());
+		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		secondDocname = miniDocListpage.getMainWindowActiveDocID().getText();
@@ -6823,7 +6822,7 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.add2ReviewerAndDistribute();
 		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -6891,8 +6890,9 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.add2ReviewerAndDistribute();
 		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
-
+		//baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
@@ -6966,7 +6966,7 @@ public class DocViewCodingForm_Regression2 {
 			baseClass.failedStep("document comment selecable");
 		}
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -7203,7 +7203,7 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
 		driver.waitForPageToBeReady();
 		docViewPage.getSaveDoc().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);

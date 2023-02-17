@@ -23095,6 +23095,38 @@ public class ProductionPage {
 		} else {
 			base.failedStep("PDF File not generated");
 			}
-
 	}
+	
+    
+    /**
+     * @author Sireesha.Gattu
+     * @param Tag
+     */
+    public void burnRedactionWithTag(String Tag) {
+            try {
+                    base.waitForElement(getClkLink_selectingRedactionTags());
+                    getClkLink_selectingRedactionTags().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(getClkBtn_selectingRedactionTags());
+                    getClkBtn_selectingRedactionTags().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    driver.waitForPageToBeReady();
+                    BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+                    base.waitForElement(BurnRedactionCheckBox_Imp(Tag));
+                    BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+                    BurnRedactionCheckBox_Imp(Tag).waitAndClick(10);
+                    
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(getClk_selectBtn());
+                    getClk_selectBtn().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(gettextRedactionPlaceHolder());
+                    gettextRedactionPlaceHolder().waitAndClick(10);
+                    gettextRedactionPlaceHolder().SendKeys(searchString4);
+                    base.stepInfo("Burn redaction PDF section is filled successfully");
+            } catch (Exception e) {
+                    e.printStackTrace();
+                    base.failedStep("Exception occcured while handling burnredaction with redaction tag" + e.getMessage());
+            }
+    }
 }

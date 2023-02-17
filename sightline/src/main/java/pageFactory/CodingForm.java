@@ -3414,31 +3414,69 @@ public class CodingForm {
 		getSetCodingFormToSG().waitAndClick(15);
 		UnselectAllCfFromSG();
 		driver.waitForPageToBeReady();
+		SelectCodingform(cfName);
+//		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
+//			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+//			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
+//			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(2) == true) {
+//				assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
+//				assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
+//			}
+//			base.waitTime(1);
+//			assgnpage.getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
+//			base.waitTime(2);
+//			assgnpage.sortOrderNxtBtn().ScrollTo();
+//			assgnpage.sortOrderNxtBtn().waitAndClick(5);
+//			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(cfName));
+//			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
+//				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
+//				base.waitForElement(getManageCodingFormButton());
+//				if (getManageCodingFormButton().Displayed()) {
+//					driver.waitForPageToBeReady();
+//					base.waitTillElemetToBeClickable(getCodingForm_Search());
+//					getCodingForm_Search().SendKeys(cfName);
+//					base.waitTime(5);
+//					base.waitForElement(getSFFormCol(cfName));
+//					System.out.println(getSFFormCol(cfName).getText());
+//					base.waitTime(5);
+//					softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
+//					softAssertion.assertAll();
+//					base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+//				} else {
+//					base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+//				}
+//			} else {
+//				base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+//			}
+//		} else {
+//			base.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
+//		}
+
+	}
+		
+	public void SelectCodingform(String CFName) {
 		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
-			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
-			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
-			if ((assgnpage.isCfCheckBoxSelected(cfName)).isElementAvailable(3) == false) {
-				assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
-				assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
-			}
+			base.stepInfo("Add / Remove Coding Forms in this Security Group.");
+			assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
+			assgnpage.getSelectCF_CheckBox(CFName).waitAndClick(5);
 			base.waitTime(1);
-			assgnpage.getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
+			assgnpage.getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			base.waitTime(2);
 			assgnpage.sortOrderNxtBtn().ScrollTo();
 			assgnpage.sortOrderNxtBtn().waitAndClick(5);
-			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(cfName));
-			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
+			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(CFName));
+			if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
 				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
 				base.waitForElement(getManageCodingFormButton());
 				if (getManageCodingFormButton().Displayed()) {
 					driver.waitForPageToBeReady();
 					base.waitTillElemetToBeClickable(getCodingForm_Search());
-					getCodingForm_Search().SendKeys(cfName);
+					getCodingForm_Search().SendKeys(CFName);
 					base.waitTime(5);
-					base.waitForElement(getSFFormCol(cfName));
-					System.out.println(getSFFormCol(cfName).getText());
+					base.waitForElement(getSFFormCol(CFName));
+					System.out.println(getSFFormCol(CFName).getText());
 					base.waitTime(5);
-					softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
+					softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
 					softAssertion.assertAll();
 					base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
 				} else {
@@ -3702,6 +3740,24 @@ public class CodingForm {
 			System.out.println("Coding form Already deleted");
 		}
 	}
+	
+	public void deleteCodingFormWithAlert(String cfName, String fieldValue) {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+		getCodingForm_Search().SendKeys(cfName);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingForm_DeleteButton(fieldValue));
+		getCodingForm_DeleteButton(fieldValue).waitAndClick(10);
+		base.waitTime(4);
+		if (getCodingForm_SGValidation_ButtonYes().isElementAvailable(1)) {
+			base.waitForElement(getCodingForm_SGValidation_ButtonYes());
+			getCodingForm_SGValidation_ButtonYes().waitAndClick(20);
+		} else {
+			System.out.println("Coding form Already deleted");
+		}
+	}
+
 
 	/**
 	 * @author Indium-Baskar date: 24/09/2021 Modified date: NA

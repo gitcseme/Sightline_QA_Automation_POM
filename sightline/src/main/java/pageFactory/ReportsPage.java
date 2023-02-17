@@ -513,7 +513,8 @@ public class ReportsPage {
 		base.waitForElement(getBullHornIcon());
 		getBullHornIcon().waitAndClick(10);
 		base.waitForElement(getFileDownloaded());
-		getFileDownloaded().Click();
+		base.waitTime(4);
+		getFileDownloaded().waitAndClick(5);
 		getBullHornIcon().waitAndClick(2);
 	}
 
