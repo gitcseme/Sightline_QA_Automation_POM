@@ -1170,7 +1170,7 @@ public class AssignmentsPage {
 
 	public Element getSelectCopyAssignments(String assignmentName) {
 		return driver.FindElementByXPath(
-				"(//*[@id='GridAssignment']/tbody//tr/*[contains(text(),'" + assignmentName + "')])[last()]");
+				"(//*[@id='GridAssignment']/tbody//tr/td[contains(text(),'" + assignmentName + "')])[last()]");
 	}
 
 	public Element getAssgn_ManageRev_Action_CompleteAllDocs() {
@@ -1191,7 +1191,7 @@ public class AssignmentsPage {
 
 	// modified 7/02/2022
 	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,"+assignmentName+")]/../following-sibling::td[6]/a[contains(.,'Draw')]");
+		return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td/a[contains(.,'"+assignmentName+"')]/../following-sibling::td[2]//a[contains(.,'Draw')]");
 //				"//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"
 //				+ assignmentName + "')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
 	}
@@ -2330,6 +2330,7 @@ public class AssignmentsPage {
 				return getAssignment_ManageReviewersTab().Visible();
 			}
 		}), Input.wait60);
+		driver.Navigate().refresh();
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 
 		String count = getAssgn_ManageRev_revdoccount().getText();
@@ -4503,7 +4504,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
 		getSelect2ndUserInDistributeTab().Click();
 		bc.waitForElement(getDistributeBtn());
-		getDistributeBtn().Click();
+		getDistributeBtn().waitAndClick(5);
 		bc.stepInfo("Assignment distributed to the reviewer successfully");
 		return reviwersList;
 	}
@@ -5203,7 +5204,12 @@ public class AssignmentsPage {
 	 */
 
 	public String addMultipleReviewersAndDistributeToOnereviewer() throws InterruptedException {
+		
 		bc.waitForElement(getAssignment_ManageReviewersTab());
+		
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		bc.waitForElement(getAddReviewersBtn());
 		getAddReviewersBtn().waitAndClick(10);
@@ -5621,6 +5627,7 @@ public class AssignmentsPage {
 			SelectCodingform(codingForm);
 			driver.scrollPageToTop();
 			bc.waitForElement(getAssignmentSaveButton());
+			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 			getAssignmentSaveButton().Click();
 			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 			bc.passedStep("Assignment " + assignmentName + " created with CF " + codingForm);
@@ -6442,7 +6449,7 @@ public class AssignmentsPage {
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
+//		bc.CloseSuccessMsgpopup();
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to three reviewers successfully");
 
@@ -7277,9 +7284,11 @@ public class AssignmentsPage {
 		getAssignmentAction_CopyAssignment().waitAndClick(5);
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Record copied successfully");
+		bc.waitForElement(getSelectCopyAssignments(assignmentName));
+		bc.wait(2);
 		getSelectCopyAssignments(assignmentName).waitAndClick(3);
 		driver.scrollPageToTop();
-		getAssignmentActionDropdown().waitAndClick(3);
+		getAssignmentActionDropdown().waitAndClick(5);
 		bc.waitForElement(getAssignmentAction_EditAssignment());
 		getAssignmentAction_EditAssignment().waitAndClick(3);
 		bc.stepInfo("Assignment edit option is clicked");
@@ -7358,13 +7367,14 @@ public class AssignmentsPage {
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 			getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
-			bc.CloseSuccessMsgpopup();
+//			bc.CloseSuccessMsgpopup();
 			getDistributeBtn().waitAndClick(3);
 			bc.stepInfo("Documents are distributed to reviewer successfully");
 			bc.CloseSuccessMsgpopup();
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rev1userName).waitAndClick(10);
@@ -7377,6 +7387,9 @@ public class AssignmentsPage {
 					"Getting expected message when complete the documents for the reviewer whose not assigned with no documents");
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rev1userName).waitAndClick(10);
 			getAssgn_ManageRev_Action().waitAndClick(10);
 			getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
@@ -7385,6 +7398,10 @@ public class AssignmentsPage {
 					"Getting expected message when uncomplete the documents for the reviewer whose not assigned with no documents");
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
 			getAssgn_ManageRev_Action().waitAndClick(10);
@@ -7412,6 +7429,9 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
 			getAssgn_ManageRev_Action().waitAndClick(10);
@@ -7464,13 +7484,17 @@ public class AssignmentsPage {
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 			getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
-			bc.CloseSuccessMsgpopup();
+//			bc.CloseSuccessMsgpopup();
 			int Totalpages = (int) Math.ceil(count / 2);
 			getAssgn_docsToDistribute().SendKeys(Integer.toString(Totalpages));
 			getDistributeBtn().waitAndClick(3);
 			bc.stepInfo("Documents are distributed to reviewer successfully");
 			bc.CloseSuccessMsgpopup();
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
@@ -7484,6 +7508,9 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
 			getAssgn_ManageRev_Action().waitAndClick(10);
@@ -7503,6 +7530,7 @@ public class AssignmentsPage {
 			bc.stepInfo("Documents are distributed to reviewer successfully");
 			bc.CloseSuccessMsgpopup();
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
@@ -7623,6 +7651,7 @@ public class AssignmentsPage {
 	 * @throws InterruptedException
 	 * @return it returns the unassigned document count
 	 */
+	
 	public int distributeHalfTheDocsToReviewer(int count) throws InterruptedException {
 
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -7638,7 +7667,7 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
+//		bc.CloseSuccessMsgpopup();
 		int Total = (int) Math.ceil(count / 2);
 		int unassignedDocs = count - Total;
 		getAssgn_docsToDistribute().SendKeys(Integer.toString(Total));
@@ -7649,6 +7678,8 @@ public class AssignmentsPage {
 		bc.getCloseSucessmsg().waitAndClick(10);
 		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 		bc.waitForElement(getAssignment_ManageReviewersTab());
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
@@ -7846,7 +7877,10 @@ public class AssignmentsPage {
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
-			bc.waitTime(5);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			bc.waitForElement(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_CompleteAllDocs());
@@ -7855,6 +7889,10 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_UnCompleteAllDocs());
 			bc.VerifySuccessMessage("Documents successfully un-completed for user.");
@@ -7862,12 +7900,15 @@ public class AssignmentsPage {
 			bc.waitForElement(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_removedoc());
 			bc.VerifySuccessMessage("Action saved successfully");
 			bc.passedStep("Documents are removed for the reviewer successfully");
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -7892,6 +7933,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 		selectActionsInManageRev(getAssgn_ManageRev_Action_ViewDocview());
 		bc.waitForElement(assignmentNameInDocViewPg(assignmentName));
+		driver.Navigate().refresh();
 		if (assignmentNameInDocViewPg(assignmentName).isDisplayed() == true) {
 			bc.passedStep("Doc-view page of the reviewer displayed successfully");
 		} else {
@@ -7910,6 +7952,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 		selectActionsInManageRev(getAssgn_ManageRev_Action_ViewDoclist());
 		bc.waitForElementCollection(getAllDocIds_DocListreviewerPg());
+		bc.waitTime(3);
 		if (docListPageTitle().isDisplayed() == true) {
 			bc.passedStep("DocList page of the reviewer displayed successfully");
 		} else {
@@ -8174,7 +8217,7 @@ public class AssignmentsPage {
 	public String selectAssignmentToView(String assignmentName) {
 		String compareCount = null;
 		try {
-			driver.Navigate().refresh();
+//			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getNumberOfAssignmentsToBeShown());
 			getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
@@ -8312,6 +8355,11 @@ public class AssignmentsPage {
 	 */
 	public void verifyDrawPoolToggledisplay(String assignmentName, String type) {
 		if (type.equalsIgnoreCase("enabled")) {
+			try {
+			driver.scrollingToElementofAPage(getAssignmentsDrawPoolInreviewerPg(assignmentName));
+			}catch(Exception e) {
+				
+			}
 			if (getAssignmentsDrawPoolInreviewerPg(assignmentName).isDisplayed() == true) {
 				bc.passedStep("Draw pool link is displayed");
 			} else {
@@ -8456,6 +8504,7 @@ public class AssignmentsPage {
 			selectActionsInManageRev(getAssgn_ManageRev_Action_Unassignuser());
 			bc.passedStep("Selected reviewer unassigned successfully");
 			bc.waitForElement(getDistributeTab());
+			driver.Navigate().refresh();
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getEditAggn_Distribute_Unassgndoc());
 			bc.waitTillTextToPresent(getEditAggn_Distribute_Unassgndoc(), Integer.toString(pureHits));
@@ -8501,7 +8550,10 @@ public class AssignmentsPage {
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 			bc.waitForElement(getAssignment_ManageReviewersTab());
 			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_CompleteAllDocs());
 			bc.VerifySuccessMessage("Documents successfully completed for user.");
@@ -8509,6 +8561,12 @@ public class AssignmentsPage {
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_UnCompleteAllDocs());
 			bc.VerifySuccessMessage("Documents successfully un-completed for user.");
@@ -8581,6 +8639,9 @@ public class AssignmentsPage {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(Input.rmu1userName));
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).ScrollTo();
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
@@ -9302,8 +9363,7 @@ public class AssignmentsPage {
 			getParentAssignmentGroupName().Displayed();
 			bc.waitForElement(getSelectedClassification());
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			SelectCodingform(codingForm);
 
 			bc.waitForElement(getAssignmentSaveButton());
 			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
@@ -10717,7 +10777,7 @@ public class AssignmentsPage {
 				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel",
 				"Display Document History Tab", "Allow users to save without completing",
 				"Complete When Coding Stamp Applied",
-				"Save the coding form automatically when switched to different coding form" };
+				"Save the document coding automatically when switching to different coding form" };
 
 		// To Enable All Toogle
 		for (int D = 0; D < elementNamesEnabled.length; D++) {

@@ -437,7 +437,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldge_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li[2]/a[contains(text()='" + tag + "')]");
 	}
 
 	public Element getSelectTechnicalIssueTag() {
@@ -445,8 +445,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldged_TagTree(String tag) {
-		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element getPriveldge_PDFTagTree(String tag) {
@@ -1819,6 +1818,10 @@ public class ProductionPage {
 	public Element getOptionExportSet() {
 		return driver.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'Export Set')]");
 	}
+	
+	public Element getExportSet() {
+		return driver.FindElementByXPath("//select[@id='ProductionSets']");
+	} 
 
 	public Element getAddNewExport() {
 		return driver.FindElementByXPath("//a[text()='Add a New Export']");
@@ -1933,8 +1936,7 @@ public class ProductionPage {
 	}
 
 	public Element getDisabledSelectRedactionTags() {
-		return driver.FindElementByXPath(
-				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']");
 	}
 
 	public Element getBeginningSubBatesNumber() {
@@ -2314,6 +2316,9 @@ public class ProductionPage {
 	public Element getNativeDocsPlaceholder() {
 		return driver.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor']");
 	}
+	public Element getNativeDocsPlaceholder1() {
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor redactor-placeholder']");
+	}
 
 	public Element getPriviledgedDoogle() {
 		return driver.FindElementById("chkEnabledforPrivDocs");
@@ -2416,8 +2421,7 @@ public class ProductionPage {
 	}
 
 	public Element getKeepDocsMasterDate() {
-		return driver.FindElementByXPath(
-				"//select[@id='lstSortByKeepDocsWithNoMasterDate']//option[text()='At the beginning']");
+		return driver.FindElementByXPath("//select[@id='lstSortByKeepDocsWithNoMasterDate']//option[text()='At the beginning']");
 	}
 
 	public Element getAdvancedProductionToggle() {
@@ -2429,13 +2433,11 @@ public class ProductionPage {
 	}
 
 	public Element getTranslationsCheckBox() {
-		return driver
-				.FindElementByXPath("//div[@id='advanced-production-accordion']//a[contains(text(),'Translations')]");
+		return driver.FindElementByXPath("//div[@id='advanced-production-accordion']//a[contains(text(),'Translations')]");
 	}
 
 	public Element getSelectDatabaseFiles() {
-		return driver.FindElementByXPath(
-				"//input[@class='clsTranslationFileLst']//following::td[contains(text(),'Database Files')]/..//i");
+		return driver.FindElementByXPath("//input[@class='clsTranslationFileLst']//following::td[contains(text(),'Database Files')]/..//i");
 	}
 
 	public Element getDocumentsOfOCR() {
@@ -2447,8 +2449,7 @@ public class ProductionPage {
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
-				+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"+ RedactionTag1 + "']/i");
 
 	}
 
@@ -5537,8 +5538,8 @@ public class ProductionPage {
 	 * @param This           method adds new production in home page
 	 */
 	public String addANewProduction(String productionName) throws InterruptedException {
-String URl = driver.getUrl();
 
+		String URl = driver.getUrl();
 		if(URl.contains("Production/Home")){
 			System.out.println(URl);
 		}
@@ -6088,8 +6089,8 @@ String URl = driver.getUrl();
 		base.waitForElement(getClkSelect());
 		getClkSelect().waitAndClick(10);
 		Thread.sleep(Input.wait30 / 10);
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(tagname);
 
 	}
 
@@ -6193,11 +6194,12 @@ String URl = driver.getUrl();
 
 		// asserting for disabled tag
 
-		boolean flag;
+		
 		base.waitForElement(getDisabledSelectRedactionTags());
-		flag = getDisabledSelectRedactionTags().GetAttribute("class").contains("disabled");
+		String flag = getDisabledSelectRedactionTags().GetAttribute("class");
+		System.out.println(flag);
 		driver.waitForPageToBeReady();
-		if (!flag) {
+		if (flag.contains("disabled")) {
 			softAssertion.assertTrue(true);
 			base.passedStep("ClickMarkIncomplete enables ALready burn redaction Tags");
 
@@ -9748,11 +9750,17 @@ String URl = driver.getUrl();
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void selectExportSetFromDropDown() {
+		
 		base.waitForElement(getProdExport_ProductionSets());
 		getProdExport_ProductionSets().Click();
+		String export =getExportSet().getText();
+		if(export.contains("Export Set")) {
 		base.waitForElement(getOptionExportSet());
 		getOptionExportSet().Click();
-
+		}else {
+			String ExportSet="Exportset" + Utility.dynamicNameAppender();
+			createNewExport(ExportSet);
+		}
 	}
 
 	/**
@@ -14835,10 +14843,13 @@ String URl = driver.getUrl();
 			driver.waitForPageToBeReady();
 			base.waitForElement(getTechissue_SelectTagButton());
 			getTechissue_SelectTagButton().waitAndClick(10);
-			getPriveldge_TagTree(tagname).isElementAvailable(10);
-			getPriveldge_TagTree(tagname).waitAndClick(5);
+			driver.scrollingToElementofAPage(getPriveldged_TagTree(tagname));
+			//getPriveldged_TagTree(tagname).ScrollTo();
+			getPriveldged_TagTree(tagname).isElementAvailable(10);
+			getPriveldged_TagTree(tagname).waitAndClick(5);
 			base.waitForElement(getPriveldge_TagTree_SelectButton());
-			getPriveldge_TagTree_SelectButton().waitAndClick(15);
+			Thread.sleep(3000);
+			getPriveldge_TagTree_SelectButton().waitAndClick(30);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getTechInsertMetadataField());
 			getTechInsertMetadataField().waitAndClick(10);
@@ -16768,8 +16779,8 @@ String URl = driver.getUrl();
 		base.waitForElement(getClkSelect());
 		getClkSelect().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(Input.technicalIssue);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(Input.technicalIssue);
 		base.stepInfo("Native placeholder is filled");
 	}
 
@@ -23084,6 +23095,38 @@ String URl = driver.getUrl();
 		} else {
 			base.failedStep("PDF File not generated");
 			}
-
 	}
+	
+    
+    /**
+     * @author Sireesha.Gattu
+     * @param Tag
+     */
+    public void burnRedactionWithTag(String Tag) {
+            try {
+                    base.waitForElement(getClkLink_selectingRedactionTags());
+                    getClkLink_selectingRedactionTags().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(getClkBtn_selectingRedactionTags());
+                    getClkBtn_selectingRedactionTags().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    driver.waitForPageToBeReady();
+                    BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+                    base.waitForElement(BurnRedactionCheckBox_Imp(Tag));
+                    BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+                    BurnRedactionCheckBox_Imp(Tag).waitAndClick(10);
+                    
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(getClk_selectBtn());
+                    getClk_selectBtn().waitAndClick(10);
+                    driver.waitForPageToBeReady();
+                    base.waitForElement(gettextRedactionPlaceHolder());
+                    gettextRedactionPlaceHolder().waitAndClick(10);
+                    gettextRedactionPlaceHolder().SendKeys(searchString4);
+                    base.stepInfo("Burn redaction PDF section is filled successfully");
+            } catch (Exception e) {
+                    e.printStackTrace();
+                    base.failedStep("Exception occcured while handling burnredaction with redaction tag" + e.getMessage());
+            }
+    }
 }

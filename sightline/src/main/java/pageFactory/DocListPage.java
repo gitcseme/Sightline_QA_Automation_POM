@@ -78,46 +78,47 @@ public class DocListPage {
 	public Element getGetDocFIleTypeFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileType')]");
 	}
-	//Doclist Inline Filters
+
+	// Doclist Inline Filters
 	public Element getDocList_DocfiletypeFilter() {
 		return driver.FindElementByXPath("//input[@id='DocFileType']");
 	}
-	
+
 	public Element getDocList_MasterDateFilter() {
 		return driver.FindElementByXPath("//input[@id='MasterDate']");
 	}
-	
+
 	public Element getDocList_CustodianName() {
 		return driver.FindElementByXPath("//input[@id='CustodianName']");
 	}
-	
+
 	public Element getDocList_DocId() {
 		return driver.FindElementByXPath("//input[@id='DocID']");
 	}
-	
+
 	public Element getDocList_NoDataFilterResult() {
 		return driver.FindElementByXPath("//td[contains(text(),'Your query returned no data')]");
 	}
-	
+
 	public Element getDocList_DocfilenameFilter() {
 		return driver.FindElementByXPath("//input[@id='DocFileName']");
 	}
-	
+
 	public Element getDocList_CustodianFirstRowValue() {
 		return driver.FindElementByXPath("(//td[contains(text(),'P Allen')])[1]");
-	
+
 	}
-	public Element getDocList_DocfiletypeFirstRowValue(){
+
+	public Element getDocList_DocfiletypeFirstRowValue() {
 		return driver.FindElementByXPath("//td[contains(text(),'Document')]");
-	
+
 	}
-	
-	public Element getDocList_MasterDateFilterValue(){
+
+	public Element getDocList_MasterDateFilterValue() {
 		return driver.FindElementByXPath("//td[contains(text(),	'2010/04/06 22:18:00')]");
-	
+
 	}
-	
-	
+
 	public Element getEmailAuthNameFilter() {
 		return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]");
 	}
@@ -481,6 +482,10 @@ public class DocListPage {
 	public Element getDocID(int rowNumber) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + rowNumber + "]//td[3]");
 	}
+	
+	public Element getDocID(int rowNumber,int colValue) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + rowNumber + "]//td[" + colValue + "]");
+	}
 
 	public Element getDocCheckBox(int rowNumber) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + rowNumber + "]//i");
@@ -594,14 +599,17 @@ public class DocListPage {
 	}
 
 	public Element getPreviedDocCloseButton() {
-		return driver
-				.FindElementByXPath("//h3[text()='Preview Document']/following-sibling::button");
+		return driver.FindElementByXPath("//h3[text()='Preview Document']/following-sibling::button");
 	}
 
 	public Element getFirstRowDocumentID() {
-		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[1]//td[3]");
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[1]//td[4]");
 	}
 
+	public Element getFirstRowDocumentID(int rowno,int colValue) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + rowno + " ]//td[" + colValue + "]");
+	}
+	
 	public Element getPreviedDocumentId() {
 		return driver.FindElementByXPath("//li[@class='doc-id pull-right']//span[2]");
 	}
@@ -875,6 +883,14 @@ public class DocListPage {
 		return driver.FindElementByXPath("//th[text()='EmailAuthorDomain']/following::tr[" + col + "]//td[8]");
 	}
 
+	public Element getAssertEmaialAuthorDomain(int rowValue,int colValue) {
+		return driver.FindElementByXPath("//th[text()='EmailAuthorDomain']/following::tr[" + rowValue + "]//td[" + colValue + "]");
+	}
+	
+	public ElementCollection getDocListTableHeader() {
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//th");
+	}
+	
 	public Element getActiveFiltersinEmailDomain() {
 		return driver.FindElementByXPath("//div[@id='activeFilters']//li");
 	}
@@ -955,7 +971,7 @@ public class DocListPage {
 	}
 
 	public Element getAssertEmailAuthorName(int colno) {
-		return driver.FindElementByXPath("//th[text()='EmailAuthorName']/following::tr[" + colno + "]//td[8]");
+		return driver.FindElementByXPath("//th[text()='EmailAuthorName']/following::tr[" + colno + "]//td[9]");
 	}
 
 	public Element getActiveFilterInEmailALLDomain(String emailDomainName) {
@@ -1057,6 +1073,10 @@ public class DocListPage {
 
 	public Element getRowCountOfDocFileSize(int colno) {
 		return driver.FindElementByXPath("//th[text()='DocFileSize']/following::tr[" + colno + "]//td[8]");
+	}
+	
+	public Element getRowCountOfDocFileSize(int colno,int rowno) {
+		return driver.FindElementByXPath("//th[text()='DocFileSize']/following::tr[" + colno + "]//td[" + rowno + "]");
 	}
 
 	// Added by Raghuram
@@ -1317,7 +1337,7 @@ public class DocListPage {
 
 	public Element getDocList_BlankSource(String docBlank, int size) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='"+docBlank+"']//following-sibling::td//parent::tr/td['"+size+"']//label/i");
-
+		
 	}
 
 	public Element getDocList_PlusIcon() {
@@ -1395,6 +1415,7 @@ public class DocListPage {
 	public Element getDocListFilterTable() {
 		return driver.FindElementByXPath("//table[@id='dtDocList']/tbody/tr");
 	}
+
 	public Element getDocListDefaultTable() {
 		return driver.FindElementByXPath("//table[@id='dtDocList']/tbody");
 	}
@@ -1445,7 +1466,7 @@ public class DocListPage {
 	}
 
 	public Element getDocListPerviewBtn() {
-		return driver.FindElementByXPath("//a[text()='Preview Document']");
+		return driver.FindElementByXPath("//a[@class='fa fa-eye preview']");
 	}
 
 	public Element getTagEmailDuplicate() {
@@ -1570,42 +1591,42 @@ public class DocListPage {
 	public Element getMetaDataBoxInDocList() {
 		return driver.FindElementByXPath("//div[@class='popover-content']/div");
 	}
-	
+
 	public Element getFilterFileds() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr[2]");
 	}
-	
+
 	public Element CustodianNameFilterFileds() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr[2]/th[5]/input[@id='CustodianName']");
 	}
-	
+
 	public Element CustodianNameAfterFilter(String CustodianName) {
 		return driver.FindElementByXPath("//td[contains(text(),'" + CustodianName + "')]");
 	}
-	
+
 	public Element DocFileTypeFilterFileds() {
 		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/thead/tr[2]/th[7]/input[@id='DocFileType']");
 	}
-	
+
 	public Element DocFileTypeAfterFilter(String type) {
 		return driver.FindElementByXPath("//td[contains(text(),'" + type + "')]");
 	}
-	
+
 	public Element eyeballIconColPosition() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']//thead/tr[1]/th[3]");
 	}
-	
+
 	public Element FilterBoxUnderNeacthCheckbox() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']//thead/tr[2]/th[2]");
 	}
 
-	public String AfterFilterverifyDocFileType(String type ) {
+	public String AfterFilterverifyDocFileType(String type) {
 		DocFileTypeAfterFilter(type).isDisplayed();
 		System.out.println(type);
 		return type;
 	}
-	
-	public String AfterFilterverifyCustodianName(String CustodianName ) {
+
+	public String AfterFilterverifyCustodianName(String CustodianName) {
 		CustodianNameAfterFilter(CustodianName).isDisplayed();
 		System.out.println(CustodianName);
 		return CustodianName;
@@ -1667,10 +1688,10 @@ public class DocListPage {
 			}
 		}), Input.wait30);
 		CustodianNameFilterFileds().waitAndClick(10);
-		CustodianNameFilterFileds().SendKeys(CustodianName);		
+		CustodianNameFilterFileds().SendKeys(CustodianName);
 		driver.waitForPageToBeReady();
 	}
-	
+
 	public void docfiletypeFilter(String type) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1678,10 +1699,10 @@ public class DocListPage {
 			}
 		}), Input.wait30);
 		DocFileTypeFilterFileds().waitAndClick(10);
-		DocFileTypeFilterFileds().SendKeys(type);		
+		DocFileTypeFilterFileds().SendKeys(type);
 		driver.waitForPageToBeReady();
 	}
-	
+
 	public void dateFilter(String option, String fromDate, String toDate) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1738,12 +1759,8 @@ public class DocListPage {
 
 	public void DoclistPreviewNonAudio() throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getColumnText(1, 8).Visible();
-			}
-		}), Input.wait60);
-		getColumnText(1, 8).Click();
+		base.waitForElement(getDocListPerviewBtn());
+		getDocListPerviewBtn().waitAndClick(5);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1768,12 +1785,8 @@ public class DocListPage {
 
 	public void DoclistPreviewAudio() throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getColumnText(1, 8).Visible();
-			}
-		}), Input.wait60);
-		getColumnText(1, 8).waitAndClick(10);
+		base.waitForElement(getDocListPerviewBtn());
+		getDocListPerviewBtn().waitAndClick(5);
 		Thread.sleep(5000);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2098,7 +2111,7 @@ public class DocListPage {
 		getContinueButton().waitAndClick(10);
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(10);
-		
+
 		driver.Manage().window().maximize();
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
@@ -2427,6 +2440,8 @@ public class DocListPage {
 				}
 			}
 			Random rand = new Random();
+			int colValue = base.getIndex(getDocListTableHeader(), "DocID");
+			System.out.println(colValue);
 			for (int i = 0; i < numberOfDocs; i++) {
 				final int random1 = rand.nextInt(10);
 				driver.scrollingToBottomofAPage();
@@ -2435,7 +2450,7 @@ public class DocListPage {
 					base.waitTillElemetToBeClickable(getDocCheckBox(random1));
 					getDocCheckBox(random1).waitAndClick(10);
 					;
-					arList.add(getDocID(random1).getText().trim());
+					arList.add(getDocID(random1,colValue).getText().trim());
 				} else if (random1 == 0) {
 					i--;
 				}
@@ -2661,11 +2676,11 @@ public class DocListPage {
 	 * @author Gopinath
 	 * @Description : Method to verify selected document ID to previewed Doc id.
 	 */
-	public void verifySelectedDocumetIdToPreviewedDocId() {
+	public void verifySelectedDocumetIdToPreviewedDocId(int rowno,int colValue) {
 		try {
-			base.waitForElement(getFirstRowDocumentID());
-			base.waitTillElemetToBeClickable(getFirstRowDocumentID());
-			String firstRowDocId = getFirstRowDocumentID().getText().trim();
+			base.waitForElement(getFirstRowDocumentID(rowno,colValue));
+			base.waitTillElemetToBeClickable(getFirstRowDocumentID(rowno,colValue));
+			String firstRowDocId = getFirstRowDocumentID(rowno,colValue).getText().trim();
 			DoclistPreviewNonAudio();
 			base.waitForElement(getPreviedDocumentId());
 			base.waitTillElemetToBeClickable(getPreviedDocumentId());
@@ -3002,8 +3017,8 @@ public class DocListPage {
 			}
 			driver.Manage().window().maximize();
 			if (getPopUpOkBtn().isElementAvailable(5)) {
-                getPopUpOkBtn().waitAndClick(10);
-            }
+				getPopUpOkBtn().waitAndClick(10);
+			}
 			base.VerifySuccessMessage("Records saved successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3304,11 +3319,13 @@ public class DocListPage {
 			}
 
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			int colValue = base.getIndex(getDocListTableHeader(), "EmailAuthorDomain");
+			System.out.println(colValue);
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
-				base.waitForElement(getAssertEmaialAuthorDomain(D));
-				AssertDate = getAssertEmaialAuthorDomain(D).getText();
+				base.waitForElement(getAssertEmaialAuthorDomain(D,colValue));
+				AssertDate = getAssertEmaialAuthorDomain(D,colValue).getText();
 				System.out.println(AssertDate);
 
 				if (!AssertDate.contains(emailDomainName)) {
@@ -3316,6 +3333,7 @@ public class DocListPage {
 							+ emailDomainName + " are not same");
 				}
 			}
+
 
 			base.passedStep(
 					"The Filter AuthorName:" + AssertDate + " and Document AuthorName" + emailDomainName + " are same");
@@ -3351,7 +3369,7 @@ public class DocListPage {
 			getApplyFilters().Click();
 			String output = null;
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
 				base.waitForElement(getAssertEmaialAuthorDomain(D));
@@ -3517,13 +3535,14 @@ public class DocListPage {
 			}
 
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
 				base.waitForElement(getAssertEmailAllDomains(D));
 				base.waitTillElemetToBeClickable(getAssertEmailAllDomains(D));
-				AssertDate = getAssertEmailAllDomains(D).getText();
+			    AssertDate = getAssertEmailAllDomains(D).getText();
 				System.out.println("The expected text:" + AssertDate);
+
 				if (!AssertDate.contains(emailDomainName)) {
 					base.failedStep("The Filtered Emailalldomain:  " + emailDomainName
 							+ "  and  Document AuthorName contains " + AssertDate + "  are not same");
@@ -3531,8 +3550,7 @@ public class DocListPage {
 			}
 
 			base.passedStep("The Filtered Emailalldomain: " + emailDomainName + "  and Document AuthorName "
-					+ AssertDate + "  are same");
-			driver.waitForPageToBeReady();
+					+ AssertDate + "  are same");			driver.waitForPageToBeReady();
 			base.waitForElement(getClearFilters());
 			base.waitTillElemetToBeClickable(getClearFilters());
 			getClearFilters().Click();
@@ -3570,7 +3588,7 @@ public class DocListPage {
 			getApplyFilters().Click();
 			String output = null;
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
 				base.waitForElement(getAssertEmailAllDomains(D));
@@ -3646,7 +3664,7 @@ public class DocListPage {
 			}
 
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
 				base.waitForElement(getAssertEmailAuthorName(D));
@@ -3701,7 +3719,7 @@ public class DocListPage {
 			getApplyFilters().Click();
 			String output = null;
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			for (int D = 2; D <= getRowCount().size(); D++) {
 				driver.waitForPageToBeReady();
 				base.waitForElement(getAssertEmailAuthorName(D));
 				base.waitTillElemetToBeClickable(getAssertEmailAuthorName(D));
@@ -3806,7 +3824,7 @@ public class DocListPage {
 		}
 	}
 
-	/**
+/**
 	 * @author : Gopinath
 	 * @Description : Suffling the column in doclist page.
 	 */
@@ -4179,7 +4197,7 @@ public class DocListPage {
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getRowCount());
 		String AssertAuthourName = null;
-		for (int D = 1; D <= getRowCount().size(); D++) {
+		for (int D = 2; D <= getRowCount().size(); D++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getAssertEmailAuthorName(D));
 			AssertAuthourName = getAssertEmailAuthorName(D).getText();
@@ -4605,10 +4623,12 @@ public class DocListPage {
 
 			driver.waitForPageToBeReady();
 			String output = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			int colValue = base.getIndex(getDocListTableHeader(), "DocFileSize");
+			System.out.println(colValue);
+			for (int D = 2; D <= getRowCount().size(); D++) {
 				driver.waitForPageToBeReady();
-				base.waitForElement(getRowCountOfDocFileSize(D));
-				output = getRowCountOfDocFileSize(D).getText();
+				base.waitForElement(getRowCountOfDocFileSize(D,colValue));
+				output = getRowCountOfDocFileSize(D,colValue).getText();
 
 				System.out.println("Doc File size:" + output);
 				if (Integer.valueOf(output) < Integer.valueOf(DocFileSizeInActiveFilter)) {
@@ -5031,8 +5051,9 @@ public class DocListPage {
 	 *                     document
 	 */
 	public void verifyPlayCountersDisplay() {
-		base.waitForElement(getColumnText(1, 8));
-		getColumnText(1, 8).waitAndClick(10);
+
+		base.waitForElement(getDocListPerviewBtn());
+		getDocListPerviewBtn().waitAndClick(5);
 		base.waitForElement(getDocListPreview_AudioStartTime());
 		if (getDocListPreview_AudioStartTime().getWebElement().isDisplayed()) {
 			base.waitForElement(getDocList_Preview_AudioEndTime());
@@ -5573,11 +5594,13 @@ public class DocListPage {
 			}
 
 			String AssertDate = null;
-			for (int D = 1; D <= getRowCount().size(); D++) {
+			int colValue = base.getIndex(getDocListTableHeader(), "EmailAuthorDomain");
+			System.out.println(colValue);
+			for (int D = 2; D <= getRowCount().size(); D++) {
 
 				driver.waitForPageToBeReady();
-				base.waitForElement(getAssertEmaialAuthorDomain(D));
-				AssertDate = getAssertEmaialAuthorDomain(D).getText();
+				base.waitForElement(getAssertEmaialAuthorDomain(D,colValue));
+				AssertDate = getAssertEmaialAuthorDomain(D,colValue).getText();
 				System.out.println(AssertDate);
 
 				if (!AssertDate.contains(emailDomainName)) {
@@ -5596,7 +5619,7 @@ public class DocListPage {
 			base.failedStep("Failed to verify email author domain name" + e.getMessage());
 		}
 	}
-
+	
 	/**
 	 * @author Vijaya.Rani
 	 * @Description : Comparing Email author name with table Email author name .
@@ -6118,7 +6141,6 @@ public class DocListPage {
 			base.waitForElement(getDocListAddFliterBtn());
 			base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
 			getDocListAddFliterBtn().Click();
-		
 
 			dateFilter("between", "2021/07/01", "2022/02/15");
 			base.waitTime(8);
@@ -6739,7 +6761,7 @@ public class DocListPage {
 		for (int i = 1; i <= count; i++) {
 			metadataValue = getDataInDoclist(i, column).getText();
 			if (!(metadataValue.isEmpty())) {
-				if(metadataValue.contains(";")) {
+				if (metadataValue.contains(";")) {
 					String[] value = metadataValue.split(";");
 					metadataValue = value[0];
 				}

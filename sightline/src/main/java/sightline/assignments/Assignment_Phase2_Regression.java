@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -1641,6 +1642,7 @@ public class Assignment_Phase2_Regression {
 				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
 		String CountOfDocsAssignToReviewers = Integer
 				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[0]);
+		System.out.println(CountOfDocsAssignToReviewers);
 		// few documents should be distributed to reviewers
 		assignment.distributeGivenDocCountToReviewers(CountOfDocsAssignToReviewers);
 
@@ -1657,7 +1659,9 @@ public class Assignment_Phase2_Regression {
 
 		// Click On Draw Link of the Assignment in DashBoard page
 		baseClass.waitForElement(assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
+		Actions action=new Actions(driver.getWebDriver());
+		action.moveToElement(assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName).getWebElement()).click().build().perform();
+//		assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 
 		// verify On click of Draw from pool' all documents from same thread should be
 		// assigned to the reviewer together irrespective of the draw from pool size to
@@ -1665,7 +1669,7 @@ public class Assignment_Phase2_Regression {
 		driver.Navigate().refresh();
 		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
 				assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
-		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2
+		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2 
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
 		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
@@ -1885,7 +1889,9 @@ public class Assignment_Phase2_Regression {
 
 		assignment.assignwithSamplemethod(assignmentName1, "Percentage", "10");
 		assignment.navigateToAssignmentsPage();
-		assignment.SelectAssignmentToViewinDocview(assignmentName1);
+		
+		assignment.selectAssignmentToViewinDocview(assignmentName1);
+		
 
 		DocViewPage docView = new DocViewPage(driver);
 		docView.clickOnPersistantHitEyeIcon();
@@ -2337,6 +2343,7 @@ public class Assignment_Phase2_Regression {
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("Create keywords");
 		KeywordPage keyPage = new KeywordPage(driver);
+		keyPage.navigateToKeywordPage();
 		for (int i = 0; i < keywords.length; i++) {
 			keyPage.addKeyword(keywords[i], color);
 		}
@@ -2407,6 +2414,10 @@ public class Assignment_Phase2_Regression {
 		// Taking count of Left To Do /Total Docs In Assignment/ Distributed to User/
 		// Complete columns from manage assignments page .
 		baseClass.stepInfo("**After uncompleting All docs verifying Various counts of docs coulumn in asignemnt**");
+		assignment.viewSelectedAssgnUsingPagination(assignmentName);
+		assignment.getSelectAssignment(assignmentName).isElementAvailable(2);
+		assignment.getSelectAssignment(assignmentName).ScrollTo();
+		assignment.getSelectAssignment(assignmentName).Click();
 		String leftToDo = assignment.getRowValueFromAssignmentTable("Left To Do", assignmentName);
 		String totalDocsInAsign = assignment.getRowValueFromAssignmentTable("Total Docs In Assignment", assignmentName);
 		String distributesDocsCount = assignment.getRowValueFromAssignmentTable("Distributed to User", assignmentName);
@@ -2735,7 +2746,12 @@ public class Assignment_Phase2_Regression {
 		}
 		driver.waitForPageToBeReady();
 		assignment.navigateBack(1);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		
+		try {
+		driver.scrollingToElementofAPage(assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName));
+		}catch(Exception e) {}
 		boolean drawLink = assignment.getAssignmentsDrawPoolInreviewerPg(assignmentName).isDisplayed();
 		sa.assertTrue(drawLink);
 		sa.assertAll();
@@ -3446,6 +3462,7 @@ public class Assignment_Phase2_Regression {
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		String userToAdd[] = { Input.rev1userName };
 		assignment.assignReviewers(userToAdd);
+		driver.waitForPageToBeReady();
 		assignment.getAssignment_ManageReviewersTab().waitAndClick(10);
 		if (assignment.getAssgn_ManageRev_selectReviewer(Input.rev1userName).isElementAvailable(5)) {
 			baseClass.passedStep("Selected reviewr from reviewer popup displayed in manage reviewers table");
@@ -4039,10 +4056,13 @@ public class Assignment_Phase2_Regression {
 		// redistributing the documents to reviewers.
 		baseClass.stepInfo("redistributing the documents to reviewers.");
 		assignment.selectReviewerAndClickRedistributeAction();
+		Actions act=new Actions(driver.getWebDriver());
 		baseClass.waitForElement(assignment.getSelectReviewerInRedistributedDocsTab(Input.pa1userName));
-		assignment.getSelectReviewerInRedistributedDocsTab(Input.pa1userName).waitAndClick(5);
+		act.moveToElement(assignment.getSelectReviewerInRedistributedDocsTab(Input.pa1userName).getWebElement()).click().build().perform();
+//		assignment.getSelectReviewerInRedistributedDocsTab(Input.pa1userName).waitAndClick(5);
 		baseClass.waitForElement(assignment.getSelectReviewerInRedistributedDocsTab(Input.rmu1userName));
-		assignment.getSelectReviewerInRedistributedDocsTab(Input.rmu1userName).waitAndClick(5);
+		act.moveToElement(assignment.getSelectReviewerInRedistributedDocsTab(Input.rmu1userName).getWebElement()).click().build().perform();
+//		assignment.getSelectReviewerInRedistributedDocsTab(Input.rmu1userName).waitAndClick(5);
 		assignment.getAssgn_Redistributepopup_save().waitAndClick(10);
 		driver.Navigate().refresh();
 		baseClass.waitForElement(assignment.getAssignment_ManageReviewersTab());
@@ -4054,7 +4074,7 @@ public class Assignment_Phase2_Regression {
 		int leastDocCount = (int) (docCountToDistribute / 2);
 		int expectedPaDocCount = leastDocCount;
 		baseClass.waitTime(3);
-		int actualPaDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.pa1userName).getText());
+		int actualPaDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
 		baseClass.digitCompareEquals(expectedPaDocCount, actualPaDocCount,
 				"Expected document count : '" + expectedPaDocCount + "' match with actual document count : '"
 						+ actualPaDocCount + "'",
@@ -4062,7 +4082,7 @@ public class Assignment_Phase2_Regression {
 						+ actualPaDocCount + "'");
 		int expectedRmuDocCount = leastDocCount + 1;
 		baseClass.waitTime(3);
-		int actualRmuDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
+		int actualRmuDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.pa1userName).getText());
 		baseClass.digitCompareEquals(expectedRmuDocCount, actualRmuDocCount,
 				"Expected document count : '" + expectedRmuDocCount + "' match with actual document count : '"
 						+ actualRmuDocCount + "'",
@@ -5255,10 +5275,13 @@ public class Assignment_Phase2_Regression {
 		baseClass.stepInfo("Logged in as RMU");
 		// Create a keyword and assignment
 		KeywordPage keyPage = new KeywordPage(driver);
+		
 		for (int i = 0; i < associatedKeyword.length; i++) {
+			keyPage.navigateToKeywordPage();
 			keyPage.addKeyword(associatedKeyword[i], "Red");
 		}
 		for (int j = 0; j < deassociatedKeyword.length; j++) {
+			keyPage.navigateToKeywordPage();
 			keyPage.addKeyword(deassociatedKeyword[j], "Blue");
 		}
 		assignment.createAssignment(assignmentName, Input.codingFormName);

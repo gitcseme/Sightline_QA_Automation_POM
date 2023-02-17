@@ -442,6 +442,7 @@ public class DocList_Phase2_Regression {
 		long start = System.currentTimeMillis();
 		
 		baseClass.stepInfo("Navigating to doclist page");
+		baseClass.waitTime(5);
 		baseClass.waitForElement(doc.getViewDocAllList());
 		doc.getViewDocAllList().waitAndClick(2);
 
@@ -1076,7 +1077,7 @@ public class DocList_Phase2_Regression {
 	 * @Description Validate onpage filter for EmailAuthorName with any special
 	 *              charatcers (,/"/-/_ /) on DocList page.
 	 */
-	@Test(description = "RPMXCON-53853", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54519", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterForEmailAuthorNameWithAnySpecialCharatersInDocList2(String username, String password, String role)
 			throws Exception {
 
@@ -1167,6 +1168,7 @@ public class DocList_Phase2_Regression {
 		baseClass.waitForElementCollection(docView.getDocumetCountMiniDocList());
 		int miniDocListCount = docView.getDocumetCountMiniDocList().WaitUntilPresent().size();
 		System.out.println(miniDocListCount);
+		baseClass.waitTime(10);
 		baseClass.digitCompareEquals(Integer.valueOf(DoclistDocCount), Integer.valueOf(miniDocListCount),
 				"Document count is displayed As expected from DocListPage", "DocCount is Not Displayed as expected");
 		softAssert.assertAll();

@@ -1324,7 +1324,7 @@ public class SavedSearch_Phase1_Regression {
 			throws InterruptedException, ParseException {
 		String searchName = "SS" + Utility.dynamicNameAppender();
 		ElementCollection availableSearchName;
-
+		SchedulesPage schedulePage=new SchedulesPage(driver);
 		// will login to the application by entering RMU credentials
 		login.loginToSightLine(userName, password);
 		base.stepInfo("Tescase ID : RPMXCON-57406 Saved search - Sprint 06");

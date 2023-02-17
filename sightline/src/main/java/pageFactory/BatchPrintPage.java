@@ -2107,8 +2107,7 @@ public class BatchPrintPage {
 			}
 		}), Input.wait30);
 		getGenerateButton().waitAndClick(5);
-		base.VerifySuccessMessage(
-				"Successfully initiated the batch print. You will be prompted with notification once completed.");
+		base.VerifySuccessMessage("The Batch Print has been successfully initiated. You will be notified once it has completed.");
 		for (int i = 0; i < 10; i++) {
 			try {
 				if (getbackgroundDownLoadLink().isDisplayed()) {

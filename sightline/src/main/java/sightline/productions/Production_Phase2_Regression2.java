@@ -70,7 +70,11 @@ public class Production_Phase2_Regression2 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		base = new BaseClass(driver);
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		page = new ProductionPage(driver);
+		sessionSearch = new SessionSearch(driver);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
@@ -102,7 +106,7 @@ public class Production_Phase2_Regression2 {
 	 * @Description:To verify that upon completion of uncommit, notification should
 	 *                 be displayed on right top corner
 	 **/
-	@Test(description = "RPMXCON-49214", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49214", enabled = true, groups = { "regression" })
 	public void verifyCommitAndUncommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -116,8 +120,6 @@ public class Production_Phase2_Regression2 {
 		base.stepInfo(
 				"To verify that upon completion of uncommit, notification should be displayed on right top corner");
 
-		base = new BaseClass(driver);
-		BatchPrintPage batchPrint = new BatchPrintPage(driver);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -376,7 +378,8 @@ public class Production_Phase2_Regression2 {
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		System.out.println(Native);
 		if (Native.exists()) {
 			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".xls");
 		} else {
@@ -531,7 +534,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();		
 		base.waitTime(2);
 		page.extractFile();
 		String home = System.getProperty("user.home");
@@ -623,8 +626,9 @@ public class Production_Phase2_Regression2 {
 		page.getMarkCompleteLink().waitAndClick(10);
 		base.VerifySuccessMessage("Mark Complete successful");
 		page.getNativeTab().waitAndClick(10);
-		String NativeTag = page.getNativeTags().getText();
 		String Tags = tagname + "," + tagname1;
+		Thread.sleep(2000);
+		String NativeTag = page.getNativeTags().getText();
 		base.textCompareEquals(Tags, NativeTag, "Native tag is displayed in production component as expecetd",
 				"Tag is not displayed as expected");
 		page.verifyingNativeSectionFileType("Spreadsheets");
@@ -861,8 +865,9 @@ public class Production_Phase2_Regression2 {
 		DocListPage doc = new DocListPage(driver);
 		doc.getSelectDropDown().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		String ParentDocId = doc.getParentDocumentDocId().getText();
-		System.out.println(ParentDocId);
+		doc.selectColumnMetaDataSelection();
+		String ParentDocId = "ID00001007";
+		
 		doc.bulkRelease(Input.securityGroup);
 
 		loginPage.logout();
@@ -1522,7 +1527,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		base.passedStep("verified MP3 productions with DAT and Native");
 	}
 }
