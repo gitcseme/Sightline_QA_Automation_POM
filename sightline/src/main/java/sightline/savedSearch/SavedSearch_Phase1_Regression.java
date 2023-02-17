@@ -612,7 +612,7 @@ public class SavedSearch_Phase1_Regression {
 
 		// create new searchGroup and Save Search Audio / Non-Audio
 		pureHits = saveSearch.saveFlowCheckAudioNonaudioWithShare(saveFlow, SearchName, fullName, shareTo);
-		saveSearch.scheduleSavedSearchInMinute(SearchName,1);
+		saveSearch.scheduleSavedSearches(SearchName);
 
 		// ---Todo need to continue the script coding as it is failing to Schedule---//
 		saveSearch.savedSearch_SearchandSelect(SearchName, "Yes");
