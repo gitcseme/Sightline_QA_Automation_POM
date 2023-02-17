@@ -3412,16 +3412,7 @@ public class SavedSearch {
 			try {
 				if(base.ValidateElement_PresenceReturn(getSavedSearchChildNodesExists())) {
 					getSavedSearchNewGroupExpand().waitAndClick(20);
-//					base.waitForElement(getChildOfCurrentClickedNode(i-1));
-
-//					base.clickButton(getChildOfCurrentClickedNode(i-1));
-					Actions act=new Actions(driver.getWebDriver());
-//					int noOFfchild=i-1;
-//					System.out.println("//div[@id='jsTreeSavedSearch']//a[@class='jstree-anchor jstree-clicked']/following-sibling::ul//a["+noOFfchild+"]");
-//					act.moveToElement(getChildOfCurrentClickedNode(i-1).getWebElement()).click().build().perform();
-//					base.waitTime(2);
 					base.waitForElement(currentClickedNode());
-//					if()
 					newNode = getChildOfCurrentClickedNode(i-1).getText();	
 				}else {
 					newNode = currentClickedNode().getText();
