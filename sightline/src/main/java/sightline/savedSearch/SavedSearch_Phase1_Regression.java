@@ -531,7 +531,6 @@ public class SavedSearch_Phase1_Regression {
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
 		finalCountresult = saveSearch.docListPageFooterCountCheck();
-		System.out.println();
 		System.out.println(hitCount + " : : " + finalCountresult);
 		if (hitCount == finalCountresult) {
 			softAssertion.assertEquals(hitCount, finalCountresult);
