@@ -507,10 +507,10 @@ public class SavedSearch_Phase1_Regression {
 
 		// Calculate the unique doc count
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		session.basicContentSearchWithSaveChanges(Input.searchString5, "No", "First");
-		base.hitEnterKey(1);
-		session.selectOperatorInBasicSearch("OR");
-		int hitCount = session.basicContentSearchWithSaveChanges(Input.searchString6, "Yes", "Third");
+//		session.basicContentSearchWithSaveChanges(Input.searchString5, "No", "First");
+//		base.hitEnterKey(1);
+//		session.selectOperatorInBasicSearch("OR");
+		int hitCount = session.basicContentSearchWithSaveChanges(Input.searchString5, "Yes", "Third");
 		base.stepInfo("Unique doc PureHit count : " + hitCount);
 
 		// Launch DocList via Saved Search
@@ -521,14 +521,16 @@ public class SavedSearch_Phase1_Regression {
 		base.stepInfo("Root node : " + newNodeList.get(0));
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		saveSearch.selectNode1(newNodeList.get(0));
+		saveSearch.savedSearch_SearchandSelect(nodeSearchpair.get(selectedNode),"Yes");
 		Element docListIcon = saveSearch.getDocListIcon();
 		saveSearch.checkButtonDisabled(docListIcon, "Should be enabled", "DocList Icon");
 
 		// Get the count of total no.of document list
 
 		saveSearch.launchDocListViaSS(latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		finalCountresult = saveSearch.docListPageFooterCountCheck();
-
 		System.out.println(hitCount + " : : " + finalCountresult);
 		if (hitCount == finalCountresult) {
 			softAssertion.assertEquals(hitCount, finalCountresult);
@@ -569,8 +571,7 @@ public class SavedSearch_Phase1_Regression {
 
 		// create new searchGroup and Save Search Audio / Non-Audio
 		pureHits = saveSearch.saveFlowCheckAudioNonaudioWithShare(saveFlow, SearchName, fullName, shareTo);
-		saveSearch.scheduleSavedSearches(SearchName);
-
+		saveSearch.scheduleSavedSearchInMinute(SearchName,2);
 		//// ----- Todo need to continue the script coding as it is failing to Schedule
 		saveSearch.savedSearch_SearchandSelect(SearchName, "Yes");
 		exeDocCount = saveSearch.getSavedSearchCount(SearchName).getText();
@@ -2091,7 +2092,7 @@ public class SavedSearch_Phase1_Regression {
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
-
+		
 		// Navigate to Saved Search
 		saveSearch.navigateToSavedSearchPage();
 
@@ -3505,9 +3506,10 @@ public class SavedSearch_Phase1_Regression {
 
 		report.customDataReportMethodExport(folderName, false);
 		driver.waitForPageToBeReady();
-
+		int Bgcount = base.initialBgCount();
+		System.out.println("Initial bg count : " + Bgcount);
 		// Download report
-		report.downLoadReport();
+		report.downLoadReport(Bgcount);
 		base.stepInfo("File Downloaded");
 
 		base.stepInfo(
@@ -4132,7 +4134,10 @@ public class SavedSearch_Phase1_Regression {
 			String Nodes = nodeList1[m][l];
 
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			System.out.println("Nodes:-"+Nodes);
+			
 			saveSearch.selectNode1(Nodes);
+			saveSearch.getSavedSearchRefresh();
 			// Schedule save search
 			saveSearch.scheduleSavedSearchInMinute(searches, 2);
 
@@ -4312,7 +4317,9 @@ public class SavedSearch_Phase1_Regression {
 		base.rolesToImp("REV", "RMU");
 
 		// verify the saved searches are present in report page
-		report.navigateToReportsPage();// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		
+//		report.navigateToReportsPage();
+		 this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		report.VerificationOfConceptualReport(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchName1,
 				searchName2);
 
