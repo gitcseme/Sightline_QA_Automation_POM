@@ -7163,7 +7163,7 @@ public class SessionSearch {
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
 		for (String nodeName : newNodeList) {
 			String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
-
+			
 			System.out.println(nodeName);
 			if (inputValue) {
 				purehit = multipleBasicContentSearch(Input.searchString5);

@@ -492,6 +492,7 @@ public class ReportsPage {
 		 * e.printStackTrace(); }
 		 */
 		base.waitForElement(getBullHornIcon());
+		base.waitTime(2);
 		getBullHornIcon().waitAndClick(10);
 		base.waitForElement(getFileDownloaded());
 		getFileDownloaded().Click();
