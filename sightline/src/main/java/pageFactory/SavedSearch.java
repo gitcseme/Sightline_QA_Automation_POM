@@ -3406,8 +3406,9 @@ public class SavedSearch {
 			
 			
 			// getSavedSearchExpandStats
-			base.waitTime(2);
+			
 			driver.Navigate().refresh();
+			base.waitTime(2);
 			
 			try {
 				if(base.ValidateElement_PresenceReturn(getSavedSearchChildNodesExists())) {
