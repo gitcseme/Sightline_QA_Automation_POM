@@ -3021,7 +3021,7 @@ public class SavedSearch {
 		getShareSerachBtn().waitAndClick(10);
 
 		// Updates
-		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(15)) {
+		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(2)) {
 			getShare_SecurityGroup(SGtoShare).waitAndClick(10);
 		} else {
 			getShare_SecurityGroupC(SGtoShare).waitAndClick(10);
