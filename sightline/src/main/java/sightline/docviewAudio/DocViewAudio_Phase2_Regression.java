@@ -2292,7 +2292,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document in 4 sec " + "and ready for the user to act up on when
 	 *              navigating from DocList")[RPMXCON-51527]
 	 */
-	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
+	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
 	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2389,7 +2389,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              state.[RPMXCON-51467]
 	 */
 	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyAppNotHangtheAudioInPause(String username, String password) throws Exception {
+	public void verifyAppNotHangtheAudioInPause(String username, String password, String fullname) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
 		Map<String, String> updateDatas = new HashMap<String, String>();
