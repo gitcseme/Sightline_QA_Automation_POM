@@ -4092,7 +4092,7 @@ public class DocViewAudio_Phase2_Regression {
 	 */
 
 	@Test(description = "RPMXCON-51123", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
-	public void validateTranscriptTabOutSideAssgn(String userName, String password, String fullName)
+	public void validateTranscriptTabOutSideAssgn(String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51123");
 		baseClass.stepInfo("Verify user can see the transcript in audio doc view outside of an assignment");
