@@ -2258,7 +2258,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              audio doc view..[RPMXCON-51177]
 	 */
 	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyRemarks1000chars(String username, String password) throws InterruptedException, Exception {
+	public void verifyRemarks1000chars(String username, String password, String fullname) throws InterruptedException, Exception {
 		DocViewPage docView = new DocViewPage(driver);
 
 		SoftAssert asserts = new SoftAssert();
@@ -2293,7 +2293,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              navigating from DocList")[RPMXCON-51527]
 	 */
 	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
-	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
+	public void verifyAudioDocBringUp4Sec(String username, String password, String fullname) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
 		sessionSearch = new SessionSearch(driver);
 
