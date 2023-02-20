@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.bouncycastle.jcajce.provider.keystore.BC;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -2087,6 +2088,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		softAssertion.assertTrue(waveform);
 
 		// verifying webpage page should not scroll automatically
+	
 		Long notToBeScroll = (Long) ((JavascriptExecutor) driver.getWebDriver())
 				.executeScript("return window.pageYOffset;");
 		softAssertion.assertEquals(Long.toString(notToBeScroll), "0");
@@ -4862,7 +4864,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
 		docViewPage.editCodingForm(comment);
 		docViewPage.codingFormSaveButton();
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		baseClass.passedStep("user can able to complete the document inside having the video file docs");
 		softAssertion.assertAll();
 		// logout
