@@ -359,7 +359,7 @@ public class DocList_Regression1 {
 		docList.closePreviewedDocument();
 
 		baseClass.stepInfo("Verify selected document ID to previewed Doc id");
-		docList.verifySelectedDocumetIdToPreviewedDocId();
+		docList.verifySelectedDocumetIdToPreviewedDocId(1,4);
 
 		baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
 		docList.verifyDownlodedFileNameConsistsPreviwedDocFileName();

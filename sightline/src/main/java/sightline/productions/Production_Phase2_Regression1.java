@@ -70,7 +70,7 @@ public class Production_Phase2_Regression1 {
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
 		page = new ProductionPage(driver);
-
+		base = new BaseClass(driver);
 	}
 
 	/**
@@ -3323,7 +3323,8 @@ public class Production_Phase2_Regression1 {
 		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
+		sessionSearch.metaDataSearchInAdvancedSearch("RequirePDFGeneration", Input.pageCount);
+		//sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
 		sessionSearch.ViewInDocList();
 
 		DocListPage doc = new DocListPage(driver);
@@ -4089,7 +4090,7 @@ public class Production_Phase2_Regression1 {
 		sessionSearch.ViewInDocListWithOutPureHit();
 
 		DocListPage doc = new DocListPage(driver);
-		int docCount = 3;
+		int docCount = 2;
 		doc.documentSelection(docCount);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -4158,7 +4159,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4312,7 +4313,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4330,7 +4331,7 @@ public class Production_Phase2_Regression1 {
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
 		page.isfileisExists(TiffFile);
 		page.verificationOfTiffFile(firstFile, ImageFiles, prefixID, suffixID);
-		loginPage.logout();
+		//loginPage.logout();
 	}
 
 	/**
@@ -4382,7 +4383,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
@@ -4395,7 +4396,7 @@ public class Production_Phase2_Regression1 {
 		int count = doc.getNumberOfPages();
 		System.out.println(count);
 		base.digitCompareEquals(TotalPages, count, "Blank Page is not removed as expected", "Blank Page is Removed");
-		loginPage.logout();
+		//loginPage.logout();
 	}
 
 	/**

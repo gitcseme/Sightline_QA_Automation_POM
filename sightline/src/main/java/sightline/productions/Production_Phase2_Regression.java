@@ -2335,7 +2335,7 @@ public class Production_Phase2_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		page.extractFile();
 		int LastFile = PureHit + FirstFile;
 		driver.waitForPageToBeReady();

@@ -437,7 +437,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldge_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li[2]/a[contains(text()='" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[contains(text()='" + tag + "')]");
 	}
 
 	public Element getSelectTechnicalIssueTag() {
@@ -12933,7 +12933,7 @@ public class ProductionPage {
 			base.waitForElement(getPriveldge_SelectTagButton());
 			getPriveldge_SelectTagButton().Click();
 			base.waitForElement(getPriveldge_TagTree(tagname));
-			getPriveldge_TagTree(tagname).waitAndClick(10);
+			getPriveldged_TagTree(tagname).waitAndClick(10);
 			getPriveldge_TagTree_SelectButton().waitAndClick(10);
 			base.waitForElement(getPriveldge_TextArea());
 			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
@@ -20859,7 +20859,7 @@ public class ProductionPage {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().Clear();
+		//getNativeDocsPlaceholder().Clear();
 		getNativeDocsPlaceholder().SendKeys(Text);
 
 		insertMetadataLink().waitAndClick(10);
@@ -21406,7 +21406,7 @@ public class ProductionPage {
 		getPriveldge_SelectTagButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-		getPriveldge_TagTree(tagname).waitAndClick(10);
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
