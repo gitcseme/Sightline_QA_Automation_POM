@@ -511,11 +511,11 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		// creating user
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
 		userManage.createNewUserFromDa(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.AutomationBackUpDomain, Input.largeVolDataProject);
-		System.out.println(paFirstName);
+		
 		userManage.createNewUserFromDa(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.AutomationBackUpDomain, Input.largeVolDataProject);
-		System.out.println(rmuFirstName);
+		
 		userManage.createNewUserFromDa(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.AutomationBackUpDomain, Input.largeVolDataProject);
-		System.out.println(revFirstName);
+		
 		// assiging user as billable/non billable
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
 		userManage.assignProjectBasedOnPara(projectTwoName,Input.ProjectAdministrator,false,paFirstName+" "+paLastName);
