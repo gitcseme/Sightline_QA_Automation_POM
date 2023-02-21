@@ -869,10 +869,6 @@ public class UserManagement {
 		return driver.FindElementByXPath("//select[@id='lstProjects']/option[@title='" + project + "']");
 	}
 	
-	public ElementCollection getAssignUserProject() {
-		return driver.FindElementsByXPath("//select[@id='lstProjects']/option");
-	}
-
 	public Element getAssigenedUserName(String FullName) {
 		return driver.FindElementByXPath(
 				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + FullName + "')]");
@@ -4957,7 +4953,7 @@ public class UserManagement {
 //		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		bc.waitForElement(bc.getSuccessMsgHeader());
-System.out.println("I am here as "+role);
+
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
