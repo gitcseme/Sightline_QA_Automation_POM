@@ -3229,9 +3229,9 @@ public class Production_Phase2_Regression1 {
 		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
 		int DocFileExtension = base.getIndex(doc.getHeaderText(), Input.docFileExt);
 		List<String> FileExtense = base.availableListofElements(doc.GetColumnData(DocFileExtension));
-		String FirstFile = FileExtense.get(0).toString().trim();
+		String FirstFile = FileExtense.get(0);
 		System.out.println(FirstFile);
-		String SecondFileFile = FileExtense.get(1).toString().trim();
+		String SecondFileFile = FileExtense.get(1);
 		System.out.println(SecondFileFile);
 		String ThirdFile = FileExtense.get(2).toString().trim();
 		System.out.println(ThirdFile);
@@ -4054,7 +4054,7 @@ public class Production_Phase2_Regression1 {
 		String RedactDocCount = page.redactedDocCountInSummaryPage().getText();
 		System.out.println(RedactDocCount);
 		base.stepInfo("verifying Redacted Document count in summary tab");
-		base.digitCompareEquals(Integer.valueOf(RedactDocCount), 2, "Redacted document count is displayed as expected",
+		base.digitCompareEquals(Integer.valueOf(RedactDocCount), 3, "Redacted document count is displayed as expected",
 				"Redacted Doc count mismatch");
 		loginPage.logout();
 

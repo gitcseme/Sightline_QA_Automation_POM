@@ -69,6 +69,7 @@ public class Production_Phase2_Regression {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
+		base = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -525,6 +526,7 @@ public class Production_Phase2_Regression {
 
 		base.stepInfo(
 				"Verify on selection of 'Production Set', the below label immediately changes to 'Production Set'.");
+		page.navigateToProductionPage();
 		page.getProdExport_ProductionSets().waitAndClick(10);
 		page.getProdExport_ProductionSets().selectFromDropdown().selectByIndex(1);
 
@@ -1081,6 +1083,7 @@ public class Production_Phase2_Regression {
 
 		String redactTag = "Redaction" + Utility.dynamicNameAppender();
 		RedactionPage redact = new RedactionPage(driver);
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redact.selectDefaultSecurityGroup();
 		redact.manageRedactionTagsPage(redactTag);
 
