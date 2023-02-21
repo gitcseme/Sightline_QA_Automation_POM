@@ -437,7 +437,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldge_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text()='" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//following::a[contains(text(),'"+tag+"')]");
 	}
 
 	public Element getSelectTechnicalIssueTag() {
@@ -7247,7 +7247,7 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 
-		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
