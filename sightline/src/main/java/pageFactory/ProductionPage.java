@@ -7311,7 +7311,8 @@ public class ProductionPage {
 				return getlstProductionRootPaths().Enabled();
 			}
 		}), Input.wait30);
-		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		//getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
