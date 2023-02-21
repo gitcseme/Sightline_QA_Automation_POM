@@ -116,6 +116,9 @@ public class DocViewRedactions {
 		return driver.FindElementById("multiPageRedactionDiv");
 	}
 
+	public Element multiPageSelectDefaultRedactionTab() {
+		return driver.FindElementByXPath("//*[@id=\"ddlMultiRedactionTagsForPopup\"]/option[1]");
+	}
 	public ElementCollection availableTagsInMultiPageRedact() {
 		return driver.FindElementsByXPath("//select[@id=\"ddlMultiRedactionTagsForPopup\"]/option");
 	}
@@ -3431,7 +3434,7 @@ public class DocViewRedactions {
 		}), Input.wait30);
 
 		Select multiplepageredaction = new Select(redactionTagSelect().getWebElement());
-		String selectedTag = multiplepageredaction.getFirstSelectedOption().getText();
+		String selectedTag = multiPageSelectDefaultRedactionTab().getText();
 
 		System.out.println(selectedTag);
 
