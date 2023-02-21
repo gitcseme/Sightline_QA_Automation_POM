@@ -493,7 +493,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		baseClass.stepInfo("Validate DomainAdmin assigning billable/internal users at Project level");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String projectTwoName="Regression_AllDataset_Consilio2";
+		String projectTwoName=Input.projectName01;
 		String paFirstName = Input.randomText + Utility.dynamicNameAppender();
 		String paLastName = Input.randomText + Utility.dynamicNameAppender();
 		String emailIdPa = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
@@ -506,14 +506,16 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 
 		// Login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-		baseClass.selectdomain(Input.domainName);
+		baseClass.selectdomain(Input.AutomationBackUpDomain);
 		
 		// creating user
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
-		userManage.createNewUserFromDa(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.domainName, Input.projectName);
-		userManage.createNewUserFromDa(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.domainName, Input.projectName);
-		userManage.createNewUserFromDa(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.domainName, Input.projectName);
-
+		userManage.createNewUserFromDa(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.AutomationBackUpDomain, Input.largeVolDataProject);
+		System.out.println(paFirstName);
+		userManage.createNewUserFromDa(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.AutomationBackUpDomain, Input.largeVolDataProject);
+		System.out.println(rmuFirstName);
+		userManage.createNewUserFromDa(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.AutomationBackUpDomain, Input.largeVolDataProject);
+		System.out.println(revFirstName);
 		// assiging user as billable/non billable
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
 		userManage.assignProjectBasedOnPara(projectTwoName,Input.ProjectAdministrator,false,paFirstName+" "+paLastName);

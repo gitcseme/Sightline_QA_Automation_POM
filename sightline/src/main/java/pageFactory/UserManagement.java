@@ -868,6 +868,10 @@ public class UserManagement {
 	public Element getAssignUserProject(String project) {
 		return driver.FindElementByXPath("//select[@id='lstProjects']/option[@title='" + project + "']");
 	}
+	
+	public ElementCollection getAssignUserProject() {
+		return driver.FindElementsByXPath("//select[@id='lstProjects']/option");
+	}
 
 	public Element getAssigenedUserName(String FullName) {
 		return driver.FindElementByXPath(
@@ -4340,6 +4344,7 @@ public class UserManagement {
 	public void selectProjectInAssignUser(String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAssignUserProject(projectName));
+//		bc.waitForElementCollection(getAssignUserProject());
 		getAssignUserProject(projectName).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		bc.stepInfo(projectName + " was select in assign project tab");
@@ -4813,8 +4818,8 @@ public class UserManagement {
 		} else {
 			bc.failedStep("Add new user popup not displayed");
 		}
-		bc.waitForElement(bc.getSelectRole());
-		bc.getSelectRole().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(bc.getSelectRole(role));
+		bc.getSelectRole(role).waitAndClick(5);
 		// checking project display status
 		if (getProjectTextBox().isElementAvailable(10) && getOptionSelectSG().isElementAvailable(10)) {
 			bc.passedStep("Project and security group status available in add user popup");
@@ -4949,9 +4954,10 @@ public class UserManagement {
 		}
 		bc.waitForElement(getDomainUserRightArrow());
 		getDomainUserRightArrow().waitAndClick(10);
-		driver.Manage().window().fullscreen();
+//		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
-
+		bc.waitForElement(bc.getSuccessMsgHeader());
+System.out.println("I am here as "+role);
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
