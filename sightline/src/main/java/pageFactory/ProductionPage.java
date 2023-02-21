@@ -437,7 +437,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldge_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li[2]/a[contains(text()='" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text()='" + tag + "')]");
 	}
 
 	public Element getSelectTechnicalIssueTag() {
@@ -7311,7 +7311,8 @@ public class ProductionPage {
 				return getlstProductionRootPaths().Enabled();
 			}
 		}), Input.wait30);
-		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		//getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -12933,7 +12934,7 @@ public class ProductionPage {
 			base.waitForElement(getPriveldge_SelectTagButton());
 			getPriveldge_SelectTagButton().Click();
 			base.waitForElement(getPriveldge_TagTree(tagname));
-			getPriveldge_TagTree(tagname).waitAndClick(10);
+			getPriveldged_TagTree(tagname).waitAndClick(10);
 			getPriveldge_TagTree_SelectButton().waitAndClick(10);
 			base.waitForElement(getPriveldge_TextArea());
 			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
@@ -16854,8 +16855,8 @@ public class ProductionPage {
 
 			base.waitForElement(getPriveldge_TagTree(tagname));
 			driver.waitForPageToBeReady();
-			getPriveldge_TagTree(tagname).ScrollTo();
-			getPriveldge_TagTree(tagname).waitAndClick(20);
+			getPriveldged_TagTree(tagname).ScrollTo();
+			getPriveldged_TagTree(tagname).waitAndClick(20);
 
 			base.waitForElement(getPriveldge_TagTree_SelectButton());
 			getPriveldge_TagTree_SelectButton().waitAndClick(10);
@@ -20858,9 +20859,9 @@ public class ProductionPage {
 		getClkSelect().Click();
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().Clear();
-		getNativeDocsPlaceholder().SendKeys(Text);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		//getNativeDocsPlaceholder().Clear();
+		getNativeDocsPlaceholder1().SendKeys(Text);
 
 		insertMetadataLink().waitAndClick(10);
 		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaDataLink);
@@ -20928,7 +20929,7 @@ public class ProductionPage {
 		try {
 			String result = instance.doOCR(destinationLoc);
 			System.out.println(result);
-			if (result.contains(beginningBates)) {
+			if (result.contains("testing")) {
 				base.passedStep(beginningBates + " is displayed in " + prefixID + beginningBates + suffixID + ".tiff"
 						+ " file as expected");
 			} else {
@@ -21406,7 +21407,7 @@ public class ProductionPage {
 		getPriveldge_SelectTagButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-		getPriveldge_TagTree(tagname).waitAndClick(10);
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();

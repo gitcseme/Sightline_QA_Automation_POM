@@ -963,10 +963,12 @@ public class ReportsPage {
 
 		// Report Page
 		new CommunicationExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		conceptualExp();
 		checkList(newNodeFromPA, newNodeFromRMU, newNodeFromRev, searchName, searchNmae1, "PA", "Yes");
 		checkdataPresent(searchName2, "PA");
 	}
+	
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -1250,6 +1252,8 @@ public class ReportsPage {
 	public void navigateToReportsPage() {
 		try {
 			driver.scrollPageToTop();
+			base.waitForElement(navigateToReports());
+			
 			navigateToReports().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.verifyPageNavigation("Report/ReportsLanding");

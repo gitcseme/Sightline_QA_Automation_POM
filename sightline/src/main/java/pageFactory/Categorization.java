@@ -454,7 +454,9 @@ public class Categorization {
 			base.waitForElement(getSelectSavedSearchPopupCloseBtn());
 			getSelectSavedSearchPopupCloseBtn().waitAndClick(15);
 		}
+		
 	}
+	
 
 	/**
 	 * @author Raghuram Date : 9/03/21 Description:Method for verifying created and

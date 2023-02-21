@@ -74,35 +74,23 @@ public class BatchPrint_Phase2_Regression {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-//												 TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			loginPage.clearBrowserCache();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-
-		try {
-			loginPage.clearBrowserCache();
-		} finally {
-			loginPage.clearBrowserCache();
-		}
+		System.out.println("**Executed Batch print_Phase2_Regression .**");
 	}
 
 	@DataProvider(name = "Users")

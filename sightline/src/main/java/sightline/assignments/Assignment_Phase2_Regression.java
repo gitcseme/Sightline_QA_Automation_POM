@@ -4074,7 +4074,7 @@ public class Assignment_Phase2_Regression {
 		int leastDocCount = (int) (docCountToDistribute / 2);
 		int expectedPaDocCount = leastDocCount;
 		baseClass.waitTime(3);
-		int actualPaDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
+		int actualPaDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.pa1userName).getText());
 		baseClass.digitCompareEquals(expectedPaDocCount, actualPaDocCount,
 				"Expected document count : '" + expectedPaDocCount + "' match with actual document count : '"
 						+ actualPaDocCount + "'",
@@ -4082,7 +4082,7 @@ public class Assignment_Phase2_Regression {
 						+ actualPaDocCount + "'");
 		int expectedRmuDocCount = leastDocCount + 1;
 		baseClass.waitTime(3);
-		int actualRmuDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.pa1userName).getText());
+		int actualRmuDocCount = Integer.parseInt(assignment.getDistributedDocs(Input.rmu1userName).getText());
 		baseClass.digitCompareEquals(expectedRmuDocCount, actualRmuDocCount,
 				"Expected document count : '" + expectedRmuDocCount + "' match with actual document count : '"
 						+ actualRmuDocCount + "'",
@@ -4090,7 +4090,6 @@ public class Assignment_Phase2_Regression {
 						+ actualRmuDocCount + "'");
 		baseClass.stepInfo(
 				"Verified that Redistribution calculation happened among Reviewer 2 and reviewer 3 From reviewer 1 Batch.");
-
 		// LogOut
 		loginPage.logout();
 	}

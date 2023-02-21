@@ -2257,7 +2257,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description :To Verify that user can add remarks upto 1000 characters in
 	 *              audio doc view..[RPMXCON-51177]
 	 */
-	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
 	public void verifyRemarks1000chars(String username, String password) throws InterruptedException, Exception {
 		DocViewPage docView = new DocViewPage(driver);
 
@@ -2337,7 +2337,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "add a new reviewer remark, when the audio is in stopped
 	 *              state.[RPMXCON-51468]
 	 */
-	@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
 	public void verifyAppNotHangNewReviewWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 
@@ -2388,7 +2388,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "edit/delete a reviewer remark, when the audio is in paused
 	 *              state.[RPMXCON-51467]
 	 */
-	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
 	public void verifyAppNotHangtheAudioInPause(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
@@ -2444,7 +2444,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              " + "edit/delete a reviewer remark, when the audio is in Stopped
 	 *              state.[RPMXCON-51469]
 	 */
-	@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RMUandREV", groups = { "regression" })
+	@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
 	public void verifyAppNotHangWhenStoppedState(String username, String password) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
