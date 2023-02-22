@@ -1552,7 +1552,7 @@ public class DomainManagement_Phase2_Regression {
      * @Description:Verify that users with RMU/Reviewer role should be displayed on
      *                     user list page for non-domain project
      **/
-    @Test(description = "RPMXCON-53039", enabled = true, groups = { "regression" })
+   @Test(description = "RPMXCON-53039", enabled = true, groups = { "regression" })
     public void verifyRMUAndREVRoleUnderNonDomanPrjt() throws Exception {
 
        baseClass.stepInfo("TestCase id : RPMXCON-53039");

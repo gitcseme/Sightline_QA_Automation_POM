@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -803,6 +804,10 @@ public class DomainManagement_Phase2_Regression1 {
 		user.defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, true, false, false, false, false, false, false, false);
 		base.waitForElement(user.getEnableRadioBtn());
 		user.getEnableRadioBtn().waitAndClick(10);
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(user.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(user.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		user.selectBulkAccessUsers(users);
 		user.getBulkUserSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Access rights applied successfully");
@@ -826,6 +831,10 @@ public class DomainManagement_Phase2_Regression1 {
 		user.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, false, true, true, true, true, true, true);
 		base.waitForElement(user.getDisableRadioBtn());
 		user.getDisableRadioBtn().waitAndClick(10);
+		Actions Act1 = new Actions(driver.getWebDriver());
+		Act1.clickAndHold(user.getPopupWindowHeader().getWebElement());
+		Act1.moveToElement(user.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act1.release().build().perform();
 		user.selectBulkAccessUsers(users);
 		user.getBulkUserSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Access rights applied successfully");

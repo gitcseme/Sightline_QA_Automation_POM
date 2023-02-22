@@ -2419,7 +2419,7 @@ public class UserManagement {
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
-		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
 		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
 				|| role.equalsIgnoreCase("Reviewer")) {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -2437,7 +2437,7 @@ public class UserManagement {
 
 		}
 		getSave().waitAndClick(10);
-		bc.VerifyErrorMessage("20001000021 : user cannot be created at this level");
+		bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
 
 	}
 
@@ -3997,7 +3997,7 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		for (String user : users) {
 			driver.scrollingToElementofAPage(getSelectBulkUser(user));
-			getSelectBulkUser(user).waitAndClick(10);
+			getSelectBulkUser(user).waitAndClick(5);
 			driver.waitForPageToBeReady();
 		}
 		bc.stepInfo("users was selected");
@@ -5101,8 +5101,8 @@ public class UserManagement {
 			bc.VerifyErrorMessage(
 					"20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
 		} else {
-			bc.VerifyErrorMessage(
-					"20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+			bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+			         
 		}
 	}
 
