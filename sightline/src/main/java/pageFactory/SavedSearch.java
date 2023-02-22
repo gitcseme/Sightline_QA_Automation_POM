@@ -65,7 +65,7 @@ public class SavedSearch {
 	String childNodeRowDetails;
 
 	public Element getSavedSearch_SearchName() {
-		return driver.FindElementById("txtSearchName");
+		return driver.FindElementByXPath("//input[@id='txtSearchName']");
 	}
 
 	public Element getSavedSearch_ApplyFilterButton() {
@@ -110,6 +110,10 @@ public class SavedSearch {
 
 	public Element getSavedSearchNewGroupExpand() {
 		return driver.FindElementByXPath("//*[contains(@class,'clicked')]//preceding-sibling::i");
+	}
+	
+	public Element getSavedSearchChildNodesExists() {
+		return driver.FindElementByXPath("//a[contains(@class,'clicked')]/parent::li[@aria-expanded='false']");
 	}
 
 	public Element getSavedSearchGroupName() {
@@ -339,7 +343,7 @@ public class SavedSearch {
 	}
 
 	public Element getShare_SecurityGroup(String securitygroup) {
-		return driver.FindElementByXPath("// *[@id='s1']//label[contains(.,'" + securitygroup + "')]/i");
+		return driver.FindElementByXPath("//div[@id='s1']//label[contains(.,'" + securitygroup + "')]/i");
 	}
 
 	public Element getShare_SecurityGroupC(String securitygroup) {
@@ -351,6 +355,10 @@ public class SavedSearch {
 
 	public Element getSavedSearchGroupName(String name) {
 		return driver.FindElementByXPath("// *[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
+	}
+	
+	public Element getChildOfCurrentClickedNode(int noOfChild) {
+		return driver.FindElementByXPath("//div[@id='jsTreeSavedSearch']//a[@class='jstree-anchor jstree-clicked']/following-sibling::ul/li["+noOfChild+"]/a");
 	}
 
 	public Element getSavedSearchGroupNameC(String name) {
@@ -2724,7 +2732,10 @@ public class SavedSearch {
 			base.waitTime(5); // in order to handle abnormal wait activities
 			// base.waitForElement(getSelectWithName(searchName));
 //			getSelectWithName(searchName).isElementAvailable(5);
-			getSelectWithName(searchName).waitAndClick(6);
+			Actions act=new Actions(driver.getWebDriver());
+			act.moveToElement(getSelectWithName(searchName).getWebElement()).click().build().perform();
+//			getSelectWithName(searchName).Click();
+//			getSelectWithName(searchName).waitAndClick(6);
 			getSelectWithName(searchName).checkIn();
 		}
 
@@ -3371,6 +3382,7 @@ public class SavedSearch {
 	 */
 	public List<String> createSGAndReturn(String role, String verifyNodeEmptyInitally, int size)
 			throws InterruptedException {
+		String newNode=null;
 		List<String> newNodeList = new ArrayList<>();
 		for (int i = 1; i <= size; i++) {
 			// Create SearchGroup
@@ -3379,7 +3391,7 @@ public class SavedSearch {
 			getSavedSearchNewGroupButton().waitAndClick(2);
 			base.waitTime(2);// to handle wait for observing the text
 			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
-			getSavedSearchNewGroupButton().waitAndClick(2);
+//			getSavedSearchNewGroupButton().waitAndClick(2);
 
 			/*
 			 * 
@@ -3391,19 +3403,36 @@ public class SavedSearch {
 			 * base.stepInfo("-------------Only 5 levels deep profiling allows----------");
 			 * break; } } catch (Exception e) { break; }
 			 */
-			driver.Navigate().refresh();
-			base.waitTime(2);// to handle wait for observing the text
-			driver.waitForPageToBeReady();
+			
+			
 			// getSavedSearchExpandStats
-			String newNode = currentClickedNode().getText();
-
-			newNodeList.add(newNode);
+			
+			driver.Navigate().refresh();
+			base.waitTime(2);
+			
 			try {
-				getSavedSearchNewGroupExpand().waitAndClick(20);
+				if(base.ValidateElement_PresenceReturn(getSavedSearchChildNodesExists())) {
+					getSavedSearchNewGroupExpand().waitAndClick(20);
+					base.waitForElement(currentClickedNode());
+					newNode = getChildOfCurrentClickedNode(i-1).getText();	
+				}else {
+					newNode = currentClickedNode().getText();
+				}
+				
+				newNodeList.add(newNode);
+				getSavedSearchGroupName(newNodeList.get(0)).waitAndClick(10);
+//				base.waitTime(2);// to handle wait for observing the text
+				
+				
 			} catch (Exception e) {
 				System.out.println("No node");
 			}
-			getSavedSearchGroupName(newNode).waitAndClick(10);
+			
+			
+			
+			
+			
+			
 			System.out.println("Via : " + role + " Created new node : " + newNode);
 
 			base.stepInfo("Via : " + role + " Created new node : " + newNode);
@@ -3489,6 +3518,7 @@ public class SavedSearch {
 		String searchiD = null;
 		try {
 			// savedSearch_SearchandSelect(searchName, "No");
+			base.waitForElement(getSelectSearchWithID(searchName));
 			searchiD = getSelectSearchWithID(searchName).getText();
 			System.out.println(searchiD);
 		} catch (Exception e) {
@@ -3730,9 +3760,13 @@ public class SavedSearch {
 		String node = null;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
-			getSavedSearchGroupName(node).waitAndClick(5);
+			base.waitForElement(getSavedSearchGroupName(node));
+			Actions act=new Actions(driver.getWebDriver());
+			act.moveToElement(getSavedSearchGroupName(node).getWebElement()).click().build().perform();
+//			getSavedSearchGroupName(node).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.waitTime(3);// To handle abnormal waits
+			getSavedSearchRefresh().Click();
 			if (verifySavedSearch_isEmpty()) {
 				// get Search ID
 				String searchiD = GetSearchID(nodeSearchpair.get(node));
@@ -5625,6 +5659,7 @@ public class SavedSearch {
 		return pureHits;
 	}
 
+	
 	/**
 	 * @author Raghuram.A Created on 11/08/2021 Modified date:N/A Modified by:N/A
 	 * @throws InterruptedException
@@ -6368,7 +6403,7 @@ public class SavedSearch {
 			Map<String, String> nodeSearchpair, int indexCount) throws Exception {
 		HashMap<String, String> nodeRenameSearchpair = new HashMap<String, String>();
 		String node = null;
-		for (int i = 0; i <= indexCount; i++) {
+		for (int i = 0; i < indexCount; i++) {
 			node = newNodeList.get(i);
 			getSavedSearchGroupName(node).waitAndClick(5);
 			Thread.sleep(3000);// To handle abnormal waits
