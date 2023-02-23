@@ -197,11 +197,18 @@ public class Element {
 		 * UtilityLog.info(sw.toString()); }
 		 */
 	}
+	
+	public void javascriptScrollTo(Element element) {
+		try { ((JavascriptExecutor) (driver.getWebDriver())).executeScript("arguments[0].scrollIntoView(true);",element.getWebElement()); 
+		} catch (Exception e) { 
+				 System.out.println("Scrolling Into View Exception"); e.printStackTrace(pw);
+				 UtilityLog.info(sw.toString()); }
+	}
 
-	public void javascriptclick() {
+	public void javascriptclick(Element element) {
 		AssertExists();
 		try {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("arguments[0].click();", element.getWebElement());
 		} catch (Exception e) {
 			System.out.println("click exception");
 			e.printStackTrace(pw);

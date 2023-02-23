@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -2048,12 +2051,19 @@ public class UsersAndRoleManagement_Regression {
 		userManage = new UserManagement(driver);
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
+		boolean browserResolution=true;
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
+		
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					true, true, true, true, false);
@@ -2069,7 +2079,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Disable the radio btn for Analytical panel checkbox");
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getEnableRadioBtn().waitAndClick(5);
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
@@ -2077,18 +2087,28 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getDisableRadioBtn().javascriptclick(userManage.getDisableRadioBtn());
+			
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		
+		Thread.sleep(2000);
+		AssignmentsPage asgn=new AssignmentsPage(driver);
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
+
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		if(!browserResolution) {
+			asgn.BrowserResolutionMax(1);
+			browserResolution=true;
+		}
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
@@ -2107,6 +2127,11 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					true, true, true, true, false);
@@ -2130,18 +2155,23 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
-			userManage.getEnableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getEnableRadioBtn().javascriptclick(userManage.getEnableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		
+		
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
+
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		
+		
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
@@ -2445,13 +2475,16 @@ public class UsersAndRoleManagement_Regression {
 		userManage.getAddUserBtn().waitAndClick(5);
 		baseClass.waitForElement(userManage.getAddNewUserPopUpWindow());
 		boolean userWindow = userManage.getAddNewUserPopUpWindow().isElementAvailable(2);
+		System.out.println(userWindow);
 		softAssertion.assertTrue(userWindow);
 		baseClass.stepInfo("Add user popup window opened successfully");
 		baseClass.waitForElement(userManage.getBilliableUserText());
 		String billiableName = userManage.getBilliableUserText().getText();
+		System.out.println(billiableName);
 		softAssertion.assertEquals("Billable User:", billiableName);
 		baseClass.waitForElement(userManage.getBilliableUserCheckBox());
 		boolean billiableCheckBox = userManage.getBilliableUserCheckBox().isElementAvailable(2);
+		System.out.println(billiableCheckBox);
 		softAssertion.assertTrue(billiableCheckBox);
 		baseClass.passedStep("Billiable user checkbox available in add user popup window");
 
@@ -2571,6 +2604,8 @@ public class UsersAndRoleManagement_Regression {
 
 	@Test(description ="RPMXCON-52703",alwaysRun = true, dataProvider = "bulkDw", groups = { "regression" } )
 	public void bulkAssignDownload(String roll, String loginuser, String loginPass, String rollId,
+
+
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52703");
 		baseClass.stepInfo("To verify for user when 'Download Native' is Checekd/Unchecked from Bulk User Access Control");
@@ -2586,6 +2621,11 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					false, true, true, true, true);
@@ -2601,7 +2641,8 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Disable the radio btn for Download native checkbox");
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getDisableRadioBtn().javascriptclick(userManage.getDisableRadioBtn());
+//			userManage.getDisableRadioBtn().waitAndClick(5);
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
@@ -2609,18 +2650,21 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getDisableRadioBtn().javascriptclick(userManage.getDisableRadioBtn());
+			
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		Actions Act=new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
@@ -2638,6 +2682,11 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					false, true, true, true, true);
@@ -2653,7 +2702,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Enable the radio btn for Download native checkbox");
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
-			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getEnableRadioBtn().javascriptclick(userManage.getEnableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
@@ -2661,17 +2710,17 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
-			userManage.getEnableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getEnableRadioBtn().javascriptclick(userManage.getEnableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
 		// logout
 		loginPage.logout();
@@ -2695,6 +2744,7 @@ public class UsersAndRoleManagement_Regression {
 
 	@DataProvider(name = "bulkRedaction")
 	public Object[][] bulkRedaction() {
+
 		return new Object[][] {
 				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
 						"pa", Input.rmu1FullName },
@@ -2726,12 +2776,18 @@ public class UsersAndRoleManagement_Regression {
 		if (assignRole == "da") {
 			baseClass.selectproject(Input.domainName);
 		}
+		
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		Thread.sleep(2000);
 		baseClass.waitForElement(userManage.getSelectRollId());
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					true, false, true, true, true);
@@ -2746,8 +2802,8 @@ public class UsersAndRoleManagement_Regression {
 		}
 		baseClass.stepInfo("Disable the radio btn for Redaction checkbox");
 		if (assignRole == "pa") {
-			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());	
+			userManage.getDisableRadioBtn().javascriptclick(userManage.getDisableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				baseClass.waitForElement(userManage.getBulkUserSecurityGroup());
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
@@ -2757,21 +2813,23 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getDisableRadioBtn().javascriptclick(userManage.getDisableRadioBtn());
+			
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		
 		Thread.sleep(2000);
-		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
+
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		// logout
 		loginPage.logout();
 		// login as userassigned for validation
 		loginPage.loginToSightLine(rollUser, rollPass);
@@ -2791,6 +2849,11 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (assignRole == "sa" || assignRole == "da") {
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			baseClass.waitTime(2);
+		}
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					true, false, true, true, true);
@@ -2806,7 +2869,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Enable the radio btn for Redaction checkbox");
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
-			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getEnableRadioBtn().javascriptclick(userManage.getEnableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
@@ -2814,17 +2877,19 @@ public class UsersAndRoleManagement_Regression {
 		}
 		if (assignRole == "sa" || assignRole == "da") {
 			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
-			userManage.getEnableRadioBtn().waitAndClick(5);
-			userManage.getSelectingProject().waitAndClick(5);
-			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			userManage.getEnableRadioBtn().javascriptclick(userManage.getEnableRadioBtn());
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
-		userManage.getSelectBulkUser(firstName).waitAndClick(5);
-		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		Thread.sleep(2000);
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
+
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
 		// logout
 		loginPage.logout();

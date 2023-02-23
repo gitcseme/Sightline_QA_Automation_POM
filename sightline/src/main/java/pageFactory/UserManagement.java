@@ -474,7 +474,8 @@ public class UserManagement {
 	}
 
 	public Element getSelectBulkUser(String userName) {
-		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
+		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'"+userName+"')]/i");
+				//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
 	}
 
 	public Element getSelectDropProject(String projectName) {
@@ -482,6 +483,7 @@ public class UserManagement {
 	}
 
 	public Element getBulkUserSaveBtn() {
+
 		return driver.FindElementById("btnSaveBulkAccessControls");
 	}
 
@@ -634,7 +636,7 @@ public class UserManagement {
 	}
 
 	public Element getCalendarOption() {
-		return driver.FindElementByXPath("//i[@class='icon-append fa fa-calendar']");
+		return driver.FindElementByXPath("//i[@class='iconappend fa fa-calendar']");
 	}
 
 	public Element getYearDropDown() {
@@ -650,7 +652,7 @@ public class UserManagement {
 	}
 
 	public Element getAddNewUserPopUpWindow() {
-		return driver.FindElementByXPath("//span[@id='ui-id-1']");
+		return driver.FindElementByXPath("//h3[@id='ui-id-1']");
 	}
 
 	public Element getBilliableUserText() {
@@ -1993,6 +1995,7 @@ public class UserManagement {
 	public void editLoginUser() throws Exception {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getLoginUserEdit());
+		bc.waitTillElemetToBeClickable(getLoginUserEdit());
 		getLoginUserEdit().waitAndClick(5);
 	}
 
@@ -2171,16 +2174,21 @@ public class UserManagement {
 			boolean reviewerRemark, boolean analyticalPanel) {
 		driver.waitForPageToBeReady();
 		if (manage == true) {
+			bc.waitForElement(getBulkManage());
 			getBulkManage().waitAndClick(5);
 		}
 		if (ingestion == true) {
+			bc.waitForElement(getBulkIngestion());
 			getBulkIngestion().waitAndClick(5);
 		}
 		if (production == true) {
+			bc.waitForElement(getBulkProduction());
 			getBulkProduction().waitAndClick(5);
 		}
 		if (search == true) {
-			getBulkSearch().waitAndClick(5);
+			bc.waitForElement(getBulkSearch());
+			getBulkSearch().javascriptclick(getBulkSearch());
+//			getBulkSearch().waitAndClick(5);
 		}
 		if (explorer == true) {
 			getBulkExplorer().waitAndClick(5);
@@ -5184,6 +5192,7 @@ public class UserManagement {
 		if (verifyUnselectedCB) {
 			for (int k = 0; k < uncheckedCB.length; k++) {
 				if (getComponentCheckBoxStatus(uncheckedCB[k]).isElementAvailable(3)) {
+					System.out.println("uncheckedCB[k] "+uncheckedCB[k]);
 					bc.failedStep(uncheckedCB[k] + " Checkbox Status is not as Expected");
 				} else {
 					bc.passedStep(uncheckedCB[k] + " Checkbox is Unchecked");
