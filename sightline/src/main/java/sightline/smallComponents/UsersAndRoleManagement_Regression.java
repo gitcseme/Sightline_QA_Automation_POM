@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -2062,6 +2063,7 @@ public class UsersAndRoleManagement_Regression {
 			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
 			baseClass.waitTime(2);
 		}
+		
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
 					true, true, true, true, false);
@@ -2077,7 +2079,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Disable the radio btn for Analytical panel checkbox");
 		if (assignRole == "pa") {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
-			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getEnableRadioBtn().waitAndClick(5);
 			if (roll == "rmu" || roll == "rev") {
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
@@ -2617,7 +2619,6 @@ public class UsersAndRoleManagement_Regression {
 		userManage = new UserManagement(driver);
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
-		boolean browserResolution=true;
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
 		if (assignRole == "da") {
@@ -2663,21 +2664,14 @@ public class UsersAndRoleManagement_Regression {
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		AssignmentsPage asgn=new AssignmentsPage(driver);
-		if(browserResolution) {
-		asgn.BrowserResolutionMin(1);
-		browserResolution=false;
-		}
-		userManage.getSelectBulkUser(firstName).javascriptScrollTo(userManage.getSelectBulkUser(firstName));
+		Actions Act=new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
-		baseClass.waitForElement(userManage.getBulkUserSaveBtn());
-		baseClass.waitTime(2);
 		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		if(!browserResolution) {
-			asgn.BrowserResolutionMax(1);
-			browserResolution=true;
-		}
+		
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
@@ -2729,20 +2723,12 @@ public class UsersAndRoleManagement_Regression {
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
-		if(browserResolution) {
-			asgn.BrowserResolutionMin(1);
-			browserResolution=false;
-			}
-			userManage.getSelectBulkUser(firstName).javascriptScrollTo(userManage.getSelectBulkUser(firstName));
-			userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
-			baseClass.waitForElement(userManage.getBulkUserSaveBtn());
-			baseClass.waitTime(2);
-			userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
+		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
+		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		if(!browserResolution) {
-		asgn.BrowserResolutionMax(1);
-		browserResolution=true;
-		}
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
@@ -2792,7 +2778,6 @@ public class UsersAndRoleManagement_Regression {
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
 		softAssertion=new SoftAssert();
-		boolean browserResolution= true;
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
 		if (assignRole == "da") {
@@ -2844,22 +2829,14 @@ public class UsersAndRoleManagement_Regression {
 		}
 		
 		Thread.sleep(2000);
-		AssignmentsPage asgn=new AssignmentsPage(driver);
-		if(browserResolution) {
-			asgn.BrowserResolutionMin(1);
-			browserResolution=false;
-		}
-		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
-		driver.javascriptScrollTo(userManage.getSelectBulkUser(firstName));
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
 		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		if(!browserResolution) {
-			asgn.BrowserResolutionMax(1);
-			browserResolution=true;
-		}
-		// logout
 		loginPage.logout();
 		// login as userassigned for validation
 		loginPage.loginToSightLine(rollUser, rollPass);
@@ -2914,22 +2891,13 @@ public class UsersAndRoleManagement_Regression {
 			}
 		}
 		Thread.sleep(2000);
-		if(browserResolution) {
-			asgn.BrowserResolutionMin(1);
-			browserResolution=false;
-		}
-		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
-		driver.javascriptScrollTo(userManage.getSelectBulkUser(firstName));
-
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
-
 		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		if(!browserResolution) {
-			asgn.BrowserResolutionMax(1);
-			browserResolution=true;
-		}
 		// logout
 		loginPage.logout();
 		// login as userassigned for validation
