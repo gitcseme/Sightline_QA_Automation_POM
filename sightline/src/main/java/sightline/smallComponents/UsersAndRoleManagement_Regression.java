@@ -2097,12 +2097,10 @@ public class UsersAndRoleManagement_Regression {
 		
 		Thread.sleep(2000);
 		AssignmentsPage asgn=new AssignmentsPage(driver);
-		if(browserResolution) {
-			asgn.BrowserResolutionMin(1);
-			browserResolution=false;
-		}
-		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
-		driver.javascriptScrollTo(userManage.getSelectBulkUser(firstName));
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
 		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 
@@ -2164,20 +2162,15 @@ public class UsersAndRoleManagement_Regression {
 			}
 		}
 		
-		if(browserResolution) {
-			asgn.BrowserResolutionMin(1);
-			browserResolution=false;
-		}
-		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
-		driver.javascriptScrollTo(userManage.getSelectBulkUser(firstName));
+		
+		Act.clickAndHold(userManage.getPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getPopupWindowHeader().getWebElement(), -10, 10);
+		Act.release().build().perform();
 		userManage.getSelectBulkUser(firstName).javascriptclick(userManage.getSelectBulkUser(firstName));
 		userManage.getBulkUserSaveBtn().javascriptclick(userManage.getBulkUserSaveBtn());
 
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
-		if(!browserResolution) {
-			asgn.BrowserResolutionMax(1);
-			browserResolution=true;
-		}
+		
 		
 		// logout
 		loginPage.logout();
