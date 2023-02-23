@@ -1311,7 +1311,7 @@ public class DocView_Redaction_Regression1 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-46860");
 		baseClass.stepInfo("Verify user can delete the redaction in a document");
-		DocExplorerPage docexp = new DocExplorerPage(driver);
+        docexp.navigateToDocExplorerPage();
 		docexp.documentSelectionIteration();
 		docexp.docExpViewInDocView();
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
