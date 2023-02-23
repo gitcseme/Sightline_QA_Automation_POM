@@ -474,7 +474,8 @@ public class UserManagement {
 	}
 
 	public Element getSelectBulkUser(String userName) {
-		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
+		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'"+userName+"')]/i");
+				//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
 	}
 
 	public Element getSelectDropProject(String projectName) {
@@ -2173,16 +2174,21 @@ public class UserManagement {
 			boolean reviewerRemark, boolean analyticalPanel) {
 		driver.waitForPageToBeReady();
 		if (manage == true) {
+			bc.waitForElement(getBulkManage());
 			getBulkManage().waitAndClick(5);
 		}
 		if (ingestion == true) {
+			bc.waitForElement(getBulkIngestion());
 			getBulkIngestion().waitAndClick(5);
 		}
 		if (production == true) {
+			bc.waitForElement(getBulkProduction());
 			getBulkProduction().waitAndClick(5);
 		}
 		if (search == true) {
-			getBulkSearch().waitAndClick(5);
+			bc.waitForElement(getBulkSearch());
+			getBulkSearch().javascriptclick(getBulkSearch());
+//			getBulkSearch().waitAndClick(5);
 		}
 		if (explorer == true) {
 			getBulkExplorer().waitAndClick(5);
