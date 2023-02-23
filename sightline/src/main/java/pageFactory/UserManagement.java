@@ -62,6 +62,10 @@ public class UserManagement {
 	public Element getSecurityGroup() {
 		return driver.FindElementByXPath("(//*[@tabindex='8'])[2]");
 	}
+	
+	public Element getSecurityGroupII(String SG) {
+		return driver.FindElementByXPath("//*[@id='ddlSysAdminSecGroup']/option[contains(text(),'" + SG +"')]");
+	}
 
 	public Element getSave() {
 		return driver.FindElementById("SaveUser");
@@ -816,6 +820,10 @@ public class UserManagement {
 	public Element getDeleteBtn() {
 		return driver.FindElementByXPath("//a[text()='Delete']");
 	}
+	
+	public Element getRemoveBtn() {
+		return driver.FindElementByXPath("//*[@id='dtUserList']//a[text()='Remove']");
+	}
 
 	// jeevitha
 	public Element getAddUserPopup() {
@@ -1363,15 +1371,20 @@ public class UserManagement {
 				return getSecurityGroup().Visible();
 			}
 		}), Input.wait30);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
-			getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-			;
+			//getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSecurityGroup().Visible();
+				}
+			}), Input.wait30);
+			getSecurityGroupII("Default Security Group").waitAndClick(2);
 
 		}
 		getSave().Click();
@@ -4229,6 +4242,21 @@ public class UserManagement {
 				getConfirmDelete().waitAndClick(10);
 			}
 			bc.VerifySuccessMessage("User has been deactivated");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
+		}
+
+	}
+	
+	public void RemoveUser() {
+		try {
+			bc.waitForElement(getRemoveBtn());
+			getRemoveBtn().waitAndClick(10);
+			if (getConfirmDelete().isElementAvailable(15)) {
+				getConfirmDelete().waitAndClick(10);
+			}
+			bc.VerifySuccessMessage("User successfully removed from the project");
 		} catch (Exception e) {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
