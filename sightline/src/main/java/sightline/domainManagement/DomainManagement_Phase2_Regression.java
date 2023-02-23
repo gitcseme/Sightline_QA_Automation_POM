@@ -812,7 +812,7 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.stepInfo("Logged in As " + Input.sa1userName);
 
 		String FirstName = "QA1" + Utility.dynamicNameAppender();
-		String LastName = "Framework";
+		String LastName = "Framework" + Utility.dynamicNameAppender();
 		String MailID = "testing"+Utility.dynamicNameAppender() + "@consilio.com";
 
 		UserManagement user = new UserManagement(driver);
@@ -838,7 +838,8 @@ public class DomainManagement_Phase2_Regression {
 			} else {
 				user.createUser(FirstName, LastName, Users[i], MailID, " ", Input.projectName);
 			}
-
+			baseClass.waitTime(5);
+			baseClass.getCloseSucessmsg();
 			baseClass.stepInfo("Verify user details in Active users popup");
 			user.verifyUserDetailsOnUserNotLoggedInPopup(UserInActivePopup, MailID);
 
