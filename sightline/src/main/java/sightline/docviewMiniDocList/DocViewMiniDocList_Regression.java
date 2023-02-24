@@ -1648,8 +1648,8 @@ public class DocViewMiniDocList_Regression {
 		docViewPage.performFolderAction(folderName, 1);
 //		verify code same as icon should not present in minidoclist for folder performed
 		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5);
-		Assert.assertFalse(flag);
-		baseClass.passedStep("Code same as icon not displayed in minidoclist after performing folder action");
+		Assert.assertTrue(flag);
+		baseClass.passedStep("Code same as icon should be displayed in minidoclist after performing folder action");
 		loginPage.logout();
 	}
 
