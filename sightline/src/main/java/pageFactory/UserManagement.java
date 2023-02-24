@@ -2188,15 +2188,16 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		if (manage == true) {
 			bc.waitForElement(getBulkManage());
-			getBulkManage().waitAndClick(5);
+			getBulkManage().javascriptclick(getBulkManage());
 		}
 		if (ingestion == true) {
 			bc.waitForElement(getBulkIngestion());
-			getBulkIngestion().waitAndClick(5);
+			getBulkIngestion().javascriptclick(getBulkIngestion());
 		}
 		if (production == true) {
 			bc.waitForElement(getBulkProduction());
-			getBulkProduction().waitAndClick(5);
+			getBulkProduction().javascriptclick(getBulkProduction());
+			
 		}
 		if (search == true) {
 			bc.waitForElement(getBulkSearch());
@@ -2204,37 +2205,51 @@ public class UserManagement {
 //			getBulkSearch().waitAndClick(5);
 		}
 		if (explorer == true) {
-			getBulkExplorer().waitAndClick(5);
+			bc.waitForElement(getBulkExplorer());
+			getBulkExplorer().javascriptclick(getBulkExplorer());
+			
 		}
 		if (comExplorer == true) {
-			getBulkComExp().waitAndClick(5);
+			bc.waitForElement(getBulkComExp());
+			getBulkComExp().javascriptclick(getBulkComExp());
 		}
 		if (catagories == true) {
-			getBulkCatagories().waitAndClick(5);
+			bc.waitForElement(getBulkCatagories());
+			getBulkCatagories().javascriptclick(getBulkCatagories());
+			
 		}
 		if (dataSet == true) {
-			getBulkDataSet().waitAndClick(5);
+			bc.waitForElement(getBulkDataSet());
+			getBulkDataSet().javascriptclick(getBulkDataSet());
+			
 		}
 		if (collection == true) {
-			getBulkCollection().waitAndClick(5);
+			bc.waitForElement(getBulkCollection());
+			getBulkCollection().javascriptclick(getBulkCollection());
 		}
 		if (report == true) {
-			getBulkReport().waitAndClick(5);
+			bc.waitForElement(getBulkReport());
+			getBulkReport().javascriptclick(getBulkReport());
 		}
 		if (downloadNative == true) {
-			getBulkDownLoadNative().waitAndClick(5);
+			bc.waitForElement(getBulkDownLoadNative());
+			getBulkDownLoadNative().javascriptclick(getBulkDownLoadNative());
 		}
 		if (redaction == true) {
-			getBulkRedaction().waitAndClick(5);
+			bc.waitForElement(getBulkRedaction());
+			getBulkRedaction().javascriptclick(getBulkRedaction());
 		}
 		if (highlighted == true) {
-			getBulkHighlighting().waitAndClick(5);
+			bc.waitForElement(getBulkHighlighting());
+			getBulkHighlighting().javascriptclick(getBulkHighlighting());
 		}
 		if (reviewerRemark == true) {
-			getBulkReviewerRemark().waitAndClick(5);
+			bc.waitForElement(getBulkReviewerRemark());
+			getBulkReviewerRemark().javascriptclick(getBulkReviewerRemark());
 		}
 		if (analyticalPanel == true) {
-			getBulkAnalyticalPanel().waitAndClick(5);
+			bc.waitForElement(getBulkAnalyticalPanel());
+			getBulkAnalyticalPanel().javascriptclick(getBulkAnalyticalPanel());
 		}
 	}
 
