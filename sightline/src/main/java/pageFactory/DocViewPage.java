@@ -23442,6 +23442,10 @@ public class DocViewPage {
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		//driver.get("https://sightlineqa.consiliotest.com/DocumentViewer/DocView");
+		driver.Navigate().refresh();
+		base.handleAlert();
+		driver.waitForPageToBeReady();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
 		softAssertion.assertAll();
