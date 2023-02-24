@@ -614,7 +614,7 @@ public class DomainManagement_Phase2_Regression {
 		// delete the created user
 		user.filterTodayCreatedUser();
 		user.filterByName(MailID);
-		user.deleteUser();
+		user.RemoveUser();
 
 		loginPage.logout();
 	}
@@ -846,7 +846,7 @@ public class DomainManagement_Phase2_Regression {
 			// delete the created user
 			user.filterTodayCreatedUser();
 			user.filterByName(MailID);
-			user.deleteUser();
+			user.RemoveUser();
 		}
 		loginPage.logout();
 	}
@@ -893,14 +893,14 @@ public class DomainManagement_Phase2_Regression {
 			} else {
 				user.createUser(FirstName, LastName, Users[i], MailID, " ", Input.projectName);
 			}
-
+			baseClass.waitTime(5);
 			baseClass.stepInfo("Verify user details in Active users popup");
 			user.verifyUserDetailsOnUserNotLoggedInPopup(UserInActivePopup, MailID);
 
 			// delete the created user
 			user.filterTodayCreatedUser();
 			user.filterByName(MailID);
-			user.deleteUser();
+			user.RemoveUser();
 		}
 		loginPage.logout();
 	}
@@ -1310,7 +1310,7 @@ public class DomainManagement_Phase2_Regression {
 		// delete the created user
 		user.filterTodayCreatedUser();
 		user.filterByName(MailID);
-		user.deleteUser();
+		user.RemoveUser();
 
 		loginPage.logout();
 
@@ -1437,7 +1437,7 @@ public class DomainManagement_Phase2_Regression {
 		user.filterTodayCreatedUser();
 		driver.waitForPageToBeReady();
 		user.filterByName(MailID);
-		user.deleteUser();
+		user.RemoveUser();
 
 		loginPage.logout();
 	}
@@ -1717,7 +1717,7 @@ public class DomainManagement_Phase2_Regression {
 		// delete the created user
 		user.filterTodayCreatedUser();
 		user.filterByName(Email);
-		user.deleteUser();
+		user.RemoveUser();
 		loginPage.logout();
 	}
 	/**
@@ -1870,7 +1870,7 @@ public class DomainManagement_Phase2_Regression {
 			// delete the created user
 			user.filterTodayCreatedUser();
 			user.filterByName(MailID);
-			user.deleteUser();
+			user.RemoveUser();
 		}
 		loginPage.logout();
 	}
@@ -2720,7 +2720,7 @@ public class DomainManagement_Phase2_Regression {
 		
 		user.filterTodayCreatedUser();
 		user.filterByName(email);
-		user.deleteUser();
+		user.RemoveUser();
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
@@ -2754,7 +2754,7 @@ public class DomainManagement_Phase2_Regression {
 		
 		user.filterTodayCreatedUser();
 		user.filterByName(email);
-		user.deleteUser();
+		user.RemoveUser();
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
