@@ -258,6 +258,7 @@ public class UserAndRoleManagement_Phase2_Regression {
 		user.addingSGToUser(Input.securityGroup, sgName);
 		baseClass.waitForElement(user.getSubmitChanges());
 		user.getSubmitChanges().waitAndClick(5);
+		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
