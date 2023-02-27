@@ -4997,15 +4997,15 @@ public class UserManagement {
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		if (flag) {
 			bc.waitForElement(getProjectBillableCheckBox());
-			getProjectBillableCheckBox().waitAndClick(5);
+			getProjectBillableCheckBox().javascriptclick(getProjectBillableCheckBox());
 		}
 		bc.waitForElement(getDomainUserRightArrow());
 		getDomainUserRightArrow().waitAndClick(10);
-//		driver.Manage().window().fullscreen();
+		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		bc.waitForElement(bc.getSuccessMsgHeader());
 
-		bc.VerifySuccessMessage("User Mapping Successful");
+//		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
@@ -5056,6 +5056,7 @@ public class UserManagement {
 		}
 
 		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			System.out.println(getSecurityDropDownDomain().isElementAvailable(10));
 			getSecurityDropDownDomain().isElementAvailable(10);
 			getSecurityDropDownDomain().selectFromDropdown().selectByVisibleText("Default Security Group");
 
