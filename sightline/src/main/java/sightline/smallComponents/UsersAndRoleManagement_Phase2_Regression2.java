@@ -574,7 +574,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 	 */
 
 	@Test(description = "RPMXCON-53221", alwaysRun = true, groups = { "regression" })
-	public void it () throws Exception {
+	public void validateSaUserAssgnBillable () throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53221");
 		baseClass.stepInfo("Validate SystemAdmin assigning billable and "
 				+ "internal users as PAU/RMU/Reviewer for specific project");
