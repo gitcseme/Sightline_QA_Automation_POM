@@ -2502,7 +2502,8 @@ public class UsersAndRoleManagement_Regression {
 						
 		userManage = new UserManagement(driver);
 		loginPage.loginToSightLine(username,Password);
-		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.navigateToUsersPAge();
+//		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.passingUserName(Input.rmu1userName);
 		userManage.applyFilter();
 		driver.waitForPageToBeReady();
