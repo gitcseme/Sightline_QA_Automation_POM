@@ -1987,7 +1987,7 @@ public class DomainManagement_Phase2_Regression1 {
 		base.passedStep("Domain Admin role was displayed in the Role drop down   ");
 		
 		user.getEmail().SendKeys(Input.da1userName);
-		user.getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+//		user.getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
 		user.getSave().waitAndClick(5);
 		
 		//verify error message

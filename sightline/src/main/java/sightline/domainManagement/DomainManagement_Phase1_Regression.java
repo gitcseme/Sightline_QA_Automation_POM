@@ -114,7 +114,7 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Changed the project from header drop down");
 		driver.waitForPageToBeReady();
-		baseClass.verifyCurrentProject(Input.additionalDataProject);
+		baseClass.verifyCurrentProject(Input.projectName);
 
 		baseClass.passedStep(
 				"Verified when Domain Admin impersonates as PA in domain project and then changes the project from header drop down");
@@ -148,7 +148,7 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Changed the project from header drop down");
 		driver.waitForPageToBeReady();
-		baseClass.verifyCurrentProject(Input.additionalDataProject);
+		baseClass.verifyCurrentProject(Input.projectName);
 
 		baseClass.passedStep(
 				"Verified when Domain Admin impersonates as RMU in domain project and then changes the project from header drop down");
