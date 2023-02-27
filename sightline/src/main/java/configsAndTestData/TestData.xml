@@ -140,7 +140,6 @@
 	<smallSetDat2>loadfile_updated_trimming_n_mp3.DAT</smallSetDat2>
 	<specialCjkDat>DAT4_STC_Special_CJKChar.dat</specialCjkDat>
 	
-	<ProductionPathAdditonal>Productions PT WorkSpace\Automation</ProductionPathAdditonal>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -219,7 +218,7 @@
 	<reviewerName>MalayalaBaskar</reviewerName>
 	<stampColours>BLACK</stampColours>
 	<stampSelection>YELLOW</stampSelection>
-	<oneHourAudio>ID00001441</oneHourAudio>
+	<oneHourAudio>2ID00000164</oneHourAudio>
 	
 
 
@@ -442,7 +441,7 @@
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
-    <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
+    <ApplicationKey>Grj8Q~PKtS-NnDFYvGpqNE16MoZgyifvpgwRwbli</ApplicationKey>
     <collection2ndEmailId>Jeevitha.Rajendran@consiliotest.com</collection2ndEmailId>
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
@@ -581,7 +580,7 @@
 	<audioSearchString5>evidence</audioSearchString5>
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
-	<pdfDataSet>27Mar_SinglePageTIFF</pdfDataSet>
+	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>
@@ -880,7 +879,6 @@
 	<telecom>telecom</telecom>
 	<regressionRun>Indium_Regressionrun</regressionRun>
 	<sourceBlank>ID00005105</sourceBlank>
-	<sourceBlank1>ID00005113</sourceBlank1>
 	<sourceParentBlank>ID00005117</sourceParentBlank>
 	<ingestionOneHour>ID00001298</ingestionOneHour>
 	<ingestionLessThanHour>ID00001294</ingestionLessThanHour>
@@ -967,32 +965,4 @@
 	<Ingestions>Ingestions</Ingestions>
 	<OutsideHelp>Yes. The problem is we're behind on the project. Can you help us get caught up? > You're right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</OutsideHelp>
     <SalaryMatch>You are right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</SalaryMatch>
-    
-    <!-- Added By Hema ONNA Connect -->
-    <OnnaUrl>https://enterprise.onna.com/oneconsilio/</OnnaUrl>
-    <OnnaDirectUrl>Collection/Initiate</OnnaDirectUrl>
-    
-     <!--Added By Hema Onna Test users -->
-    <Onnasa1userName>qasa5@consilio.com</Onnasa1userName> 
-    <Onnasa1password>Q@test_1995</Onnasa1password>
-    
-    <Onnada1userName>qada7@consilio.com</Onnada1userName> 
-    <Onnada1password>Q@test_1994</Onnada1password> 
-    
-    <Onnapa1FullName>Hema PAQA24</Onnapa1FullName>
-  	<Onnapa1userName>qapau24@consilio.com</Onnapa1userName>  
-  	<Onnapa1password>Q@test_1993</Onnapa1password>
-  	
-  	<Onnarmu1FullName>Hema RMUQA24</Onnarmu1FullName>
-  	<Onnarmu1userName>qarmu24@consilio.com</Onnarmu1userName>
-    <Onnarmu1password>Q@test_1993</Onnarmu1password> 
-    
-    <Onnaeditpa1FullName>QA PA 27</Onnaeditpa1FullName>
-  	<Onnaeditpa1userName>qapau27@consilio.com</Onnaeditpa1userName>  
-  	<Onnaeditpa1password>Q@test_1993</Onnaeditpa1password>
-  	
-  	<Onnaeditrmu1FullName>QA RMU 27</Onnaeditrmu1FullName>
-  	<Onnaeditrmu1userName>qarmu27@consilio.com</Onnaeditrmu1userName>
-    <Onnaeditrmu1password>Q@test_1993</Onnaeditrmu1password> 
-    
 </TestData>
