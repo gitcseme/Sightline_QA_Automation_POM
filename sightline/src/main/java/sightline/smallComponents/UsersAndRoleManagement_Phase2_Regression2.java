@@ -619,7 +619,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		baseClass.waitTime(2);
 		int indexBillable=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billFalse=userManage.getUserListUsingIndex(indexBillable).getText();
-        System.out.println(billFalse);
+        
         System.out.println(billFalse);
         softAssertion.assertEquals(billFalse, "True");
         userManage.filterByName(emailIdPa);
@@ -632,7 +632,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		int indexBillableRmu=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
         System.out.println(billTrueRmu);
-        System.out.println(billTrueRmu);
+       
         softAssertion.assertEquals(billTrueRmu, "True");
         userManage.filterByName(emailIdrmu);
 		userManage.deleteUser();
@@ -644,7 +644,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		int indexBillableRev=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
         System.out.println(billFalseRev);
-        System.out.println(billFalseRev);
+        
         softAssertion.assertEquals(billFalseRev, "True");
         userManage.filterByName(emailIdRev);
 		userManage.deleteUser();
