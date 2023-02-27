@@ -2087,6 +2087,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		softAssertion.assertTrue(waveform);
 
 		// verifying webpage page should not scroll automatically
+	
 		Long notToBeScroll = (Long) ((JavascriptExecutor) driver.getWebDriver())
 				.executeScript("return window.pageYOffset;");
 		softAssertion.assertEquals(Long.toString(notToBeScroll), "0");
@@ -4862,7 +4863,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
 		docViewPage.editCodingForm(comment);
 		docViewPage.codingFormSaveButton();
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		baseClass.passedStep("user can able to complete the document inside having the video file docs");
 		softAssertion.assertAll();
 		// logout

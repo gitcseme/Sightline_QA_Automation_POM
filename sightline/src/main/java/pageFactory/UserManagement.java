@@ -478,7 +478,8 @@ public class UserManagement {
 	}
 
 	public Element getSelectBulkUser(String userName) {
-		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
+		return driver.FindElementByXPath("//div[@id='divBulkUserList']//label[contains(text(),'"+userName+"')]/i");
+				//div[@id='divBulkUserList']//label[contains(text(),'" + userName + "')]//i");
 	}
 
 	public Element getSelectDropProject(String projectName) {
@@ -486,6 +487,7 @@ public class UserManagement {
 	}
 
 	public Element getBulkUserSaveBtn() {
+
 		return driver.FindElementById("btnSaveBulkAccessControls");
 	}
 
@@ -638,7 +640,7 @@ public class UserManagement {
 	}
 
 	public Element getCalendarOption() {
-		return driver.FindElementByXPath("//i[@class='icon-append fa fa-calendar']");
+		return driver.FindElementByXPath("//i[@class='iconappend fa fa-calendar']");
 	}
 
 	public Element getYearDropDown() {
@@ -654,7 +656,7 @@ public class UserManagement {
 	}
 
 	public Element getAddNewUserPopUpWindow() {
-		return driver.FindElementByXPath("//span[@id='ui-id-1']");
+		return driver.FindElementByXPath("//h3[@id='ui-id-1']");
 	}
 
 	public Element getBilliableUserText() {
@@ -2006,6 +2008,7 @@ public class UserManagement {
 	public void editLoginUser() throws Exception {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getLoginUserEdit());
+		bc.waitTillElemetToBeClickable(getLoginUserEdit());
 		getLoginUserEdit().waitAndClick(5);
 	}
 
@@ -2184,49 +2187,69 @@ public class UserManagement {
 			boolean reviewerRemark, boolean analyticalPanel) {
 		driver.waitForPageToBeReady();
 		if (manage == true) {
-			getBulkManage().waitAndClick(5);
+			bc.waitForElement(getBulkManage());
+			getBulkManage().javascriptclick(getBulkManage());
 		}
 		if (ingestion == true) {
-			getBulkIngestion().waitAndClick(5);
+			bc.waitForElement(getBulkIngestion());
+			getBulkIngestion().javascriptclick(getBulkIngestion());
 		}
 		if (production == true) {
-			getBulkProduction().waitAndClick(5);
+			bc.waitForElement(getBulkProduction());
+			getBulkProduction().javascriptclick(getBulkProduction());
+			
 		}
 		if (search == true) {
-			getBulkSearch().waitAndClick(5);
+			bc.waitForElement(getBulkSearch());
+			getBulkSearch().javascriptclick(getBulkSearch());
+//			getBulkSearch().waitAndClick(5);
 		}
 		if (explorer == true) {
-			getBulkExplorer().waitAndClick(5);
+			bc.waitForElement(getBulkExplorer());
+			getBulkExplorer().javascriptclick(getBulkExplorer());
+			
 		}
 		if (comExplorer == true) {
-			getBulkComExp().waitAndClick(5);
+			bc.waitForElement(getBulkComExp());
+			getBulkComExp().javascriptclick(getBulkComExp());
 		}
 		if (catagories == true) {
-			getBulkCatagories().waitAndClick(5);
+			bc.waitForElement(getBulkCatagories());
+			getBulkCatagories().javascriptclick(getBulkCatagories());
+			
 		}
 		if (dataSet == true) {
-			getBulkDataSet().waitAndClick(5);
+			bc.waitForElement(getBulkDataSet());
+			getBulkDataSet().javascriptclick(getBulkDataSet());
+			
 		}
 		if (collection == true) {
-			getBulkCollection().waitAndClick(5);
+			bc.waitForElement(getBulkCollection());
+			getBulkCollection().javascriptclick(getBulkCollection());
 		}
 		if (report == true) {
-			getBulkReport().waitAndClick(5);
+			bc.waitForElement(getBulkReport());
+			getBulkReport().javascriptclick(getBulkReport());
 		}
 		if (downloadNative == true) {
-			getBulkDownLoadNative().waitAndClick(5);
+			bc.waitForElement(getBulkDownLoadNative());
+			getBulkDownLoadNative().javascriptclick(getBulkDownLoadNative());
 		}
 		if (redaction == true) {
-			getBulkRedaction().waitAndClick(5);
+			bc.waitForElement(getBulkRedaction());
+			getBulkRedaction().javascriptclick(getBulkRedaction());
 		}
 		if (highlighted == true) {
-			getBulkHighlighting().waitAndClick(5);
+			bc.waitForElement(getBulkHighlighting());
+			getBulkHighlighting().javascriptclick(getBulkHighlighting());
 		}
 		if (reviewerRemark == true) {
-			getBulkReviewerRemark().waitAndClick(5);
+			bc.waitForElement(getBulkReviewerRemark());
+			getBulkReviewerRemark().javascriptclick(getBulkReviewerRemark());
 		}
 		if (analyticalPanel == true) {
-			getBulkAnalyticalPanel().waitAndClick(5);
+			bc.waitForElement(getBulkAnalyticalPanel());
+			getBulkAnalyticalPanel().javascriptclick(getBulkAnalyticalPanel());
 		}
 	}
 
@@ -5212,6 +5235,7 @@ public class UserManagement {
 		if (verifyUnselectedCB) {
 			for (int k = 0; k < uncheckedCB.length; k++) {
 				if (getComponentCheckBoxStatus(uncheckedCB[k]).isElementAvailable(3)) {
+					System.out.println("uncheckedCB[k] "+uncheckedCB[k]);
 					bc.failedStep(uncheckedCB[k] + " Checkbox Status is not as Expected");
 				} else {
 					bc.passedStep(uncheckedCB[k] + " Checkbox is Unchecked");

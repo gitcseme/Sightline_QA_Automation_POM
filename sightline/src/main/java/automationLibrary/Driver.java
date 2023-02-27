@@ -401,6 +401,15 @@ public class Driver {
 			e.printStackTrace();
 		}
 	}
+	
+	public void javascriptScrollTo(Element element) {
+		try { ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",element.getWebElement()); 
+		} catch (Exception e) { 
+			e.getLocalizedMessage();
+			e.printStackTrace();
+				 
+				 }
+	}
 
 	public void waitForPageToBeReady() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;

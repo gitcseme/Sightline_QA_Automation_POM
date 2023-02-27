@@ -2258,7 +2258,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              audio doc view..[RPMXCON-51177]
 	 */
 	@Test(description = "RPMXCON-51177", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyRemarks1000chars(String username, String password) throws InterruptedException, Exception {
+	public void verifyRemarks1000chars(String username, String password, String fullname) throws InterruptedException, Exception {
 		DocViewPage docView = new DocViewPage(driver);
 
 		SoftAssert asserts = new SoftAssert();
@@ -2292,8 +2292,8 @@ public class DocViewAudio_Phase2_Regression {
 	 *              document in 4 sec " + "and ready for the user to act up on when
 	 *              navigating from DocList")[RPMXCON-51527]
 	 */
-	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "Allusers", groups = { "regression" })
-	public void verifyAudioDocBringUp4Sec(String username, String password) throws Exception {
+	@Test(description = "RPMXCON-51527", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
+	public void verifyAudioDocBringUp4Sec(String username, String password, String fullname) throws Exception {
 		DocListPage doclist = new DocListPage(driver);
 		sessionSearch = new SessionSearch(driver);
 
@@ -2389,7 +2389,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              state.[RPMXCON-51467]
 	 */
 	@Test(description = "RPMXCON-51467", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyAppNotHangtheAudioInPause(String username, String password) throws Exception {
+	public void verifyAppNotHangtheAudioInPause(String username, String password, String fullname) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
 		Map<String, String> updateDatas = new HashMap<String, String>();
@@ -4092,7 +4092,7 @@ public class DocViewAudio_Phase2_Regression {
 	 */
 
 	@Test(description = "RPMXCON-51123", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
-	public void validateTranscriptTabOutSideAssgn(String userName, String password, String fullName)
+	public void validateTranscriptTabOutSideAssgn(String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51123");
 		baseClass.stepInfo("Verify user can see the transcript in audio doc view outside of an assignment");
