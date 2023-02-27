@@ -4450,7 +4450,7 @@ public class UserManagement {
 
 		getDomainUserRightArrow().waitAndClick(10);
 		
-//		driver.Manage().window().fullscreen();
+		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		
 		bc.VerifySuccessMessage("User Mapping Successful");
@@ -5005,7 +5005,7 @@ public class UserManagement {
 		getsavedomainuser().waitAndClick(10);
 		bc.waitForElement(bc.getSuccessMsgHeader());
 
-//		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
