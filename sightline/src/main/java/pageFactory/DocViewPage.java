@@ -130,7 +130,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_TextFileType() {
-		return driver.FindElementById("txtspanfileType");
+		return driver.FindElementByXPath("//*[@id=\"txtspanfileType\"]");
 	}
 
 	public Element getDocView_IconPlay() {
@@ -7513,6 +7513,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
@@ -28592,6 +28593,7 @@ public class DocViewPage {
 
 		// Check Default Selection
 		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+
 		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
 				"In default : Application automatically selected the ‘Default Redaction Tag’",
 				"In default : invalid redaction tag selected");
