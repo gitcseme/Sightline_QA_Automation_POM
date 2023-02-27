@@ -5056,7 +5056,7 @@ public class UserManagement {
 		}
 
 		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
-			System.out.println(getSecurityDropDownDomain().isElementAvailable(10));
+			
 			getSecurityDropDownDomain().isElementAvailable(10);
 			getSecurityDropDownDomain().selectFromDropdown().selectByVisibleText("Default Security Group");
 
