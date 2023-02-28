@@ -103,6 +103,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
+		miniDocListpage= new MiniDocListPage(driver);
 
 	}
 
@@ -1544,6 +1545,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
 
 		driver.waitForPageToBeReady();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
 
@@ -1595,9 +1598,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage.codingFormSaveButton();
 		baseClass.stepInfo("Document saved successfully");
 		docViewPage.closeWindow(2);
-
 		// validating waveform displaying for same document
 		docViewPage.switchToNewWindow(1);
+        baseClass.waitTime(3);
 		String childactiveId = docViewPage.getDocView_CurrentDocId().getText();
 		softAssertion.assertEquals(Input.oneHourAudio, childactiveId);
 		boolean childwaveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
@@ -1648,6 +1651,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
 
+		driver.waitForPageToBeReady();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
@@ -4612,6 +4617,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
 
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
@@ -4892,6 +4898,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
+		String title=docViewPage.getDocView_TextFileType().getText().toString();
+		System.out.println(title);
 		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
 		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
 		softAssertion.assertAll();

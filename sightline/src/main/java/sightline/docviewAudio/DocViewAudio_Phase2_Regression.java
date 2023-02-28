@@ -82,6 +82,8 @@ public class DocViewAudio_Phase2_Regression {
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion=new SoftAssert();
+		sessionSearch=new SessionSearch(driver);
+		docViewPage=new DocViewPage(driver);
 	}
 
 	@DataProvider(name = "AllTheUsers")

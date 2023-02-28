@@ -945,7 +945,6 @@ public class DocViewMiniDocList_Regression1 {
 		baseClass.stepInfo("User navigated to docview page from saved search page");
 
 		String docId = docViewPage.editSavedSearchCodingForm(verifyCoding);
-		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.ViewInDocView();
 		String CodingFormText = docViewPage.reVerifyCodingForm(docId);
 		SoftAssert assertion = new SoftAssert();

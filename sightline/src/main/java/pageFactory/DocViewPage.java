@@ -130,7 +130,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_TextFileType() {
-		return driver.FindElementById("txtspanfileType");
+		return driver.FindElementByXPath("//*[@id=\"txtspanfileType\"]");
 	}
 
 	public Element getDocView_IconPlay() {
@@ -7513,6 +7513,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
@@ -23442,8 +23443,9 @@ public class DocViewPage {
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
-		driver.get("https://sightlineqa.consiliotest.com/DocumentViewer/DocView");
+		//driver.get("https://sightlineqa.consiliotest.com/DocumentViewer/DocView");
 		driver.Navigate().refresh();
+		base.handleAlert();
 		driver.waitForPageToBeReady();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
@@ -28591,6 +28593,7 @@ public class DocViewPage {
 
 		// Check Default Selection
 		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+
 		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
 				"In default : Application automatically selected the ‘Default Redaction Tag’",
 				"In default : invalid redaction tag selected");
