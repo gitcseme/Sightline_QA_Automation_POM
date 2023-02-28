@@ -28,6 +28,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ManageUsersPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -183,7 +184,8 @@ public class DocView_Regression6 {
 		driver.scrollPageToTop();
 		assignPage.addReviewerAndDistributeDocs();
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
-		assignPage.getAssignmentSaveButton().Click();
+		baseClass.waitTillElemetToBeClickable(assignPage.getAssignmentSaveButton());
+		assignPage.getAssignmentSaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 
@@ -193,15 +195,11 @@ public class DocView_Regression6 {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignPage.selectAssignmentToViewinDocView(assignmentName);
 		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+//		Added
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		// click eye icon and verify the highlighting of search term
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return docView.getPersistantHitEyeIcon().Displayed();
-			}
-		}), Input.wait30);
-		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		docView.clickOnPersistantHitEyeIcon();
 		driver.waitForPageToBeReady();
 
 		if (docView.getPersistentToogle().isDisplayed()) {
@@ -216,16 +214,11 @@ public class DocView_Regression6 {
 		baseClass.stepInfo("Logined as Reviewer");
 		assignPage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Select assigned assignment and navigated to docview");
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 
 		// click eye icon and verify the highlighting of search term
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return docView.getPersistantHitEyeIcon().Displayed();
-			}
-		}), Input.wait30);
-		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(30);
+		docView.clickOnPersistantHitEyeIcon();
 		driver.waitForPageToBeReady();
 		if (docView.getPersistentToogle().isDisplayed()) {
 			baseClass.failedStep("Keywprds are highlighted while checking as reviewer");
@@ -380,14 +373,14 @@ public class DocView_Regression6 {
 		securityGroupsPage.selectSecurityGroup(random1);
 
 		baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+//		Added
+		driver.waitForPageToBeReady();
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
-		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
+
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
@@ -398,8 +391,9 @@ public class DocView_Regression6 {
 		sessionSearch.bulkRelease(random1);
 
 		baseClass.stepInfo("Edit user by name in Users page");
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		docViewRedact.assignAccessToSecurityGroups(random1);
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		user.assignAccessToSecurityGroups(random1, Input.rmu2userName);
 
 		loginPage.logout();
 
@@ -415,14 +409,15 @@ public class DocView_Regression6 {
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.addDocsMetCriteriaToActionBoard();
+		sessionSearch.viewInDocView();
 
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
 		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
-
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with project administrator");
@@ -450,6 +445,7 @@ public class DocView_Regression6 {
 
 @Test(description = "RPMXCON-51990", groups={"regression"})
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
+	
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		folder = "51990Default_" + Utility.dynamicNameAppender();
 		folder2 = "51990DefaultSec_" + Utility.dynamicNameAppender();
@@ -479,8 +475,8 @@ public class DocView_Regression6 {
 			baseClass.failedStep("The persistent hit panel is NOT visible");
 		}
 		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-
 		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		docViewMetaDataPage.selectSecurityGroup(random1);
 		baseClass.stepInfo("RMU2 Assigned to new SG");

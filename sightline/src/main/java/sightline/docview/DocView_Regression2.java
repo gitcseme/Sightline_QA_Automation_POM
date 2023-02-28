@@ -1489,7 +1489,6 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		
-//		Added on 07_02_23
 		assignmentspage.navigateToAssignmentsPage();
 		driver.waitForPageToBeReady();
 		
@@ -1535,6 +1534,7 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 	
 		baseClass.stepInfo("Add Remark To Non Audio Document");
@@ -2126,7 +2126,6 @@ public class DocView_Regression2 {
 		assignPage.addReviewerAndDistributeDocs();
 		driver.waitForPageToBeReady();
 		
-//		Added on 07_02_23
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().waitAndClick(5);
 		

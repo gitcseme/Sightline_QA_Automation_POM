@@ -1085,26 +1085,31 @@ public class DocView_Regression3 {
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 
 		sessionsearch.basicContentSearch(Input.testData1);
-
 		sessionsearch.ViewInDocView();
 
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-
+		driver.waitForPageToBeReady();
+		docViewRedact.selectDoc2();
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
+		driver.waitForPageToBeReady();
+		
 		docViewMetaDataPage.redactbyrectangle(10, 15, redactiontag);
 		
+		baseClass.waitForElement(docViewRedact.getDocViewAllRedation());
 		String beforeCount = docViewRedact.getDocViewAllRedation().getText();
 		System.out.println(beforeCount);
-
+		
+		driver.waitForPageToBeReady();
+		
+		baseClass.waitForElement(docViewRedact.getDocViewAllRedation());
 		String afterCount = docViewRedact.getDocViewAllRedation().getText();
 		System.out.println(afterCount);
 		softAssertion.assertNotEquals(beforeCount, afterCount);
 		baseClass.passedStep("count of 'All Redactions'are increased");
 
-		
 	}
 	
 
@@ -1502,21 +1507,25 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Sharing same annotation layer to different security groups");
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
-
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Docs are released to both security groups");
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu1userName);
+		driver.waitForPageToBeReady();
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
 		loginPage.logout();
 
@@ -1527,9 +1536,10 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		driver.waitForPageToBeReady();
+		
 		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(5,55, remark);
+		docView.addRemarkToNonAudioDocument(1,20, remark);
 		loginPage.logout();
 
 		baseClass.stepInfo("Login in to sightline using first user " + Input.rmu1userName);
@@ -1539,13 +1549,16 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList("T2490D");
 		driver.waitForPageToBeReady();
 		
-		String firstUserWindow = driver.CurrentWindowHandle();
+//		String firstUserWindow = driver.CurrentWindowHandle();
 		baseClass.stepInfo("Opening a new tab");
 		baseClass.openNewTab();
-		driver.switchToChildWindow();
+//		driver.switchToChildWindow();
+		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		String parentWin = reusableDocView.switchTochildWindow();
 		baseClass.stepInfo("Navigating to Sighline URL");
 		driver.Navigate().to(Input.url);
 		driver.waitForPageToBeReady();
@@ -1556,15 +1569,22 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList("T2490D");
 		driver.waitForPageToBeReady();
-		String secondUserWindow = driver.CurrentWindowHandle();
+//		String secondUserWindow = driver.CurrentWindowHandle();
 		baseClass.stepInfo("Switching back to first window to delete remark");
-		driver.switchToWindow(firstUserWindow);
+		driver.switchToWindow(parentWin);
+//		reusableDocView.childWindowToParentWindowSwitching(parentWin);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList("T2490D");
 		baseClass.stepInfo("Perfrom non audio annotation");
 		docView.performNonAudioAnnotation();
 		baseClass.stepInfo("Switching back to second window to warning message displayed in all 3 panels");
-		driver.switchToWindow(secondUserWindow);
+//		driver.switchToWindow(secondUserWindow);
+		reusableDocView.switchTochildWindow();
+		driver.waitForPageToBeReady();
 		docView.verifyWarningMessage("Annotation");
 		docView.verifyAppliedAnnotationSubMenusAreDisabled();
 		docView.verifyWarningMessage("Redaction");
@@ -1660,19 +1680,24 @@ public class DocView_Regression3 {
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
-
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(namesg2);
-
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
 		//baseClass.CloseSuccessMsgpopup();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
 		//baseClass.CloseSuccessMsgpopup();
-
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
@@ -1687,7 +1712,10 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-
+		driver.waitForPageToBeReady();
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Click on Redaction Icon");
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
@@ -1701,14 +1729,18 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-
+		driver.waitForPageToBeReady();
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Click on Redaction Icon");
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Click on page redaction");
+		baseClass.waitForElement(docViewRedact.thisPageRedaction());
 		docViewRedact.thisPageRedaction().isElementAvailable(10);
-		docViewRedact.thisPageRedaction().Click();
+		docViewRedact.thisPageRedaction().waitAndClick(5);
 
 		baseClass.stepInfo("Verify First Option Of Redaction From Dropdown");
 		docView.verifyFirstOptionOfRedactionFromDropdown(Input.defaultRedactionTag);

@@ -105,6 +105,11 @@ public class DocView_Regression5 {
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		KeywordPage keyword = new KeywordPage(driver);
+		String keyWord = "Test" + Utility.dynamicNameAppender();
+		keyword.navigateToKeywordPage();
+		keyword.AddKeyword(keyWord, keyWord);
+		
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.bulkAssign();
@@ -114,10 +119,10 @@ public class DocView_Regression5 {
 
 // Checking persistent hits and keywords in DocView		
 		docViewRedact.checkingPersistentHitPanel();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitForElement(docViewRedact.nextKeywordTest());
-		docViewRedact.nextKeywordTest().Click();
-		if (docViewRedact.nextKeywordTest().Enabled() == true) {
+		docViewRedact.verifyHighLightingTextInDocView();
+		baseClass.waitForElement(docViewRedact.hitForwardIcon(keyWord));
+		docViewRedact.hitForwardIcon(keyWord).waitAndClick(5);
+		if (docViewRedact.hitForwardIcon(keyWord).Enabled() == true) {
 			baseClass.passedStep("next button clickable");
 		} else {
 			baseClass.failedStep("next button not clickable");
@@ -131,14 +136,19 @@ public class DocView_Regression5 {
 
 		// Checking persistent hits and keywords in DocView
 		docViewRedact.checkingPersistentHitPanel();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
-		docViewRedact.getKeywordInPersistentHitPanel().Click();
-		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
+		docViewRedact.verifyHighLightingTextInDocView();
+		baseClass.waitForElement(docViewRedact.hitForwardIcon(keyWord));
+		docViewRedact.hitForwardIcon(keyWord).waitAndClick(5);
+		if (docViewRedact.hitForwardIcon(keyWord).Enabled() == true) {
 			baseClass.passedStep("next button clickable");
 		} else {
 			baseClass.failedStep("next button not clickable");
 		}
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		keyword.navigateToKeywordPage();
+		keyword.deleteKeyword(keyWord);
 		loginPage.logout();
 	}
 
@@ -154,22 +164,29 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
 		baseClass.stepInfo(
 				"Verify that after impersonation > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search");
+		String keyWord = "Test" + Utility.dynamicNameAppender();
 		loginPage = new LoginPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
+		KeywordPage keyword = new KeywordPage(driver);
+		keyword.navigateToKeywordPage();
+		keyword.AddKeyword(keyWord, keyWord);
+		
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.ViewInDocView();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docViewRedact.checkingPersistentHitPanel();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
-		docViewRedact.nextKeywordTest().Click();
-		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
-			baseClass.passedStep("next btn clickable");
+		docViewRedact.verifyHighLightingTextInDocView();
+		baseClass.waitForElement(docViewRedact.hitForwardIcon(keyWord));
+		docViewRedact.hitForwardIcon(keyWord).waitAndClick(5);
+		if (docViewRedact.hitForwardIcon(keyWord).Enabled() == true) {
+			baseClass.passedStep("next button clickable");
 		} else {
-			baseClass.failedStep("next btn not clickable");
+			baseClass.failedStep("next button not clickable");
 		}
 
 		// Impersonation as Rev and checking the above
@@ -178,14 +195,19 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
-		docViewRedact.getKeywordInPersistentHitPanel().Click();
-		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
-			baseClass.passedStep("next btn clickable");
+		docViewRedact.verifyHighLightingTextInDocView();
+		baseClass.waitForElement(docViewRedact.hitForwardIcon(keyWord));
+		docViewRedact.hitForwardIcon(keyWord).waitAndClick(5);
+		if (docViewRedact.hitForwardIcon(keyWord).Enabled() == true) {
+			baseClass.passedStep("next button clickable");
 		} else {
-			baseClass.failedStep("next btn not clickable");
+			baseClass.failedStep("next button not clickable");
 		}
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		keyword.navigateToKeywordPage();
+		keyword.deleteKeyword(keyWord);
 		loginPage.logout();
 	}
 
@@ -228,7 +250,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
@@ -562,7 +584,7 @@ public class DocView_Regression5 {
 			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
 
 		}
-
+		
 		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
@@ -671,8 +693,8 @@ public class DocView_Regression5 {
 			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
 
 		}
-		docView.getSelectedDocIdInMiniDocList().ScrollTo();
-		baseClass.waitTillElemetToBeClickable(docView.getSelectedDocIdInMiniDocList());
+		
+		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
 		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
@@ -705,7 +727,9 @@ public class DocView_Regression5 {
 		docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);
-		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String searchNamePA = "Search Name" + UtilityLog.dynamicNameAppender();
+		String searchNameRMu = "Search Name" + UtilityLog.dynamicNameAppender();
+		String searchNameRev = "Search Name" + UtilityLog.dynamicNameAppender();
 
 		baseClass.stepInfo("Test case id : RPMXCON-51404");
 		baseClass.stepInfo(
@@ -713,8 +737,8 @@ public class DocView_Regression5 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
+		sessionSearch.saveSearch(searchNameRMu);
+		savedSearch.savedSearchToDocList(searchNameRMu);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
@@ -723,14 +747,15 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
+		sessionSearch.saveSearch(searchNameRev);
+		savedSearch.savedSearchToDocList(searchNameRev);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
@@ -744,8 +769,8 @@ public class DocView_Regression5 {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
 		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
+		sessionSearch.saveSearch(searchNamePA);
+		savedSearch.savedSearchToDocList(searchNamePA);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
@@ -778,6 +803,10 @@ public class DocView_Regression5 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		driver.waitForPageToBeReady();
+		String keyWord = "Test" + Utility.dynamicNameAppender();
+		KeywordPage keyword = new KeywordPage(driver);
+		keyword.navigateToKeywordPage();
+		keyword.AddKeyword(keyWord, keyWord);
 		
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
@@ -794,7 +823,7 @@ public class DocView_Regression5 {
 		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().Click();
-		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
+		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keyWord);
 		loginPage.logout();
 
 	}
@@ -1113,15 +1142,9 @@ public class DocView_Regression5 {
 		// Method for viewing doc view images.
 		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
 		driver.getWebDriver().navigate().refresh();
-		try {
-			Alert alert = driver.getWebDriver().switchTo().alert();
-			String alertText = alert.getText();
-			System.out.println("Alert data: " + alertText);
-			UtilityLog.info("Alert data: " + alertText);
-			alert.accept();
-		} catch (NoAlertPresentException e) {
+//		Added
 
-		}
+		baseClass.handleAlert();
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
 		loginPage.logout();
@@ -1135,15 +1158,8 @@ public class DocView_Regression5 {
 		// Method for viewing doc view images.
 		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
 		driver.getWebDriver().navigate().refresh();
-		try {
-			Alert alert = driver.getWebDriver().switchTo().alert();
-			String alertText = alert.getText();
-			System.out.println("Alert data: " + alertText);
-			UtilityLog.info("Alert data: " + alertText);
-			alert.accept();
-		} catch (NoAlertPresentException e) {
+		baseClass.handleAlert();
 
-		}
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
 		loginPage.logout();
@@ -1158,15 +1174,7 @@ public class DocView_Regression5 {
 		// Method for viewing doc view images.
 		docViewRedact.verifyViewDocAnalyticalPanelIsNotPartInMiniDocList();
 		driver.getWebDriver().navigate().refresh();
-		try {
-			Alert alert = driver.getWebDriver().switchTo().alert();
-			String alertText = alert.getText();
-			System.out.println("Alert data: " + alertText);
-			UtilityLog.info("Alert data: " + alertText);
-			alert.accept();
-		} catch (NoAlertPresentException e) {
-
-		}
+		baseClass.handleAlert();
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyViewDocAnalyticalPanelPartInMiniDocList();
 		loginPage.logout();
@@ -1484,6 +1492,7 @@ public class DocView_Regression5 {
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 
 		baseClass.stepInfo("Step 4: Go to Images tab");
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(5);
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
@@ -1519,11 +1528,12 @@ public class DocView_Regression5 {
 
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 4: Go to Images tab");
+		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(5);
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDoc05);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 

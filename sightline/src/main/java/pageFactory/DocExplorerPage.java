@@ -1429,7 +1429,8 @@ public class DocExplorerPage {
 		bc.waitForElement(addToFilterButton());
 		addToFilterButton().waitAndClick(10);
 		for (int row = 1; row <= 10; row++) {
-			doclistTableMultiSelect(row).Click();
+			bc.waitForElement(doclistTableMultiSelect(row));
+			doclistTableMultiSelect(row).waitAndClick(5);
 			Thread.sleep(5000); // required here as per testCase requirements
 		}
 		bc.waitForElement(actionDropdown());
@@ -1453,7 +1454,8 @@ public class DocExplorerPage {
 		exportWindow_closeButton().waitAndClick(10);
 
 		for (int row1 = 1; row1 <= 10; row1++) {
-			doclistTableMulti_EyeIconSelect(row1).Click();
+			bc.waitForElement(doclistTableMulti_EyeIconSelect(row1));
+			doclistTableMulti_EyeIconSelect(row1).waitAndClick(10);
 			Thread.sleep(5000); // required here as per testCase requirements
 			bc.waitForElement(exportWindow_PreviewDocumentCloseButton());
 			exportWindow_PreviewDocumentCloseButton().waitAndClick(10);

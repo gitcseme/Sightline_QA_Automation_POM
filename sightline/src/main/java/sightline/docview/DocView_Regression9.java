@@ -187,7 +187,6 @@ public class DocView_Regression9 {
 	 */
 
 	@Test(description = "RPMXCON-51863", enabled = true, alwaysRun = true, groups = { "regression" })
-
 	public void verifyTextRemarks() throws Exception {
 // Selecting Document from Session search
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -200,28 +199,31 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.remarksIcon().Visible() && docViewRedact.remarksIcon().Enabled();
-			}
-		}), Input.wait30);
-		docViewRedact.remarksIcon().waitAndClick(25);
-		wait.until(
-				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
-		Thread.sleep(4000);
-//Thread sleep added for the page to adjust resolution		
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(100, 20).release().build().perform();
-		baseClass.stepInfo("text for remarks has been selected");
-		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-		actions.click().build().perform();
-		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
-		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-		actions.click();
-		actions.sendKeys("Remark by RMU");
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
-		actions.click().build().perform();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() throws Exception {
+//				return docViewRedact.remarksIcon().Visible() && docViewRedact.remarksIcon().Enabled();
+//			}
+//		}), Input.wait30);
+//		docViewRedact.remarksIcon().waitAndClick(25);
+//		wait.until(
+//				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
+//		Thread.sleep(4000);
+////Thread sleep added for the page to adjust resolution		
+//		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+//				.moveByOffset(100, 20).release().build().perform();
+//		baseClass.stepInfo("text for remarks has been selected");
+//		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+//		actions.click().build().perform();
+//		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
+//		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+//		actions.click();
+//		actions.sendKeys("Remark by RMU");
+//		actions.build().perform();
+//		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
+//		actions.click().build().perform();
+		docView.addRemarkNonAudioDoc("Remark by RMU");
 		if (docViewRedact.deleteRemarksBtn().Displayed() && docViewRedact.deleteRemarksBtn().Enabled()) {
 			assertTrue(true);
 			baseClass.passedStep("The Remark has been saved by RMU");
@@ -249,9 +251,13 @@ public class DocView_Regression9 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass = new BaseClass(driver);
+		baseClass.clearBullHornNotification();
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
@@ -417,15 +423,20 @@ public class DocView_Regression9 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass = new BaseClass(driver);
+		baseClass.clearBullHornNotification();
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input for pdf doc completed");
 		sessionsearch.ViewInDocView();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.forwardNextDocBtn().Visible() && docViewRedact.forwardNextDocBtn().Enabled();
 			}
 		}), Input.wait30);
 		docViewRedact.forwardNextDocBtn().waitAndClick(20);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Moved to next document(pdf) using naviagtion option");
 		Thread.sleep(2000);
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -434,6 +445,7 @@ public class DocView_Regression9 {
 			}
 		}), Input.wait30);
 		docViewRedact.printIcon().waitAndClick(20);
+		driver.waitForPageToBeReady();
 		try {
 			baseClass.VerifySuccessMessage(
 					"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
@@ -554,12 +566,14 @@ public class DocView_Regression9 {
 		baseClass.stepInfo("Search for document with bullet points completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document viewed in DocView");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+				return docViewRedact.btnprintIcon().Visible() && docViewRedact.btnprintIcon().Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.printIcon().waitAndClick(25);
+		docViewRedact.btnprintIcon().waitAndClick(25);
 		baseClass.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		baseClass.stepInfo("Success message has been verified");
@@ -826,23 +840,11 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.docIdRemarks);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
-		docViewRedact.clickingRemarksIcon();
-		wait.until(
-				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
-		Thread.sleep(4000);
-//Thread sleep added for the page to adjust resolution		
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(30, 20).release().build().perform();
-		baseClass.stepInfo("text for remarks has been selected");
-		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-		actions.click().build().perform();
-		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-		actions.click();
-		actions.sendKeys("Remark by RMU");
-		actions.build().perform();
-		baseClass.passedStep("Created Remarks as RMU");
-		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
-		actions.click().build().perform();
+//		docViewRedact.clickingRemarksIcon();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		docView.addRemarkToNonAudioDocument(1, 20, "Remark by RMU");
 		driver.waitForPageToBeReady();
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex1 = Color.fromString(color).asHex();
@@ -970,6 +972,8 @@ public class DocView_Regression9 {
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Documents viewd in DocView");
+		docViewRedact.selectDoc3();
+		driver.waitForPageToBeReady();
 		docViewRedact.clickingHighlitingIcon();
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
@@ -1031,6 +1035,7 @@ public class DocView_Regression9 {
 			}
 		}), Input.wait30);
 		docViewRedact.clickPageNumber(3).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		String text = docViewRedact.clickPageNumber(3).getText();
 		System.out.println(text);
 		if (text.equalsIgnoreCase("3")) {
@@ -1152,8 +1157,9 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.performClickSearchIconAndX();
-
+		baseClass.waitForElement(docViewRedact.getSearchIcon());
 		if (docViewRedact.getSearchIcon().isElementPresent() == true) {
 			baseClass.passedStep("Textbox and the magnifying glass, X is back to magnifying glass");
 		} else {
@@ -1170,8 +1176,9 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.performClickSearchIconAndX();
-
+		baseClass.waitForElement(docViewRedact.getSearchIcon());
 		if (docViewRedact.getSearchIcon().isElementPresent() == true) {
 			baseClass.passedStep("Textbox and the magnifying glass, X is back to magnifying glass");
 		} else {
@@ -1187,8 +1194,9 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.performClickSearchIconAndX();
-
+		baseClass.waitForElement(docViewRedact.getSearchIcon());
 		if (docViewRedact.getSearchIcon().isElementPresent() == true) {
 			baseClass.passedStep("Textbox and the magnifying glass, X is back to magnifying glass");
 		} else {
@@ -1796,8 +1804,7 @@ public class DocView_Regression9 {
 		String docId1 = docViewPage.getDocView_CurrentDocId().getText();
 		System.out.println(docId1);
 
-		baseClass.waitForElement(docViewPage.getCompleteDocBtn());
-		docViewPage.getCompleteDocBtn().waitAndClick(5);
+		docViewPage.completeDocument("test");
 		docViewPage.verifyCheckMark();
 
 		sessionSearch.basicSearchWithMetaDataQuery(docId1);
@@ -2637,6 +2644,7 @@ public class DocView_Regression9 {
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo(
 				"Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
 		docListPage.selectingAllDocuments();
@@ -2686,6 +2694,7 @@ public class DocView_Regression9 {
 
 		baseClass.stepInfo(
 				"Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
 		docListPage.selectingAllDocuments();
@@ -2736,6 +2745,7 @@ public class DocView_Regression9 {
 
 		baseClass.stepInfo(
 				"Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
 		docListPage.selectingAllDocuments();
@@ -2870,10 +2880,11 @@ public class DocView_Regression9 {
 		SoftAssert softAssert = new SoftAssert();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-
+		baseClass.selectproject(Input.additionalDataProject);
+		
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("performing bulk assign");
 		sessionSearch.bulkAssign();
 		baseClass.stepInfo("Create assignment WIth allow user to save with out complete option");
@@ -2900,7 +2911,7 @@ public class DocView_Regression9 {
 		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
 		driver.waitForPageToBeReady();
 		softAssert.assertFalse(docView.geDocView_MiniList_CodeSameAsIcon().isDisplayed());
-		if (docView.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(1)) {
+		if (docView.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)) {
 			baseClass.failedStep("CodeSameAs icon is displayed for the selected docs ");
 		} else {
 			baseClass.passedStep("CodeSameAs icon is not displayed for the selected docs");
@@ -4138,16 +4149,20 @@ public class DocView_Regression9 {
 			}
 		}), Input.wait30);
 		docViewRedact.redactionIcon().waitAndClick(30);
-		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
-		actions.build().perform();
+//		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+//		actions.build().perform();
+		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.verifyingMultipageIconColour(Input.iconColor);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("Success message has been verified");
 		baseClass.CloseSuccessMsgpopup();
 		baseClass.passedStep("Redaction using page range option is successfully executed");
-		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
-		actions.build().perform();
+//		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+//		actions.build().perform();
+		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.fullPageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("Success message has been verified");
@@ -4183,15 +4198,19 @@ public class DocView_Regression9 {
 			}
 		}), Input.wait30);
 		docViewRedact.redactionIcon().waitAndClick(30);
-		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
-		actions.click().build().perform();
+//		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+//		actions.click().build().perform();
+		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("Success message has been verified");
 		baseClass.passedStep(
 				"Redaction using page range option is successfully executed after impersonating from PA to RMU");
-		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
-		actions.build().perform();
+//		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
+//		actions.build().perform();
+		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.fullPageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("Success message has been verified");
@@ -6579,6 +6598,7 @@ public class DocView_Regression9 {
 		baseClass.waitForElement(docViewRedact.redactionIcon());
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -6586,8 +6606,10 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
+		baseClass.waitForElement(docViewRedact.redactionIcon());
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -6595,8 +6617,10 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
+		baseClass.waitForElement(docViewRedact.redactionIcon());
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		docViewRedact.verifySearchUsingMagnifyingIcon(false);
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -6798,7 +6822,7 @@ public class DocView_Regression9 {
 
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		Reporter.log("Logged in as User: " + Input.rmu2userName);
-		baseClass.selectproject("Indium_Regressionrun");
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
@@ -6850,6 +6874,8 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
@@ -6858,12 +6884,14 @@ public class DocView_Regression9 {
 
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		Reporter.log("Logged in as User: " + Input.rmu2userName);
-		baseClass.selectproject("Indium_Regressionrun");
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);

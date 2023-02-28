@@ -2321,7 +2321,7 @@ public class DocViewPage {
 
 	public Element getSelectedDocIdInMiniDocList() {
 		return driver.FindElementByXPath(
-				"//i[@class=\"fa fa-arrow-right\"]/..//following-sibling::td[contains(text(),'ID')]");
+				"//i[@class='fa fa-arrow-right']/..//following-sibling::td[contains(text(),'ID')]");
 	}
 
 	public Element getDocView_MiniDocList_SelectSecDocs() {
@@ -2461,7 +2461,7 @@ public class DocViewPage {
 	}
 
 	public Element docViewEyeSearchTerm() {
-		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
+		return driver.FindElementByXPath("//*[text()='Search Term and Concept Hits:']");
 	}
 
 	// added by brundha
@@ -6129,6 +6129,8 @@ public class DocViewPage {
 				return getDocView_NumTextBox().Enabled();
 			}
 		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_NumTextBox());
+        getDocView_NumTextBox().waitAndClick(5);
 		getDocView_NumTextBox().SendKeys("125" + Keys.ENTER);
 		base.waitTime(3);
 		base.waitForElement(getDocumetListLoading());
@@ -12123,8 +12125,11 @@ public class DocViewPage {
 		base.passedStep("Bulk folder is done, folder is : " + folderName);
 		base.waitForElement(getDocView_MiniDocListIds(rowno));
 		getDocView_MiniDocListIds(rowno).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_FolderTab());
+		base.waitTillElemetToBeClickable(getDocView_FolderTab());
 		getDocView_FolderTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_FolderTab_Expand());
 		getDocView_FolderTab_Expand().waitAndClick(5);
 		Thread.sleep(Input.wait30);
@@ -14474,6 +14479,7 @@ public class DocViewPage {
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		try {
 			base.waitTime(4);
+			 driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
@@ -14496,8 +14502,10 @@ public class DocViewPage {
 			System.out.println(off1 + "...." + off2);
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
-			base.waitTime(3);
-			getSelectedAreaElement().Click();
+			base.waitTime(2);
+            base.waitForElement(getSelectedAreaElement());
+            base.waitTillElemetToBeClickable(getSelectedAreaElement());
+            getSelectedAreaElement().waitAndClick(5);
 			WebElement text = getPageNumberInputTextField().getWebElement();
 			int x = text.getLocation().getX();
 			int y = text.getLocation().getY();
@@ -23518,7 +23526,7 @@ public class DocViewPage {
 	 * @Description To perform Folder MiniDocList
 	 * 
 	 */
-	public void performFloderMiniDocList() throws InterruptedException {
+	public void performFloderMiniDocList(String folder) throws InterruptedException {
 
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 2; i++) {
@@ -23542,8 +23550,8 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
-		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
+		base.waitForElement(getFolderSelection(folder));
+        getFolderSelection(folder).waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -23571,7 +23579,7 @@ public class DocViewPage {
 	 * @Description To perform Folder MiniDocList For Reviewer test id:50820
 	 * 
 	 */
-	public void performFloderMiniDocListForReviewer() throws InterruptedException {
+	public void performFloderMiniDocListForReviewer(String folder) throws InterruptedException {
 
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 2; i++) {
@@ -23596,8 +23604,8 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
-		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
+        base.waitForElement(getFolderSelection(folder));
+        getFolderSelection(folder).waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -26478,12 +26486,14 @@ public class DocViewPage {
 			base.waitForElement(getPageNumberInputTextField());
 			pageNumberBefore = Integer.parseInt(getPageNumberInputTextField().GetAttribute("placeholder"));// default 1
 		}
+		driver.waitForPageToBeReady();
 		int numberOfPages = docViewDocPageCount();
 		if (numberOfPages < 2) {
 			base.failedStep("document should have more then one page ");
 		}
 		base.waitForElement(getDocViewPageNextButton());
 		getDocViewPageNextButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getPageNumberInputTextField());
 		String pageNumberafter = getPageNumberInputTextField().GetAttribute("value");
 		if (Integer.parseInt(pageNumberafter) > pageNumberBefore) {
@@ -26564,7 +26574,7 @@ public class DocViewPage {
 		String parentWindow = reusableDocView.switchTochildWindow();
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
-		base.waitForElement(getCentralPanelDispaly());
+	
 		if (getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
 		} else {
@@ -26592,6 +26602,7 @@ public class DocViewPage {
 	 */
 	public int docViewDocPageCount() {
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
 		base.waitForElement(getdocViewDocPageCount());
 		String pageCountText = getdocViewDocPageCount().getText().trim();
 		int pageCount = Integer
