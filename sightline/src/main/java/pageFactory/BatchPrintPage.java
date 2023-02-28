@@ -632,6 +632,10 @@ public class BatchPrintPage {
 	public Element getBasisProduction(String ProdName) {
 		return driver.FindElementByXPath("//select[@id='ProductionDropDown']//option[text()='"+ProdName+"']");
 	}
+	public Element getEnableSlipSheetsToggleButton() {
+		return driver.FindElementByXPath("//label[text()='Enable Slip Sheets:']/../label[2]/i");
+	}
+
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -2593,7 +2597,7 @@ public class BatchPrintPage {
 	public void navigateAndVerifyBackBtn(String select, String searchOrTagOrFol, boolean Next) {
 
 		String[] listOfHeaders = { "Source Selection", "Basis for Printing", "Analysis", "Exception File Types",
-				"Slip Sheets", "Branding and Redactions", "Export Format" };
+				"Slip Sheets and Cover Page", "Branding and Redactions", "Export Format" };
 		fillingSourceSelectionTab(select, searchOrTagOrFol, Next);
 		String Header = getPageHeader().getText();
 		SoftAssert softAssert = new SoftAssert();
@@ -2608,8 +2612,8 @@ public class BatchPrintPage {
 			if (currentHeader.equalsIgnoreCase("Export Format")) {
 				base.ValidateElement_Presence(getGenerateButton(), "Generate Button");
 			}
-			if (currentHeader.equalsIgnoreCase("Slip Sheets")) {
-				getToggleButton().waitAndClick(5);
+			if (currentHeader.equalsIgnoreCase("Slip Sheets and Cover Page")) {
+				getEnableSlipSheetsToggleButton().waitAndClick(5);
 			}
 			if (currentHeader.equalsIgnoreCase("Exception File Types")) {
 				getToggleButton().waitAndClick(5);
@@ -2809,8 +2813,8 @@ public class BatchPrintPage {
 	 * @param Next
 	 */
 	public void disableSlipSheet(boolean Next) {
-		if (getToggleButton().isElementAvailable(10)) {
-			getToggleButton().waitAndClick(5);
+		if (getEnableSlipSheetsToggleButton().isElementAvailable(10)) {
+			getEnableSlipSheetsToggleButton().waitAndClick(5);
 
 			base.passedStep("Disables Slipsheet Toggle");
 		}
