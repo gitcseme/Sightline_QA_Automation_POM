@@ -683,10 +683,11 @@ public class SavedSearch_Phase1_AudioRegresssion {
 		// Login as PA
 		login.loginToSightLine(Input.pa2userName, Input.pa2password);
 		base.stepInfo("Loggedin As : " + Input.pa2FullName);
+		base.selectproject();
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, node,newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 		base.passedStep(
 				"Only the selected search group and their child groups are with Searches, none of the searches in parent hierarchical group is shared");
@@ -699,7 +700,7 @@ public class SavedSearch_Phase1_AudioRegresssion {
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, node,newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 		base.passedStep(
 				"Only the selected search group and their child groups are with Searches, none of the searches in parent hierarchical group is shared");
@@ -843,12 +844,12 @@ public class SavedSearch_Phase1_AudioRegresssion {
 		// Login as PA
 		login.loginToSightLine(Input.pa2userName, Input.pa2password);
 		base.stepInfo("Loggedin As : " + Input.pa2FullName);
-
+		base.selectproject();
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 		base.passedStep(
 				"Saved Search shared with the group hierarchy till 5th level across all PAU users associated to the project ,Except the selected search, none of the searches in any hierarchical group should be shared");

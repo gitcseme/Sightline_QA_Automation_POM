@@ -1670,7 +1670,7 @@ public class SavedSearch_Phase1_Regression {
 
 		login.logout();
 		// Verify with Different Users
-		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair, rolesToVerify, passMessage);
 
 		// Login as RMU
@@ -2120,7 +2120,7 @@ public class SavedSearch_Phase1_Regression {
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		// Adding new searches to root node and leaf node
@@ -2164,7 +2164,7 @@ public class SavedSearch_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		// verify the search with modifiedSearchIDpair
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				modifiedSearchIDpair);
 		login.logout();
 
@@ -2172,10 +2172,11 @@ public class SavedSearch_Phase1_Regression {
 
 		login.loginToSightLine(Input.pa2userName, Input.pa2password);
 		base.stepInfo("Loggedin As : " + Input.pa2FullName);
+		base.selectproject();
 		// Landed on Saved Search
 		base.stepInfo("ID verfication between shared searches");
 		saveSearch.navigateToSavedSearchPage();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeNewSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeNewSearchpair,
 				addSearchIDpair);
 		base.stepInfo("Verified Shared SG and Searches");
 
@@ -4052,6 +4053,7 @@ public class SavedSearch_Phase1_Regression {
 		String savedSearch2 = "Search2" + Utility.dynamicNameAppender();
 		String savedSearch3 = "Search3" + Utility.dynamicNameAppender();
 		String savedSearch4 = "Search4" + Utility.dynamicNameAppender();
+		SoftAssert softAssertion=new SoftAssert();
 		SchedulesPage schedule = new SchedulesPage(driver);
 		String pureHit0;
 		int pureHit4 = 0;
@@ -4198,6 +4200,7 @@ public class SavedSearch_Phase1_Regression {
 			// Verify Doc Count In DocListPage.
 			int DocCountInDocList = saveSearch.launchDocListViaSSandReturnDocCount();
 			try {
+				
 				softAssertion.assertEquals(Integer.parseInt(actualDocCount), DocCountInDocList);
 				base.passedStep("DocCounts Displayed in DocListPage is as Expected");
 			} catch (Exception e) {
