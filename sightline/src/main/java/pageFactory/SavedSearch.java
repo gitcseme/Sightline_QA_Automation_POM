@@ -3832,7 +3832,7 @@ public class SavedSearch {
 			node = newNodeList.get(i);
 			
 			// verify id should get changed
-			System.out.println("getSavedSearchGroupName(node).isElementAvailable(5) :-"+getSavedSearchGroupName(node).isElementAvailable(5));
+			
 			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
