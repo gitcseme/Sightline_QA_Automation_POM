@@ -574,13 +574,13 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 	 */
 
 	@Test(description = "RPMXCON-53221", alwaysRun = true, groups = { "regression" })
-	public void validateSaUserAssgnBillable() throws Exception {
+	public void validateSaUserAssgnBillable () throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53221");
 		baseClass.stepInfo("Validate SystemAdmin assigning billable and "
 				+ "internal users as PAU/RMU/Reviewer for specific project");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String projectTwoName="Regression_AllDataset_Consilio2";
+		String projectTwoName=Input.projectName01;
 		String paFirstName = Input.randomText + Utility.dynamicNameAppender();
 		String paLastName = Input.randomText + Utility.dynamicNameAppender();
 		String emailIdPa = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
@@ -594,11 +594,12 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		// Login as sa
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		
+		System.out.println(emailIdPa);
 		// creating user
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
-		userManage.createNewUser(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.domainName, Input.projectName);
-		userManage.createNewUser(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.domainName, Input.projectName);
-		userManage.createNewUser(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.domainName, Input.projectName);
+		userManage.createNewUser(paFirstName, paLastName, Input.ProjectAdministrator, emailIdPa, Input.AutomationBackUpDomain, Input.largeVolDataProject);
+		userManage.createNewUser(rmuFirstName, rmuLastName, Input.ReviewManager, emailIdrmu, Input.AutomationBackUpDomain, Input.largeVolDataProject);
+		userManage.createNewUser(revFirstName, revLastName, Input.Reviewer, emailIdRev, Input.AutomationBackUpDomain, Input.largeVolDataProject);
 
 		// assiging user as billable/non billable
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
@@ -618,6 +619,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		baseClass.waitTime(2);
 		int indexBillable=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billFalse=userManage.getUserListUsingIndex(indexBillable).getText();
+        
         System.out.println(billFalse);
         softAssertion.assertEquals(billFalse, "True");
         userManage.filterByName(emailIdPa);
@@ -630,6 +632,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		int indexBillableRmu=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billTrueRmu=userManage.getUserListUsingIndex(indexBillableRmu).getText();
         System.out.println(billTrueRmu);
+       
         softAssertion.assertEquals(billTrueRmu, "True");
         userManage.filterByName(emailIdrmu);
 		userManage.deleteUser();
@@ -641,6 +644,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		int indexBillableRev=baseClass.getIndex(userManage.getUserListHeaderIndex(), "Billable");
 		String billFalseRev=userManage.getUserListUsingIndex(indexBillableRev).getText();
         System.out.println(billFalseRev);
+        
         softAssertion.assertEquals(billFalseRev, "True");
         userManage.filterByName(emailIdRev);
 		userManage.deleteUser();
