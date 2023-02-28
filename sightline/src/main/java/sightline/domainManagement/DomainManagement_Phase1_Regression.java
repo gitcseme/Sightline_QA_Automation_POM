@@ -83,6 +83,7 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.stepInfo("Domain admin role displayed in dropdown field");
 		baseClass.passedStep("Created new user with Domain admin rule");
 
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Delete added users");
 		userManage.deleteAddedUser(firstName);
 		loginPage.logout();
@@ -103,6 +104,16 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.stepInfo(
 				"Verify when Domain Admin impersonates as PA in domain project and then changes the project from header drop down");
 		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		baseClass.waitTime(3);
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		String lastName = userManage.getTableData("LAST NAME", 1);
+		String userName = firstName + " " + lastName;
+		userManage.AssignUserToDomain(Input.domainName, userName);
+		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		UtilityLog.info("Logged in as User: " + Input.da1userName);
@@ -111,7 +122,7 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.impersonateDAtoPAforMultiDominUser();
 		baseClass.stepInfo("Impersonated as PA in same domain project");
 
-		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.selectproject(Input.projectName);
 		baseClass.stepInfo("Changed the project from header drop down");
 		driver.waitForPageToBeReady();
 		baseClass.verifyCurrentProject(Input.projectName);
@@ -145,7 +156,7 @@ public class DomainManagement_Phase1_Regression {
 		baseClass.impersonateDAtoRMU();
 		baseClass.stepInfo("Impersonated as RMU in same domain project");
 
-		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.selectproject(Input.projectName);
 		baseClass.stepInfo("Changed the project from header drop down");
 		driver.waitForPageToBeReady();
 		baseClass.verifyCurrentProject(Input.projectName);
@@ -539,6 +550,8 @@ public class DomainManagement_Phase1_Regression {
 
 		baseClass.passedStep("Created Exiting user with Domain admin rule Error Message Is Displayed");
 
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Delete added users");
 		userManage.deleteAddedUser(firstName);
 
