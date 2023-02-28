@@ -3021,7 +3021,7 @@ public class SavedSearch {
 		getShareSerachBtn().waitAndClick(10);
 		
 		base.waitForElement(getShare_SecurityGroup(SGtoShare));
-		System.out.println(getShare_SecurityGroup(SGtoShare).isElementAvailable(2));
+		
 		// Updates
 		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(2)) {
 			getShare_SecurityGroup(SGtoShare).waitAndClick(10);
@@ -3830,7 +3830,7 @@ public class SavedSearch {
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
-			System.out.println("node :-"+node);
+			
 			// verify id should get changed
 			System.out.println("getSavedSearchGroupName(node).isElementAvailable(5) :-"+getSavedSearchGroupName(node).isElementAvailable(5));
 			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
@@ -3879,9 +3879,9 @@ public class SavedSearch {
 		String Parentnode = newNodeList.get(0);
 		getSavedSearchGroupName(Parentnode).Click();
 		getSavedSearchNewGroupExpand().waitAndClick(20);
-			System.out.println("node :-"+node);
+			
 			// verify id should get changed
-			System.out.println("getSavedSearchGroupName(node).isElementAvailable(5) :-"+getSavedSearchGroupName(node).isElementAvailable(5));
+			
 			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
