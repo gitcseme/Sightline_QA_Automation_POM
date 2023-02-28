@@ -71,8 +71,8 @@ public class DocView_Regression7 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -121,6 +121,7 @@ public class DocView_Regression7 {
 		RedactionPage redactionpage = new RedactionPage(driver);
 		redactionpage.navigateToRedactionsPageURL();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		driver.waitForPageToBeReady();
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
@@ -134,27 +135,37 @@ public class DocView_Regression7 {
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew2);
+		
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew2);
 		//baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
-		//baseClass.CloseSuccessMsgpopup();
+//		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
 		//baseClass.CloseSuccessMsgpopup();
-
+		driver.waitForPageToBeReady();
+		
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg3, Input.rmu2userName);
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -241,17 +252,25 @@ public class DocView_Regression7 {
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew2);
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew2);
 		//baseClass.CloseSuccessMsgpopup();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
-		//baseClass.CloseSuccessMsgpopup();
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		//baseClass.CloseSuccessMsgpopup();\
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
 		//baseClass.CloseSuccessMsgpopup();
 
 		sessionsearch = new SessionSearch(driver);
@@ -319,7 +338,7 @@ public class DocView_Regression7 {
 	 * different security groups
 	 * stabilization done
 	 */
-	@Test( description = "RPMXCON-51052", enabled = true,alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51052", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();

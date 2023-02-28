@@ -6500,14 +6500,11 @@ public class ProductionPage {
 		}), Input.wait30);
 		getPriveldge_SelectTagButton().Click();
 
-		base.waitForElement(getPriveldge_TagTree(tagname));
-		driver.waitForPageToBeReady();
-		getPriveldge_TagTree(tagname).ScrollTo();
-		Thread.sleep(3000);
-		getPriveldge_TagTree(tagname).waitAndClick(10);
-
-		getPriveldge_TagTree_SelectButton().Click();
-
+        base.waitForElement(getPriveldged_TagTree(tagname));
+        getPriveldged_TagTree(tagname).waitAndClick(10);
+        base.waitForElement(getPriveldge_TagTree_SelectButton());
+        getPriveldge_TagTree_SelectButton().waitAndClick(5);
+        
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPriveldge_TextArea().Enabled();
@@ -12933,8 +12930,9 @@ public class ProductionPage {
 			getTIFF_EnableforPrivilegedDocs().ScrollTo();
 			base.waitForElement(getPriveldge_SelectTagButton());
 			getPriveldge_SelectTagButton().Click();
-			base.waitForElement(getPriveldge_TagTree(tagname));
+			base.waitForElement(getPriveldged_TagTree(tagname));
 			getPriveldged_TagTree(tagname).waitAndClick(10);
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
 			getPriveldge_TagTree_SelectButton().waitAndClick(10);
 			base.waitForElement(getPriveldge_TextArea());
 			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();

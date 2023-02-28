@@ -979,7 +979,7 @@ public class DocViewRedactions {
 	}
 
 	public Element getDocview_GearButton() {
-		return driver.FindElementByXPath(" //*[@id=\"miniDocListConfig\"]/i");
+		return driver.FindElementByXPath("//*[@id='miniDocListConfig']/i");
 	}
 
 	public Element getDocview_ShowCompletedDocs() {
@@ -1101,7 +1101,7 @@ public class DocViewRedactions {
 
 	// Added by Vijaya.Rani
 	public Element docViewEyeSearchTerm() {
-		return driver.FindElementByXPath("//h3[text()='Search Hits:']");
+		return driver.FindElementByXPath("//*[text()='Search Term and Concept Hits:']");
 	}
 
 	public Element docViewEyeIconKeyword() {
@@ -1514,7 +1514,7 @@ public class DocViewRedactions {
 
 	public void docListTableItration() throws Exception {
 		for (int r = 1; r < 10; r++) {
-
+			base.waitForElement(doclistTable(r));
 			doclistTable(r).Click();
 			Thread.sleep(4000);
 		}
@@ -4020,6 +4020,7 @@ public class DocViewRedactions {
 		base = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		base.waitTime(2);
+		base.waitForElement(docViewRedact.thumbNailsPanel());
 		softAssertion.assertTrue(docViewRedact.thumbNailsPanel().isElementPresent());
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
 			base.passedStep("The thumbnails panel is clicked and menu is visible");
@@ -4087,6 +4088,8 @@ public class DocViewRedactions {
 		driver.waitForPageToBeReady();
 		docViewRedact.clickingThumbnailIcon();
 		docViewRedact.verifyThumbNailsPanelDisplayed();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
 
 	}

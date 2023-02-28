@@ -150,7 +150,9 @@ public class DocView_Regression4 {
 		assignmentsPage.assignmentActions("Edit");
 
 		assignmentsPage.removeDocs(Input.rev1userName);
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		assignmentsPage.reassignDocs(Input.rev1userName);
 
 		loginPage.logout();
@@ -219,6 +221,7 @@ public class DocView_Regression4 {
 
 		savedSearch.savedSearch_Searchandclick(searchName);
 
+		baseClass.waitForElement(savedSearch.getSavedSearchToBulkAssign());
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
 
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
@@ -255,7 +258,9 @@ public class DocView_Regression4 {
 		assignmentsPage.assignmentActions("Edit");
 
 		assignmentsPage.removeDocs(Input.rev1userName);
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		assignmentsPage.reassignDocs(Input.rev1userName);
 
 		loginPage.logout();
@@ -413,8 +418,10 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.addRemarkByText("Remark by Rmu");
+//		docView.addRemarkByText("Remark by Rmu");
+		docView.addRemarkToNonAudioDocument(5, 20, "Remark by Rmu");
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.getCommentsOrRemarksCount("Remark", "\"Remark by Rmu\"");
@@ -437,6 +444,7 @@ public class DocView_Regression4 {
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
+		docViewRedact.clickingRemarksIcon();
 		docView.deleteReamark("Remark by Rmu");
 		loginPage.logout();
 	}
@@ -469,6 +477,7 @@ public class DocView_Regression4 {
 		assignmentsPage.editAssignment(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
+		assignmentsPage.navigateToAssignmentsPage();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
@@ -496,6 +505,7 @@ public class DocView_Regression4 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
 		DocViewPage docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51771");
@@ -569,8 +579,9 @@ public class DocView_Regression4 {
 
 		driver.waitForPageToBeReady();
 
-		miniDocList.configureMiniDocListToShowCompletedDocs();
-
+//		miniDocList.configureMiniDocListToShowCompletedDocs()
+		driver.waitForPageToBeReady();
+		docViewRedact.performGeerIcon();
 		docView.scrollUntilloadingTextDisplay(false);
 
 		baseClass.waitForElement(docView.getCompletedDocs());
@@ -791,6 +802,7 @@ public class DocView_Regression4 {
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.selectproject(Input.additionalDataProject);
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
@@ -960,6 +972,7 @@ public class DocView_Regression4 {
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.selectproject(Input.additionalDataProject);
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
@@ -1216,6 +1229,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectproject(Input.additionalDataProject);
 		// Add keywords
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
@@ -1369,6 +1383,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1389,6 +1404,7 @@ public class DocView_Regression4 {
 
 		// Impersonate RMU to Reviewer
 		baseClass.impersonateRMUtoReviewer();
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Select the Assignment from dashboard
@@ -1407,6 +1423,7 @@ public class DocView_Regression4 {
 
 		// Login as REVU
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
@@ -1455,10 +1472,12 @@ public class DocView_Regression4 {
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignmentNametoCreate, Input.codingFormName);
+		driver.waitForPageToBeReady();
 		assignmentPage.assignmentDistributingToReviewerManager();
 		baseClass.passedStep("Assignment created and assigned to reviewer");
 
 		// distributedCOunt pick
+		driver.waitForPageToBeReady();
 		String distributedCOunt = assignmentPage.getDistibuteDocsCount(userName);
 		baseClass.stepInfo("Distributed count to the user : " + distributedCOunt);
 
@@ -1466,9 +1485,11 @@ public class DocView_Regression4 {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getDashBoardLink());
 		miniDocListpage.getDashBoardLink().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		miniDocListpage.chooseAnAssignmentFromDashBoard(assignmentNametoCreate);
 
 		// Complete document
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Complete doc iteration count : " + iteration);
 		docIDlist = miniDocListpage.getDocListDatas();
 		miniDocListpage.verifyCompleteCheckMarkIconandDocHighlight(docIDlist, iteration, false);
@@ -1666,17 +1687,17 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
 
+		keywordPage.navigateToKeywordPage();
 		keywordPage.addKeywordWithColor(keyword, color);
-
+//
 		baseClass.stepInfo("Step 2:  Go to Basic/Advanced Search Search by term   Go to Doc View and ");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
 		baseClass.stepInfo(
 				"Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(keyword);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
@@ -1696,9 +1717,9 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo(
 				"Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(keyword);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
@@ -1719,9 +1740,8 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo(
 				"Step 4: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(keyword);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
@@ -1887,6 +1907,7 @@ public class DocView_Regression4 {
 	public void verifyArrowsRedirdctedToDocViewFromBasicSearch() throws Exception {
 
 		baseClass = new BaseClass(driver);
+		docView = new DocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51441");
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search");
@@ -1894,6 +1915,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1902,9 +1924,10 @@ public class DocView_Regression4 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
-
+		driver.waitForPageToBeReady();
 		docViewRedact.performTheEyeIconHighLighting();
-
+		docView.verifyKeywordHighlightedOnDocView();
+		
 		baseClass.stepInfo(
 				"That > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search is Successfully");
 		loginPage.logout();
@@ -1917,9 +1940,8 @@ public class DocView_Regression4 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
-
+		driver.waitForPageToBeReady();
 		docViewRedact.performTheEyeIconHighLighting();
-
 		baseClass.stepInfo(
 				"That > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search is Successfully");
 		loginPage.logout();
@@ -2006,10 +2028,12 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 		docViewRedact.checkingPersistentHitPanel();
 		docViewRedact.VerifyKeywordHitsinDoc();
-		docViewRedact.forwardToLastDoc().Click();
+		baseClass.waitForElement(docViewRedact.forwardToLastDoc());
+		docViewRedact.forwardToLastDoc().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		docViewRedact.VerifyKeywordHitsinDoc();
-		docViewRedact.backwardToFirstDoc().Click();
+		baseClass.waitForElement(docViewRedact.backwardToFirstDoc());
+		docViewRedact.backwardToFirstDoc().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		docViewRedact.VerifyKeywordHitsinDoc();
 		loginPage.logout();
@@ -2180,10 +2204,8 @@ public class DocView_Regression4 {
 		savedSearch.savedSearchToDocView(saveName);
 
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
-
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(panelText);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -2206,9 +2228,8 @@ public class DocView_Regression4 {
 		savedSearch.savedSearchToDocView(saveName);
 
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(panelText);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -2232,9 +2253,8 @@ public class DocView_Regression4 {
 		savedSearch.savedSearchToDocView(saveName);
 
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		docView.persistenHitWithSearchString(panelText);
 		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -2318,7 +2338,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id: RPMXCON-50923");
 		baseClass.stepInfo(
 				"Verify waning message is prompted to the user after impersonation when user navigates away from the page without saving action from doc view.");
-
+		DocViewRedactions redact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -2345,6 +2365,8 @@ public class DocView_Regression4 {
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.add3ReviewerAndDistribute();
 		assignmentsPage.selectAssignmentToViewinDocview(assname,Input.additionalDataProject);
+		driver.waitForPageToBeReady();
+		redact.selectMiniDocListAndViewInDocView(4);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
@@ -2373,8 +2395,11 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
 		baseClass.impersonatePAtoRMU();
+		driver.waitForPageToBeReady();
 		assignmentsPage.selectAssignmentToViewinDocview(assname,Input.additionalDataProject);
 		driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
+		redact.selectMiniDocListAndViewInDocView(4);
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
 		docView.performConfirmNavigationDisplay();
@@ -2445,7 +2470,7 @@ public class DocView_Regression4 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingPDFSection(tagname, Input.searchString4);
+		page.fillingPDFSection(tagname, Input.testData1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -2453,13 +2478,17 @@ public class DocView_Regression4 {
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+//		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.viewingPreviewInSummaryTab();
+		driver.waitForPageToBeReady();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("View searched for audio docs in Doc view");
 		sessionsearch.ViewInDocView();
 
@@ -2502,6 +2531,8 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
@@ -2520,7 +2551,7 @@ public class DocView_Regression4 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingPDFSection(tagname, Input.searchString4);
+		page.fillingPDFSection(tagname, Input.testData1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -2528,9 +2559,11 @@ public class DocView_Regression4 {
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
+//		page.fillingProductionLocationPage(productionname);
+		page.fillingProductionLocationPageAdditonal(productionname);
 		page.navigateToNextSection();
 		page.viewingPreviewInSummaryTab();
+		driver.waitForPageToBeReady();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		loginPage.logout();
@@ -2584,6 +2617,7 @@ public class DocView_Regression4 {
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		driver.waitForPageToBeReady();
 		assignmentsPage.add2ReviewerAndDistribute();
 
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
@@ -2657,20 +2691,25 @@ public class DocView_Regression4 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		String folderName = "Folder" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
-
+		TagsAndFoldersPage tag = new TagsAndFoldersPage(driver);
+		
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-
+		
+		tag.navigateToTagsAndFolderPage();
+		tag.CreateFolderInRMU(folderName);
+		
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		docView.performFloderMiniDocList();
+		docView.performFloderMiniDocList(folderName);
 		driver.waitForPageToBeReady();
-		if (docView.getDocView_AnalyticsExitingFolderName1().Displayed()) {
+		if (docView.getFolderSelection(folderName).Displayed()) {
 			baseClass.passedStep("All existing folder under that security group is displayed");
 		} else {
 			baseClass.failedStep("All existing folder under that security group is not displayed");
@@ -2686,22 +2725,24 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-
-		docView.performFloderMiniDocListForReviewer();
+		docView.performFloderMiniDocListForReviewer(folderName);
 		loginPage.logout();
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.additionalDataProject);
+		String folderNamePA = "FolderPA" + Utility.dynamicNameAppender();
+		tag.navigateToTagsAndFolderPage();
+		tag.CreateFolder(folderNamePA, Input.securityGroup);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		docView.performFloderMiniDocList();
+		docView.performFloderMiniDocList(folderNamePA);
 		driver.waitForPageToBeReady();
-		if (docView.getDocView_AnalyticsExitingFolderName1().Displayed()) {
+		if (docView.getFolderSelection(folderNamePA).Displayed()) {
 			baseClass.passedStep("All existing folder under that security group is displayed");
 		} else {
 			baseClass.failedStep("All existing folder under that security group is not displayed");
@@ -2730,26 +2771,28 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
-		sessionSearch.basicContentSearch(searchString);
+		int purehit = sessionSearch.basicContentSearch(searchString);
 		sessionSearch.bulkAssign();
 
 		// create Assignment and disturbute docs
 		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, purehit);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		System.out.println(assname);
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assname + "' is created Successfully");
 
 		driver.waitForPageToBeReady();
 		System.out.println(assname);
-		baseClass
-				.stepInfo("Doc is Assigned from basic Search and Assignment '" + assname + "' is created Successfully");
-
-		driver.waitForPageToBeReady();
-		System.out.println(assname);
-		docViewRedact.getHomeDashBoard();
 		docViewRedact.selectAssignmentfromDashborad(assname);
+		driver.waitForPageToBeReady();
 		docViewRedact.performCompleteToDocs();
+		
 		docViewRedact.performGeerIcon();
 		docViewRedact.performUnCompleteToDocs();
+		baseClass.waitForElement(docViewRedact.clickManage());
 		docViewRedact.clickManage().waitAndClick(30);
+		baseClass.waitForElement(docViewRedact.manageAssignments());
 		docViewRedact.manageAssignments().waitAndClick(20);
 		driver.waitForPageToBeReady();
 		baseClass.passedStep("The Documents is marked Uncompleted successfully");
@@ -2779,6 +2822,7 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo(" Prerequisites: Keyword groups should be created   with different Keywords");
 
+		keywordPage.navigateToKeywordPage();
 		keywordPage.addKeywordWithColor(keyword, color);
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2976,10 +3020,10 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Verify the context on navigating to doc view from RMU dashboard "
 				+ "after configuring the mini doc list should be assignment");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
+//		baseClass.selectproject();
 		// creating And Distributing the Assignment
 		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
-		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.verifyPureHitsCount();
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignmentCreation(assignmentName, Input.codeFormName);
