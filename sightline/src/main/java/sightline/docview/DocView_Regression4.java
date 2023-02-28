@@ -2024,7 +2024,7 @@ public class DocView_Regression4 {
 		assignmentspage.toggleEnableAnalyticsPanel();
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
-		assignmentspage.selectAssignmentToViewinDocview("AAassignment8501992");
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
 		docViewRedact.checkingPersistentHitPanel();
 		docViewRedact.VerifyKeywordHitsinDoc();
