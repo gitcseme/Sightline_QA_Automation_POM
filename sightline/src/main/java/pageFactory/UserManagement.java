@@ -1917,7 +1917,7 @@ public class UserManagement {
 
 		}
 		getSave().waitAndClick(10);
-//		bc.VerifySuccessMessage("User profile was successfully created");
+		bc.VerifySuccessMessage("User profile was successfully created");
 
 	}
 
@@ -2623,15 +2623,19 @@ public class UserManagement {
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
 
-		bc.waitForElement(getSelectusertoassignindomain());
+		//bc.waitForElement(getSelectusertoassignindomain());
+		bc.waitTime(10);
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
 		driver.waitForPageToBeReady();
+		bc.waitTime(3);
 		getrightBtndomainuser().waitAndClick(10);
+		bc.waitTime(3);
 		if (getAssignedUserName(AssigedUserName).isElementPresent()) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
 		} else {
 			bc.failedStep("verification failed");
 		}
+		bc.waitTime(4);
 		getProjectTab().waitAndClick(10);
 		bc.waitForElement(getbellyBandMsg());
 		String msg = getbellyBandMsg().getText();
@@ -2665,15 +2669,19 @@ public class UserManagement {
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
 
-		bc.waitForElement(getSelectusertoassignindomain());
+		//bc.waitForElement(getSelectusertoassignindomain());
+		bc.waitTime(10);
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
 		driver.waitForPageToBeReady();
+		bc.waitTime(3);
 		getrightBtndomainuser().waitAndClick(10);
+		bc.waitTime(3);
 		if (getAssignedUserName(AssigedUserName).isElementPresent()) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
 		} else {
 			bc.failedStep("verification failed");
 		}
+		bc.waitTime(4);
 		getProjectTab().waitAndClick(10);
 		bc.waitForElement(getbellyBandMsg());
 		String msg = getbellyBandMsg().getText();

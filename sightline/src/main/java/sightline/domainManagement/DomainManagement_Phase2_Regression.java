@@ -548,6 +548,16 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52993");
 		baseClass.stepInfo(
 				"To verify that Domain Admin user impersonate as RMU in current logged in Domain successfully");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		baseClass.waitTime(3);
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		String lastName = userManage.getTableData("LAST NAME", 1);
+		String userName = firstName + " " + lastName;
+		userManage.AssignUserToDomain(Input.domainName, userName);
+		loginPage.logout();
+		
 		// login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
