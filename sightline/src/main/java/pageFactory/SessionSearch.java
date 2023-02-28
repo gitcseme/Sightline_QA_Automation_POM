@@ -6336,6 +6336,7 @@ public class SessionSearch {
 		if (getSavedSearch_MySearchesNewNode1(Node).isElementAvailable(10)) {
 			getSavedSearch_MySearchesNewNode1(Node).waitAndClick(3);
 		} else {
+			base.waitForElement(getSavedSearch_MySearchesTab());
 			getSavedSearch_MySearchesTab().waitAndClick(10);
 		}
 
