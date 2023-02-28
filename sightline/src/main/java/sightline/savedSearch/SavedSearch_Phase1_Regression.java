@@ -4194,13 +4194,13 @@ public class SavedSearch_Phase1_Regression {
 			saveSearch.savedSearch_SearchandSelect(searches, "Yes");
 
 			String actualDocCount = saveSearch.getCountofDocs().getText();
-			System.out.println("actualDocCount :"+actualDocCount);
+			
 			softAssertion.assertEquals(pureHit0, actualDocCount);
 
 			// Verify Doc Count In DocListPage.
 			int DocCountInDocList = saveSearch.launchDocListViaSSandReturnDocCount();
 			try {
-				System.out.println("DocCountInDocList :"+DocCountInDocList);
+				
 				softAssertion.assertEquals(Integer.parseInt(actualDocCount), DocCountInDocList);
 				base.passedStep("DocCounts Displayed in DocListPage is as Expected");
 			} catch (Exception e) {

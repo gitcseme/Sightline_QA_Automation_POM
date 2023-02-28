@@ -3019,7 +3019,9 @@ public class SavedSearch {
 		// Share to SG
 		getSavedSearchGroupName(nodeName).waitAndClick(10);
 		getShareSerachBtn().waitAndClick(10);
-
+		
+		base.waitForElement(getShare_SecurityGroup(SGtoShare));
+		System.out.println(getShare_SecurityGroup(SGtoShare).isElementAvailable(2));
 		// Updates
 		if (getShare_SecurityGroup(SGtoShare).isElementAvailable(2)) {
 			getShare_SecurityGroup(SGtoShare).waitAndClick(10);
@@ -3828,7 +3830,9 @@ public class SavedSearch {
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
+			System.out.println("node :-"+node);
 			// verify id should get changed
+			System.out.println("getSavedSearchGroupName(node).isElementAvailable(5) :-"+getSavedSearchGroupName(node).isElementAvailable(5));
 			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
@@ -3864,7 +3868,51 @@ public class SavedSearch {
 			}
 		}
 	}
+	
+	public void verifyImpactinSharedchildNodes(String SGtoShare, String node,List<String> newNodeList, int selectIndex,
+			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair)
+			throws InterruptedException {
+		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
+		rootGroupExpansion();
+		String searchiD=null;
+		
+		String Parentnode = newNodeList.get(0);
+		getSavedSearchGroupName(Parentnode).Click();
+		getSavedSearchNewGroupExpand().waitAndClick(20);
+			System.out.println("node :-"+node);
+			// verify id should get changed
+			System.out.println("getSavedSearchGroupName(node).isElementAvailable(5) :-"+getSavedSearchGroupName(node).isElementAvailable(5));
+			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
+				System.out.println(node + " : Search group is Present in " + SGtoShare);
+				base.passedStep(node + " : Search group is Present in " + SGtoShare);
+				getSavedSearchGroupName(node).Click();
+				
+					savedSearch_SearchandSelect(nodeSearchpair.get(node), "No");
+					driver.waitForPageToBeReady();
+					// get Search ID
+					base.waitTime(3);
+					searchiD = GetSearchID(nodeSearchpair.get(node));
+					base.stepInfo("Search ID after Share : " + searchiD);
+					base.stepInfo(searchGroupSearchpIDpair.get(nodeSearchpair.get(node)));
+					base.textCompareNotEquals(searchiD, searchGroupSearchpIDpair.get(nodeSearchpair.get(node)),
+							"Different Search ID", "Same Search ID");
 
+					// Result count
+					String resultCount = getSelectSearchWithResultCount(nodeSearchpair.get(node)).getText();
+					if (resultCount.length() > 0) {
+						base.stepInfo("Available Result Count : " + resultCount);
+					} else {
+						base.stepInfo("Result Count is empty : " + resultCount);
+					}
+
+//				getSavedSearchNewGroupExpand().waitAndClick(20);
+				rootGroupExpansion();
+			} else {
+				System.out.println(node + " : Search group is not Present in " + SGtoShare);
+				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
+			}
+		}
+	
 	/**
 	 * @author Raghuram A Date: 10/5/21 Modified date:N/A Modified by: Description
 	 *         :sortedMapList
@@ -6349,6 +6397,29 @@ public class SavedSearch {
 			navigateToSavedSearchPage();
 			// verify Impact in Shared child Nodes
 			verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+					searchGroupSearchpIDpair);
+			base.passedStep(passMessage);
+
+			login.logout();
+		}
+
+	}
+	
+	public void verifyListofsharedNodesandSearchesAcrossUsers(String SGtoShare, String node, List<String> newNodeList,
+			int selectIndex, HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair,
+			String[] rolesToVerify, String passMessage) throws InterruptedException {
+
+		for (int i = 0; i < rolesToVerify.length; i++) {
+			System.out.println(rolesToVerify[i]);
+			if (rolesToVerify[i].equals("RMU-2")) {
+				login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+			} else if (rolesToVerify[i].equals("PA-2")) {
+				login.loginToSightLine(Input.pa2userName, Input.pa2password);
+			}
+			// Navigate to Saved Search
+			navigateToSavedSearchPage();
+			// verify Impact in Shared child Nodes
+			verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 					searchGroupSearchpIDpair);
 			base.passedStep(passMessage);
 
