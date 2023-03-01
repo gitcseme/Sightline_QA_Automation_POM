@@ -1354,9 +1354,11 @@ public class TagsAndFolders_Regression2 {
 		driver.waitForPageToBeReady();
 
 		// delete renamed folder
-		tagAndFolderPage.deleteAllFolderGroup(folder, "");
-		tagAndFolderPage.verifyNotificationMsg("Failure-Error", "Folder", "", "");
-		tagAndFolderPage.verifyNodePresent(folder, false, "Folder");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagAndFolderPage.deleteAllFolderGroup(renamedFolder, "Failure-Error");
+		tagAndFolderPage.verifyNodeNotPresent(renamedFolder,
+				"- not present - Folder Group Deleted Successfully ", "Deletion failed");
 
 		// logout
 		lp.logout();
@@ -1428,9 +1430,9 @@ public class TagsAndFolders_Regression2 {
 		driver.waitForPageToBeReady();
 
 		// delete renamed tag
-		tagAndFolderPage.deleteAllTagsGroups(tag, "");
-		tagAndFolderPage.verifyNotificationMsg("Failure-Error", "Tag", "", "");
-		tagAndFolderPage.verifyNodePresent(tag, false, "Tag");
+		tagAndFolderPage.deleteAllTagsGroups(renamedTag, "Failure-Error");
+		tagAndFolderPage.verifyNodeNotPresent(renamedTag, " - not present - Tag Group Deleted Successfully ",
+				"Deletion failed");
 
 		// logout
 		lp.logout();
@@ -1506,17 +1508,26 @@ public class TagsAndFolders_Regression2 {
 		// Rename Tag group
 		driver.waitForPageToBeReady();
 		tagAndFolderPage.selectallTagRoot();
+		
 		tagAndFolderPage.verifyNodePresent(tagGroupSG, true, "Tag");
 		tagAndFolderPage.editTagGroup(Input.securityGroup, tagGroupSG, renamedTagGroupSG, "Failure-Error", null);
 
 		// Delete Tag group
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		tagAndFolderPage.deleteAllTagsGroups(tagGroupSG, "Failure-Error");
-		tagAndFolderPage.verifyNodePresent(tagGroupSG, false, "Tag");
+		tagAndFolderPage.deleteAllTagsGroups(renamedTagGroupSG, "Failure-Error");
+		tagAndFolderPage.verifyNodeNotPresent(renamedTagGroupSG, " - not present - Tag Group Deleted Successfully ",
+				"Deletion failed");
+		lp.logout();
 
-//		To add - delete SG once issue is fixed
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
 
+		// delete SG
+		sgPage.deleteSecurityGroups(securitygroupname);
+		
+		// logout
 		lp.logout();
 	}
 
@@ -1583,14 +1594,25 @@ public class TagsAndFolders_Regression2 {
 		tagAndFolderPage.editFolderGroup(Input.securityGroup, folderGroupSG, renamedfolderGroupSG, "Failure-Error",
 				null);
 
-		// delete folder group
+		// delete renamed folder group
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		tagAndFolderPage.deleteAllFolderGroup(folderGroupSG, "Failure-Error");
-		tagAndFolderPage.verifyNodePresent(folderGroupSG, false, "Folder");
-
+		tagAndFolderPage.deleteAllFolderGroup(renamedfolderGroupSG, "Failure-Error");
+		tagAndFolderPage.verifyNodeNotPresent(renamedfolderGroupSG,
+				"- not present - Folder Group Deleted Successfully ", "Deletion failed");
 //		To add - delete SG once issue is fixed 
 
+		// logout
+		lp.logout();
+
+		// login as PA
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		// delete SG
+		sgPage.deleteSecurityGroups(securitygroupname);
+		
+		// logout
 		lp.logout();
 	}
 
