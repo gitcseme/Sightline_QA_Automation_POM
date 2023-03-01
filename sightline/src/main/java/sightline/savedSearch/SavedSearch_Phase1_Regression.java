@@ -3884,7 +3884,7 @@ public class SavedSearch_Phase1_Regression {
 		SchedulesPage schedule = new SchedulesPage(driver);
 		String pureHit0;
 		int pureHit4 = 0;
-
+		SoftAssert softAssertion=new SoftAssert();
 		// Login as SA
 		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("Logged in as SA");
@@ -4085,17 +4085,19 @@ public class SavedSearch_Phase1_Regression {
 		int pureHit1 = session.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
 		session.saveSearchInNewNode(savedSearch1, newNode1);
 		session.saveSearchInRootNode(savedSearch1, newNode1, child1);
+		System.out.println("pureHit1 :-"+pureHit1);
 
 		session.getNewSearchButton().waitAndClick(20);
 		int pureHit2 = session.advancedContentSearchWithSearchChanges(Input.searchString1, "Yes");
 		session.saveSearchInNewNode(savedSearch2, newNode2);
 		session.saveSearchInRootNode(savedSearch2, newNode2, child2);
-
+		System.out.println("pureHit2 :-"+pureHit2);
+		
 		base.selectproject();
 		int pureHit3 = session.conceptualSearch_new("field report", "mid");
 		session.saveSearchInNewNode(savedSearch3, newNode3);
 		session.saveSearchInRootNode(savedSearch3, newNode3, child3);
-		System.out.println(pureHit3);
+		System.out.println("pureHit3 :-"+pureHit3);
 
 		base.selectproject();
 		session.switchToWorkproduct();
@@ -4104,7 +4106,7 @@ public class SavedSearch_Phase1_Regression {
 		driver.scrollPageToTop();
 		session.saveSearchInNewNode(savedSearch4, newNode4);
 		session.saveSearchInRootNode(savedSearch4, newNode4, child4);
-		System.out.println(pureHit4);
+		System.out.println("pureHit4 :-"+pureHit4);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
@@ -4133,6 +4135,7 @@ public class SavedSearch_Phase1_Regression {
 			String searches = dataSet1[i][j];
 			j++;
 			pureHit0 = dataSet1[i][j];
+			System.out.println("pureHit0 :-"+pureHit0);
 			String Nodes = nodeList1[m][l];
 
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
@@ -4148,11 +4151,12 @@ public class SavedSearch_Phase1_Regression {
 			saveSearch.selectNode1(Nodes);
 			saveSearch.savedSearch_SearchandSelect(searches, "Yes");
 			String actualDocCount = saveSearch.getCountofDocs().getText();
-			System.out.println(actualDocCount);
+			System.out.println("actualDocCount :-"+actualDocCount);
 			softAssertion.assertEquals(pureHit0, actualDocCount);
 
 			// verify DocCount in DocListPage.
 			int DocCountInDocList = saveSearch.launchDocListViaSSandReturnDocCount();
+			System.out.println("DocCountInDocList :-"+DocCountInDocList);
 			try {
 				softAssertion.assertEquals(Integer.parseInt(actualDocCount), DocCountInDocList);
 				base.passedStep("DocCounts Displayed in DocListPage is as Expected");
@@ -4180,7 +4184,7 @@ public class SavedSearch_Phase1_Regression {
 			String Nodes = nodeList[k][l];
 			l++;
 			String childNode = nodeList[k][l];
-
+			System.out.println("pureHit0_1 :-"+pureHit0);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			saveSearch.selectNode1(Nodes);
 			saveSearch.selectNode1(childNode);
@@ -4194,11 +4198,12 @@ public class SavedSearch_Phase1_Regression {
 			saveSearch.savedSearch_SearchandSelect(searches, "Yes");
 
 			String actualDocCount = saveSearch.getCountofDocs().getText();
-			System.out.println(actualDocCount);
+			System.out.println("actualDocCount_1 :-"+actualDocCount);
 			softAssertion.assertEquals(pureHit0, actualDocCount);
 
 			// Verify Doc Count In DocListPage.
 			int DocCountInDocList = saveSearch.launchDocListViaSSandReturnDocCount();
+			System.out.println("DocCountInDocList_1 :-"+DocCountInDocList);
 			try {
 				
 				softAssertion.assertEquals(Integer.parseInt(actualDocCount), DocCountInDocList);
