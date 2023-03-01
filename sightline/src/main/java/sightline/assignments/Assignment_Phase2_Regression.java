@@ -58,8 +58,8 @@ public class Assignment_Phase2_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+//		in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -2366,8 +2366,8 @@ public class Assignment_Phase2_Regression {
 		;
 		driver.waitForPageToBeReady();
 		DocViewPage docView = new DocViewPage(driver);
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().waitAndClick(10);
+//		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+//		docView.getPersistantHitEyeIcon().waitAndClick(10);
 		docView.verifyPersistantHitsWithDocView(keys);
 		baseClass.passedStep("All keywords related to assignment highlighted");
 		loginPage.logout();
