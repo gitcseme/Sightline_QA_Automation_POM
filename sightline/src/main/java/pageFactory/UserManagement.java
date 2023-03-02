@@ -670,6 +670,10 @@ public class UserManagement {
 	public Element getUnAssignedDomainUser() {
 		return driver.FindElementByXPath("//select[@id='UnAssignedUser']");
 	}
+	
+	public Element getUUnAssignedDomainUser() {
+		return driver.FindElementByXPath("//*[@id='AssignedUser']");
+	}
 
 	public Element getDomainRole() {
 		return driver.FindElementByXPath("//select[@id='lstRoles']");
@@ -1356,8 +1360,7 @@ public class UserManagement {
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
-		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
-				|| role.equalsIgnoreCase("Reviewer")) {
+		if (role.equalsIgnoreCase("Project Administrator")) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSelectProject().Visible();
@@ -1368,11 +1371,6 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 			getSelectProjectFromDropdown(project).waitAndClick(10);
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSecurityGroup().Visible();
-			}
-		}), Input.wait30);
 //		try {
 //			Thread.sleep(3000);
 //		} catch (InterruptedException e) {

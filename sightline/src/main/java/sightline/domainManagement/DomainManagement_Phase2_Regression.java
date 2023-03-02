@@ -50,6 +50,8 @@ public class DomainManagement_Phase2_Regression {
 	SoftAssert softAssertion;
 	BatchPrintPage batchPrint;
 	DomainDashboard domainDashboard;
+	
+	
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -67,6 +69,8 @@ public class DomainManagement_Phase2_Regression {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		
+		
 
 	}
 	
@@ -624,7 +628,7 @@ public class DomainManagement_Phase2_Regression {
 		// delete the created user
 		user.filterTodayCreatedUser();
 		user.filterByName(MailID);
-		user.RemoveUser();
+		user.deleteUser();
 
 		loginPage.logout();
 	}
@@ -881,7 +885,7 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.selectdomain(Input.domainName);
 
 		String FirstName = "QA1" + Utility.dynamicNameAppender();
-		String LastName = "Framework";
+		String LastName = "Framework" + Utility.dynamicNameAppender();
 		String MailID = "testing"+Utility.dynamicNameAppender() + "@consilio.com";
 
 		UserManagement user = new UserManagement(driver);
@@ -1263,9 +1267,32 @@ public class DomainManagement_Phase2_Regression {
 	@Test(description = "RPMXCON-53031", enabled = true, groups = { "regression" })
 	public void verifyDAUserCanUnassignedUsers() throws Exception {
 
+		ProjectPage project = new ProjectPage(driver);
 		baseClass.stepInfo("TestCase id : RPMXCON-53031");
 		baseClass.stepInfo(
 				"To verify that the Domain Admin should be able to unassign users from projects in the domain");
+		
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		String projectnamenondomain = "AutomationScriptCreatedDomain"+Utility.dynamicNameAppender();
+		baseClass.clearBullHornNotification();
+		project.navigateToProductionPage();
+		project.AddDomainProject(projectnamenondomain, Input.domainName);
+		baseClass.getRedBullHornIcon().isElementAvailable(300);
+		project.filterTheProject(projectnamenondomain);
+//		int n = baseClass.getIndex(project.getProjectTableHeader(), "IN DOMAIN");
+//		String inDomain = project.getColumValue(n).getText().trim();
+//		baseClass.waitTime(3);
+//		if(inDomain.equals("Yes")) {
+//			baseClass.passedStep("Newly created project is available in project list and is listed as Domain project.");
+//		}else {
+//			baseClass.failedStep("verification failed");
+//		}
+//		baseClass.passedStep("Validated new project creation of Domain client by System Admin user");
+		loginPage.logout();
+		
 
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("Logged in As " + Input.da1userName);
@@ -1277,6 +1304,7 @@ public class DomainManagement_Phase2_Regression {
 		String LastName = "automation";
 		String MailID = "test" +Utility.dynamicNameAppender()+ "@consilio.com";
 		String UserName=FirstName+" "+LastName;
+		String isBillable=" || Role: Project Administrator || IsBillable: false";
 		
 		user.navigateToUsersPAge();
 		baseClass.stepInfo("Creating new project Administrator user");
@@ -1289,10 +1317,10 @@ public class DomainManagement_Phase2_Regression {
 		System.out.println(Project);
 		if(!Project.equals(Input.projectName)) {
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(2);
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
 		}else {
 			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(3);
+			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
 		}
 		driver.waitForPageToBeReady();
 		user.selectRoleInAssignUser(Input.ProjectAdministrator);
@@ -1303,13 +1331,34 @@ public class DomainManagement_Phase2_Regression {
 		user.getsavedomainuser().waitAndClick(5);
 		baseClass.VerifySuccessMessage("User Mapping Successful");
 		
+		//Unassign users
+		user.openAssignUser();
+		user.goToProjectTabInAssignUser();
+		String Project1=user.getProjectDropdownList(2).getText();
+		System.out.println(Project1);
+		if(!Project1.equals(Input.projectName)) {
+		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		}else {
+			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		}
+		driver.waitForPageToBeReady();
+		user.selectRoleInAssignUser(Input.ProjectAdministrator);
+		driver.scrollingToElementofAPage(user.getUnAssignedDomainUser());
+		user.getUUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(UserName + isBillable);
+		user.getLeftArrowForProject().waitAndClick(10);
+		baseClass.waitForElement(user.getsavedomainuser());
+		user.getsavedomainuser().waitAndClick(5);
+		baseClass.VerifySuccessMessage("User Mapping Successful");
+		
 		
 		baseClass.stepInfo("verifying Domain Admin able to unassign users from projects in the domain");
 		baseClass.waitForElement(user.getAssignUserButton());
 		user.getAssignUserButton().waitAndClick(2);
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(2);
-		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(3)) {
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(5)) {
 			baseClass.passedStep("User is unassigned from the selected project");
 		}else {
 			baseClass.failedStep("user is not unassigned from the selected project");
@@ -1431,23 +1480,27 @@ public class DomainManagement_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		user.getSelectDomainname().selectFromDropdown().selectByIndex(3);
      	driver.waitForPageToBeReady();
+     	baseClass.waitTime(5);
 		user.getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		baseClass.waitForElement(user.getrightBtndomainuser());
 		driver.waitForPageToBeReady();
 		user.getrightBtndomainuser().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		user.getsavedomainuser().waitAndClick(5);
 		baseClass.VerifySuccessMessage("User Mapping Successful");
 		baseClass.stepInfo("Domain user Assiged succesfully");
 		baseClass.passedStep("Success message is displayed.");
+		baseClass.waitTime(5);
 
 		// delete the created user
 		driver.waitForPageToBeReady();
 		user.filterTodayCreatedUser();
 		driver.waitForPageToBeReady();
 		user.filterByName(MailID);
-		user.RemoveUser();
+		user.deleteUser();
 
 		loginPage.logout();
 	}
@@ -2321,6 +2374,7 @@ public class DomainManagement_Phase2_Regression {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA");
 		baseClass.stepInfo("go to manage clients section");
+		domainDashboard =new DomainDashboard(driver);
 		domainDashboard.navigateToManageClientSection();
 		baseClass.passedStep("Manage clients page displayed");
 		baseClass.stepInfo("Verify columns displayed on grid");
@@ -2379,7 +2433,7 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.waitForElement(projects.getProductionserverpath());
 		projects.getProductionserverpath().waitAndClick(2);
 		projects.getClientNameSaveBtn().waitAndClick(10);
-		baseClass.VerifySuccessMessage("The client details were updated successfully");
+		baseClass.VerifySuccessMessage("Client update was successful.");
 
 		baseClass.stepInfo("verifying updated domain type in grid page");
 		Client.filterClient(clientName);
@@ -2764,7 +2818,7 @@ public class DomainManagement_Phase2_Regression {
 		
 		user.filterTodayCreatedUser();
 		user.filterByName(email);
-		user.RemoveUser();
+		user.deleteUser();;
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
@@ -2953,9 +3007,9 @@ public class DomainManagement_Phase2_Regression {
 		base.stepInfo("Test case Id: RPMXCON-52899");
 		base.stepInfo("Validate HCode value while creating new project");
 		
-		String projectName = Input.randomText + Utility.dynamicNameAppender();
 		String alfaNumeric = "Aa"+Utility.dynamicNameAppender();
 		String hcode = "#!&%$hi123_"+Utility.dynamicNameAppender();
+		String projectName = Input.randomText + Utility.dynamicNameAppender();
 		
 		//login as da
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -3006,8 +3060,8 @@ public class DomainManagement_Phase2_Regression {
 			base.failedStep("verification failed");
 		}
 		project.getProjectServerPath().waitAndClick(10);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
-		project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+		project.getIngestionserverpath().waitAndClick(10);
+		//project.getIngestionserverpath().waitAndClick(10);
 		project.getProductionserverpath().waitAndClick(10);
 		project.getProjectFolder().SendKeys(Input.randomText);
 		project.getIngestionFolder().SendKeys(Input.randomText);
@@ -3033,7 +3087,8 @@ public class DomainManagement_Phase2_Regression {
 		
 		//save the project
 		base.clearBullHornNotification();
-		project.getButtonSaveProject().waitAndClick(10);
+		base.waitTime(5);
+		project.getButtonSaveProject().Click();
 		base.waitForNotification();
 		dash.getNotificationMessage(0, projectName); 
 		
@@ -3101,7 +3156,7 @@ public class DomainManagement_Phase2_Regression {
 			base.failedStep("label verification failed");
 		}
 		client.getSaveBtn().waitAndClick(10);
-		base.VerifySuccessMessage("The client details were updated successfully");
+		base.VerifySuccessMessage("Client update was successful.");
 		base.CloseSuccessMsgpopup();
 		//verify client
 		client.filterClient(clientName);

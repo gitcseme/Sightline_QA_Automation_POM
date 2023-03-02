@@ -939,8 +939,8 @@ public class DomainDashboard {
 	public void navigateToManageClientSection() {
 		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
 		driver.waitForPageToBeReady();
-		base.verifyUrlLanding(Input.url + "Entity/Entity", "navigated to manage-client section", 
-				"not in manage client page");
+		base.verifyUrlLanding(Input.url + "Entity/Entity", null, 
+				null);
 	}
 	
 	/**
