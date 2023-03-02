@@ -65,6 +65,7 @@ public class ManageComments_Regression {
 		baseClass = new BaseClass(driver);
 		projectPage = new ProjectPage(driver);
 		loginPage = new LoginPage(driver);
+		commentsPage= new CommentsPage(driver);
 
 	}
 
@@ -264,7 +265,7 @@ public class ManageComments_Regression {
 	 */
 	@Test(description = "RPMXCON-52514", enabled = true, groups = { "regression" })
 	public void verifyDeleteOptionForCommentsInRMU() throws InterruptedException, AWTException {
-
+		CommentsPage comments = new CommentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52514");
 		baseClass.stepInfo("To verify when RMU deletes the comment");
 		// Login As RMU
@@ -274,18 +275,18 @@ public class ManageComments_Regression {
 		//Navigate to Comments Page
 		String commentName = "Doc_Comment"+Utility.dynamicNameAppender();
 		commentsPage.navigateToCommentsPage();
-		commentsPage.addComments(commentName);
-		commentsPage.deleteCommentsAndClickOnCancelButton(commentName);
-		commentsPage.DeleteComments(commentName);
+		comments.addComments(commentName);
+		comments.deleteCommentsAndClickOnCancelButton(commentName);
+		comments.DeleteComments(commentName);
 		loginPage.logout();
 		
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 		
-		commentsPage.navigateToCommentsPage();
+		comments.navigateToCommentsPage();
 		
-		if (commentsPage.getCommentname(commentName).isDisplayed()) {
+		if (comments.getCommentname(commentName).isDisplayed()) {
 			baseClass.failedStep("Comment is present in PA User");
 		}else {
 			baseClass.passedStep("Comments is not present in CommentsPage when user logged in as PA");
@@ -302,19 +303,18 @@ public class ManageComments_Regression {
 	 */
 	@Test(description = "RPMXCON-52508", enabled = true, groups = { "regression" })
 	public void verifyRMUClicksEditForComments() throws InterruptedException, AWTException {
-
+		CommentsPage comments = new CommentsPage(driver);
+		String commentName = "Doc_Comment"+Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-52508");
 		baseClass.stepInfo("To verify when RMU click to edit the comment [RPMXCON-11149]");
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.sa1userName + "");
-		
+		comments.AddComments(commentName);
 		//Navigate to Comments Page
-		commentsPage.EditCommentsIsDisabled();
-		
+		comments.EditCommentsIsDisabled();
 		loginPage.logout();
-		
-		
+	
 	}
 	
 	/**
@@ -325,7 +325,7 @@ public class ManageComments_Regression {
 	 */
 	@Test(description = "RPMXCON-52725", enabled = true, groups = { "regression" })
 	public void verifyCommentsNameMoreThan128CharaTerms() throws InterruptedException, AWTException {
-
+		CommentsPage comments = new CommentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52725");
 		baseClass.stepInfo("Verify that comment name should not accept more than 128 characters");
 		
@@ -336,7 +336,7 @@ public class ManageComments_Regression {
 		
 		
 		// Navigate to Comments and create CommentsName more than 128
-		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		comments.AddCommentsWithErrorMsg(commentsName);
 		baseClass.passedStep("Error message is displayed when comment name entered with more than 128 characters.");
 		loginPage.logout();
 		
@@ -359,7 +359,7 @@ public class ManageComments_Regression {
 	 */
 	@Test(description = "RPMXCON-52724", enabled = true, groups = { "regression" })
 	public void verifyCommentsNameWithSpecialCharacters() throws InterruptedException, AWTException {
-
+		CommentsPage comments = new CommentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52724");
 		baseClass.stepInfo("Verify that after impersonation space, special characters should not be allowed to add comment");
 		
@@ -370,7 +370,7 @@ public class ManageComments_Regression {
 		
 		baseClass.impersonateSAtoPA();
 		// Navigate to Comments and create CommentsName more than 128
-		commentsPage.AddCommentsWithErrorMsg(commentsName);
+		comments.AddCommentsWithErrorMsg(commentsName);
 		baseClass.passedStep("Error message is displayed as 'Only alphanumeric characters and underscore are allowed successfully.'");
 		loginPage.logout();
 		
