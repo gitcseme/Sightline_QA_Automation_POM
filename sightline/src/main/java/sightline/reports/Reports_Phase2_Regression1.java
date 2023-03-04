@@ -369,7 +369,7 @@ public class Reports_Phase2_Regression1 {
 	public void verifyExportCorrectlyWith2MBCmtsdocs() throws Exception {
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
 
-		String dataSet = "2MBCommentData";
+		String dataSet = "2MBComment";
 		String[] metaDataFields = { "CustodianName" };
 		String[] workProductFields = { dataSet };
 		String expValue = "CustodianName'''All Folders\\Datasets\\" + dataSet + "''";
