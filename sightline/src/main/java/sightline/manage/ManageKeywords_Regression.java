@@ -319,7 +319,7 @@ public class ManageKeywords_Regression {
 	 */
 	@Test(description = "RPMXCON-52739", enabled = true, groups = { "regression" })
 	public void verifyKeywordWildCardsTerms() throws InterruptedException, AWTException {
-
+		KeywordPage keyWord = new KeywordPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52739");
 		baseClass.stepInfo("Verify that keyword should accept the wildcard terms while adding");
 		String color = "Blue";
@@ -358,7 +358,7 @@ public class ManageKeywords_Regression {
 	 */
 	@Test(description = "RPMXCON-52529", enabled = true, groups = { "regression" })
 	public void verifyPACanDeleteKeywords() throws InterruptedException, AWTException {
-
+		KeywordPage keyWord = new KeywordPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52529");
 		baseClass.stepInfo("To verify when Project Admin user deletes keyword group and keywords");
 		String color = "Blue";
@@ -405,7 +405,7 @@ public class ManageKeywords_Regression {
 	 */
 	@Test(description = "RPMXCON-53476", enabled = true, groups = { "regression" })
 	public void verifyCharatersWith4000KeywordGroupName() throws InterruptedException, AWTException {
-
+		KeywordPage keyWord = new KeywordPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53476");
 		baseClass.stepInfo("Verify that character limit to add keywords should be increased from 500 to 4000 characters and should be saved successfully");
 		
@@ -452,7 +452,7 @@ public class ManageKeywords_Regression {
 	 */
 	@Test(description = "RPMXCON-52495", enabled = true, groups = { "regression" })
 	public void verifyDeleteKeywordGroupName4000Characters() throws InterruptedException, AWTException {
-
+		KeywordPage keyWord = new KeywordPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52495");
 		baseClass.stepInfo("To verify when user deletes keyword group and keywords");
 		
