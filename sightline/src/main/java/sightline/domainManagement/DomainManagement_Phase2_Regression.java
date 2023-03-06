@@ -1317,10 +1317,10 @@ public class DomainManagement_Phase2_Regression {
 		System.out.println(Project);
 		if(!Project.equals(Input.projectName)) {
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
 		}else {
 			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
 		}
 		driver.waitForPageToBeReady();
 		user.selectRoleInAssignUser(Input.ProjectAdministrator);
@@ -1338,10 +1338,10 @@ public class DomainManagement_Phase2_Regression {
 		System.out.println(Project1);
 		if(!Project1.equals(Input.projectName)) {
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
 		}else {
 			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
 		}
 		driver.waitForPageToBeReady();
 		user.selectRoleInAssignUser(Input.ProjectAdministrator);
@@ -1357,7 +1357,7 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.waitForElement(user.getAssignUserButton());
 		user.getAssignUserButton().waitAndClick(2);
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByIndex(1);
+		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
 		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(5)) {
 			baseClass.passedStep("User is unassigned from the selected project");
 		}else {

@@ -166,7 +166,8 @@ public class DomainDashboard {
 	}
 
 	public Element getPopupMsg() {
-		return driver.FindElementByXPath("//span[@class='MsgTitle']/../p");
+		//return driver.FindElementByXPath("//span[@class='MsgTitle']/../p");
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
 
 	public Element getAscending() {

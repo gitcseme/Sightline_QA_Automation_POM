@@ -26,6 +26,7 @@ public class UserManagement {
 	Driver driver;
 	BaseClass bc;
 	SoftAssert softAssertion;
+	
 
 	public Element getAddUserBtn() {
 		return driver.FindElementById("addNewUser");
@@ -4039,7 +4040,8 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		for (String user : users) {
 			driver.scrollingToElementofAPage(getSelectBulkUser(user));
-			getSelectBulkUser(user).waitAndClick(5);
+			bc.waitTime(5);
+			getSelectBulkUser(user).Click();
 			driver.waitForPageToBeReady();
 		}
 		bc.stepInfo("users was selected");
@@ -4270,6 +4272,7 @@ public class UserManagement {
 			if (getConfirmDelete().isElementAvailable(15)) {
 				getConfirmDelete().waitAndClick(10);
 			}
+			bc.waitTime(3);
 			bc.VerifySuccessMessage("User has been deactivated");
 		} catch (Exception e) {
 			e.printStackTrace();
