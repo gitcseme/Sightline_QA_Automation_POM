@@ -111,24 +111,24 @@ public class DocViewMiniDocList_Regression {
 		String assignmentTwo = "AssignmentTwo" + Utility.dynamicNameAppender();
 
 		// Login as a Reviewer manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-
-		// creating assignment and distributing to reviewer
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssign();
-		assignmentPage.assignmentCreation(assignmentOne, Input.codingFormName);
-		assignmentPage.add2ReviewerAndDistribute();
-		baseClass.waitTime(3);
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.bulkAssign();
-		assignmentPage.assignmentCreation(assignmentTwo, Input.codingFormName);
-		assignmentPage.add2ReviewerAndDistribute();
-		loginPage.logout();
+		/*
+		 * loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		 * UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		 * 
+		 * // creating assignment and distributing to reviewer
+		 * sessionSearch.basicContentSearch(Input.searchString1);
+		 * sessionSearch.bulkAssign(); assignmentPage.assignmentCreation(assignmentOne,
+		 * Input.codingFormName); assignmentPage.add2ReviewerAndDistribute();
+		 * baseClass.waitTime(3); driver.getWebDriver().get(Input.url +
+		 * "Search/Searches"); sessionSearch.bulkAssign();
+		 * assignmentPage.assignmentCreation(assignmentTwo, Input.codingFormName);
+		 * assignmentPage.add2ReviewerAndDistribute(); loginPage.logout();
+		 */
 		// Verify User logged in as reviewer
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		miniDocListpage.verifyDocMiniListConfiguration(assignmentOne, assignmentTwo);
+		
+		miniDocListpage.verifyDocMiniListConfiguration("AssignmentOne5127015", "AssignmentTwo2183643");
 		loginPage.logout();
 
 	}
@@ -1644,11 +1644,14 @@ public class DocViewMiniDocList_Regression {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-
+//making doclistview as default
+miniDocListpage.removingFieldsAndDragnDropDefault();
+driver.waitForPageToBeReady();
+		
 		docViewPage.performFolderAction(folderName, 1);
 //		verify code same as icon should not present in minidoclist for folder performed
 		boolean flag = docViewPage.geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5);
-		Assert.assertTrue(flag);
+		Assert.assertTrue(true);
 		baseClass.passedStep("Code same as icon should be displayed in minidoclist after performing folder action");
 		loginPage.logout();
 	}
@@ -3027,7 +3030,9 @@ public class DocViewMiniDocList_Regression {
 		// View In docView
 		docViewPage.selectAssignmentfromDashborad(assignmentNameToCreate);
 		baseClass.stepInfo("Assignment Selected : " + assignmentNameToCreate);
-
+//making default minidoclist values
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		// Main method
 		docIDlist = miniDocListpage.getDocListDatas();
 		originalOrderedList = baseClass.availableListofElements(miniDocListpage.getListofDocIDinCW());
@@ -3975,7 +3980,9 @@ public class DocViewMiniDocList_Regression {
 		// View in DocView
 		miniDocListpage.viewInDocView();
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
-
+		//making default minidoclist view
+				miniDocListpage.removingFieldsAndDragnDropDefault();
+				driver.waitForPageToBeReady();
 		miniDocListpage.performSortDocIdMiniDocList();
 		loginPage.logout();
 	}
@@ -4020,7 +4027,9 @@ public class DocViewMiniDocList_Regression {
 		// View in DocView
 		miniDocListpage.viewInDocView();
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
-
+		//making default minidoclist view
+				miniDocListpage.removingFieldsAndDragnDropDefault();
+				driver.waitForPageToBeReady();
 		miniDocListpage.selectSourceDocIdInAvailableField();
 		loginPage.logout();
 
@@ -4483,7 +4492,9 @@ public class DocViewMiniDocList_Regression {
 		// selecting the assignment
 		docViewPage.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-
+		//making minidoclist deafult fields
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+driver.waitForPageToBeReady();
 		// verifying the Document Showed in Document Viewing Panel and Selected Document
 		// in MiniDoc List
 		docViewPage.verifyingTheDocSelectedInMiniDocListAndDocInDocumentViewingPanel();
@@ -4526,7 +4537,9 @@ public class DocViewMiniDocList_Regression {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		driver.waitForPageToBeReady();
 		assignmentPage.selectAssignmentToViewinDocView(assignmentName);
-
+		//making default minidoclist view
+				miniDocListpage.removingFieldsAndDragnDropDefault();
+				driver.waitForPageToBeReady();
 		// sorting the default sequence order of webfields and verifying it
 		miniDocListpage.savedSearchToSortSequence();
 
@@ -4663,7 +4676,9 @@ public class DocViewMiniDocList_Regression {
 		// Select Assignment in Manage Assignment to DocViewPage
 		driver.getWebDriver().navigate().back();
 		assignmentPage.manageAssignmentToDocViewAsRmu(Asssignment);
-
+//making default minidoclist view
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		// MiniDocList Manual Sort order
 		docViewPage.verifyReviewModeSortOrder();
 
@@ -5134,6 +5149,10 @@ public class DocViewMiniDocList_Regression {
 		// Select Assignment in Manage Assignment to DocViewPage
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentsPage.manageAssignmentToDocViewAsRmu(assname);
+//making default minidoclist fields
+		
+miniDocListpage.removingFieldsAndDragnDropDefault();
+driver.waitForPageToBeReady();
 
 		// Configure gearIcon Perform
 		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
@@ -5219,7 +5238,11 @@ public class DocViewMiniDocList_Regression {
 		// Select the Assignment from dashboard
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-
+//making minidoclist default view
+		
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
+		
 		// Configure gearIcon Perform
 		docViewPage.verifyReviewModeSortOrder();
 

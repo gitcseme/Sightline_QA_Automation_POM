@@ -895,7 +895,9 @@ public Element getDocViewFromDropDown() {
 		assignmentPage.SelectAssignmentByReviewer(assignmentOne);
 		System.out.println("Selected Assignement "  + assignmentOne);
 		baseClass.stepInfo("Selected Assignement "  + assignmentOne);
-
+//making doclist default view
+		removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		// Click on the Gear icon
 		baseClass.waitForElement(getGearIcon());
 		driver.waitForPageToBeReady();
@@ -1638,7 +1640,10 @@ public Element getDocViewFromDropDown() {
 		getDashBoardLink().Click();
 		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
 		baseClass.stepInfo("Selected " + assignmentNameToChoose);
-
+//making minidoclist default fields
+	removingFieldsAndDragnDropDefault();
+	driver.waitForPageToBeReady();
+	
 		baseClass.stepInfo("Header Fields Before Action");
 		driver.waitForPageToBeReady();
 		configureMiniDocList();
@@ -1943,7 +1948,12 @@ public Element getDocViewFromDropDown() {
 		docViewPage.selectAssignmentfromDashborad(assignmentTocreate);
 		baseClass.stepInfo("Assignment Selected : " + assignmentTocreate);
 
-		// Verify Sorting order in Child Window
+		//making minidoclist default fields
+		
+	removingFieldsAndDragnDropDefault();
+	driver.waitForPageToBeReady();
+		
+	// Verify Sorting order in Child Window
 		launchingMindoclistChildWindow();
 		String parentId = childWindowTransfer();
 
