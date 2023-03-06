@@ -111,24 +111,24 @@ public class DocViewMiniDocList_Regression {
 		String assignmentTwo = "AssignmentTwo" + Utility.dynamicNameAppender();
 
 		// Login as a Reviewer manager
-		/*
-		 * loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		 * UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		 * 
-		 * // creating assignment and distributing to reviewer
-		 * sessionSearch.basicContentSearch(Input.searchString1);
-		 * sessionSearch.bulkAssign(); assignmentPage.assignmentCreation(assignmentOne,
-		 * Input.codingFormName); assignmentPage.add2ReviewerAndDistribute();
-		 * baseClass.waitTime(3); driver.getWebDriver().get(Input.url +
-		 * "Search/Searches"); sessionSearch.bulkAssign();
-		 * assignmentPage.assignmentCreation(assignmentTwo, Input.codingFormName);
-		 * assignmentPage.add2ReviewerAndDistribute(); loginPage.logout();
-		 */
+		
+		  loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		  UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		  
+		  // creating assignment and distributing to reviewer
+		  sessionSearch.basicContentSearch(Input.searchString1);
+		  sessionSearch.bulkAssign(); assignmentPage.assignmentCreation(assignmentOne,
+		  Input.codingFormName); assignmentPage.add2ReviewerAndDistribute();
+		  baseClass.waitTime(3); driver.getWebDriver().get(Input.url +
+		  "Search/Searches"); sessionSearch.bulkAssign();
+		  assignmentPage.assignmentCreation(assignmentTwo, Input.codingFormName);
+		  assignmentPage.add2ReviewerAndDistribute(); loginPage.logout();
+		 
 		// Verify User logged in as reviewer
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		
-		miniDocListpage.verifyDocMiniListConfiguration("AssignmentOne5127015", "AssignmentTwo2183643");
+		miniDocListpage.verifyDocMiniListConfiguration(assignmentOne,assignmentTwo);
 		loginPage.logout();
 
 	}
