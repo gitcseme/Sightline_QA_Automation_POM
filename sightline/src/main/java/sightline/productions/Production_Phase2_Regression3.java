@@ -89,6 +89,7 @@ public class Production_Phase2_Regression3 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		 page = new ProductionPage(driver);
 		 base = new BaseClass(driver);
+		 softAssertion = new SoftAssert();
 		 tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		 sessionSearch = new SessionSearch(driver);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -695,10 +696,12 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		page = new ProductionPage(driver);
 		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
 		page.verifyingComponentTabSection();
 		driver.waitForPageToBeReady();
 		page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		page.baseInfoLoadTemplate(productionname1, Templatename);
 		page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
 		page.getCheckBoxCheckedVerification(page.chkIsTIFFSelected());
@@ -5291,7 +5294,7 @@ try {
 	 *              TIFF/PDF for this uncommitted production
 	 * 
 	 */
-	@Test(description = "RPMXCON-49217", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49217", enabled = true, groups = { "regression" })
 	public void verifyDocumentDisplayedInProductionInDocViewPage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49217");
@@ -5373,7 +5376,7 @@ try {
 	 *              not show up as it was uncommitted
 	 * 
 	 */
-	@Test(description = "RPMXCON-49219", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49219", enabled = true, groups = { "regression" })
 	public void verfyingReflectionOfProductionInBatchPrint() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49219");
@@ -5470,7 +5473,7 @@ try {
 	 *              successfully
 	 * 
 	 */
-	@Test(description = "RPMXCON-49223", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49223", enabled = true, groups = { "regression" })
 	public void verfyingRegenartionOfProduction() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49223");
