@@ -112,6 +112,8 @@ public class DomainManagement_Phase1_Regression {
 		String firstName = userManage.getTableData("FIRST NAME", 1);
 		String lastName = userManage.getTableData("LAST NAME", 1);
 		String userName = firstName + " " + lastName;
+		userManage.unAssignUserToDomain(Input.domainName, userName);
+		baseClass.waitTime(5);
 		userManage.AssignUserToDomain(Input.domainName, userName);
 		loginPage.logout();
 

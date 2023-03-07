@@ -44,7 +44,9 @@ public class ProjectPage {
 	}
 
 	public Element getProjectServerPath() {
-		return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]");
+		//return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]");
+		return driver.FindElementByXPath("//*[@id='ddlProjectWS']/option[1]");
+		
 	}
 
 	public Element getIngestionserverpath() {
@@ -675,8 +677,19 @@ public class ProjectPage {
 			}
 		}), Input.wait30);
 		getHCode().SendKeys(hcode);
-
+		
+		getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+		if(bc.text("HCode").isDisplayed()) {
+			bc.passedStep("\"HCode\" field should be available for user entry");
+		}else {
+			bc.failedStep("Hcode was not present");
+		}
+		
 		driver.scrollingToBottomofAPage();
+		getProjectServerPath().waitAndClick(10);
+		getIngestionserverpath().waitAndClick(10);
+		getProductionserverpath().waitAndClick(10);
+		
 
 		getProjectFolder().Clear();
 		getProjectFolder().SendKeys("Automation");
@@ -1216,7 +1229,7 @@ public class ProjectPage {
 	 *              name else create project
 	 */
 	public String checkTempDomainProjectIsAvailable() {
-		String tempProject = "TemporayDomainProject";
+		String tempProject = "TemporayDomainProject" + Utility.dynamicNameAppender();
 		filterTheProject(tempProject);
 		if (!bc.text(tempProject).isElementAvailable(3)) {
 			bc.clearBullHornNotification();
@@ -1227,6 +1240,7 @@ public class ProjectPage {
 				AddDomainProjectViaDaUser(tempProject);
 			}
 			bc.waitForNotification();
+
 		}
 		return tempProject;
 

@@ -166,7 +166,8 @@ public class DomainDashboard {
 	}
 
 	public Element getPopupMsg() {
-		return driver.FindElementByXPath("//span[@class='MsgTitle']/../p");
+		//return driver.FindElementByXPath("//span[@class='MsgTitle']/../p");
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
 
 	public Element getAscending() {
@@ -939,8 +940,8 @@ public class DomainDashboard {
 	public void navigateToManageClientSection() {
 		this.driver.getWebDriver().get(Input.url + "Entity/Entity");
 		driver.waitForPageToBeReady();
-		base.verifyUrlLanding(Input.url + "Entity/Entity", "navigated to manage-client section", 
-				"not in manage client page");
+		base.verifyUrlLanding(Input.url + "Entity/Entity", null, 
+				null);
 	}
 	
 	/**
