@@ -9236,7 +9236,7 @@ public class ProductionPage {
 				return getDATChkBox().Enabled();
 			}
 		}), Input.wait30);
-		getDATChkBox().Click();
+		getDATChkBox().javascriptclick(getDATChkBox());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -9274,7 +9274,7 @@ public class ProductionPage {
 				return getNativeChkBox().Enabled();
 			}
 		}), Input.wait30);
-		getNativeChkBox().Click();
+		getNativeChkBox().javascriptclick(getNativeChkBox());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -9329,7 +9329,7 @@ public class ProductionPage {
 				return getTIFFChkBox().Enabled();
 			}
 		}), Input.wait30);
-		getTIFFChkBox().Click();
+		getTIFFChkBox().javascriptclick(getTIFFChkBox());
 
 		driver.scrollingToBottomofAPage();
 
@@ -9364,7 +9364,7 @@ public class ProductionPage {
 				return getTIFF_EnableforPrivilegedDocs().Enabled();
 			}
 		}), Input.wait30);
-		// getTIFF_EnableforPrivilegedDocs().Click();
+//		 getTIFF_EnableforPrivilegedDocs().Click();
 
 		getPriveldge_SelectTagButton().Click();
 
@@ -9399,7 +9399,7 @@ public class ProductionPage {
 				return getTextChkBox().Enabled();
 			}
 		}), Input.wait30);
-		getTextChkBox().Click();
+		getTextChkBox().javascriptclick(getTextChkBox());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
