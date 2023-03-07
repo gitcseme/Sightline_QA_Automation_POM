@@ -207,9 +207,15 @@ public class LoginPage {
 		BaseClass bc = new BaseClass(driver);
 		try {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
-			if (!strUserName.equals(Input.sa1userName) && !strUserName.equals(Input.da1userName) && !strUserName.equals(Input.Onnasa1userName) && !strUserName.equals(Input.Onnada1userName))
+			if (!strUserName.equals(Input.sa1userName) && !strUserName.equals(Input.da1userName) && !strUserName.equals(Input.Onnasa1userName) && !strUserName.equals(Input.Onnada1userName)) {
 				bc.selectproject();
 			bc.stepInfo(Input.projectName);
+			}
+			else if(strUserName.equals(Input.da1userName)) {
+				bc.selectdomain(Input.domainName);
+			bc.stepInfo(Input.domainName);
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
