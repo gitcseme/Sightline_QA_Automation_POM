@@ -1778,7 +1778,11 @@ public class IngestionPage_Indium {
 				getSpecifySourceSystem().isElementAvailable(10);
 				getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
 			}
+			base.stepInfo("Select Location");
 			base.waitForElement(getSpecifyLocation());
+			base.waitTime(2);
+			getSpecifyLocation().selectFromDropdown().selectByVisibleText(sourceLocation);
+			/*base.waitForElement(getSpecifyLocation());
 			getSpecifyLocation().isElementAvailable(10);
 			for (int i = 0; i < 30; i++) {
 				try {
@@ -1787,8 +1791,12 @@ public class IngestionPage_Indium {
 				} catch (Exception e) {
 					base.waitTime(1);
 				}
-			}
+			}*/
+			base.stepInfo("Select Location");
 			base.waitForElement(getSpecifySourceFolder());
+			base.waitTime(2);
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+			/*base.waitForElement(getSpecifySourceFolder());
 			getSpecifySourceFolder().isElementAvailable(10);
 			for (int i = 0; i < 30; i++) {
 				try {
@@ -1797,7 +1805,7 @@ public class IngestionPage_Indium {
 				} catch (Exception e) {
 					base.waitTime(1);
 				}
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while selecting ingestion type and specify source loaction"
@@ -4820,7 +4828,7 @@ public class IngestionPage_Indium {
 			}
 			for (int i = 0; i < 10000; i++) {
 				driver.Navigate().refresh();
-				endTime().ScrollTo();
+				//endTime().ScrollTo();
 				String endTime = endTime().getText();
 				String status = getAnalyticsStatus(1,5).getText();
 				System.out.println(status);
@@ -4956,7 +4964,7 @@ public class IngestionPage_Indium {
 	 *               folder
 	 */
 	public void tiffImagesIngestion(String DATfile, String TIFFfile, String genSearchPDFCheckBox) {
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.TiffImagesFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, Input.TiffImagesFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(DATfile, "ProdBeg");
@@ -5217,7 +5225,7 @@ public class IngestionPage_Indium {
 	 */
 	public void selectPdfInPathFileAndSaveAsDraft(String ingestionName, String datFile, String datKey, String pdfKey) {
 
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.stepInfo("Selecting DAT source");
 		selectDATSource(datFile, datKey);
@@ -5364,7 +5372,7 @@ public class IngestionPage_Indium {
 	 */
 	public void unicodeFilesIngestion(String datFile, String textFile, String datKey) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.UniCodeFilesFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, Input.UniCodeFilesFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
@@ -5423,7 +5431,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName, String datFile, String datKey) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
@@ -5439,7 +5447,7 @@ public class IngestionPage_Indium {
 	 */
 	public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName, String datFile, String datKey) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
@@ -5459,7 +5467,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayForNativeWithoutIngestion(String ingestionName, String nativeFile) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		
 		base.waitForElement(datCheckboxStatus());
@@ -5680,7 +5688,7 @@ public class IngestionPage_Indium {
 	 */
 	public void performAKNativeFolderIngestion(String datFile) {
 
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AK_NativeFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, Input.AK_NativeFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
@@ -5785,7 +5793,7 @@ public class IngestionPage_Indium {
 	 */
 	public void mediaAndTranscriptIngestion(String sourceFolder, String datFile) {
 
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, sourceFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, sourceFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
@@ -6454,7 +6462,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionWithoutDat(String ingestionName, String type, String file) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.waitForElement(datCheckboxStatus());
@@ -6653,7 +6661,7 @@ public class IngestionPage_Indium {
 	public void unicodeFilesIngestionWithDifferentSourceSystem(String source, String datFile, String textFile,
 			String datKey) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.sourceLocation, Input.UniCodeFilesFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.SourceLocation, Input.UniCodeFilesFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
@@ -6805,7 +6813,7 @@ public class IngestionPage_Indium {
 	 */
 	public void performAKNativeFolderIngestionInOverlay(String datFile) {
 
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation,
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation,
 				Input.AK_NativeFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.stepInfo("Selecting Dat file");
@@ -6982,7 +6990,7 @@ public class IngestionPage_Indium {
 	 */
 	public void performAudio96DocsIngestion(String datFile, String docKey) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.audio96DocsFolder);
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, Input.audio96DocsFolder);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
@@ -7051,7 +7059,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionWithDat(String ingestionName,String datFile,String datKey,String type,String file) {
 		
-		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.SourceLocation, ingestionName);
 		addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
@@ -7470,11 +7478,11 @@ public class IngestionPage_Indium {
 		 */
 		
 		public void allSourcesIngestionWithText(String datFile,String docKey) {
-			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.SourceLocation, Input.AllSourcesFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
-			selectDATSource(datFile,docKey );
+			selectDATSource(datFile,docKey);
 			base.waitTime(2);
 			base.stepInfo("Selecting Text file");
 			selectTextSource(Input.TextFile, false);
@@ -7631,7 +7639,7 @@ public class IngestionPage_Indium {
 		
 		public void performAutomationAllsourcesIngestion(String system,String datFile,String docKey) {
 			
-			selectIngestionTypeAndSpecifySourceLocation("Add Only", system, Input.sourceLocation, Input.AllSourcesFolder);
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", system, Input.SourceLocation, Input.AllSourcesFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
@@ -7727,7 +7735,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will perform ingestion for GD994NativeTextForProductionFolder
 		 */
 		public void performGD_994NativeFolderIngestion(String sourceSystem,String datFile,String nativeFile,String textFile) {
-			selectIngestionTypeAndSpecifySourceLocation("Add Only", sourceSystem, Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", sourceSystem, Input.SourceLocation, Input.GD994NativeTextForProductionFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
@@ -8314,7 +8322,7 @@ public class IngestionPage_Indium {
 		public void startOverlayIngestion(String dataset,String datFile,String dockey,String textFile,String nativeFile,String PDF,
 				String tiffFile,String mp3Variant,String audioTranscript,String otherFile,String otherLinkType,boolean generatepdf) {
 			
-			selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation, dataset);
+			selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.SourceLocation, dataset);
 			base.waitTime(2);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
@@ -8486,7 +8494,7 @@ public class IngestionPage_Indium {
 		 */
 		public void performCollection1kTallyIngestion(String source,String datFile,String textFile) {
 			base.stepInfo("Add new ingestion");
-			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,source, Input.sourceLocation, 
+			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,source, Input.SourceLocation, 
 					Input.Collection1KFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.waitTime(2);
@@ -8935,7 +8943,7 @@ public class IngestionPage_Indium {
 		
 		public void performAutomationCollection1kIngestion(String sourceSystem,String datFile,String textFile) {
 			
-			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, sourceSystem, Input.sourceLocation, Input.Collection1KFolder);
+			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, sourceSystem, Input.SourceLocation, Input.Collection1KFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile,Input.documentKey);
@@ -9783,7 +9791,7 @@ public class IngestionPage_Indium {
 		 */
 		public void performGNonSearchableFolderIngestion(String ingestionType,String sourceSystem,String datFile,String nativeFile,String textFile) {
 			
-			selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, Input.sourceLocation, Input.GNonsearchablePDFLoadfileFolder);
+			selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, Input.SourceLocation, Input.GNonsearchablePDFLoadfileFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile, Input.sourceDocIdSearch);
@@ -10124,7 +10132,7 @@ public class IngestionPage_Indium {
 		public void performSmallSetGdIngestion(String ingestionType,String dat) {
 			
 			selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
-					Input.sourceLocation, Input.H13696smallSetFolder);
+					Input.SourceLocation, Input.H13696smallSetFolder);
 			addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(dat, Input.docIdKey);
