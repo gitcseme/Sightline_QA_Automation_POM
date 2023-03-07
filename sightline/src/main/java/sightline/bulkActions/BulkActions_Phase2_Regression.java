@@ -430,6 +430,7 @@ public class BulkActions_Phase2_Regression {
 		String fromDate = "2019/01/01";
 		String toDate = timeGaps.getCurrentDate();
 		String folderTag = "folderTag" + Utility.dynamicNameAppender();
+		
 
 		baseClass.stepInfo("RPMXCON-54483");
 		baseClass.stepInfo(
