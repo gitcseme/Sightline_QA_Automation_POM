@@ -488,9 +488,7 @@ public class DocViewPage {
 	}
 
 	public Element geDocView_MiniList_CodeSameAsIcon() {
-		// return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa
-		// fa-link']");
-		return driver.FindElementByXPath("//*[@id='CodeSameAsLast']");
+return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
 	}
 
 	public Element geDocView_FamilyMem_CodeSameAsIcon() {
@@ -2263,7 +2261,7 @@ public class DocViewPage {
 	}
 
 	public Element getPopUpLeftButton() {
-		return driver.FindElementByXPath("//span[.='Confirm Navigation']");
+		return driver.FindElementByXPath("//h3[.='Confirm Navigation']");
 	}
 
 	public Element getNavigationButton(String click) {
@@ -2719,7 +2717,7 @@ public class DocViewPage {
 
 	public Element getNavigationPopUpMsg_cc() {
 		return driver
-				.FindElementByXPath("(//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
+				.FindElementByXPath("(//h3[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p)[last()]");
 	}
 
 	public ElementCollection getHitPanels_audio() {

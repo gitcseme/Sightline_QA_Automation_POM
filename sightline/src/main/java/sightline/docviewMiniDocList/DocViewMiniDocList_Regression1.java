@@ -796,7 +796,14 @@ public class DocViewMiniDocList_Regression1 {
 //      Go to docview via session search
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
+		 miniDocListpage.removingFieldsAndDragnDropDefault();
+	        loginPage.logout();
+	        loginPage.loginToSightLine(userName, password);
+	        driver.waitForPageToBeReady();
 
+//	      Go to docview via session search
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewInDocView();
 		miniDocListpage.verifyDefaultValueInOptimizedSort();	
 
 								

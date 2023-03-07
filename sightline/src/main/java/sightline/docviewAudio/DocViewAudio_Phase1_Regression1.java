@@ -1460,7 +1460,7 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		baseClass.elementDisplayCheck(docViewPage.getTriangularIcon());
 		baseClass.stepInfo("Audio triangular arrow is displayed");
-		baseClass.visibleCheck(Input.audioSearchString2);
+		baseClass.visibleCheck(Input.audioSearchString2.toUpperCase());
 		baseClass.stepInfo("Audio search ,search term is visible in docview");
 		driver.waitForPageToBeReady();
 
@@ -1505,7 +1505,7 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		baseClass.elementDisplayCheck(docViewPage.getTriangularIcon());
 		baseClass.stepInfo("Audio triangular arrow is displayed");
-		baseClass.visibleCheck(Input.audioSearchString2);
+		baseClass.visibleCheck(Input.audioSearchString2.toUpperCase());
 		baseClass.stepInfo("Audio search ,search term is visible in docview");
 
 		baseClass.passedStep(
@@ -2765,7 +2765,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		saveSearch.navigateToSSPage();
 		saveSearch.selectNode1(nodeName);
 		driver.waitForPageToBeReady();
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
+
+		baseClass.waitTime(3);
 
 		// Persistant data to check
 		miniDocListpage.getDocListDatas();
