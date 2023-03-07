@@ -69,6 +69,7 @@ public class BulkActions_Phase2_Regression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		savedSearch=new SavedSearch(driver);
 		softAssert = new SoftAssert();
 
 	}
