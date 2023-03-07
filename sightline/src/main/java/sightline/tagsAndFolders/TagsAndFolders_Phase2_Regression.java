@@ -1198,10 +1198,10 @@ public class TagsAndFolders_Phase2_Regression {
 		tagsAndFolderPage.selectallTagRoot();
 		tagsAndFolderPage.createTagGroup(Input.securityGroup, tagGroupName, "Success", null);
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(tagGroupName));
-		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(15);
+		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(20);
 		tagsAndFolderPage.CreateTagCC(TagName, Input.securityGroup);
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(tagGroupName));
-		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(15);
+		tagsAndFolderPage.getTagNameDataCon(tagGroupName).waitAndClick(20);
 		tagsAndFolderPage.CreateTagCC(TagName2, Input.securityGroup);
 
 		// Tags And Folder
@@ -1211,10 +1211,10 @@ public class TagsAndFolders_Phase2_Regression {
 		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
 		driver.waitForPageToBeReady();
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(20);
 		tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(15);
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(20);
 		tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
 
 		// Calculate the unique doc count for the respective searches
