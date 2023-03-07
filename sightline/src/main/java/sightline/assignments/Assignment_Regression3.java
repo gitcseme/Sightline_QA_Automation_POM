@@ -189,6 +189,14 @@ public class Assignment_Regression3 {
 						+ "displays correct count on Manage Reviewers tab");
 
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.testData1);
+		ActualCount = sessionsearch.verifyPureHitsCount();
+		sessionsearch.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName1);
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName1);
 		driver.waitForPageToBeReady();
@@ -844,6 +852,7 @@ public class Assignment_Regression3 {
 
 		// assignment Creation
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -951,6 +960,7 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-59197");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles OFF");
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -1063,6 +1073,7 @@ public class Assignment_Regression3 {
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -1451,6 +1462,7 @@ public class Assignment_Regression3 {
 				+ " keep email threads as ON");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -1674,6 +1686,7 @@ public class Assignment_Regression3 {
 				+ "threads together as disabled toggle should be displayed");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -1823,6 +1836,7 @@ public class Assignment_Regression3 {
 
 		// Getting the ingested docs to assign to assignment
 		ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);

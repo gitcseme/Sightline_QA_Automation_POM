@@ -1208,7 +1208,7 @@ public class AssignmentsPage {
 	}
 
 	public Element docListPageTitle() {
-		return driver.FindElementByXPath("//h1[text()='DocList ']");
+		return driver.FindElementByXPath("//h1[text()='DocList']");
 	}
 
 	public ElementCollection getAllKeywordsList() {
@@ -7287,7 +7287,7 @@ public class AssignmentsPage {
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Record copied successfully");
 		bc.waitForElement(getSelectCopyAssignments(assignmentName));
-		bc.wait(2);
+		bc.waitTime(2);
 		getSelectCopyAssignments(assignmentName).waitAndClick(3);
 		driver.scrollPageToTop();
 		getAssignmentActionDropdown().waitAndClick(5);
