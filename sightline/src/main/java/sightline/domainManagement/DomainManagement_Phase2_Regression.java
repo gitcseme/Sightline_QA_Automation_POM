@@ -2201,15 +2201,15 @@ public class DomainManagement_Phase2_Regression {
 		user.navigateToUsersPAge();
         user.passingUserName(Input.da1userName);
         user.applyFilter();
-        String firstName = user.getTableData("FIRST NAME", 1);
-        String lastName = user.getTableData("LAST NAME", 1);
-        String userName = firstName + " " + lastName;
+//        String firstName = user.getTableData("FIRST NAME", 1);
+//        String lastName = user.getTableData("LAST NAME", 1);
+//        String userName = firstName + " " + lastName;
         
 		project.navigateToClientFromHomePage();
 		driver.waitForPageToBeReady();
 		project.addNewClient(ClientName, shrtType, "Domain");
 		user.navigateToUsersPAge();
-		user.Assignusertodomain(ClientName, userName);
+		user.Assignusertodomain(ClientName, Input.da1FullName);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();

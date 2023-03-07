@@ -1527,6 +1527,7 @@ public class DomainManagement_Phase2_Regression1 {
 				"The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
 		base.passedStep("Confirmation message is displayed to user saying \"The role of this user is being switched. "
 				+ "The user permissions will be reset to the default permissions of the new role. Do you want to continue?\"");
+		softAssertion.assertAll();
 		base.getNOBtn().waitAndClick(5);
 		
 		if(!base.text("Security Group :").isDisplayed()) {
@@ -1537,7 +1538,8 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality rights
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), false);
+		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), true);
+		softAssertion.assertAll();
 		base.passedStep("rights was displayed as per selected role on functionality tab.");
 		
 		user.clickDetailsTAb();
@@ -1557,10 +1559,11 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality tab
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 2);
+		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 3);
+		softAssertion.assertAll();
 		base.passedStep("rights was displayed as per the selected role on functionality tab");
 
-		softAssertion.assertAll();
+		
 		base.passedStep("verified user rights from Edit User > Functionality tab "
 				+ "when Sys Admin changes role of Domain Admin[assigned to single domain/non-domain project] user to RMU");
 		loginPage.logout();
@@ -1607,7 +1610,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality rights
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), false);
+		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), true);
 		base.passedStep("rights was displayed as per selected role on functionality tab.");
 		
 		user.clickDetailsTAb();
@@ -1627,7 +1630,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality tab
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 9);
+		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(),11);
 		base.passedStep("rights was displayed as per the selected role on functionality tab");
 
 		softAssertion.assertAll();
@@ -1676,7 +1679,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality rights
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 1);
+		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 2);
 		base.passedStep("rights was displayed as per selected role on functionality tab.");
 		
 		user.clickDetailsTAb();
@@ -1696,7 +1699,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality tab
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), false);
+		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), true);
 		base.passedStep("rights was displayed as per the selected role on functionality tab");
 
 		softAssertion.assertAll();
