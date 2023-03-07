@@ -2659,18 +2659,25 @@ public class DocView_Regression4 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		String folderName = "Folder" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
+		
+		TagsAndFoldersPage tag = new TagsAndFoldersPage(driver);
+		
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
+		tag.navigateToTagsAndFolderPage();
+		tag.CreateFolderInRMU(folderName);
+		
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		docView.performFloderMiniDocList();
+		docView.performFloderMiniDocList(folderName);
 		driver.waitForPageToBeReady();
 		if (docView.getDocView_AnalyticsExitingFolderName1().Displayed()) {
 			baseClass.passedStep("All existing folder under that security group is displayed");
@@ -2689,7 +2696,7 @@ public class DocView_Regression4 {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		docView.performFloderMiniDocListForReviewer();
+		docView.performFloderMiniDocListForReviewer(folderName);
 		loginPage.logout();
 
 		// Login as PA
@@ -2698,10 +2705,13 @@ public class DocView_Regression4 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		String folderNamePA = "FolderPA" + Utility.dynamicNameAppender();
+		tag.navigateToTagsAndFolderPage();
+		tag.CreateFolder(folderNamePA, Input.securityGroup);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		docView.performFloderMiniDocList();
+		docView.performFloderMiniDocList(folderNamePA);
 		driver.waitForPageToBeReady();
 		if (docView.getDocView_AnalyticsExitingFolderName1().Displayed()) {
 			baseClass.passedStep("All existing folder under that security group is displayed");
