@@ -6028,4 +6028,56 @@ public class UserManagement {
 
 	}
 
+	public void editRoleFromReviewerToRMU(String username, String role,String manageButton, String projectName) {
+		driver.waitForPageToBeReady();
+		bc.waitTime(5);
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
+
+		if (role.contains("Reviewer")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityButton());
+			getFunctionalityButton().waitAndClick(5);
+
+
+			if (manageButton.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			} else if (manageButton.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
+
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled and Save button is clicked");
+		}
+		else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+	}
+
 }

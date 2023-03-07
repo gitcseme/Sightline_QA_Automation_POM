@@ -147,7 +147,7 @@ public class ManageKeywords_Regression {
 	 */
 	@Test(description = "RPMXCON-52505", enabled = true, groups = { "regression" })
 	public void verifyManageKeywordPage() throws InterruptedException, AWTException {
-
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-52505");
 		baseClass.stepInfo("To verify Manage Keywords page");
 		KeywordPage keyWord = new KeywordPage(driver);
@@ -158,6 +158,7 @@ public class ManageKeywords_Regression {
 		
 		//Verify Manage Keyowrd Page for RMU
 		keyWord.navigateToKeywordPage();
+		
 		keyWord.verifyManageKeywordPageRMUAndPA(Input.rmu2userName);
 		loginPage.logout();
 		
@@ -546,6 +547,7 @@ public class ManageKeywords_Regression {
 	 * @throws AWTException
 	 * @Description To verify whether user is able to create keyword group, keyword after changing role to RMU from Reviewer by Project Admin
 	 */
+	
 	@Test(description = "RPMXCON-52539", enabled = true, groups = { "regression" })
 	public void verifyChangeRoleToRMUFromReviewer() throws InterruptedException, AWTException {
 
@@ -561,13 +563,16 @@ public class ManageKeywords_Regression {
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleFromPAToRMU(Input.rev2userName, "Reviewer",Input.projectName);
 		
+		//Edit role from Reviewer to Rmu by PAU
+		userManagement.editRoleFromReviewerToRMU(Input.rev2userName, "Reviewer","1",Input.projectName);
 		
 		loginPage.logout();
 		
 		// Login As RMU from Reviewer
 		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.selectproject();
+		
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rev2userName + "");
 		
 		keyWord.navigateToKeywordPage();
@@ -586,9 +591,7 @@ public class ManageKeywords_Regression {
 		userManagement.navigateToUsersPAge();
 		userManagement.editRoleForRMUANdPAUsers(Input.rev2userName, "Review Manager",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
-		loginPage.logout();
-		
-		
+		loginPage.logout();	
 	}
 	
 	/**
