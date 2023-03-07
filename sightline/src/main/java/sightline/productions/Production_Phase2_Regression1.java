@@ -3229,12 +3229,12 @@ public class Production_Phase2_Regression1 {
 		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
 		int DocFileExtension = base.getIndex(doc.getHeaderText(), Input.docFileExt);
 		List<String> FileExtense = base.availableListofElements(doc.GetColumnData(DocFileExtension));
-		String FirstFile = FileExtense.get(0);
+		/*String FirstFile = FileExtense.get(0);
 		System.out.println(FirstFile);
 		String SecondFileFile = FileExtense.get(1);
 		System.out.println(SecondFileFile);
 		String ThirdFile = FileExtense.get(2).toString().trim();
-		System.out.println(ThirdFile);
+		System.out.println(ThirdFile); */
 		doc.documentSelection(3);
 		doc.bulkTagExistingFromDoclist(tagname);
 
@@ -3267,11 +3267,11 @@ public class Production_Phase2_Regression1 {
 		int Count = Integer.valueOf(beginningBates) + Integer.valueOf(Input.pageCount);
 		int ThirdDoc = Count + +Integer.valueOf(Input.pageCount);
 		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + FirstFile);
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
 		File Native2File = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + Count + suffixID + SecondFileFile);
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + Count + suffixID + ".docx");
 		File Native3File = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + ThirdDoc + suffixID + ThirdFile);
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + ThirdDoc + suffixID + ".docx");
 		if (Native.exists()) {
 			base.passedStep("Native file is generated with DocFileExtension ");
 		} else {
