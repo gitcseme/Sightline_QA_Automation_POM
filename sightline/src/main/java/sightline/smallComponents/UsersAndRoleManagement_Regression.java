@@ -92,7 +92,7 @@ public class UsersAndRoleManagement_Regression {
 		String role = "Review Manager";
 		String role2 = "Reviewer";
 		String project1 = Input.projectName;
-		String project2 = "MasterAutomationData";
+		String project2 = Input.additionalDataProject;
 		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
 		baseClass.stepInfo("Test case Id: RPMXCON-52426");
 		utility = new Utility(driver);
@@ -943,6 +943,9 @@ public class UsersAndRoleManagement_Regression {
 
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
+		if(assignRole.equalsIgnoreCase("da")) {
+		baseClass.selectdomain(Input.domainName);
+		}
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
@@ -1079,6 +1082,9 @@ public class UsersAndRoleManagement_Regression {
 
 		// login
 		loginPage.loginToSightLine(loginuser, loginPass);
+		if(loginuser.equalsIgnoreCase(Input.da1userName)) {
+		baseClass.selectdomain(Input.domainName);
+		}
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
@@ -2502,6 +2508,9 @@ public class UsersAndRoleManagement_Regression {
 						
 		userManage = new UserManagement(driver);
 		loginPage.loginToSightLine(username,Password);
+		if(username.equalsIgnoreCase(Input.da1userName)) {
+			baseClass.selectdomain(Input.domainName);
+		}
 		userManage.navigateToUsersPAge();
 //		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.passingUserName(Input.rmu1userName);

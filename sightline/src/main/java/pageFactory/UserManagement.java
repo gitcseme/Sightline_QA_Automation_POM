@@ -845,6 +845,12 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Delete')]");
 	}
+	
+	public Element getSelectUserToRemove(String projectName) {
+		return driver.FindElementByXPath(
+				"//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Remove')]");
+	}
+
 
 	public Element NavigateToDataSets() {
 		return driver.FindElementByXPath("//a[@name='DataSets']//i");
@@ -2443,19 +2449,23 @@ public class UserManagement {
 		getFirstName().SendKeys(firstName);
 		getLastName().SendKeys(lastName);
 		getSelectRole().selectFromDropdown().selectByVisibleText(role);
-
-		if (role.equalsIgnoreCase("Domain Administrator")) {
-			getSelectDomain().isElementAvailable(10);
-			getSelectDomain().selectFromDropdown().selectByIndex(1);
-		}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getEmail().Exists();
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
+
+		if (role.equalsIgnoreCase("Domain Administrator")) {
+			getSelectDomain().isElementAvailable(10);
+			getSelectDomain().selectFromDropdown().selectByIndex(1);
+			getSave().waitAndClick(10);
+			bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+		}
+		
 //		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
-		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
+		if (role.equalsIgnoreCase("Project Administrator")
 				|| role.equalsIgnoreCase("Reviewer")) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -2464,15 +2474,26 @@ public class UserManagement {
 			}), Input.wait30);
 			getSelectProject().Click();
 			getSelectProject(project).Click();
+			getSave().waitAndClick(10);
+			bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
 		}
 
 		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProject().Visible();
+				}
+			}), Input.wait30);
+			getSelectProject().Click();
+			getSelectProject(project).Click();
 			getSecurityDropDown().isElementAvailable(10);
 			getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
-
+			getSave().waitAndClick(10);
+			bc.VerifyErrorMessage("20001000024 : The specified user cannot be added, since an identical user already exists in the project in a different security group.");
+			
 		}
-		getSave().waitAndClick(10);
-		bc.VerifyErrorMessage("20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.");
+		
+		
 
 	}
 
@@ -5100,6 +5121,34 @@ public class UserManagement {
 			}
 		} else {
 			bc.failedStep("Delete User Popup is Not Displayed");
+		}
+	}
+	
+	/**
+	 * @Author Hema MJ
+	 * @Description : veriy Delete user Popup And Click cancel or ok Button
+	 * @param remove
+	 * @param projectName
+	 */
+	public void verifyRemoveUserPopup(boolean delete, String projectName) {
+		bc.waitForElement(getSelectUserToDelete(projectName));
+		getSelectUserToRemove(projectName).waitAndClick(10);
+		if (getBellyBandMsg().isElementAvailable(10)) {
+			bc.stepInfo("Remove User Popup is Displayed");
+			if (getConfirmTab().isElementAvailable(3) && getConfirmDelete().isElementAvailable(3)) {
+				bc.stepInfo("Cancel & Ok Button is Displayed");
+				if (delete) {
+					getConfirmDelete().waitAndClick(5);
+					bc.VerifySuccessMessage("User successfully removed from the project");
+				} else {
+					getConfirmTab().waitAndClick(10);
+					bc.stepInfo("CLicked Cancel Button");
+				}
+			} else {
+				bc.failedStep("Cancel & Ok Button is Not Displayed");
+			}
+		} else {
+			bc.failedStep("Remove User Popup is Not Displayed");
 		}
 	}
 

@@ -537,7 +537,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
         softAssertion.assertEquals(billFalse, "False");
         baseClass.passedStep("Cross checked from user list page PA role user is non-billable ");
         userManage.filterByName(emailIdPa);
-		userManage.deleteUser();
+		userManage.RemoveUser();
         //verify rmu role
         userManage.passingUserName(emailIdrmu);
         userManage.applyFilter();
@@ -547,7 +547,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
         System.out.println(billTrueRmu);
         softAssertion.assertEquals(billTrueRmu, "True");
         userManage.filterByName(emailIdrmu);
-		userManage.deleteUser();
+		userManage.RemoveUser();
         baseClass.passedStep("Cross checked from user list page Review Manager role user is billable ");
         //verify rev role
         userManage.passingUserName(emailIdRev);
@@ -558,7 +558,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
         System.out.println(billFalseRev);
         softAssertion.assertEquals(billFalseRev, "True");
         userManage.filterByName(emailIdRev);
-		userManage.deleteUser();
+		userManage.RemoveUser();
         baseClass.passedStep("Cross checked from user list page Reviewer role user is billable ");
 		softAssertion.assertAll();
 		// logout
@@ -1349,14 +1349,14 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		baseClass.stepInfo("Create user under existing emailid");
 		if (name == "pa") {
-			userManage.createNewUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
+			userManage.createExitingUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
 			boolean errorMsgExt = userManage.getLoginUserShouldNotCreate().isElementAvailable(2);
 			String errorText = userManage.getLoginUserShouldNotCreate().getText();
             baseClass.stepInfo("Error message displayed as :"+errorText+"");
 			softAssertion.assertTrue(errorMsgExt);
 		}
 		if (name == "rmu") {
-			userManage.createNewUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
+			userManage.createExitingUser(FirstName, LastName, role, email, Input.domainName, Input.projectName);
 			boolean errorMsgExt = userManage.getLoginUserShouldNotCreateRmu().isElementAvailable(2);
 			String errorText = userManage.getLoginUserShouldNotCreateRmu().getText();
             baseClass.stepInfo("Error message displayed as :"+errorText+"");
@@ -1367,14 +1367,14 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		baseClass.CloseSuccessMsgpopup();
 		baseClass.stepInfo("Create user under existing emailid,without reset password from unnique encrypted link");
 		if (name == "pa") {
-			userManage.createNewUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
+			userManage.createExitingUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
 			boolean errorMsgExt = userManage.getLoginUserShouldNotCreate().isElementAvailable(2);
 			String errorText = userManage.getLoginUserShouldNotCreate().getText();
             baseClass.stepInfo("Error message displayed as :"+errorText+"");
 			softAssertion.assertTrue(errorMsgExt);
 		}
 		if (name == "rmu") {
-			userManage.createNewUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
+			userManage.createExitingUser(FirstName, LastName, role, emailId, Input.domainName, Input.projectName);
 			boolean errorMsgExt = userManage.getLoginUserShouldNotCreateRmu().isElementAvailable(2);
 			String errorText = userManage.getLoginUserShouldNotCreateRmu().getText();
             baseClass.stepInfo("Error message displayed as :"+errorText+"");
