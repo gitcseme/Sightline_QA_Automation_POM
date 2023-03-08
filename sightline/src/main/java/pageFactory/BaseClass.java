@@ -312,7 +312,8 @@ public class BaseClass {
 	}
 
 	public Element getRedBullHornIcon() {
-		return driver.FindElementByXPath("//span[@class='activity-dropdown newRed']");
+		//return driver.FindElementByXPath("//span[@class='activity-dropdown newRed']");
+		return driver.FindElementByXPath("//a[@class='activity-dropdown newRed']");
 	}
 
 	public Element getBullIcon() {
