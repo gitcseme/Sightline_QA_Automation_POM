@@ -69,6 +69,7 @@ public class BulkActions_Phase2_Regression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
+		savedSearch=new SavedSearch(driver);
 		softAssert = new SoftAssert();
 
 	}
@@ -429,6 +430,7 @@ public class BulkActions_Phase2_Regression {
 		String fromDate = "2019/01/01";
 		String toDate = timeGaps.getCurrentDate();
 		String folderTag = "folderTag" + Utility.dynamicNameAppender();
+		
 
 		baseClass.stepInfo("RPMXCON-54483");
 		baseClass.stepInfo(
