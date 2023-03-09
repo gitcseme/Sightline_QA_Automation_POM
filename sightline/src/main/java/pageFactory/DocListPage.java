@@ -955,7 +955,7 @@ public class DocListPage {
 	}
 
 	public Element getAssertEmailAllDomains(int colno) {
-		return driver.FindElementByXPath("//th[text()='EmailAllDomains']/following::tr[" + colno + "]//td[8]");
+		return driver.FindElementByXPath("//th[text()='EmailAllDomains']/following::tr[" + colno + "]//td[9]");
 	}
 
 	public Element getEmailAuthorNameBtn() {
@@ -1090,27 +1090,27 @@ public class DocListPage {
 	}
 
 	public ElementCollection getColumnCount() {
-		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[4]");
+		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[5]");
 	}
 
 	public ElementCollection getRowValueAfterSuffling() {
-		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[3]");
+		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[4]");
 	}
 
 	public ElementCollection getNextColumnCount() {
-		return driver.FindElementsByXPath("//th[text()='DocFileType']/following::tr//td[6]");
+		return driver.FindElementsByXPath("//th[text()='DocFileType']/following::tr//td[7]");
 	}
 
 	public ElementCollection getNextColumnCountAfterSuffling() {
-		return driver.FindElementsByXPath("//th[text()='DocFileType']/following::tr//td[5]");
+		return driver.FindElementsByXPath("//th[text()='DocFileType']/following::tr//td[6]");
 	}
 
 	public Element getTableHeader() {
-		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//th[3]");
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//th[4]");
 	}
 
 	public Element getNextTableHeader() {
-		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//th[5]");
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//th[6]");
 	}
 
 	public Element getCustodianName() {
