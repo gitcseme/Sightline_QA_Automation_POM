@@ -3019,7 +3019,7 @@ public class DocExplorerPage {
 				return doclist.getPopUpOkBtn().Visible();
 			}
 		}), Input.wait30);
-		doclist.getPopUpOkBtn().Click();
+		doclist.getPopUpOkBtn().waitAndClick(5);
 
 		bc.waitForElement(actionDropdown());
 		actionDropdown().waitAndClick(5);
@@ -3039,7 +3039,8 @@ public class DocExplorerPage {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getContinueButton());
-		getContinueButton().Click();
+		getContinueButton().waitAndClick(5);
+
 		System.out.println("Clicked continue");
 
 		driver.waitForPageToBeReady();
@@ -3067,10 +3068,10 @@ public class DocExplorerPage {
 				return doclist.getPopUpOkBtn().Visible();
 			}
 		}), Input.wait30);
-		doclist.getPopUpOkBtn().Click();
+		doclist.getPopUpOkBtn().waitAndClick(5);
 
 		bc.waitForElement(actionDropdown());
-		actionDropdown().waitAndClick(5);
+		actionDropdown().waitAndClick(10);
 
 		bc.waitForElement(getBulkFolder());
 		getBulkFolder().waitAndClick(5);
