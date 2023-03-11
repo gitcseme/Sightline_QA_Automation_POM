@@ -69,9 +69,11 @@ public class Export_Phase2_Regression1 {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
 
+		
 		driver = new Driver();
 		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		page = new ProductionPage(driver);
 	}
 	
 	/**

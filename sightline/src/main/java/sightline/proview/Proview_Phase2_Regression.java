@@ -1053,16 +1053,19 @@ public class Proview_Phase2_Regression {
 
 		base.waitForElementCollection(session.getTree());
 		List<String> searchlist = base.availableListofElements(session.getTree());
+		System.out.println(searchlist);
 
 		// navigate to categorize page
 		categorize.navigateToCategorizePage();
 
 		// Fetch displayed Searches in Categorization page
 		categorize.selectTrainingSet("Identify by Saved Search");
+		categorize.PBMclickArrow().Click();
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElementCollection(categorize.getAvailableSearches());
 		List<String> searchPresentInCategorize = base.availableListofElements(categorize.getAvailableSearches());
+		System.out.println(searchPresentInCategorize);
 
 		// Verify All existing Searches is Displayed
 
