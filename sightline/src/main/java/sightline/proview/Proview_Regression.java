@@ -70,6 +70,7 @@ public class Proview_Regression {
 			sessionSearch.bulkFolder(folderName);
 		}
 		Categorization cat = new Categorization(driver);
+		cat.navigateToCategorizePage();
 		cat.CategorizationFunctionalityVerification(tagName, folderName, Input.tag);
 		cat.ViewInDocLIst();
 		DocListPage doclistPage = new DocListPage(driver);
@@ -132,8 +133,7 @@ public class Proview_Regression {
 	 *              Categorization to doc list. [RPMXCON-54138]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-54138", enabled = true, dataProvider = "Users_PARMU", 
-			groups = { "regression" })
+	@Test(description = "RPMXCON-54138", enabled = true, dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role)
 			throws InterruptedException {
 		String folderName = "FOLDER" + Utility.dynamicNameAppender();

@@ -148,6 +148,10 @@ public class Categorization {
 	public Element getDome() {
 		return driver.FindElementByXPath("//div[@class='panel-collapse collapse in']//div[@class='panel-body']");
 	}
+	
+	public Element PBMclickArrow() {
+		return driver.FindElementByXPath("//*[@id='2g']/i");
+	}
 
 	public ElementCollection getAvailableFoldersInAnalyzed() {
 		return driver.FindElementsByXPath("//div[@id='divTree']//a");
