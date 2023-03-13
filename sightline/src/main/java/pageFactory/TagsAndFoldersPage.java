@@ -580,7 +580,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditFolderPopup() {
-		return driver.FindElementByXPath("//span[text()='Edit Folder']");
+		return driver.FindElementByXPath("//h3[text()='Edit Folder']");
 	}
 
 	public Element getNewFolderInputTextBox() {
@@ -601,7 +601,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditTagPopup() {
-		return driver.FindElementByXPath("//span[text()='Edit Tag']");
+		return driver.FindElementByXPath("//h3[text()='Edit Tag']");
 	}
 
 	public Element getUpdateTagSaveBtn() {
@@ -2708,7 +2708,7 @@ public class TagsAndFoldersPage {
 			if (getEditTagWaringMessagePopupTitle().isElementPresent()) {
 				System.out.println("Edit Tag Warning Message appeared");
 				String sourceString = getEditTagWaringMessageText().getText();
-				String compreString = "You are about to change the name of the tag. All existing searches that are using the existing tag name in their queries may no longer execute correctly. Do you want to continue?";
+				String compreString = "You are about to change the name of the tag. All existing searches that are using the existing tag name in their queries may no longer execute correctly.";
 				base.textCompareEquals(sourceString, compreString,
 						"Edit Tag Warning Message Text is Verified Successfully",
 						"Edit Tag Warning Message Text is not Verified");
