@@ -1505,7 +1505,10 @@ public class DocListPage {
 	public Element getSelectAllCheckBox() {
 		return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
 	}
-
+	public Element getYesBtn() {
+		return driver.FindElementByXPath("//*[@id=\"Yes\"]");
+	}
+	//*[@id="Yes"]
 	public Element getSelectAllOk() {
 		return driver.FindElementByXPath("//*[@id='bot1-Msg1']");
 	}
@@ -1516,7 +1519,7 @@ public class DocListPage {
 	}
 
 	public Element getFirstCheckBox() {
-		return driver.FindElementByXPath("//*[@id='chkDoc_1']");
+		return driver.FindElementByXPath("//*[@id='chkDoc_102']");
 	}
 
 	public Element getTileViewSelectAll() {
@@ -6648,6 +6651,7 @@ public class DocListPage {
 		if (getSelectAllCheckBox().isElementPresent()) {
 			base.waitForElement(getSelectAllCheckBox());
 			getSelectAllCheckBox().waitAndClick(5);
+			getYesBtn().waitAndClick(3);
 			base.passedStep("selectall checkbox is displayed in tileview");
 		} else {
 			base.failedStep("check box is not present");
