@@ -1170,7 +1170,7 @@ public class DocListPage {
 
 //	    Added by Baskar
 	public ElementCollection getDocIds() {
-		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr//td[3]");
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr//td[4]");
 	}
 
 	public Element getDocList_Action_Drp_Dwn() {

@@ -74,6 +74,9 @@ public class Export_Phase2_Regression1 {
 		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		page = new ProductionPage(driver);
+		tag=new TagsAndFoldersPage(driver);
+		search=new SessionSearch(driver);
+		
 	}
 	
 	/**
