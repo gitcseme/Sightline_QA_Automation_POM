@@ -13885,6 +13885,7 @@ public class SessionSearch {
 	 */
 
 	public void bulkTag_FluctuationVerification(String TagName, String docCount) throws InterruptedException {
+		UserManagement userManage=new UserManagement(driver);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -13907,6 +13908,10 @@ public class SessionSearch {
 		getEnterTagName().SendKeys(TagName);
 		base.waitForElement(getTagsAllRoot());
 		getTagsAllRoot().Click();
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getBulkTagPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getBulkTagPopupWindowHeader().getWebElement(), -100, -100);
+		Act.release().build().perform();
 
 		getContinueButton().waitAndClick(10);
 		if (getFinalizeButton().isDisplayed() == false) {

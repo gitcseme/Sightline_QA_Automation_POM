@@ -441,12 +441,12 @@ public class BulkActions_Phase2_Regression {
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		String count1 = timeGaps.selectBarChartandRtnDocCount("yearly");
 		timeGaps.selectActions("Tag", "yearlyActions");
-		sessionSearch.bulkTag_FluctuationVerification(folderTag, count1);
+		sessionSearch.bulkTag_FluctuationVerification(folderTag+"_1", count1);
 
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		String count2 = timeGaps.selectBarChartandRtnDocCount("yearly");
 		timeGaps.selectActions(" Folder", "yearlyActions");
-		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count2);
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag+"_2", count2);
 
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		timeGaps.selectBarChartandRtnDocCount("yearly");
@@ -454,15 +454,13 @@ public class BulkActions_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		String count3 = timeGaps.selectBarChartandRtnDocCount("monthly");
 		timeGaps.selectActions("Tag", "monthlyActions");
-		sessionSearch.bulkTag_FluctuationVerification(folderTag, count3);
-
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		timeGaps.selectBarChartandRtnDocCount("yearly");
 		timeGaps.selectActions("Monthly Timeline", "yearlyActions");
 		driver.waitForPageToBeReady();
 		String count4 = timeGaps.selectBarChartandRtnDocCount("monthly");
 		timeGaps.selectActions(" Folder", "monthlyActions");
-		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count4);
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag+"_3", count4);
 
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		timeGaps.selectBarChartandRtnDocCount("yearly");
@@ -473,7 +471,7 @@ public class BulkActions_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		String count5 = timeGaps.selectBarChartandRtnDocCount("daily");
 		timeGaps.selectActions("Tag", "dailyActions");
-		sessionSearch.bulkTag_FluctuationVerification(folderTag, count5);
+		sessionSearch.bulkTag_FluctuationVerification(folderTag+"_4", count5);
 
 		timeGaps.fillingDetailsinTimeGaps(timeLine, fromDate, toDate);
 		timeGaps.selectBarChartandRtnDocCount("yearly");
@@ -484,7 +482,7 @@ public class BulkActions_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		String count6 = timeGaps.selectBarChartandRtnDocCount("daily");
 		timeGaps.selectActions(" Folder", "dailyActions");
-		sessionSearch.bulkFolder_FluctuationVerification(folderTag, count6);
+		sessionSearch.bulkFolder_FluctuationVerification(folderTag+"_5", count6);
 
 		loginPage.logout();
 
@@ -1192,7 +1190,7 @@ public class BulkActions_Phase2_Regression {
 
 		AssignmentsPage assign = new AssignmentsPage(driver);
 		DocListPage docList = new DocListPage(driver);
-
+		SavedSearch savedSearch=new SavedSearch(driver);
 		String finalCount;
 		String docCount;
 		String searchName = "savedSearch" + Utility.dynamicNameAppender();
