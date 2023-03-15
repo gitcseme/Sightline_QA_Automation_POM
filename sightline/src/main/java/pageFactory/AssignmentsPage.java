@@ -4838,7 +4838,7 @@ public class AssignmentsPage {
 				return getDistributeBtn().Visible();
 			}
 		}), Input.wait30);
-		bc.CloseSuccessMsgpopup();
+
 		getDistributeBtn().waitAndClick(7);
 		bc.VerifySuccessMessage("Action saved successfully");
 
