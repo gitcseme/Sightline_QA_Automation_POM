@@ -617,7 +617,7 @@ public class UsersAndRoleManagement_Regression {
 		softAssertion = new SoftAssert();
 		String fullName = Input.pa1FullName;
 	    String[] splittingFullName=fullName.split(" ");
-	    String firstName=splittingFullName[0];
+	    String firstName=splittingFullName[1];
 		
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -628,7 +628,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Apply Filter Button in clicked successfully");
 
 		driver.waitForPageToBeReady();
-		String AfterfilterUserName = userManage.getFirstNameTab().getText().trim();
+		String AfterfilterUserName = userManage.getLastNameTab().getText().trim();
 		System.out.println(AfterfilterUserName);
 
 		softAssertion.assertEquals(firstName, AfterfilterUserName);
