@@ -45,6 +45,7 @@ import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -70,8 +71,8 @@ public class Assignment_Regression3 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		ingestionDataName = Input.IngestionName_PT;
 		ingestionMetaData = Input.metadataIngestion;
 	}
@@ -724,15 +725,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59179", enabled = true, groups = { "regression" })
-	public void verifyDrawLinkWhenEmailThreadToggleEnabled() throws InterruptedException {
+	public void verifyDrawLinkWhenEmailThreadToggleEnabled() throws Exception {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59179 ");
@@ -741,6 +744,10 @@ public class Assignment_Regression3 {
 
 		// Getting the ingested docs to assign to assignment
 		ingestionPage = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -834,15 +841,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59177", enabled = true, groups = { "regression" })
-	public void verifyDrawLinkWhenFamilyToggleEnabled() throws InterruptedException {
+	public void verifyDrawLinkWhenFamilyToggleEnabled() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -852,6 +861,8 @@ public class Assignment_Regression3 {
 
 		// assignment Creation
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -945,21 +956,25 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59197", enabled = true, groups = { "regression" })
-	public void verifyDrawaLimit_BothToggleOFF() throws InterruptedException {
+	public void verifyDrawaLimit_BothToggleOFF() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59197");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles OFF");
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1056,15 +1071,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59196", enabled = true, groups = { "regression" })
-	public void verifyDrawaLimit_BothToggleON() throws InterruptedException {
+	public void verifyDrawaLimit_BothToggleON() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1073,6 +1090,8 @@ public class Assignment_Regression3 {
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1445,15 +1464,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59199", enabled = true, groups = { "regression" })
-	public void verifyDrawaLimitEditAssgn_ThreadON() throws InterruptedException {
+	public void verifyDrawaLimitEditAssgn_ThreadON() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1462,6 +1483,8 @@ public class Assignment_Regression3 {
 				+ " keep email threads as ON");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1555,15 +1578,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59198", enabled = true, groups = { "regression" })
-	public void verifyDrawLimitEditAssgn_FamilyON() throws InterruptedException {
+	public void verifyDrawLimitEditAssgn_FamilyON() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1572,7 +1597,9 @@ public class Assignment_Regression3 {
 				+ "together as ON & keep email threads as OFF ");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
 	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
@@ -1669,15 +1696,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59216", enabled = true, groups = { "regression" })
-	public void verifyDrawPoolToggle_existingAssgn() throws InterruptedException {
+	public void verifyDrawPoolToggle_existingAssgn() throws Exception {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1686,6 +1715,8 @@ public class Assignment_Regression3 {
 				+ "threads together as disabled toggle should be displayed");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1819,15 +1850,17 @@ public class Assignment_Regression3 {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
+	 * @throws Exception 
 	 */
 	@Test(description = "RPMXCON-59180", enabled = true, groups = { "regression" })
-	public void verifyDrawLinkWhenEmailThreadToggleDisabled() throws InterruptedException {
+	public void verifyDrawLinkWhenEmailThreadToggleDisabled() throws Exception {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59180 ");
@@ -1836,6 +1869,8 @@ public class Assignment_Regression3 {
 
 		// Getting the ingested docs to assign to assignment
 		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
