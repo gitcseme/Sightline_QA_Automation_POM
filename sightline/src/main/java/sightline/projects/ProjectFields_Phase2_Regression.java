@@ -92,6 +92,9 @@ public class ProjectFields_Phase2_Regression {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
 
 	}
 
@@ -493,7 +496,7 @@ public class ProjectFields_Phase2_Regression {
 		// cloning the project
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "");
-//		baseClass.waitTime(200);
+		baseClass.waitTime(5);
 		data.getNotificationMessage(0, projectName);
 		baseClass.stepInfo("Cloning a project");
 
@@ -687,6 +690,7 @@ public class ProjectFields_Phase2_Regression {
 		userManagementPage.getSelectBulkUser(Input.pa1FullName).waitAndClick(10);
 		baseClass.waitForElement(userManagementPage.getBulkUserSaveBtn());
 		userManagementPage.getBulkUserSaveBtn().waitAndClick(10);
+		baseClass.waitTime(3);
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
 		loginPage.logout();
 
@@ -787,7 +791,7 @@ public class ProjectFields_Phase2_Regression {
 	@Test(description = "RPMXCON-55749", enabled = true, groups = { "regression" })
 	public void VerifyEmailThreadSequenceId() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		baseClass.stepInfo("RPMXCON-48976");
+		baseClass.stepInfo("RPMXCON-55749");
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
