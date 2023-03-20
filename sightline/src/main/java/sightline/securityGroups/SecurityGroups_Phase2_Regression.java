@@ -462,6 +462,7 @@ public class SecurityGroups_Phase2_Regression {
 		SoftAssert softassert = new SoftAssert();
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
 		String projectName = "DAProject" + Utility.dynamicNameAppender();
 		String annoName = "newAnnotation" + Utility.dynamicNameAppender();
 		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
@@ -2678,6 +2679,7 @@ public class SecurityGroups_Phase2_Regression {
 		userManage = new UserManagement(driver);
 		DataSets data = new DataSets(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
 		String projectName = "DAProject" + Utility.dynamicNameAppender();
 
 		// Login As SA
@@ -2872,6 +2874,7 @@ public class SecurityGroups_Phase2_Regression {
 		SoftAssert softassert = new SoftAssert();
 		DataSets data = new DataSets(driver);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		String projectName = "PAProject" + Utility.dynamicNameAppender();
 		String annoName = "newAnnotation" + Utility.dynamicNameAppender();

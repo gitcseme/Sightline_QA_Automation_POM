@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
 import org.testng.ITestResult;
@@ -76,7 +77,6 @@ public class BatchPrint_Phase2_Regression1 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		page = new ProductionPage(driver);
 	}
-
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
@@ -293,6 +293,7 @@ public class BatchPrint_Phase2_Regression1 {
 	 */
 	@Test(description = "RPMXCON-47857", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyPDFFileWithRedaction(String username, String password) throws Exception {
+		SoftAssert softassert = new SoftAssert();
 		String Folder = "Folder" + Utility.dynamicNameAppender();
 		String redactionTag = "RedactionTag" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
@@ -480,10 +481,12 @@ public class BatchPrint_Phase2_Regression1 {
 	 */
 	@Test(description = "RPMXCON-49427", dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyPDFFileWithRedaction1(String username, String password) throws Exception {
+		SoftAssert softassert = new SoftAssert();
 		String Folder = "Folder" + Utility.dynamicNameAppender();
 		String slipsheetDD = "Create new slip sheets";
 
 		DocListPage doclist = new DocListPage(driver);
+		
 
 		// Login As User
 		loginPage.loginToSightLine(username, password);
@@ -1229,6 +1232,7 @@ public class BatchPrint_Phase2_Regression1 {
 	 */
 	@Test(description = "RPMXCON-47830", enabled = true, groups = { "regression" })
 	public void verifyCanUsePrioProdForBatchPrint() throws Exception {
+		SoftAssert softassert = new SoftAssert();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String Folder = "Folder" + Utility.dynamicNameAppender();
@@ -2423,7 +2427,6 @@ public class BatchPrint_Phase2_Regression1 {
 
 		// Generate Production with TIFF
 		String productionname = page.preRequisiteGenerateProduction(Folder);
-
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
@@ -2432,7 +2435,22 @@ public class BatchPrint_Phase2_Regression1 {
 		if (!batchPrint.getSlipSheetDD_prod().isElementAvailable(10)) {
 			batchPrint.navigateToNextPage(1);
 		}
+		//batchPrint.getSelectFolder(Folder).waitAndClick(5);
+		//batchPrint.navigateToNextPage(1);
+		//batchPrint.fillingAnalysisTab(false, false, false, true);
+		//strong[text()='Folder All Skipped Documents:']//following::label/i
+		////input[@id='ignoreRadioButton']//parent::label
+		//batchPrint.navigateToNextPage(1);
+//		try {
+//			batchPrint.getEnableAnalyseToggleButton().Displayed();
 
+//			batchPrint.getEnableAnalyseToggleButton().waitAndClick(5);
+			
+//		} catch (Exception e1) {
+
+//			System.out.println("No enable Analyse toggle is  displayed");
+//		}
+//		batchPrint.navigateToNextPage(1);
 		// filling SlipSheet With metadata
 		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
 		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
@@ -2444,7 +2462,7 @@ public class BatchPrint_Phase2_Regression1 {
 		// in "DESC" Order And [One PDF for each doc]
 		batchPrint.selectSortingFromExportPage("DESC");
 		batchPrint.fillingExportFormatPage(Input.documentKey, columnName, false, 20);
-
+		
 		// Download Batch Print File
 		String fileName = batchPrint.DownloadBatchPrintFile();
 
@@ -2661,34 +2679,24 @@ public class BatchPrint_Phase2_Regression1 {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-//									 TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			loginPage.clearBrowserCache();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
 
-		try {
-			loginPage.clearBrowserCache();
-		} finally {
-			loginPage.clearBrowserCache();
-		}
+	public void close() {
+		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
+
 	}
 }

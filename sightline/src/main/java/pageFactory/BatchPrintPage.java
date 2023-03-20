@@ -635,6 +635,10 @@ public class BatchPrintPage {
 	public Element getEnableSlipSheetsToggleButton() {
 		return driver.FindElementByXPath("//label[text()='Enable Slip Sheets:']/../label[2]/i");
 	}
+	public Element getEnableAnalyseToggleButton() {
+		return driver.FindElementByXPath("//strong[text()='Folder All Skipped Documents:']//following::label/i");
+	}
+	
 
 	public BatchPrintPage(Driver driver) {
 
@@ -1544,7 +1548,6 @@ public class BatchPrintPage {
 			}
 		}), Input.wait30);
 		getGenerateButton().waitAndClick(5);
-
 		base.VerifySuccessMessage(
 				"The Batch Print has been successfully initiated. You will be notified once it has completed.");
 
@@ -1929,7 +1932,7 @@ public class BatchPrintPage {
 			getGenerateButton().waitAndClick(5);
 
 			base.VerifySuccessMessage(
-					"Successfully initiated the batch print. You will be prompted with notification once completed.");
+					"The Batch Print has been successfully initiated. You will be notified once it has completed.");
 
 			for (int i = 0; i < 10; i++) {
 				try {
