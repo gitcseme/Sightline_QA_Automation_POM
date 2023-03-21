@@ -852,6 +852,9 @@ public class UserManagement {
 	}
 
 
+	public Element NavigateToIngestion() {
+		return driver.FindElementByXPath("//a[@title='Ingestions']");
+	}
 	public Element NavigateToDataSets() {
 		return driver.FindElementByXPath("//a[@name='DataSets']//i");
 	}
@@ -3836,6 +3839,74 @@ public class UserManagement {
 			getPopUpCloseBtn().waitAndClick(10);
 		}
 	}
+	
+	/**
+	 * @author Hema MJ
+	 * @Date:13/03/23
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param userRolesData
+	 * @throws Exception
+	 * @Description : verify Ingestion Access For Users
+	 */
+	public void verifyIngestionAccessForUsers(String[][] userRolesData,
+			Boolean IngestionAccess, String checkUpdateIngestion) throws Exception {
+		for (int i = 0; i < userRolesData.length; i++) {
+
+			String actionUser = userRolesData[i][2];
+			// Select the respective user
+			bc.stepInfo("Checking for the role : " + userRolesData[i][1]);
+			passingUserName(userRolesData[i][0]);
+			applyFilter();
+			if (actionUser.equalsIgnoreCase("Project Administrator")) {
+				editLoginUser();
+			} else {
+				selectEditUserUsingPagination(Input.projectName, false, "");
+			}
+
+			// Launch functionality pop-up
+			getFunctionalityTab().waitAndClick(5);
+
+			// Access validations
+			if (userRolesData[i][1].equalsIgnoreCase("Project Administrator")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Ingestion")),
+						"Ingestion option has access", "Ingestion option is blocked", "Fail");
+
+				// Check-In or Check-Out datasets
+				Boolean action = verifyStatusForComponents(getComponentCheckBoxStatus("Ingestions"), "Ingestions",
+						IngestionAccess);
+				driver.waitForPageToBeReady();
+
+				if (checkUpdateIngestion.equals("Yes") && action == true) {
+					
+					if (actionUser.equalsIgnoreCase("Project Administrator")) {
+						editLoginUser();
+					} else {
+						selectEditUserUsingPagination(Input.projectName, false, "");
+					}
+
+					// Launch functionality pop-up
+					getFunctionalityTab().waitAndClick(5);
+				}
+
+				
+
+				} else {
+					bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Ingestions")), "For "
+							+ userRolesData[i][1]
+							+ " - Ingestions option is available  on “Edit User >> Functionality” TAB. [Enabled] ",
+							"For " + userRolesData[i][1]
+									+ " - Ingestions"
+									+ " option is not available  on “Edit User >> Functionality” TAB. [Disabled]",
+							"Pass");
+				}
+
+			
+
+			// Close pop-up
+			getPopUpCloseBtn().waitAndClick(10);
+		}
+	}
 	/**
 	 * @author Hema Mj
 	 * @Date: 02/03/23
@@ -4653,6 +4724,40 @@ public class UserManagement {
 			login.loginToSightLine(accessUser, accessPwd);
 			navigateToUsersPAge();
 			verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+			login.logout();
+
+			login.loginToSightLine(userRolesData[0][0], loginPwd);
+
+		}
+	}
+	/**
+	 * @Author Hema MJ
+	 * @Description : verify ingestion access
+	 * @param userRolesData
+	 * @param accessUser
+	 * @param accessPwd
+	 * @param loginPwd
+	 * @throws Exception
+	 */
+	public void verifyIngestionAccess(String[][] userRolesData, String accessUser, String accessPwd, String loginPwd)
+			throws Exception {
+		LoginPage login = new LoginPage(driver);
+		boolean action = false;
+		action = bc.ValidateElement_PresenceReturn(NavigateToIngestion());
+		if (action) {
+			NavigateToIngestion().waitAndClick(10);
+			bc.stepInfo("Ingestion access is Enabled");
+		}
+			 else {
+				login.logout();
+			}
+		
+
+		if (!action) {
+			// Login as User
+			login.loginToSightLine(accessUser, accessPwd);
+			navigateToUsersPAge();
+			verifyIngestionAccessForUsers(userRolesData, true, "Yes");
 			login.logout();
 
 			login.loginToSightLine(userRolesData[0][0], loginPwd);

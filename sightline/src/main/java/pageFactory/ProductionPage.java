@@ -7695,7 +7695,7 @@ public class ProductionPage {
 		base.waitTime(2);
 		base.waitTillElemetToBeClickable(getConfirmProductionCommit());
 		getConfirmProductionCommit().ScrollTo();
-		getConfirmProductionCommit().waitAndClick(10);
+		getConfirmProductionCommit().waitAndClick(15);
 
 		if (base.getErrorMsgHeader().isElementAvailable(2)) {
 			base.failedStep("Commit is not successfull");
