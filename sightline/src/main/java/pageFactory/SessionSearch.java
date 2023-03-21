@@ -1839,16 +1839,15 @@ public class SessionSearch {
 	}
 
 	public Element getBulkNavigationPopup() {
-		return driver.FindElementByXPath("//span[text()='BulkNavigation']");
+		return driver.FindElementByXPath("//h3[text()='BulkNavigation']");
 	}
 
 	public Element getBulkNavigationPopupNoBtn() {
-		return driver.FindElementByXPath(
-				"//span[text()='BulkNavigation']/parent::div/following-sibling::div[contains(@class,'buttonpane') ]/div/button[@id='btnNo']");
+		return driver.FindElementByXPath("//h3[text()='BulkNavigation']/parent::div/following-sibling::div[contains(@class,'buttonpane') ]/div/button[@id='btnNo']");
 	}
 
 	public Element getBackGroundTaskAlertPopUp() {
-		return driver.FindElementByXPath("(//span[contains(text(),'Background Task Alert')])[last()]");
+		return driver.FindElementByXPath("(//h3[contains(text(),'Background Task Alert')])[last()]");
 	}
 
 	public Element getBullHornIcon() {
@@ -11496,9 +11495,14 @@ public class SessionSearch {
 
 		}
 		String BGTaskId = null;
+		driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getBulkNavigationPopup().isDisplayed();
+		}
+	}), Input.wait60);
 		if (getBulkNavigationPopup().isElementAvailable(3)) {
 			base.stepInfo("Bulk Navigation pop displayed.");
-			getBulkNavigationPopupNoBtn().waitAndClick(30);
+			getBulkNavigationPopupNoBtn().Click();
 			if (getBackGroundTaskAlertPopUp().isElementAvailable(3)) {
 				BGTaskId = getWhenAllResultsAreReadyIDDynamic().getText();
 				base.stepInfo("bulk navigation is  in back ground with " + "Generated ID is: " + BGTaskId);

@@ -1174,6 +1174,7 @@ public class CodingForm_Phase2_Regression {
 	    int i =baseClass.getIndex(cf.getCodingFormTableHeaders(), "CODING FORM NAME");
 	    soft.assertEquals(cf.getCodingFormTableHeadColumn(i).GetAttribute("aria-sort"), "ascending");
 	    baseClass.stepInfo("table is in ascending order");
+	    baseClass.waitTime(3);
 	    cf.getCodingFormTableHeadColumn(i).waitAndClick(5);
 	    driver.waitForPageToBeReady();
 	    soft.assertEquals(cf.getCodingFormTableHeadColumn(i).GetAttribute("aria-sort"), "descending");
@@ -2716,6 +2717,7 @@ public class CodingForm_Phase2_Regression {
 		// creating metadata
 		List<String> collectionData=new ArrayList<String>();
 		projectPage.addCustomFieldProjectDataType(metadata, "INT");
+		baseClass.waitTime(3);
 		securityGroupPage.addProjectFieldtoSG(metadata);
 		collectionData.add(metadata);
 		
