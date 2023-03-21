@@ -273,6 +273,7 @@ public class BatchRedaction_Production_Regression {
 
 		// create export with PDF
 		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		String text = page.getProdExport_ProductionSets().getText();
 		if (text.contains("Export Set")) {
 			page.selectExportSetFromDropDown();

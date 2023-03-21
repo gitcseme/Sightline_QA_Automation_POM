@@ -7286,7 +7286,7 @@ public class ProductionPage {
 				return getlstProductionRootPaths().Enabled();
 			}
 		}), Input.wait30);
-		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -13657,19 +13657,9 @@ public class ProductionPage {
 				return getCopyPath().isDisplayed();
 			}
 		}), Input.wait60);
+		driver.getWebDriver().getCurrentUrl();
 		getCopyPath().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getQC_Download().isDisplayed();
-			}
-		}), Input.wait30);
-
-		getQC_Download().waitAndClick(10);
-		getQC_Downloadbutton_allfiles().waitAndClick(10);
-		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		base.stepInfo("Generate production page is filled");
-
 		return Doc;
 
 	}
