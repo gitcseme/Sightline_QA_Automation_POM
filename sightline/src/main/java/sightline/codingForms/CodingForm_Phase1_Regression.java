@@ -228,7 +228,11 @@ public class CodingForm_Phase1_Regression {
 	    codingForm.verifyCFlogicValidationsInDocViewPg("radio-group");
 	    baseClass.stepInfo("All the validations of child window are successfully verified");
 	    reusableDocView.childWindowToParentWindowSwitching(parentId);
+	    
+	    driver.Navigate().refresh();
+	    baseClass.handleAlert();
 		//delete codingform
+	    baseClass.waitTime(5);
 	    codingForm.assignCodingFormToSG("Default Project Coding Form");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.deleteCodingForm(codingform, codingform);
@@ -386,7 +390,10 @@ public class CodingForm_Phase1_Regression {
 	    codingForm.verifyCFlogicValidationsInDocViewPg("check-group");
 	    baseClass.stepInfo("All the validations of child window are successfully verified");
 	    reusableDocView.childWindowToParentWindowSwitching(parentId);
+	    driver.Navigate().refresh();
+	    baseClass.handleAlert();
 		//delete codingform
+	    baseClass.waitTime(5);
 	    codingForm.assignCodingFormToSG("Default Project Coding Form");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.deleteCodingForm(codingform, codingform);
@@ -543,7 +550,10 @@ public class CodingForm_Phase1_Regression {
 	    codingForm.verifyCFlogicValidationsInDocViewPg("radio-group");
 	    baseClass.stepInfo("All the validations of child window are successfully verified");
 	    reusableDocView.childWindowToParentWindowSwitching(parentId);
+	    driver.Navigate().refresh();
+	    baseClass.handleAlert();
 		//delete codingform
+	    baseClass.waitTime(5);
 	    codingForm.assignCodingFormToSG("Default Project Coding Form");
 	    baseClass.stepInfo("Default security group is reverted to Default project coding form successfully");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
