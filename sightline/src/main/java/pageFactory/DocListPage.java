@@ -1519,7 +1519,7 @@ public class DocListPage {
 	}
 
 	public Element getFirstCheckBox() {
-		return driver.FindElementByXPath("//*[@id='chkDoc_102']");
+		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[4]");
 	}
 
 	public Element getTileViewSelectAll() {
