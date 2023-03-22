@@ -1161,6 +1161,12 @@ public class UserManagement {
 	public Element getPopupWindowHeader() {
 		return driver.FindElementByXPath("//div[contains(text(),'Modify Multiple User Profiles')]");
 	}
+	public Element getBulkFolderPopupWindowHeader() {
+		return driver.FindElementByXPath("//h3[contains(.,'Folder/Unfolder Documents')]");
+	}
+	public Element getBulkTagPopupWindowHeader() {
+		return driver.FindElementByXPath("//h3[contains(.,'Tag/Untag Documents')]");
+	}
 
 	public Element getCollectionsCheckBox() {
 		return driver.FindElementById("chkCanCollections");
@@ -1961,6 +1967,7 @@ public class UserManagement {
 			}), Input.wait30);
 			getConfirmDelete().isElementAvailable(10);
 			getConfirmDelete().waitAndClick(5);
+			bc.waitTime(3);
 			bc.VerifySuccessMessage("User has been deactivated");
 		} catch (Exception e) {
 			e.printStackTrace();

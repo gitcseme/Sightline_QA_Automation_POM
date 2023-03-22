@@ -1616,6 +1616,7 @@ public class DocViewMetaDataPage {
 	 */
 	public void createNewFolderAndAddSelectedDocument(String folderName) {
 		try {
+			UserManagement userManage=new UserManagement(driver);
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			getActionButton().isElementAvailable(15);
@@ -1628,6 +1629,8 @@ public class DocViewMetaDataPage {
 					base.waitForElement(getActionButton());
 				}
 			}
+			Actions Act = new Actions(driver.getWebDriver());
+			
 			getFolderOption2().isElementAvailable(15);
 			base.waitForElement(getFolderOption2());
 			getFolderOption2().waitAndClick(15);
@@ -1635,6 +1638,9 @@ public class DocViewMetaDataPage {
 			base.waitForElement(getNewFolderLink());
 			getNewFolderLink().Displayed();
 			getNewFolderLink().Click();
+			Act.clickAndHold(userManage.getBulkFolderPopupWindowHeader().getWebElement());
+			Act.moveToElement(userManage.getBulkFolderPopupWindowHeader().getWebElement(), -10, 10);
+			Act.release().build().perform();
 			getSelectAllFoldersOption().isElementAvailable(15);
 			base.waitForElement(getSelectAllFoldersOption());
 			getSelectAllFoldersOption().Displayed();

@@ -767,6 +767,7 @@ public class SecurityGroupsPage {
 		bc.waitForElement(getSG_ProjectField(projectTag));
 		bc.waitTillElemetToBeClickable(getSG_ProjectField(projectTag));
 		getSG_ProjectField(projectTag).waitAndClick(10);
+		bc.waitTime(3);
 		bc.waitForElement(getSG_ProjectField_Right());
 		bc.waitTillElemetToBeClickable(getSG_ProjectField_Right());
 		getSG_ProjectField_Right().waitAndClick(10);
