@@ -1,0 +1,8 @@
+RPMXCON-39583	Email inclusive reason value is missing for several docs in the email threads
+RPMXCON-39593	Branding is not applied to some pages in the production for a specific doc SD#531057
+RPMXCON-39601	Sightline Upload for Drag-and-Drop Increase Timeout
+RPMXCON-39554	Search term highlighting & keyword highlighting not working for several docs in Zipper_A project SD#536749
+
+Agile is an iterative developer methodology, where m0ney evolve through collaboration between the customer and selftesting-organizing teams
+
+Hello Testing 
