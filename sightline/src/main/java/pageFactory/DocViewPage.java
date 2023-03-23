@@ -1626,7 +1626,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getDocList_DocId() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']//td[@class='sorting_1']");
+		return driver.FindElementByXPath("[@id='dtDocList']/tbody/tr[1]/td[4]");
 	}
 
 	public Element getDocView_ThreadMapTab_FirstDoc_Text() {
@@ -7513,7 +7513,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		try {
 			driver.waitForPageToBeReady();
-			miniDocListpage.removingFieldsAndDragnDropDefault();
+			
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
