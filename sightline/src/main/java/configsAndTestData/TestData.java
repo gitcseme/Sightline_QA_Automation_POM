@@ -967,5 +967,8 @@ public class TestData {
     public String Ingestions;
     public String OnnaUrl;
     public String OnnaDirectUrl;
+    
+    //ICE DataSet smoke data
+    public String SmokeDatasetUploadData;
 	
 }

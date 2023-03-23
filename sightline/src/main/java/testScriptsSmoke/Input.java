@@ -153,6 +153,7 @@ public class Input {
 	public static int totalNumberOfDocsincludeadvoption;
 	public static String MasterPDF1location;
 	public static String MasterPDF2location;
+	public static String SmokeDatasetUploadData;
 
 	// Docview Analytics Mohan Indium- Modified 8/24/21
 	public static String Panel;
@@ -1131,6 +1132,7 @@ public class Input {
 		AllSourcesTextFile = config.getAllSourcesTextFile();
 		FamilyNativeFile = config.getFamilyNativeFile();
 		AllSourcesNativeFile = config.getAllSourcesNativeFile();
+		
 
 		// Environment data-------------------------------------------------------------
 		url = envConfig.getUrl();
@@ -1338,6 +1340,12 @@ public class Input {
 		ToDoDocs = testData.getToDoDocs();
 		Complete = testData.getComplete();
 		BeginBates=testData.getBeginBates();
+		
+		/*
+		 * ICE Upload Data
+		 * 
+		 */
+		SmokeDatasetUploadData=testData.getSmokeDatasetUploadData();
 
 		/**
 		 * @author Aathith.Senthilkumar
