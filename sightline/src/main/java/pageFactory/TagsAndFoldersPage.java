@@ -1230,6 +1230,7 @@ public class TagsAndFoldersPage {
 					return getbtnTagCancel().Enabled() && getbtnTagCancel().Visible();
 				}
 			}), Input.wait30);
+			base.waitTime(2);
 			getbtnTagCancel().waitAndClick(10);
 
 			driver.waitForPageToBeReady();

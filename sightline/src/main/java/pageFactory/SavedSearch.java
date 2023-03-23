@@ -5897,6 +5897,7 @@ public class SavedSearch {
 				return getBatchUploadButton().Visible();
 			}
 		}), Input.wait30);
+		base.waitTime(2);
 		getBatchUploadButton().Click();
 		System.out.println("Clicked on Upload button..");
 		UtilityLog.info("Clicked on Upload button..");

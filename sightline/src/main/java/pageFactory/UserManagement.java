@@ -65,7 +65,9 @@ public class UserManagement {
 	}
 	
 	public Element getSecurityGroupII(String SG) {
-		return driver.FindElementByXPath("//*[@id='ddlSysAdminSecGroup']/option[contains(text(),'" + SG +"')]");
+		//return driver.FindElementByXPath("//*[@id='ddlSysAdminSecGroup']/option[contains(text(),'" + SG +"')]");
+		return driver.FindElementByXPath("(//*[@tabindex='8'])/option[contains(text(),'" + SG +"')]");
+
 	}
 
 	public Element getSave() {
@@ -1397,7 +1399,16 @@ public class UserManagement {
 			//getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
-					return getSecurityGroup().Visible();
+					return getSelectProject().Visible();
+				}
+			}), Input.wait30);
+			// getSelectDomain().SendKeys(domain);
+			// getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			driver.waitForPageToBeReady();
+			getSelectProjectFromDropdown(project).waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSecurityGroupII("Default Security Group").Visible();
 				}
 			}), Input.wait30);
 			getSecurityGroupII("Default Security Group").waitAndClick(2);
