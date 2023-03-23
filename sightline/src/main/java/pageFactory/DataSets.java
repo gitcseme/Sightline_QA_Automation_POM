@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import automationLibrary.Driver;
 import automationLibrary.ElementCollection;
+import automationLibrary.GenFunc;
 import testScriptsSmoke.Input;
 import automationLibrary.Element;
 
@@ -47,13 +48,14 @@ public class DataSets {
 		return driver.FindElementByXPath("//a[@id='idBulkTag'][text()='DocList']");
 
 	}
+	public Element getUploadFilesBtn() {return driver.FindElementByCssSelector("#initiate");}
 
 	// Added by Gopinath - 22/02/2022
 	public Element getExportIconButton() {
 		return driver.FindElementByXPath("//a[@id='ExportDatasetExceptions']//i");
 
 	}
-
+	public Element getDropZoneLink() {return driver.FindElementByCssSelector("#mydropzone");}
 	public Element getDownloadedCompletedState() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[1]//td[text()='COMPLETED']");
 
@@ -109,6 +111,7 @@ public class DataSets {
 				"//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//div[@class='ingestCt col-md-4 txt-color-green']//span");
 	}
 
+	public Element getInitatePopupYesBtn() {return driver.FindElementByCssSelector("#bot1-Msg1");}
 	public Element getSelectDocView() {
 		return driver.FindElementByXPath("//a[@id='idBulkFolder']");
 	}
@@ -1086,4 +1089,51 @@ public class DataSets {
 		}
 		return actualStatus;
 	}
+	
+	
+	public int uploadFilesByFolder(String folderPath)
+    {
+    	System.out.println("*********Uplaoding Files started***********");
+    	
+    	int FileUploadCountExist = GenFunc.StringToInt(driver.FindElementByCssSelector("#fileCount").GetAttribute("data-filecount"));
+    	String exeFile = System.getProperty("user.dir")+"\\src\\main\\java\\aIs\\";
+		String fileListString = "";
+		System.out.println(exeFile);
+		base.waitForElement(getDropZoneLink());
+    	getDropZoneLink().waitAndClick(10);
+    	exeFile = System.getProperty("user.dir")+"\\src\\main\\java\\aIs\\";
+    	//String testDataFolder = System.getProperty("user.dir")+"\\sightline\\ICETestData";
+    	File directory = new File(folderPath);
+		File[] flist =  directory.listFiles();
+		System.out.println("Printing files");
+		for (File file:flist)
+		{
+			if(file.isFile())
+			{
+				fileListString = fileListString+"\""+file.getName()+"\""+" ";
+				//fileListString = fileListString+"\""+file.getName().replaceAll("\\s+","")+"\""+" ";
+			}
+		}
+		try {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Runtime.getRuntime().exec(exeFile+"DragAndDrop_x64.exe"+" "+folderPath+"\\ "+fileListString);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();	
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getUploadFilesBtn().getText().contains("Uploading...") ;}}),Input.wait90);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			GenFunc.StringToInt(driver.FindElementByCssSelector("#fileCount").GetAttribute("data-filecount"))== FileUploadCountExist+flist.length ;}}),500000);
+    	
+    	System.out.println("*********Uplaoding Files Completed***********");
+    	return flist.length;
+    }
 }

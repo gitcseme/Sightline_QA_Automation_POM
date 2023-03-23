@@ -724,6 +724,8 @@
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
 	<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
 
+<!--  smoke Drag And Drop Data -->
+	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
 
 	<!-- Ingetion Related data Start -->
 	<Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>

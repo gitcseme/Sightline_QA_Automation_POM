@@ -17,6 +17,8 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>121</metaDataCNcount>
 	<totalNumberOfDocs>125</totalNumberOfDocs>
+	<!--  smoke Drag And Drop Data -->
+	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
 
 	
     <!--Indium Search strings and expected pure hit counts -->
