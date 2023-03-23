@@ -1714,6 +1714,18 @@ public class IngestionPage_Indium {
 			// publish!
 			IngestionCatlogtoIndexing(dataset);
 			approveAndPublishIngestion(dataset);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getIngestionName().Visible()  ;}}),Input.wait60); 
+	        getIngestionName().waitAndClick(10);
+	        
+	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        		getIngestionNameText().Visible()  ;}}),Input.wait60); 
+	     	IngestionName = getIngestionNameText().getText();
+			Thread.sleep(2000);
+			System.out.println(IngestionName);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+	    	getCloseButton().waitAndClick(10);	
 		}
 
 	}

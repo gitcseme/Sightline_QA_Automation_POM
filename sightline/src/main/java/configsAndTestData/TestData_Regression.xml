@@ -743,15 +743,15 @@
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 
-	<DATFile>DAT4_STC_09172014.dat</DATFile>
-	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
-	<NativeFile>Natives.lst</NativeFile>
-	<TIFFFile>Images.lst</TIFFFile>
-	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
-	<TranslationFile>Translation.lst</TranslationFile>
-	<PDFFile>PDFs.lst</PDFFile>
-	<TranscriptFile>Transcript.lst</TranscriptFile>
-	<MP3File>MP3.lst</MP3File>
+	<DATFile>RegressionAllDataset.dat</DATFile>
+    <TextFile>RegressionAllDatasetText.lst</TextFile>
+    <NativeFile>RegressionAllDatasetNatives.lst</NativeFile> 
+    <TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
+    <TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
+    <TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
+    <PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
+    <TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
+   <MP3File>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File>  
 
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
