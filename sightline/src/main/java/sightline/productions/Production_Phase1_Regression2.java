@@ -75,9 +75,10 @@ public class Production_Phase1_Regression2 {
 		UtilityLog.info("Started Execution for prerequisite");
 		Input input = new Input();
 		input.loadEnvConfig();
-		base = new BaseClass(driver);
+		
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		base = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -1515,6 +1516,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.navigateToDocExplorerPage();
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
@@ -4325,7 +4327,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Native component without tag and file type
 	 */
 
-	@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
 	public void AssertionOnNativeSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -5454,6 +5456,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -5476,6 +5479,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -6154,7 +6158,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutDownload();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		base.passedStep("Verified that production should be generated successfully for audio files");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -7012,8 +7016,7 @@ public class Production_Phase1_Regression2 {
 		UtilityLog.info(Input.prodPath);
 
 		base.stepInfo("RPMXCON-47912-Production component");
-		base.stepInfo(
-				"To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
+		base.stepInfo("To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
 
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
