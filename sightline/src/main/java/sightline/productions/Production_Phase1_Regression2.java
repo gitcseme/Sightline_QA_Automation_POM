@@ -3138,6 +3138,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3317,6 +3318,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3337,6 +3339,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -3394,6 +3397,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3811,7 +3815,26 @@ public class Production_Phase1_Regression2 {
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
-		redactionpage.manageRedactionTagsPage(Redactiontag);
+		redactionpage.getselectAllRedactionTag().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectAllRedactionTag());
+		redactionpage.getselectAllRedactionTag().waitAndClick(10);
+		
+		redactionpage.getselectActionToggle().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectActionToggle());
+		redactionpage.getselectActionToggle().waitAndClick(10);
+
+		redactionpage.getselectNewFromDropdown().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectNewFromDropdown());
+		redactionpage.getselectNewFromDropdown().waitAndClick(10);
+
+		redactionpage.getRedactionTagName().isElementAvailable(15);
+		base.waitForElement(redactionpage.getRedactionTagName());
+		redactionpage.getRedactionTagName().SendKeys(Redactiontag);
+
+		redactionpage.getSaveBtn().isElementAvailable(15);
+		base.waitForElement(redactionpage.getSaveBtn());
+		redactionpage.getSaveBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		System.out.println("First Redaction Tag is created" + Redactiontag);
 
 		loginPage.logout();
@@ -3842,6 +3865,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -4006,6 +4030,7 @@ public class Production_Phase1_Regression2 {
 		driver.waitForPageToBeReady();
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -4026,6 +4051,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -7197,6 +7223,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -7366,7 +7393,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		//tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
