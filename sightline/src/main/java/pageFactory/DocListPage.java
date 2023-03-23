@@ -1506,7 +1506,7 @@ public class DocListPage {
 		return driver.FindElementByXPath("//*[@id='selectText'][text()='Select All']//following-sibling::label//input");
 	}
 	public Element getYesBtn() {
-		return driver.FindElementByXPath("//*[@id=\"Yes\"]");
+		return driver.FindElementByXPath("//*[@id='Yes']");
 	}
 	//*[@id="Yes"]
 	public Element getSelectAllOk() {

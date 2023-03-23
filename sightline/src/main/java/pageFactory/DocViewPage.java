@@ -7513,8 +7513,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		try {
 			driver.waitForPageToBeReady();
-			MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
-			miniDocListpage.removingFieldsAndDragnDropDefault();
+			
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
