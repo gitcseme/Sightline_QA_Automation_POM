@@ -1593,7 +1593,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 
 		base.passedStep(
 				"Verified that if 'Do Not Produce TIFFs/PDFs for Natively Produced Docs' is enabled , then TIFFs with redaction should be produced. It should not export Natives");
@@ -3308,6 +3308,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
@@ -3387,6 +3388,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
@@ -4651,7 +4653,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		BaseClass base = new BaseClass(driver);
-		base.selectproject(Input.regressionConsilio1);
+		base.selectproject();
 		base.stepInfo("Logined as another PA");
 
 		driver.Navigate().to(currentURL);
