@@ -42,8 +42,8 @@ public class BasicSearch_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//    	in.loadEnvConfig();
+		//Input in = new Input();
+  // 	in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -2074,10 +2074,10 @@ public class BasicSearch_Regression1 {
 		return commentsCF;
 	}
 
-	@Test(description ="RPMXCON-46882",enabled = true, dataProvider = "commentsCF", groups = { "regression" })
-	public void verifyCommentsForAudioDoc(String username, String password, boolean coding_Form, boolean DefaultCF)
+	@Test(description ="RPMXCON-46882",enabled = true, groups = { "regression" })
+	public void verifyCommentsForAudioDoc()
 			throws InterruptedException {
-		String docComment = Input.comments+ Utility.dynamicNameAppender();
+		final String docComment = Input.comments+ Utility.dynamicNameAppender();
 		String codingform = "CF" + Utility.dynamicNameAppender();
 		int count = 1;
 
@@ -2088,8 +2088,8 @@ public class BasicSearch_Regression1 {
 		bc.stepInfo("RPMXCON- 46882 Basic Search Sprint-11");
 		bc.stepInfo("Verify that added comments for audio documents is working correctly in Basic Search.");
 
-		if (coding_Form) {
-
+		
+			
 			// Login as RMU
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -2108,17 +2108,25 @@ public class BasicSearch_Regression1 {
 			ss.audioSearch(Input.audioSearch, Input.language);
 			ss.ViewInDocView();
 			docview.addCommentAndSave(docComment, true, count, false);
-
+			
 			lp.logout();
-		}
+		
 
-		lp.loginToSightLine(username, password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		int PureHit1 = ss.getCommentsOrRemarksCount(Input.documentComments, docComment);
+		softAssertion.assertEquals(PureHit1, count);
+		lp.logout();
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		int PureHit2 = ss.getCommentsOrRemarksCount(Input.documentComments, docComment);
+		softAssertion.assertEquals(PureHit2, count);
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		int PureHit = ss.getCommentsOrRemarksCount(Input.documentComments, docComment);
 		softAssertion.assertEquals(PureHit, count);
 
-		if (DefaultCF) {
+		
 			codingForm.assignCodingFormToSG(Input.codeFormName);
-		}
+		
 
 		softAssertion.assertAll();
 		lp.logout();

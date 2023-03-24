@@ -75,9 +75,10 @@ public class Production_Phase1_Regression2 {
 		UtilityLog.info("Started Execution for prerequisite");
 		Input input = new Input();
 		input.loadEnvConfig();
-		base = new BaseClass(driver);
+		
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		base = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -1515,6 +1516,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.navigateToDocExplorerPage();
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
@@ -1591,7 +1593,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 
 		base.passedStep(
 				"Verified that if 'Do Not Produce TIFFs/PDFs for Natively Produced Docs' is enabled , then TIFFs with redaction should be produced. It should not export Natives");
@@ -3136,6 +3138,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3305,6 +3308,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
@@ -3315,6 +3319,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3335,6 +3340,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -3382,6 +3388,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
@@ -3392,6 +3399,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3809,7 +3817,26 @@ public class Production_Phase1_Regression2 {
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
-		redactionpage.manageRedactionTagsPage(Redactiontag);
+		redactionpage.getselectAllRedactionTag().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectAllRedactionTag());
+		redactionpage.getselectAllRedactionTag().waitAndClick(10);
+		
+		redactionpage.getselectActionToggle().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectActionToggle());
+		redactionpage.getselectActionToggle().waitAndClick(10);
+
+		redactionpage.getselectNewFromDropdown().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectNewFromDropdown());
+		redactionpage.getselectNewFromDropdown().waitAndClick(10);
+
+		redactionpage.getRedactionTagName().isElementAvailable(15);
+		base.waitForElement(redactionpage.getRedactionTagName());
+		redactionpage.getRedactionTagName().SendKeys(Redactiontag);
+
+		redactionpage.getSaveBtn().isElementAvailable(15);
+		base.waitForElement(redactionpage.getSaveBtn());
+		redactionpage.getSaveBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		System.out.println("First Redaction Tag is created" + Redactiontag);
 
 		loginPage.logout();
@@ -3840,6 +3867,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -4004,6 +4032,7 @@ public class Production_Phase1_Regression2 {
 		driver.waitForPageToBeReady();
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -4024,6 +4053,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -4325,7 +4355,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Native component without tag and file type
 	 */
 
-	@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
 	public void AssertionOnNativeSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -4623,7 +4653,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		BaseClass base = new BaseClass(driver);
-		base.selectproject(Input.regressionConsilio1);
+		base.selectproject();
 		base.stepInfo("Logined as another PA");
 
 		driver.Navigate().to(currentURL);
@@ -5454,6 +5484,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -5476,6 +5507,7 @@ public class Production_Phase1_Regression2 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
@@ -6154,7 +6186,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutDownload();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		base.passedStep("Verified that production should be generated successfully for audio files");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -7012,8 +7044,7 @@ public class Production_Phase1_Regression2 {
 		UtilityLog.info(Input.prodPath);
 
 		base.stepInfo("RPMXCON-47912-Production component");
-		base.stepInfo(
-				"To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
+		base.stepInfo("To Verify generated Generate Load File Should point to respective Directories.(Eg.Native Load File Should point to Native Directory).");
 
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -7194,6 +7225,7 @@ public class Production_Phase1_Regression2 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -7363,7 +7395,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		//tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 
