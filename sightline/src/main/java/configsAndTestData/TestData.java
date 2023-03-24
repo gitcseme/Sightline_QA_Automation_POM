@@ -733,6 +733,15 @@ public class TestData {
 	public String PDFFile;
 	public String TranscriptFile;
 	public String MP3File;
+	public String DATFile_S;
+	public String TextFile_S;
+	public String NativeFile_S;
+	public String TIFFFile_S;
+	public String TIFFFile1_S;
+	public String TranslationFile_S;
+	public String PDFFile_S;
+	public String TranscriptFile_S;
+	public String MP3File_S;
 	public String DATGermanFile;
 	public String DATJapneseFile;
 	public String TranscriptGermanFile;
