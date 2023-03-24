@@ -44,8 +44,8 @@ public class ProjectPage {
 	}
 
 	public Element getProjectServerPath() {
-		//return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]");
-		return driver.FindElementByXPath("//*[@id='ddlProjectWS']/option[1]");
+		return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]");
+		//return driver.FindElementByXPath("//*[@id='ddlProjectWS']/option[1]");
 		
 	}
 

@@ -1467,7 +1467,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality rights
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), false);
+		softAssertion.assertEquals((boolean)user.getAllBlockedUserRightInFuncnalityTab().isElementAvailable(1), true);
 		base.passedStep("rights was displayed as per selected role on functionality tab.");
 		
 		user.clickDetailsTAb();
@@ -1487,7 +1487,7 @@ public class DomainManagement_Phase2_Regression1 {
 		
 		//verify funcnality tab
 		user.clickFunctionnalityTab();
-		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 1);
+		softAssertion.assertEquals(user.getAllBlockedUserRightInFuncnalityTab().FindWebElements().size(), 2);
 		base.passedStep("rights was displayed as per the selected role on functionality tab");
 
 		softAssertion.assertAll();

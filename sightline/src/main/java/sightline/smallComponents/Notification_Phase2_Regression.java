@@ -729,6 +729,7 @@ public class Notification_Phase2_Regression {
 //		verify notification in Doclist Page
 		base.checkNotificationCount(initialBg, 1);
 		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
 		driver.waitForPageToBeReady();
@@ -1087,6 +1088,7 @@ public void verifyStatusInprogressPurHitReady(String userName, String passWord) 
 		saveSearch.savedSearchExecute_Draft(searchName, initialBg);
 
 		// verify Notification
+		base.waitTime(2);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
 		// Delete Search

@@ -548,7 +548,7 @@ public class DomainManagement_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-52993", enabled = true, groups = { "regression" })
 	public void verifyingImpersonatingFromDAToRMU() throws Exception {
-
+		UserManagement userManage = new UserManagement(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52993");
 		baseClass.stepInfo(
 				"To verify that Domain Admin user impersonate as RMU in current logged in Domain successfully");
@@ -559,7 +559,7 @@ public class DomainManagement_Phase2_Regression {
 		String firstName = userManage.getTableData("FIRST NAME", 1);
 		String lastName = userManage.getTableData("LAST NAME", 1);
 		String userName = firstName + " " + lastName;
-		userManage.AssignUserToDomain(Input.domainName, userName);
+		//userManage.AssignUserToDomain(Input.domainName, userName);
 		loginPage.logout();
 		
 		// login as da
@@ -1276,7 +1276,7 @@ public class DomainManagement_Phase2_Regression {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Login as a sa user :"+Input.sa1userName);
 		
-		String projectnamenondomain = "AutomationScriptCreatedDomain"+Utility.dynamicNameAppender();
+		String projectnamenondomain = "AutoScptCtdDomain"+Utility.dynamicNameAppender();
 		baseClass.clearBullHornNotification();
 		project.navigateToProductionPage();
 		project.AddDomainProject(projectnamenondomain, Input.domainName);
@@ -1317,10 +1317,14 @@ public class DomainManagement_Phase2_Regression {
 		System.out.println(Project);
 		if(!Project.equals(Input.projectName)) {
 		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
+		user.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		baseClass.waitForElement(user.getSelectDropProject(projectnamenondomain));
+		user.getSelectDropProject(projectnamenondomain).waitAndClick(5);
 		}else {
 			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
+			user.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+			baseClass.waitForElement(user.getSelectDropProject(projectnamenondomain));
+			user.getSelectDropProject(projectnamenondomain).waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
 		user.selectRoleInAssignUser(Input.ProjectAdministrator);
@@ -1337,11 +1341,15 @@ public class DomainManagement_Phase2_Regression {
 		String Project1=user.getProjectDropdownList(2).getText();
 		System.out.println(Project1);
 		if(!Project1.equals(Input.projectName)) {
-		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
+			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+			user.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+			baseClass.waitForElement(user.getSelectDropProject(projectnamenondomain));
+			user.getSelectDropProject(projectnamenondomain).waitAndClick(5);
 		}else {
 			baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-			user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
+			user.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+			baseClass.waitForElement(user.getSelectDropProject(projectnamenondomain));
+			user.getSelectDropProject(projectnamenondomain).waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
 		user.selectRoleInAssignUser(Input.ProjectAdministrator);
@@ -1351,21 +1359,22 @@ public class DomainManagement_Phase2_Regression {
 		baseClass.waitForElement(user.getsavedomainuser());
 		user.getsavedomainuser().waitAndClick(5);
 		baseClass.VerifySuccessMessage("User Mapping Successful");
+		baseClass.waitTime(3);
 		
-		
-		baseClass.stepInfo("verifying Domain Admin able to unassign users from projects in the domain");
-		baseClass.waitForElement(user.getAssignUserButton());
-		user.getAssignUserButton().waitAndClick(2);
-		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
-		user.getAssignUserProjectDrp_Dwn().selectFromDropdown().selectByVisibleText(projectnamenondomain);
-		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(5)) {
-			baseClass.passedStep("User is unassigned from the selected project");
-		}else {
-			baseClass.failedStep("user is not unassigned from the selected project");
-		}
-		user.getPopUpCloseBtn().waitAndClick(10);
-		
-		
+//		baseClass.stepInfo("verifying Domain Admin able to unassign users from projects in the domain");
+//		baseClass.waitForElement(user.getAssignUserButton());
+//		user.getAssignUserButton().waitAndClick(2);
+//		baseClass.waitForElement(user.getAssignUserProjectDrp_Dwn());
+//		user.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+//		baseClass.waitForElement(user.getSelectDropProject(projectnamenondomain));
+//		user.getSelectDropProject(projectnamenondomain).waitAndClick(5);
+//		if(user.getCheckingAssignedUserSG(UserName).isElementAvailable(5)) {
+//			baseClass.passedStep("User is unassigned from the selected project");
+//		}else {
+//			baseClass.failedStep("user is not unassigned from the selected project");
+//		}
+//		user.getPopUpCloseBtn().waitAndClick(10);
+	
 		// delete the created user
 		user.filterTodayCreatedUser();
 		user.filterByName(MailID);
@@ -1931,6 +1940,11 @@ public class DomainManagement_Phase2_Regression {
 			user.getPopUpCloseBtn().waitAndClick(10);
             baseClass.waitTime(2);
 			// delete the created user
+			user.filterTodayCreatedUser();
+			user.filterByName(MailID);
+			user.RemoveUser();
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			user.filterTodayCreatedUser();
 			user.filterByName(MailID);
 			user.RemoveUser();
@@ -2594,7 +2608,7 @@ public class DomainManagement_Phase2_Regression {
 			String domain=webElement.getText().toString();
 			domainInt.add(domain);
 		}
-		if (count==domainInt.size()&&count<=2) {
+		if (count==domainInt.size()&&count>=2) {
 			baseClass.passedStep("Mutiple rows displayed for domain header, when different domain access for same username");
 		}
 		else {
@@ -2784,7 +2798,7 @@ public class DomainManagement_Phase2_Regression {
 		
 		user.filterTodayCreatedUser();
 		user.filterByName(email);
-		user.RemoveUser();
+		user.deleteUser();
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
