@@ -724,6 +724,8 @@
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
 	<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
 
+<!--  smoke Drag And Drop Data -->
+	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
 
 	<!-- Ingetion Related data Start -->
 	<Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
@@ -740,16 +742,27 @@
 	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
-
-	<DATFile>DAT4_STC_09172014.dat</DATFile>
-	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
-	<NativeFile>Natives.lst</NativeFile>
-	<TIFFFile>Images.lst</TIFFFile>
+	
+	<DATFile>DAT4_STC_09172014.dat</DATFile>		   
+	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>	           
+	<NativeFile>Natives.lst</NativeFile>	                   
+	<TIFFFile>Images.lst</TIFFFile>	                           
 	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
-	<TranslationFile>Translation.lst</TranslationFile>
-	<PDFFile>PDFs.lst</PDFFile>
-	<TranscriptFile>Transcript.lst</TranscriptFile>
+	<TranslationFile>Translation.lst</TranslationFile>	   
+	<PDFFile>PDFs.lst</PDFFile>	                           
+	<TranscriptFile>Transcript.lst</TranscriptFile>	           
 	<MP3File>MP3.lst</MP3File>
+	
+
+	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
+    <TextFile_S>RegressionAllDatasetText.lst</TextFile_S>
+    <NativeFile_S>RegressionAllDatasetNatives.lst</NativeFile_S> 
+    <TIFFFile_S>RegressionAllDatasetTIFFImages.lst</TIFFFile_S>
+    <TIFFFile1_S> RegressionAllDatasetTIFFImages.OPT</TIFFFile1_S>
+    <TranslationFile_S>RegressionAllDatasetTranslation.lst</TranslationFile_S>
+    <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
+    <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
+   <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>  
 
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>

@@ -17,8 +17,20 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>121</metaDataCNcount>
 	<totalNumberOfDocs>125</totalNumberOfDocs>
+	<!--  smoke Drag And Drop Data -->
+	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
 
 	
+	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
+    <TextFile_S>RegressionAllDatasetText.lst</TextFile_S>
+    <NativeFile_S>RegressionAllDatasetNatives.lst</NativeFile_S> 
+    <TIFFFile_S>RegressionAllDatasetTIFFImages.lst</TIFFFile_S>
+    <TIFFFile1_S> RegressionAllDatasetTIFFImages.OPT</TIFFFile1_S>
+    <TranslationFile_S>RegressionAllDatasetTranslation.lst</TranslationFile_S>
+    <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
+    <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
+   <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>
+   
     <!--Indium Search strings and expected pure hit counts -->
 	<!--  Docview Analytics -->
     <AssgnName>TDM54178</AssgnName>
