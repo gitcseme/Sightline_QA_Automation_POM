@@ -1,6 +1,7 @@
 package sightline.reports;
 
 import java.awt.AWTException;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -42,12 +43,22 @@ public class CommunicationExplorer_Phase1_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 	}
-
-	@Test(description ="RPMXCON-56969",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) {
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method : " + testMethod.getName());
+		softAssertion = new SoftAssert();
+		driver = new Driver();
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		comExpPage = new CommunicationExplorerPage(driver);
+	}
+	
+	@Test(description ="RPMXCON-56969",dataProvider = "Users_PARMU", groups = { "regression" },alwaysRun = true )
 	public void verifyReportGeneration_searches(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56969");
@@ -352,16 +363,7 @@ public class CommunicationExplorer_Phase1_Regression1 {
 		lp.logout();
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
-		softAssertion = new SoftAssert();
-		driver = new Driver();
-		lp = new LoginPage(driver);
-		bc = new BaseClass(driver);
-		comExpPage = new CommunicationExplorerPage(driver);
-	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

@@ -28,7 +28,7 @@ import testScriptsSmoke.Input;
 
 public class DashBoard_Phase2_Regression {
 
-	public class Dashboard_Regression {
+	
 
 		Driver driver;
 		LoginPage loginPage;
@@ -64,20 +64,7 @@ public class DashBoard_Phase2_Regression {
 			Reporter.log("Logged in as User: " + Input.rmu1password);
 		}
 
-		@AfterMethod(alwaysRun = true)
-		private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-			baseClass = new BaseClass(driver);
-			Reporter.setCurrentTestResult(result);
-			if (ITestResult.FAILURE == result.getStatus()) {
-				Utility baseClass = new Utility(driver);
-				baseClass.screenShot(result);
-			}
-			try {
-				loginPage.quitBrowser();
-			} catch (Exception e) {
-				loginPage.quitBrowser();
-			}
-		}
+		
 
 		@AfterClass(alwaysRun = true)
 
@@ -937,4 +924,4 @@ public class DashBoard_Phase2_Regression {
 
 	}
 
-}
+
