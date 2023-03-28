@@ -3312,7 +3312,26 @@ public class Production_Phase1_Regression2 {
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 
-		redactionpage.manageRedactionTagsPage(Redactiontag1);
+		redactionpage.getselectAllRedactionTag().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectAllRedactionTag());
+		redactionpage.getselectAllRedactionTag().waitAndClick(10);
+		
+		redactionpage.getselectActionToggle().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectActionToggle());
+		redactionpage.getselectActionToggle().waitAndClick(10);
+
+		redactionpage.getselectNewFromDropdown().isElementAvailable(15);
+		base.waitForElement(redactionpage.getselectNewFromDropdown());
+		redactionpage.getselectNewFromDropdown().waitAndClick(10);
+
+		redactionpage.getRedactionTagName().isElementAvailable(15);
+		base.waitForElement(redactionpage.getRedactionTagName());
+		redactionpage.getRedactionTagName().SendKeys(Redactiontag1);
+
+		redactionpage.getSaveBtn().isElementAvailable(15);
+		base.waitForElement(redactionpage.getSaveBtn());
+		redactionpage.getSaveBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		loginPage.logout();
@@ -4536,7 +4555,7 @@ public class Production_Phase1_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		BaseClass base = new BaseClass(driver);
-		base.selectproject(Input.regressionConsilio1);
+		base.selectproject();
 		base.stepInfo("Logined as RMU");
 
 		driver.Navigate().to(currentURL);
