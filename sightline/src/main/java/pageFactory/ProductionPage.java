@@ -18298,6 +18298,7 @@ public class ProductionPage {
 		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
 
@@ -18310,6 +18311,7 @@ public class ProductionPage {
 		getPriveldged_TagTree(tagname1).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname1);
 
