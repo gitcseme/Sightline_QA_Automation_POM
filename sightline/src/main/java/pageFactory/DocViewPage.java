@@ -24281,7 +24281,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
-			System.out.println("docIdToBeSelected :-"+docIdToBeSelected);
+			
 			base.waitTime(2);
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
