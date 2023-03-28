@@ -64,7 +64,20 @@ public class DashBoard_Phase2_Regression {
 			Reporter.log("Logged in as User: " + Input.rmu1password);
 		}
 
-		
+		@AfterMethod(alwaysRun = true)
+		private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+			baseClass = new BaseClass(driver);
+			Reporter.setCurrentTestResult(result);
+			if (ITestResult.FAILURE == result.getStatus()) {
+				Utility baseClass = new Utility(driver);
+				baseClass.screenShot(result);
+			}
+			try {
+				loginPage.quitBrowser();
+			} catch (Exception e) {
+				loginPage.quitBrowser();
+			}
+		}
 
 		@AfterClass(alwaysRun = true)
 
