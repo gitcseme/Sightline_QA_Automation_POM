@@ -1626,7 +1626,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getDocList_DocId() {
-		return driver.FindElementByXPath("[@id='dtDocList']/tbody/tr[1]/td[4]");
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr[1]/td[4]");
 	}
 
 	public Element getDocView_ThreadMapTab_FirstDoc_Text() {
@@ -27624,11 +27624,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 
-			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
-			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
-
-			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
-			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
+			
 
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
 
