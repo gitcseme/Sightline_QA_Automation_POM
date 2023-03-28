@@ -677,7 +677,7 @@
 	<!-- DocView Analytical Panel PT environment -->
 
 	<historyClockIconDocId>T1310D</historyClockIconDocId>
-	<nearDupeCompletedDocId>ID00001418</nearDupeCompletedDocId>
+	<nearDupeCompletedDocId>T1819D</nearDupeCompletedDocId>
 	<familyDocument>331ID00000176</familyDocument>
 	<MetaDataId>T2392D</MetaDataId>>
 	<conceptualDocumentReviewer>331ID00000186</conceptualDocumentReviewer>
@@ -686,6 +686,7 @@
 	<familyDocumentForReviewer>T2421D</familyDocumentForReviewer>
 	<nearDupeDocId>T556D</nearDupeDocId>
 	<nearDupeDocument>ID00001175</nearDupeDocument>
+	<threadDocWithToolTip>ID00001224</threadDocWithToolTip>
 	<nearDupeDocumentForReviewer>T556D</nearDupeDocumentForReviewer>
 	<nearDoc1>T2541D</nearDoc1>
 	<familyDoc1>T2378D</familyDoc1>
