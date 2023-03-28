@@ -28,7 +28,7 @@ import testScriptsSmoke.Input;
 
 public class DashBoard_Phase2_Regression {
 
-	public class Dashboard_Regression {
+	
 
 		Driver driver;
 		LoginPage loginPage;
@@ -937,4 +937,4 @@ public class DashBoard_Phase2_Regression {
 
 	}
 
-}
+

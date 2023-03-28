@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke Suite1">
+	
+    <test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" > </class>  
+    </classes>
+	</test> 
+	
+	<test name="AdvanceSearch">
+	    <classes>
+        	<class name="sightline.advancedSearch.AdvancedSearch_Phase2_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyAdvancedSearchWorksProperlyForEmailSentDateFieldWithRangeOperator"/>
+          			<include name="verifyBulkReleaseOnAdvancedSearch"/>
+          			<include name="verifyMasterDateMetaDataWithRange"/>
+          			<include name="takeScreenShot"/>
+          			<include name="close"/>
+          		</methods>
+        	</class>
+        	<class name="sightline.advancedSearch.AdvancedSearch_Regression4">
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="verifyConceptualDefaultPS"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+        		</methods>
+        	</class>  
+    	</classes>
+	</test> 
+	<test name="BasicSearch">
+	    <classes>
+        	<class name="sightline.basicSearch.BasicSearch_Phase2_Regression2" >
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="verifyPhraseForSearch1"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+        	<class name="sightline.basicSearch.BasicSearch_Regression1">
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="basicSearchWithMedtaDataDetails"/>
+        		<include name="verifyCountOfSearch2"/>
+        		<include name="verifySearchResultForComment"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+        		</methods>
+        	</class>  
+    	</classes>
+	</test>
+	<test name="Batch Redactions">
+	    <classes>
+        	<class name="sightline.batchRedaction.BatchRedaction_Regression1" >
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="verifyReport"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test> 
+	<test name="Manage Comments">
+	    <classes>
+        	<class name="testScriptsRegression.Comments_Regression" >
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="AddComments"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test>
+	<test name="Manage Keywords">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_008_AllManageModules" >
+        		<methods>
+        		<include name="before"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="createKeywordField"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test> 
+	
+	<test name="Quick Batch">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality" >
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="CreateQuickBatch"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test>
+	
+	<test name="Security Groups">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_008_AllManageModules" >
+        		<methods>
+        		<include name="before"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="CreateSecurityGroup"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test>
+	
+	<test name="Tags and Folders">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_008_AllManageModules" >
+        		<methods>
+        		<include name="before"/>
+			<include name="beforeTestMethod"/>
+        		<include name="CreateTagField"/>
+        		<include name="DeleteTagField"/>
+			<include name="DeleteFolderField"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test>
+	<test name="Batch Print">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_006_ValidateBatchPrint" >
+        		<methods>
+        		<include name="beforeTestMethod"/>
+        		<include name="BatchPrintWithNative"/>
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+        	</class>
+    	</classes>
+	</test>
+	
+	<test name="Assignments">
+	    <classes>
+        	<class name="sightline.assignments.Assignment_Regression3" >
+        		<methods>
+        		<include name="TestStart"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="verifyAfterEditingAssignGroup"/>
+        		<include name="afterMethod"/>
+        		<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Bulk Actions">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_003_AdvancedSearchBulkActions" >
+        		<methods>
+        		<include name="preCondition"/>
+        		<include name="beforeTestMethod"/>
+        		<include name="bulkFolderInAdvancedSearch"/>
+        		<include name="bulkTagInAdvancedSearch"/>	
+        		<include name="takeScreenShot"/>
+        		<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Saved Search">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="saveSearchToDocList"/>
+        			<include name="saveSearchToDocView"/>
+        			<include name="shareSavedSearch"/>
+        			<!-- //<include name="shareSavedSearchRev"/> -->
+        			<include name="scheduleSavedSearch"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Users and Role Management">
+	    <classes>
+        	<class name="sightline.smallComponents.UsersAndRoleManagement_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="createUserWithDifferentProjectAndRole"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.domainManagement.DomainManagement_Phase1_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="createNewUserForDomain"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Coding Form">
+	    <classes>
+        	<class name="sightline.codingForms.CodingForm_Phase2_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyRmuAlbleToEditCF"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.codingForms.CodingForm_Phase1_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyCFLogicValidationsWithRadioInDocViewParentWindow"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Dashboard">
+	    <classes>
+        	<class name="sightline.smallComponents.DashBoard_Phase2_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyEyeToEyeWidget"/>	
+				<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Domain Dashboard">
+	    <classes>
+        	<class name="sightline.domainManagement.DomainDashBoard_Phase2_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="validateProjectGridColum"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Domain Management">
+	    <classes>
+        	<class name="sightline.domainManagement.DomainManagement_Phase2_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyingDomainClient"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Export">
+	    <classes>
+        	<class name="sightline.productions.Export_Phase2_Regression1" >
+        		<methods>
+        			<include name="preConditions"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyGeneratePDF_MultiPage"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Productions">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_006_Production" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="AddNewProduction"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Project Fields">
+	    <classes>
+        	<class name="sightline.projects.ProjectField_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyFilterFieldsByClickingApplyAndEnterButton"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.projects.ProjectFields_Phase2_Regression" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="validatingEditFunctionalInProjectField"/>
+        			<include name="verifyingMasterDateInDoclistPage"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Projects/Clients">
+	    <classes>
+        	<class name="sightline.projects.Projects_Phase2_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="VerifyProjCreation20CharNonDomain"/>
+        			<include name="verifyUserCanDeleteClient"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="proview">
+	    <classes>
+        	<class name="sightline.proview.Proview_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyDocsFromCategorizeToDoclist"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="testScriptsSmoke.TS_005_ValidateCategorization" >
+        		<methods>
+        			<include name="preConditions"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="validateCategorization"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Doc Explorer">
+	    <classes>
+        	<class name="testScriptsSmoke.ValidateDocExplorerpage" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="TagMasterDateFilter"/>
+        			<include name="CustodianNameFilter"/>
+        			<include name="ViewinDoclist"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocList">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_017_DocList" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="DoclisttobulkTagAlldoc"/>
+        			<include name="DoclistToBulkFolderAlldoc"/>
+        			<include name="doclistToDocView"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocView">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="addCommentandcompleteDoc"/>
+        			<include name="addRemarkToFirstDoc"/>
+        			<include name="addredaction"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocView/Audio">
+	    <classes>
+        	<class name="sightline.docviewAudio.DocViewAudio_Phase1_Regression1" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="validatePlayAudioInsideDocView"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.docviewAudio.DocViewAudio_Phase2_Regression1" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyRedactionAudioFileInternationalEngLanguage"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.docviewAudio.DocviewAudio_Phase1_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="audioRedactionTagAnnotationLayerSecurityGroups"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocView/Coding Forms">
+	    <classes>
+        	<class name="testScriptsSmoke.TS_008_AllManageModules" >
+        		<methods>
+        			<include name="before"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="CreateCodingform"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocView/Metadata">
+	    <classes>
+        	<class name="sightline.docviewMetaData.DocView_MetaData_Regression" >
+        		<methods>
+        			<include name="preConditions"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyMetadataTabFromDocViewPage"/>
+        			<include name="afterMethod"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="DocView/Mini DocList">
+	    <classes>
+        	<class name="sightline.docviewMiniDocList.DocViewMiniDocList_Phase2_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyingOnClickAnyDocumentFromMiniDocListAndViewInDocViewSection"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="Reports">
+	    <classes>
+       	<class name="sightline.reports.CommunicationExplorer_Phase1_Regression1" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyReportGeneration_searches"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class> 
+      		<class name="sightline.reports.CustomDocumentDataReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyAndValidateCustomDataReport"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.DocumentAuditReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="DocAuditPageDisplay"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality" >
+        		<methods>
+        			<include name="beforeClass"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="reviewProgressByRevReport"/>
+        			<include name="conceptExplorer"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.ReviewResultReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyReviewerResultReportShedule"/>
+        			<include name="reviewerResultDisplay"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.ReviewerProductiviytReport_Regression" >
+        		<methods>
+        			<include name="beforeTestMethod"/>
+        			<include name="reviewerProdPageDisplay"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.ReviewerTimeOnlineReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyRTOreportGeneratedByFilteringOptions"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.SearchTermReport_Regression1" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="navigateToSearchTermReport"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.TagCountByTagsReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="VerifyTagReportsPAgeDisplay"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="testScriptsRegression.TS_006_Tally_Report" >
+        		<methods>
+        			<include name="beforeClass"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="subTallyMetadata"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.TimelineAndGapReports_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyTimelinegapReportUSingSourceAsSearch"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+      		<class name="sightline.reports.UserLoginActivityReport_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyLoginDetailsWhenLoginAsRMU"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	<test name="Workflow Automation">
+	    <classes>
+        	<class name="sightline.smallComponents.WorkFlowAutomation_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="validationDocsCountSaveSearchAndFolder"/>
+        			<include name="takeScreenShot"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	<test name="O365">
+	    <classes>
+        	<class name="sightline.O356.O365_Phase2_Regression" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyCanInitiateCollection"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
+    	</classes>
+	</test>
+	
+	
+	</suite> <!-- Suite -->
