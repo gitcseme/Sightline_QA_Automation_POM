@@ -1538,7 +1538,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element get_textHighlightedYellowColor() {
-		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
+		return driver.FindElementByCssSelector("#ig0level0surface1 > path");
 	}
 
 	public Element getDocView_Production_Image() {
