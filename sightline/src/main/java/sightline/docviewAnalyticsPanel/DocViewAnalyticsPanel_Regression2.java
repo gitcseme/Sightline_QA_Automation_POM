@@ -24,10 +24,12 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
+import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -51,7 +53,8 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		
+		Input in =new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -2571,20 +2574,36 @@ public class DocViewAnalyticsPanel_Regression2 {
 	/**
      *Author :Arunkumar date: 28/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51515
 	 * Description :Verify that documents on thread map should be in chronological order (oldest email first) by SentDate.
+	 * @throws Exception 
 	 */
 	@Test(description="RPMXCON-51515",enabled = true, groups = {"regression" })
-	public void verifyChronologicalOrderBySentDate() throws InterruptedException  {
+	public void verifyChronologicalOrderBySentDate() throws Exception  {
+		String ingestionDataName = Input.IngestionName_PT;
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String savedSearchName ="AChronosearch"+ Utility.dynamicNameAppender();
 
 		//Login as PA and verify
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51515");
 		baseClass.stepInfo("Verify that documents on thread map should be in chronological order (oldest email first) by SentDate");
-		sessionsearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
+		
+		
+		baseClass.stepInfo("Ingestion Access Verification");
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		ingestionPage.navigateToIngestionPage();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == true) {
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
+	        }
+		 System.out.println(ingestionDataName);
+		
+		sessionsearch.basicSearchWithMetaDataQuery(ingestionDataName, "IngestionName");
 		sessionsearch.saveSearchAtAnyRootGroup(savedSearchName, Input.shareSearchDefaultSG);
 		docView.selectSavedSearchInDefaultSecurityGroupAndGotoDocview(savedSearchName);
 		driver.waitForPageToBeReady();

@@ -24281,6 +24281,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
+			System.out.println("docIdToBeSelected :-"+docIdToBeSelected);
+			base.waitTime(2);
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
@@ -26388,18 +26390,28 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		savedSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
 		base.waitForElement(savedSearch.getSavedSearch_SearchName());
 		savedSearch.getSavedSearch_SearchName().SendKeys(searchName);
-		savedSearch.getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		savedSearch.getSavedSearch_ApplyFilterButton().javascriptclick(savedSearch.getSavedSearch_ApplyFilterButton());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return savedSearch.getSelectWithName(searchName).Visible();
 			}
 		}), Input.wait30);
-		savedSearch.getSelectWithName(searchName).waitAndClick(10);
+		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));
 
-		base.waitForElement(savedSearch.getToDocView());
-		savedSearch.getToDocView().waitAndClick(5);
+//		base.waitForElement(savedSearch.getToDocView());
+//		savedSearch.getToDocView().waitAndClick(5);
+		savedSearch.docViewFromSS("View in DocView");
 
+		try {
+			if (base.getYesBtn().isElementAvailable(3)) {
+				base.getYesBtn().waitAndClick(10);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Pop up message does not appear");
+			UtilityLog.info("Pop up message does not appear");
+		}
 	}
 
 	/**
