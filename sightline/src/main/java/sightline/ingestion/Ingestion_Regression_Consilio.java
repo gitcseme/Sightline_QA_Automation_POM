@@ -142,8 +142,11 @@ public class Ingestion_Regression_Consilio {
         UserManagement user=new UserManagement(driver);
         user.navigateToUsersPAge();
         user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa1FullName);
+        user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa2FullName);
         user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu1FullName);
+        user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu2FullName);
         user.AssignUserToProject(ProjectName, "Reviewer", Input.rev1FullName);
+        user.AssignUserToProject(ProjectName, "Reviewer", Input.rev2FullName);
         loginPage.logout();
 	}
 	
