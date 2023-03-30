@@ -20,7 +20,7 @@ public class Dashboard {
 	// Added by sowndarya.velraj
 
 	public Element dashboardWidgetIcon() {
-		return driver.FindElementByXPath("//a[@id='wEdit']");
+		return driver.FindElementByXPath("//*[@id='wEdit']");
 	}
 
 	public Element btnAddNewWidget() {
