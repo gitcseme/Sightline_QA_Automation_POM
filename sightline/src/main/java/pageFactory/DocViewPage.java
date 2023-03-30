@@ -18169,7 +18169,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
-		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
+		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
