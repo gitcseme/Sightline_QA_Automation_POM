@@ -1101,6 +1101,7 @@ public class Proview_Phase2_Regression {
 
 		// create folder in Default SG
 		tagsAndFolder.CreateFolder(Folder, Input.securityGroup);
+		base.waitTime(3);
 		tagsAndFolder.CreateTag(Tagname, Input.securityGroup);
 
 		// Open CATEGORIZATION
