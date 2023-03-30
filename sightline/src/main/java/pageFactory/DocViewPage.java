@@ -18424,9 +18424,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 //	Reusable method for verify the saved stamp
 	public void verifyComments(String comment) {
-		driver.waitForPageToBeReady();
+//		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
+		base.waitTime(2);
 		String text = getDocument_CommentsTextBox().GetAttribute("value");
+		base.waitTime(2);
+		System.out.println(text);
 		softAssertion.assertEquals(text, comment);
 		if (text.equals(comment)) {
 			base.stepInfo("Coding form value as per the previous one");
@@ -18843,7 +18846,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void clickCodeSameAsLast() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodeSameAsLast());
-		getCodeSameAsLast().waitAndClick(10);
+		getCodeSameAsLast().javascriptclick(getCodeSameAsLast());
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
@@ -24599,7 +24602,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
 
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();

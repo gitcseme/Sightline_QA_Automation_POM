@@ -152,5 +152,10 @@
 	
 	<!--  Advance search -->
 	<masterDateText>MasterDate</masterDateText>
+	<!--  DocView Audio -->
+	<audioSearch>morning</audioSearch>
+	<language>North American English</language>
+	<defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
+	<mySavedSearch>My Saved Search</mySavedSearch>
 </TestData>
 

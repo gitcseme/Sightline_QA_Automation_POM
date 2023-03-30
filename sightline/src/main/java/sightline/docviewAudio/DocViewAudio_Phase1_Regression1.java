@@ -2436,9 +2436,11 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage.audioReduction(Input.defaultRedactionTag);
 
 		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+		
 
 		// AfterSave Default Selection
 		String defautTagSelection = docViewPage.getAudioRedactionColumnValue(index).getText();
+		System.out.println(defautTagSelection);
 		baseClass.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
 				"After Save : â€˜Default Redaction Tagâ€™ is displayed", "After Save : invalid redaction tag selected");
 
@@ -3428,18 +3430,18 @@ public class DocViewAudio_Phase1_Regression1 {
 		softAssertion.assertEquals(docviewSec, activeDocId);
 		baseClass.stepInfo("Next docId displayed in docview panel as active docId");
 		for (int i = 1; i <= 2; i++) {
-			docViewPage.getClickDocviewID(i).waitAndClick(5);
+			docViewPage.getClickDocviewID(i).javascriptclick(docViewPage.getClickDocviewID(i));
 			driver.waitForPageToBeReady();
 			boolean unCompleteBtn = docViewPage.getUnCompleteButton().Displayed();
 			System.out.println(unCompleteBtn);
 			softAssertion.assertTrue(unCompleteBtn);
 		}
 		baseClass.stepInfo("Document completed successfully");
-		docViewPage.getClickDocviewID(3).waitAndClick(5);
+		docViewPage.getClickDocviewID(3).javascriptclick(docViewPage.getClickDocviewID(3));
 		driver.waitForPageToBeReady();
 		docViewPage.clickCodeSameAsLast();
-		docViewPage.getClickDocviewID(3).waitAndClick(5);
-		driver.waitForPageToBeReady();
+		docViewPage.getClickDocviewID(3).javascriptclick(docViewPage.getClickDocviewID(3));
+//		driver.waitForPageToBeReady();
 		// validating code same as last as per the previous completed docs
 		docViewPage.verifyComments(comment);
 		loginPage.logout();
