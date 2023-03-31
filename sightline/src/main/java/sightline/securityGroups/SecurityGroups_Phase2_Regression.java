@@ -348,7 +348,7 @@ public class SecurityGroups_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-47087", enabled = true, groups = { "regression" })
 	public void verifyNewlyCreatAnnotationLayerInPA() throws Exception {
-
+		ProjectPage projectPage = new ProjectPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47087");
 		baseClass.stepInfo(
 				"Verify that newly created annotation layer should be displayed though the Project Admin/RMU user who created annotation layer is in-active.");
@@ -697,7 +697,7 @@ public class SecurityGroups_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-47083", enabled = true, groups = { "regression" })
 	public void verifyDefaultAnnotationLayerInSAProject() throws Exception {
-
+		ProjectPage projectPage = new ProjectPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47083");
 		baseClass.stepInfo(
 				"Verify that default annotation layer should be displayed though the System Admin user who created the project is in-active.");
@@ -898,6 +898,7 @@ public class SecurityGroups_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-54868", enabled = true, groups = { "regression" })
 	public void verifyDAAfterImpersonatedPAHomePage() throws Exception {
+		ProjectPage projectPage = new ProjectPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54868");
 		baseClass.stepInfo(
@@ -2292,6 +2293,7 @@ public class SecurityGroups_Phase2_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
 		driver.waitForPageToBeReady();
+		//getting warning message in the below
 		page.clickBackBtnandSelectingNative(7, tagname);
 		driver.scrollingToBottomofAPage();
 		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
@@ -2616,6 +2618,7 @@ public class SecurityGroups_Phase2_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		BatchPrintPage batchPrint = new BatchPrintPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -2687,6 +2690,7 @@ public class SecurityGroups_Phase2_Regression {
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
 		driver.waitForPageToBeReady();
+		
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
 		data.getNotificationMessage(0, projectName);
@@ -2815,7 +2819,7 @@ public class SecurityGroups_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-47098", enabled = true, groups = { "regression" })
 	public void verifyRedactionAnnotationRemarksIconDisplayInDocView() throws Exception {
-
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-47098");
 		baseClass.stepInfo(
 				"Verify that redaction/annotations/remarks icons should be displayed on doc view though the Project Admin/RMU user who created new annotation layer is in-active.");
