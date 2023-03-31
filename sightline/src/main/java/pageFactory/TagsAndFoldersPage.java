@@ -1096,7 +1096,7 @@ public class TagsAndFoldersPage {
 			driver.waitForPageToBeReady();
 			if (base.getYesBtn().Displayed()) {
 				base.waitForElement(base.getYesBtn());
-				base.getYesBtn().waitAndClick(5);
+				base.getYesBtn().waitAndClick(10);
 				base.VerifySuccessMessage("Folder deleted successfully");
 				base.CloseSuccessMsgpopup();
 				Reporter.log(strFolder + " Folder delete Successful", true);
