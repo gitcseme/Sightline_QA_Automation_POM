@@ -352,7 +352,7 @@ public class Production_Phase2_Regression2 {
 
 		sessionSearch.ViewInDocList();
 		DocListPage doclist = new DocListPage(driver);
-		doclist.documentSelection(6);
+		doclist.documentSelection(3);
 		doclist.bulkTagExisting(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
