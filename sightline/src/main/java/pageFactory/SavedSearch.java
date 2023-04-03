@@ -2120,7 +2120,7 @@ public class SavedSearch {
 	 */
 	public String createNewSearchGrp(String groupName) {
 
-		navigateToSSPage();
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		System.out.println("Clicked MY saved Search Tab");
 

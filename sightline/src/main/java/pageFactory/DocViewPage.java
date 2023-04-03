@@ -18424,9 +18424,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 //	Reusable method for verify the saved stamp
 	public void verifyComments(String comment) {
-		driver.waitForPageToBeReady();
+//		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
+		base.waitTime(2);
 		String text = getDocument_CommentsTextBox().GetAttribute("value");
+		base.waitTime(2);
+		System.out.println(text);
 		softAssertion.assertEquals(text, comment);
 		if (text.equals(comment)) {
 			base.stepInfo("Coding form value as per the previous one");
@@ -18843,7 +18846,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void clickCodeSameAsLast() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodeSameAsLast());
-		getCodeSameAsLast().waitAndClick(10);
+		getCodeSameAsLast().javascriptclick(getCodeSameAsLast());
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
@@ -24281,6 +24284,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
+			
+			base.waitTime(2);
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
@@ -24597,7 +24602,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
 
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
@@ -26388,18 +26393,28 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		savedSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
 		base.waitForElement(savedSearch.getSavedSearch_SearchName());
 		savedSearch.getSavedSearch_SearchName().SendKeys(searchName);
-		savedSearch.getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		savedSearch.getSavedSearch_ApplyFilterButton().javascriptclick(savedSearch.getSavedSearch_ApplyFilterButton());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return savedSearch.getSelectWithName(searchName).Visible();
 			}
 		}), Input.wait30);
-		savedSearch.getSelectWithName(searchName).waitAndClick(10);
+		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));
 
-		base.waitForElement(savedSearch.getToDocView());
-		savedSearch.getToDocView().waitAndClick(5);
+//		base.waitForElement(savedSearch.getToDocView());
+//		savedSearch.getToDocView().waitAndClick(5);
+		savedSearch.docViewFromSS("View in DocView");
 
+		try {
+			if (base.getYesBtn().isElementAvailable(3)) {
+				base.getYesBtn().waitAndClick(10);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Pop up message does not appear");
+			UtilityLog.info("Pop up message does not appear");
+		}
 	}
 
 	/**

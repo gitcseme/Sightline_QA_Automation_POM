@@ -19,6 +19,12 @@
 	<totalNumberOfDocs>125</totalNumberOfDocs>
 	<!--  smoke Drag And Drop Data -->
 	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
+	<expectedCombinedSearchHits1>12</expectedCombinedSearchHits1>
+	<expectedCombinedSearchHits2>2</expectedCombinedSearchHits2>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
+	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
+	<searchString5>commit</searchString5>
+	<WPbatchFile>/WP_BatchFile/</WPbatchFile>
 
 	
 	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
@@ -66,6 +72,7 @@
   	    <nearDupeDocument>ID00000189</nearDupeDocument>
 		<nearDupeDocumentForReviewer>ID00001239</nearDupeDocumentForReviewer>
   	    		<familyDocumentForReviewer>ID00005144</familyDocumentForReviewer>
+  	    		
   	   
      
     <!-- DocView Coding Form -->
@@ -125,7 +132,7 @@
     <crammerdocumentID>ID00001191</crammerdocumentID>
 <threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 		<conceptualDoc>ID00000001</conceptualDoc>
-		
+
 		<!--  Added by Hemon -->
 		<EndtoEnd>End-to-End</EndtoEnd>
 		<bates>Bates</bates>
@@ -133,5 +140,32 @@
 	<searchString4>testing</searchString4>
 		<fieldByValue>Custodian</fieldByValue>
 		
+
+		<!-- O365 -->
+		 <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
+    <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
+    <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
+			<collectionDataEmailId>Raghuram.A@consiliotest.com</collectionDataEmailId>
+	<collectionDataFirstName>Raghuram</collectionDataFirstName>
+	<collectionDataLastName>A</collectionDataLastName>
+	<collectionPageUrl>Collection/Collections</collectionPageUrl>
+	
+	<!-- Batch Print -->
+	<tag>tag</tag>
+	<documentKey>DocID</documentKey>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\</fileDownloadLocation>
+	
+	<!-- Tags & Folders -->
+	<searchString9>document</searchString9>
+	
+	<!--  Advance search -->
+	<masterDateText>MasterDate</masterDateText>
+	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
+	<!--  DocView Audio -->
+	<audioSearch>morning</audioSearch>
+	<language>North American English</language>
+	<defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
+	<mySavedSearch>My Saved Search</mySavedSearch>
+
 </TestData>
 
