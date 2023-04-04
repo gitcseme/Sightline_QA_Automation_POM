@@ -1908,13 +1908,11 @@ public class ProductionPage {
 	}
 
 	public Element getClkBtn_selectingRedactionTags() {
-		return driver
-				.FindElementByXPath("//div[contains(@id,'divRedaction')]//button[text()='Select Redaction Tag(s)']");
+		return driver.FindElementByXPath("//div[contains(@id,'divRedaction')]//button[text()='Select Redaction Tag(s)']");
 	}
 
 	public Element getClkCheckBox_selectingRedactionTags() {
-		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
+		return driver.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClk_selectBtn() {
@@ -2454,8 +2452,7 @@ public class ProductionPage {
 	}
 
 	public Element redactionTagInBurnRedaction2CheckBox(String RedactionTag2) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
-				+ RedactionTag2 + "']/i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"+ RedactionTag2 + "']/i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	// Added by Gopinath- 29-10-2021
@@ -3069,7 +3066,7 @@ public class ProductionPage {
 	}
 
 	public Element getSlipSheetMetaDataActiveCheck() {
-		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='METADATA']/../..");
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='Metadata']/../..");
 	}
 
 	public Element getSlipSheetMetaDataTypeCheck() {
@@ -3077,7 +3074,7 @@ public class ProductionPage {
 	}
 
 	public Element getSlipSheetWorkProductActiveCheck() {
-		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='WORKPRODUCT']/../..");
+		return driver.FindElementByXPath("//div[@id='tiffObjectPalette']//span[text()='Work Product']/../..");
 	}
 
 	public Element getSlipSheetWorkProductFolder() {
@@ -6194,8 +6191,13 @@ public class ProductionPage {
 
 		// asserting for disabled tag
 
-		
 		base.waitForElement(getDisabledSelectRedactionTags());
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String flag = getDisabledSelectRedactionTags().GetAttribute("class");
 		System.out.println(flag);
 		driver.waitForPageToBeReady();
@@ -17028,6 +17030,7 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().isDisplayed();
 		gettextRedactionPlaceHolder().waitAndClick(10);
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
+		
 		base.stepInfo("Burn redaction PDF section is filled successfully");
 		base.stepInfo("Burn Reduction Enabled with default redaction tag is selected");
 	}
@@ -18641,6 +18644,12 @@ public class ProductionPage {
 		String ExpectedColor = Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
 		String ActualColor = "#a9c981";
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		if (ActualColor.equals(ExpectedColor)) {
 			base.passedStep("toggle is on :" + element);
 		} else {
@@ -23088,7 +23097,16 @@ public class ProductionPage {
 			}
 	}
 	
-    
+	public void RedactionWithTag(String Tag) {
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+		base.waitForElement(redactionTagInBurnRedaction2CheckBox(Tag));
+		redactionTagInBurnRedaction2CheckBox(Tag).isDisplayed();
+		
+		redactionTagInBurnRedaction2CheckBox(Tag).waitAndClick(20);
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+	}
     /**
      * @author Sireesha.Gattu
      * @param Tag

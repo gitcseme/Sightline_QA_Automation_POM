@@ -1525,6 +1525,7 @@ public class Production_Phase1_Regression2 {
 		DocViewPage doc = new DocViewPage(driver);
 		doc.documentSelection(1);
 		driver.waitForPageToBeReady();
+		Thread.sleep(3000);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 20, 20);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
@@ -2011,7 +2012,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.technicalIssue);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
+		 String redactiontag1 ="Default Redaction Tag";
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2032,6 +2033,7 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
+		page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
@@ -2046,6 +2048,7 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
+		page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
@@ -6390,7 +6393,7 @@ public class Production_Phase1_Regression2 {
 
 		// metadata verification
 		base.waitForElement(page.getSlipSheetMetaData());
-		page.getSlipSheetMetaData().waitAndClick(10);
+		//page.getSlipSheetMetaData().waitAndClick(10);
 		boolean flag = page.getSlipSheetMetaDataActiveCheck().GetAttribute("class").contains("active");
 		if (flag) {
 			softAssertion.assertTrue(flag);
