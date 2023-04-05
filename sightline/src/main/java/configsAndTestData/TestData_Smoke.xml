@@ -132,7 +132,15 @@
     <crammerdocumentID>ID00001191</crammerdocumentID>
 <threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 		<conceptualDoc>ID00000001</conceptualDoc>
+
+		<!--  Added by Hemon -->
+		<EndtoEnd>End-to-End</EndtoEnd>
+		<bates>Bates</bates>
+	<batesNumber>BatesNumber</batesNumber>
+	<searchString4>testing</searchString4>
+		<fieldByValue>Custodian</fieldByValue>
 		
+
 		<!-- O365 -->
 		 <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
@@ -158,5 +166,6 @@
 	<language>North American English</language>
 	<defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
 	<mySavedSearch>My Saved Search</mySavedSearch>
+
 </TestData>
 
