@@ -23101,6 +23101,8 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 		base.waitForElement(redactionTagInBurnRedaction2CheckBox(Tag));
+		driver.scrollPageToTop();
+		//redactionTagInBurnRedaction2CheckBox(Tag).ScrollTo();
 		redactionTagInBurnRedaction2CheckBox(Tag).isDisplayed();
 		
 		redactionTagInBurnRedaction2CheckBox(Tag).waitAndClick(20);

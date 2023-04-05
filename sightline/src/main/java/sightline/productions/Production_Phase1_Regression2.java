@@ -3410,9 +3410,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
-		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
-		redactionpage.selectDefaultSecurityGroup();
-		driver.waitForPageToBeReady();
+		
 
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
