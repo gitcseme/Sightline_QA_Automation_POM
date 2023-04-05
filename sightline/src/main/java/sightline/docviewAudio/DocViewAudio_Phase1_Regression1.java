@@ -3440,8 +3440,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage.getClickDocviewID(3).javascriptclick(docViewPage.getClickDocviewID(3));
 		driver.waitForPageToBeReady();
 		docViewPage.clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getClickDocviewID(3));
 		docViewPage.getClickDocviewID(3).javascriptclick(docViewPage.getClickDocviewID(3));
-//		driver.waitForPageToBeReady();
 		// validating code same as last as per the previous completed docs
 		docViewPage.verifyComments(comment);
 		loginPage.logout();
