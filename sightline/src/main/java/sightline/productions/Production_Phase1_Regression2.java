@@ -2041,6 +2041,7 @@ public class Production_Phase1_Regression2 {
 		// Verify
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates1 = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -2051,7 +2052,7 @@ public class Production_Phase1_Regression2 {
 		//page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
+		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates1);
 		base.passedStep(
 				"verified that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.");
 
