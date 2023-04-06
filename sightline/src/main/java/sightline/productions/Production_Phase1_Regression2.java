@@ -1525,6 +1525,7 @@ public class Production_Phase1_Regression2 {
 		DocViewPage doc = new DocViewPage(driver);
 		doc.documentSelection(1);
 		driver.waitForPageToBeReady();
+		Thread.sleep(3000);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 20, 20);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
@@ -2011,7 +2012,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.technicalIssue);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
+		 String redactiontag1 ="Default Redaction Tag";
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -2032,6 +2033,7 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
+		//page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
@@ -2039,6 +2041,7 @@ public class Production_Phase1_Regression2 {
 		// Verify
 		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates1 = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -2046,9 +2049,10 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
+		//page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
+		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates1);
 		base.passedStep(
 				"verified that Tiff/PDF should generate with Priv placeholdering even though 'Tech Issue Doc' placeholdering, Burn redactions and File group/tag based placeholdering is exists.");
 
@@ -2104,8 +2108,7 @@ public class Production_Phase1_Regression2 {
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
 
-		base.passedStep(
-				"verified that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
+		base.passedStep("verified that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
 
 		// delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3407,9 +3410,7 @@ public class Production_Phase1_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
-		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
-		redactionpage.selectDefaultSecurityGroup();
-		driver.waitForPageToBeReady();
+		
 
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
@@ -6311,6 +6312,7 @@ public class Production_Phase1_Regression2 {
 
 		// view all state
 		page = new ProductionPage(driver);
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		base.waitForElement(page.getFilterByButton());
 		page.getFilterByButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -6374,10 +6376,12 @@ public class Production_Phase1_Regression2 {
 		page.fillingDATSection();
 
 		page.getTIFFTab().Click();
-		page.getTiffAdvanceBtn().ScrollTo();
-		page.getTiffAdvanceBtn().waitAndClick(10);
-
+		 driver.scrollingToBottomofAPage();
+		page.getAdvanceBtnOpenCloseCheck().ScrollTo();
+		//page.getTiffAdvanceBtn().waitAndClick(10);
+		page.getAdvanceBtnOpenCloseCheck().waitAndClick(10);
 		driver.waitForPageToBeReady();
+	   
 		page.toggleOffCheck(page.getSlipSheets());
 		page.getSlipSheets().waitAndClick(10);
 		page.toggleOnCheck(page.getSlipSheets());
@@ -6390,7 +6394,7 @@ public class Production_Phase1_Regression2 {
 
 		// metadata verification
 		base.waitForElement(page.getSlipSheetMetaData());
-		page.getSlipSheetMetaData().waitAndClick(10);
+		//page.getSlipSheetMetaData().waitAndClick(10);
 		boolean flag = page.getSlipSheetMetaDataActiveCheck().GetAttribute("class").contains("active");
 		if (flag) {
 			softAssertion.assertTrue(flag);

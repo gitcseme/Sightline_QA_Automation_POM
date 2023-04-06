@@ -11,6 +11,8 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -2602,19 +2604,25 @@ public class DocExplorerPage {
 	 * 
 	 */
 	public void docExpViewInDocView() {
-
+		SessionSearch ss = new SessionSearch(driver);
 		bc.waitForElement(getDocExp_actionButton());
 		getDocExp_actionButton().waitAndClick(10);
-		if (getView().isDisplayed()) {
+		if (ss.getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
-			Actions act = new Actions(driver.getWebDriver());
-			act.moveToElement(getView().getWebElement()).build().perform();
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(ss.getViewBtn().getWebElement()));
+			actions.moveToElement(ss.getViewBtn().getWebElement()).build().perform();
+
+			//bc.waitForElement(ss.getDocViewFromDropDown());
+			//ss.getDocViewFromDropDown().waitAndClick(10);
+			getDocViewAction().waitAndClick(10);
 		} else {
-			System.out.println("View is not found");
+			getDocViewAction().waitAndClick(10);
+			bc.waitTime(3); // added for stabilization
 		}
 
-		bc.waitForElement(getDocViewAction());
-		getDocViewAction().waitAndClick(5);
 	}
 
 	/**

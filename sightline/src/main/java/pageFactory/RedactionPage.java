@@ -48,7 +48,7 @@ public class RedactionPage {
  	}
 
 	public Element getDefaultSecurityGroup() {
-		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupRedaction']//option[text()='Default Security Group']");
+		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupRedaction']");
 	}
 	
 	//Added by Krishna
@@ -245,8 +245,9 @@ public class RedactionPage {
  							getDefaultSecurityGroup().Enabled();
  				}
  			}), Input.wait30);
-
- 			getDefaultSecurityGroup().waitAndClick(10);
+ 			
+ 			getDefaultSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+ 			
  		} catch (Exception e) {
  			e.printStackTrace();
  			getDefaultSecurityGroup().waitAndClick(10);
@@ -258,6 +259,7 @@ public class RedactionPage {
 	public void manageRedactionTagsPage(String Tag) throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+		selectDefaultSecurityGroup();
 			driver.waitForPageToBeReady();
 			bc.waitTime(2); 
 			getselectAllRedactionTag().isElementAvailable(15);
