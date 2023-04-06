@@ -1036,7 +1036,7 @@ public class DocViewAnalyticsPanel_Regression4 {
 				"Step 2 : Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewNearDupeDocumentsInDocView();
 		
 		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
 		driver.waitForPageToBeReady();
