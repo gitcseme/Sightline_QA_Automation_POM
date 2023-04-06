@@ -1834,7 +1834,7 @@ public class ProductionPage {
 
 	public Element getNativeAdvanced_Text() {
 		return driver.FindElementByXPath(
-				"//div[@class='col-md-12 advanced-dropdown']//p[contains( text(),'redacted documents, and parents of privileged and redacted documents.')]");
+				"//div[@class='col-md-12 advanced-dropdown']//strong[contains( text(),'Placeholders in the TIFF/PDF Component section.')]");
 	}
 
 	public Element getPriviledgedToolTip_Text() {
@@ -17665,7 +17665,7 @@ public class ProductionPage {
 
 		visibleCheck("LST");
 
-		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
+		String Expect = "Note: This setting is contingent on enabling Placeholders in the TIFF/PDF Component section. No documents will be withheld unless Placeholders are enabled.";
 
 		String Actual = getNativeAdvanced_Text().getWebElement().getText();
 
@@ -18292,8 +18292,8 @@ public class ProductionPage {
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		Thread.sleep(Input.wait30 / 10);
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(Input.tagNamePrev);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(Input.tagNamePrev);
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getclkSelectTag(1));
@@ -18305,8 +18305,8 @@ public class ProductionPage {
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		Thread.sleep(Input.wait30 / 10);
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname1);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(tagname1);
 
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
@@ -23101,8 +23101,7 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 		base.waitForElement(redactionTagInBurnRedaction2CheckBox(Tag));
-		driver.scrollPageToTop();
-		//redactionTagInBurnRedaction2CheckBox(Tag).ScrollTo();
+		
 		redactionTagInBurnRedaction2CheckBox(Tag).isDisplayed();
 		
 		redactionTagInBurnRedaction2CheckBox(Tag).waitAndClick(20);

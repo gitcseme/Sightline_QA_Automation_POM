@@ -2107,8 +2107,7 @@ public class Production_Phase1_Regression2 {
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
 
-		base.passedStep(
-				"verified that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
+		base.passedStep("verified that if Blank Page Removal toggle is OFF then it should produced the PDF with blank pages");
 
 		// delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -6312,6 +6311,7 @@ public class Production_Phase1_Regression2 {
 
 		// view all state
 		page = new ProductionPage(driver);
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		base.waitForElement(page.getFilterByButton());
 		page.getFilterByButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -6375,10 +6375,12 @@ public class Production_Phase1_Regression2 {
 		page.fillingDATSection();
 
 		page.getTIFFTab().Click();
-		page.getTiffAdvanceBtn().ScrollTo();
-		page.getTiffAdvanceBtn().waitAndClick(10);
-
+		 driver.scrollingToBottomofAPage();
+		page.getAdvanceBtnOpenCloseCheck().ScrollTo();
+		//page.getTiffAdvanceBtn().waitAndClick(10);
+		page.getAdvanceBtnOpenCloseCheck().waitAndClick(10);
 		driver.waitForPageToBeReady();
+	   
 		page.toggleOffCheck(page.getSlipSheets());
 		page.getSlipSheets().waitAndClick(10);
 		page.toggleOnCheck(page.getSlipSheets());
