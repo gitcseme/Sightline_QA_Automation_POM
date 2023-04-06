@@ -139,7 +139,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		baseClass.stepInfo("Doc is searched by Advanced Search");
 		docViewAnalytics.selectPureHit();
 		baseClass.stepInfo("Doc is search and Purehit is selected successfully");
-		docViewAnalytics.selectViewInDocView();
+        sessionSearch.viewInDocView();
 		baseClass.stepInfo("Doc is viewed on DocView successfully");
 		docViewAnalytics.selectEyeIcon();
 		docViewAnalytics.selectAnalyticsPanelWithoutChildWindow();
@@ -188,7 +188,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		baseClass.stepInfo("Doc is searched by Advanced Search");
 		docViewAnalytics.selectPureHit();
 		baseClass.stepInfo("Doc is search and Purehit is selected successfully");
-		docViewAnalytics.selectViewInDocView();
+        sessionSearch.viewInDocView();
 		baseClass.stepInfo("Doc is viewed on DocView successfully");
 		docViewAnalytics.selectAnalyticsPanelWithChildWindow();
 		String parentWindowID = driver.CurrentWindowHandle();
@@ -579,8 +579,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		baseClass.stepInfo("Basic Search is done successfully");
 
 		// Select Purehit from search result
-		docViewAnalytics.getFamilyMemberPurehit();
-		docViewAnalytics.selectViewInDocView();
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		baseClass.stepInfo("Doc are selected and viewed in the DocView successfully");
 		// Create a folder in Doc Analytics
 		docViewAnalytics.Analytics_FamilyActionsFolderCreation();
