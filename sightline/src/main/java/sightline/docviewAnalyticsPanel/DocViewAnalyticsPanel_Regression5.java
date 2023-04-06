@@ -1636,7 +1636,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocInMiniDocList(documentToBeSelectedForReviewer);
+		docViewAnalytics.selectDocInMiniDocList(documnetToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
