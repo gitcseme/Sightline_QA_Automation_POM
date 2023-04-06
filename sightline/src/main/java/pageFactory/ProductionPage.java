@@ -1912,7 +1912,7 @@ public class ProductionPage {
 	}
 
 	public Element getClkCheckBox_selectingRedactionTags() {
-		return driver.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
+		return driver.FindElementByXPath("(//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClk_selectBtn() {
@@ -23101,8 +23101,6 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 		base.waitForElement(redactionTagInBurnRedaction2CheckBox(Tag));
-		
-		redactionTagInBurnRedaction2CheckBox(Tag).isDisplayed();
 		
 		redactionTagInBurnRedaction2CheckBox(Tag).waitAndClick(20);
 		getClk_selectBtn().isDisplayed();

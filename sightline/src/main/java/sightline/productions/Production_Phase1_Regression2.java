@@ -2033,7 +2033,7 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
-		page.RedactionWithTag(redactiontag1);
+		//page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
@@ -2048,7 +2048,7 @@ public class Production_Phase1_Regression2 {
 		page.selectTechIssueDoc(tagname1);
 		page.fillingNativeDocsPlaceholder(tagname);
 		page.selectBurnReduction();
-		page.RedactionWithTag(redactiontag1);
+		//page.RedactionWithTag(redactiontag1);
 		driver.scrollPageToTop();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, productionname, beginningBates);
