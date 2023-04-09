@@ -559,7 +559,7 @@ public class SessionSearch {
 	}
 
 	public ElementCollection getTree() {
-		return driver.FindElementsByXPath("//a[@class='jstree-anchor'][contains(text(),'')]");
+		return driver.FindElementsByXPath("//li[@id='-1g']/ul[@class='jstree-children']/li/a");
 	}
 
 	public ElementCollection getSecurityNamesTree() {
@@ -1738,7 +1738,7 @@ public class SessionSearch {
 	}
 
 	public Element ConenetInSaerchResult() {
-		return driver.FindElementByXPath("//td[text()='Content & MetaData']/parent::tr//span[@class='badge']");
+		return driver.FindElementByXPath("//td[text()='Content and Metadata']//following::span[text()='test']");
 	}
 
 	public Element gettingThresholdValue() {
@@ -2255,6 +2255,9 @@ public class SessionSearch {
 	public Element getAdvancedWaringMsg() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 
+	}
+	public Element rootAssignment() {
+		return driver.FindElementByXPath("//*[@id='-1g']//i");
 	}
 
 	
@@ -3130,10 +3133,10 @@ public class SessionSearch {
 			base.waitTime(2);
 			if (iterable_element.getText().contains(SaveName)) {
 				base.waitTime(2);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
-				iterable_element.click();
+//				iterable_element.click();
 			}
 		}
 		// added on 16-8-21
@@ -4023,6 +4026,7 @@ public class SessionSearch {
 	public void selectAssignmentInWPS(final String assignMentName) throws InterruptedException {
 		base.waitForElement(getWP_assignmentsBtn());
 		getWP_assignmentsBtn().Click();
+		rootAssignment().waitAndClick(5);
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
@@ -13121,7 +13125,7 @@ public class SessionSearch {
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 		} else if (MessageNumber == 5) {
-			String msg = "Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)  Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			String msg = "Yourquerycontainsa~(tilde)character,whichdoesnotinvokeastemmingsearchasdtSearchinRelativitydoes.Ifyouwanttoperformastemmingsearch,usethetrailingwildcardcharacter(ex.cub*returnscubs,cubicle,cubby,etc.).ToperformaproximitysearchinSightline,usethe~(tilde)character(ex.\"gastransportation\"~4findsalldocumentswherethewordgasandtransportationarewithin4wordsofeachother.)Doesyourqueryreflectyourintent?ClickYEStocontinuewithyoursearchasis,orNOtocancelyoursearchsoyoucaneditthesyntax.";
 			base.waitTime(2);
 			base.waitForElement(getQueryAlertGetText());
 			String actualMsg = getQueryAlertGetText().getText();
@@ -13204,6 +13208,7 @@ public class SessionSearch {
 			selectDate("From Date");
 			selectDate("To Date");
 		}
+		
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {

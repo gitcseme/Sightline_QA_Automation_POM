@@ -578,6 +578,7 @@ public class AdvancedSearch_Regression3 {
 
 	@Test(description ="RPMXCON-48158",dataProvider = "Users", groups = { "regression" })
 	public void verifyAudioSearchCreteria(String username, String password) throws InterruptedException {
+		SoftAssert assertion = new SoftAssert();
 		lp = new LoginPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48158");
 		lp.loginToSightLine(username, password);
@@ -593,7 +594,7 @@ public class AdvancedSearch_Regression3 {
 		String seconds = String.valueOf(Input.documentIdNum);
 		SessionSearch search = new SessionSearch(driver);
 		List<String> ExpectedResult = new ArrayList<String>(Arrays.asList(audioSearchString2, audioSearchString1));
-		lp.loginToSightLine(username, password);
+		//lp.loginToSightLine(username, password);
 		String ExpectedConfidenceThreshold = search.configureAudioSearchBlock(audioSearchString1, audioSearchString2,
 				language, threshold, termOperator, loactionAudioFile, seconds);
 		baseClass.stepInfo("Configured valid query with  language pack as " + language + " and search terms are "
@@ -606,7 +607,7 @@ public class AdvancedSearch_Regression3 {
 		search.getQuerySearchBtn().Click();
 		search.validateAudioSearchResult(ExpectedResult, termOperator, language, seconds, ExpectedConfidenceThreshold);
 		String actualContent = search.ConenetInSaerchResult().getText();
-		SoftAssert assertion = new SoftAssert();
+		
 		assertion.assertEquals(actualContent, Input.searchString1); // verification of content and metadata search term
 																	// in results page
 		assertion.assertAll();
