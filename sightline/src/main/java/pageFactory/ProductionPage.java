@@ -2443,7 +2443,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocumentsOfTIFF() {
-		return driver.FindElementByXPath("//label[contains(text(),'Documents to TIFF: ')]//following-sibling::label");
+		return driver.FindElementByXPath("//label[contains(text(),'Documents to Image: ')]//following-sibling::label");
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
