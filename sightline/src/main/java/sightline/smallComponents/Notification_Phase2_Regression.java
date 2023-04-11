@@ -1182,6 +1182,10 @@ public void verifyStatusInprogressPurHitReady(String userName, String passWord) 
 		driver.waitForPageToBeReady();
 		base.stepInfo(assignmentName + " assignment opened in edit mode");
 		agnmt.assignmentDistributingToReviewerManager();
+		login.logout();
+		
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in as : " + Input.rmu1FullName);
 
 		// navigate to doclist and perform bulk unassign
 		session.basicContentSearch(Input.testData1);
