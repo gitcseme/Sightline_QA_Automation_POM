@@ -21024,8 +21024,8 @@ public class ProductionPage {
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		driver.scrollingToBottomofAPage();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(Input.searchString4);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(Input.searchString4);
 	}
 
 	/**
