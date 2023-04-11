@@ -191,7 +191,11 @@ public class Export_Phase2_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getCopyPath().waitAndClick(10);
+		String actualCopedText = page.getCopiedTextFromClipBoard();
+		String parentTab = page.openNewTab(actualCopedText);
 		page.verifyingExportFile(doc,prefixID,suffixID,subBates,ActualText);
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
 		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
