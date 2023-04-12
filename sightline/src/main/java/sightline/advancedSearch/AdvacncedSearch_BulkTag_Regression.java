@@ -184,7 +184,7 @@ public class AdvacncedSearch_BulkTag_Regression {
 	 */
 	@Test(description = "RPMXCON-50046", enabled = true, groups = { "regression" })
 	public void verifyBulkFolderWithOperators() throws Exception {
-
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		// login as PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -623,7 +623,7 @@ public class AdvacncedSearch_BulkTag_Regression {
 	public void verifyPureHitTileNotCorruptedInShoppingCart(String userName, String password, String loginUser) {
 
 		// login as PA
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password);		
 		baseClass.selectproject(Input.highVolumeProject);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48656");
@@ -656,6 +656,7 @@ public class AdvacncedSearch_BulkTag_Regression {
 
 		// Verify that pure hit tile does not get corrupted (CSS Removed) in shopping
 		// cart
+		SoftAssert assertion = new SoftAssert();
 		assertion.assertEquals(expectedpureHit, sessionSearch.verifyPureHitsCount());
 		assertion.assertAll();
 		baseClass.passedStep(
@@ -731,7 +732,8 @@ public class AdvacncedSearch_BulkTag_Regression {
 	 */
 	@Test(description = "RPMXCON-57045", enabled = true, groups = { "regression" })
 	public void verifyPAUserAbleToSelectAllRedactionTagsInAdvancedSearch() throws Exception {
-
+		assertion = new SoftAssert();
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		String tagName1 = "tagName" + Utility.dynamicNameAppender();
 		String tagName2 = "tagName" + Utility.dynamicNameAppender();
 		List<String> tagNameList = new ArrayList<String>(Arrays.asList(tagName1, tagName2));
@@ -784,7 +786,7 @@ public class AdvacncedSearch_BulkTag_Regression {
 	 */
 	@Test(description = "RPMXCON-57183", enabled = true, groups = { "regression" })
 	public void verifyUnfolderWorksUsingBulkFolderActionInAdvancedSearch() throws Exception {
-
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		String folderName = "myFolder" + Utility.dynamicNameAppender();
 		int docCountAfterUnfold = 0;
 
