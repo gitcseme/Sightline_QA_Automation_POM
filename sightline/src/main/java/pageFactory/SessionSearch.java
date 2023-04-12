@@ -12112,7 +12112,13 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getPureHitsCount2ndSearch().waitAndClick(15);
-		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		
+		try {
+			int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+			System.out.println(pureHit); 			
+		} catch(NumberFormatException e) {
+			System.out.println("NumberFormatException: invalid input string");
+		}
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
