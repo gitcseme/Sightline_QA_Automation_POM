@@ -80,6 +80,7 @@ public class AdvancedSearch_Phase2_Regression {
 		assertion = new SoftAssert();
 		savedSearch = new SavedSearch(driver);
 		tagPage = new TagsAndFoldersPage(driver);
+		docView = new DocViewPage(driver);
 
 	}
 
@@ -605,10 +606,10 @@ public class AdvancedSearch_Phase2_Regression {
 
 		// Click on "Search" button
 		baseClass.stepInfo("Clicking on 'Search' button.");
-		sessionSearch.SearchBtnAction();
+		//sessionSearch.SearchBtnAction(); Removing this since search action is been handled in 'verifyWarningMessage' methods
 
 		// verify that application displays Proximity warning message
-		sessionSearch.verifyWarningMessage(false, true, 5);
+		sessionSearch.verifyWarningMessage(true, true, 5);
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
@@ -939,10 +940,10 @@ public class AdvancedSearch_Phase2_Regression {
 
 		// Click on "Search" button
 		baseClass.stepInfo("Clicking on 'Search' button.");
-		sessionSearch.SearchBtnAction();
+//		sessionSearch.SearchBtnAction(); Removing this since search action is been handled in 'verifyWarningMessage' methods
 
 		// verify that application displays Proximity warning message
-		sessionSearch.verifyWarningMessage(false, true, 5);
+		sessionSearch.verifyWarningMessage(true, true, 5);
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button
