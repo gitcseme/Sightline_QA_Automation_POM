@@ -2443,7 +2443,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocumentsOfTIFF() {
-		return driver.FindElementByXPath("//label[contains(text(),'Documents to TIFF: ')]//following-sibling::label");
+		return driver.FindElementByXPath("//label[contains(text(),'Documents to Image: ')]//following-sibling::label");
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
@@ -19417,10 +19417,10 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		for (int i = firstFile; i < lastFile; i++) {
-			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
 
 			if (TiffFile.exists()) {
-				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".tiff");
+				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".tif");
 				System.out.println("passeed");
 			} else {
 				base.failedStep("verification failed");
