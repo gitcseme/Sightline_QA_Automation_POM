@@ -174,7 +174,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49253 : To verify In Export DAT, TIFFPageCount for each
+	 * @TestCASE_No:RPMXCON-49253 : To verify In Export DAT, TIFFPageCount for each
 	 *                            document should be displayed when export is done
 	 *                            with any component.
 	 * @Description:To verify In Export DAT, TIFFPageCount for each document should
@@ -288,7 +288,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49252 : To verify In Export DAT, provide the
+	 * @TestCASE_No:RPMXCON-49252 : To verify In Export DAT, provide the
 	 *                            TIFFPageCount for each document should be zero
 	 *                            when only DAT component is selected
 	 * @Description: To verify In Export DAT, provide the TIFFPageCount for each
@@ -400,7 +400,7 @@ public class Export_Phase1_Regression {
 	 * @Description : Verify that in Production Export, this production will not
 	 *              show up as it was uncommitted.
 	 */
-	// @Test(description ="RPMXCON-49220",alwaysRun = true,groups={"regression"})
+	 @Test(description ="RPMXCON-49220",alwaysRun = true,groups={"regression"})
 	public void verifyProductionNotShownInExportWhenUncommited() throws Exception {
 		base = new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49220 Export Sprint-8");
@@ -501,7 +501,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49137 : To verify that when text is for document then it
+	 * @TestCASE_No:RPMXCON-49137 : To verify that when text is for document then it
 	 *                            should export the actual text file.
 	 * @Description: To verify that when text is for document then it should export
 	 *               the actual text file.
@@ -598,7 +598,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49054 : Verify Add documents option is not getting
+	 * @TestCASE_No:RPMXCON-49054 : Verify Add documents option is not getting
 	 *                            displayed in Export.
 	 * @Description: Verify Add documents option is not getting displayed in Export.
 	 * 
@@ -710,7 +710,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-50630 : Verify that TIFF should Export with Burned
+	 * @TestCASE_No:RPMXCON-50630 : Verify that TIFF should Export with Burned
 	 *                            Redaction if Only Burn Redaction is enabled.
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only
 	 *               Burn Redaction is enabled.
@@ -836,7 +836,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-50330 : Verify that TIFF should Export with Burned
+	 * @TestCASE_No:RPMXCON-50330 : Verify that TIFF should Export with Burned
 	 *                            Redaction if Only Burn Redaction is enabled.
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only
 	 *               Burn Redaction is enabled.
@@ -966,7 +966,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49248 : To Verify in Export TIFFPageCount for
+	 * @TestCASE_No:RPMXCON-49248 : To Verify in Export TIFFPageCount for
 	 *                            placeholders.
 	 * @Description: To Verify in Export TIFFPageCount for placeholders.
 	 * 
@@ -1101,7 +1101,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49131 : To verify that in Production-Export-Slip Sheet,
+	 * @TestCASE_No:RPMXCON-49131 : To verify that in Production-Export-Slip Sheet,
 	 *                            Metadata Field should be sorted by alpha
 	 *                            ascending.
 	 * @Description: Verify that in Production-Export-Slip Sheet, Metadata Field
@@ -1143,7 +1143,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49127 : To verify that in Production-Export-File Type
+	 * @TestCASE_No:RPMXCON-49127 : To verify that in Production-Export-File Type
 	 *                            Group Placeholder section, Metadata Field drop
 	 *                            down should be sorted by alpha ascending.
 	 * @Description: Verify that in Production-Export-File Type Group Placeholder
@@ -1184,7 +1184,7 @@ public class Export_Phase1_Regression {
 
 	/**
 	 * @author Gopinath created on:NA modified by:NA
-	 * @TESTCASE_No:RPMXCON-49125 : Verify that in Production-Export-Exception Docs
+	 * @TestCASE_No:RPMXCON-49125 : Verify that in Production-Export-Exception Docs
 	 *                            Placeholder section, Metadata Field drop down
 	 *                            should be sorted by alpha ascending.
 	 * @Description: Verify that in Production-Export-Exception Docs Placeholder
@@ -1253,6 +1253,7 @@ public class Export_Phase1_Regression {
 
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
 		String text = page.getProdExport_ProductionSets().getText();
 		if (text.contains("Export Set")) {
 			page.selectExportSetFromDropDown();
