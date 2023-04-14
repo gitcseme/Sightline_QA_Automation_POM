@@ -18451,7 +18451,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //	Reusable method for verify the saved stamp
 	public void verifyComments(String comment) {
 //		driver.waitForPageToBeReady();
-		base.waitForElement(getDocument_CommentsTextBox());		
+		base.waitForElement(getDocument_CommentsTextBox());
 		base.waitTime(2);
 		String text = getDocument_CommentsTextBox().GetAttribute("value");
 		base.waitTime(2);
@@ -26427,10 +26427,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}), Input.wait30);
 		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));
 
-//		base.waitForElement(savedSearch.getToDocView());	
-//		savedSearch.getToDocView().waitAndClick(5);	
-		savedSearch.docViewFromSS("View in DocView");	
-
+//		base.waitForElement(savedSearch.getToDocView());
+//		savedSearch.getToDocView().waitAndClick(5);
+		savedSearch.docViewFromSS("View in DocView");
+		
 		try {
 			if (base.getYesBtn().isElementAvailable(3)) {
 				base.getYesBtn().waitAndClick(10);
