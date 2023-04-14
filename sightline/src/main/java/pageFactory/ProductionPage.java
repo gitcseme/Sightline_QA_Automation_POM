@@ -3024,7 +3024,8 @@ public class ProductionPage {
 
 	public Element getGenrateTIFFRadioButton() {
 		return driver.FindElementByXPath(
-				"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']");
+			//	"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']");
+				"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']/..//i");
 	}
 
 	public Element chkIsTIFFSelected() {

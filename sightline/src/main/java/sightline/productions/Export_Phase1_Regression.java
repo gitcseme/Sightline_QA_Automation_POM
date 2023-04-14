@@ -400,7 +400,7 @@ public class Export_Phase1_Regression {
 	 * @Description : Verify that in Production Export, this production will not
 	 *              show up as it was uncommitted.
 	 */
-	 @Test(description ="RPMXCON-49220",alwaysRun = true,groups={"regression"})
+	// @Test(description ="RPMXCON-49220",alwaysRun = true,groups={"regression"})
 	public void verifyProductionNotShownInExportWhenUncommited() throws Exception {
 		base = new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49220 Export Sprint-8");

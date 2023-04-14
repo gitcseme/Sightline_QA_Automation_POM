@@ -646,16 +646,6 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Export Path" + actualCopedTexts);
 		String parentTabs = page.openNewTab(actualCopedTexts);
 		page.goToPDFImageFiles();
-//		for (int i = 2; i < 6; i++) {
-//			if (page.getFirstPDFImageFile(prefixID1 + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(5)) {
-//				base.passedStep("Pdf files are generated successfully");
-//			} else if (page.getFirstPDFImageFile(prefixID1 + "0" + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(2)) {
-//					
-//				base.passedStep("pdf files are generated successfully");
-//			} else {
-//				base.failedStep("PDF file is not generated");
-//			}
-//		}
 		for (int i = 2; i < 6; i++) {
 			if (page.getFirstPDFImageFile(prefixID1 + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(5)) {
 				base.passedStep("Pdf files are generated successfully");
@@ -2191,7 +2181,7 @@ public class Export_Phase2_Regression1 {
 		page.getTIFFTab().Click();
 		driver.scrollPageToTop();
 		base.waitForElement(page.getRadioButton_GenerateTIFF());
-		page.getRadioButton_GenerateTIFF().waitAndClick(10);
+		page.getGenrateTIFFRadioButton().waitAndClick(10);
 		page.navigateToNextSection();
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
