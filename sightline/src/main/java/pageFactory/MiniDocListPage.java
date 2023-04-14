@@ -94,6 +94,7 @@ public class MiniDocListPage {
 		sessionSearch = new SessionSearch(driver);
 		reusableDocViewPage = new ReusableDocViewPage(driver);
 	}
+	
 
 	public Element getReviewHeader() {
 		return driver
@@ -227,8 +228,7 @@ public class MiniDocListPage {
 	}
 
 	public Element getSearchHitsTitle() {
-		// return driver.FindElementByXPath("//h3[@class='remark-title' and
-		// text()='Search Hits:']");
+		//return driver.FindElementByXPath("//h3[@class='remark-title' and text()='Search Hits:']");
 		return driver.FindElementByXPath("//*[@id='divPersistentSearch']/div/div[5]/p");
 	}
 
@@ -392,10 +392,6 @@ public class MiniDocListPage {
 		return driver.FindElementById("liDocumentNearDupe");
 	}
 
-	public Element getNearDupesData() {
-		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
-	}
-
 	public ElementCollection getAnalyticalPanelDocIdText() {
 		return driver.FindElementsByXPath("//table[@id='dtDocumentNearDuplicates']/tbody/tr//td[2]");
 	}
@@ -507,7 +503,7 @@ public class MiniDocListPage {
 	public Element getAvailableFieldsDisplay(String fields) {
 		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='" + fields + "']");
 	}
-
+	
 	public Element getHistoryClockDocs() {
 		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li/a[contains(text(),'ID')])[last()]");
 	}
@@ -515,31 +511,69 @@ public class MiniDocListPage {
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount() {
 		return driver.FindElementByXPath("//li[text()='FamilyMemberCount']//following-sibling::i");
 	}
-
+	
 	public Element getDashBoardReviewer() {
 		return driver.FindElementByXPath("//a[@name='ReviewerDashboard']");
 	}
-
 	public Element getPureHitAddButton() {
-		return driver.FindElementByXPath(".//*[@id='001']/i[2]");
-	}
-
-	public Element getBulkActionButton() {
-		return driver.FindElementByXPath("//*[@id='idAction']");
-	}
-
-	public Element getViewBtn() {
-		return driver.FindElementByXPath("//a[text()='View']");
-	}
-
-	public Element getDocViewFromDropDown() {
-		return driver.FindElementByXPath("//a[text()='View In DocView']");
-	}
+	return driver.FindElementByXPath(".//*[@id='001']/i[2]");
+}
+public Element getBulkActionButton() {
+	return driver.FindElementByXPath("//*[@id='idAction']");
+}
+public Element getViewBtn() {
+	return driver.FindElementByXPath("//a[text()='View']");
+}
+public Element getDocViewFromDropDown() {
+	return driver.FindElementByXPath("//a[text()='View In DocView']");
+}
 
 	public Element getDocViewAction() {
-		return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]");
-	}
+	return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]");
+}
+	
+	public Element getDocView_Analytics_liDocumentConceptualSimilarab() {
+		return driver.FindElementById("liDocumentConceptualSimilar");
+		}
 
+		public Element getDocView_Analytics_FamilyTab() {
+		return driver.FindElementById("liDocumentFamilyMember");
+		}
+
+		public Element getFamilyData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+		}
+
+		public Element getNearDupeTab() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//td[@class='dataTables_empty']");
+		}
+
+		public ElementCollection dtDocumentFamilyMembersID() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtDocumentFamilyMembers']//tr[contains(@class,'dtDocumentFamilyMembersRowNumber_')]//td[contains(text(),'ID00')]");
+		}
+
+		public ElementCollection getNearDupesDataList() {
+		return driver.FindElementsByXPath("//div[@id='dtDocumentNearDuplicates_wrapper']//tr//th[@class='sorting']");
+		}
+
+		public ElementCollection getNearDupeDocCounnt() {
+		return driver.FindElementsByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]");
+		}
+
+		public ElementCollection getNearDupeDocIDs(int index) {
+		return driver.FindElementsByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + "]");
+		}
+
+		public ElementCollection getNearDupesDataListCollection(int index, int i) {
+		return driver.FindElementsByXPath(
+				"(.//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + "])[" + i + "]");
+		}
+	
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -674,9 +708,8 @@ public class MiniDocListPage {
 			if (!parentWindowID.equals(childWindowList)) {
 				driver.switchTo().window(childWindowList);
 				try {
-					driver.waitForPageToBeReady();
-				} catch (NullPointerException e) {
-				}
+				driver.waitForPageToBeReady();}
+				catch(NullPointerException e) {}
 				String text = driver.getTitle();
 				System.out.println("Heading of child window is " + text);
 			}
@@ -899,12 +932,11 @@ public class MiniDocListPage {
 	 * @author Indium Raghuram Description :Main method for Test case 58104 Date:
 	 *         8/15/21 Modified date: 8/16/21 Modified by: Raghuram A
 	 */
-	public void verifyDocMiniListConfiguration(String assignmentOne, String assignmentTwo)
-			throws InterruptedException, Exception {
+	public void verifyDocMiniListConfiguration(String assignmentOne,String assignmentTwo) throws InterruptedException, Exception {
 		// Total no.of Assignment
 		assignmentPage.SelectAssignmentByReviewer(assignmentOne);
-		System.out.println("Selected Assignement " + assignmentOne);
-		baseClass.stepInfo("Selected Assignement " + assignmentOne);
+		System.out.println("Selected Assignement "  + assignmentOne);
+		baseClass.stepInfo("Selected Assignement "  + assignmentOne);
 //making doclist default view
 		removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
@@ -945,7 +977,8 @@ public class MiniDocListPage {
 		String childWindowHeaderFieldsC = childWindowHeaderFields.toString().toLowerCase();
 		String afterActionselectedFieldsPickColumnDisplayFirst = afterActionselectedFieldsPickColumnDisplayFirstAssignment
 				.toString().toLowerCase();
-		System.out.println(afterActionselectedFieldsPickColumnDisplayFirstAssignment.size() + " After Pick fields");
+		System.out.println(
+				afterActionselectedFieldsPickColumnDisplayFirstAssignment.size() + " After Pick fields");
 
 		softAssertion.assertEquals(childWindowHeaderFieldsC, afterActionselectedFieldsPickColumnDisplayFirst);
 
@@ -1086,7 +1119,7 @@ public class MiniDocListPage {
 	public void clickingGearIconMultipletimes(int clicks) {
 		int i;
 		driver.waitForPageToBeReady();
-
+		
 		for (i = 1; i < clicks; i++) {
 			getGearIcon().waitAndClick(5);
 		}
@@ -1413,11 +1446,10 @@ public class MiniDocListPage {
 	 * @throws InterruptedException
 	 * @throws Exception
 	 */
-	public void verifyDocMiniListMethodChildWindow(String assignmentOne, String assignmentTwo)
-			throws InterruptedException, Exception {
+	public void verifyDocMiniListMethodChildWindow(String assignmentOne,String assignmentTwo) throws InterruptedException, Exception {
 		assignmentPage.SelectAssignmentByReviewer(assignmentOne);
-		System.out.println("Selected Assignement " + assignmentOne);
-		baseClass.stepInfo("Selected Assignement " + assignmentOne);
+		System.out.println("Selected Assignement "  + assignmentOne);
+		baseClass.stepInfo("Selected Assignement "  + assignmentOne);
 		// Launching Mini doc Child Window
 		launchingMindoclistChildWindow();
 		// Handling Minidoclist Child Window
@@ -1488,7 +1520,8 @@ public class MiniDocListPage {
 		softAssertion.assertNotEquals(afterActionselectedFieldsPickColumnDisplayFirstAssignment,
 				selectedFieldsSecondAssignment);
 
-		if (afterActionselectedFieldsPickColumnDisplayFirstAssignment.equals(selectedFieldsSecondAssignment)) {
+		if (afterActionselectedFieldsPickColumnDisplayFirstAssignment
+				.equals(selectedFieldsSecondAssignment)) {
 			System.out.println("--");
 		}
 		{
@@ -1497,6 +1530,7 @@ public class MiniDocListPage {
 		}
 
 	}
+
 
 	/**
 	 * @author Indium Raghuram Description : Date:8/17/21 Modified date: N/A
@@ -1649,9 +1683,9 @@ public class MiniDocListPage {
 		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
 		baseClass.stepInfo("Selected " + assignmentNameToChoose);
 //making minidoclist default fields
-		removingFieldsAndDragnDropDefault();
-		driver.waitForPageToBeReady();
-
+	removingFieldsAndDragnDropDefault();
+	driver.waitForPageToBeReady();
+	
 		baseClass.stepInfo("Header Fields Before Action");
 		driver.waitForPageToBeReady();
 		configureMiniDocList();
@@ -1750,13 +1784,13 @@ public class MiniDocListPage {
 		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
 		baseClass.stepInfo("Selected " + assignmentNameToChoose);
 		baseClass.waitTime(2);
-		reusableDocViewPage.clickGearIconOpenMiniDocList();
-		docViewPage.switchToNewWindow(2);
+        reusableDocViewPage.clickGearIconOpenMiniDocList();
+        docViewPage.switchToNewWindow(2);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getChildWindowGearIcons());
 		getChildWindowGearIcons().waitAndClick(5);
 		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+	    docViewPage.switchToNewWindow(1);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getManualSortRadioButton());
@@ -1956,12 +1990,12 @@ public class MiniDocListPage {
 		docViewPage.selectAssignmentfromDashborad(assignmentTocreate);
 		baseClass.stepInfo("Assignment Selected : " + assignmentTocreate);
 
-		// making minidoclist default fields
-
-		removingFieldsAndDragnDropDefault();
-		driver.waitForPageToBeReady();
-
-		// Verify Sorting order in Child Window
+		//making minidoclist default fields
+		
+	removingFieldsAndDragnDropDefault();
+	driver.waitForPageToBeReady();
+		
+	// Verify Sorting order in Child Window
 		launchingMindoclistChildWindow();
 		String parentId = childWindowTransfer();
 
@@ -2261,7 +2295,7 @@ public class MiniDocListPage {
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
 
-		baseClass.waitTime(5);
+	    baseClass.waitTime(5);
 
 		for (int i = 1; i <= 3; i++) {
 			String name = docIDlist.get(i);
@@ -2379,7 +2413,6 @@ public class MiniDocListPage {
 		}
 		return completedDoc;
 	}
-
 	/**
 	 * @author Indium Raghuram Description : Method to click gearIcon Date: 9/13/21
 	 *         Modified date: NA Modified by: N/A
@@ -2388,7 +2421,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		try {
-			// baseClass.waitForElement(getGearIcon());
+			//baseClass.waitForElement(getGearIcon());
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getGearIcon().Visible();
@@ -2869,8 +2902,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		// Pick Column Display
 		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodForPickColumnDisplayWebFields();
-		String configureSelectedData = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
-				.toUpperCase();
+		String configureSelectedData = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString().toUpperCase();
 		driver.waitForPageToBeReady();
 		String headerVlaueAfterConfig = reusableDocViewPage.defaultHeaderValue();
 		softAssertion.assertEquals(configureSelectedData, headerVlaueAfterConfig);
@@ -3008,7 +3040,7 @@ public class MiniDocListPage {
 	 *              history drop down
 	 */
 
-	public void docsShouldNotOfMiniDocList(int count, String docIdText) throws InterruptedException {
+	public void docsShouldNotOfMiniDocList(int count,String docIdText) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 10; i++) {
 			getClickDocviewID(i).waitAndClick(5);
@@ -3051,11 +3083,12 @@ public class MiniDocListPage {
 		System.out.println(miniDocList);
 		if (miniDocList.contains(docIdText)) {
 			baseClass.failedStep("Minidoclist part of history drop down");
-		} else {
+		}
+		else {
 			baseClass.passedStep("DocId selected from history drop down : " + docIdText);
 			baseClass.passedStep(docIdText + ": Is not part of MiniDocList");
 		}
-
+		
 	}
 
 	/**
@@ -3070,9 +3103,9 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 10; i++) {
 			getClickDocviewID(i).waitAndClick(5);
-			if (i == 10) {
-				prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
-
+			if (i==10) {
+				prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+				
 			}
 		}
 		baseClass.waitForElement(getDocView_HistoryButton());
@@ -3112,8 +3145,8 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		for (int i = 1; i <= 2; i++) {
 			getClickDocviewID(i).waitAndClick(5);
-			if (i == 2) {
-				prnDoc = docViewPage.getVerifyPrincipalDocument().getText();
+			if (i==2) {
+				prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
 			}
 		}
 		reusableDocViewPage.clickGearIconOpenMiniDocList();
@@ -3339,7 +3372,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		String defaultValue = "DocID, DocFileType, FamilyRelationship, FamilyMemberCount";
 		driver.waitForPageToBeReady();
-		// clickingGearIcon();
+		//clickingGearIcon();
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(3);
 		baseClass.passedStep("Optimized mode is selected");
@@ -3744,7 +3777,7 @@ public class MiniDocListPage {
 			baseClass.failedStep("Document is Not highlighted");
 			return false;
 		}
-
+		
 	}
 
 	/**
@@ -3758,16 +3791,16 @@ public class MiniDocListPage {
 		getGearIcon().waitAndClick(10);
 		baseClass.waitForElement(getOptimizedSortRadioButton());
 		try {
-			String value = getSelectedOptimizedSortRadioButton().GetAttribute("checked");
-			System.out.println(value);
-			driver.waitForPageToBeReady();
-			if (value.equals("true")) {
-				baseClass.passedStep("Optimized mode from mini doc list is selected by default");
-			} else {
-				baseClass.failedStep("Optimized mode from mini doc list is not selected by default");
-			}
-		} catch (NullPointerException e) {
+		String value = getSelectedOptimizedSortRadioButton().GetAttribute("checked");
+		System.out.println(value);
+		driver.waitForPageToBeReady();
+		if (value.equals("true")) {
+			baseClass.passedStep("Optimized mode from mini doc list is selected by default");
+		} else {
+			baseClass.failedStep("Optimized mode from mini doc list is not selected by default");
 		}
+		}
+		catch(NullPointerException e) {}
 	}
 
 	/**
@@ -4352,6 +4385,7 @@ public class MiniDocListPage {
 
 		}
 	}
+	
 
 	/**
 	 * @author Sakthivel 07/02/22 NA Modified date: NA Modified by:NA
@@ -4395,8 +4429,8 @@ public class MiniDocListPage {
 	/**
 	 * @author Sakthivel 07/02/22 NA Modified date: NA Modified by:NA
 	 * @throws Exception
-	 * @description : verify selected Docs on ClockIcon is presently viewed in
-	 *              PersistentHit panel on SearchString.
+	 * @description : verify selected Docs on ClockIcon is presently viewed in PersistentHit panel on
+	 *              SearchString.
 	 */
 
 	public void verifySelectedDocsInClockIcon(String searchString, String searchString1) throws Exception {
@@ -4447,7 +4481,7 @@ public class MiniDocListPage {
 		}
 
 	}
-
+	
 	/**
 	 * @author Vijaya.Rani Modify Date: 16/03/22 NA Modified date: NA Modified by:NA
 	 * @description perform Gear Icon OpenPopUp Window
@@ -4464,7 +4498,7 @@ public class MiniDocListPage {
 		softAssertion.assertAll();
 		baseClass.passedStep("Configure mini doc list pop up Window open Successfully");
 	}
-
+	
 	/**
 	 * Indium-Baskar
 	 * 
@@ -4497,9 +4531,9 @@ public class MiniDocListPage {
 		dragAndDropAction(sourcefromPickColumDisplayed, destinationfromPickColumDisplayed);
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
-
+		
 	}
-
+	
 	public void removingFieldsAndDragnDropDefault() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		try {
@@ -4508,14 +4542,14 @@ public class MiniDocListPage {
 			baseClass.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 
-			driver.waitForPageToBeReady();
-			ElementCollection pickColumnafterSelectedfieldList = getSelectedFieldsAvailablePickColumnDisplay();
-			afterActionselectedFieldsList = availableListofElements(pickColumnafterSelectedfieldList);
-			for (String element : afterActionselectedFieldsList) {
-				System.out.println(element);
-				getValueToRemoveFromSelectedWebFields(element).waitAndClick(3);
-			}
-			baseClass.waitTime(5);
+        driver.waitForPageToBeReady();
+		ElementCollection pickColumnafterSelectedfieldList = getSelectedFieldsAvailablePickColumnDisplay();
+		afterActionselectedFieldsList = availableListofElements(pickColumnafterSelectedfieldList);
+		for (String element : afterActionselectedFieldsList) {
+			System.out.println(element);
+			getValueToRemoveFromSelectedWebFields(element).waitAndClick(3);
+		}
+		    baseClass.waitTime(5);
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("DocID");
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("DocFileType");
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("FamilyRelationship");
@@ -4528,7 +4562,7 @@ public class MiniDocListPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
-
+	
 	/**
 	 * @author
 	 * @description : removing All Existing Fields And AddingNewField
@@ -4560,200 +4594,155 @@ public class MiniDocListPage {
 		baseClass.passedStep("Newly Added Field is displayed in minidoclist");
 	}
 
-	/////////////// - Raghu changes
+/**
+* @author Raghuram.A
+*/
+public void checkFamilyMemberDoc() {
+MiniDocListPage doclist = new MiniDocListPage(driver);
+List<String> docIDFMlist = new ArrayList<>();
+String uniqueDoc = "";
+// Main method
+int sizeofList = doclist.getListofDocIDinCW().size();
+System.out.println("Size : " + sizeofList);
+int totalDocs = getDocCountMethod();
+Boolean dataEmpty = false; // for additional purpose
+Boolean uniqueDocStatus = false;
 
-	public Element getDocView_Analytics_liDocumentConceptualSimilarab() {
-		return driver.FindElementById("liDocumentConceptualSimilar");
-	}
+docIDlist = availableListofElements(doclist.getListofDocIDinCW());
 
-	public Element getDocView_Analytics_FamilyTab() {
-		return driver.FindElementById("liDocumentFamilyMember");
-	}
+for (int i = 1; i <= totalDocs; i++) {
+	String name = docIDlist.get(i);
+	getDociD(name).waitAndClick(5);
+	System.out.println("Selected Document : " + name);
+	baseClass.stepInfo("Selected Document : " + name);
 
-	public Element getFamilyData() {
-		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
-	}
+	// Move to NearDupes
+	driver.waitForPageToBeReady();
+	getDocView_Analytics_FamilyTab().WaitUntilPresent().ScrollTo();
+	getDocView_Analytics_FamilyTab().waitAndClick(5);
+	// Verify Empty
+	if (getFamilyData().isElementAvailable(3)) {
+		dataEmpty = false;
+	} else {
+		dataEmpty = true;
+		System.out.println("Document that has FamilyMember datas : " + name);
+		baseClass.stepInfo("Document that has FamilyMember datas : " + name);
 
-	public Element getNearDupeTab() {
-		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//td[@class='dataTables_empty']");
-	}
+		baseClass.waitForElementCollection(dtDocumentFamilyMembersID());
+		int sizeofDOcFMList = doclist.dtDocumentFamilyMembersID().size();
 
-	public ElementCollection dtDocumentFamilyMembersID() {
-		return driver.FindElementsByXPath(
-				"//table[@id='dtDocumentFamilyMembers']//tr[contains(@class,'dtDocumentFamilyMembersRowNumber_')]//td[contains(text(),'ID00')]");
-	}
-
-	public ElementCollection getNearDupesDataList() {
-		return driver.FindElementsByXPath("//div[@id='dtDocumentNearDuplicates_wrapper']//tr//th[@class='sorting']");
-	}
-
-	public ElementCollection getNearDupeDocCounnt() {
-		return driver.FindElementsByXPath(
-				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]");
-	}
-
-	public ElementCollection getNearDupeDocIDs(int index) {
-		return driver.FindElementsByXPath(
-				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
-						+ index + "]");
-	}
-
-	public ElementCollection getNearDupesDataListCollection(int index, int i) {
-		return driver.FindElementsByXPath(
-				"(.//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
-						+ index + "])[" + i + "]");
-	}
-
-	/**
-	 * @author Raghuram.A
-	 */
-	public void checkFamilyMemberDoc() {
-		MiniDocListPage doclist = new MiniDocListPage(driver);
-		List<String> docIDFMlist = new ArrayList<>();
-		String uniqueDoc = "";
-		// Main method
-		int sizeofList = doclist.getListofDocIDinCW().size();
-		System.out.println("Size : " + sizeofList);
-		int totalDocs = getDocCountMethod();
-		Boolean dataEmpty = false; // for additional purpose
-		Boolean uniqueDocStatus = false;
-
-		docIDlist = availableListofElements(doclist.getListofDocIDinCW());
-
-		for (int i = 1; i <= totalDocs; i++) {
-			String name = docIDlist.get(i);
-			getDociD(name).waitAndClick(5);
-			System.out.println("Selected Document : " + name);
-			baseClass.stepInfo("Selected Document : " + name);
-
-			// Move to NearDupes
-			driver.waitForPageToBeReady();
-			getDocView_Analytics_FamilyTab().WaitUntilPresent().ScrollTo();
-			getDocView_Analytics_FamilyTab().waitAndClick(5);
-			// Verify Empty
-			if (getFamilyData().isElementAvailable(3)) {
-				dataEmpty = false;
-			} else {
-				dataEmpty = true;
-				System.out.println("Document that has FamilyMember datas : " + name);
-				baseClass.stepInfo("Document that has FamilyMember datas : " + name);
-
-				baseClass.waitForElementCollection(dtDocumentFamilyMembersID());
-				int sizeofDOcFMList = doclist.dtDocumentFamilyMembersID().size();
-
-				for (int j = 1; j <= sizeofDOcFMList; j++) {
-					docIDFMlist = availableListofElements(doclist.dtDocumentFamilyMembersID());
-					System.out.println(docIDFMlist.get(j));
-					try {
-						uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j), "", "");
-						if (!uniqueDoc.equals("Empty")) {
-							System.out.println("Unique doc : " + uniqueDoc);
-							uniqueDocStatus = true;
-							break;
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					if (!uniqueDocStatus && j == sizeofDOcFMList) {
-						baseClass.failedStep("Expected Input data not available");
-					}
-				}
-				if (uniqueDocStatus) {
+		for (int j = 1; j <= sizeofDOcFMList; j++) {
+			docIDFMlist = availableListofElements(doclist.dtDocumentFamilyMembersID());
+			System.out.println(docIDFMlist.get(j));
+			try {
+				uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j), "", "");
+				if (!uniqueDoc.equals("Empty")) {
+					System.out.println("Unique doc : " + uniqueDoc);
+					uniqueDocStatus = true;
 					break;
 				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (!uniqueDocStatus && j == sizeofDOcFMList) {
+				baseClass.failedStep("Expected Input data not available");
 			}
 		}
-	}
-
-	/**
-	 * @author Raghuram.A
-	 * @return
-	 */
-	public Integer getDocCountMethod() {
-		String documentSize = "";
-		int docCount = 0;
-		try {
-			baseClass.waitForElement(getDocumentCountFromDocView());
-			String sizeofList = getDocumentCountFromDocView().getText();
-			documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
-			System.out.println("Size : " + documentSize);
-			baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (uniqueDocStatus) {
+			break;
 		}
-		docCount = Integer.parseInt(documentSize);
-		return docCount;
 	}
+}
+}
 
-	/**
-	 * @author Raghuram.A
-	 * @throws AWTException
-	 */
-	public void checkNearDupeDoc() throws AWTException {
-		MiniDocListPage doclist = new MiniDocListPage(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
-		List<String> docIDFMlist = new ArrayList<>();
-		String uniqueDoc = "";
-		// Main method
-		int sizeofList = doclist.getListofDocIDinCW().size();
-		System.out.println("Size : " + sizeofList);
-		int totalDocs = getDocCountMethod();
-		Boolean dataEmpty = false; // for additional purpose
-		Boolean uniqueDocStatus = false;
+/**
+* @author Raghuram.A
+* @return
+*/
+public Integer getDocCountMethod() {
+String documentSize = "";
+int docCount = 0;
+try {
+	baseClass.waitForElement(getDocumentCountFromDocView());
+	String sizeofList = getDocumentCountFromDocView().getText();
+	documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+	System.out.println("Size : " + documentSize);
+	baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+docCount = Integer.parseInt(documentSize);
+return docCount;
+}
 
-		docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+/**
+* @author Raghuram.A
+* @throws AWTException
+*/
+public void checkNearDupeDoc() throws AWTException {
+MiniDocListPage doclist = new MiniDocListPage(driver);
+DocViewPage docViewPage = new DocViewPage(driver);
+List<String> docIDFMlist = new ArrayList<>();
+String uniqueDoc = "";
+// Main method
+int sizeofList = doclist.getListofDocIDinCW().size();
+System.out.println("Size : " + sizeofList);
+int totalDocs = getDocCountMethod();
+Boolean dataEmpty = false; // for additional purpose
+Boolean uniqueDocStatus = false;
 
-		for (int i = 1; i <= totalDocs; i++) {
-			String name = docIDlist.get(i);
-			getDociD(name).waitAndClick(5);
-			System.out.println("Selected Document : " + name);
-			baseClass.stepInfo("Selected Document : " + name);
+docIDlist = availableListofElements(doclist.getListofDocIDinCW());
 
-			// Move to NearDupes
-			driver.waitForPageToBeReady();
-			getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
-			getDocView_Analytics_NearDupeTab().waitAndClick(5);
+for (int i = 1; i <= totalDocs; i++) {
+	String name = docIDlist.get(i);
+	getDociD(name).waitAndClick(5);
+	System.out.println("Selected Document : " + name);
+	baseClass.stepInfo("Selected Document : " + name);
 
-			// Verify Empty
-			if (getNearDupeTab().isElementAvailable(3)) {
-				dataEmpty = false;
-			} else {
-				dataEmpty = true;
-				System.out.println("Document that has NearDupe datas : " + name);
-				baseClass.stepInfo("Document that has NearDupe datas : " + name);
+	// Move to NearDupes
+	driver.waitForPageToBeReady();
+	getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
+	getDocView_Analytics_NearDupeTab().waitAndClick(5);
 
-				int sizeofDOcFMList = getNearDupeDocCounnt().size();
-				baseClass.waitForElementCollection(getNearDupeDocIDs(sizeofDOcFMList));
+	// Verify Empty
+	if (getNearDupeTab().isElementAvailable(3)) {
+		dataEmpty = false;
+	} else {
+		dataEmpty = true;
+		System.out.println("Document that has NearDupe datas : " + name);
+		baseClass.stepInfo("Document that has NearDupe datas : " + name);
 
-				// Header
-				int docIDindex = baseClass.getIndex(getNearDupesDataList(), "DocID");
+		int sizeofDOcFMList = getNearDupeDocCounnt().size();
+		baseClass.waitForElementCollection(getNearDupeDocIDs(sizeofDOcFMList));
 
-				for (int j = 1; j <= sizeofDOcFMList; j++) {
-					docIDFMlist = availableListofElements(doclist.getNearDupeDocIDs(docIDindex + 1));
-					System.out.println(docIDFMlist.get(j - 1));
-					try {
-						uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j - 1), "", "");
-						if (!uniqueDoc.equals("Empty")) {
-							System.out.println("Unique NearDupe doc : " + uniqueDoc);
-							uniqueDocStatus = true;
-							if (docViewPage.highlightVerification(uniqueDoc)) {
-								baseClass.stepInfo("Highlights present in the document");
-								break;
-							} else {
-								uniqueDocStatus = false;
-								continue;
-							}
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		// Header
+		int docIDindex = baseClass.getIndex(getNearDupesDataList(), "DocID");
+
+		for (int j = 1; j <= sizeofDOcFMList; j++) {
+			docIDFMlist = availableListofElements(doclist.getNearDupeDocIDs(docIDindex + 1));
+			System.out.println(docIDFMlist.get(j - 1));
+			try {
+				uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j - 1), "", "");
+				if (!uniqueDoc.equals("Empty")) {
+					System.out.println("Unique NearDupe doc : " + uniqueDoc);
+					uniqueDocStatus = true;
+					if (docViewPage.highlightVerification(uniqueDoc)) {
+						baseClass.stepInfo("Highlights present in the document");
+						break;
+					} else {
+						uniqueDocStatus = false;
+						continue;
 					}
 				}
-				if (uniqueDocStatus) {
-					break;
-				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
+		if (uniqueDocStatus) {
+			break;
+		}
 	}
+}
+}
 
-	////////////////////////////////////
 }

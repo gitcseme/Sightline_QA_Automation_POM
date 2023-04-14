@@ -98,8 +98,7 @@ public class BaseClass {
 	}
 
 	public Element getSelectRole() {
-		return driver
-				.FindElementByXPath("//label[contains(text(),'Impersonate To: ')]//following::select[@name='Role']");
+		return driver.FindElementByXPath("//label[contains(text(),'Impersonate To: ')]//following::select[@name='Role']");
 	}
 
 	public Element getSelectDomain() {
@@ -131,11 +130,11 @@ public class BaseClass {
 	public Element getSelectProject() {
 		return driver.FindElementByXPath("//a[@title='" + Input.projectName + "']");
 	}
-
+	
 	public Element getSelectProjectCjk() {
 		return driver.FindElementByXPath("//a[@title='" + Input.projectNameCjk + "']");
 	}
-
+	
 	public Element getSelectProjectICE() {
 		return driver.FindElementByXPath("//a[@title='" + Input.ICEProjectName + "']");
 	}
@@ -313,8 +312,7 @@ public class BaseClass {
 	}
 
 	public Element getRedBullHornIcon() {
-		// return driver.FindElementByXPath("//span[@class='activity-dropdown
-		// newRed']");
+		//return driver.FindElementByXPath("//span[@class='activity-dropdown newRed']");
 		return driver.FindElementByXPath("//a[@class='activity-dropdown newRed']");
 	}
 
@@ -346,11 +344,9 @@ public class BaseClass {
 	public Element getLoginedUserRole() {
 		return driver.FindElementByXPath("//span[@class='badge bg-color-greenLight']");
 	}
-
 	public ElementCollection getAllTags() {
 		return driver.FindElementsByXPath("//a[text()='All Tags']/../..//ul//li//a");
 	}
-
 	public Element getDefaultTag() {
 		return driver.FindElementByXPath("//a[text()='Default Tags']//preceding-sibling::i");
 	}
@@ -419,7 +415,6 @@ public class BaseClass {
 		}
 
 	}
-
 	public void impersonatePAtoRMU(String ProjectName) throws InterruptedException {
 		waitForElement(getSignoutMenu());
 		waitTillElemetToBeClickable(getSignoutMenu());
@@ -633,7 +628,7 @@ public class BaseClass {
 		UtilityLog.info("Project is successfully selected");
 
 	}
-
+	
 	public void selectprojectCjk() {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -647,10 +642,10 @@ public class BaseClass {
 		driver.scrollPageToTop();
 		getProjectNames().waitAndClick(3);
 
-		getSelectProjectCjk().waitAndClick(3);
+	 	getSelectProjectCjk().waitAndClick(3);
 		driver.waitForPageToBeReady();
 	}
-
+	
 	public void selectprojectICE() {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -673,6 +668,7 @@ public class BaseClass {
 
 	}
 
+	
 	/**
 	 * Method is to select the project after logging in to application
 	 * 
@@ -906,8 +902,8 @@ public class BaseClass {
 			}
 		}
 	}
-
-	public void impersonateDAtoPA(String projectName, String domainName) {
+	
+	public void impersonateDAtoPA(String projectName,String domainName) {
 		getSignoutMenu().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2102,8 +2098,7 @@ public class BaseClass {
 			UtilityLog.info(sw.toString());
 		}
 	}
-
-	public void impersonateDAtoRMU(String projectName, String domainName) {
+	public void impersonateDAtoRMU(String projectName,String domainName) {
 		try {
 			waitForElement(getSignoutMenu());
 			getSignoutMenu().waitAndClick(5);
@@ -3114,21 +3109,19 @@ public class BaseClass {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}
 	}
-
 	public void openNewTabJs(String URL) {
 		try {
-			String a = "window.open('" + URL + "');";
-			((JavascriptExecutor) driver.getWebDriver()).executeScript(a);
+			 String a = "window.open('"+URL+"');";
+		        ((JavascriptExecutor)driver.getWebDriver()).executeScript(a);
 			passedStep("New tab is opened successfully");
 		} catch (Exception e) {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
 		}
 	}
-
 	public void openNewTabActionClass() {
 		try {
 			Actions act = new Actions(driver.getWebDriver());
-			act.keyDown(Keys.CONTROL).sendKeys("t").keyUp(Keys.CONTROL).build().perform();
+			act.keyDown(Keys.CONTROL).sendKeys("t").keyUp(Keys.CONTROL).build().perform(); 
 			passedStep("New tab is opened successfully");
 		} catch (Exception e) {
 			UtilityLog.info("Failed to open new tab due to following exception " + e);
@@ -3779,6 +3772,7 @@ public class BaseClass {
 			stepInfo("No new Tabs opened.");
 		}
 	}
+	
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -4992,7 +4986,7 @@ public class BaseClass {
 		}
 		return isKeyPresent;
 	}
-
+	
 	/**
 	 * @author sowndarya
 	 */
@@ -5010,9 +5004,39 @@ public class BaseClass {
 		System.out.println(Time);
 		UtilityLog.info(Time);
 		return Time;
+}
+	/**
+	 * @author Indium Raghuram Description : Method to transfer control to child
+	 *         window Returns : returns parent window id Date: 8/15/21 Modified
+	 *         date: N/A Modified by: N/A
+	 */
+	public String childWindowTransfer() throws AWTException, InterruptedException {
+		driver.waitForPageToBeReady();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		Set<String> childWindowID = driver.getWebDriver().getWindowHandles();
+		for (String childWindowList : childWindowID) {
+			if (!parentWindowID.equals(childWindowList)) {
+				driver.switchTo().window(childWindowList);
+				try {
+					driver.waitForPageToBeReady();
+				} catch (NullPointerException e) {
+				}
+				String text = driver.getTitle();
+				System.out.println("Heading of child window is " + text);
+			}
+		}
+		return parentWindowID;
 	}
-
-	// Raghu changes
+	/**
+	 * @author Indium Raghuram Description : Method to close child window and
+	 *         transfer control to Parent window Date : 8/15/21 Modified date: N/A
+	 *         Modified by: N/A
+	 * @throws InterruptedException
+	 */
+	public void childWIndowCloseHandles(String parentWindowID) throws InterruptedException {
+		driver.close();
+		driver.switchTo().window(parentWindowID);
+	}
 	/**
 	 * @author Raghuram.A
 	 * @param source
@@ -5039,37 +5063,4 @@ public class BaseClass {
 
 	}
 
-	/**
-	 * @author Indium Raghuram Description : Method to transfer control to child
-	 *         window Returns : returns parent window id Date: 8/15/21 Modified
-	 *         date: N/A Modified by: N/A
-	 */
-	public String childWindowTransfer() throws AWTException, InterruptedException {
-		driver.waitForPageToBeReady();
-		String parentWindowID = driver.getWebDriver().getWindowHandle();
-		Set<String> childWindowID = driver.getWebDriver().getWindowHandles();
-		for (String childWindowList : childWindowID) {
-			if (!parentWindowID.equals(childWindowList)) {
-				driver.switchTo().window(childWindowList);
-				try {
-					driver.waitForPageToBeReady();
-				} catch (NullPointerException e) {
-				}
-				String text = driver.getTitle();
-				System.out.println("Heading of child window is " + text);
-			}
-		}
-		return parentWindowID;
-	}
-
-	/**
-	 * @author Indium Raghuram Description : Method to close child window and
-	 *         transfer control to Parent window Date : 8/15/21 Modified date: N/A
-	 *         Modified by: N/A
-	 * @throws InterruptedException
-	 */
-	public void childWIndowCloseHandles(String parentWindowID) throws InterruptedException {
-		driver.close();
-		driver.switchTo().window(parentWindowID);
-	}
 }

@@ -101,8 +101,6 @@ public class DocViewMiniDocList_Phase2_Regression {
 		// logout
 		login.logout();
 	}
-
-	///Raghu - changess
 	@Test(description = "RPMXCON-46855", enabled = true, groups = { "regression" })
 	public void che3ckNearDupe() throws InterruptedException, AWTException {
 
@@ -147,7 +145,6 @@ public class DocViewMiniDocList_Phase2_Regression {
 		// logout
 		login.logout();
 	}
-
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
