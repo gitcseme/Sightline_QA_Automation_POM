@@ -488,7 +488,7 @@ public class DocViewPage {
 	}
 
 	public Element geDocView_MiniList_CodeSameAsIcon() {
-return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
+		return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
 	}
 
 	public Element geDocView_FamilyMem_CodeSameAsIcon() {
@@ -862,10 +862,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getDocument_CommentsTextBox() {
 		return driver.FindElementByXPath("//textarea[@id='1_textarea']");
 	}
-	
+
 	public Element getDocument_AddComment() {
-        return driver.FindElementByXPath("//*[@id='item1']//label//textarea");
-    }
+		return driver.FindElementByXPath("//*[@id='item1']//label//textarea");
+	}
 
 	public Element getReadOnlyTextBox(String projectFieldName) {
 		return driver.FindElementByXPath("//input[@name='FIELD'][@projectfieldname='" + projectFieldName + "']");
@@ -900,12 +900,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getCodingStampSaveBtn() {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save']");
 	}
-	
+
 	public Element getCodingStampSaveButton() {
 		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save Coding']");
 	}
 
-	
 	public Element getDocview_GearButton() {
 		return driver.FindElementByXPath("//i[@class='fa fa-gear font-xl']");
 	}
@@ -1540,6 +1539,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
+
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
@@ -1625,7 +1625,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getDocList_DocId() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr[1]/td[4]");
+		return driver.FindElementByXPath("//*[@id='dtDocList']//td[@class='sorting_1']");
 	}
 
 	public Element getDocView_ThreadMapTab_FirstDoc_Text() {
@@ -2184,7 +2184,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getNavigationMsg() {
-		//return driver.FindElementByXPath("//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p");
+		// return driver.FindElementByXPath("//span[text()='Confirm
+		// Navigation']/ancestor::div[@role='dialog']//p");
 		return driver.FindElementByXPath("//*[@id='ui-id-4']/p/text()");
 	}
 
@@ -2213,7 +2214,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	// added by sowndarya.velraj
-
 
 	public Element tagnameInDocview() {
 		return driver.FindElementByXPath("//span[@type='checkbox']");
@@ -2317,8 +2317,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getSelectedDocIdInMiniDocList() {
-		return driver.FindElementByXPath(
-				"//i[@class='fa fa-arrow-right']/..//following-sibling::td[contains(text(),'ID')]");
+		return driver
+				.FindElementByXPath("//i[@class='fa fa-arrow-right']/..//following-sibling::td[contains(text(),'ID')]");
 	}
 
 	public Element getDocView_MiniDocList_SelectSecDocs() {
@@ -3651,6 +3651,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getselectDocHistory(int no) {
 		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li)[" + no + "]");
 	}
+
 	public Element getAttorney_ClientCheckBox() {
 		return driver.FindElementByXPath("//*[@id='l_it_0']/span");
 	}
@@ -3658,15 +3659,15 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getAudioSilderValue() {
 		return driver.FindElementByXPath("//div[@class='tooltip top in']//div[@class='tooltip-inner']");
 	}
-	
+
 	public Element getAudioSilderPoint() {
 		return driver.FindElementByXPath("//div[@class='slider-handle round']");
 	}
-	
+
 	public Element getDocviewAudio_StartTime() {
 		return driver.FindElementByXPath("//*[@class='jp-current-time']");
 	}
-	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -6127,7 +6128,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getDocView_NumTextBox());
-        getDocView_NumTextBox().waitAndClick(5);
+		getDocView_NumTextBox().waitAndClick(5);
 		getDocView_NumTextBox().SendKeys("125" + Keys.ENTER);
 		base.waitTime(3);
 		base.waitForElement(getDocumetListLoading());
@@ -7512,7 +7513,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		try {
 			driver.waitForPageToBeReady();
-			
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
@@ -14476,7 +14477,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		try {
 			base.waitTime(4);
-			 driver.waitForPageToBeReady();
+			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
@@ -14500,9 +14501,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
-            base.waitForElement(getSelectedAreaElement());
-            base.waitTillElemetToBeClickable(getSelectedAreaElement());
-            getSelectedAreaElement().waitAndClick(5);
+			base.waitForElement(getSelectedAreaElement());
+			base.waitTillElemetToBeClickable(getSelectedAreaElement());
+			getSelectedAreaElement().waitAndClick(5);
 			WebElement text = getPageNumberInputTextField().getWebElement();
 			int x = text.getLocation().getX();
 			int y = text.getLocation().getY();
@@ -18169,7 +18170,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
-		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
+		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
@@ -18423,12 +18424,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 //	Reusable method for verify the saved stamp
 	public void verifyComments(String comment) {
-//		driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
-		base.waitTime(2);
 		String text = getDocument_CommentsTextBox().GetAttribute("value");
-		base.waitTime(2);
-		System.out.println(text);
 		softAssertion.assertEquals(text, comment);
 		if (text.equals(comment)) {
 			base.stepInfo("Coding form value as per the previous one");
@@ -18845,7 +18843,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void clickCodeSameAsLast() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodeSameAsLast());
-		getCodeSameAsLast().javascriptclick(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
@@ -19897,15 +19895,15 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void verifyPersistantHitsWithDocView(List<String> keywords) {
 		List<String> persisatantNames = new ArrayList<String>();
 		try {
-			 driver.waitForPageToBeReady();
-             driver.waitForPageToBeReady();
-             base.waitForElement(getPersistantHitEyeIcon());
-             base.waitForElement(getPersistantHitEyeIcon());
-             base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+			driver.waitForPageToBeReady();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPersistantHitEyeIcon());
+			base.waitForElement(getPersistantHitEyeIcon());
+			base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
 //             Modify
-             getPersistantHitEyeIcon().waitAndClick(5);
-             base.waitForElementCollection(getPersistantNamesList());
-             persisatantNames = base.availableListofElements(getPersistantNamesList());
+			getPersistantHitEyeIcon().waitAndClick(5);
+			base.waitForElementCollection(getPersistantNamesList());
+			persisatantNames = base.availableListofElements(getPersistantNamesList());
 			base.passedStep("Persistant hits are : " + persisatantNames);
 			if (persisatantNames.containsAll(keywords)) {
 				base.passedStep("All keywords are displayed in persistant hit panel");
@@ -23451,7 +23449,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
-		//driver.get("https://sightlineqa.consiliotest.com/DocumentViewer/DocView");
+		// driver.get("https://sightlineqa.consiliotest.com/DocumentViewer/DocView");
 		driver.Navigate().refresh();
 		base.handleAlert();
 		driver.waitForPageToBeReady();
@@ -23551,7 +23549,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
 		base.waitForElement(getFolderSelection(folder));
-        getFolderSelection(folder).waitAndClick(10);
+		getFolderSelection(folder).waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -23604,8 +23602,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-        base.waitForElement(getFolderSelection(folder));
-        getFolderSelection(folder).waitAndClick(10);
+		base.waitForElement(getFolderSelection(folder));
+		getFolderSelection(folder).waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -24283,8 +24281,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
-			
-			base.waitTime(2);
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
@@ -24601,7 +24597,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
+			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
@@ -25698,7 +25694,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitTime(3);
 			base.waitForElement(getDocViewNotificationBellIcon());
 			getDocViewNotificationBellIcon().waitAndClick(10);
-			
+
 			base.waitForElement(getDocView_Print());
 			getDocView_Print().waitAndClick(10);
 
@@ -26392,28 +26388,18 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		savedSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
 		base.waitForElement(savedSearch.getSavedSearch_SearchName());
 		savedSearch.getSavedSearch_SearchName().SendKeys(searchName);
-		savedSearch.getSavedSearch_ApplyFilterButton().javascriptclick(savedSearch.getSavedSearch_ApplyFilterButton());
+		savedSearch.getSavedSearch_ApplyFilterButton().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return savedSearch.getSelectWithName(searchName).Visible();
 			}
 		}), Input.wait30);
-		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));
+		savedSearch.getSelectWithName(searchName).waitAndClick(10);
 
-//		base.waitForElement(savedSearch.getToDocView());
-//		savedSearch.getToDocView().waitAndClick(5);
-		savedSearch.docViewFromSS("View in DocView");
+		base.waitForElement(savedSearch.getToDocView());
+		savedSearch.getToDocView().waitAndClick(5);
 
-		try {
-			if (base.getYesBtn().isElementAvailable(3)) {
-				base.getYesBtn().waitAndClick(10);
-			}
-
-		} catch (Exception e) {
-			System.out.println("Pop up message does not appear");
-			UtilityLog.info("Pop up message does not appear");
-		}
 	}
 
 	/**
@@ -26586,7 +26572,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		String parentWindow = reusableDocView.switchTochildWindow();
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
-	
+
 		if (getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
 		} else {
@@ -27638,7 +27624,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 
-			
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
+			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
 
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
 
@@ -28835,7 +28825,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 * @description : verifyKeywordsOnDocView
 	 * @param keywords
 	 */
-	public void verifyKeywordsOnDocView(List<String> keywords,String[][]keywordss) {
+	public void verifyKeywordsOnDocView(List<String> keywords, String[][] keywordss) {
 		base.waitForElement(getEyeIcon());
 		if (getPersistentPanel().isElementAvailable(3)) {
 			System.out.println("the Persistent Panel is already available.");
@@ -28844,21 +28834,22 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			getEyeIcon().waitAndClick(5);
 		}
 		base.waitTime(3);
-		if(keywordss == null) {
-		for (String keyword : keywords) {
-			if (getHitPanleVerify(keyword).isElementAvailable(5)) {
-				base.passedStep("keyword '" + keyword + "' is present in the DocView page");
-			} else {
-				base.failedStep("keyword '" + keyword + "' is Not present in the DocView page");
+		if (keywordss == null) {
+			for (String keyword : keywords) {
+				if (getHitPanleVerify(keyword).isElementAvailable(5)) {
+					base.passedStep("keyword '" + keyword + "' is present in the DocView page");
+				} else {
+					base.failedStep("keyword '" + keyword + "' is Not present in the DocView page");
+				}
 			}
-		}}else {
-			for(int i=0,j=0;i<keywordss.length;i++) {
+		} else {
+			for (int i = 0, j = 0; i < keywordss.length; i++) {
 				if (getHitPanleVerify(keywordss[i][j]).isElementAvailable(10)) {
 					base.passedStep("keyword '" + keywordss[i][j] + "' is present in the DocView page");
 				} else {
 					base.failedStep("keyword '" + keywordss[i][j] + "' is Not present in the DocView page");
 				}
-			}	
+			}
 		}
 	}
 
@@ -28977,43 +28968,45 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.stepInfo("copied text is pasted on codingform comment box");
 		return status;
 	}
-	
+
 	/**
 	 * @author Mohan Venugopal Date: 11/15/22 Modified date:N/A Modified by: N/A
-	 * Description : To verify application latency is not more than 5 seconds. 
+	 *         Description : To verify application latency is not more than 5
+	 *         seconds.
 	 */
 	public void loadingCountVerify(int waitTime, Element loadingElement) throws InterruptedException {
 		base.stepInfo("Verifying Application not hang or shows latency longer than 5 seconds.");
 		base.waitTime(waitTime); // In order to verify latency
 		if (loadingElement.isElementAvailable(1)) {
-			base.passedStep("Application not hang or shows latency of "+waitTime+" seconds.");
+			base.passedStep("Application not hang or shows latency of " + waitTime + " seconds.");
 		} else {
-			base.failedMessage("Continues Loading more than "+waitTime+" seconds.");
+			base.failedMessage("Continues Loading more than " + waitTime + " seconds.");
 		}
 	}
+
 	/**
-     * @author  Created Date: NA
-     * @description To verify copyandpaste is should be clicked
-     */
-   public void verifyCopyandPasteIconStatus() {
-        driver.waitForPageToBeReady();
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return getCopyPasteIconStatus().Displayed();
-            }
-        }), Input.wait120);
-        String status = getCopyPasteIconStatus().GetAttribute("class");
-        System.out.println(status);
-        base.waitForElement(getCopyPasteIconStatus());
-        if (status.equals("active")) {
-            base.passedStep("Copy and paste icon is in enabled state");
-        } else {
-            base.failedStep("Copy and paste icon is in disabled state");
-        }
-   }
-   
-   /**
-	 * @author  Created Date: NA
+	 * @author Created Date: NA
+	 * @description To verify copyandpaste is should be clicked
+	 */
+	public void verifyCopyandPasteIconStatus() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPasteIconStatus().Displayed();
+			}
+		}), Input.wait120);
+		String status = getCopyPasteIconStatus().GetAttribute("class");
+		System.out.println(status);
+		base.waitForElement(getCopyPasteIconStatus());
+		if (status.equals("active")) {
+			base.passedStep("Copy and paste icon is in enabled state");
+		} else {
+			base.failedStep("Copy and paste icon is in disabled state");
+		}
+	}
+
+	/**
+	 * @author Created Date: NA
 	 * @description To verify selected folder in docview folder tab
 	 */
 
@@ -29093,4 +29086,80 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		Assert.assertTrue(getFolderFromList(folderName).Displayed());
 
 	}
+
+/////////////// - Raghu Changes
+
+	public Element getNearDupesData() {
+		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+	}
+
+	public Element getFamilyData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+	}
+
+	public Element getThreadData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+	}
+
+	public ElementCollection dtDocumentFamilyMembersID() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtDocumentFamilyMembers']//tr[contains(@class,'dtDocumentFamilyMembersRowNumber_')]//td[contains(text(),'ID000000')]");
+	}
+
+	public ElementCollection getNearDupesDataList() {
+		return driver.FindElementsByXPath("//div[@id='dtDocumentNearDuplicates_wrapper']//tr//th[@class='sorting']");
+	}
+
+	public Element getNearDupeDataId(int index, String data) {
+		return driver.FindElementByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + " and text()=' " + data + "']");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param uniqueDoc
+	 * @return
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 */
+	public Boolean highlightVerification(String uniqueDoc) throws InterruptedException, AWTException {
+
+		// Header
+		int docIDindex = base.getIndex(getNearDupesDataList(), "DocID");
+
+		// To click doc
+		getNearDupeDataId(docIDindex, uniqueDoc).waitAndClick(5);
+
+		// Transfer control to child window
+		String parentWindowID = base.childWindowTransfer();
+
+		getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = getDocView_NearDupe_DocID().getText().toString();
+		System.out.println(docidinchildwinodw);
+
+		// Highlight Check
+		Boolean highlight = highlightCheck();
+
+		// Transfer control back to Parent Window
+		base.childWIndowCloseHandles(parentWindowID);
+		base.waitTime(3);
+
+		return highlight;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @return
+	 */
+	public Boolean highlightCheck() {
+		if (get_textHighlightedColor().isElementAvailable(5)) {
+			base.passedStep("Documents are present with the persistent hits");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+//////////////
 }

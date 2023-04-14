@@ -1,5 +1,6 @@
 package sightline.docviewMiniDocList;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -19,6 +20,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
+import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -95,6 +97,52 @@ public class DocViewMiniDocList_Phase2_Regression {
 		// Default view
 		base.stepInfo("**Step-3 Click the document from mini doc list by RMU");
 		docView.selectDocumentFromMiniDocList(rowNumber);
+
+		// logout
+		login.logout();
+	}
+
+	///Raghu - changess
+	@Test(description = "RPMXCON-46855", enabled = true, groups = { "regression" })
+	public void che3ckNearDupe() throws InterruptedException, AWTException {
+
+		SessionSearch session = new SessionSearch(driver);
+		// login as Users
+		base.stepInfo(
+				"**Step-1 Logged in as RMU/Reviewer user in same project and security group as per pre-requisites **");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigating to DocExplorer and selecting Documents
+		base.stepInfo("**Step-2 From Doc Explorer, select few documents and select action as 'View in Docview'");
+		session.basicContentSearch("Auto");
+		session.viewInDocView();
+
+		// selecting the document from miniDocList and verifying whether it is viewed in
+		// Default view
+		base.stepInfo("**Step-3 Click the document from mini doc list by RMU");
+		miniDocListPage.checkNearDupeDoc();
+
+		// logout
+		login.logout();
+	}
+	@Test(description = "RPMXCON-46855", enabled = true, groups = { "regression" })
+	public void checkFamilyMember() throws InterruptedException, AWTException {
+
+		SessionSearch session = new SessionSearch(driver);
+		// login as Users
+		base.stepInfo(
+				"**Step-1 Logged in as RMU/Reviewer user in same project and security group as per pre-requisites **");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigating to DocExplorer and selecting Documents
+		base.stepInfo("**Step-2 From Doc Explorer, select few documents and select action as 'View in Docview'");
+		session.basicContentSearch("Auto");
+		session.viewInDocView();
+
+		// selecting the document from miniDocList and verifying whether it is viewed in
+		// Default view
+		base.stepInfo("**Step-3 Click the document from mini doc list by RMU");
+		miniDocListPage.checkFamilyMemberDoc();
 
 		// logout
 		login.logout();
