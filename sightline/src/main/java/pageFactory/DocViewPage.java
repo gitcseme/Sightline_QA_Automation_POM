@@ -9020,7 +9020,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
-		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
+		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
 		driver.getPageSource();
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(20);
@@ -18196,7 +18196,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
-		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
+		getDocView_Analytics_Conceptual_ThirdDoc().waitAndClick(15);
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(15);
@@ -18451,10 +18451,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //	Reusable method for verify the saved stamp
 	public void verifyComments(String comment) {
 //		driver.waitForPageToBeReady();
-		base.waitForElement(getDocument_CommentsTextBox());			
-		base.waitTime(2);	
-		String text = getDocument_CommentsTextBox().GetAttribute("value");		
-		base.waitTime(2);	
+		base.waitForElement(getDocument_CommentsTextBox());		
+		base.waitTime(2);
+		String text = getDocument_CommentsTextBox().GetAttribute("value");
+		base.waitTime(2);
 		System.out.println(text);
 		softAssertion.assertEquals(text, comment);
 		if (text.equals(comment)) {
@@ -26425,23 +26425,20 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				return savedSearch.getSelectWithName(searchName).Visible();
 			}
 		}), Input.wait30);
-		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));		
+		savedSearch.getSelectWithName(searchName).javascriptclick(savedSearch.getSelectWithName(searchName));
 
 //		base.waitForElement(savedSearch.getToDocView());	
 //		savedSearch.getToDocView().waitAndClick(5);	
 		savedSearch.docViewFromSS("View in DocView");	
 
-
-		try {			
-			if (base.getYesBtn().isElementAvailable(3)) {	
-				base.getYesBtn().waitAndClick(10);	
-			}	
-
-
-		} catch (Exception e) {	
-			System.out.println("Pop up message does not appear");	
-			UtilityLog.info("Pop up message does not appear");	
-		}	
+		try {
+			if (base.getYesBtn().isElementAvailable(3)) {
+				base.getYesBtn().waitAndClick(10);
+			}
+		} catch (Exception e) {
+			System.out.println("Pop up message does not appear");
+			UtilityLog.info("Pop up message does not appear");
+		}
 	}
 	/**
 	 * @author Arunkumar Modified date: NA Modified by:NA
