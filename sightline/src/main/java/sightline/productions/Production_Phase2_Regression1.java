@@ -332,7 +332,7 @@ public class Production_Phase2_Regression1 {
 		driver.waitForPageToBeReady();
 		File dir = new File(home + "/Downloads/VOL0001/Images/0001/");
 		File imageFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(imageFile);
 		File[] dir_contents = dir.listFiles();
 		System.out.println(dir_contents.length);
@@ -406,7 +406,7 @@ public class Production_Phase2_Regression1 {
 		page.isdatFileExist();
 		File NativeFile = new File(home + "/Downloads/VOL0001/Natives/0001/");
 		File imageFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(NativeFile);
 		page.isfileisExists(imageFile);
 		loginPage.logout();
@@ -821,7 +821,7 @@ public class Production_Phase2_Regression1 {
 		}
 		driver.waitForPageToBeReady();
 		File TiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(TiffFile);
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1763,7 +1763,7 @@ public class Production_Phase2_Regression1 {
 		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, Lastile, prefixID, suffixID, Input.searchString4);
 
 		int File = FirstFile + Doc + Integer.valueOf(Input.pageCount);
-		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + File + suffixID + ".tiff");
+		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + File + suffixID + ".tif");
 		page.verifyingTiffImage(TiffFile, Input.searchString4);
 
 		File NativeFile = new File(home + "/Downloads/VOL0001/Natives/0001/");
@@ -2995,7 +2995,7 @@ public class Production_Phase2_Regression1 {
 		String home = System.getProperty("user.home");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(prefixID, suffixID, beginningBates);
 		File imageFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, PlaceholderText);
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3058,7 +3058,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -3066,7 +3066,7 @@ public class Production_Phase2_Regression1 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Top - Lef"));
 		softAssertion.assertTrue(
 				page.extractTextFromTiff(tiffFile).contains("Top - Center Multiple Line Branding Text Verify"));
@@ -3137,7 +3137,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -3145,7 +3145,7 @@ public class Production_Phase2_Regression1 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		softAssertion.assertTrue(
 				page.extractTextFromTiff(tiffFile).contains("Top - Center Multiple Line Branding Text Verify"));
 		softAssertion.assertTrue(
@@ -3481,7 +3481,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -3607,7 +3607,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -3692,7 +3692,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		driver.waitForPageToBeReady();
 		int Count = Integer.valueOf(beginningBates) + PageCount;
 		int LastDoc = Count + PageCount2Doc;
@@ -3873,7 +3873,7 @@ public class Production_Phase2_Regression1 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -4170,7 +4170,7 @@ public class Production_Phase2_Regression1 {
 		int LastFile = FirstFile + PureHit;
 		base.waitTime(2);
 		File TiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		if (TiffFile.exists()) {
 			base.passedStep("Tiff  file is displayed as expected");
 		} else {
@@ -4328,7 +4328,7 @@ public class Production_Phase2_Regression1 {
 		int Image = dir_contents.length;
 		int ImageFiles = firstFile + Image;
 		File TiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(TiffFile);
 		page.verificationOfTiffFile(firstFile, ImageFiles, prefixID, suffixID);
 		//loginPage.logout();

@@ -395,7 +395,7 @@ public class Production_Phase2_Regression {
 		page.getNativeTab().waitAndClick(10);
 		base.waitForElement(page.getNativeSelectTags());
 		page.getNativeSelectTags().waitAndClick(10);
-		page.getNativeCheckBox(tagname).ScrollTo();
+		//page.getNativeCheckBox(tagname).ScrollTo();
 		base.waitForElement(page.getNativeCheckBox(tagname));
 		driver.waitForPageToBeReady();
 		page.getNativeCheckBox(tagname).GetAttribute("class").contains("clicked");
@@ -1929,6 +1929,7 @@ public class Production_Phase2_Regression {
 
 		driver.waitForPageToBeReady();
 		page = new ProductionPage(driver);
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
 		page.verifyingComponentTabSection();
 

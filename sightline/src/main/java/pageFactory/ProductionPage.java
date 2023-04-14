@@ -1614,6 +1614,11 @@ public class ProductionPage {
 
 		return driver.FindElementByXPath("(//button[@id='btnTagCancel'])[2]");
 	}
+	
+	public Element getCancel() {
+
+		return driver.FindElementByXPath("(//button[@class='close delete-logic'])[2]");
+	}
 
 	public Element getLeftSpecifyBrandingBySelectingTag() {
 		return driver.FindElementByXPath("(//a[@class='add-logic'])[1]");
@@ -2443,7 +2448,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocumentsOfTIFF() {
-		return driver.FindElementByXPath("//label[contains(text(),'Documents to TIFF: ')]//following-sibling::label");
+		return driver.FindElementByXPath("//label[contains(text(),'Documents to Image: ')]//following-sibling::label");
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
@@ -3019,7 +3024,7 @@ public class ProductionPage {
 
 	public Element getGenrateTIFFRadioButton() {
 		return driver.FindElementByXPath(
-				"//span//b[text()='Generate TIFF']/../..//input[@id='CommonTIFFSettings_FileType']");
+				"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']/..//i");
 	}
 
 	public Element chkIsTIFFSelected() {
@@ -3538,6 +3543,10 @@ public class ProductionPage {
 	public Element getNativeFileType(String fileType) {
 		return driver
 				.FindElementByXPath("//div[@id='divImageTIFFPHImage_1']//option[contains(text(),'" + fileType + "')]");
+	}
+	public Element getNativeFileType1(String fileType) {
+		return driver
+				.FindElementByXPath("//div[@id='divImageTIFFPHImage_0']//option[contains(text(),'" + fileType + "')]");
 	}
 
 	public Element getOperatorInPrivGuard(String Operator) {
@@ -6702,8 +6711,8 @@ public class ProductionPage {
 		base.waitForElement(getClkSelect());
 		getClkSelect().waitAndClick(10);
 		Thread.sleep(Input.wait30 / 10);
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(tagname);
 	}
 
 	/**
@@ -19417,10 +19426,10 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		for (int i = firstFile; i < lastFile; i++) {
-			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
 
 			if (TiffFile.exists()) {
-				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".tiff");
+				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".tif");
 				System.out.println("passeed");
 			} else {
 				base.failedStep("verification failed");
@@ -21566,7 +21575,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		for (int i = 2; i < purehit; i++) {
 			File imageFile = new File(
-					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tiff");
+					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tif");
 			OCR_Verification_In_Generated_Tiff_tess4j(imageFile, searchString);
 		}
 

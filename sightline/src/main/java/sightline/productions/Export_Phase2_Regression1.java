@@ -76,6 +76,7 @@ public class Export_Phase2_Regression1 {
 		page = new ProductionPage(driver);
 		tag=new TagsAndFoldersPage(driver);
 		search=new SessionSearch(driver);
+		soft = new SoftAssert();
 		
 	}
 	
@@ -292,10 +293,10 @@ public class Export_Phase2_Regression1 {
 		String export = "Export Set"+ Utility.dynamicNameAppender();
 	
 		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
 		page.createNewExport(export);
 		page.getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(export+" (Export Set)");
 		exportName = "Export" + Utility.dynamicNameAppender();
-		page.selectingDefaultSecurityGroup();
 		page.addANewExport(exportName);
 		page.getNativeTab().waitAndClick(5);
 		
@@ -574,10 +575,11 @@ public class Export_Phase2_Regression1 {
 		page.fillingNativeSection();
 		page.verifyingTheDefaultSelectedOptionInNative();
 		page.getTiff_NativeDoc().waitAndClick(10);
+
 		driver.waitForPageToBeReady();
 		page.getNativeFileType(Input.fileTypeInNativeDocs).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		page.getNativeDocsPlaceholder().SendKeys(Input.searchString4);
+		page.getNativeDocsPlaceholder1().SendKeys(Input.searchString4);
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
 		page.navigateToNextSection();
@@ -594,16 +596,17 @@ public class Export_Phase2_Regression1 {
 		String parentTab = page.openNewTab(actualCopedText);
 
 		page.goToImageFiles();
-		for (int i = 2; i < 6; i++) {
-			if (page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
-				base.passedStep("Tiff files are generated successfully");
-			} else if (page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates)
-					.isElementAvailable(2)) {
-				base.passedStep("Tiff files are generated successfully");
-			} else {
-				base.failedStep("Tiff file is not generated");
-			}
-		}
+		page.verifyTiffFile(7, prefixID, suffixID, subBates, Input.searchString4);
+//		for (int i = 2; i < 6; i++) {
+//			if (page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
+//				base.passedStep("Tiff files are generated successfully");
+//			} else if (page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates)
+//					.isElementAvailable(2)) {
+//				base.passedStep("Tiff files are generated successfully");
+//			} else {
+//				base.failedStep("Tiff file is not generated");
+//			}
+//		}
 		driver.waitForPageToBeReady();
 		page.navigatingBack(2);
 		page.getFileDir("Natives/").waitAndClick(10);
@@ -627,7 +630,7 @@ public class Export_Phase2_Regression1 {
 		driver.waitForPageToBeReady();
 		page.getNativeFileType(Input.fileTypeInNativeDocs).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		page.getNativeDocsPlaceholder().SendKeys(Input.searchString4);
+		page.getNativeDocsPlaceholder1().SendKeys(Input.searchString4);
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID1, suffixID1, subBates1);
 		page.navigateToNextSection();
@@ -644,14 +647,16 @@ public class Export_Phase2_Regression1 {
 		String parentTabs = page.openNewTab(actualCopedTexts);
 		page.goToPDFImageFiles();
 		for (int i = 2; i < 6; i++) {
-			if (page.getFirstPDFImageFile(prefixID1 + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(2)) {
+			if (page.getFirstPDFImageFile(prefixID1 + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(5)) {
 				base.passedStep("Pdf files are generated successfully");
-			} else if (page.getFirstPDFImageFile(prefixID1 + "0" + "(" + i + ")" + suffixID1, subBates1).isElementAvailable(2)) {
-					
-				base.passedStep("pdf files are generated successfully");
-			} else {
-				base.failedStep("Tiff file is not generated");
 			}
+		}
+
+		driver.waitForPageToBeReady();
+		for (int i = 2; i < 6; i++) {
+			File imageFile = new File(
+					Input.fileDownloadLocation + prefixID1 + "(" + i + ")" + suffixID1+ ".000" + subBates1 + ".pdf");
+			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
 		}
 		page.navigatingBack(2);
 		page.getFileDir("Natives/").waitAndClick(10);
@@ -828,9 +833,9 @@ public class Export_Phase2_Regression1 {
 					base.failedStep( "Comments are not displayed");
 				}
 
-		} else if (page.getFirstPDFImageFile(prefixID + "0" + suffixID, subBates).isElementAvailable(2)) {
+		} else if (page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).isElementAvailable(2)) {
 
-			page.getFirstPDFImageFile(prefixID + "0" + suffixID, subBates).waitAndClick(10);
+			page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).waitAndClick(10);
 			String CurrentUrl=driver.getWebDriver().getCurrentUrl();
 			System.out.println(CurrentUrl);
 			 String DownloadedFile2 = page.getPdfContent(CurrentUrl);
@@ -1373,7 +1378,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify that for existing production/export/template with configured natively placeholdering,"
 				+ " should be with enabled native placeholdering under TIFF/PDF section");
 
-		tagName = "Tag" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
 	    String tempTIFF = "Temp" + Utility.dynamicNameAppender();
 	    String tempPDF = "Temp" + Utility.dynamicNameAppender();
 	    
@@ -1409,12 +1414,13 @@ public class Export_Phase2_Regression1 {
 		page.addANewExportWithTemplate(exportName, tempTIFF);	
 		base.waitForElement(page.getTIFFTab());
 		page.getTIFFTab().waitAndClick(3);
-		driver.scrollingToBottomofAPage();
 		page.toggleOnCheck(page.getEnableForNativelyToggle());
+		driver.scrollingToBottomofAPage();
 		base.waitForElement(page.getNativeDocsPlaceholderText());
 		String actphTextTiff = page.getNativeDocsPlaceholderText().getText();
 		soft.assertEquals(tagName, actphTextTiff);
-		
+
+
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.selectDefaultExport();
@@ -1422,8 +1428,8 @@ public class Export_Phase2_Regression1 {
 		page.addANewExportWithTemplate(exportName, tempPDF);
 		base.waitForElement(page.getTIFFTab());
 		page.getTIFFTab().waitAndClick(3);
-		driver.scrollingToBottomofAPage();
 		page.toggleOnCheck(page.getEnableForNativelyToggle());
+		driver.scrollingToBottomofAPage();
 		base.waitForElement(page.gettextRedactionPlaceHolder());
 		String actphTextPdf = page.gettextRedactionPlaceHolder().getText();
 		soft.assertEquals(tagName, actphTextPdf);
@@ -2175,7 +2181,7 @@ public class Export_Phase2_Regression1 {
 		page.getTIFFTab().Click();
 		driver.scrollPageToTop();
 		base.waitForElement(page.getRadioButton_GenerateTIFF());
-		page.getRadioButton_GenerateTIFF().waitAndClick(10);
+		page.getGenrateTIFFRadioButton().waitAndClick(10);
 		page.navigateToNextSection();
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
