@@ -145,6 +145,7 @@ public class DocViewMiniDocList_Phase2_Regression {
 		// logout
 		login.logout();
 	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
