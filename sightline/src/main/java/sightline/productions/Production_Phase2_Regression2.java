@@ -227,7 +227,9 @@ public class Production_Phase2_Regression2 {
 		page.fillingProductionLocationPage(productionname1);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
+		
 		page.clickGenarateWithoutWait();
+		page.getbtnContinueGeneration();
 		page.getDocumentGeneratetext().isElementAvailable(60);
 		page.verifyingFailedStatusInProduction(productionname1);
 		loginPage.logout();
@@ -378,7 +380,7 @@ public class Production_Phase2_Regression2 {
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 		File Native = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		System.out.println(Native);
 		if (Native.exists()) {
 			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".xls");
@@ -689,7 +691,7 @@ public class Production_Phase2_Regression2 {
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 		File TiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		if (TiffFile.exists()) {
 			base.passedStep("Tiff  file is displayed as expected");
 		} else {

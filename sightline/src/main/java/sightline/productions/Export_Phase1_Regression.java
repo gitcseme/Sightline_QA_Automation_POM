@@ -1253,6 +1253,7 @@ public class Export_Phase1_Regression {
 
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
 		String text = page.getProdExport_ProductionSets().getText();
 		if (text.contains("Export Set")) {
 			page.selectExportSetFromDropDown();
