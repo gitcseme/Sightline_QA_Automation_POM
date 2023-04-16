@@ -1727,7 +1727,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 
 		base.passedStep("Verified Enabling Placeholder for Privilege Doc at PrivGuard.");
 
@@ -3787,7 +3787,7 @@ public class Production_Phase1_Regression2 {
 		docViewPage.navigateToDocViewPageURL();
 
 		DocViewRedactions redact = new DocViewRedactions(driver);
-		redact.deleteAllAppliedRedactions();
+		//redact.deleteAllAppliedRedactions();
 		redact.clickOnAddRedactionForAudioDocument();
 		redact.addAudioRedaction(Input.startTime, Input.endTime, redactiontag);
 
@@ -3809,7 +3809,7 @@ public class Production_Phase1_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		loginPage.logout();

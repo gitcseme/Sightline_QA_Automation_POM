@@ -1223,7 +1223,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 	 *              responsive when 10 session searches are in session search panel
 	 *              and new search is removed from session search panel
 	 */
-	@Test(description = "RPMXCON-48616", enabled = true, dataProvider = "Users", groups = { "regression" })
+	@Test(description = "RPMXCON-48616", enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" })
 	public void veriyPgResponsiveAfter10SeacrchesInAdvSearch(String username, String password, String role)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48616");
@@ -1337,7 +1337,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 	 *              session search panel and new search is removed from session
 	 *              search panel
 	 */
-	@Test(description = "RPMXCON-48617", enabled = true, dataProvider = "Users", groups = { "regression" })
+	@Test(description = "RPMXCON-48617", enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" })
 	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearch(String username, String password, String role)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48617");
@@ -1451,7 +1451,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 	 *              when more than 10 advance saved searches are edited in session
 	 *              search panel
 	 */
-	@Test(description = "RPMXCON-48575", enabled = true, dataProvider = "Users", groups = { "regression" })
+	@Test(description = "RPMXCON-48575", enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" })
 	public void veriyPgResponsiveAfter10SeacrchesInAdvSearchSS(String username, String password, String role)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48575");
@@ -1577,7 +1577,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 	 *              responsive when 10 basic & advance searches edited from saved
 	 *              search and new search is removed from session search panel
 	 */
-	@Test(description = "RPMXCON-48620", enabled = true, dataProvider = "Users", groups = { "regression" })
+	@Test(description = "RPMXCON-48620", enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" })
 	public void veriyPgResponsiveAfter10SearchesInAdvAndBasicSearchSS(String username, String password, String role)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48620");
@@ -1838,7 +1838,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 	 *              enclosed parantheses "(" and ")" in Advanced Search Query
 	 *              screen(Warning message 40001000008).
 	 */
-	@Test(description = "RPMXCON-57370", dataProvider = "Users", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-57370", dataProvider = "SavedSearchwithUsers", enabled = true, groups = { "regression" })
 	public void verifyApplicationAdvancedSearchDisplayWarningMsg(String username, String password, String role)
 			throws InterruptedException, AWTException {
 
@@ -1882,7 +1882,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 		loginPage.logout();
 	}
 
-	@DataProvider(name = "Users")
+	@DataProvider(name = "SavedSearchwithUsers")
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
 				{ Input.rmu1userName, Input.rmu1password, "RMU" }, { Input.rev1userName, Input.rev1password, "REV" } };

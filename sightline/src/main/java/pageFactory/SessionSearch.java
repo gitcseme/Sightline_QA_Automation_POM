@@ -559,7 +559,7 @@ public class SessionSearch {
 	}
 
 	public ElementCollection getTree() {
-		return driver.FindElementsByXPath("//a[@class='jstree-anchor'][contains(text(),'')]");
+		return driver.FindElementsByXPath("//li[contains(@id,'-1g') or contains(@id,'1g')]/ul[@class='jstree-children']/li/a");
 	}
 
 	public ElementCollection getSecurityNamesTree() {
@@ -1738,7 +1738,7 @@ public class SessionSearch {
 	}
 
 	public Element ConenetInSaerchResult() {
-		return driver.FindElementByXPath("//td[text()='Content & MetaData']/parent::tr//span[@class='badge']");
+		return driver.FindElementByXPath("//td[text()='Content and Metadata']//following::span[text()='test'");
 	}
 
 	public Element gettingThresholdValue() {
@@ -2255,6 +2255,9 @@ public class SessionSearch {
 	public Element getAdvancedWaringMsg() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 
+	}
+	public Element rootAssignment() {
+		return driver.FindElementByXPath("//*[@id='-1g']//i");
 	}
 
 	
@@ -3141,7 +3144,6 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(15);
 		// Click on Search button
 		driver.scrollPageToTop();
-
 	}
 
 	// Function to fetch pure hit count
@@ -4023,6 +4025,7 @@ public class SessionSearch {
 	public void selectAssignmentInWPS(final String assignMentName) throws InterruptedException {
 		base.waitForElement(getWP_assignmentsBtn());
 		getWP_assignmentsBtn().Click();
+		rootAssignment().waitAndClick(5);
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
@@ -13204,6 +13207,7 @@ public class SessionSearch {
 			selectDate("From Date");
 			selectDate("To Date");
 		}
+		
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
