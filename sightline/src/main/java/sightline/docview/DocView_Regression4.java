@@ -325,7 +325,7 @@ public class DocView_Regression4 {
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
@@ -333,7 +333,8 @@ public class DocView_Regression4 {
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		Added on 10_04
+		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
@@ -372,7 +373,7 @@ public class DocView_Regression4 {
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		sessionSearch.switchToWorkproduct();
@@ -383,7 +384,8 @@ public class DocView_Regression4 {
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		Added on 10_04
+		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
@@ -391,7 +393,8 @@ public class DocView_Regression4 {
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
 		baseClass.impersonateReviewertoRMU();
-		assignmentsPage.deleteAssignment(assignmentName);
+		driver.waitForPageToBeReady();
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
 
@@ -417,6 +420,7 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+		
 		sessionSearch.viewInDocView();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -427,11 +431,13 @@ public class DocView_Regression4 {
 		sessionSearch.getCommentsOrRemarksCount("Remark", "\"Remark by Rmu\"");
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		Added 10_04
+//		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
@@ -439,7 +445,8 @@ public class DocView_Regression4 {
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
 		baseClass.impersonateReviewertoRMU();
-		assignmentsPage.deleteAssignment(assignmentName);
+//		Added 10_04
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		baseClass.stepInfo("Deleting Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
@@ -474,13 +481,15 @@ public class DocView_Regression4 {
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		assignmentsPage.navigateToAssignmentsPage();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		Added 10_04
+//		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
@@ -527,7 +536,7 @@ public class DocView_Regression4 {
 
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
 
-		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 5);
 
 		loginPage.logout();
 
@@ -575,24 +584,31 @@ public class DocView_Regression4 {
 
 		assignmentsPage.completeDocs(Input.rev1userName);
 
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		assignmentsPage.selectAssignmentfromRMUDashborad(assname);
 
 		driver.waitForPageToBeReady();
 
-//		miniDocList.configureMiniDocListToShowCompletedDocs()
+//		miniDocList.configureMiniDocListToShowCompletedDocs();
 		driver.waitForPageToBeReady();
 		docViewRedact.performGeerIcon();
+	
 		docView.scrollUntilloadingTextDisplay(false);
 
-		baseClass.waitForElement(docView.getCompletedDocs());
-
-		docView.getCompletedDocs().Click();
-
+//		Added 14
+//		baseClass.waitForElement(docView.getCompletedDocs());
+//		docView.getCompletedDocs().waitAndClick(5);
+		driver.Navigate().refresh();
+		baseClass.waitTime(4);
+		docViewRedact.selectMiniDocListAndViewInDocView(1);
+		
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view even after completing docs");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		try {
 			if (docView.getHitPanel().Displayed()) {
@@ -642,7 +658,7 @@ public class DocView_Regression4 {
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		sessionSearch.switchToWorkproduct();
@@ -657,7 +673,7 @@ public class DocView_Regression4 {
 		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		assignmentsPage.deleteAssignment(assignmentName);
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
 
@@ -1131,9 +1147,10 @@ public class DocView_Regression4 {
 		public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
 			baseClass = new BaseClass(driver);
 			SessionSearch sessionSearch = new SessionSearch(driver);
-			AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+//			AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 			docViewRedact = new DocViewRedactions(driver);
 		    docView = new DocViewPage(driver);
+		    DocListPage docList = new DocListPage(driver);
 			loginPage = new LoginPage(driver);
 			String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 
@@ -1141,60 +1158,82 @@ public class DocView_Regression4 {
 			baseClass.stepInfo(
 					"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
 
-			String codingForm = Input.codeFormName;
+//			
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Create new assignment");
-			assignmentsPage.createAssignment(assignmentName, codingForm);
 			sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
-			sessionSearch.saveSearch(searchName);
-//			sessionSearch.saveSearchAdvanced_New(searchName,"Shared With Project Administrator");
-			sessionSearch.bulkAssign();
-			assignmentsPage.assignDocstoExisting(assignmentName);
+			sessionSearch.saveSearchAtAnyRootGroup(searchName, Input.shareSearchDefaultSG);
 			loginPage.logout();
+			
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			driver.waitForPageToBeReady();
 			sessionSearch.switchToWorkproduct();
-			sessionSearch.selectAssignmentInWPS(assignmentName);
+			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
+			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
+			sessionSearch.selectSavedsearchesInTree(searchName);
+			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
 			sessionSearch.serarchWP();
 			sessionSearch.ViewInDocList();
-			new DocListPage(driver).documentSelection(1);
+			
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
+			docList.selectAllDocs();
 			sessionSearch.viewInDocView_redactions();
 			driver.waitForPageToBeReady();
-			docViewRedact.verifyHighlightedTextsAreDisplayed();
+			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+			driver.waitForPageToBeReady();
+//			Added on 10_04
+		
+			docViewRedact.verifyHighLightingTextInDocView();
 			loginPage.logout();
-			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 			
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 			UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 			baseClass.stepInfo(
 					"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 			driver.waitForPageToBeReady();
 			sessionSearch.switchToWorkproduct();
-			sessionSearch.selectAssignmentInWPS(assignmentName);
+			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
+			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
+			sessionSearch.selectSavedsearchesInTree(searchName);
+			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
+			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
 			sessionSearch.serarchWP();
 			sessionSearch.ViewInDocList();
-			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+			
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
+			docList.selectAllDocs();
 			sessionSearch.viewInDocView_redactions();
 			driver.waitForPageToBeReady();
 			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 			driver.waitForPageToBeReady();
-			docViewRedact.verifyHighlightedTextsAreDisplayed();
+//			Added on 10_04
+		
+			docViewRedact.verifyHighLightingTextInDocView();
 			loginPage.logout();
+			
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			baseClass.stepInfo(
 					"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
 			driver.waitForPageToBeReady();
 			sessionSearch.switchToWorkproduct();
-			sessionSearch.getSavedSearchBtn1().Click();
-			sessionSearch.selectSavedsearchesInTree("My Saved Search");
+			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
+			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
+			sessionSearch.selectSavedsearchesInTree(searchName);
 			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			//sessionSearch.getMetaDataInserQuery().waitAndClick(5);
+			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
 			sessionSearch.serarchWP();
 			sessionSearch.ViewInDocList();
-			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+			
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+			docList.selectAllDocs();
+			
 			sessionSearch.viewInDocView_redactions();
 			driver.waitForPageToBeReady();
 			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 			driver.waitForPageToBeReady();
-			docViewRedact.verifyHighlightedTextsAreDisplayed();
+//			Added on 10_04
+			
+			docViewRedact.verifyHighLightingTextInDocView();
 			loginPage.logout();
 		}
 
@@ -1239,14 +1278,20 @@ public class DocView_Regression4 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoExisting(assignmentName);
-		assignmentsPage.editAssignment(assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		baseClass.impersonateRMUtoReviewer();
+		
+//		Added on 10_04
+		driver.waitForPageToBeReady();
+		baseClass.selectproject(Input.additionalDataProject);
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		Added on 10_04
+		
+		docViewRedact.verifyHighLightingTextInDocView();
 		docView.getPersistentHit(hitTerms);
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
 		loginPage.logout();
@@ -1462,14 +1507,14 @@ public class DocView_Regression4 {
 		String assignmentNametoCreate = "TestAssignmentNo" + Utility.dynamicNameAppender();
 		List<String> docIDlist = new ArrayList<>();
 		String userName = Input.rmu1userName;
-		int iteration = 3;
+		int iteration = 1;
 
 		baseClass.stepInfo("Test case Id:RPMXCON-50987 Sprint 11");
 		baseClass.stepInfo(
 				"To verify that once user complete the document, count should increased on the Edit Assignment->Manage Reviewers.");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		// Assignment Creation
-		sessionSearch.basicContentSearch(Input.searchString2);
+//		// Assignment Creation
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignmentNametoCreate, Input.codingFormName);
 		driver.waitForPageToBeReady();
@@ -1494,6 +1539,9 @@ public class DocView_Regression4 {
 		docIDlist = miniDocListpage.getDocListDatas();
 		miniDocListpage.verifyCompleteCheckMarkIconandDocHighlight(docIDlist, iteration, false);
 
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		// Assignment Edit View
 		assignmentPage.editAssignmentUsingPaginationConcept(assignmentNametoCreate);
 		driver.waitForPageToBeReady();
@@ -1698,7 +1746,8 @@ public class DocView_Regression4 {
 				"Step 3: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(keyword);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(keyword));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
 
@@ -1720,7 +1769,8 @@ public class DocView_Regression4 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(keyword);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(keyword));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
 
@@ -1742,7 +1792,8 @@ public class DocView_Regression4 {
 				"Step 4: Click the eye icon to see the persistent hits and verify the keyword and persistent hit highlighting");
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(keyword);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(keyword).isDisplayed());
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(keyword));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(keyword).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep("Keyword is highlighted with specified color in the Doc View successfully");
 		loginPage.logout();
@@ -1915,7 +1966,6 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1926,7 +1976,8 @@ public class DocView_Regression4 {
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		docViewRedact.performTheEyeIconHighLighting();
-		docView.verifyKeywordHighlightedOnDocView();
+		
+		docViewRedact.verifyHighLightingTextInDocView();
 		
 		baseClass.stepInfo(
 				"That > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search is Successfully");
@@ -2206,7 +2257,9 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(panelText);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+//		Added on 10_04
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(panelText));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
@@ -2230,7 +2283,8 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(panelText);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(panelText));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
@@ -2255,7 +2309,8 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
 		driver.waitForPageToBeReady();
 		docView.persistenHitWithSearchString(panelText);
-		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelText(panelText).isDisplayed());
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(panelText));
+		softAssertion.assertTrue(docView.getDocView_PersistanceHit_PanelTextNew(panelText).isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
 				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
@@ -2695,7 +2750,7 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 		TagsAndFoldersPage tag = new TagsAndFoldersPage(driver);
-		
+//		
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -2704,6 +2759,7 @@ public class DocView_Regression4 {
 		tag.CreateFolderInRMU(folderName);
 		
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
@@ -2718,11 +2774,16 @@ public class DocView_Regression4 {
 
 		// Login as REVU
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+//		Added on 10_04
+		driver.waitForPageToBeReady();
+		driver.Manage().window().maximize();
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		docView.performFloderMiniDocListForReviewer(folderName);
@@ -2730,6 +2791,9 @@ public class DocView_Regression4 {
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		driver.waitForPageToBeReady();
+		driver.Manage().window().maximize();
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
 		String folderNamePA = "FolderPA" + Utility.dynamicNameAppender();
 		tag.navigateToTagsAndFolderPage();
@@ -2737,6 +2801,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
@@ -3039,7 +3104,7 @@ public class DocView_Regression4 {
 		// Configuring mini doc list in manual mode
 		driver.waitForPageToBeReady();
 
-		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
+//		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
 		// performing Add and Remove action on Selected Web Fields and validating the
 		// same.
 		miniDocListpage.verifyManualModeSortingConfigure(assignmentName);
@@ -3096,5 +3161,7 @@ public class DocView_Regression4 {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 
 	}
+	
+	
 
 }

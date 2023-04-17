@@ -2427,7 +2427,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getShowCompletedDocsToggle() {
-		return driver.FindElement(By.xpath("//input[@id=\"ShowCompletedDocs\"]//following-sibling::i"));
+		return driver.FindElement(By.xpath("//input[@id='ShowCompletedDocs']//following-sibling::i"));
 	}
 
 	public Element getMiniDocListConfirmationButton(String actionType) {
@@ -3693,6 +3693,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
 						+ index + " and text()=' " + data + "']");
 	}
+	
+    public Element getDocView_PersistanceHit_PanelTextNew(String text) {
+        return driver.FindElementByXPath("//span[@id='HitCount_" + text + "']");
+}
 	
 	public DocViewPage(Driver driver) {
 
@@ -14563,6 +14567,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		try {
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
+			base.waitTime(4);
 			String panelItemValue = null;
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -14597,6 +14602,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		try {
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
+			base.waitTime(4);
 			String panelItemValue = null;
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -19885,6 +19891,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void persistenHitWithSearchString(String SearchString) {
 		driver.waitForPageToBeReady();
+		base.waitTime(3);
 		base.waitForElement(getPersistantHitEyeIcon());
 		getPersistantHitEyeIcon().waitAndClick(5);
 		base.waitForElementCollection(getHitPanels());
@@ -19892,6 +19899,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		int numOfPanels = getHitPanels().size();
 		boolean flag = false;
 		for (int i = 2; i <= numOfPanels; i++) {
+			base.waitForElement(getTermInHitPanels(i));
 			String term = getTermInHitPanels(i).getText();
 			System.out.println(getTermInHitPanels(i).getText());
 			if (term.contains(SearchString)) {
@@ -29160,4 +29168,6 @@ public Boolean highlightCheck() {
 		return false;
 	}
 }
+
+
 }
