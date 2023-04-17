@@ -5005,4 +5005,63 @@ public class BaseClass {
 		UtilityLog.info(Time);
 		return Time;
 }
+	/**
+	 * @author Indium Raghuram Description : Method to transfer control to child
+	 *         window Returns : returns parent window id Date: 8/15/21 Modified
+	 *         date: N/A Modified by: N/A
+	 */
+	public String childWindowTransfer() throws AWTException, InterruptedException {
+		driver.waitForPageToBeReady();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		Set<String> childWindowID = driver.getWebDriver().getWindowHandles();
+		for (String childWindowList : childWindowID) {
+			if (!parentWindowID.equals(childWindowList)) {
+				driver.switchTo().window(childWindowList);
+				try {
+					driver.waitForPageToBeReady();
+				} catch (NullPointerException e) {
+				}
+				String text = driver.getTitle();
+				System.out.println("Heading of child window is " + text);
+			}
+		}
+		return parentWindowID;
+	}
+	/**
+	 * @author Indium Raghuram Description : Method to close child window and
+	 *         transfer control to Parent window Date : 8/15/21 Modified date: N/A
+	 *         Modified by: N/A
+	 * @throws InterruptedException
+	 */
+	public void childWIndowCloseHandles(String parentWindowID) throws InterruptedException {
+		driver.close();
+		driver.switchTo().window(parentWindowID);
+	}
+	/**
+	 * @author Raghuram.A
+	 * @param source
+	 * @param compareString
+	 * @param passMsg
+	 * @param failMsg
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public String compareListWithString1(List<String> source, String compareString, String passMsg, String failMsg)
+			throws InterruptedException {
+		boolean compare = false;
+		String notMatchedData = "Empty";
+		for (String actualValue : source) {
+			if (actualValue.equalsIgnoreCase(compareString)) {
+				compare = true;
+			} else {
+				compare = false;
+				notMatchedData = compareString;
+				break;
+			}
+		}
+		return notMatchedData;
+
+	}
+
+	
 }

@@ -1540,6 +1540,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element get_textHighlightedYellowColor() {
 		return driver.FindElementByCssSelector("#ig0level0surface1 > path:nth-child(39)");
 	}
+
 	public Element getDocView_Production_Image() {
 		return driver.FindElementByXPath("//*[@id='divViewerProductions']");
 	}
@@ -3665,6 +3666,32 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	
 	public Element getDocviewAudio_StartTime() {
 		return driver.FindElementByXPath("//*[@class='jp-current-time']");
+	}
+	public Element getNearDupesData() {
+		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+	}
+
+	public Element getFamilyData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+	}
+
+	public Element getThreadData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+	}
+
+	public ElementCollection dtDocumentFamilyMembersID() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtDocumentFamilyMembers']//tr[contains(@class,'dtDocumentFamilyMembersRowNumber_')]//td[contains(text(),'ID000000')]");
+	}
+
+	public ElementCollection getNearDupesDataList() {
+		return driver.FindElementsByXPath("//div[@id='dtDocumentNearDuplicates_wrapper']//tr//th[@class='sorting']");
+	}
+
+	public Element getNearDupeDataId(int index, String data) {
+		return driver.FindElementByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + " and text()=' " + data + "']");
 	}
 	
 	public DocViewPage(Driver driver) {
@@ -24283,7 +24310,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDocView_Analytics_FamilyTab());
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			base.waitForElement(getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected));
-			
 			base.waitTime(2);
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).ScrollTo();
 			getDocView_AnalyticsDocIdFamilyTab(docIdToBeSelected).waitAndClick(5);
@@ -24420,7 +24446,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				base.stepInfo("Current viewed document : " + docID);
 
 				// click on remarks button
-				getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+				getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
 
 				if (deleteExistingRemark) {
 					// Delete Existing Remark
@@ -24601,7 +24627,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
+			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
@@ -26404,18 +26430,16 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //		base.waitForElement(savedSearch.getToDocView());
 //		savedSearch.getToDocView().waitAndClick(5);
 		savedSearch.docViewFromSS("View in DocView");
-
+		
 		try {
 			if (base.getYesBtn().isElementAvailable(3)) {
 				base.getYesBtn().waitAndClick(10);
 			}
-
 		} catch (Exception e) {
 			System.out.println("Pop up message does not appear");
 			UtilityLog.info("Pop up message does not appear");
 		}
 	}
-
 	/**
 	 * @author Arunkumar Modified date: NA Modified by:NA
 	 * @description To verify thread docs display documents in chronological order
@@ -27637,8 +27661,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
-
-			
 
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
 
@@ -29093,4 +29115,49 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		Assert.assertTrue(getFolderFromList(folderName).Displayed());
 
 	}
+
+/**
+ * @author Raghuram.A
+ * @param uniqueDoc
+ * @return
+ * @throws InterruptedException
+ * @throws AWTException
+ */
+public Boolean highlightVerification(String uniqueDoc) throws InterruptedException, AWTException {
+
+	// Header
+	int docIDindex = base.getIndex(getNearDupesDataList(), "DocID");
+
+	// To click doc
+	getNearDupeDataId(docIDindex, uniqueDoc).waitAndClick(5);
+
+	// Transfer control to child window
+	String parentWindowID = base.childWindowTransfer();
+
+	getDocView_NearDupe_DocID().WaitUntilPresent();
+	String docidinchildwinodw = getDocView_NearDupe_DocID().getText().toString();
+	System.out.println(docidinchildwinodw);
+
+	// Highlight Check
+	Boolean highlight = highlightCheck();
+
+	// Transfer control back to Parent Window
+	base.childWIndowCloseHandles(parentWindowID);
+	base.waitTime(3);
+
+	return highlight;
+}
+
+/**
+ * @author Raghuram.A
+ * @return
+ */
+public Boolean highlightCheck() {
+	if (get_textHighlightedColor().isElementAvailable(5)) {
+		base.passedStep("Documents are present with the persistent hits");
+		return true;
+	} else {
+		return false;
+	}
+}
 }

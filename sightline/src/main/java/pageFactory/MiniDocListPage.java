@@ -532,6 +532,48 @@ public Element getDocViewFromDropDown() {
 	return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]");
 }
 	
+	public Element getDocView_Analytics_liDocumentConceptualSimilarab() {
+		return driver.FindElementById("liDocumentConceptualSimilar");
+		}
+
+		public Element getDocView_Analytics_FamilyTab() {
+		return driver.FindElementById("liDocumentFamilyMember");
+		}
+
+		public Element getFamilyData() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentFamilyMembers']//td[@class='dataTables_empty']");
+		}
+
+		public Element getNearDupeTab() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//td[@class='dataTables_empty']");
+		}
+
+		public ElementCollection dtDocumentFamilyMembersID() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtDocumentFamilyMembers']//tr[contains(@class,'dtDocumentFamilyMembersRowNumber_')]//td[contains(text(),'ID00')]");
+		}
+
+		public ElementCollection getNearDupesDataList() {
+		return driver.FindElementsByXPath("//div[@id='dtDocumentNearDuplicates_wrapper']//tr//th[@class='sorting']");
+		}
+
+		public ElementCollection getNearDupeDocCounnt() {
+		return driver.FindElementsByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]");
+		}
+
+		public ElementCollection getNearDupeDocIDs(int index) {
+		return driver.FindElementsByXPath(
+				".//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + "]");
+		}
+
+		public ElementCollection getNearDupesDataListCollection(int index, int i) {
+		return driver.FindElementsByXPath(
+				"(.//*[@id='dtDocumentNearDuplicates']/tbody//tr[contains(@class,'dtDocumentNearDuplicatesRowNumber')]//td["
+						+ index + "])[" + i + "]");
+		}
+	
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -4552,5 +4594,156 @@ public Element getDocViewFromDropDown() {
 		baseClass.passedStep("Newly Added Field is displayed in minidoclist");
 	}
 
+/**
+* @author Raghuram.A
+*/
+public void checkFamilyMemberDoc() {
+MiniDocListPage doclist = new MiniDocListPage(driver);
+List<String> docIDFMlist = new ArrayList<>();
+String uniqueDoc = "";
+// Main method
+int sizeofList = doclist.getListofDocIDinCW().size();
+System.out.println("Size : " + sizeofList);
+int totalDocs = getDocCountMethod();
+Boolean dataEmpty = false; // for additional purpose
+Boolean uniqueDocStatus = false;
+
+docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+for (int i = 1; i <= totalDocs; i++) {
+	String name = docIDlist.get(i);
+	getDociD(name).waitAndClick(5);
+	System.out.println("Selected Document : " + name);
+	baseClass.stepInfo("Selected Document : " + name);
+
+	// Move to NearDupes
+	driver.waitForPageToBeReady();
+	getDocView_Analytics_FamilyTab().WaitUntilPresent().ScrollTo();
+	getDocView_Analytics_FamilyTab().waitAndClick(5);
+	// Verify Empty
+	if (getFamilyData().isElementAvailable(3)) {
+		dataEmpty = false;
+	} else {
+		dataEmpty = true;
+		System.out.println("Document that has FamilyMember datas : " + name);
+		baseClass.stepInfo("Document that has FamilyMember datas : " + name);
+
+		baseClass.waitForElementCollection(dtDocumentFamilyMembersID());
+		int sizeofDOcFMList = doclist.dtDocumentFamilyMembersID().size();
+
+		for (int j = 1; j <= sizeofDOcFMList; j++) {
+			docIDFMlist = availableListofElements(doclist.dtDocumentFamilyMembersID());
+			System.out.println(docIDFMlist.get(j));
+			try {
+				uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j), "", "");
+				if (!uniqueDoc.equals("Empty")) {
+					System.out.println("Unique doc : " + uniqueDoc);
+					uniqueDocStatus = true;
+					break;
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (!uniqueDocStatus && j == sizeofDOcFMList) {
+				baseClass.failedStep("Expected Input data not available");
+			}
+		}
+		if (uniqueDocStatus) {
+			break;
+		}
+	}
+}
+}
+
+/**
+* @author Raghuram.A
+* @return
+*/
+public Integer getDocCountMethod() {
+String documentSize = "";
+int docCount = 0;
+try {
+	baseClass.waitForElement(getDocumentCountFromDocView());
+	String sizeofList = getDocumentCountFromDocView().getText();
+	documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+	System.out.println("Size : " + documentSize);
+	baseClass.stepInfo("Available documents in DocView page : " + sizeofList);
+} catch (Exception e) {
+	e.printStackTrace();
+}
+docCount = Integer.parseInt(documentSize);
+return docCount;
+}
+
+/**
+* @author Raghuram.A
+* @throws AWTException
+*/
+public void checkNearDupeDoc() throws AWTException {
+MiniDocListPage doclist = new MiniDocListPage(driver);
+DocViewPage docViewPage = new DocViewPage(driver);
+List<String> docIDFMlist = new ArrayList<>();
+String uniqueDoc = "";
+// Main method
+int sizeofList = doclist.getListofDocIDinCW().size();
+System.out.println("Size : " + sizeofList);
+int totalDocs = getDocCountMethod();
+Boolean dataEmpty = false; // for additional purpose
+Boolean uniqueDocStatus = false;
+
+docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+for (int i = 1; i <= totalDocs; i++) {
+	String name = docIDlist.get(i);
+	getDociD(name).waitAndClick(5);
+	System.out.println("Selected Document : " + name);
+	baseClass.stepInfo("Selected Document : " + name);
+
+	// Move to NearDupes
+	driver.waitForPageToBeReady();
+	getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
+	getDocView_Analytics_NearDupeTab().waitAndClick(5);
+
+	// Verify Empty
+	if (getNearDupeTab().isElementAvailable(3)) {
+		dataEmpty = false;
+	} else {
+		dataEmpty = true;
+		System.out.println("Document that has NearDupe datas : " + name);
+		baseClass.stepInfo("Document that has NearDupe datas : " + name);
+
+		int sizeofDOcFMList = getNearDupeDocCounnt().size();
+		baseClass.waitForElementCollection(getNearDupeDocIDs(sizeofDOcFMList));
+
+		// Header
+		int docIDindex = baseClass.getIndex(getNearDupesDataList(), "DocID");
+
+		for (int j = 1; j <= sizeofDOcFMList; j++) {
+			docIDFMlist = availableListofElements(doclist.getNearDupeDocIDs(docIDindex + 1));
+			System.out.println(docIDFMlist.get(j - 1));
+			try {
+				uniqueDoc = baseClass.compareListWithString1(docIDlist, docIDFMlist.get(j - 1), "", "");
+				if (!uniqueDoc.equals("Empty")) {
+					System.out.println("Unique NearDupe doc : " + uniqueDoc);
+					uniqueDocStatus = true;
+					if (docViewPage.highlightVerification(uniqueDoc)) {
+						baseClass.stepInfo("Highlights present in the document");
+						break;
+					} else {
+						uniqueDocStatus = false;
+						continue;
+					}
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		if (uniqueDocStatus) {
+			break;
+		}
+	}
+}
+
+}
 
 }
