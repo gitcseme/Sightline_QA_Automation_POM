@@ -1091,9 +1091,10 @@ public class SecurityGroupsPage {
 		actions.sendKeys(Keys.SPACE).build().perform();
 
 		bc.waitTime(2);
-		bc.waitForElement(getAnnotationDD());
-		getAnnotationDD().waitAndClick(10);
-
+		
+		bc.waitForElement(getAllFolder("annotationJSTree", "All AnnotationLayers"));
+        getAllFolder("annotationJSTree", "All AnnotationLayers").waitAndClick(4);
+        
 		bc.waitForElement(getAnnotation(annotation));
 		getAnnotation(annotation).waitAndClick(10);
 

@@ -100,6 +100,7 @@ public class DocView_Regression5 {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		
 		baseClass.stepInfo("Test case id : RPMXCON-51444");
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
@@ -147,8 +148,10 @@ public class DocView_Regression5 {
 		loginPage.logout();
 		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		keyword.navigateToKeywordPage();
-		keyword.deleteKeyword(keyWord);
+		
+//		Added on 11_04
+		keyword.deleteKeywordByName(keyWord);
+		
 		loginPage.logout();
 	}
 
@@ -206,8 +209,9 @@ public class DocView_Regression5 {
 		loginPage.logout();
 		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		keyword.navigateToKeywordPage();
-		keyword.deleteKeyword(keyWord);
+		
+//		Added on 11_04
+		keyword.deleteKeywordByName(keyWord);
 		loginPage.logout();
 	}
 
@@ -235,9 +239,13 @@ public class DocView_Regression5 {
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
-		sessionSearch.viewInDocView();
+		
+		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
-		docView.addRemarkByText("Remark by Rmu");
+		
+//		Added on 11_04
+		docView.addRemarkToNonAudioDocument(5, 20, "Remark by Rmu");
+		
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.getCommentsOrRemarksCount("Remark", "\"Remark by Rmu\"");
@@ -247,6 +255,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
+		
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
@@ -258,7 +268,10 @@ public class DocView_Regression5 {
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyHighlightedKeywordInDocView();
 		baseClass.impersonateReviewertoRMU();
-		assignmentsPage.deleteAssignment(assignmentName);
+		
+//		Added on 11_04
+	
+		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		baseClass.stepInfo("Deleting Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
@@ -764,6 +777,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
@@ -1486,7 +1500,9 @@ public class DocView_Regression5 {
 
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.toggleDisableShowDefaultViewTab();
-		assignmentsPage.add2ReviewerAndDistribute();
+		
+//		Added on 11_04
+		assignmentsPage.addReviewerAndDistributeDocs();
 
 		baseClass.stepInfo("Step 3: Go to doc view in context of an assignment");
 		assignmentsPage.selectAssignmentToViewinDocview(assname);

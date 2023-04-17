@@ -112,7 +112,7 @@ public class DocView_Regression7 {
 		loginPage = new LoginPage(driver);
 		 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
@@ -126,36 +126,49 @@ public class DocView_Regression7 {
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.AddSecurityGroup(namesg2);
 		//baseClass.CloseSuccessMsgpopup();
 		driver.scrollPageToTop();
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.AddSecurityGroup(namesg3);
 
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew2);
 		
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		
 		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+//		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		
 		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew2);
+//		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew2);
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew2);
 		//baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		
 		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
+//		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
+		securityGroupsPage.assignRedactionTagtoSG(Redactiontag1);
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
 //		baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		
 		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
+//		securityGroupsPage.clickOnReductionTagAndSelectReduction(Redactiontag1);
+		securityGroupsPage.assignRedactionTagtoSG(Redactiontag1);
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
 		//baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		
@@ -174,6 +187,7 @@ public class DocView_Regression7 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Redactiontag1);
@@ -181,13 +195,14 @@ public class DocView_Regression7 {
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
+		driver.waitForPageToBeReady();
 		docViewMetaDataPage.verifyPrintOnDocView();
 
 		loginPage.logout();
@@ -1305,8 +1320,8 @@ public class DocView_Regression7 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that when two different users under different security group with different annotation layer adds reviewer remark to the same record successfully ####");
@@ -1327,16 +1342,23 @@ public class DocView_Regression7 {
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+//		Added on_12_04
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew2);
+		
+		
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew2);
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+	
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
 		//baseClass.CloseSuccessMsgpopup();
 
 		sessionsearch = new SessionSearch(driver);
@@ -1346,7 +1368,8 @@ public class DocView_Regression7 {
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg3, Input.rmu2userName);
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -1361,7 +1384,9 @@ public class DocView_Regression7 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkByText(remark);
+//		Added on 
+		baseClass.waitTime(3);
+		docView.addRemarkToNonAudioDocument(5, 10, remark);
 		docView.verifyRemarkIsAdded(remark); 
 
 		// Switch To SG2
@@ -1382,7 +1407,9 @@ public class DocView_Regression7 {
 
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
-
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(4);
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
@@ -1406,6 +1433,7 @@ public class DocView_Regression7 {
 			securityGroupsPage.deleteSecurityGroups(namesg3);
 		}
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		loginPage.logout();
 	}
@@ -1430,8 +1458,8 @@ public class DocView_Regression7 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that after editing the remark should be saved for the document when same annotation layer is mapped to different security groups. ####");
@@ -1450,11 +1478,14 @@ public class DocView_Regression7 {
 
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+//		Added on 12
 		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+	
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
 
 		sessionsearch = new SessionSearch(driver);
@@ -1463,8 +1494,11 @@ public class DocView_Regression7 {
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
-
+		
+		
+		docViewRedact.assignAccesstoSGs(namesg2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg3, Input.rmu2userName);
+		
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
@@ -1478,7 +1512,11 @@ public class DocView_Regression7 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkByText(remark);
+		
+//		docView.addRemarkByText(remark);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		docView.addRemarkToNonAudioDocument(5, 10, remark);
 		docView.verifyRemarkIsAdded(remark);
 
 		// Switch To SG2
@@ -1511,6 +1549,7 @@ public class DocView_Regression7 {
 		}
 		driver.Navigate().refresh();
 		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 	

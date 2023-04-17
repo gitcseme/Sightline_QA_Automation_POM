@@ -29,6 +29,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageUsersPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -61,7 +62,7 @@ public class DocView_Regression6 {
 	String tag;
 
 	String random = "Test657394345" + Utility.dynamicNameAppender();
-	String random1 = random;
+	String random1 = random ;
 	String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
@@ -364,23 +365,28 @@ public class DocView_Regression6 {
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 
+
 		baseClass.stepInfo("Add security group");
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(random1);
 
+		
 		baseClass.stepInfo("Selecting security group");
+//		Added on 11_04
 		securityGroupsPage.navigateToSecurityGropusPageURL();
+		driver.Navigate().refresh();
+		
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(random1);
 
 		baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
-//		Added
 		driver.waitForPageToBeReady();
 		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
 
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
 		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
-
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
@@ -402,7 +408,8 @@ public class DocView_Regression6 {
 
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 
-		docViewMetaDataPage.selectSecurityGroup(random1);
+//		Added on 11_04
+		baseClass.selectsecuritygroup(random1);
 		baseClass.stepInfo("Select security group for RMU");
 
 		sessionSearch = new SessionSearch(driver);
@@ -410,6 +417,10 @@ public class DocView_Regression6 {
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.viewInDocView();
+		
+		
+//		Added on 11_04	
+		baseClass.waitTime(5);
 
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
@@ -445,12 +456,61 @@ public class DocView_Regression6 {
 
 @Test(description = "RPMXCON-51990", groups={"regression"})
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
-	
+//	Added 
+	    securityGroupsPage = new SecurityGroupsPage(driver);
+	    loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	    Reporter.log("Logged in as User: " + Input.pa1userName);
+
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+
+		baseClass.stepInfo("Add security group");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(random1);
+
+		
+		baseClass.stepInfo("Selecting security group");
+//		Added on 11_04
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		securityGroupsPage.selectSecurityGroup(random1);
+
+		baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
+		driver.waitForPageToBeReady();
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
+
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
+		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
+
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic search with text input");
+		sessionSearch.basicContentSearch(Input.searchText);
+
+		baseClass.stepInfo("Bulk release to security group");
+		sessionSearch.bulkRelease(random1);
+
+		baseClass.stepInfo("Edit user by name in Users page");
+		UserManagement user = new UserManagement(driver);
+		user.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		user.assignAccessToSecurityGroups(random1, Input.rmu2userName);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
+		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		folder = "51990Default_" + Utility.dynamicNameAppender();
 		folder2 = "51990DefaultSec_" + Utility.dynamicNameAppender();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+//		
 		baseClass.stepInfo("Test case Id: RPMXCON 51990");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchText);
@@ -477,8 +537,9 @@ public class DocView_Regression6 {
 		loginPage.logout();
 		
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		docViewMetaDataPage.selectSecurityGroup(random1);
+		
+		baseClass.selectsecuritygroup(random1);
+		
 		baseClass.stepInfo("RMU2 Assigned to new SG");
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with Work product completed with RMU2");
@@ -500,7 +561,7 @@ public class DocView_Regression6 {
 		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		securityGroupsPage = new SecurityGroupsPage(driver);
+		
 		securityGroupsPage.deleteSecurityGroups(random1);
 		loginPage.logout();
 	}

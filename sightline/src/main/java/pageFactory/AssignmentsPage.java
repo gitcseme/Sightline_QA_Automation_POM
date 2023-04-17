@@ -3978,6 +3978,7 @@ public class AssignmentsPage {
 				e.printStackTrace();
 			}
 		}
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 	}
 
