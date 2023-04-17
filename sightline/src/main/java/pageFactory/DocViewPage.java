@@ -2185,7 +2185,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 	public Element getNavigationMsg() {
 		//return driver.FindElementByXPath("//span[text()='Confirm Navigation']/ancestor::div[@role='dialog']//p");
-		return driver.FindElementByXPath("//*[@id='ui-id-4']/p/text()");
+		return driver.FindElementByXPath("//*[@id='ui-id-4']");
 	}
 
 	public Element getNavigationMsgPopupYesBtn() {
