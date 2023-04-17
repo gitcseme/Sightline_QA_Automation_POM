@@ -1692,5 +1692,7 @@ public class DocView_Regression7 {
 	public void close() {	
 	UtilityLog.info("Executed Docview Regression 3_2 class successfully");		
 	}
+	
+	
 
 }
