@@ -698,9 +698,14 @@ public class Export_Phase2_Regression1 {
 		DocListPage doclist = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 		doclist.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
+		base.waitTime(3);	
 		int DocFileExtension = base.getIndex(doclist.getHeaderText(), Input.docFileExt);
+		base.waitTime(3);
+		System.out.println(DocFileExtension);
 		List<String> FileExtense = base.availableListofElements(doclist.GetColumnData(DocFileExtension));
+		base.waitTime(3);
 		String FirstFile = FileExtense.get(0).toString().trim();
+		base.waitTime(3);
 		System.out.println(FirstFile);
 		doclist.documentSelection(3);
 		doclist.bulkTagExisting(tagName);
