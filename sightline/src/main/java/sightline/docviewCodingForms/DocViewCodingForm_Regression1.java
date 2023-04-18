@@ -5772,7 +5772,7 @@ public class DocViewCodingForm_Regression1 {
 		docViewPage.getStampBlueColour().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		docViewPage.getSelectSaveLink().waitAndClick(5);
-		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 		docViewPage.verifyThatIsLastDoc();
 		docViewPage.getDocView_NumTextBox().SendKeys("5");
 		driver.waitForPageToBeReady();
