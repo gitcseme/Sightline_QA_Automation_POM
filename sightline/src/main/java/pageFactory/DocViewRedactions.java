@@ -1541,9 +1541,11 @@ public class DocViewRedactions {
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		redactionTag.selectByVisibleText("Default Redaction Tag");
 		wait.until(ExpectedConditions.elementToBeClickable(redactionTagCancleBtn().getWebElement()));
-		actions.moveToElement(redactionTagCancleBtn().getWebElement());
-		actions.click().build().perform();
-
+//		actions.moveToElement(redactionTagCancleBtn().getWebElement());
+//		actions.click().build().perform();
+		base.waitForElement(redactionTagCancleBtn());
+        base.waitTillElemetToBeClickable(redactionTagCancleBtn());
+        redactionTagCancleBtn().waitAndClick(5);
 	}
 
 	/**
@@ -2214,6 +2216,7 @@ public class DocViewRedactions {
 	}
 
 	public void clickingRedactionIcon() throws InterruptedException {
+		base.waitTime(5);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return redactionIcon().Visible() && redactionIcon().Enabled();
@@ -2334,16 +2337,19 @@ public class DocViewRedactions {
 		for (String miniDocListChild : childWindow) {
 			if (!parentWindow.equals(miniDocListChild)) {
 				driver.switchTo().window(miniDocListChild);
-//				driver.waitForPageToBeReady();
+				driver.waitForPageToBeReady();
 			}
 		}
 
 		for (int i = 1; i <= 4; i++) {
 			Thread.sleep(4000);
+			if(miniDoclistTable(i).isElementAvailable(5)) {
 			miniDoclistTable(i).waitAndClick(10);
+			}
 
 		}
-		driver.switchTo().window(parentWindow);
+		docView = new DocViewPage(driver);
+        docView.childWindowToParentWindowSwitching(parentWindow);
 		if (persistantHitRightNavigate().Displayed() && persistantHitRightNavigate().Enabled()) {
 			assertTrue(true);
 			base.passedStep(
@@ -2916,10 +2922,10 @@ public class DocViewRedactions {
 			base.failedStep("HighLighting Text  is Not Displayed");
 		}
 		driver.waitForPageToBeReady();
-		if (getNextArrowBtn().Displayed()) {
+		if (nextKeywordTest().Displayed()) {
 
 			base.passedStep("The Arrow Button is Displayed");
-			getNextArrowBtn().waitAndClick(30);
+			nextKeywordTest().waitAndClick(30);
 		} else {
 
 			base.failedStep("Arrow Button is Not Displayed");
@@ -3031,10 +3037,13 @@ public class DocViewRedactions {
 	public void performGeerIcon() {
 
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_GearButton());
 		getDocview_GearButton().waitAndClick(30);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_ShowCompletedDocs());
 		getDocview_ShowCompletedDocs().waitAndClick(30);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_GeerSaveBtn());
 		getDocview_GeerSaveBtn().waitAndClick(30);
 
 	}
@@ -3292,6 +3301,7 @@ public class DocViewRedactions {
 				driver.switchTo().window(eachId);
 			}
 		}
+		base.waitForElement(getDocView_MiniDoc_Selectdoc(3));
 		getDocView_MiniDoc_Selectdoc(3).waitAndClick(20);
 		base.passedStep("Mini Doc List Child Window Docs Selected Successfully");
 		driver.getWebDriver().close();
@@ -4326,4 +4336,7 @@ public class DocViewRedactions {
 		docView.getSaveRemark().Click();
 	}
 
+	
+	
+	
 }
