@@ -443,10 +443,10 @@ public class AdvancedSearch_Phase2_Regression {
 			if (Searchboxcriteria.contains(AllFolders.get(i))) {
 				baseClass.passedStep(AllFolders.get(i)
 						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
-			} //else {
-				//baseClass.failedStep(
-					//	"Selected  All folders is did not inserted in search criteria for advanced search ");
-			//}
+			} else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
+			}
 		}
 
 		loginPage.logout();
@@ -487,11 +487,11 @@ public class AdvancedSearch_Phase2_Regression {
 				baseClass.passedStep(AllFolders1.get(j)
 						+ "Selected All folders has been  inserted in search criteria for advanced search  as expected");
 			}
-			//else {
-			//	baseClass.failedStep(
-			//			"Selected  All folders is did not inserted in search criteria for advanced search ");
+			else {
+				baseClass.failedStep(
+						"Selected  All folders is did not inserted in search criteria for advanced search ");
 
-			//}
+			}
 		}
 	}
 
@@ -3113,6 +3113,7 @@ public class AdvancedSearch_Phase2_Regression {
 
 		// login as User
 		loginPage.loginToSightLine(username, password);
+		
 
 		baseClass.stepInfo("Test case Id: RPMXCON-57071  Advanced Search");
 		baseClass.stepInfo(
