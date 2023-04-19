@@ -984,6 +984,7 @@ public class O365_Phase2_Regression {
 	public void verifyAttributesOfInfoTab() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1008,7 +1009,7 @@ public class O365_Phase2_Regression {
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
 
 		// Add Dataset
-		List<String> custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName,
+		List<String> custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName,
 				collectionEmailId, selectedApp, collectionData, collectionName, 3, selectedFolder, false, false, false,
 				"-", true, true, "Save", "");
 
@@ -1034,6 +1035,7 @@ public class O365_Phase2_Regression {
 			throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1058,7 +1060,7 @@ public class O365_Phase2_Regression {
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
 
 		// Add Dataset
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, false, false, false, "-", true, true, "Save", "");
 
 		// Start Collection & Get Notification Count
@@ -1092,6 +1094,7 @@ public class O365_Phase2_Regression {
 		List<String> custodianDetails = new ArrayList();
 
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1135,7 +1138,7 @@ public class O365_Phase2_Regression {
 			actualCollectionName = collectionName;
 		} else {
 			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
-			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
+			custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 					selectedApp, collectionData, collectionNewName, 3, selectedFolder1, true, true, true,
 					Input.randomText, true, true, "Save", "");
 
@@ -1177,6 +1180,7 @@ public class O365_Phase2_Regression {
 	public void verifyFileFormatDwnldAutomaticInitiate() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1204,7 +1208,7 @@ public class O365_Phase2_Regression {
 
 		// Click create New Collection with datasets
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -1258,6 +1262,7 @@ public class O365_Phase2_Regression {
 	public void verifyCancelCollectionInDataSetCreationCompletedStats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1283,7 +1288,7 @@ public class O365_Phase2_Regression {
 
 		// create new Collection with Datasets and Initiate
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -1324,6 +1329,7 @@ public class O365_Phase2_Regression {
 			String actionRole) throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1350,7 +1356,7 @@ public class O365_Phase2_Regression {
 
 		// Click create New Collection with datasets
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -1429,6 +1435,7 @@ public class O365_Phase2_Regression {
 		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1456,7 +1463,7 @@ public class O365_Phase2_Regression {
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
 
 		// Add DataSets
-		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionInfoPage, dataSourceName, 3);
 		System.out.println(dataSetNameGenerated);
 
@@ -1497,6 +1504,7 @@ public class O365_Phase2_Regression {
 		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1525,7 +1533,7 @@ public class O365_Phase2_Regression {
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
 
 		// Add DataSets
-		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionInfoPage, dataSourceName, 3);
 		System.out.println(dataSetNameGenerated);
 
@@ -1566,6 +1574,7 @@ public class O365_Phase2_Regression {
 		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "AutomationCollectionWizard" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1593,7 +1602,7 @@ public class O365_Phase2_Regression {
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
 
 		// Add DataSets
-		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionInfoPage, dataSourceName, 3);
 		System.out.println(dataSetNameGenerated);
 
@@ -1634,6 +1643,7 @@ public class O365_Phase2_Regression {
 	public void verifyDataRetreivalWithSpecialCharFilesFolder() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1662,7 +1672,7 @@ public class O365_Phase2_Regression {
 
 		// Click create New Collection with datasets
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -1698,6 +1708,7 @@ public class O365_Phase2_Regression {
 	public void verifyCancelCollectionInDataRetrivedCompletedStats() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1723,7 +1734,7 @@ public class O365_Phase2_Regression {
 
 		// create new Collection with Datasets and Initiate
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -1769,6 +1780,7 @@ public class O365_Phase2_Regression {
 
 		HashMap<String, String> colllectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1782,7 +1794,7 @@ public class O365_Phase2_Regression {
 
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, additional1Status, "Button", 3, true, "");
 
 		// navigate to Collection page and get the data
@@ -1916,6 +1928,7 @@ public class O365_Phase2_Regression {
 	public void verifyStausWorkProgress(String userName, String password, String role) throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1942,7 +1955,7 @@ public class O365_Phase2_Regression {
 
 		// Click create New Collection with datasets
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
 				"Save", "");
 
@@ -2316,6 +2329,7 @@ public class O365_Phase2_Regression {
 		HashMap<String, String> colllectionData = new HashMap<>();
 		HashMap<String, String> colllectionData2 = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -2327,6 +2341,7 @@ public class O365_Phase2_Regression {
 		String collectionID = "";
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		String collection2ndEmailId = Input.collection2ndEmailId;
+		String collectiondatalistVal2 = Input.collection2nddatalistVal;
 		String secondFirstName = Input.collsecondFirstName;
 		String secondlastName = Input.collsecondlastName;
 		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
@@ -2346,7 +2361,7 @@ public class O365_Phase2_Regression {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 
 		// Add DataSets
-		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, "", "Button", 3, false, "");
 
 		// navigate to Collection page and get the data
@@ -2378,7 +2393,7 @@ public class O365_Phase2_Regression {
 		collectionID = colllectionData.get(collectionName);
 
 		// DataSet creation
-		collection.fillinDS(collectionName, secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
+		collection.fillinDS(collectionName,collectiondatalistVal2, secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
 				colllectionData2, selectedFolder, headerList, "Button", 3, false, "Save", false, "");
 
 		// Initiate collection
@@ -2418,6 +2433,7 @@ public class O365_Phase2_Regression {
 		HashMap<String, String> collectionData = new HashMap<>();
 
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -2440,7 +2456,7 @@ public class O365_Phase2_Regression {
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
 
 		// Add DataSets
-		collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId, selectedApp, collectionData,
+		collection.addDataSetWithHandles("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp, collectionData,
 				collectionName, 3);
 
 		// Edit folder name and verify Dataset Selection Table
@@ -2465,6 +2481,7 @@ public class O365_Phase2_Regression {
 		HashMap<String, String> collectionData = new HashMap<>();
 
 		String collectionEmailId = Input.collectionDataEmailId;
+		String collectiondataListVal = Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -2491,7 +2508,7 @@ public class O365_Phase2_Regression {
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
 
 		// Add Dataset
-		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, false, false, false, "-", true, true, "Save", "");
 
 		// Initiate collection

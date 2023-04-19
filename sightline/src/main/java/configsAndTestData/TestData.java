@@ -33,6 +33,11 @@ public class TestData {
 	public String MasterPDF1location;
 	public String MasterPDF2location;
 	public String ProductionPathAdditonal;
+	public String collectionDatalistval;
+	public String collection2nddatalistVal;
+	public String clientEmaildatalistVal01;
+	public String clientEmaildatalistVal02; 
+	public String collectionJebDatalistval;
 
 	// Mohan Indium Docview Analytics
 	public String Panel;
