@@ -79,6 +79,7 @@ public class Projects_Phase2_Regression {
 		docExplorer = new DocExplorerPage(driver);
 		tally = new TallyPage(driver);
 	    projects = new ProjectPage(driver);
+	    page = new ProductionPage(driver);
 	}
 
 	/**
@@ -765,7 +766,7 @@ public class Projects_Phase2_Regression {
 		projects.getClientNameSaveBtn().waitAndClick(10);
 
 		baseClass.waitTime(2);
-		baseClass.VerifySuccessMessage("The client details were updated successfully");
+		baseClass.VerifySuccessMessage("Client update was successful.");
 		baseClass.CloseSuccessMsgpopup();
 
 		projects.verifyProcessingEngineSection(projectName, clientName);
@@ -1746,7 +1747,7 @@ public class Projects_Phase2_Regression {
 		baseClass.passedStep("Big value should get selected from \"Initial Size of Project Database\" field");
 		client.getSaveBtn().waitAndClick(10);
 		baseClass.getSuccessMsgHeader().isElementAvailable(60);
-		baseClass.VerifySuccessMessage("The client details were updated successfully");
+		baseClass.VerifySuccessMessage("Client update was successful.");
 		baseClass.CloseSuccessMsgpopup();
 
 		// verify
@@ -1803,7 +1804,7 @@ public class Projects_Phase2_Regression {
 		baseClass.passedStep("Medium value should displayed in \"Initial Size of Project Database\" field");
 		client.getSaveBtn().waitAndClick(10);
 		baseClass.getSuccessMsgHeader().isElementAvailable(60);
-		baseClass.VerifySuccessMessage("The client details were updated successfully");
+		baseClass.VerifySuccessMessage("Client update was successful.");
 		baseClass.CloseSuccessMsgpopup();
 
 		// verify
@@ -2047,10 +2048,14 @@ public class Projects_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
 		page.toggleOffCheck(projPage.getEnableAnalyticsToogle());
-
+		baseClass.waitForElement(projPage.getEnableAnalyticsToogle());
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		projPage.getEnableAnalyticsToogle().waitAndClick(4);
 		baseClass.passedStep(
 				"Verified - that When SAU/DAU changes the setting for Enable/Disable Project level Analytics ,"
 						+ " the changes should be saved.");
+		
 		loginPage.logout();
 	}
 
