@@ -48,8 +48,8 @@ public class Assignment_Regression2 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		Input in = new Input();
-	    in.loadEnvConfig();
+//		Input in = new Input();
+//	    in.loadEnvConfig();
 		searchText = Input.TallySearch;
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}
@@ -1062,8 +1062,6 @@ public class Assignment_Regression2 {
 		bc.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
 		try {
 			bc.waitTillTextToPresent(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName),Integer.toString(unassignedDocs));
-			System.out.println("Actual :-"+agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText());
-			System.out.println("Expected :-"+Integer.toString(unassignedDocs));
 			assertion.assertEquals(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText(),
 					Integer.toString(unassignedDocs));
 			assertion.assertAll();

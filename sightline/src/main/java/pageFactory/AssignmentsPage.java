@@ -10146,9 +10146,9 @@ public class AssignmentsPage {
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
 		bc.CloseSuccessMsgpopup();
-//		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
-//		bc.getCloseSucessmsg().waitAndClick(10);
-//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 
 		return count;
 	}
