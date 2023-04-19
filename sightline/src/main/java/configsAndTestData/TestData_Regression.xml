@@ -374,6 +374,7 @@
 	<collectionPageUrl>Collection/Collections</collectionPageUrl>
 	<sourceLocationPageUrl>Collection/SourceLocation</sourceLocationPageUrl>
 	<collectionDataEmailId>Raghuram.A@consiliotest.com</collectionDataEmailId>
+	<collectionDatalistval>Raghuram A (Raghuram.A@consiliotest.com)</collectionDatalistval>
 	<collectionDataFirstName>Raghuram</collectionDataFirstName>
 	<collectionDataLastName>A</collectionDataLastName>
 	<collectionDataselectedApp>Outlook Mail</collectionDataselectedApp>
@@ -405,9 +406,11 @@
    <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
    <clientCollectionEmail01>ppatil@consiliotest.com</clientCollectionEmail01>
+   <clientEmaildatalistVal01>Paresh Patil (ppatil@consiliotest.com)</clientEmaildatalistVal01>
    <clientcollectionFirstName01>Paresh</clientcollectionFirstName01>
    <clientcollectionSecondName01>Patil</clientcollectionSecondName01>
    <clientCollectionEmail02>Gouri.Dhavalikar@consiliotest.com</clientCollectionEmail02>
+   <clientEmaildatalistVal02>Gouri Dhavalikar (Gouri.Dhavalikar@consiliotest.com)</clientEmaildatalistVal02>
    <clientcollectionFirstName02>Gouri</clientcollectionFirstName02>
    <clientcollectionSecondName02>Dhavalikar</clientcollectionSecondName02>
    <copyDSwithErr>Copied datasets with errors</copyDSwithErr>
@@ -444,6 +447,7 @@
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
     <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
     <collection2ndEmailId>Jeevitha.Rajendran@consiliotest.com</collection2ndEmailId>
+    <collection2nddatalistVal>Jeevitha Rajendran (Jeevitha.Rajendran@consiliotest.com)</collection2nddatalistVal>
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
@@ -454,6 +458,8 @@
     <ApplicationIDJeb>6d76a630-be97-4493-9f7a-edf318c03c18</ApplicationIDJeb>
     <ApplicationKeyJeb>dlh7Q~fNgOWVJ3sTtQvA8KsA0lV2bqRtZAIaK</ApplicationKeyJeb>
     <collectionJebEmailId>jbush@consiliodeveloper.onmicrosoft.com</collectionJebEmailId>
+    <collectionJebDatalistval>Jeb Bush (jbush@consiliodeveloper.onmicrosoft.com)</collectionJebDatalistval>
+
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -987,25 +993,25 @@
     
      <!--Added By Hema Onna Test users -->
     <Onnasa1userName>qasa5@consilio.com</Onnasa1userName> 
-    <Onnasa1password>Q@test_1995</Onnasa1password>
+    <Onnasa1password>Q@test_1992</Onnasa1password>
     
     <Onnada1userName>qada7@consilio.com</Onnada1userName> 
-    <Onnada1password>Q@test_1994</Onnada1password> 
+    <Onnada1password>Q@test_1995</Onnada1password> 
     
     <Onnapa1FullName>Hema PAQA24</Onnapa1FullName>
   	<Onnapa1userName>qapau24@consilio.com</Onnapa1userName>  
-  	<Onnapa1password>Q@test_1993</Onnapa1password>
+  	<Onnapa1password>Q@test_1994</Onnapa1password>
   	
   	<Onnarmu1FullName>Hema RMUQA24</Onnarmu1FullName>
   	<Onnarmu1userName>qarmu24@consilio.com</Onnarmu1userName>
-    <Onnarmu1password>Q@test_1993</Onnarmu1password> 
+    <Onnarmu1password>Q@test_1994</Onnarmu1password> 
     
     <Onnaeditpa1FullName>QA PA 27</Onnaeditpa1FullName>
   	<Onnaeditpa1userName>qapau27@consilio.com</Onnaeditpa1userName>  
-  	<Onnaeditpa1password>Q@test_1993</Onnaeditpa1password>
+  	<Onnaeditpa1password>Q@test_1994</Onnaeditpa1password>
   	
   	<Onnaeditrmu1FullName>QA RMU 27</Onnaeditrmu1FullName>
   	<Onnaeditrmu1userName>qarmu27@consilio.com</Onnaeditrmu1userName>
-    <Onnaeditrmu1password>Q@test_1993</Onnaeditrmu1password> 
+    <Onnaeditrmu1password>Q@test_1994</Onnaeditrmu1password> 
     
 </TestData>

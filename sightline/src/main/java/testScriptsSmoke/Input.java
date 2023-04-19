@@ -27,6 +27,7 @@ public class Input {
 	Driver driver;
 	LoginPage lp;
 
+	
 	// Default should be true, Make it false during Development
 	public static boolean mode = true;
 
@@ -67,6 +68,11 @@ public class Input {
 	public static String OnnaUrl;
 	public static String OnnaDirectUrl;
 	public static String ProductionPathAdditonal;
+	public static String collectionDatalistval;
+	public static String collection2nddatalistVal;
+	public static String clientEmaildatalistVal01;
+	public static String clientEmaildatalistVal02;
+	public static String collectionJebDatalistval;
 	// Environment data---------------------------------------------
 
 	public static String url;
@@ -1553,8 +1559,11 @@ public class Input {
 		smallSetDat2 = testData.getSmallSetDat2();
 		specialCjkDat = testData.getSpecialCjkDat();
 		ProductionPathAdditonal = testData.getProductionPathAdditonal();
-		
-		
+		collectionDatalistval=testData.getCollectionDatalistval();
+		collection2nddatalistVal=testData.getCollection2nddatalistVal();
+		clientEmaildatalistVal01=testData.getClientEmaildatalistVal01();
+		clientEmaildatalistVal02=testData.getClientEmaildatalistVal02();
+		collectionJebDatalistval=testData.getCollectionJebDatalistval();
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
