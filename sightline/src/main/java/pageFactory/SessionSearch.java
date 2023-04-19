@@ -762,7 +762,7 @@ public class SessionSearch {
 	public Element getQueryAlertGetText() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
 	}
-
+	
 	public Element getQueryAlertGetTextSingleLine() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
@@ -1352,7 +1352,8 @@ public class SessionSearch {
 	}
 
 	public Element getSavedSearchQueryAS() {
-		return driver.FindElementByXPath("//span[@class='editable editable-click']");
+		//return driver.FindElementByXPath("//span[@class='editable editable-click']");
+		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input"); 
 	}
 
 	public Element getValueTextArea() {
@@ -11320,11 +11321,12 @@ public class SessionSearch {
 			System.out.println("Advance Search2");
 		}
 
-		if (getYesQueryAlert().isElementAvailable(2)) {
+		if (getYesQueryAlert().isElementAvailable(1)) {
 			getYesQueryAlert().waitAndClick(8);
 		}
 
 	}
+	
 
 	/**
 	 * @author Raghuram.A
@@ -12112,7 +12114,13 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getPureHitsCount2ndSearch().waitAndClick(15);
-		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		
+		try {
+			int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+			System.out.println(pureHit); 			
+		} catch(NumberFormatException e) {
+			System.out.println("NumberFormatException: invalid input string");
+		}
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
