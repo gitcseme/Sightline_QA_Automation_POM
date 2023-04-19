@@ -1139,6 +1139,10 @@ public class AssignmentsPage {
 	public Element getCategory() {
 		return driver.FindElementByXPath("//a[text()='Category']/parent::li[@aria-disabled='true']");
 	}
+	
+	public Element getOptimizedSort() {
+		return driver.FindElementByXPath("//a[text()='Optimized Sort']/parent::li[@aria-disabled='true']");
+	}
 
 	public Element getRoot() {
 		return driver.FindElementByXPath("//a[@data-content='Root']");
@@ -1707,6 +1711,14 @@ public class AssignmentsPage {
 
 	public Element getAssgn_EditReviewerReMarkToggle() {
 		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsAllowReviwerRemarks']/following-sibling::i");
+	}
+	
+	public Element getFamilytogetherInDistributeDocPage() {
+		return driver.FindElementByXPath("(//label[@id='distribute_document_toggle']/i)[1]");
+	}
+	
+	public Element getEmailThreadedInDistributeDocPage() {
+		return driver.FindElementByXPath("(//label[@id='distribute_document_toggle']/i)[2]");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -6449,6 +6461,10 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().waitAndClick(10);
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().waitAndClick(10);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
@@ -7250,7 +7266,7 @@ public class AssignmentsPage {
 	 */
 	public void validateCascadeSettingsChangesInAgnmt(String cascadeSettings) {
 		if (cascadeSettings == "Yes") {
-			if (getsortBymetaData().isElementAvailable(5) == true && getCategory().isElementAvailable(5) == true) {
+			if (getsortBymetaData().isElementAvailable(5) == true && getOptimizedSort().isElementAvailable(5) == true) {
 				bc.passedStep("Unable to make changes when parent group has cascade settings on");
 			} else {
 				bc.failedStep("Able to make changes when parent group has cascade settings on");
@@ -7671,6 +7687,10 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().waitAndClick(10);
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().waitAndClick(10);
 //		bc.CloseSuccessMsgpopup();
 		int Total = (int) Math.ceil(count / 2);
 		int unassignedDocs = count - Total;
@@ -8109,7 +8129,7 @@ public class AssignmentsPage {
 	public void VerifyCascadefunctionality_ON() {
 		try {
 			bc.ValidateElement_Presence(getsortBymetaData(), "Disabled SortByMetadata Tab ");
-			bc.ValidateElement_Presence(getCategory(), "Disabled Cateogory Tab");
+			bc.ValidateElement_Presence(getOptimizedSort(), "Disabled Optimized Tab");
 			validateCascadeSettings();
 			bc.ValidateElement_Presence(SelectMetaDataPopUpDisabled(), "disabled SelectMetaData PopUp");
 			bc.ValidateElement_Presence(SelectKeywordPopUpDisabled(), "disabled SelectMetaData PopUp");
@@ -10118,13 +10138,17 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().waitAndClick(5);
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().waitAndClick(5);
 		getAssgn_docsToDistribute().SendKeys(count);
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
 		bc.CloseSuccessMsgpopup();
-		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
-		bc.getCloseSucessmsg().waitAndClick(10);
-		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+//		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+//		bc.getCloseSucessmsg().waitAndClick(10);
+//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 
 		return count;
 	}
