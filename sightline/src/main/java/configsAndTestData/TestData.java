@@ -38,6 +38,7 @@ public class TestData {
 	public String clientEmaildatalistVal01;
 	public String clientEmaildatalistVal02; 
 	public String collectionJebDatalistval;
+	
 
 	// Mohan Indium Docview Analytics
 	public String Panel;

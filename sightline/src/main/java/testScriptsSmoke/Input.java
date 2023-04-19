@@ -27,6 +27,7 @@ public class Input {
 	Driver driver;
 	LoginPage lp;
 
+	
 	// Default should be true, Make it false during Development
 	public static boolean mode = true;
 

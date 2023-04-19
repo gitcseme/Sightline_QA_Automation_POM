@@ -832,6 +832,7 @@ public class O365_Phase2_Regression {
 	 *              Source Location' button
 	 * @throws Exception
 	 */
+	
 	@Test(description = "RPMXCON-60604", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
 	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation(String username, String password,
 			String fullname) throws Exception {

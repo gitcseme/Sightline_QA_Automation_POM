@@ -1224,6 +1224,7 @@ public class O365_Phase2_Regression1 {
 	 *              displays in Orange/Yellow colour coded on "Manage Collections"
 	 *              screen.. RPMXCON-61209
 	 */
+	
 	@Test(description = "RPMXCON-61209", enabled = true, groups = { "regression" })
 	public void verifyPausedStatusCollectionColorCode() throws Exception {
 
