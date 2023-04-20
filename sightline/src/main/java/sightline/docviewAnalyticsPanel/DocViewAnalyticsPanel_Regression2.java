@@ -53,8 +53,8 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in =new Input();
-		in.loadEnvConfig();
+//		Input in =new Input();
+//		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
