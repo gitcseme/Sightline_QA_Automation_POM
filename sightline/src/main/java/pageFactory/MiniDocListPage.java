@@ -155,6 +155,10 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath(
 				"//div[@id='divColumnDisplay']//p//strong[text()='SelectedFields']//..//..//ul[@id='sortable2PickColumns']");
 	}
+	
+	public Element getConceptuallySimilarData() {
+		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+				}
 
 	public Element getMiniDocListcloseButton() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
@@ -379,6 +383,11 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath(
 				"//p[text()='Cannot perform Code Same As action, as the selected documents include one or more completed documents']");
 	}
+	
+	public Element getDocView_Analytics_liDocumentThreadMap() {
+		return driver.FindElementById("liDocumentThreadedMap");
+	}
+
 
 	public Element getDocView_HistoryButton() {
 		return driver.FindElementById("btnDocHistory");
@@ -499,6 +508,9 @@ public class MiniDocListPage {
 	public Element getSelectedOptimizedSortRadioButton() {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}
+	public Element getThreadData() {
+		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+				}
 
 	public Element getAvailableFieldsDisplay(String fields) {
 		return driver.FindElementByXPath("//ul[@id='sortable1PickColumns']//li[@customfield-name='" + fields + "']");
@@ -4593,11 +4605,105 @@ public Element getDocViewFromDropDown() {
 		System.out.println(flag);
 		baseClass.passedStep("Newly Added Field is displayed in minidoclist");
 	}
+	public void checkThreadMapDoc() {
+		MiniDocListPage doclist=new MiniDocListPage(driver);
+		// Main method
+			int sizeofList = doclist.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		int totalDocs = getDocCountMethod();
+		Boolean dataEmpty = false; // for additional purpose
+
+		docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+		for (int i = 1; i <= totalDocs; i++) {
+		String name = docIDlist.get(i);
+		getDociD(name).waitAndClick(5);
+		System.out.println("Selected Document : " + name);
+		baseClass.stepInfo("Selected Document : " + name);
+
+		// Move to NearDupes
+		driver.waitForPageToBeReady();
+		getDocView_Analytics_liDocumentThreadMap().WaitUntilPresent().ScrollTo();
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		// Verify Empty
+		if (doclist.getThreadData().isElementAvailable(3)) {
+			dataEmpty = false;
+			}
+		else {
+			dataEmpty = true;
+			System.out.println("Document that has Thread Map datas : " + name);
+			baseClass.stepInfo("Document that has Thread Map datas : " + name);
+			break;}}
+		}
+	
+	public void checkConceptuallySimilarDoc() {
+		MiniDocListPage doclist=new MiniDocListPage(driver);
+		// Main method
+			int sizeofList = doclist.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		int totalDocs = getDocCountMethod();
+		Boolean dataEmpty = false; // for additional purpose
+
+		docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+		for (int i = 1; i <= totalDocs; i++) {
+		String name = docIDlist.get(i);
+		getDociD(name).waitAndClick(5);
+		System.out.println("Selected Document : " + name);
+		baseClass.stepInfo("Selected Document : " + name);
+
+		// Move to NearDupes
+		driver.waitForPageToBeReady();
+		getDocView_Analytics_liDocumentConceptualSimilarab().WaitUntilPresent().ScrollTo();
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+		// Verify Empty
+		if (doclist.getConceptuallySimilarData().isElementAvailable(3)) {
+			dataEmpty = false;
+			}
+		else {
+			dataEmpty = true;
+			System.out.println("Document that has Conceptually similar datas : " + name);
+			baseClass.stepInfo("Document that has Conceptually similar datas : " + name);
+			break;}}
+		}
+	public void checkFamilyMemberDoc() {
+		MiniDocListPage doclist=new MiniDocListPage(driver);
+		// Main method
+			int sizeofList = doclist.getListofDocIDinCW().size();
+		System.out.println("Size : " + sizeofList);
+		int totalDocs = getDocCountMethod();
+		Boolean dataEmpty = false; // for additional purpose
+
+		docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+		for (int i = 1; i <= totalDocs; i++) {
+		String name = docIDlist.get(i);
+		getDociD(name).waitAndClick(5);
+		System.out.println("Selected Document : " + name);
+		baseClass.stepInfo("Selected Document : " + name);
+
+		// Move to NearDupes
+		driver.waitForPageToBeReady();
+		getDocView_Analytics_FamilyTab().WaitUntilPresent().ScrollTo();
+		getDocView_Analytics_FamilyTab().waitAndClick(5);
+		// Verify Empty
+		if (getFamilyData().isElementAvailable(3)) {
+			dataEmpty = false;
+		}		
+		else {
+			dataEmpty = true;
+			System.out.println("Document that has Family datas : " + name);
+			baseClass.stepInfo("Document that has Family datas : " + name);
+			break;
+			}
+		}
+		
+	}
 
 /**
 * @author Raghuram.A
 */
-public void checkFamilyMemberDoc() {
+public void checkFamilyMemberForUniqueDoc() {
 MiniDocListPage doclist = new MiniDocListPage(driver);
 List<String> docIDFMlist = new ArrayList<>();
 String uniqueDoc = "";
@@ -4654,6 +4760,8 @@ for (int i = 1; i <= totalDocs; i++) {
 	}
 }
 }
+
+
 
 /**
 * @author Raghuram.A
