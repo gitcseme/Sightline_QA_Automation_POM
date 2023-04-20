@@ -670,7 +670,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		// login as SA
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as Utesser: " + Input.sa1userName);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
 
 		docView = new DocViewPage(driver);
