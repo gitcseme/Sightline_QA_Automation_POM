@@ -1300,7 +1300,7 @@ public class Export_Phase1_Regression {
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.testData1);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
@@ -1333,11 +1333,12 @@ public class Export_Phase1_Regression {
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		page.goToImageFiles();
-		page.getFirstImageFile(prefixID + suffixID, subBates).waitAndClick(10);
-		driver.waitForPageToBeReady();
-
-		File imageFile = new File(Input.fileDownloadLocation + prefixID + suffixID + ".000" + subBates + ".tiff");
-		page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, tagname);
+		page.verifyTiffFile(purehit, prefixID, suffixID, subBates, tagname);
+//		page.getFirstImageFile(prefixID + suffixID, subBates).waitAndClick(10);
+//		driver.waitForPageToBeReady();
+//
+//		File imageFile = new File(Input.fileDownloadLocation + prefixID + suffixID + ".000" + subBates + ".tiff");
+//		page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, tagname);
 
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
@@ -1966,17 +1967,18 @@ public class Export_Phase1_Regression {
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		page.goToImageFiles();
-		driver.waitForPageToBeReady();
-		for (int i = 2; i < purehit; i++) {
-			page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
-		}
-
-		driver.waitForPageToBeReady();
-		for (int i = 2; i < purehit; i++) {
-			File imageFile = new File(
-					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tiff");
-			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
-		}
+//		driver.waitForPageToBeReady();
+		page.verifyTiffFile(purehit, prefixID, suffixID, subBates, Input.searchString4);
+//		for (int i = 2; i < purehit; i++) {
+//			page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+//		}
+//
+//		driver.waitForPageToBeReady();
+//		for (int i = 2; i < purehit; i++) {
+//			File imageFile = new File(
+//					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tiff");
+//			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
+//		}
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
 
