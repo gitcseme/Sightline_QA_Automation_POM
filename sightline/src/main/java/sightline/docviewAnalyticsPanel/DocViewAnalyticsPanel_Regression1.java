@@ -47,8 +47,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -660,17 +660,17 @@ public class DocViewAnalyticsPanel_Regression1 {
 	 */
 	@Test(description="RPMXCON-50908",enabled = true, groups = { "regression" } )
 	public void verifyCodeSameAsDocsSelectionForFamilyMember() throws InterruptedException {
-
+		MiniDocListPage docList=new MiniDocListPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50908");
 		baseClass.stepInfo(
 				"To verify user after impersonation should able to 'Code same as this' on document selection from Family Members panel.");
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
-		String docsToBeSelected = Input.threadDocId;
+//		String docsToBeSelected = Input.threadDocId;
 
 		// login as SA
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		UtilityLog.info("Logged in as Utesser: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
 
 		docView = new DocViewPage(driver);
@@ -687,7 +687,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.add3ReviewerAndDistribute();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberDoc();
+//		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -699,7 +700,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		baseClass.impersonatePAtoRMU();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberDoc();
+//		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -712,7 +714,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.familyDoc1);
+		docList.checkFamilyMemberDoc();
+//		docView.selectDocIdInMiniDocList(Input.familyDoc1);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -725,7 +728,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberDoc();
+//		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
