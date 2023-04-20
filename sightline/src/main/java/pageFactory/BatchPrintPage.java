@@ -633,7 +633,7 @@ public class BatchPrintPage {
 		return driver.FindElementByXPath("//select[@id='ProductionDropDown']//option[text()='"+ProdName+"']");
 	}
 	public Element getEnableSlipSheetsToggleButton() {
-		return driver.FindElementByXPath("//label[text()='Enable Slip Sheets:']/../label[2]/i");
+		return driver.FindElementByXPath("(//label[@class='toggle col-md-7']//i)[2]");
 	}
 	public Element getEnableAnalyseToggleButton() {
 		return driver.FindElementByXPath("//strong[text()='Folder All Skipped Documents:']//following::label/i");
