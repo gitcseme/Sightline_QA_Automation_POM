@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.awt.AWTException;
+
 import java.awt.Color;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -70,7 +71,6 @@ import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import de.redsix.pdfcompare.PdfComparator;
 import executionMaintenance.UtilityLog;
-import net.sf.ehcache.search.aggregator.Count;
 import testScriptsSmoke.Input;
 
 public class BaseClass {
