@@ -3382,7 +3382,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getDocView_MiniDoclist_GearIcon() {
 		return driver.FindElementByXPath("//*[@id='miniDocListConfig']//i[@class='fa fa-gear']");
 	}
-
+	public Element getDocView_MiniDoclist_Attachcount() {
+		return driver.FindElementByXPath("//ul[@id='sortable2PickColumns']//li//i[@value='AttachCount']");
+	}
+	
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields() {
 		return driver.FindElementByXPath("//li[text()='FamilyRelationship']//following-sibling::i");
 	}
@@ -27664,20 +27667,21 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void selectAttachCountDocIdInAvailableField() {
 
-		try {
+		
 			driver.waitForPageToBeReady();
 
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 
-			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
+			if(getDocView_MiniDoclist_Attachcount().isDisplayed()) {
+				getMiniDocListConfirmationButton("Save").waitAndClick(10);
+				}
+			else {
+				dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
+				getMiniDocListConfirmationButton("Save").waitAndClick(10);
 
-			getMiniDocListConfirmationButton("Save").waitAndClick(10);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("ConfigureMiniDocist popup is not opened");
-		}
+			}
+		
 	}
 
 	/**
