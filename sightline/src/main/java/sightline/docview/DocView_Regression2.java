@@ -521,10 +521,16 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
+		
+//		Added on
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		
 		baseClass.stepInfo("Docs Viewed in Doc View");
 		docViewRedact.clickingImagesTab();
-		DocViewPage docviewpage = new DocViewPage(driver);
-		docviewpage.selectDocIdInMiniDocList("ID00001186");
+		
+		docViewRedact.selectMiniDocListAndViewInDocView(5);
+		
 		driver.waitForPageToBeReady();
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
@@ -1374,10 +1380,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		assignmentspage.addReviewerAndDistributeDocs();
 		
-//		 Added on 07_02_23
-		baseClass.waitForElement(assignmentspage.getAssignmentSaveButton());
-		baseClass.waitTillElemetToBeClickable(assignmentspage.getAssignmentSaveButton());
-		assignmentspage.getAssignmentSaveButton().Click();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
@@ -1534,11 +1537,12 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
-		driver.Navigate().refresh();
+//		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 	
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		docViewRedact.selectMiniDocListAndViewInDocView(4);
+		baseClass.waitTime(3);
 		docView.addRemarkToNonAudioDocument(1,20, remarksName);
 		
 		baseClass.stepInfo("Remarks added successfully");
@@ -1552,7 +1556,7 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The page is not loaded where the remarks is added");
 		}
 		driver.waitForPageToBeReady();
-		docView.deleteReamark(remarksName);
+		docView.deleteRemark(remarksName);
 		loginPage.logout();
 	}
 
@@ -1713,6 +1717,7 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicMetaDataSearch("SourceDocID", null, Input.TiffDocId, null);
 		sessionsearch.ViewInDocView();
+		baseClass.waitTime(4);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIconDisabled());
 		String SearchIcon = docViewRedact.getSearchIconDisabled().GetAttribute("class");
 		if (SearchIcon.contains("disabled")) {
@@ -2873,13 +2878,15 @@ public class DocView_Regression2 {
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Sheets";
+		int pageNum = Integer.parseInt(Input.pageNumber) + 1;
+		
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51956");
 		baseClass.stepInfo(
 				"Verify that when document number is entered to view having hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch("Hidden");
+		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
@@ -2888,7 +2895,7 @@ public class DocView_Regression2 {
 		}), Input.wait60);
 		docViewRedact.pageNumberTextBox().waitAndClick(10);
 		docViewRedact.pageNumberTextBox().getWebElement().clear();
-		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
+		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(String.valueOf(pageNum));
 		driver.waitForPageToBeReady();
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -2910,7 +2917,7 @@ public class DocView_Regression2 {
 				"Verify that a Hidden Info icon is presented in the action icon section of Doc View if the document being viewed has any Hidden Content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
 		sessionsearch.ViewInDocView();
 		if (docViewRedact.hiddenInfoIcon().isDisplayed() == true) {
 			baseClass.passedStep("Hidden info Icon is visible for document with hidden content");
@@ -3185,11 +3192,15 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		
 //		Added on
-		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
-	
+		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();
 		DocViewPage docviewpage = new DocViewPage(driver);
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
+		
+//		Added on
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		docviewpage.selectDocInMiniDocList(Input.DocIdWithComments);
+	
 		baseClass.stepInfo("Document with hidden content - excel protected worsheet selected from mini doclist");
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 
@@ -3234,7 +3245,11 @@ public class DocView_Regression2 {
 		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkByText(remark);
+		
+//		docView.addRemarkByText(remark);
+		DocViewRedactions docRedact =new DocViewRedactions(driver);
+		docRedact.selectMiniDocListAndViewInDocView(5);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 		loginPage.logout();
 		baseClass.stepInfo("Prerequisites creation completed");
 
@@ -3262,9 +3277,16 @@ public class DocView_Regression2 {
 		String secondUserWindow = driver.CurrentWindowHandle();
 		baseClass.stepInfo("Switching back to first window to delete remark");
 		driver.switchToWindow(firstUserWindow);
+//		Added on
+		driver.Navigate().refresh();
+		docRedact.selectMiniDocListAndViewInDocView(5);
+		baseClass.waitTime(5);
 		docView.deleteReamark(remark);
 		baseClass.stepInfo("Switching back to second window to warning message displayed in all 3 panels");
 		driver.switchToWindow(secondUserWindow);
+		driver.Navigate().refresh();
+		docRedact.selectMiniDocListAndViewInDocView(5);
+		baseClass.waitTime(5);
 		docView.verifyWarningMessage("Annotation");
 		docView.verifyAppliedAnnotationSubMenusAreDisabled();
 		docView.verifyWarningMessage("Redaction");
@@ -3284,7 +3306,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		docView.verifyReviewRemarkActionPanel("Remark", remark);
 
-
+		loginPage.logout();
 	}
 
 
@@ -3437,6 +3459,9 @@ public class DocView_Regression2 {
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Workbook";
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+//		Added on
+		baseClass.selectproject(Input.additionalDataProject);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-51960");
 		baseClass.stepInfo("Verify that on tabs navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3474,6 +3499,7 @@ public class DocView_Regression2 {
 		baseClass.waitTime(1);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
 		docViewRedact.forwardNextDocBtn().waitAndClick(5);
+
 		baseClass.stepInfo("navigated to Document with hidden content");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessage(expectedMessage1);
@@ -3713,7 +3739,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As SA
@@ -3727,7 +3753,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As PA
@@ -3741,7 +3767,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As PA
@@ -3755,7 +3781,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As RMU
@@ -3769,7 +3795,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -3991,7 +4017,9 @@ public class DocView_Regression2 {
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Sheets";
-		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		loginPage.loginToSightLine(userName, password);
+//		Added on
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51994");
 		baseClass.stepInfo("Verify that for hidden property \"contains comments\", the message should be modified that should ask the user to \"download the native\" to review");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3999,9 +4027,14 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();
 		baseClass.waitTime(3);
-		DocViewPage docviewpage = new DocViewPage(driver);	
-//Selecting Doc that contains comments
-		docviewpage.selectDocIdInMiniDocList("ID00000173");
+		DocViewPage docviewpage = new DocViewPage(driver);
+	
+//		Added on
+	
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		docviewpage.selectDocInMiniDocList("ID00000173");	
+
 		baseClass.stepInfo("Document with hidden content -Contains comments selected from mini doclist");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
@@ -4029,7 +4062,14 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		DocViewPage docviewpage = new DocViewPage(driver);	
 //Selecting Doc that contains Track changes
-		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithTrackChanges);
+		
+		
+//		Added on
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		docviewpage.selectDocInMiniDocList(Input.DocIdWithTrackChanges);	
+
+		
 		baseClass.stepInfo("Document with hidden content - Track changesselected from mini doclist");
 		driver.waitForPageToBeReady();	
 	driver.WaitUntil((new Callable<Boolean>() {
@@ -4067,7 +4107,13 @@ public class DocView_Regression2 {
 		sessionsearch.basicMetaDataSearch("IngestionName", null, Input.HiddenIngestionName, null);
 		sessionsearch.ViewInDocView();
 		DocViewPage docviewpage = new DocViewPage(driver);	
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+		
+//		Added on
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		docviewpage.selectDocInMiniDocList(Input.HiddenIngestionDocId);	
+		
+		
 		baseClass.stepInfo("Document with hidden content selected from mini doclist");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessage(expectedMessage1);
@@ -4079,7 +4125,11 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content selected from mini doclist");
 		driver.waitForPageToBeReady();	
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+		
+//		Added on
+		minidoc.removingFieldsAndDragnDropDefault();
+		docviewpage.selectDocInMiniDocList(Input.HiddenIngestionDocId);	
+
 		baseClass.VerifyWarningMessage(expectedMessage1);
 		loginPage.logout();
 		
@@ -4089,7 +4139,12 @@ public class DocView_Regression2 {
 				sessionsearch.ViewInDocView();
 				baseClass.stepInfo("Document with hidden content selected from mini doclist");
 				driver.waitForPageToBeReady();	
-				docviewpage.selectDocIdInMiniDocList(Input.HiddenIngestionDocId);
+				
+//				Added on
+				minidoc.removingFieldsAndDragnDropDefault();
+				docviewpage.selectDocInMiniDocList(Input.HiddenIngestionDocId);	
+	
+				
 				baseClass.VerifyWarningMessage(expectedMessage1);
 				loginPage.logout();
 		

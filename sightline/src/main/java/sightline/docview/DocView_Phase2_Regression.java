@@ -171,7 +171,7 @@ public class DocView_Phase2_Regression {
 		baseClass.passedStep("persistent hit terms displayed on docview panel successfully");
 		softassertion.assertAll();
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
-		keywordPage.deleteKeyword(hitTerms);
+		keywordPage.deleteKeywordByName(hitTerms);
 		loginPage.logout();
 
 		// login as RMU
@@ -214,7 +214,7 @@ public class DocView_Phase2_Regression {
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
-		keywordPage.deleteKeyword(hitTerms1);
+		keywordPage.deleteKeywordByName(hitTerms1);
 
 	}
 
@@ -947,6 +947,11 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Login as Rmu");
 		docexp = new DocExplorerPage(driver);
 		// DocExploer to viewindocView Page
+		
+//		Added o
+		baseClass.waitForElement(docexp.getDocExplorerTabAfterDashBoard());
+		docexp.getDocExplorerTabAfterDashBoard().waitAndClick(5);
+		
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();

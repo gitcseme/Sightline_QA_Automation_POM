@@ -128,6 +128,7 @@ public class DocView_Regression1 {
 		agnmt.selectAssignmentToViewinDocview(assignmentName);
 
 		baseClass.stepInfo("Click on reduction button ");
+		baseClass.waitTime(5);
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
@@ -1495,6 +1496,8 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Basic meta data search");
 			sessionSearch.basicContentSearch(Input.testData1);
 			sessionSearch.ViewInDocView();
+			baseClass.waitTime(4);
+			
 			DocViewPage doc = new DocViewPage(driver);
 			doc.nonAudioPageRedaction(Redactiontag1);
 			String productionname;
@@ -1559,7 +1562,7 @@ public class DocView_Regression1 {
 			String suffixID = "_P" + Utility.dynamicNameAppender();
 			baseClass.stepInfo(
 					"#### Verify that Producing a PDF with Block Redaction burning properly and not eliminate any characters in the produced document. ####");
-			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 			Reporter.log("Logged in as User: " + Input.rmu1password);
 
@@ -1575,6 +1578,7 @@ public class DocView_Regression1 {
 			docViewMetaDataPage = new DocViewMetaDataPage(driver);
 			
 			baseClass.stepInfo("Click on reduction button ");
+			baseClass.waitTime(5);
 			docViewMetaDataPage.clickOnRedactAndRectangle();
 			
 			driver.waitForPageToBeReady();
@@ -1895,10 +1899,11 @@ public class DocView_Regression1 {
 		search.navigateToSessionSearchPageURL();
 
 		baseClass.stepInfo("Basic Content Search");
-		search.basicContentSearch(Input.testData1);
+		search.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("Add Docs Met Criteria To Action Board");
-		search.addDocsMetCriteriaToActionBoard();
+//		search.addDocsMetCriteriaToActionBoard();
+		search.viewInDocView();
 
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 
@@ -1907,8 +1912,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Navigate To Doc View Page URL");
 		docView.navigateToDocViewPageURL();
 
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(7, 55, remark);
+		docView.addRemarkToNonAudioDocument(5, 55, remark);
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 
@@ -1929,7 +1935,7 @@ public class DocView_Regression1 {
 		String parentWindow = reusableDocView.switchTochildWindow();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(7, 55, remark);
+		docView.addRemarkToNonAudioDocument(5, 55, remark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
@@ -1950,7 +1956,8 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(7,55, remark);
+		baseClass.waitTime(4);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("Open Duplicate Tab Of Already Opened Tab");
 		docViewMetaDataPage.openDuplicateTabOfAlreadyOpenedTab();
@@ -1996,6 +2003,10 @@ public class DocView_Regression1 {
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+//		Added on
+		baseClass.selectproject(Input.additionalDataProject);
+		
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
@@ -2009,9 +2020,10 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Create assignment by bulk assign operationfrom Session search");
 		agnmt.createAssignmentByBulkAssignOperation(assignmentName, Input.codeFormName);
-
+		
 		baseClass.stepInfo("Select assignment to view in Doc view");
-		agnmt.selectAssignmentToViewinDocview(assignmentName);
+//		agnmt.SelectAssignmentToViewinDocview(assignmentName);
+		agnmt.selectAssignmentToViewinDocview(assignmentName, Input.additionalDataProject);
 
 		baseClass.stepInfo("Select Doc From Family Members And Create Folder");
 		docViewMetaDataPage.selectDocFromFamilyMembersAndCreateFolder(docId, folderName);
@@ -2872,7 +2884,7 @@ public class DocView_Regression1 {
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.randomText);
 
 		baseClass.stepInfo("Save searched content");
 		search.saveSearch(searchname);
@@ -2915,7 +2927,8 @@ public class DocView_Regression1 {
 		docView.verifyPersistentHitsPanelDisplayed();
 
 		baseClass.stepInfo("Verifying persistent Hits Displayed.");
-		docView.verifyPersistentHitsDisplayed(Input.searchString1);
+		docView.clickOnPersistantHitEyeIcon();
+		docView.persistenHitWithSearchString(Input.randomText);
 		loginPage.logout();
 	}
 
@@ -3003,7 +3016,7 @@ public class DocView_Regression1 {
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.randomText);
 
 		baseClass.stepInfo("Selected Doclist");
 		search.ViewInDocList();
@@ -3041,7 +3054,8 @@ public class DocView_Regression1 {
 		docView.verifyPersistentHitsPanelDisplayed();
 
 		baseClass.stepInfo("Verifying persistent Hits Displayed.");
-		docView.verifyPersistentHitsDisplayed(Input.searchString1);
+		docView.clickOnPersistantHitEyeIcon();
+		docView.persistenHitWithSearchString(Input.randomText);
 		loginPage.logout();
 	}
 
@@ -4456,7 +4470,7 @@ public class DocView_Regression1 {
 		keywordPage.AddKeyword(keywordname, keyword);
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.searchString1);
+		session.basicContentSearch(Input.randomText);
 
 		baseClass.stepInfo("Create bulk assign with new assignment with persistant hit.");
 		session.bulkAssignWithNewAssignmentWithPersistantHit(AssignName, Input.codingFormName);
@@ -4479,8 +4493,9 @@ public class DocView_Regression1 {
 		// selecting the assignment
 		assignmentPage.SelectAssignmentByReviewer(AssignName);
 
+		
 		baseClass.stepInfo("Verify persistant hit for searched string");
-		docView.persistenHitWithSearchString(Input.searchString1);
+		docView.persistenHitWithSearchString(Input.randomText);
 
 		driver.Navigate().refresh();
 
@@ -4498,7 +4513,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
-		assignmentPage.deleteAssignment(AssignName);
+		assignmentPage.deleteAssgnmntUsingPagination(AssignName);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -5426,6 +5441,7 @@ public class DocView_Regression1 {
 
 		KeywordPage keywordPage = new KeywordPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectproject();
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
@@ -5474,7 +5490,8 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Click on save button");
 		driver.waitForPageToBeReady();
-		assignmentPage.getSaveBtn().Click();
+		baseClass.waitForElement(assignmentPage.getSaveBtn());
+		assignmentPage.getSaveBtn().waitAndClick(5);
 
 		baseClass.stepInfo("Reviews adding and distributing to Reviewer");
 		assignmentPage.assignmentDistributingToReviewer();
@@ -5493,10 +5510,15 @@ public class DocView_Regression1 {
 
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-
+		baseClass.selectproject();
 		// selecting the assignment
 		assignmentPage.SelectAssignmentByReviewer(AssignName2);
-
+		
+//		Added on
+		
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingFieldsAndDragnDropDefault();
+		
 		baseClass.stepInfo("Verify expected document is displayed in mini doc list.");
 		docView.verifyExpectedDocumentIsDisplayedInMiniDocList(Input.testTenthDocId);
 
@@ -5752,7 +5774,7 @@ public class DocView_Regression1 {
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.testData1);
+		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
@@ -5775,7 +5797,7 @@ public class DocView_Regression1 {
 		baseClass.impersonateRMUtoReviewer();
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.testData1);
+		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
@@ -5783,9 +5805,10 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Adding remark to document");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(4);
+		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(1,20, remark);
+		baseClass.waitTime(5);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -5795,9 +5818,10 @@ public class DocView_Regression1 {
 
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(4);
+		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		driver.waitForPageToBeReady();
 		
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Click on redaction icon");
 		baseClass.waitForElement(docView.redactionIcon());
 		docView.redactionIcon().waitAndClick(5);
@@ -5812,7 +5836,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -5842,14 +5866,21 @@ public class DocView_Regression1 {
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+//		Added on
+		baseClass.selectproject();
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.searchString2);
+		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
+		
+//		Added on 
+		DocViewRedactions docViewredact = new DocViewRedactions(driver);
+		docViewredact.selectMiniDocListAndViewInDocView(6);
 
 		driver.waitForPageToBeReady();
 		String currentUrl = driver.getUrl();
@@ -5866,30 +5897,42 @@ public class DocView_Regression1 {
 		driver.getWebDriver().get(currentUrl);
 
 		baseClass.impersonateRMUtoReviewer();
-
+	
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
-
+		
+		docViewredact.selectMiniDocListAndViewInDocView(6);
+		
 		baseClass.stepInfo("Adding remark to document");
-		docView.addRemarkToNonAudioDocument(5,55, remark);
+		baseClass.waitTime(5);
+		docView.addRemarkToNonAudioDocument(5,20, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
 
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
-
+		driver.waitForPageToBeReady();
+		
+		docViewredact.selectMiniDocListAndViewInDocView(6);
+		
 		baseClass.stepInfo("Edit already added remark");
+		baseClass.waitTime(5);
 		docView.editRemark(remark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
 		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
 
 		baseClass.stepInfo("Click on redaction icon");
-		docView.redactionIcon().Click();
+//		Addded on
+
+		baseClass.waitTime(4);
+		
+		baseClass.waitForElement(docView.redactionIcon());
+		docView.redactionIcon().waitAndClick(5);
 
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
 		docView.verifyDisableRemarkWarningMessage();
@@ -5899,7 +5942,8 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
-
+		driver.waitForPageToBeReady();
+		
 		baseClass.stepInfo("verify visibility of edited remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
 
@@ -5960,6 +6004,7 @@ public class DocView_Regression1 {
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Perform this page annotation");
+		baseClass.waitTime(4);
 		docView.performNonAudioAnnotation();
 
 		baseClass.stepInfo("Get annotation count");
@@ -5968,8 +6013,10 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Switch to parent window");
 		driver.switchTo().window(parentWindowHandle);
 
+		driver.Navigate().refresh();
 		baseClass.stepInfo("Click on redaction icon");
-		docView.redactionIcon().Click();
+		baseClass.waitForElement(docView.redactionIcon());
+		docView.redactionIcon().waitAndClick(5);
 
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
 		docView.verifyDisableAnnotationWarningMessageAndSubMenu();
@@ -5984,6 +6031,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(4);
 		baseClass.stepInfo("Verify annotation is added to document.");
 		docView.verifyAddedAnnotationToDocument(previousAnnotationCount);
 
@@ -6684,6 +6732,7 @@ public class DocView_Regression1 {
 		
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		
+		baseClass.waitTime(4);
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
@@ -6868,13 +6917,13 @@ public class DocView_Regression1 {
 		SessionSearch session = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic Basic content search");
-		session.basicContentSearch(Input.searchString1);
+		session.basicContentSearch(Input.searchString2);
 
 		baseClass.stepInfo("Navigate to  DocView page");
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Persistent Hit With search string");
-		docView.persistenHitWithSearchString(Input.searchString1);
+		docView.persistenHitWithSearchString(Input.searchString2);
 		
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
@@ -7524,9 +7573,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		
-//		loginPage.logout();
-		// Login As RMU
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.logout();
+//		 Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51920");
