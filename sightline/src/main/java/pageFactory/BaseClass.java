@@ -70,6 +70,7 @@ import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import de.redsix.pdfcompare.PdfComparator;
 import executionMaintenance.UtilityLog;
+import net.sf.ehcache.search.aggregator.Count;
 import testScriptsSmoke.Input;
 
 public class BaseClass {
@@ -5051,6 +5052,7 @@ public class BaseClass {
 		boolean compare = false;
 		String notMatchedData = "Empty";
 		for (String actualValue : source) {
+			
 			if (actualValue.equalsIgnoreCase(compareString)) {
 				compare = true;
 			} else {
@@ -5060,6 +5062,24 @@ public class BaseClass {
 			}
 		}
 		return notMatchedData;
+
+	}
+	public List<String> compareListWithString2(List<String> source, String compareString, List<String> DocIds, String failMsg)
+			throws InterruptedException {
+		int compare = 0;
+		for (String actualValue : source) {
+			if (actualValue.equalsIgnoreCase(compareString)) {
+				DocIds.add(actualValue);
+				compare = compare++;
+				System.out.println(compare);
+			} else {
+				compare = 0;
+			}
+			if(compare==1) {
+				break;
+			}
+		}
+		return DocIds;
 
 	}
 

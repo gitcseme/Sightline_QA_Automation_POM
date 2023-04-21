@@ -50,8 +50,8 @@ public class DocViewAnalyticsPanel_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1454,6 +1454,7 @@ public class DocViewAnalyticsPanel_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
+		MiniDocListPage docList=new MiniDocListPage(driver);
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created successfully");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1466,6 +1467,7 @@ public class DocViewAnalyticsPanel_Regression {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
+		docList.checkThreadMapDoc();
 		docViewPage.selectDocIdInMiniDocList(Input.threadDocId);
 		docViewPage.performViewDocumentFromThreadMapTab();
 
@@ -1514,7 +1516,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
-		assignmentsPage.SelectAssignmentByReviewer(assname);
+		assignmentsPage.SelectAssignmentByReviewer("assgnment7083398");
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
 		docViewPage.performViewDocumentFromThreadMapTab();
@@ -1935,13 +1937,14 @@ public class DocViewAnalyticsPanel_Regression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
-
+		MiniDocListPage docList=new MiniDocListPage(driver);	
 		baseClass.stepInfo(
 				"Step 2 & 3 : Search for documents to get threaded documents and Drag the result to shopping cart and go to doc view  and view the document from mini doc list with threaded documents");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewThreadedDocsInDocViews();
-		docView.selectDocIdInMiniDocList(Input.threadDocWithToolTip);
+		docList.checkThreadMapDoc();
+//		docView.selectDocIdInMiniDocList(Input.threadDocWithToolTip);
 
 		baseClass.stepInfo("Step 4 : Check for the sender from thread map tab");
 		driver.waitForPageToBeReady();
