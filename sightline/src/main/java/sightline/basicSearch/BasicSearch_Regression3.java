@@ -48,8 +48,8 @@ public class BasicSearch_Regression3 {
 
 		// Open browser
 		softAssertion = new SoftAssert();
-	//	Input in = new Input();
-    //	in.loadEnvConfig();
+//		Input in = new Input();
+//    	in.loadEnvConfig();
 	
 	}
 	
@@ -64,9 +64,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57422", groups = { "regression" })
 	public void basicSearch9() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="transport";
 		String data2="\"##[0-9]\"";
@@ -127,9 +127,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57423", groups = { "regression" })
 	public void basicSearch8() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="CustodianName: ( Allen)";
 		String data2="\"##[0-9]\"";
@@ -193,9 +193,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57424", groups = { "regression" })
 	public void basicSearch4() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="information";
 		String data2="\"money power\"~2";
@@ -259,9 +259,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57425", groups = { "regression" })
 	public void basicSearch11() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="transport";
 		String data2="\"##[0-9]*\"";
@@ -323,9 +323,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57463", groups = { "regression" })
 	public void basicSearch10() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="\"money power\"~2";
 		String data2="CustodianName: ( Allen)";
@@ -387,9 +387,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57464", groups = { "regression" })
 	public void basicSearch5() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="\"##[0-9]\"";
 		String data2="information";
@@ -451,9 +451,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57465", groups = { "regression" })
 	public void basicSearch13() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1= "\"##[0-9]\"";
 		String data2="CustodianName: ( Allen)";
@@ -514,9 +514,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57466", groups = { "regression" })
 	public void basicSearch12() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1= "CustodianName: ( Allen)";
 		String data2="\"##[0-9]*\"";
@@ -579,9 +579,9 @@ public class BasicSearch_Regression3 {
 	 */
 	@Test(description ="RPMXCON-57467", groups = { "regression" })
 	public void basicSearch6() throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
-				{ Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } 
+		String dataSet[][] = { { Input.pa2userName, Input.pa2password }, 
+				{ Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2userName, Input.rev2password } 
 				};
 		String data1="\"##[0-9]\"";
 		String data2="\"money power*\"";
@@ -636,9 +636,9 @@ public class BasicSearch_Regression3 {
 
 	@DataProvider(name = "SavedSearchwithUsers")
 	public Object[][] SavedSearchwithUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		Object[][] users = { { Input.pa2userName, Input.pa2password, Input.pa1FullName },
+				{ Input.rmu2userName, Input.rmu2password, Input.rmu1FullName },
+				{ Input.rev2userName, Input.rev2password, Input.rev1FullName } };
 		return users;
 	}
 

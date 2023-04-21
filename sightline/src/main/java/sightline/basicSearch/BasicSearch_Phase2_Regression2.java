@@ -37,8 +37,8 @@ public class BasicSearch_Phase2_Regression2 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 	}
 
@@ -58,7 +58,7 @@ public class BasicSearch_Phase2_Regression2 {
 	public void verifyResultForTwoWords(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa5userName, Input.pa5password);
 		base.stepInfo("RPMXCON-57303 Basic Search");
 		base.stepInfo("Verify that result appears for proximity having 2 words with OR in Basic Search Query Screen.");
 
@@ -87,7 +87,7 @@ public class BasicSearch_Phase2_Regression2 {
 		String folder = "FOLDER" + Utility.dynamicNameAppender();
 
 		// login as Users
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa5userName, Input.pa5password);
 
 		base.stepInfo("RPMXCON-57186 Basic Search");
 		base.stepInfo("Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
@@ -136,7 +136,7 @@ public class BasicSearch_Phase2_Regression2 {
 	public void verifyBandMsgWithoutDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa5userName, Input.pa5password);
 
 		base.stepInfo("RPMXCON-57296 Basic Search");
 		base.stepInfo(
@@ -163,7 +163,7 @@ public class BasicSearch_Phase2_Regression2 {
 		DocViewPage docview = new DocViewPage(driver);
 
 		// login as User
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 
 		base.stepInfo("RPMXCON-56997 Basic Search");
 		base.stepInfo("Verify that basic search for Comment is working properly");
@@ -225,7 +225,7 @@ public class BasicSearch_Phase2_Regression2 {
 		int count = 1;
 
 		// login as User
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 
 		base.stepInfo("RPMXCON-46879 Basic Search");
 		base.stepInfo(
@@ -259,7 +259,7 @@ public class BasicSearch_Phase2_Regression2 {
 		DocViewPage docview = new DocViewPage(driver);
 
 		// login as User
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 
 		base.stepInfo("RPMXCON-48230 BasicSearch");
 		base.stepInfo(
