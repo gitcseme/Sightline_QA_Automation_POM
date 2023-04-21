@@ -22,6 +22,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -49,8 +50,8 @@ public class DocViewAnalyticsPanel_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1119,6 +1120,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		MiniDocListPage docList=new MiniDocListPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -1136,7 +1138,8 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		docList.checkConceptuallySimilarDoc();
+//		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
@@ -1166,8 +1169,8 @@ public class DocViewAnalyticsPanel_Regression {
 		// Select the Assignment from dashboard
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-
-		docView.selectDocIdInMiniDocList(Input.conceptualDocIdForReviewer01);
+		docList.checkConceptuallySimilarDoc();
+//		docView.selectDocIdInMiniDocList(Input.conceptualDocIdForReviewer01);
 		// perform code same as NearDupe Documents
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 
