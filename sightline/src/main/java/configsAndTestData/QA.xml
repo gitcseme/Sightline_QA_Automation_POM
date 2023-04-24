@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QA>
     <url>https://sightlineqa.consiliotest.com/</url>
-    <prodpath>\\ld5sltest.consiliotest.com\ld5slqa\Productions\Automation</prodpath>
-    <SourceLocation>IngestionTestData\Automation</SourceLocation>
-    <domainName>AutoDomain</domainName>
-    <projectName>AutoSmoke_04012021</projectName>
+    <prodpath>ProductionsWorkSpace\Automation</prodpath>
+  <SourceLocation>IngestionTestData\Automation</SourceLocation>
+    <domainName>Consilio_Automation</domainName>
+     <projectName>Consilio_Automation_Regression</projectName>
+    <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
+        <ingestDataProject>AutomationIngestionProject</ingestDataProject>
+        <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
+<!--
 
+<prodpath>\\ld5sltest.consiliotest.com\ld5slqa\Productions\Automation</prodpath>
+    <SourceLocation>IngestionTestData\Automation</SourceLocation>
+ -->
    
    <!-- Need to Get Domain Admin -->
   
@@ -20,35 +27,129 @@
         <!-- Password Picked up from Passwordstate -->
      
         <!-- User Name : SA QA -->    
-        <sa1userName>QASA1@Consilio.com</sa1userName> 
-        <sa1password>TestCons!042021</sa1password> 
+        <sa1userName>rakhim.kadyrov@consilio.com</sa1userName> 
+        <sa1password>Qwerty123</sa1password> 
      
         <!-- Consilio PAU Automation -->
         <pa1FullName>Consilio PAU1 Automation</pa1FullName>
-        <pa1userName>QAPAU1@Consilio.com</pa1userName>
-        <pa1password>Q@test_10</pa1password> 
+        <pa1userName>qapau137@consilio.com</pa1userName>
+        <pa1password>123Login789</pa1password> 
         
-        <pa2FullName>Consilio PAU2 Automation</pa2FullName>
-        <pa2userName>QAPAU2@Consilio.com</pa2userName>
-        <pa2password>Q@test_10</pa2password>
+        <pa2FullName>QA PAU138</pa2FullName>
+        <pa2userName>qapau138@consilio.com</pa2userName>
+        <pa2password>123Login789</pa2password>
+        
+        <pa3FullName>Consilio PAU3 Automation</pa3FullName>
+        <pa3userName>qapau140@consilio.com</pa3userName>
+        <pa3password>Qwerty123</pa3password>
+        
+        
+    <!--      <pa4FullName>Consilio PAU3 Automation</pa4FullName> -->
+        <pa4userName>qapau71@consilio.com</pa4userName>
+        <pa4password>Qwerty123</pa4password>
+        
+        
+   <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa5userName>qapau72@consilio.com</pa5userName>
+        <pa5password>Qwerty123</pa5password>  
+        
+        <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa6userName>qapau73@consilio.com</pa6userName>
+        <pa6password>Qwerty123</pa6password>
+        
+        <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa7userName>qapau74@consilio.com</pa7userName>
+        <pa7password>Qwerty123</pa7password>
+        
+        <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa8userName>qapau69@consilio.com</pa8userName>
+        <pa8password>Qwerty123</pa8password>
+        
+        <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa9userName>qapau70@consilio.com</pa9userName>
+        <pa9password>Qwerty123</pa9password>
+        
+         <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa10userName>qapau142@consilio.com</pa10userName>
+        <pa10password>Qwerty123</pa10password>
+        
+        <!--     <pa5FullName>Consilio PAU3 Automation</pa5FullName> -->
+        <pa11userName>qapau143@consilio.com</pa11userName>
+        <pa11password>Qwerty123</pa11password>
         
         <!--Consilio RMU Automation  -->
         <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
-        <rmu1userName>QARMU1@Consilio.com</rmu1userName>
-        <rmu1password>Q@test_10</rmu1password>
+        <rmu1userName>qarmu137@consilio.com</rmu1userName>
+        <rmu1password>123Login789</rmu1password>
         
-        <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
-        <rmu2userName>QARMU3@Consilio.com</rmu2userName>
-        <rmu2password>Q@test_10</rmu2password>
+        <rmu2FullName>Consilio RMU2 Automation</rmu2FullName>
+        <rmu2userName>qarmu138@consilio.com</rmu2userName>
+        <rmu2password>123Login789</rmu2password>
+        
+        <rmu3FullName>Consilio RMU3 Automation</rmu3FullName>
+        <rmu3userName>qarmu140@consilio.com</rmu3userName>
+        <rmu3password>Qwerty123</rmu3password>
+        
+  <!--      <rmu4FullName>Consilio RMU3 Automation</rmu4FullName> -->
+        <rmu4userName>qarmu71@consilio.com</rmu4userName>
+        <rmu4password>Qwerty123</rmu4password>
+        
+  <!--      <rmu5FullName>Consilio RMU3 Automation</rmu5FullName> -->
+        <rmu5userName>qarmu72@consilio.com</rmu5userName>
+        <rmu5password>Qwerty123</rmu5password>  
+        
+         <!--      <rmu4FullName>Consilio RMU3 Automation</rmu4FullName> -->
+        <rmu6userName>qarmu73@consilio.com</rmu6userName>
+        <rmu6password>Qwerty123</rmu6password>
+        
+  <!--      <rmu5FullName>Consilio RMU3 Automation</rmu5FullName> -->
+        <rmu7userName>qarmu74@consilio.com</rmu7userName>
+        <rmu7password>Qwerty123</rmu7password>
+        
+        <!--      <rmu5FullName>Consilio RMU3 Automation</rmu5FullName> -->
+        <rmu8userName>qarmu69@consilio.com</rmu8userName>
+        <rmu8password>Qwerty123</rmu8password>
+        
+        <!--      <rmu5FullName>Consilio RMU3 Automation</rmu5FullName> -->
+        <rmu9userName>qarmu70@consilio.com</rmu9userName>
+        <rmu9password>Qwerty123</rmu9password>
         
         <!-- Consilio REVU Automation -->
         <rev1FullName>Consilio REVU1 Automation</rev1FullName>
-        <rev1userName>QAREV1@Consilio.com</rev1userName>
-        <rev1password>Q@test_12</rev1password>
+        <rev1userName>qarev137@consilio.com</rev1userName>
+        <rev1password>123Login789</rev1password>
         
         <rev2FullName>Consilio REVU2 Automation</rev2FullName>
-        <rev2userName>QAREV2@Consilio.com</rev2userName>
-        <rev2password>Q@test_12</rev2password>
+        <rev2userName>qarev138@consilio.com</rev2userName>
+        <rev2password>123Login789</rev2password>
+        
+        <rev3FullName>Consilio REVU3 Automation</rev3FullName>
+        <rev3userName>qarev140@consilio.com</rev3userName>
+        <rev3password>Qwerty123</rev3password>
+        
+    <!--    <rev4FullName>Consilio REVU3 Automation</rev4FullName> -->
+        <rev4userName>qarev71@consilio.com</rev4userName>
+        <rev4password>Qwerty123</rev4password>
+        
+    <!--    <rev5FullName>Consilio REVU3 Automation</rev5FullName> -->
+        <rev5userName>qarev72@consilio.com</rev5userName>
+        <rev5password>Qwerty123</rev5password> 
+        
+        <!--    <rev4FullName>Consilio REVU3 Automation</rev4FullName> -->
+        <rev6userName>qarev73@consilio.com</rev6userName>
+        <rev6password>Qwerty123</rev6password>
+        
+    <!--    <rev5FullName>Consilio REVU3 Automation</rev5FullName> -->
+        <rev7userName>qarev74@consilio.com</rev7userName>
+        <rev7password>Qwerty123</rev7password>
+        
+         <!--    <rev5FullName>Consilio REVU3 Automation</rev5FullName> -->
+        <rev8userName>qarev69@consilio.com</rev8userName>
+        <rev8password>Qwerty123</rev8password>
+        
+         <!--    <rev5FullName>Consilio REVU3 Automation</rev5FullName> -->
+        <rev9userName>qarev70@consilio.com</rev9userName>
+        <rev9password>Qwerty123</rev9password>
 
     <shareTo>CPA2 PA2</shareTo>
 

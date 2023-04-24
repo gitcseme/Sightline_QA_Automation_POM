@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConfigMain>
-	<env>LD9PT</env><!--it should be QA or DE or LD9PT or Chicago or UK or US or US_CM-->
+	<env>QA</env><!--it should be QA or DE or LD9PT or Chicago or UK or US or US_CM-->
 	<newProject>NO</newProject><!--it should be YES or NO only-->
 	<ingestion>NO</ingestion><!--it should be YES or NO only-->
 	<suite>Regression</suite><!--it should be Smoke or Regression only-->
