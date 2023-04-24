@@ -9027,7 +9027,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 		driver.getPageSource();
 		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
-		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
+		base.waitTime(3);
+		getDocView_Analytics_Conceptual_FirstDoc().javascriptclick(getDocView_Analytics_Conceptual_FirstDoc());
 		driver.getPageSource();
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(20);
@@ -11794,7 +11795,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //			getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 			getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
-			for (int i = 2; i <= 3; i++) {
+			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_Concept_DocCheckBox(i));
 				getDocView_Analytics_Concept_DocCheckBox(i).waitAndClick(10);
 			}
@@ -12542,6 +12543,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
 				driver.getPageSource();
+				System.out.println(getDocView_Analytics_FamilyMember_DocCheckBox(i));
 				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
 			}
 			base.waitForElement(getDocView_ChildWindow_ActionButton());

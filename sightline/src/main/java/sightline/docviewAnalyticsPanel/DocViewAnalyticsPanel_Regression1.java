@@ -3,6 +3,8 @@ package sightline.docviewAnalyticsPanel;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.testng.ITestResult;
@@ -665,7 +667,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		baseClass.stepInfo(
 				"To verify user after impersonation should able to 'Code same as this' on document selection from Family Members panel.");
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
-//		String docsToBeSelected = Input.threadDocId;
+		List<String> NonuniqueDocFromMinidocList = new ArrayList<>();
 
 		// login as SA
 		loginPage = new LoginPage(driver);
@@ -679,7 +681,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
 		baseClass.impersonateSAtoRMU();
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch("Auto");//Input.searchString1
 		sessionSearch.bulkAssignFamilyMemberDocuments();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
@@ -687,8 +689,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.add3ReviewerAndDistribute();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
-		docList.checkFamilyMemberDoc();
-//		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberForNonUniqueDoc(NonuniqueDocFromMinidocList);
+		
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -700,8 +702,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		baseClass.impersonatePAtoRMU();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
-		docList.checkFamilyMemberDoc();
-//		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberForNonUniqueDoc(NonuniqueDocFromMinidocList);
+
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -714,8 +716,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docList.checkFamilyMemberDoc();
-//		docView.selectDocIdInMiniDocList(Input.familyDoc1);
+		docList.checkFamilyMemberForNonUniqueDoc(NonuniqueDocFromMinidocList);
+
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -728,8 +730,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docList.checkFamilyMemberDoc();
-//		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docList.checkFamilyMemberForNonUniqueDoc(NonuniqueDocFromMinidocList);
+
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
