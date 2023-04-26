@@ -1,8 +1,11 @@
 package sightline.docviewAnalyticsPanel;
 
 import java.io.IOException;
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.support.Color;
@@ -17,7 +20,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
@@ -26,6 +28,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -83,7 +86,8 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+		return new Object[][] { 
+			{ Input.pa1FullName, Input.pa1userName, Input.pa1password },
 				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
@@ -810,7 +814,10 @@ public class DocViewAnalyticsPanel_Regression2 {
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.MetaDataId);
+//		MiniDocListPage docList=new MiniDocListPage(driver);
+//		List<String> NonuniqueDoc=new ArrayList<String>();
+//		docList.checkFamilyMemberForNonUniqueDoc(NonuniqueDoc);
+		docView.getFirstDocIdOnMiniDocList().waitAndClick(10);
 		
         driver.waitForPageToBeReady();
         baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
@@ -1334,13 +1341,15 @@ public class DocViewAnalyticsPanel_Regression2 {
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 3: Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.basicContentSearch("Auto");
 		sessionSearch.ViewInDocView();
 		
 		
 		baseClass.stepInfo("Step 4: View the document from mini doc list having near dupe documents");
 		docView = new DocViewPage(driver);
-		docView.selectDocIdInMiniDocList(docId);
+		MiniDocListPage DocList=new MiniDocListPage(driver);
+		DocList.checkNearDupeDoc();
+//		docView.selectDocIdInMiniDocList(docId);
 		String parentWindowID  =driver.getWebDriver().getWindowHandle();
 		
 		
@@ -1380,8 +1389,8 @@ public class DocViewAnalyticsPanel_Regression2 {
 		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
 		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
 		System.out.println(docidinchildwinodw);
-		
-		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		baseClass.waitForElement(docView.get_textHighlightedColor());
+		String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex2 = Color.fromString(color).asHex();
 		System.out.println(hex2);
 		baseClass.passedStep("Near Dupe comparison window is opened and the differences highlighted on the near dupe comparison window");
@@ -1420,7 +1429,7 @@ public class DocViewAnalyticsPanel_Regression2 {
 		baseClass.stepInfo(
 				"Step 2: Go to doc view from basic search/saved search/doc list   Note: Search for the document to get the near dupe result");
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.highlightedDocsQuery);
+		sessionSearch.basicContentSearch("Auto");
 		sessionSearch.saveSearchQuery(saveName);
 		baseClass.stepInfo("Basic Search is done and query saved successfully");
 		savedSearch = new SavedSearch(driver);
@@ -1429,7 +1438,10 @@ public class DocViewAnalyticsPanel_Regression2 {
 		
 		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
 		docView = new DocViewPage(driver);
-		docView.selectDocIdInMiniDocList(docId);
+		MiniDocListPage docList=new MiniDocListPage(driver);
+		docList.checkNearDupeDoc();
+//		docView.selectDocIdInMiniDocList(docId);
+		
 		String parentWindowID  =driver.getWebDriver().getWindowHandle();
 		
 		
@@ -1469,8 +1481,8 @@ public class DocViewAnalyticsPanel_Regression2 {
 		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
 		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
 		System.out.println(docidinchildwinodw);
-		
-		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+		baseClass.waitForElement(docView.get_textHighlightedColor());
+		String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex2 = Color.fromString(color).asHex();
 		System.out.println(hex2);
 		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");

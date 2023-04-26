@@ -342,7 +342,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
 		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
-		baseClass.impersonateRMUtoReviewer();
+		baseClass.impersonateRMUtoReviewer();//assname
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
@@ -350,6 +350,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		baseClass.waitForElement(docView.getDocView_NumTextBox());
 		docView.getDocView_NumTextBox().Clear();
 		docView.getDocView_NumTextBox().SendKeys(Integer.toString(id));
+		baseClass.waitTime(2);
 		docView.getDocView_NumTextBox().Enter();
 
 		baseClass.stepInfo(
@@ -367,10 +368,10 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
-
+		List<String> NonuniqueDoc=new ArrayList<String>();
 		baseClass.stepInfo(
 				"Step 3: Select the documents from family member which are assigned to the user  Select multiple documents from Family Members and action as 'Code same as this'  ");
-		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame(NonuniqueDoc);
 
 		baseClass.stepInfo("Step 4: Edit the coding form of the principle document and save/complete the document");
 		docView.editCodingFormComplete();
