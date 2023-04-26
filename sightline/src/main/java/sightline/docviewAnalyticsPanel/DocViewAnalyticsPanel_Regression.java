@@ -2240,7 +2240,7 @@ public class DocViewAnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		baseClass.stepInfo("Searching documents based on search string to get documents ");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch("Auto");
 
 		baseClass.stepInfo("Creating assignments with documents and Distributing to reviewer");
 		sessionSearch.bulkAssign();
@@ -2256,7 +2256,9 @@ public class DocViewAnalyticsPanel_Regression {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Select the document from mini doc list which has family member documents");
-		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		MiniDocListPage docList=new MiniDocListPage(driver);
+		docList.checkFamilyMemberForUniqueDoc();
+//		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
 
 		baseClass
 				.stepInfo("Verify the background color of the code same docment from family member tab on mouse hover");
