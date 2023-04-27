@@ -14510,8 +14510,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 *               edit box.
 	 */
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
-		try {
-			base.waitTime(4);
+		base.waitTime(4);
+		try {		
 			 driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {

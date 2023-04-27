@@ -1688,6 +1688,7 @@ public class DocViewRedactions {
 
 	public void verifyingMultipageIconColour(String expectedColor) throws Exception {
 		base = new BaseClass(driver);
+		base.waitTime(2);
 		driver.waitForPageToBeReady();
 		base.waitForElement(multiPageIconColourCheck());
 		String color = multiPageIconColourCheck().getWebElement().getCssValue("color");
@@ -2405,6 +2406,8 @@ public class DocViewRedactions {
 				}
 			}), Input.wait30);
 			HighliteIcon().waitAndClick(30);
+			base = new BaseClass(driver);
+            base.waitForElement(thisPageHighlite());
 			thisPageHighlite().waitAndClick(5);
 		} catch (Exception e) {
 			HighliteIcon().waitAndClick(30);
