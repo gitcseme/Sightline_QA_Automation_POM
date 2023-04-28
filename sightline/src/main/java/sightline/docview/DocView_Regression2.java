@@ -155,6 +155,8 @@ public class DocView_Regression2 {
 		docViewRedact.clickPageNumber(2).waitAndClick(10);
 		String text = docViewRedact.clickPageNumber(2).getText();
 		System.out.println(text);
+//		Added on 
+		baseClass.waitTime(2);
 		if (text.equalsIgnoreCase("2")) {
 			baseClass.passedStep("The doc view has page loaded as per the click on thumbnail ");
 		} else {
@@ -1537,7 +1539,7 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
-//		driver.Navigate().refresh();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 	
 		baseClass.stepInfo("Add Remark To Non Audio Document");
@@ -3384,7 +3386,9 @@ public class DocView_Regression2 {
 	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
-		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
+		loginPage.loginToSightLine(userName, password);
+//		Added on
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51948");
 		baseClass.stepInfo("Verify that tool tip should be displayed on mouse hover of the hidden icon");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3497,6 +3501,7 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.TextHidden);
 		sessionsearch.ViewInDocView();	
 		baseClass.waitTime(1);
+		docViewRedact.selectMiniDocListAndViewInDocView(2);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
 		docViewRedact.forwardNextDocBtn().waitAndClick(5);
 
@@ -4167,7 +4172,7 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 //Searching for ducument with external link hidden		
-		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
+		sessionsearch.basicContentSearch(Input.HiddenContentExternalLink);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		if(baseClass.getSuccessMsgHeader().isDisplayed()) {
@@ -4653,7 +4658,7 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docView = new DocViewPage(driver);
-		String withoutHiddenDocId = "\"Native Review\"";
+		String withoutHiddenDocId = "Native Review";
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.projectName01);

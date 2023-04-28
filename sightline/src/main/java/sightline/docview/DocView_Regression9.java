@@ -617,6 +617,7 @@ public class DocView_Regression9 {
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.quickbatch();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Assignment created using quickbatch");
 		assignmentspage.createNewquickBatchWithoutReviewer(assignmentName, Input.codingFormName);
 		assignmentspage.ViewinDocviewFromAssignments(assignmentName);
@@ -629,7 +630,7 @@ public class DocView_Regression9 {
 		} else {
 			assertTrue(false);
 		}
-		assignmentspage.deleteAssignment(assignmentName);
+		assignmentspage.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
 
@@ -973,17 +974,17 @@ public class DocView_Regression9 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Documents viewd in DocView");
-		
-		
+				
 //		Added
 		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
 		docViewRedact.clickingHighlitingIcon();
+		
 		driver.waitForPageToBeReady();
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
@@ -4155,7 +4156,7 @@ public class DocView_Regression9 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		sessionsearch.basicContentSearch("ID00000230");
+		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document viewed in DocView");
@@ -4168,6 +4169,7 @@ public class DocView_Regression9 {
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.build().perform();
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.verifyingMultipageIconColour(Input.iconColor);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
@@ -4178,6 +4180,7 @@ public class DocView_Regression9 {
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.build().perform();
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.fullPageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
@@ -4204,7 +4207,7 @@ public class DocView_Regression9 {
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("PA has been impersonated as RMU");
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch("ID00000230");
+		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document viewed in DocView");
@@ -4217,6 +4220,7 @@ public class DocView_Regression9 {
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.click().build().perform();
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.pageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
@@ -4226,6 +4230,7 @@ public class DocView_Regression9 {
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.build().perform();
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
+		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.fullPageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
@@ -4299,6 +4304,7 @@ public class DocView_Regression9 {
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.quickbatch();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Created Assignment using Quick Batch");
 		assignmentspage.createNewquickBatchWithoutReviewer(assignmentName, Input.codingFormName);
 		assignmentspage.ViewinDocviewFromAssignments(assignmentName);
