@@ -1145,7 +1145,7 @@ public class Production_Phase1_Regression {
 		base.waitForElement(page.getClkBtnDownloadDATFiles());
 		page.getClkBtnDownloadDATFiles().waitAndClick(5);
 		BaseClass base = new BaseClass(driver);
-		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.VerifySuccessMessage("Your Production DAT Archive download will get started shortly");
 		loginPage.logout();
 	}
 
@@ -3385,7 +3385,7 @@ public class Production_Phase1_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 
 		base.waitTime(4);
 		String name = page.getProduction().getText().trim();
@@ -3712,9 +3712,10 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		for (int i = number; i < lastfile; i++) {
-			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".pdf");
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID );
 			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
-			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
+			System.out.println(Native);
 			if (Native.exists()) {
 				base.passedStep("Native file are generated correctly");
 				System.out.println("passeed");
@@ -6284,7 +6285,7 @@ public class Production_Phase1_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		int doccount = page.fillingGeneratePageWithContinueGenerationPopup();
+		int doccount = page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		int lastFile = firstFile + doccount;
 		String home = System.getProperty("user.home");
 		File Native = new File(home + "/Downloads/VOL0001/Natives/" + prefixID + beginningBates + suffixID + ".MP3");

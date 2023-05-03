@@ -3990,6 +3990,7 @@ public class Production_Phase1_Regression1 {
 		page1.navigateToNextSection();
 
 		ProductionPage page = new ProductionPage(driver);
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Select Saved Template And Manage Template");
 		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
@@ -4007,8 +4008,8 @@ public class Production_Phase1_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		productionname = Input.randomText + Utility.dynamicNameAppender();
-		page = new ProductionPage(driver);
-
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		base.stepInfo("Base Info Load Template");
 		page.baseInfoLoadTemplate(productionname, Templatename);
 
