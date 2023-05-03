@@ -509,7 +509,7 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("//input[@id='rbOptimized']");
 	}
 	public Element getThreadData() {
-		return driver.FindElementByXPath("//td[@class='dataTables_empty']");
+		return driver.FindElementByXPath("//div[@id='theThreadMapUI']/div[contains(.,'Your query returned no data')]");
 				}
 
 	public Element getAvailableFieldsDisplay(String fields) {
@@ -4752,6 +4752,8 @@ for (int i = 1; i <= totalDocs; i++) {
 			}
 			if (!uniqueDocStatus && j == sizeofDOcFMList) {
 				baseClass.failedStep("Expected Input data not available");
+	
+				
 			}
 		}
 		if (uniqueDocStatus) {
@@ -4761,6 +4763,71 @@ for (int i = 1; i <= totalDocs; i++) {
 }
 }
 
+public void checkFamilyMemberForNonUniqueDoc(List<String> NonuniqueDoc) {
+MiniDocListPage doclist = new MiniDocListPage(driver);
+List<String> docIDFMlist = new ArrayList<>();
+// Main method
+int sizeofList = doclist.getListofDocIDinCW().size();
+System.out.println("Size : " + sizeofList);
+int totalDocs = getDocCountMethod();
+Boolean dataEmpty = false; // for additional purpose
+Boolean NonuniqueDocStatus = false;
+int countofDocId=0;
+
+docIDlist = availableListofElements(doclist.getListofDocIDinCW());
+
+for (int i = 1; i <= totalDocs; i++) {
+	String name = docIDlist.get(i);
+	getDociD(name).waitAndClick(5);
+	System.out.println("Selected Document : " + name);
+	baseClass.stepInfo("Selected Document : " + name);
+
+	// Move to NearDupes
+	driver.waitForPageToBeReady();
+	getDocView_Analytics_FamilyTab().WaitUntilPresent().ScrollTo();
+	getDocView_Analytics_FamilyTab().waitAndClick(5);
+	// Verify Empty
+	if (getFamilyData().isElementAvailable(3)) {
+		dataEmpty = false;
+	} else {
+		dataEmpty = true;
+		System.out.println("Document that has FamilyMember datas : " + name);
+		baseClass.stepInfo("Document that has FamilyMember datas : " + name);
+
+		baseClass.waitForElementCollection(dtDocumentFamilyMembersID());
+		int sizeofDOcFMList = doclist.dtDocumentFamilyMembersID().size();
+
+		for (int j = 1; j <= sizeofDOcFMList; j++) {
+			docIDFMlist = availableListofElements(doclist.dtDocumentFamilyMembersID());
+			System.out.println(NonuniqueDocStatus);
+			
+			try {
+				NonuniqueDoc = baseClass.compareListWithString2(docIDlist,docIDFMlist.get(j),NonuniqueDoc, "");
+				System.out.println(NonuniqueDoc);
+				
+				if (!NonuniqueDoc.isEmpty()) {
+					NonuniqueDocStatus = true;
+					countofDocId++;
+					System.out.println(NonuniqueDocStatus);
+					if(countofDocId==2) {
+					break;
+					}
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			if (!NonuniqueDocStatus && j == sizeofDOcFMList) {
+				System.out.println("I am here");
+				break;	
+			}
+		}
+		if (NonuniqueDocStatus) {
+			break;
+		}
+	}
+}
+}
 
 
 /**

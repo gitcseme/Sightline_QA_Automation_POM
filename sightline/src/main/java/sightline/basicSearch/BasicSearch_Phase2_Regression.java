@@ -58,7 +58,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\!C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61593 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (exclamation mark ! ) embedded within Regular Expression query.");
@@ -91,7 +91,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\&C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61591 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (ampersand & ) embedded within a Regular Expression query.");
@@ -130,7 +130,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyResultAppearsForProximitySearchWithSpace(String searchString, String warningMsg) {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57288 Basic Search");
 		base.stepInfo(
 				"Verify that result appears for proximity search having spaces between the proximity query in Basic Search Query Screen.");
@@ -178,7 +178,7 @@ public class BasicSearch_Phase2_Regression {
 		base.stepInfo("Verify that User can run [Execute] - Drafted Basic search with Comments from Saved Search Screen.");
   		
   	    // login
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu3userName, Input.rmu3password);
   		
   		// Configure Documents_Comments: Reviewed and Save it without execute
   		base.stepInfo("Configure Documents_Comments: Reviewed and Save it without execute.");
@@ -245,8 +245,8 @@ public class BasicSearch_Phase2_Regression {
 		String searchTerm = "2009-09-20";
 
 		// Login As PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa3userName + "");
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.waitForPageToBeReady();
@@ -290,8 +290,8 @@ public class BasicSearch_Phase2_Regression {
 		String searchTerm = "@testdata";
 
 		// Login As PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa3userName + "");
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.waitForPageToBeReady();
@@ -384,9 +384,9 @@ public class BasicSearch_Phase2_Regression {
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		Object[][] users = { { Input.pa3userName, Input.pa3password, Input.pa3FullName },
+				{ Input.rmu3userName, Input.rmu3password, Input.rmu3FullName },
+				{ Input.rev3userName, Input.rev3password, Input.rev3FullName } };
 		return users;
 	}
 
@@ -402,7 +402,7 @@ public class BasicSearch_Phase2_Regression {
 		String expectedMsg = "Invalid search name";
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-65052 Basic Search");
 		base.stepInfo(
 				"Verify that error message should be displayed when save search name entered with < > * ; ‘ / ( ) # & from Basic search");
@@ -419,8 +419,8 @@ public class BasicSearch_Phase2_Regression {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } };
+		Object[][] users = { { Input.pa3userName, Input.pa3password }, { Input.rmu3userName, Input.rmu3password },
+				{ Input.rev3userName, Input.rev3password } };
 		return users;
 	}
 
@@ -437,7 +437,7 @@ public class BasicSearch_Phase2_Regression {
 		String search = "\"bi-weekly\"";
 
 		// login as Users
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		base.stepInfo("RPMXCON-57121 Basic Search");
 		base.stepInfo(
@@ -469,7 +469,7 @@ public class BasicSearch_Phase2_Regression {
 		String search = "\"2009/09/20\"";
 
 		// login as Users
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		base.stepInfo("RPMXCON-57119 Basic Search");
 		base.stepInfo(
@@ -500,7 +500,7 @@ public class BasicSearch_Phase2_Regression {
 		String search = "\"bi-weekly\"";
 
 		// login as Users
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		base.stepInfo("RPMXCON-57112 Basic Search");
 		base.stepInfo(
@@ -529,7 +529,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyMasterdateWorksProperly() throws InterruptedException {
 
 		// login as Users
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		base.stepInfo("RPMXCON-57220 Basic Search");
 		base.stepInfo(
@@ -562,7 +562,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U-C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61610 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (Subtraction mark -) embedded within a Regular Expression query.");
@@ -603,7 +603,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\*C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61611 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (asterisk mark *) embedded within a Regular Expression query.");
@@ -644,7 +644,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\$C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61600 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (dollar $) embedded within a Regular Expression query.");
@@ -685,7 +685,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\ C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61595 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (space) embedded within a Regular Expression query.");
@@ -726,7 +726,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\:C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61594 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (colon mark : ) embedded within a Regular Expression query.");
@@ -764,7 +764,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyResultForTwoProxiPhrases(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57332 Basic Search");
 		base.stepInfo(
 				"Verify that result appears for proximity having 2 Phrases in Basic Search Query Screen. - Metadata");
@@ -805,7 +805,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyMsgOfProxiWithRightDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57298 Basic Search");
 		base.stepInfo(
 				"Verify that belly band message appears when user configured Proximity with Right double quotes only and combined with other criteria in Basic Search Query Screen.");
@@ -844,7 +844,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyMsgOfProxiWithLeftDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57297 Basic Search");
 		base.stepInfo(
 				"Verify that belly band message appears when user configured Proximity with Left double quotes only and combined with other criteria in Basic Search Query Screen.");
@@ -877,7 +877,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyMsgWithRightDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57284 Basic Search");
 		base.stepInfo(
 				"Verify that belly band message appears when user tries to run search having Right double quote only in Basic Search Query Screen.");
@@ -909,7 +909,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyMsgWithLeftDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57283 Basic Search");
 		base.stepInfo(
 				"Verify that belly band message appears when user tries to run search having left double quote only in Basic Search Query Screen.");
@@ -940,7 +940,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyResultForProxiWithDoubleQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57286 Basic Search");
 		base.stepInfo(
 				"Verify that result appears for proximity search having double quote after the number in Basic Search Query Screen.");
@@ -977,7 +977,7 @@ public class BasicSearch_Phase2_Regression {
 	public void verifyResultForProxiWithQuotes(String data) throws InterruptedException {
 
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-57285 Basic Search");
 		base.stepInfo(
 				"Verify that Search result when user tries to run proximity search having double quote after the number in Basic Search Query Screen.");
@@ -1012,7 +1012,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\.C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61612 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (dot mark .) embedded within a Regular Expression query.");
@@ -1047,7 +1047,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\/C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61613 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (forward slash mark /) embedded within a Regular Expression query.");
@@ -1082,7 +1082,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\]C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61615 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (right square  symbol ]) embedded within a Regular Expression query.");
@@ -1117,7 +1117,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\[C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61616 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (left square  symbol [) embedded within a Regular Expression query.");
@@ -1152,7 +1152,7 @@ public class BasicSearch_Phase2_Regression {
 
 		String searchString = "\"##U\\<C Tester\"";
 		// login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-61617 Basic Search");
 		base.stepInfo(
 				"Verify that Application is not displaying warning message when white-space character (less than symbol <) embedded within a Regular Expression query.");
@@ -1191,8 +1191,8 @@ public class BasicSearch_Phase2_Regression {
 		String searchTerm = "2009-09-20";
 
 		// Login As PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
+		login.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa3userName + "");
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.waitForPageToBeReady();

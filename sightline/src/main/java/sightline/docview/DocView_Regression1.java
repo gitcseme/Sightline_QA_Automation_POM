@@ -103,6 +103,7 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
+		
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
@@ -125,7 +126,8 @@ public class DocView_Regression1 {
 		agnmt.enableToogleToEnableRedactions(true);
 
 		baseClass.stepInfo("Select assignment to view in Doc view");
-		agnmt.selectAssignmentToViewinDocview(assignmentName);
+	
+		agnmt.selectAssignmentToViewinDocview(assignmentName, Input.additionalDataProject);
 
 		baseClass.stepInfo("Click on reduction button ");
 		baseClass.waitTime(5);
@@ -727,7 +729,7 @@ public class DocView_Regression1 {
 		
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		docView.addRemarkToNonAudioDocument(1,20, remark);
 		
@@ -857,10 +859,11 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docViewRedact.selectMiniDocListAndViewInDocView(6);
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(1,20, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
 
@@ -1872,7 +1875,6 @@ public class DocView_Regression1 {
 		page.clickOnGenerateButtonAndVerifyPreGenChecksStatus();
 		loginPage.logout();
 	}
-//	////////////
 
 	/**
 	 * @author Gopinath //@Testcase_Id : RPMXCON-51542 : Verify that same user with
@@ -2927,7 +2929,9 @@ public class DocView_Regression1 {
 		docView.verifyPersistentHitsPanelDisplayed();
 
 		baseClass.stepInfo("Verifying persistent Hits Displayed.");
-		docView.clickOnPersistantHitEyeIcon();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		docView.persistenHitWithSearchString(Input.randomText);
 		loginPage.logout();
 	}
@@ -3312,7 +3316,7 @@ public class DocView_Regression1 {
 		
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
-		agnmt.deleteAssignment(assignmentName);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 
 	}
@@ -5598,7 +5602,7 @@ public class DocView_Regression1 {
 		session.ViewInDocViewWithoutPureHit();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(1,20, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("Switchimg to first window");
 		driver.switchTo().window(parentWindowHandle);
@@ -5737,10 +5741,6 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("View serached dos in Docview");
 		session.ViewInDocView();
-		driver.waitForPageToBeReady();
-		
-//		added 
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		
 		baseClass.stepInfo("Verify document in docview loaded in 4 sec");
@@ -7573,9 +7573,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		
-		loginPage.logout();
+//		loginPage.logout();
 //		 Login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51920");

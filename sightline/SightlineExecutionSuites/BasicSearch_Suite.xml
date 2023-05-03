@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sightline-Jenkins-Basicsearch" preserve-order="true">
-
+<suite name="Sightline-Jenkins-Basicsearch" parallel="classes" thread-count="5" preserve-order="true">
+ 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
+<!-- -->
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
 <test name="Basicsearch_Suite">
 <classes>
 <class name="testScriptsSmoke.Input" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression" />
 <class name= "sightline.basicSearch.BasicSearch_Regression1" />
-<class name= "sightline.basicSearch.BasicSearch_Regression3" />
 <class name= "sightline.basicSearch.BasicSearch_Phase2_Regression2" />
 <class name= "sightline.basicSearch.BasicSearch_Phase2_Regression1" />
-<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression" />
-
-
-
-
+<class name= "sightline.basicSearch.BasicSearch_Regression3" />
 </classes>
 </test>
+<!--  
 
 
+
+
+
+
+<class name= "sightline.basicSearch.BasicSearch_Regression1" />
+<class name= "sightline.basicSearch.BasicSearch_Regression3" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression1" />
+<class name= "sightline.basicSearch.BasicSearch_Phase2_Regression2" />
+-->
 
 </suite>
 <!-- Suite -->
-

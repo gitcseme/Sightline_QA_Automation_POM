@@ -154,6 +154,7 @@ public class Docview_Annotation_Regression {
 			docViewRedact.selectsecuritygroup(namesg2);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
+			baseClass.waitTime(4);
 			docViewRedact.clickingRedactionIcon();
 			docViewRedact.performThisPageRedaction("Default Redaction Tag");
 		} catch (InterruptedException e1) {
@@ -161,6 +162,7 @@ public class Docview_Annotation_Regression {
 			docViewRedact.selectsecuritygroup(namesg3);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
+			baseClass.waitTime(4);
 			docViewRedact.clickingRedactionIcon();
 			docViewRedact.performThisPageRedaction("Default Redaction Tag");
 		}
@@ -179,12 +181,14 @@ public class Docview_Annotation_Regression {
 			docViewRedact.selectsecuritygroup(namesg2);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
+			baseClass.waitTime(4);
 			docViewRedact.checkingForRedaction();
 		} catch (InterruptedException e) {
 			driver.waitForPageToBeReady();
 			docViewRedact.selectsecuritygroup(namesg3);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
+			baseClass.waitTime(4);
 			docViewRedact.checkingForRedaction();
 
 		}

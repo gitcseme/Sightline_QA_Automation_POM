@@ -1412,7 +1412,7 @@ public class ProductionPage {
 	}
 
 	public Element getRadioButton_GenerateTIFF() {
-		return driver.FindElementByXPath("(//input[@id='CommonTIFFSettings_FileType']//following-sibling::i)[1]");
+		return driver.FindElementByXPath("(//input[@id='rbdGenerateTiff']//following-sibling::i)");
 	}
 
 	public Element getProductionNameInManageView(String productionName) {
@@ -13645,7 +13645,7 @@ public class ProductionPage {
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		getDocumentGeneratetext().isElementAvailable(180);
+		getDocumentGeneratetext().isElementAvailable(280);
 		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
 		System.out.println(actualText);
