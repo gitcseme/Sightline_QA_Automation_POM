@@ -371,7 +371,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		List<String> NonuniqueDoc=new ArrayList<String>();
 		baseClass.stepInfo(
 				"Step 3: Select the documents from family member which are assigned to the user  Select multiple documents from Family Members and action as 'Code same as this'  ");
-		docView.selectDocsFromFamilyMemberTabAndActionCodeSame(NonuniqueDoc);
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		baseClass.stepInfo("Step 4: Edit the coding form of the principle document and save/complete the document");
 		docView.editCodingFormComplete();
