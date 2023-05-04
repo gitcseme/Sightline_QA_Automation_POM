@@ -372,6 +372,7 @@ public class ConceptExplorerPage {
 	}
 
 	public void ValidateConceptExplorerreport() throws InterruptedException {
+		String sourceToSelect = "Security Groups";
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -380,37 +381,10 @@ public class ConceptExplorerPage {
 		}), Input.wait30);
 		getReports_ConceptExplorer().Click();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_SelectSource().Visible();
-			}
-		}), Input.wait30);
-		getTally_SelectSource().Click();
-		// Thread.sleep(2000);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_SecurityGroupsButton().Enabled();
-			}
-		}), Input.wait30);
-		getTally_SecurityGroupsButton().waitAndClick(5);
-		// Thread.sleep(2000);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_SelectSecurityGroup().Enabled();
-			}
-		}), Input.wait30);
-		getTally_SelectSecurityGroup().waitAndClick(5);
-		// Thread.sleep(2000);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTally_SaveSelections().Visible();
-			}
-		}), Input.wait30);
-		getTally_SaveSelections().waitAndClick(5);
-
+		clickSelectSources();
+		driver.waitForPageToBeReady();
+		base.stepInfo("** Select Security group as source and save selection");
+		selectSGsource(sourceToSelect, Input.securityGroup);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getApplyBtn().Visible();
