@@ -6651,7 +6651,7 @@ public class DocListPage {
 		if (getSelectAllCheckBox().isElementPresent()) {
 			base.waitForElement(getSelectAllCheckBox());
 			getSelectAllCheckBox().waitAndClick(5);
-			getYesBtn().waitAndClick(3);
+			
 			base.passedStep("selectall checkbox is displayed in tileview");
 		} else {
 			base.failedStep("check box is not present");
