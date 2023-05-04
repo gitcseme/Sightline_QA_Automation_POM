@@ -3712,10 +3712,13 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		for (int i = number; i < lastfile; i++) {
-			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID );
+
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
 			File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + i + suffixID + ".txt");
 			File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
+
 			System.out.println(Native);
+
 			if (Native.exists()) {
 				base.passedStep("Native file are generated correctly");
 				System.out.println("passeed");
@@ -4087,7 +4090,7 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		String firstFile = prefixID + beginningBates + suffixID;
-		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
+		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tif");
 
 		BufferedImage bimg = ImageIO.read(file);
 		int width = bimg.getWidth();

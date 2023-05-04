@@ -1323,7 +1323,7 @@ public class ProductionPage {
 
 	public Element radioBtnInAdvancedNative_ForPrivRedactedDocs() {
 		return driver.FindElementByXPath(
-				"//ul[@class='list-inline']//label//input[@id='rdbExcludeNativesofparent']//..//span[contains(text(),'natives of the parents')]");
+				"//input[@id='rdbExcludeNativesofparent']");
 	}
 
 	public Element productionNameInHomePage() {
@@ -19352,8 +19352,8 @@ public class ProductionPage {
 			getSelectMultiFileTypeInTifffNative(2, fileType).Click();
 			base.waitTillElemetToBeClickable(getSelectFileTypeInTifffNative(fileType));
 			getSelectFileTypeInTifffNative(fileType).Click();
-			base.waitForElement(getNativeDocsPlaceholder());
-			getNativeDocsPlaceholder().SendKeys(placeholderText);
+			base.waitForElement(getNativeDocsPlaceholder1());
+			getNativeDocsPlaceholder1().SendKeys(placeholderText);
 			getSelectCloseBtn().Click();
 			
 		} catch (Exception e) {
