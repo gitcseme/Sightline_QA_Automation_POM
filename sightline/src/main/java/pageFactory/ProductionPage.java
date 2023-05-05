@@ -5963,8 +5963,9 @@ public class ProductionPage {
 
 		// added thread.sleep to avoid exception while running in batch
 		Thread.sleep(1000);
+		
 		String actual = getNative_text().getWebElement().getText();
-
+		System.out.println(actual);
 		softAssertion.assertEquals(actual, expected);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -12621,10 +12622,10 @@ public class ProductionPage {
 			getClkBtn_selectingRedactionTags().waitAndClick(10);
 
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
-			redactionTagInBurnRedactionCheckBox(redactiontag1).ScrollTo();
-			redactionTagInBurnRedactionCheckBox(redactiontag1).isDisplayed();
+			redactionTagInBurnRedaction2CheckBox(redactiontag1).ScrollTo();
+			redactionTagInBurnRedaction2CheckBox(redactiontag1).isDisplayed();
 			driver.waitForPageToBeReady();
-			redactionTagInBurnRedactionCheckBox(redactiontag1).waitAndClick(10);
+			redactionTagInBurnRedaction2CheckBox(redactiontag1).waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.waitForElement(redactionTagInBurnRedaction2CheckBox(redactiontag2));
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).ScrollTo();
@@ -17223,12 +17224,11 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		if (exptext.equals("Redacted documents are automatically OCRed"
-				+ " to export the text. Original extracted text is exported for natively "
-				+ "produced documents (file based placeholdering). "
-				+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
-				+ " The configured format is applicable only to OCRed text and production generated text"
-				+ ", and not to ingested text.")) {
+		if (exptext.equals("The configured format (above) is applicable only to OCRed and production generated text."
+			    +"The selected Format does not apply to ingested or mapped text."
+				+"Redacted documents are automatically OCRed to export the updated text."
+				+"Original extracted text is exported for Natively produced documents."
+				+"For Tech Issue and Privileged Placeholdered documents, the Placeholder text is exported.")) {
 			base.passedStep("" + exptext + " is displayed as expected");
 		} else {
 			base.failedStep("" + exptext + " is not displayed as expected");
