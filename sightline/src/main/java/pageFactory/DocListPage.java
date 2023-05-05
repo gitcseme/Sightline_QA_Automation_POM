@@ -828,7 +828,7 @@ public class DocListPage {
 	}
 
 	public Element getAssertDate(int colno) {
-		return driver.FindElementByXPath("//th[text()='MasterDate']/following::tr[" + colno + "]//td[7]");
+		return driver.FindElementByXPath("//th[text()='MasterDate']/following::tr[" + colno + "]//td[8]");
 	}
 
 	public ElementCollection getRowCount() {
@@ -1572,7 +1572,7 @@ public class DocListPage {
 
 	public Element getDocListDocFileSizeValue() {
 		return driver.FindElementByXPath(
-				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[7]");
+				"//table[@id='dtDocList']//tbody/tr/td[@class='details-control']/following-sibling::td[8]");
 	}
 
 	public Element getDocListChildWindow() {
@@ -2857,7 +2857,7 @@ public class DocListPage {
 			List<WebElement> rows = driver.getWebDriver().findElements(By.xpath("//table[@id='dtDocList']//tbody//tr"));
 			for (int row = 0; row < rows.size(); row++) {
 				String rowChar = getParentRow(row).GetAttribute("class").trim();
-				if (rowChar.equalsIgnoreCase((" details-control").trim())) {
+				if (rowChar.equalsIgnoreCase(("details-control").trim())) {
 					rowNum = row + 1;
 					break;
 				}
@@ -3256,9 +3256,10 @@ public class DocListPage {
 			if (getRowCount().size() == 0) {
 				base.stepInfo("No documents are avaliable in doc list table on selected date :: " + visibleDate);
 			} else if (getRowCount().size() != 0) {
-				for (int D = 1; D <= getRowCount().size(); D++) {
+				for (int D = 2; D <= getRowCount().size(); D++) {
 
 					driver.waitForPageToBeReady();
+					
 					base.waitForElement(getAssertDate(D));
 					String AssertDate = getAssertDate(D).getText();
 					System.out.println(AssertDate);
