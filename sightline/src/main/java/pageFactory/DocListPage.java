@@ -2863,7 +2863,7 @@ public class DocListPage {
 				}
 			}
 
-			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class=' details-control']"));
+			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class='details-control']"));
 			for (int row = 0; row < 2; row++) {
 				js.executeScript("arguments[0].scrollIntoView(true);", parents.get(row));
 				js.executeScript("window.scrollBy(0,-250)");
