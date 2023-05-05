@@ -1883,8 +1883,7 @@ public class Production_Phase1_Regression1 {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50033 Production 05");
-		base.stepInfo(
-				"#### Verify that PDF should burn multiple redactions and display the correct text for each redaction. ####");
+		base.stepInfo("#### Verify that PDF should burn multiple redactions and display the correct text for each redaction. ####");
 		String testData1 = Input.testData1;
 		String foldername = Input.randomText + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1901,7 +1900,7 @@ public class Production_Phase1_Regression1 {
 		UtilityLog.info(Input.prodPath);
 
 		RedactionPage redactionpage = new RedactionPage(driver);
-
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		base.stepInfo("Select Default Security Group");
 		redactionpage.selectDefaultSecurityGroup();
 
