@@ -2,6 +2,7 @@
 <!-- SMOKE TEST DATA -->
  <TestData>
  <!--Consilio Search strings and expected pure hit counts -->
+ 	<searchText>Test</searchText>
  	<searchString1>comments</searchString1>
 	<searchString2>test</searchString2>
 	<pureHitSeachString1>9</pureHitSeachString1>
@@ -120,6 +121,7 @@
     <codeFormName>Default Project Coding Form</codeFormName>
      <securityGroup>Default Security Group</securityGroup>
          <mySavedSearch>My Saved Search</mySavedSearch>
+         <custodianName_Andrew>Andrew</custodianName_Andrew>
      
       <!-- Raghuram Indium modified on 9/7/21 --> 
     <docHighlightColor>#CDD9E1</docHighlightColor>

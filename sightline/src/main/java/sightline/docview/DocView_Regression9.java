@@ -120,6 +120,8 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.getDocIDFromDocView(2).waitAndClick(5);
 // Redacting using rectangular redaction
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		baseClass.stepInfo("A rectangle redaction has been applied");

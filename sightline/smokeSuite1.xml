@@ -15,9 +15,16 @@
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
         			<include name="verifyAdvancedSearchWorksProperlyForEmailSentDateFieldWithRangeOperator"/>
-          			<include name="verifyTilesSequenceRemainsWhenUserClicksRunIconAndUnpinnedMultipleTitlesFromCartAndRefreshPage"/>
           			<include name="verifyThatTwoSearchCriteriaCombinedWithAND_OR_NOTCondition"/>
-          			<include name="verifySavedSearchExecuteWorksForMasterDateFieldWithISOperator"/>
+          			<include name="takeScreenShot"/>
+          			<include name="close"/>
+          		</methods>
+        	</class>
+        	<class name="sightline.advancedSearch.AdvancedSearch_Phase2_Regression1" >
+        		<methods>
+        			<include name="preCondition"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyResultAppearsForProximityHavingTwoPhrasesWithinBracketsInAdvancedSearch"/>
           			<include name="takeScreenShot"/>
           			<include name="close"/>
           		</methods>
@@ -35,16 +42,6 @@
 	</test> 
 	<test name="BasicSearch">
 	    <classes>
-        	<class name="sightline.basicSearch.BasicSearch_Phase2_Regression" >
-        		<methods>
-        		<include name="preCondition"/>
-        		<include name="beforeTestMethod"/>
-        		<include name="verifyApplicationNotDisplayingWarningMessageLessThanSymbolEmbeddedWithinRegularExpressionQuery"/>
-        		<include name="verifyMsgOfProxiWithRightDoubleQuotes"/>
-        		<include name="takeScreenShot"/>
-        		<include name="close"/>
-          		</methods>
-        	</class>
         	<class name="sightline.basicSearch.BasicSearch_Regression1">
         		<methods>
         		<include name="preCondition"/>
@@ -179,12 +176,12 @@
 	
 	<test name="Saved Search">
 	    <classes>
-        	<class name="sightline.savedSearch.SavedSearch_Phase1_Regression2" >
+        	<class name="sightline.savedSearch.SavedSearch_Phase1_Regression1" >
         		<methods>
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
-        			<include name="showHideFieldsWithSharedSG"/>
-        			<include name="afterMethod"/>
+        			<include name="validateSecurityGroupSharingSearch"/>
+        			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
       		</class>
@@ -195,16 +192,6 @@
         			<include name="performAnyActionSharedPAU"/>
         			<include name="manageScheduleCheck"/>
         			<include name="verifyBatchUpload"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.savedSearch.SavedSearch_Phase1_Regression1" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="verifyDocumentsDisplayAndNavigatingToDocview"/>
-        			<include name="verifyDocumentDisplayAndNavigateToDocList"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
@@ -358,7 +345,6 @@
         		<methods>
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
-        			<include name="VerifyProjCreation20CharNonDomain"/>
         			<include name="verifyUserCanDeleteClient"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
@@ -418,6 +404,16 @@
         			<include name="close"/>
           		</methods>
       		</class>
+      		<class name="sightline.doclist.DocList_Consilio" >
+        		<methods>
+        			<include name="TestStart"/>
+        			<include name="beforeTestMethod"/>
+        			<include name="verifyApplyFilterInDocList"/>
+        			<include name="verifyAfterApplyFilterInDocListandClearField"/>
+        			<include name="afterMethod"/>
+        			<include name="close"/>
+          		</methods>
+      		</class>
     	</classes>
 	</test>
 	
@@ -428,15 +424,7 @@
         			<include name="TestStart"/>
         			<include name="beforeTestMethod"/>
         			<include name="verifyTextRemarks"/>
-        			<include name="afterMethod"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.docviewRedactions.DocView_Redactions_Regression1" >
-        		<methods>
-        			<include name="TestStart"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="checkingRectangleRedactionWhileRefreshingPage"/>
+        			<include name="verifyRedactionasReviewer"/>
         			<include name="afterMethod"/>
         			<include name="close"/>
           		</methods>
@@ -568,15 +556,6 @@
         			<include name="close"/>
           		</methods>
       		</class>
-      		<class name="sightline.reports.ReviewerTimeOnlineReport_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="verifyRTOreportGeneratedByFilteringOptions"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
       		<class name="sightline.reports.SearchTermReport_Regression1" >
         		<methods>
         			<include name="preCondition"/>
@@ -609,15 +588,6 @@
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
         			<include name="verifyTimelinegapReportUSingSourceAsSearch"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.UserLoginActivityReport_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="verifyLoginDetailsWhenLoginAsRMU"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
