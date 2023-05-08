@@ -3873,6 +3873,7 @@ public class DocViewAudio_Phase2_Regression {
 		savedsearch.getToDocViewoption().ScrollTo();
 		savedsearch.getToDocView().ScrollTo();
 		savedsearch.getviewindocview().Click();
+		
 		baseClass.stepInfo(
 				"** verifying the audio hits and triangular arrow Icon fro two searches with same serach term/different threshold saved in a node**");
 		// verifying the audio hits and triangular arrow Icon

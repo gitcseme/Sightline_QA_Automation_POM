@@ -5456,7 +5456,9 @@ public class DocViewAudio_Phase1_Regression1 {
 			saveSearch.navigateToSSPage();
 			saveSearch.selectNode1(nodeName);
 			driver.waitForPageToBeReady();
-
+			savedSearch.getToDocViewoption().ScrollTo();
+			savedSearch.getToDocView().ScrollTo();
+			savedSearch.getviewindocview().Click();
 			// Persistant data to check
 			miniDocListpage.getDocListDatas();
 			miniDocListpage.getDociD(commonDocName).waitAndClick(10);
