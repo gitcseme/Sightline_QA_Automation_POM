@@ -3832,9 +3832,11 @@ public class DocViewAudio_Phase2_Regression {
 		savedsearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
 		savedsearch.selectNode1(newNode);
 		driver.scrollPageToTop();
-
+		savedsearch.getToDocViewoption().ScrollTo();
+		savedsearch.getToDocView().ScrollTo();
+		savedsearch.getviewindocview().Click();
 		
-		savedsearch.getviewindocview().Click();	
+	
 		
 		baseClass.stepInfo(
 				"** verifying the audio hits and triangular arrow Icon for two searches with same serach term/same threshold saved in a node**");
