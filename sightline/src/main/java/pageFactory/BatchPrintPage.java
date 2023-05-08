@@ -168,6 +168,12 @@ public class BatchPrintPage {
 	public Element getDownLoadLink() {
 		return driver.FindElementByCssSelector("#dt_basic a[onclick*='downloadFile']");
 	}
+	public Element getDownload() {
+		return driver.FindElementByXPath("//a[contains(text(),'Download')]");
+	}
+	public Element getDownloadAllFiles() {
+		return driver.FindElementByXPath("(//a[contains(@title,'Download All files')])[1]");
+	}
 
 	public Element getAnalysis_SkipExcelFiles_RadioButton() {
 		return driver.FindElementByXPath(".//*[@id='skipExcelFileRadioButton']/following-sibling::i");

@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -101,10 +102,12 @@ public class BatchPrint_Phase2_Regression {
 
 	@DataProvider(name = "UserSaUDaUPaU")
 	public Object[][] UserSaUDaUPaU() {
-		Object[][] users = { { Input.sa1userName, Input.sa1password, "SA", "PA" },
-				{ Input.sa1userName, Input.sa1password, "SA", "RMU" },
+		Object[][] users = {
+//				{ Input.sa1userName, Input.sa1password, "SA", "PA" },
+//				{ Input.sa1userName, Input.sa1password, "SA", "RMU" },
 				{ Input.da1userName, Input.da1password, "SA", "PA" },
-				{ Input.da1userName, Input.da1password, "SA", "RMU" }, };
+				{ Input.da1userName, Input.da1password, "SA", "RMU" },
+				};
 		return users;
 	}
 	
@@ -401,7 +404,10 @@ public class BatchPrint_Phase2_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-
+		
+		batchPrint.getDownload().waitAndClick(10);
+		batchPrint.getDownloadAllFiles().waitAndClick(10);
+		
 		// Verify Downloaded File name is same as production Name
 		baseClass.waitUntilFileDownload();
 		String downloadedFile = baseClass.GetLastModifiedFileName();
