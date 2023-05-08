@@ -3833,9 +3833,9 @@ public class DocViewAudio_Phase2_Regression {
 		savedsearch.selectNode1(newNode);
 		driver.scrollPageToTop();
 
-		savedsearch.getToDocViewoption().ScrollTo();
-		savedsearch.getToDocView().ScrollTo();
-		savedsearch.getToDocView().Click();
+		
+		savedsearch.getviewindocview().Click();	
+		
 		baseClass.stepInfo(
 				"** verifying the audio hits and triangular arrow Icon for two searches with same serach term/same threshold saved in a node**");
 		// verifying the audio hits and triangular arrow Icon
@@ -3870,7 +3870,7 @@ public class DocViewAudio_Phase2_Regression {
 
 		savedsearch.getToDocViewoption().ScrollTo();
 		savedsearch.getToDocView().ScrollTo();
-		savedsearch.getToDocView().Click();
+		savedsearch.getviewindocview().Click();
 		baseClass.stepInfo(
 				"** verifying the audio hits and triangular arrow Icon fro two searches with same serach term/different threshold saved in a node**");
 		// verifying the audio hits and triangular arrow Icon
