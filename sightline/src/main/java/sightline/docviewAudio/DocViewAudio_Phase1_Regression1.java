@@ -1655,7 +1655,6 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		driver.waitForPageToBeReady();
 		miniDocListpage.removingFieldsAndDragnDropDefault();
-		miniDocListpage.selectSourceDocIdInAvailableField();
 		driver.waitForPageToBeReady();
 		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
