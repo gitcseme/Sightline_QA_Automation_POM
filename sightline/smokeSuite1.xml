@@ -404,7 +404,7 @@
         			<include name="close"/>
           		</methods>
       		</class>
-      		<class name="sightline.doclist.DocList_Consilio" >
+      		<class name="sightline.smallComponents.DocList_Consilio" >
         		<methods>
         			<include name="TestStart"/>
         			<include name="beforeTestMethod"/>

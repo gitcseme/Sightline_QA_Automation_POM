@@ -1214,7 +1214,9 @@ public class IngestionPage_Indium {
 				base.stepInfo("Click on add new ingestion button");
 				base.waitForElement(getAddanewIngestionButton());
 				getAddanewIngestionButton().waitAndClick(10);
+				base.waitTime(3);
 				base.waitForElement(getIngestion_IngestionType());
+				
 				getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(Input.ingestionType);
 
 				base.stepInfo("Select Source system");
