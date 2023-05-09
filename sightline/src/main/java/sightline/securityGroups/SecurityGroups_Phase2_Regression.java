@@ -772,7 +772,7 @@ public class SecurityGroups_Phase2_Regression {
 	 */
 	@Test(description = "RPMXCON-47084", enabled = true, groups = { "regression" })
 	public void verifyDefaultAnnotationLayerDisplayInDA() throws Exception {
-
+		ProjectPage projectPage = new ProjectPage(driver); 
 		baseClass.stepInfo("Test case Id: RPMXCON-47084");
 		baseClass.stepInfo(
 				"Verify that default annotation layer should be displayed though the Domain Admin user who created the project is in-active.");

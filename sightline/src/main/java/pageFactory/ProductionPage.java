@@ -18154,7 +18154,9 @@ public class ProductionPage {
 		base.clickButton(getMP3RatiobtnRedactiontag());
 
 		driver.waitForPageToBeReady();
-		getMP3FilesRedactionTag().waitAndClick(10);
+		//getMP3FilesRedactionTag().waitAndClick(10);
+		//base.waitForElement(getMP3FilesRedactionTag()); //Anna
+		//getMP3FilesRedactionTag().Click(); //Anna;
 		driver.scrollingToBottomofAPage();
 		getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
 		getMP3FilesBurnRedactionTag(redactionTag).waitAndClick(10);
