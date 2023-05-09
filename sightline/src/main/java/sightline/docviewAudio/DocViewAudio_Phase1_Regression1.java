@@ -493,8 +493,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
-		saveSearch.getToDocView().waitAndClick(5);
-
+		saveSearch.getToDocViewoption().ScrollTo();
+		saveSearch.getToDocView().ScrollTo();
+		saveSearch.getviewindocview().Click();
 		// Main method
 		docIDlist = miniDocListpage.getDocListDatas();
 		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
@@ -566,8 +567,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
-		saveSearch.getToDocView().waitAndClick(5);
-
+		saveSearch.getToDocViewoption().ScrollTo();
+		saveSearch.getToDocView().ScrollTo();
+		saveSearch.getviewindocview().Click();
 		// Main method
 		docIDlist = miniDocListpage.getDocListDatas();
 		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
@@ -2986,11 +2988,11 @@ public class DocViewAudio_Phase1_Regression1 {
 			audioSearchTerms.add(searchString1);
 			audioSearchTerms.add(searchString2);
 			// creating new node as PA
-			nodeName = savedSearch.createSearchGroupAndReturn(Input.shareSearchDefaultSG, "PA", Input.yesButton);
+			nodeName = savedSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", Input.yesButton);
 
 			// configuring and saving the audio search term 1 in credated node
 			sessionSearch.audioSearch(searchString1, Input.language);
-			sessionSearch.saveSearchInNodeUnderGroup(savedSearch1, nodeName, Input.shareSearchDefaultSG);
+			sessionSearch.saveSearchInNodeUnderGroup(savedSearch1, nodeName, Input.mySavedSearch);
 			driver.scrollPageToTop();
 			sessionSearch.ViewInDocList();
 			List<String> DocIdsWithSearchString1 = docListPage.gettingAllDocIDs();
@@ -2998,7 +3000,7 @@ public class DocViewAudio_Phase1_Regression1 {
 			// configuring and saving the audio search term 2 in credated node
 			baseClass.selectproject();
 			sessionSearch.audioSearch(searchString2, Input.language);
-			sessionSearch.saveSearchInNodeUnderGroup(savedSearch2, nodeName, Input.shareSearchDefaultSG);
+			sessionSearch.saveSearchInNodeUnderGroup(savedSearch2, nodeName, Input.mySavedSearch);
 			driver.scrollPageToTop();
 			sessionSearch.ViewInDocList();
 			List<String> DocIdsWithSearchString2 = docListPage.gettingAllDocIDs();
@@ -3018,11 +3020,11 @@ public class DocViewAudio_Phase1_Regression1 {
 					DocIdsWithSearchString2);
 		}
 		// viewing the Documents in DocView from SavedSearch page
-		savedSearch.selectNodeUnderSpecificSearchGroup(Input.securityGroup, nodeName);
+		savedSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, nodeName);
 		driver.scrollPageToTop();
-		baseClass.waitForElement(savedSearch.getToDocView());
-		savedSearch.getToDocView().waitAndClick(5);
-
+		savedSearch.getToDocViewoption().ScrollTo();
+		savedSearch.getToDocView().ScrollTo();
+		savedSearch.getviewindocview().Click();
 		// verifying the AudioPersistantHitPanel for document having only searchString1
 		baseClass.stepInfo(
 				"verifying the AudioPersistantHitPanel for document having audio search term '" + searchString1 + "'");
@@ -5454,8 +5456,9 @@ public class DocViewAudio_Phase1_Regression1 {
 			saveSearch.navigateToSSPage();
 			saveSearch.selectNode1(nodeName);
 			driver.waitForPageToBeReady();
-			saveSearch.getToDocView().waitAndClick(5);
-
+			savedSearch.getToDocViewoption().ScrollTo();
+			savedSearch.getToDocView().ScrollTo();
+			savedSearch.getviewindocview().Click();
 			// Persistant data to check
 			miniDocListpage.getDocListDatas();
 			miniDocListpage.getDociD(commonDocName).waitAndClick(10);
