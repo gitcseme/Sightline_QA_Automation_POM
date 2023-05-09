@@ -2340,7 +2340,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              state.[RPMXCON-51468]
 	 */
 	@Test(description = "RPMXCON-51468", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyAppNotHangNewReviewWhenStoppedState(String username, String password) throws Exception {
+	public void verifyAppNotHangNewReviewWhenStoppedState(String username, String password,String fullname) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 
 		DocViewPage docView = new DocViewPage(driver);
@@ -2447,7 +2447,7 @@ public class DocViewAudio_Phase2_Regression {
 	 *              state.[RPMXCON-51469]
 	 */
 	@Test(description = "RPMXCON-51469", enabled = true, dataProvider = "RmuRev", groups = { "regression" })
-	public void verifyAppNotHangWhenStoppedState(String username, String password) throws Exception {
+	public void verifyAppNotHangWhenStoppedState(String username, String password,String fullname) throws Exception {
 		String remarkText = Input.randomText + Utility.dynamicNameAppender();
 		String editedRemark = Input.randomText + Utility.dynamicNameAppender();
 		Map<String, String> updateDatas = new HashMap<String, String>();
@@ -3751,7 +3751,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description Verify user can see the metada for the audio files
 	 */
 	@Test(description = "RPMXCON-51075", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
-	public void verifyAudioRedactionTagReleasedToSG(String username, String password) throws Exception {
+	public void verifyAudioRedactionTagReleasedToSG(String username, String password,String fullname) throws Exception {
 
 		sessionSearch = new SessionSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
