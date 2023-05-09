@@ -18152,9 +18152,8 @@ public class ProductionPage {
 		base.clickButton(getMP3CheckReductionBoxEnable());
 		getMP3CheckReductionBoxEnable().Enabled();
 		base.clickButton(getMP3RatiobtnRedactiontag());
-
-		driver.waitForPageToBeReady();
-		getMP3FilesRedactionTag().waitAndClick(10);
+		driver.waitForPageToBeReady();        
+		getMP3FilesRedactionTag().waitAndClick(10);;
 		driver.scrollingToBottomofAPage();
 		getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
 		getMP3FilesBurnRedactionTag(redactionTag).waitAndClick(10);
