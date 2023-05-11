@@ -75,7 +75,7 @@ public class TagsAndFolders_Phase2_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	}
 
-//	@AfterMethod(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);

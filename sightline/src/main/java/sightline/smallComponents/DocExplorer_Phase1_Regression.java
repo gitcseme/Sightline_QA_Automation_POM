@@ -394,7 +394,7 @@ public class DocExplorer_Phase1_Regression {
 			
 			baseClass.stepInfo("Verify Doc List Header");
 			docExplorer.verifyDocListHeader();
-//			loginPage.logout();
+			loginPage.logout();
 		
 		 }
 		 

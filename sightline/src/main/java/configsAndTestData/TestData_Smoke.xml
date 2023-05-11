@@ -112,7 +112,7 @@
      <!-- Added by Gopinath -->
     <historyTab>History</historyTab>
     <documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
-    <randomText>ID00000101</randomText>
+    <randomText>Test</randomText>
     <metaDataName>CustodianName</metaDataName>
     <is_Or_Range>range</is_Or_Range>
     <second_Input>CustodianName</second_Input>

@@ -14512,7 +14512,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) throws InterruptedException {
 		base.waitTime(4);
-//		try {		
+		try {		
 			 driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -14557,10 +14557,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}), Input.wait30);
 			getRemarkTextArea().SendKeys(remark);
 			getSaveRemark().Click();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
-//		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
+		}
 
 	}
 
