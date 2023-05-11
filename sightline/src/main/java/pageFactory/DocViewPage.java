@@ -14510,7 +14510,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 *               edit box.
 	 * @throws InterruptedException 
 	 */
-	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) throws InterruptedException {
+	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		base.waitTime(4);
 		try {		
 			 driver.waitForPageToBeReady();
