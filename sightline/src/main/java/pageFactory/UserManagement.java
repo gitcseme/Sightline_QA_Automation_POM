@@ -4563,7 +4563,6 @@ public class UserManagement {
 
 		bc.waitForElement(getUnAssignedDomainUser());
 		bc.waitTime(5);
-		
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		bc.waitForElement(getDomainUserRightArrow());
 

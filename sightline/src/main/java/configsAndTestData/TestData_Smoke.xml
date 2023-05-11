@@ -26,6 +26,9 @@
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
 	<searchString5>commit</searchString5>
 	<WPbatchFile>/WP_BatchFile/</WPbatchFile>
+	
+	<!-- Added by Gopinath Modified date - 17/09/2021 -->
+	<comment>testing</comment>
 
 	
 	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
@@ -122,6 +125,8 @@
      <securityGroup>Default Security Group</securityGroup>
          <mySavedSearch>My Saved Search</mySavedSearch>
          <custodianName_Andrew>Andrew</custodianName_Andrew>
+         <analyzeAt2>Analyze at 2nd Level</analyzeAt2>
+	<analyzeAt3>Analyze at 3rd Level</analyzeAt3>
          
          <!-- Added by Gopinath Created date - 02/03/2022 -->
 	<ingestionProjectName>AutomationIngestionProject</ingestionProjectName>
@@ -141,6 +146,11 @@
     <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
     <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
    <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>  
+   
+   
+   <!-- Added by Gopinath Created date - 15/12/2021 -->
+	<proximity>Cramfri</proximity>
+	<masterDate>2000/02/22</masterDate>
 
      
       <!-- Raghuram Indium modified on 9/7/21 --> 

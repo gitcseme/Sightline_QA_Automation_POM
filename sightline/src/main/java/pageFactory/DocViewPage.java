@@ -14508,6 +14508,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 * @Description : Method for adding remark to current selected document.
 	 * @param remark : remark is String value that any remark value need to enter in
 	 *               edit box.
+	 * @throws InterruptedException 
 	 */
 	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
 		base.waitTime(4);
@@ -14547,7 +14548,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			actions.release();
 			actions.build().perform();
 			driver.scrollPageToTop();
-			getAddRemarkbtn().getWebElement().click();
+			base.waitForElement(getAddRemarkbtn());
+			getAddRemarkbtn().javascriptclick(getAddRemarkbtn());
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getRemarkTextArea().isElementAvailable(10);
@@ -24640,8 +24642,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
-
+			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");

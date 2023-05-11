@@ -2016,7 +2016,7 @@ public class DocViewMetaDataPage {
 			base.waitTillElemetToBeClickable(getConfidentialRadioButton());
 			getConfidentialRadioButton().Click();
 			driver.scrollingToElementofAPage(getCommentTextField());
-			base.waitTillElemetToBeClickable(getCommentTextField());
+			base.waitForElement(getCommentTextField());
 			getCommentTextField().SendKeys(comment);
 
 		} catch (Exception e) {
@@ -2036,7 +2036,7 @@ public class DocViewMetaDataPage {
 			driver.waitForPageToBeReady();
 			getMetaDataTableOnPopup().isElementAvailable(15);
 			base.waitForElement(getMetaDataTableOnPopup());
-			getCloseButton().waitAndClick(15);
+			getCloseButton().javascriptclick(getCloseButton());
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while closing metadata popup" + e.getMessage());

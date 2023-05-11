@@ -41,7 +41,7 @@ public class DocView_MetaData_Regression {
 	Utility utility;
 
 	@BeforeClass(alwaysRun = true)
-	public void preConditions() throws InterruptedException, ParseException, IOException {
+	public void preConditions() throws  IOException,InterruptedException, ParseException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
@@ -58,6 +58,7 @@ public class DocView_MetaData_Regression {
 		
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
