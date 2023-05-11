@@ -1995,6 +1995,7 @@ public class DocExplorerPage {
 	public void masterDateWithEmailSubject(String emailSubject, String masterDate) {
 		try {
 			getEmailSubjectTextField().isElementAvailable(15);
+			bc.waitForElement(getEmailSubjectTextField());
 			getEmailSubjectTextField().SendKeys(emailSubject);
 			getEmailSubjectTextField().getWebElement().sendKeys(Keys.ENTER);
 			getMasterDatetextField().isElementAvailable(15);

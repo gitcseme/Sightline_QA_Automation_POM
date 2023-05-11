@@ -3414,7 +3414,7 @@ public class DocListPage {
 			base.waitTillElemetToBeClickable(getCustodianTextField());
 			getCustodianTextField().SendKeys(custodianName);
 			base.waitForElement(getCustodianOption(custodianName));
-			base.waitTillElemetToBeClickable(getCustodianOption(custodianName));
+//			base.waitTillElemetToBeClickable(getCustodianOption(custodianName));
 			getCustodianOption(custodianName).Click();
 			base.waitForElement(getAddToFilterButton());
 			base.waitTillElemetToBeClickable(getAddToFilterButton());
@@ -5577,7 +5577,7 @@ public class DocListPage {
 			base.waitForElement(getClickToMakeSelection());
 			getClickToMakeSelection().Click();
 			base.waitForElement(getSelectAuthor());
-			getSelectAuthor().Click();
+			getSelectAuthor().javascriptclick(getActiveFiltersElement());;
 			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.]", "");
 			base.waitForElement(getFilterToDomainName());
 			getFilterToDomainName().Click();

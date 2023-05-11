@@ -75,7 +75,7 @@ public class TagsAndFolders_Phase2_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	}
 
-	@AfterMethod(alwaysRun = true)
+//	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -1224,7 +1224,9 @@ public class TagsAndFolders_Phase2_Regression {
 		sessionSearch.multipleBasicContentSearch(Input.searchString2);
 		sessionSearch.addPureHit();
 		sessionSearch.ViewInDocListWithOutPureHit();
+		
 		int aggregateHitCount = saveSearch.docListPageFooterCountCheck();
+		System.out.println(aggregateHitCount);
 		base.selectproject();
 
 		// Perform Search and release docs to the tags and folders

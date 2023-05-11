@@ -94,11 +94,11 @@
 	
 	<test name="Quick Batch">
 	    <classes>
-        	<class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality" >
+        	<class name="sightline.assignments.Assignment_Regression2" >
         		<methods>
         		<include name="preCondition"/>
         		<include name="beforeTestMethod"/>
-        		<include name="CreateQuickBatch"/>
+        		<include name="VerifyMetaList_QuickBatch"/>
         		<include name="takeScreenShot"/>
         		<include name="close"/>
           		</methods>
@@ -419,7 +419,7 @@
 	
 	<test name="DocView">
 	    <classes>
-        	<class name="sightline.docview.DocView_Regression9" >
+        	<class name="testScriptsSmoke.smoke_Indium" >
         		<methods>
         			<include name="TestStart"/>
         			<include name="beforeTestMethod"/>
@@ -509,67 +509,12 @@
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
-      		</class> 
-      		<class name="sightline.reports.CustomDocumentDataReport_Regression" >
+      		</class>	 
+      		<class name="sightline.reports.ConceptExplorer_Phase2_Regression" >
         		<methods>
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
-        			<include name="verifyAndValidateCustomDataReport"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.DocumentAuditReport_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="DocAuditPageDisplay"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality" >
-        		<methods>
-        			<include name="beforeClass"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="reviewProgressByRevReport"/>
-        			<include name="conceptExplorer"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.ReviewResultReport_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="verifyReviewerResultReportShedule"/>
-        			<include name="reviewerResultDisplay"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.ReviewerProductiviytReport_Regression" >
-        		<methods>
-        			<include name="beforeTestMethod"/>
-        			<include name="reviewerProdPageDisplay"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.SearchTermReport_Regression1" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="navigateToSearchTermReport"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-      		<class name="sightline.reports.TagCountByTagsReport_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="VerifyTagReportsPAgeDisplay"/>
+        			<include name="verifyConceptExplorerAction"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
@@ -582,18 +527,9 @@
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
-      		</class>
-      		<class name="sightline.reports.TimelineAndGapReports_Regression" >
-        		<methods>
-        			<include name="preCondition"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="verifyTimelinegapReportUSingSourceAsSearch"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class>
-    	</classes>
-	</test>
+      		</class> 		
+      </test>
+	
 	<test name="Workflow Automation">
 	    <classes>
         	<class name="sightline.smallComponents.WorkFlowAutomation_Regression" >

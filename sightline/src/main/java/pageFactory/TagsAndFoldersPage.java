@@ -2734,9 +2734,11 @@ public class TagsAndFoldersPage {
 	 * @param tagName
 	 */
 	public void verifyTagDocCount(String tagName, int count) {
-		base.waitForElement(getTag_ToggleDocCount());
-		getTag_ToggleDocCount().waitAndClick(20);
+		
 		base.waitTime(2);
+		base.waitForElement(getTag_ToggleDocCount());
+		getTag_ToggleDocCount().javascriptclick(getTag_ToggleDocCount());
+		base.waitForElement(getTagandCount(tagName, count));
 		if (getTagandCount(tagName, count).isElementAvailable(3)) {
 			base.passedStep(tagName + " with " + count + " count  could be seen under tags and folder page -"
 					+ getTagandCount(tagName, count).getText());

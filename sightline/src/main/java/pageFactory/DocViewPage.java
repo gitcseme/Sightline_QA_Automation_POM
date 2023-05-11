@@ -14508,10 +14508,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 * @Description : Method for adding remark to current selected document.
 	 * @param remark : remark is String value that any remark value need to enter in
 	 *               edit box.
+	 * @throws InterruptedException 
 	 */
-	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) {
+	public void addRemarkToNonAudioDocument(int off1, int off2, String remark) throws InterruptedException {
 		base.waitTime(4);
-		try {		
+//		try {		
 			 driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -14547,7 +14548,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			actions.release();
 			actions.build().perform();
 			driver.scrollPageToTop();
-			getAddRemarkbtn().getWebElement().click();
+			base.waitForElement(getAddRemarkbtn());
+			getAddRemarkbtn().javascriptclick(getAddRemarkbtn());
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getRemarkTextArea().isElementAvailable(10);
@@ -14555,10 +14557,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}), Input.wait30);
 			getRemarkTextArea().SendKeys(remark);
 			getSaveRemark().Click();
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			base.failedStep("Exception occured while adding remark to current selected document" + e.getMessage());
+//		}
 
 	}
 
@@ -24640,8 +24642,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
-
+			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");

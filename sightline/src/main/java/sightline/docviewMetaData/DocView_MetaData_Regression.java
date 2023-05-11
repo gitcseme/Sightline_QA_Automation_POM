@@ -50,14 +50,16 @@ public class DocView_MetaData_Regression {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, InterruptedException {
 		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
-		
+		Input in=new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
