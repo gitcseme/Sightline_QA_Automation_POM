@@ -3419,7 +3419,7 @@ public class Production_Phase1_Regression {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.basicContentSearch("crammer");
 		sessionSearch.bulkTagExisting(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
@@ -3704,7 +3704,7 @@ public class Production_Phase1_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		
@@ -4486,6 +4486,7 @@ public class Production_Phase1_Regression {
 		driver.scrollingToBottomofAPage();
 		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
 		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		page.getNativeDocsPlaceholder1().SendKeys(tagname1);
 		page.clickMArkCompleteMutipleTimes(3);
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
@@ -4495,10 +4496,10 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		File Native1 = new File(
-				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".doc");
+				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".ogg");
 
 		if (Native1.exists()) {
-			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".doc");
+			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".ogg");
 			System.out.println("passeed");
 		} else {
 			base.failedStep("verification failed");
