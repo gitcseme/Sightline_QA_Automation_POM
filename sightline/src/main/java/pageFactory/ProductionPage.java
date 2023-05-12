@@ -367,6 +367,10 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i");
 	}
 
+	public Element getPDFtab() {
+		return driver.FindElementByXPath("//input[@id='rbdGeneratePdf']/following-sibling::i");
+	}
+	
 	public Element getPDFTab() {
 		return driver.FindElementByXPath("//a[contains( text(),' TIFF / PDF ')]");
 	}
@@ -900,6 +904,10 @@ public class ProductionPage {
 	public Element getSelectCloseBtn() {
 		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[@class='close delete-logic']");
 	}
+	public Element getSelectCloseBtn1() {
+		return driver.FindElementByXPath("//div[@id='divImageTIFFPHImage_1']//button[@class='close delete-logic']");
+	}
+	
 	
 	// added by sowndariya
 	public Element getSecondOptInText() {
@@ -13290,6 +13298,7 @@ public class ProductionPage {
 			getPDFChkBox().Click();
 			base.waitForElement(getPDFTab());
 			getPDFTab().Click();
+			
 			for (int i = 0; i < 9; i++) {
 				try {
 					driver.waitForPageToBeReady();
@@ -13299,6 +13308,7 @@ public class ProductionPage {
 					driver.waitForPageToBeReady();
 				}
 			}
+			
 			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 			getTIFF_EnableforPrivilegedDocs().Enabled();
 			getTIFF_EnableforPrivilegedDocs().Click();
@@ -13313,6 +13323,8 @@ public class ProductionPage {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getNativeDocsPlaceholder());
 			getNativeDocsPlaceholder().SendKeys(Text);
+			getSelectCloseBtn1().Click();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while filling Natively produced docs" + e.getMessage());

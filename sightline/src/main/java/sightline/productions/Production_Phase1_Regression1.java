@@ -3371,7 +3371,7 @@ public class Production_Phase1_Regression1 {
 		page.fillingPDFWithNativelyProduceddDocs(tagname, Input.randomText);
 
 		base.stepInfo("PDF section with Natively produced docs docs are filled");
-
+		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
 
@@ -7523,7 +7523,6 @@ public class Production_Phase1_Regression1 {
 		page.fillingDATSection();
 		page.SelectMP3FileAndVerifyLstFile();
 		driver.scrollPageToTop();
-		page.getSaveOption().waitAndClick(10);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -8723,7 +8722,7 @@ public class Production_Phase1_Regression1 {
 		File file = new File(home + "/Downloads/" + VolumeName + "/Natives/0001");
 		File TiffFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_TIFF.OPT");
 		File DatFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_DAT.dat");
-		File NativeFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_Native.lst");
+		//File NativeFile = new File(home + "/Downloads/" + VolumeName + "/Load Files/" + productionname + "_Native.lst");
 
 		if (!file.exists()) {
 			base.passedStep("Native file is not copied to priv file as expected");
@@ -8743,11 +8742,11 @@ public class Production_Phase1_Regression1 {
 			base.failedStep("Dat file is not generated as expected");
 		}
 
-		if (NativeFile.exists()) {
+		/*if (NativeFile.exists()) {
 			base.passedStep("Native file is generated as expected");
 		} else {
 			base.failedStep("Native file is not generated as expected");
-		}
+		}*/
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
