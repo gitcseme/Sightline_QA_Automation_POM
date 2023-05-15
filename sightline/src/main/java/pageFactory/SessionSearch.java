@@ -4093,7 +4093,7 @@ public class SessionSearch {
 
 	// Function to perform bulk tag from any page
 	public String BulkActions_Tag(String TagName) throws InterruptedException {
-
+		UserManagement userManage=new UserManagement(driver);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkNewTab().Visible();
@@ -4115,6 +4115,10 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getTagsAllRoot().Click();
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getBulkTagPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getBulkTagPopupWindowHeader().getWebElement(), -100, -100);
+		Act.release().build().perform();
 		driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
