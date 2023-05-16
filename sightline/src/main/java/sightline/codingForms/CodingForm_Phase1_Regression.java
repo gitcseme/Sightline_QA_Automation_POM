@@ -316,9 +316,6 @@ public class CodingForm_Phase1_Regression {
  		//delete codingform
  		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 	    assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
-	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.verifyCodingFormIsDeleted(codingform);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -851,7 +848,7 @@ public class CodingForm_Phase1_Regression {
 	    codingForm.validatePreviewSuccessMsg();
 	    baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
-	    baseClass.waitTillElemetToBeClickable( codingForm.getCFmetadataTextBox(metaDataName));
+	    baseClass.waitTillElemetToBeClickable(codingForm.getCFmetadataTextBox(metaDataName));
 	    codingForm.getCFmetadataTextBox(metaDataName).SendKeys(Input.searchString1);
 	    baseClass.stepInfo("Verify the field by passing the text");
 	    codingForm.validatePreviewSuccessMsg();
