@@ -999,8 +999,8 @@ public class CollectionPage {
 		getCustodianIDInputTextField().waitAndClick(10);
 		getCustodianIDInputTextField().SendKeys(inputString);
 
-		int size = getIndexOfAutoSuggestion(inputString);
-		System.out.println(size);
+//		int size = getIndexOfAutoSuggestion(inputString);
+//		System.out.println(size);
 
 		base.waitTime(2);
 		
