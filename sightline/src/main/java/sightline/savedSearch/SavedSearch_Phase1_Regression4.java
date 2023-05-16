@@ -430,6 +430,7 @@ public class SavedSearch_Phase1_Regression4 {
 	 * @throws ParseException
 	 * @Stabilize -- done - new imp - done
 	 */
+	
 	@Test(description = "RPMXCON-49070", enabled = true, groups = { "regression" })
 	public void aggregateResultWhileBulkAssignment() throws InterruptedException, ParseException {
 		int latencyCheckTime = 5;

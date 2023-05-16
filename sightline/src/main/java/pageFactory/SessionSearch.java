@@ -7955,20 +7955,14 @@ public class SessionSearch {
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		base.waitForElement(selectAssignmentFromWP(assignMentName));
-//		for (WebElement iterable_element : getTree().FindWebElements()) {
-//			if (iterable_element.getText().contains(assignMentName)) {
-//
-////				base.waitTime(4);
-//				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.javascriptScrollTo(selectAssignmentFromWP(assignMentName));
 				selectAssignmentFromWP(assignMentName).javascriptclick(selectAssignmentFromWP(assignMentName));
 				System.out.println(selectAssignmentFromWP(assignMentName).getText());
 				UtilityLog.info(selectAssignmentFromWP(assignMentName).getText());
-//				iterable_element.click();
+
 				System.out.println("Assignment selected");
 
-//			}
-//		}
+
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(5);
 
