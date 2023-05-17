@@ -3140,16 +3140,61 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
+			}
+		}), Input.wait30);
+		System.out.println("newNode"+SaveName);
+		driver.scrollingToBottomofAPage();
+//		driver.scrollingToBottomofAPage();
+		driver.javascriptScrollTo(getCreatedNode(SaveName));
+		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
+		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		base.waitForElement(getCreatedNode(SaveName));
+		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
+//		driver.scrollingToBottomofAPage();
+//		for (WebElement iterable_element : getTree().FindWebElements()) {
+//			// System.out.println(iterable_element.getText());
+//			base.waitTime(2);
+//			if (iterable_element.getText().contains(SaveName)) {
+//				base.waitTime(2);
+//				driver.scrollingToElementofAPage(iterable_element);
+//				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+//				
+////				driver.scrollingToBottomofAPage();
+////				// System.out.println(iterable_element.getText());
+////				iterable_element.click();
+//			}
+//		}
+		// added on 16-8-21
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(15);
+		// Click on Search button
+		driver.scrollPageToTop();
+	}
+
+	public void searchSavedSearch(String NodeName,final String SaveName) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearchBtn().Visible();
+			}
+		}), Input.wait60);
+		getSavedSearchBtn().Click();
+		
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
 			base.waitTime(2);
 			if (iterable_element.getText().contains(SaveName)) {
 				base.waitTime(2);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				// System.out.println(iterable_element.getText());
-				iterable_element.click();
+				driver.scrollingToElementofAPage(iterable_element);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+				
+//				driver.scrollingToBottomofAPage();
+//				// System.out.println(iterable_element.getText());
+//				iterable_element.click();
 			}
 		}
 		// added on 16-8-21
@@ -3158,7 +3203,6 @@ public class SessionSearch {
 		// Click on Search button
 		driver.scrollPageToTop();
 	}
-
 	// Function to fetch pure hit count
 	public String verifyPureHitsCount() {
 
@@ -4446,6 +4490,16 @@ public class SessionSearch {
 	 * 
 	 */
 	public void selectSavedsearchInASWp(String saveSearchName) {
+		base = new BaseClass(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.selectproject();
+		switchToWorkproduct();
+		searchSavedSearch(saveSearchName);
+		UtilityLog.info("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+		base.stepInfo("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+
+	}
+	public void selectSavedsearchInASWp(String NodeName,String saveSearchName) {
 		base = new BaseClass(driver);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		base.selectproject();
