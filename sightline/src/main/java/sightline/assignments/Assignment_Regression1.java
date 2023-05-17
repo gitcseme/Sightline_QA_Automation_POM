@@ -412,7 +412,7 @@ public class Assignment_Regression1 {
 	 */
 
 	@Test(description ="RPMXCON-54917",enabled = true, groups = { "regression" })
-	public void validateConfigureButtonInNewAssignment() throws InterruptedException, ParseException, IOException {
+	public void t () throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 
 		bc.stepInfo("To verify that RMU is able to view the configure button on New Assignment"

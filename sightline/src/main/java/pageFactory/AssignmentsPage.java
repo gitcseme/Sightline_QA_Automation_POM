@@ -6462,9 +6462,9 @@ public class AssignmentsPage {
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getFamilytogetherInDistributeDocPage());
-		getFamilytogetherInDistributeDocPage().waitAndClick(10);
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
 		bc.waitForElement(getEmailThreadedInDistributeDocPage());
-		getEmailThreadedInDistributeDocPage().waitAndClick(10);
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
@@ -7688,9 +7688,9 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		bc.waitForElement(getFamilytogetherInDistributeDocPage());
-		getFamilytogetherInDistributeDocPage().waitAndClick(10);
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
 		bc.waitForElement(getEmailThreadedInDistributeDocPage());
-		getEmailThreadedInDistributeDocPage().waitAndClick(10);
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
 //		bc.CloseSuccessMsgpopup();
 		int Total = (int) Math.ceil(count / 2);
 		int unassignedDocs = count - Total;
@@ -7700,7 +7700,7 @@ public class AssignmentsPage {
 		bc.CloseSuccessMsgpopup();
 		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 		bc.getCloseSucessmsg().waitAndClick(10);
-		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
@@ -10139,16 +10139,16 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
 		bc.waitForElement(getFamilytogetherInDistributeDocPage());
-		getFamilytogetherInDistributeDocPage().waitAndClick(5);
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
 		bc.waitForElement(getEmailThreadedInDistributeDocPage());
-		getEmailThreadedInDistributeDocPage().waitAndClick(5);
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
 		getAssgn_docsToDistribute().SendKeys(count);
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
 		bc.CloseSuccessMsgpopup();
 		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 		bc.getCloseSucessmsg().waitAndClick(10);
-		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 
 		return count;
 	}
