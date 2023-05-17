@@ -120,8 +120,6 @@ public class DocView_Regression9 {
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
-		DocListPage doclist = new DocListPage(driver);
-		doclist.getDocIDFromDocView(2).waitAndClick(5);
 // Redacting using rectangular redaction
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		baseClass.stepInfo("A rectangle redaction has been applied");
@@ -204,14 +202,16 @@ public class DocView_Regression9 {
 		sessionsearch.ViewInDocView();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
-		docViewRedact.selectMiniDocListAndViewInDocView(6);
+		docView = new DocViewPage(driver);
+		String docId = docView.getDocumentWithoutRedaction();
 		driver.waitForPageToBeReady();
+		
+		docView.selectDocInMiniDocList(docId);
 		baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
 		
 //		Added on 11_04
 		docView = new DocViewPage(driver);
-		docView.addRemarkToNonAudioDocument(5, 10, "Remark by RMU");
+		docView.addRemarkToNonAudioDocument(1, 20, "Remark by RMU");
 		if (docViewRedact.deleteRemarksBtn().Displayed() && docViewRedact.deleteRemarksBtn().Enabled()) {
 			assertTrue(true);
 			baseClass.passedStep("The Remark has been saved by RMU");
@@ -518,6 +518,7 @@ public class DocView_Regression9 {
 		Robot robot = new Robot();
 		baseClass.stepInfo("Test case Id: RPMXCON-52192, RPMXCON-52201");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.duplicateDocId);
@@ -526,20 +527,21 @@ public class DocView_Regression9 {
 		baseClass.stepInfo("Document viewed in DocView");
 		
 //		Added on 11_04
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
 		docView = new DocViewPage(driver);
 		baseClass.waitTime(4);
 		
-		docViewRedact.redactRectangleUsingOffset(-5, 10, 100, 50);
-		baseClass.waitTime(3);
-		docViewRedact.selectingRedactionTag("Default Redaction Tag");
+//		docViewRedact.redactRectangleUsingOffset(-5, 10, 100, 50);
+//		baseClass.waitTime(4);
+//		docViewRedact.selectingRedactionTag("Default Redaction Tag");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+		docViewMetaDataPage.redactbyrectangle(5, 55, Input.defaultRedactionTag);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.redactionIcon().Displayed() && docViewRedact.redactionIcon().Enabled();
 			}
 		}), Input.wait30);
 		docViewRedact.redactionIcon().waitAndClick(15);
+		baseClass.waitTime(3);
 		docViewRedact.redactTextUsingOffset();
 		baseClass.passedStep("The Redaction Tag selection Pop up appears");
 		docViewRedact.canclingRedactionTag();
@@ -622,7 +624,7 @@ public class DocView_Regression9 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Assignment created using quickbatch");
 		assignmentspage.createNewquickBatchWithoutReviewer(assignmentName, Input.codingFormName);
-		assignmentspage.ViewinDocviewFromAssignments(assignmentName);
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment created in quick batch and viewed in DocView");
 		docViewRedact.checkingPersistentHitPanelAudio();
 		if (docViewRedact.persistantHitRightNavigate().Displayed()
@@ -982,7 +984,15 @@ public class DocView_Regression9 {
 		baseClass.stepInfo("Documents viewd in DocView");
 				
 //		Added
-		docViewRedact.selectMiniDocListAndViewInDocView(6);
+		docView = new DocViewPage(driver);
+		String docId = docView.getDocumentWithoutRedaction();
+		
+		docView.selectDocInMiniDocList(docId);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
+		docViewRedact.removeThisPageHighlight();
+		
+		docView.selectDocInMiniDocList(docId);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
 		docViewRedact.clickingHighlitingIcon();
@@ -991,7 +1001,7 @@ public class DocView_Regression9 {
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(6);
+		docView.selectDocInMiniDocList(docId);
 		Thread.sleep(3000);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
@@ -1001,12 +1011,12 @@ public class DocView_Regression9 {
 		} else {
 			assertTrue(false);
 		}
-		docViewRedact.highliteDeleteBtn().Click();
+		docViewRedact.highliteDeleteBtn().waitAndClick(5);
 		baseClass.passedStep("The highlite has been deleted successfully");
 		robot.keyPress(KeyEvent.VK_F5);
 		robot.keyRelease(KeyEvent.VK_F5);
 		driver.waitForPageToBeReady();
-		docViewRedact.selectMiniDocListAndViewInDocView(6);
+		docView.selectDocInMiniDocList(docId);
 		Thread.sleep(3000);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).click();
 		actions.build().perform();
@@ -1089,6 +1099,7 @@ public class DocView_Regression9 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		
 		baseClass.impersonateRMUtoReviewer();
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1712,7 +1723,7 @@ public class DocView_Regression9 {
 
 		baseClass.stepInfo(
 				"Step 2: Search for documents and go to doc view OR Go to doc view in context of an assignment");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		baseClass.stepInfo("Step 3:Click the Images tab of the document");
@@ -1753,7 +1764,7 @@ public class DocView_Regression9 {
 
 		baseClass.stepInfo(
 				"Step 2: Search for documents and go to doc view OR Go to doc view in context of an assignment");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		baseClass.stepInfo("Step 3:Click the Images tab of the document");
@@ -4170,6 +4181,7 @@ public class DocView_Regression9 {
 		docViewRedact.redactionIcon().waitAndClick(30);
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.build().perform();
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
 		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
@@ -4181,15 +4193,14 @@ public class DocView_Regression9 {
 		baseClass.passedStep("Redaction using page range option is successfully executed");
 //		actions.moveToElement(docViewRedact.multiPageIcon().getWebElement()).click();
 //		actions.build().perform();
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewRedact.multiPageIcon());
 		baseClass.waitTillElemetToBeClickable(docViewRedact.multiPageIcon());
 		docViewRedact.multiPageIcon().waitAndClick(5);
 		docViewRedact.enteringPagesInMultipageTextBox(Input.fullPageRange);
 		baseClass.VerifySuccessMessage("Redaction tags saved successfully.");
 		baseClass.stepInfo("Success message has been verified");
-		baseClass
-				.passedStep("Redaction using page range option for all pages in the document is successfully executed");
-		loginPage.logout();
+		baseClass.passedStep("Redaction using page range option for all pages in the document is successfully executed");
 
 	}
 
@@ -5281,7 +5292,7 @@ public class DocView_Regression9 {
 		docViewRedact = new DocViewRedactions(driver);
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
@@ -5631,7 +5642,7 @@ public class DocView_Regression9 {
 
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -5640,7 +5651,8 @@ public class DocView_Regression9 {
 		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
 		baseClass.stepInfo("Select the Assigment go to Docview");
-		assignmentPage.selectAssignmentToViewinDocview(assname);
+//		assignmentPage.selectAssignmentToViewinDocview(assname);
+		assignmentPage.selectAssignmentToViewinDocview(assname, Input.additionalDataProject);
 		baseClass.stepInfo("Doc view page is selected from assigment page");
 
 		driver.waitForPageToBeReady();
@@ -5690,32 +5702,39 @@ public class DocView_Regression9 {
 		SoftAssert softAssert = new SoftAssert();
 		DocViewPage docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		KeywordPage keyword = new KeywordPage(driver);
+		
 		baseClass.stepInfo("Test case id : RPMXCON-51854");
 		baseClass.stepInfo(
 				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document same as last from coding form child window");
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,  Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		
+		String keyWord = "a";
+		keyword.addKeywordAndVerifyExist(keyWord);	
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.saveSearch(searchName);
 
 		// Share Search via Saved Search
 		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
 		baseClass.stepInfo("Sharing the saved search with security group");
+		baseClass.waitForElement(savedSearch.getSavedSearchToBulkAssign());
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
 
 		// Logout as ReviewManager
 		loginPage.logout();
+		
 		baseClass.stepInfo(
 				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
 
 		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password, Input.additionalDataProject);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
@@ -5732,9 +5751,9 @@ public class DocView_Regression9 {
 
 		// verify PeristantHitEyeIcon is Displayed
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
-		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		baseClass.waitTime(4);
+		docView.clickOnPersistantHitEyeIcon();
+		
 		if (docView.getHitPanel().isDisplayed()) {
 			baseClass.passedStep("Persistent hit panels are displayed");
 			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
@@ -5743,8 +5762,8 @@ public class DocView_Regression9 {
 		}
 
 		// verify Edit and complete CodingForm childWindow and LastDocument
-		baseClass.waitForElement(docView.getHitPanelCount());
-		String beforeComplete = docView.getHitPanelCount().getText();
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(keyWord));
+		String beforeComplete = docView.getDocView_PersistanceHit_PanelTextNew(keyWord).getText();
 		System.out.println(beforeComplete);
 		driver.WaitUntil(new Callable<Boolean>() {
 			public Boolean call() {
@@ -5774,13 +5793,21 @@ public class DocView_Regression9 {
 		driver.waitForPageToBeReady();
 		docView.closeWindow(1);
 		docView.switchToNewWindow(1);
-		baseClass.waitForElement(docView.getHitPanelCount());
-		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
+		baseClass.waitTime(4);
+//		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+//		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_PersistanceHit_PanelTextNew(keyWord));
+		String afterComplete = docView.getDocView_PersistanceHit_PanelTextNew(keyWord).getText();
 		System.out.println(afterComplete);
 		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
+		keyword.navigateToKeywordPage();
+		keyword.deleteKeywordByName(keyWord);
 		loginPage.logout();
 	}
 

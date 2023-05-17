@@ -957,5 +957,21 @@ public class KeywordPage {
 		}
 		return keywordGroupName;
 	}
+	
+    public void addKeywordAndVerifyExist(String name) {
+        boolean status = false;
+        List<String> allKeywords = getAllKeywords();
+        for(String keyword : allKeywords) {
+        if(keyword.equals(name)) {
+                System.out.println("Keyword already exists");
+                status = true;
+                break;
+        }
+        }
+        if(!status){
+         navigateToKeywordPage();
+         AddKeyword(name, name);
+        }
+        }
 
 }

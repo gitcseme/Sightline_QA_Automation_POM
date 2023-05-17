@@ -803,41 +803,48 @@ public class DocView_Regression5 {
 	 */
 	@Test(description = "RPMXCON-51398", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
-		String searchName ="Search"+utility.dynamicNameAppender();
+		String searchName ="Search"+ Utility.dynamicNameAppender();
 		
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Test case id : RPMXCON-51398");
 		baseClass.stepInfo(
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		driver.waitForPageToBeReady();
-		String keyWord = "Test" + Utility.dynamicNameAppender();
+		String keyWord = "es" + Utility.dynamicNameAppender();
 		KeywordPage keyword = new KeywordPage(driver);
-		keyword.navigateToKeywordPage();
-		keyword.AddKeyword(keyWord, keyWord);
 		
-		sessionSearch.basicContentSearch(Input.searchString1);
+		keyword.navigateToKeywordPage();
+		keyword.AddKeyword(keyWord, keyWord);	
+
+		sessionSearch.basicContentSearch("es");
 		sessionSearch.saveSearch(searchName);
 		
-		baseClass.selectproject();
 		sessionSearch.switchToWorkproduct();
 		baseClass.waitForElement(sessionSearch.getSavedSearchBtn());
 		sessionSearch.getSavedSearchBtn().waitAndClick(10);
-		sessionSearch.selectSavedsearchesInTree("My Saved Search");
+		
+//		Added on
+		sessionSearch.selectSavedsearchesInTree(searchName);
+		
 		baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
 		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
-		sessionSearch.serarchWP();
+		
+		sessionSearch.searchAndReturnPureHit_BS();
 		sessionSearch.ViewInDocView();
-		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
-		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
+	
+		docView.clickOnPersistantHitEyeIcon();
+		baseClass.waitTime(3);
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keyWord);
+		
+		keyword.navigateToKeywordPage();
+		keyword.deleteKeywordByName(keyWord);
 		loginPage.logout();
 
 	}

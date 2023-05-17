@@ -591,18 +591,16 @@ public class DocView_Regression4 {
 
 		driver.waitForPageToBeReady();
 
-//		miniDocList.configureMiniDocListToShowCompletedDocs();
 		driver.waitForPageToBeReady();
 		docViewRedact.performGeerIcon();
-	
 		docView.scrollUntilloadingTextDisplay(false);
 
 //		Added 14
-//		baseClass.waitForElement(docView.getCompletedDocs());
-//		docView.getCompletedDocs().waitAndClick(5);
 		driver.Navigate().refresh();
 		baseClass.waitTime(4);
-		docViewRedact.selectMiniDocListAndViewInDocView(1);
+		baseClass.waitForElement(docView.getCompletedDocs());
+		docView.getCompletedDocs().waitAndClick(5);
+//		docViewRedact.selectMiniDocListAndViewInDocView(1);
 		
 		driver.waitForPageToBeReady();
 
@@ -1838,7 +1836,8 @@ public class DocView_Regression4 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click to see Reviewer Remarks");
 		docView = new DocViewPage(driver);
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		String docId = docView.getDocumentWithoutRedaction();
+		docView.selectDocInMiniDocList(docId);
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
@@ -1850,7 +1849,7 @@ public class DocView_Regression4 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.selectDocInMiniDocList(docId);
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
@@ -1863,7 +1862,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.selectDocInMiniDocList(docId);
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
@@ -1876,7 +1875,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.selectDocInMiniDocList(docId);
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
@@ -1895,6 +1894,7 @@ public class DocView_Regression4 {
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		// Selecting Document from Session search
+		DocViewPage docView = new  DocViewPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52170");
@@ -1916,9 +1916,11 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Reviewer are added and doc distributed and Viewed in Docview successfully");
 
 		// select docs from MiniDoclist
-		docViewRedact.selectMiniDocListAndViewInDocView(3);
-		baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
+		String docId = docView.getDocumentWithoutRedaction();
 		
+		driver.Navigate().refresh();
+		baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
+		docView.selectDocInMiniDocList(docId);
 		// Mini doc list having all page redaction
 		docViewRedact.selectRedactionIconAndRedactWholePage();
 
@@ -2393,7 +2395,6 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id: RPMXCON-50923");
 		baseClass.stepInfo(
 				"Verify waning message is prompted to the user after impersonation when user navigates away from the page without saving action from doc view.");
-		DocViewRedactions redact = new DocViewRedactions(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -2413,16 +2414,16 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
 		baseClass.impersonateSAtoRMU();
-		baseClass.selectproject(Input.additionalDataProject);
-		sessionSearch.basicContentSearch(Input.searchString1);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
 		sessionSearch.bulkAssignThreadedDocs();
 		baseClass.stepInfo("Search with text input for docs completed");
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.add3ReviewerAndDistribute();
-		assignmentsPage.selectAssignmentToViewinDocview(assname,Input.additionalDataProject);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		driver.waitForPageToBeReady();
-		redact.selectMiniDocListAndViewInDocView(4);
-		driver.waitForPageToBeReady();
+		
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
 		docView.performConfirmNavigationDisplay();
@@ -2430,12 +2431,10 @@ public class DocView_Regression4 {
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
 		baseClass.impersonatePAtoReviewer();
-		baseClass.selectproject(Input.additionalDataProject);
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
@@ -2445,16 +2444,14 @@ public class DocView_Regression4 {
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
 		baseClass.impersonatePAtoRMU();
 		driver.waitForPageToBeReady();
-		assignmentsPage.selectAssignmentToViewinDocview(assname,Input.additionalDataProject);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		driver.waitForPageToBeReady();
 		driver.waitForPageToBeReady();
-		redact.selectMiniDocListAndViewInDocView(4);
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
 		docView.performConfirmNavigationDisplay();
@@ -2462,12 +2459,10 @@ public class DocView_Regression4 {
 
 		// Login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
-		baseClass.selectproject(Input.additionalDataProject);
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
