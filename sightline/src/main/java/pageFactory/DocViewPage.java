@@ -7297,6 +7297,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void openNearDupeComparisonWindow() throws InterruptedException {
 
 		driver.waitForPageToBeReady();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		base.waitForElement(getDocView_NearDupeIcon());
@@ -7308,18 +7309,24 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			driver.waitForPageToBeReady();
 		}
 
-		for (int i = 1; i <= 3; i++) {
-			if (getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
 				System.out.println("Comparison Window is Ready to perform next steps");
 				break;
-			} else {
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
 				driver.Navigate().refresh();
 			}
+			
 		}
 
 		getDocView_NearDupe_DocID().WaitUntilPresent();
 		String docidinchildwinodw = getDocView_NearDupe_DocID().getText().toString();
 		System.out.println(docidinchildwinodw);
+		
 	}
 
 	/**
