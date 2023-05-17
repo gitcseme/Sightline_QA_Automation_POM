@@ -73,8 +73,8 @@ public class DocView_Redactions_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)

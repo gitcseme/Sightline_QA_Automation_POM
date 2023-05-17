@@ -448,7 +448,7 @@ public class DocView_MetaData_Regression {
 		
 		baseClass.stepInfo("Create new folder and add selected document to it");
 		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+String.valueOf(utility.dynamicNameAppender()));
-		loginPage.logout();		
+		//loginPage.logout();		
 	}
 	
 	/**

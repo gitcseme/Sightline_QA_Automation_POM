@@ -2848,7 +2848,7 @@ public class Production_Phase1_Regression3 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3522,7 +3522,7 @@ public class Production_Phase1_Regression3 {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
-
+		this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
@@ -3547,6 +3547,7 @@ public class Production_Phase1_Regression3 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -3584,7 +3585,7 @@ public class Production_Phase1_Regression3 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
-		securityGroupsPage.navigateToSecurityGropusPageURL();
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityGroupsPage.unAssigningTheTagInRedaction(Redactiontag3);
 
 		// create tags and folders
@@ -4589,7 +4590,8 @@ public class Production_Phase1_Regression3 {
 	public void getPageCountOneWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56076 -Production Sprint 06");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -4651,7 +4653,8 @@ public class Production_Phase1_Regression3 {
 	public void getProductionPageCountWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56081 -Production Sprint 06");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
 		String tagNameTechnical = Input.tagNameTechnical;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
