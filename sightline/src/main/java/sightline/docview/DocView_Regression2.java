@@ -4812,6 +4812,7 @@ public class DocView_Regression2 {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
+		 
 		}
 	}
 

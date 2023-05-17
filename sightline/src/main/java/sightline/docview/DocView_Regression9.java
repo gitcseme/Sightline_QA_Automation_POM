@@ -6967,6 +6967,7 @@ public class DocView_Regression9 {
 		}
 
 		loginPage.quitBrowser();
+		
 
 	}
 

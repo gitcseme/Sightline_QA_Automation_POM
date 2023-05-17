@@ -567,6 +567,7 @@ public class DocView_Regression6 {
 		
 		securityGroupsPage.deleteSecurityGroups(random1);
 		loginPage.logout();
+		
 	}
 
 

@@ -29262,6 +29262,7 @@ public String getRequiredDocs(String reqDocsType) {
                     base.failedStep("Failed to get document.");
             }
     }
+    
     System.out.println(document);
     return document;
 }

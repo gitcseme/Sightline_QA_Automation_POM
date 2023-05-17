@@ -971,6 +971,7 @@ public class KeywordPage {
         if(!status){
          navigateToKeywordPage();
          AddKeyword(name, name);
+         
         }
         }
 

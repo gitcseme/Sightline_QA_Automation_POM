@@ -4334,6 +4334,7 @@ public class DocViewRedactions {
 			base.waitForElement(getNonAudioRemarkBtn());
 			getNonAudioRemarkBtn().waitAndClick(10);
 		}
+		
 		Actions actions = new Actions(driver.getWebDriver());
 		Thread.sleep(10000);
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold().perform();
@@ -4349,6 +4350,7 @@ public class DocViewRedactions {
 		}), Input.wait30);
 		docView.getRemarkTextArea().SendKeys(remark);
 		docView.getSaveRemark().Click();
+		
 	}
 
 	

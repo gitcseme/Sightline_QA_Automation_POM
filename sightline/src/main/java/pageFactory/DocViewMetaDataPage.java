@@ -3148,6 +3148,7 @@ public class DocViewMetaDataPage {
 			base.failedStep("Hidden properties in history table is not blank" + e.getMessage());
 			e.printStackTrace();
 		}
+		
 	}
 
 }
