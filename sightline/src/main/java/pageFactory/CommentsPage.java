@@ -146,6 +146,7 @@ public class CommentsPage {
 			}
 		}), Input.wait30);
 		getPopupYesBtn().Click();
+		base.waitTime(2);
 		base.VerifySuccessMessage("Comment Field deleted successfully.");
 		base.CloseSuccessMsgpopup();
 

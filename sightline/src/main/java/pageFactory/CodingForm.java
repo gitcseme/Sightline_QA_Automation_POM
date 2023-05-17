@@ -1119,7 +1119,9 @@ public class CodingForm {
 	public Element selectObjectsInPreviewBox(String objectName) {
 		return driver.FindElementByXPath("//span[text()='" + objectName + "']/parent::span/parent::div/label/span");
 	}
-
+	public Element selectObjectsResponseInChiuldW(String objectName) {
+		return driver.FindElementByXPath("//span[text()='" + objectName + "']/parent::span/parent::div/label/span");
+	}
 	public Element getHiddenObjectsInPreviewBox(String objectName) {
 		return driver.FindElementByXPath("//span[text()='" + objectName + "']/ancestor::div[@style='display: none;']");
 	}
@@ -4655,6 +4657,8 @@ public class CodingForm {
 			base.passedStep("Help text is displayed successfully");
 			base.ValidateElement_Presence(getCFPreviewObjectName("Technical_Issue"), "Technical issue tag");
 			base.ValidateElement_Presence(getCFPreviewObjectName("Responsive"), "Responsive tag");
+			base.waitTime(3);
+			selectObjectsResponseInChiuldW("Responsive").Click();
 			verifyCFObjectsNotDisplayed("Processing_Issue");
 			verifyCFObjectsNotDisplayed("Foreign_Language");
 			base.stepInfo("The processing issue and foreign language tag is not displayed");
@@ -4771,6 +4775,8 @@ public class CodingForm {
 			base.passedStep("Help text is displayed successfully");
 			base.ValidateElement_Presence(getCFPreviewObjectName("Technical_Issue"), "Technical issue tag");
 			base.ValidateElement_Presence(getCFPreviewObjectName("Responsive"), "Responsive tag");
+			selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
+			selectObjectsResponseInChiuldW("Responsive").waitAndClick(10);
 			verifyCFObjectsNotDisplayed("Processing_Issue");
 			verifyCFObjectsNotDisplayed("Foreign_Language");
 			base.stepInfo("The processing issue and foreign language tag is not displayed");

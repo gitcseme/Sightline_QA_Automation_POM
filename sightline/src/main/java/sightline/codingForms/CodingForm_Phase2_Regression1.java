@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -2060,9 +2061,10 @@ public class CodingForm_Phase2_Regression1 {
 		
 		//verify
 		driver.waitForPageToBeReady();
-		docview.Hot_DocCheckBox().waitAndClick(1);
-		soft.assertFalse(baseClass.text("Processing_Issue").isDisplayed()," progressing_issue");
-		soft.assertFalse(baseClass.text("Processing_Issue").isDisplayed(), "Foreign_Language");
+		baseClass.waitForElement(docview.getResponsiveCheked());
+		docview.getResponsiveCheked().Click();
+		soft.assertFalse(baseClass.text("Processing_Issue").isDisplayed(),"Processing_Issue");
+		soft.assertFalse(baseClass.text("Foreign_Language").isDisplayed(), "Foreign_Language");
 		baseClass.passedStep("Tech issue group check box is as per default action");
 		
 	    soft.assertAll();
