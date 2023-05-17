@@ -1069,11 +1069,11 @@ public class DocViewAnalyticsPanel_Regression4 {
 			driver.waitForPageToBeReady();
 		}
 
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 1; i <= 5; i++) {
 			if ((docViewPage.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((docViewPage.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 				System.out.println("Comparison Window is Ready to perform next steps");
 				break;
-			}else if(i==10) {
+			}else if(i==5) {
 				driver.close();
 				driver.switchTo().window(parentWindowID);
 			}else {
