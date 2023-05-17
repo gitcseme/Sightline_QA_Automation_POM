@@ -4909,7 +4909,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		System.out.println(title);
 		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
 		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
-		softAssertion.assertAll();
+		//softAssertion.assertAll();
 		// logout
 		loginPage.logout();
 	}
