@@ -849,7 +849,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		return driver
 				.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");
 	}
-
+	public Element getTechIssue() {
+		return driver
+				.FindElementByXPath("//*[@id='0_radiogroup']/div[3]/div/label/span");
+	}
 	public Element getNonPrivilegeRadio() {
 		return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");
 	}

@@ -1067,6 +1067,10 @@ public class SessionSearch {
 	public ElementCollection getTree_productions() {
 		return driver.FindElementsByXPath("//div[@id='JSTree']//span[@class='font-xs']");
 	}
+	
+	public ElementCollection getTree_savedSearch() {
+		return driver.FindElementsByXPath("//a[text()='My Saved Search']");
+	}
 
 	// added by Jayanthi 23/8/21
 	public Element selectReviewerInAssgnWP(String reviewer) {
@@ -2260,8 +2264,16 @@ public class SessionSearch {
 	public Element rootAssignment() {
 		return driver.FindElementByXPath("//*[@id='-1g']//i");
 	}
-
-	
+	public Element savedSearchWPNodeExpansion(String node) {
+		return driver.FindElementByXPath("//a[text()='"+node+"']/preceding-sibling::i");
+	}
+	public Element assignmentWPNodeExpansion() {
+		return driver.FindElementByXPath("//a[text()='Root']/preceding-sibling::i");
+	}
+	public Element selectAssignmentFromWP(String AssignmentName) {
+		return driver.FindElementByXPath("//a[text()='"+AssignmentName+"']");
+	}
+	//a[text()='Root']/preceding-sibling::i
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -4093,7 +4105,7 @@ public class SessionSearch {
 
 	// Function to perform bulk tag from any page
 	public String BulkActions_Tag(String TagName) throws InterruptedException {
-
+		UserManagement userManage=new UserManagement(driver);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkNewTab().Visible();
@@ -4115,6 +4127,10 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getTagsAllRoot().Click();
+		Actions Act = new Actions(driver.getWebDriver());
+		Act.clickAndHold(userManage.getBulkTagPopupWindowHeader().getWebElement());
+		Act.moveToElement(userManage.getBulkTagPopupWindowHeader().getWebElement(), -100, -100);
+		Act.release().build().perform();
 		driver.Manage().window().fullscreen();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -7937,22 +7953,20 @@ public class SessionSearch {
 
 		base.waitForElement(getWP_assignmentsBtn());
 		getWP_assignmentsBtn().Click();
+		base.waitForElement(assignmentWPNodeExpansion());
+		assignmentWPNodeExpansion().javascriptclick(assignmentWPNodeExpansion());
 		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(assignMentName)) {
+		base.waitForElement(selectAssignmentFromWP(assignMentName));
+				driver.javascriptScrollTo(selectAssignmentFromWP(assignMentName));
+				selectAssignmentFromWP(assignMentName).javascriptclick(selectAssignmentFromWP(assignMentName));
+				System.out.println(selectAssignmentFromWP(assignMentName).getText());
+				UtilityLog.info(selectAssignmentFromWP(assignMentName).getText());
 
-				base.waitTime(4);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				System.out.println(iterable_element.getText());
-				UtilityLog.info(iterable_element.getText());
-				iterable_element.click();
 				System.out.println("Assignment selected");
 
-			}
-		}
+
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(5);
 
@@ -8355,6 +8369,60 @@ public class SessionSearch {
 		getSavedSearchResult().waitAndClick(5);
 
 		driver.scrollingToBottomofAPage();
+		base.waitForElement(getSelectWorkProductSSResults(searchname));
+		getSelectWorkProductSSResults(searchname).waitAndClick(5);
+		getInsertInToQueryBtn().waitAndClick(10);
+
+		driver.scrollPageToTop();
+		try {
+			base.waitForElement(getQuerySearchButtonC());
+			getQuerySearchButtonC().waitAndClick(5);
+		} catch (Exception e) {
+			System.out.println("Not Clicked");
+		}
+
+		driver.waitForPageToBeReady();
+		saveSearchAction();
+
+		try {
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} catch (Exception e) {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
+
+		getMySavedSearch().waitAndClick(5);
+		base.waitForElement(getSavedSearch_MySearchesNewNode());
+		getSavedSearch_MySearchesNewNode().waitAndClick(5);
+
+		getSaveSearch_Name().SendKeys(search_name);
+		getSaveSearch_SaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Saved search saved successfully");
+		Reporter.log("Saved the search with name '" + search_name + "'", true);
+		UtilityLog.info("Saved search with name - " + search_name);
+
+	}
+	
+	public void advanceWorkProduct(String newNode,String searchname, String search_name) throws InterruptedException {
+
+		base.waitForElement(getAdvancedSearchLink());
+		getAdvancedSearchLink().waitAndClick(5);
+		getSelectNewSearchbtn().waitAndClick(5);
+		getWorkproductBtnC().waitAndClick(5);
+		getSavedSearchResult().waitAndClick(5);
+
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
+			}
+		}), Input.wait30);
+		System.out.println("newNode"+newNode);
+		driver.scrollingToBottomofAPage();
+//		driver.scrollingToBottomofAPage();
+		driver.javascriptScrollTo(getCreatedNode(newNode));
+		base.waitForElement(savedSearchWPNodeExpansion(newNode));
+		savedSearchWPNodeExpansion(newNode).javascriptclick(savedSearchWPNodeExpansion(newNode));
 		base.waitForElement(getSelectWorkProductSSResults(searchname));
 		getSelectWorkProductSSResults(searchname).waitAndClick(5);
 		getInsertInToQueryBtn().waitAndClick(10);

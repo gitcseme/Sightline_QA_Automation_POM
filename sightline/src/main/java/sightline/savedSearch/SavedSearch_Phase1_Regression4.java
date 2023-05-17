@@ -430,6 +430,7 @@ public class SavedSearch_Phase1_Regression4 {
 	 * @throws ParseException
 	 * @Stabilize -- done - new imp - done
 	 */
+	
 	@Test(description = "RPMXCON-49070", enabled = true, groups = { "regression" })
 	public void aggregateResultWhileBulkAssignment() throws InterruptedException, ParseException {
 		int latencyCheckTime = 5;
@@ -1648,7 +1649,7 @@ public class SavedSearch_Phase1_Regression4 {
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		login.logout();
@@ -1680,8 +1681,8 @@ public class SavedSearch_Phase1_Regression4 {
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		String newNode = saveSearch.getSavedSearchNewNode().getText();
 		session.basicContentSearch(Input.searchString1);
-		session.saveSearchInNewNode(SearchName, newNode);
-		session.advanceWorkProduct(SearchName, search_name);
+		session.saveSearchInNewNode(SearchName, newNode);//savedSearchWPNodeExpansion
+		session.advanceWorkProduct(newNode,SearchName, search_name);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		base.stepInfo("Landed on SavedSearchPage");
@@ -1990,13 +1991,13 @@ public class SavedSearch_Phase1_Regression4 {
 
 		// verify Saved Search by child node of Shared with
 		saveSearch.selectChildNodeOfSharedWith();
-		saveSearch.verifySavedSearchProperOptionsChildNodeAsPARMUREV();
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(role);
 		base.stepInfo("-----------------------------" + SGtoShare + " Completed--------------------------------");
 		// navigate to Doclist and return back to Saved Search page
 		saveSearch.navigateToDoclistAndReturnBackToSavedSearch();
 
 		// verify Saved Search Proper Option
-		saveSearch.verifySavedSearchProperOptionsChildNodeAsPARMUREV();
+		saveSearch.verifySavedSearchProperOptionsSharedWithAsPARMUREV(role);
 
 		login.logout();
 

@@ -399,7 +399,6 @@
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
         			<include name="verifyAsRMUGotoDocViewFromDocList"/>
-        			<include name="verifyAsReviewerPerformAllActinsFromDocLsitPage"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
@@ -425,6 +424,7 @@
         			<include name="beforeTestMethod"/>
         			<include name="verifyTextRemarks"/>
         			<include name="verifyRedactionasReviewer"/>
+        			<include name="verifyAsReviewerPerformAllActinsFromDocLsitPage"/>
         			<include name="afterMethod"/>
         			<include name="close"/>
           		</methods>
@@ -510,11 +510,11 @@
         			<include name="close"/>
           		</methods>
       		</class>	 
-      		<class name="sightline.reports.ConceptExplorer_Phase2_Regression" >
+      		<class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality" >
         		<methods>
-        			<include name="preCondition"/>
+        			<include name="beforeClass"/>
         			<include name="beforeTestMethod"/>
-        			<include name="verifyConceptExplorerAction"/>
+        			<include name="conceptExplorer"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
@@ -527,7 +527,8 @@
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
-      		</class> 		
+      		</class> 
+      		</classes>		
       </test>
 	
 	<test name="Workflow Automation">
