@@ -3751,7 +3751,7 @@ public class DocViewAudio_Phase2_Regression {
 	 * @Description Verify user can see the metada for the audio files
 	 */
 	@Test(description = "RPMXCON-51075", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
-	public void verifyAudioRedactionTagReleasedToSG(String username, String password,String fullname) throws Exception {
+	public void verifyAudioRedactionTagReleasedToSG(String username, String password) throws Exception {
 
 		sessionSearch = new SessionSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
