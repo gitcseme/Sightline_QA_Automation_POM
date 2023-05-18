@@ -1046,11 +1046,6 @@ public class CollectionPage {
 		base.waitForElement(getCustodianIDInputTextField());
 		getCustodianIDInputTextField().waitAndClick(10);
 		getCustodianIDInputTextField().SendKeys(inputString);
-
-		int size = getIndexOfAutoSuggestion(inputString);
-		System.out.println(size);
-
-		base.waitTime(2);
 		
 		for(WebElement it : getCustodianIDdataListOptions().FindWebElements()){//it.getAttribute("value").contentEquals(datalistVal)
 		if (it.getAttribute("value").contains(datalistVal)){ 

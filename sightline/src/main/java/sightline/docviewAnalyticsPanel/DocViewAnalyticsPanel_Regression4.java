@@ -444,6 +444,7 @@ public class DocViewAnalyticsPanel_Regression4 {
 		baseClass.stepInfo("Step 4 : From Analytics panel > Near Dupe window click the icon");
 		// Open Comparison Window in NearDupes Tab
 		docViewPage.openNearDupeComparisonWindow();
+		
 		baseClass.passedStep("Comparison Window is opened Successfully");
 
 		baseClass.stepInfo("Step 5 : Click the icon to Zoom-in, Zoom-out from Original/Near Dupe panel");
@@ -1068,11 +1069,15 @@ public class DocViewAnalyticsPanel_Regression4 {
 			driver.waitForPageToBeReady();
 		}
 
-		for (int i = 1; i <= 3; i++) {
-			if (docViewPage.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+		for (int i = 1; i <= 5; i++) {
+			if ((docViewPage.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((docViewPage.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 				System.out.println("Comparison Window is Ready to perform next steps");
 				break;
-			} else {
+			}else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
 				driver.Navigate().refresh();
 			}
 		}

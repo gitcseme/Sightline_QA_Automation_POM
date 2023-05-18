@@ -3140,18 +3140,18 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
-		driver.scrollingToBottomofAPage();
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			// System.out.println(iterable_element.getText());
-			base.waitTime(2);
-			if (iterable_element.getText().contains(SaveName)) {
-				base.waitTime(2);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				// System.out.println(iterable_element.getText());
-				iterable_element.click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
 			}
-		}
+		}), Input.wait30);
+		System.out.println("newNode"+SaveName);
+
+		driver.javascriptScrollTo(getCreatedNode(SaveName));
+		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
+		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		base.waitForElement(getCreatedNode(SaveName));
+		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
 		// added on 16-8-21
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(15);
@@ -3159,6 +3159,7 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 	}
 
+	
 	// Function to fetch pure hit count
 	public String verifyPureHitsCount() {
 
