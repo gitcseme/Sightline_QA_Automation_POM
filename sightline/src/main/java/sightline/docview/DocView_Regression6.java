@@ -360,12 +360,12 @@ public class DocView_Regression6 {
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa1userName);
-
+//
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 
-
+//
 		baseClass.stepInfo("Add security group");
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(random1);
@@ -381,15 +381,18 @@ public class DocView_Regression6 {
 
 		baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
 		driver.waitForPageToBeReady();
-		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
+//		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
-		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
-		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
+//		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
+		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+//		securityGroupsPage.assignRedactionTagtoSG("Default Redaction Tag");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
-
+//
 		baseClass.stepInfo("Basic search with text input");
 		sessionSearch.basicContentSearch(Input.searchText);
 
@@ -416,7 +419,7 @@ public class DocView_Regression6 {
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.viewInDocView();
+		sessionSearch.ViewInDocView();
 		
 		
 //		Added on 11_04	
@@ -426,7 +429,7 @@ public class DocView_Regression6 {
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
-		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
+		docViewMetaDataPage.redactbyrectangle(5, 55, Input.defaultRedactionTag);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
@@ -564,6 +567,7 @@ public class DocView_Regression6 {
 		
 		securityGroupsPage.deleteSecurityGroups(random1);
 		loginPage.logout();
+		
 	}
 
 

@@ -28,6 +28,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
@@ -4720,11 +4721,13 @@ public class SessionSearch {
 
 			System.out.println("Navigated to docView to view docs");
 			UtilityLog.info("Navigated to docView to view docs");
+			base.waitTime(5);
 
 		} catch (Exception e) {
 			UtilityLog.info("Failed to Perform advanced Search With Content And MetaData Option");
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
@@ -4770,6 +4773,7 @@ public class SessionSearch {
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 
+		base.waitTime(5);
 	}
 
 	/**
