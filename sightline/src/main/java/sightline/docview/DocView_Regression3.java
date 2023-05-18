@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AnnotationLayer;
+
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.BatchRedactionPage;
@@ -116,8 +117,8 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify the automatically selected redaction tag when shared annotation layer with shared redaction tags in security groups and all propagated documents are not released to security groups. ####");
@@ -1359,10 +1360,14 @@ public class DocView_Regression3 {
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		//baseClass.CloseSuccessMsgpopup();
-
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		baseClass.stepInfo("Docs are released to both security groups");
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
@@ -1379,9 +1384,11 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 
+		
+		String docID = docView.getDocumentWithoutRedaction();
 		String currentUrl = driver.getUrl();
 
 		DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
@@ -1402,10 +1409,12 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("view in docview");
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Getting : " + currentUrl + " url in second tab");
 		driver.getWebDriver().get(currentUrl);
 
+		docView.selectDocInMiniDocList(docID);		
 		baseClass.stepInfo("Perfrom non audio remark");
 		docView.addRemarkToNonAudioDocument(5,55, remark);
 
@@ -1416,12 +1425,16 @@ public class DocView_Regression3 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Edit already added remark");
+		docView.selectDocInMiniDocList(docID);	
 		docView.editRemark(editRemark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+//		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+//		docView.switchFromChildWindowToParentWindow();
+		reusableDocView.closeWindow(1);
 
 		baseClass.stepInfo("Click on redaction icon");
+		baseClass.waitForElement(docView.redactionIcon());
 		docView.redactionIcon().Click();
 
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
@@ -1433,6 +1446,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
 
+		docView.selectDocInMiniDocList(docID);	
 		baseClass.stepInfo("verify visibility of edited remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(editRemark);
 
@@ -1534,12 +1548,12 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		
 		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(1,20, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 		loginPage.logout();
 
 		baseClass.stepInfo("Login in to sightline using first user " + Input.rmu1userName);
@@ -1608,6 +1622,7 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup("Default Security Group");
 		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
 		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Select security group for REVIEWER");
 		docViewRedact.selectsecuritygroup("Default Security Group");

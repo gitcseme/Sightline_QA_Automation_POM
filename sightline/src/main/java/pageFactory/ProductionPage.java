@@ -19924,7 +19924,7 @@ public class ProductionPage {
 
 		for (int i = firstFile; i < lastFile; i++) {
 
-			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".ss.tiff");
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".SS.tif");
 			// ITesseract instance = new Tesseract(); // JNA Interface Mapping
 			ITesseract instance = new Tesseract1(); // JNA Direct Mapping
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
@@ -19937,7 +19937,7 @@ public class ProductionPage {
 			base.stepInfo(verificationText);
 
 			if (result.contains(verificationText)) {
-				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".tiff"
+				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".tif"
 						+ " file as expected");
 			} else {
 				base.failedStep(verificationText + " verification failed");

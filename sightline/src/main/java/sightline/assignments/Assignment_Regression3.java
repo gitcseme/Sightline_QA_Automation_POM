@@ -345,6 +345,7 @@ public class Assignment_Regression3 {
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		driver.waitForPageToBeReady();
 		keyword.deleteKeyword(keywordName);
 		baseClass.stepInfo("Key word deleted sucessfully.");
 		driver.waitForPageToBeReady();

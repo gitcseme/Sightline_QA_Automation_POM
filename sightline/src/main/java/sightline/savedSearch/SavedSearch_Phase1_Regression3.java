@@ -2020,8 +2020,8 @@ public class SavedSearch_Phase1_Regression3 {
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSSPage();
 		saveSearch.selectNode1(nodeName);
-		saveSearch.getSavedSearchExecuteButton().waitAndClick(10);
-		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+		saveSearch.getSavedSearchExecuteButton().javascriptclick(saveSearch.getSavedSearchExecuteButton());
+//		saveSearch.getExecuteContinueBtn().waitAndClick(10);
 		saveSearch.verifyStatusByReSearch(SearchName, statusToCheck, 5);
 		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
 

@@ -1314,6 +1314,10 @@ public class DocViewRedactions {
 	public Element getNonAudioRemarkBtn() {
 		return driver.FindElementById("remarks-btn");
 	}
+    public Element getHitCountRefreshIcon(String searchText)
+    {
+            return driver.FindElementByXPath("//span[@id='HitCount_"+ searchText + "']//i");
+    }
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -1688,8 +1692,8 @@ public class DocViewRedactions {
 
 	public void verifyingMultipageIconColour(String expectedColor) throws Exception {
 		base = new BaseClass(driver);
-		base.waitTime(2);
 		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		base.waitForElement(multiPageIconColourCheck());
 		String color = multiPageIconColourCheck().getWebElement().getCssValue("color");
 		String hex = Color.fromString(color).asHex();
@@ -2162,7 +2166,12 @@ public class DocViewRedactions {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-
+		base.hitEnterKey(1);
+//      Added
+        if(getHitCountRefreshIcon("chocolate").isElementAvailable(1)) {
+        base.waitForElementToBeGone(getHitCountRefreshIcon("chocolate"), 30);
+        }
+      driver.waitForPageToBeReady();
 		base.waitForElement(hitBackwardIcon1());
 		hitBackwardIcon1().waitAndClick(10);
 		String backwardCount = getHitCount1().getText();
@@ -3515,7 +3524,7 @@ public class DocViewRedactions {
 			getSearchIcon().Click();
 			base.waitForElement(getInputSearchBox());
 			getInputSearchBox().SendKeys(term);
-
+			base.waitTime(5);
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
 		} catch (AWTException e) {
@@ -4280,7 +4289,10 @@ public class DocViewRedactions {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-
+        base.hitEnterKey(1);
+        if(getHitCountRefreshIcon("in").isElementAvailable(1)) {
+        base.waitForElementToBeGone(getHitCountRefreshIcon("in"), 30);
+        }
 		base.waitForElement(hitForwardIcon("in"));
 		hitForwardIcon("in").waitAndClick(10);
 		String forwardCount = getHitCount("in").getText();
@@ -4322,6 +4334,7 @@ public class DocViewRedactions {
 			base.waitForElement(getNonAudioRemarkBtn());
 			getNonAudioRemarkBtn().waitAndClick(10);
 		}
+		
 		Actions actions = new Actions(driver.getWebDriver());
 		Thread.sleep(10000);
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold().perform();
@@ -4337,6 +4350,7 @@ public class DocViewRedactions {
 		}), Input.wait30);
 		docView.getRemarkTextArea().SendKeys(remark);
 		docView.getSaveRemark().Click();
+		
 	}
 
 	

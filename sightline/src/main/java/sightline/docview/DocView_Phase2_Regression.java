@@ -18,14 +18,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
@@ -350,7 +353,12 @@ public class DocView_Phase2_Regression {
 		}
 
 		// Create assignment and go to docview
-		sessionsearch.basicContentSearch(Input.searchString1);
+//		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.clickOnNewSearch();
+		sessionsearch.multipleBasicContentSearch(Input.searchString1);
+		sessionsearch.addPureHit();
+		
 		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codingFormName, 0);
 		loginPage.logout();
@@ -358,11 +366,22 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		String docId = docView.getDocumentWithoutRedaction();
+//		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
+		
+//		Added on 
+		DocViewRedactions docRedact = new DocViewRedactions(driver);
+		docView.selectDocInMiniDocList(docId);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(docRedact.activeDocId());
+		String docID2 = docRedact.activeDocId().getText();
+		
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(5);
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -375,7 +394,7 @@ public class DocView_Phase2_Regression {
 		docView.getCodeSameAsLast().waitAndClick(3);
 		baseClass.stepInfo("clicked codesameas");
 		baseClass.waitTime(5);
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
 		String afterText2 = docView.getAddComment1().getText();
@@ -452,19 +471,39 @@ public class DocView_Phase2_Regression {
 		driver.Navigate().refresh();
 
 		// Create assignment and go to docview
-		sessionsearch.basicContentSearch(Input.searchString1);
+//		Added on 24
+//		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.addNewSearch();
+		sessionsearch.multipleBasicContentSearch(Input.searchString1);
+		sessionsearch.addPureHit();
+//		
 		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codeFormName, 0);
 		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		
+		String docId = docView.getDocumentWithoutRedaction();
+		
+//		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
+		
+//		Added on 
+		DocViewRedactions docRedact = new DocViewRedactions(driver);
+		docView.selectDocInMiniDocList(docId);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(docRedact.activeDocId());
+		String docID2 = docRedact.activeDocId().getText();
+		
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(5);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -479,7 +518,7 @@ public class DocView_Phase2_Regression {
 		docView.getCodeSameAsLast().waitAndClick(3);
 		baseClass.stepInfo("clicked codesameas");
 		baseClass.waitTime(5);
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(10);
 		docView.getAddComment1().isElementAvailable(5);
 		baseClass.waitForElement(docView.getAddComment1());
@@ -581,19 +620,36 @@ public class DocView_Phase2_Regression {
 		}
 
 		// Create assignment and go to docview
-		sessionsearch.basicContentSearch(Input.searchString1);
+//		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.navigateToSessionSearchPageURL();
+		sessionsearch.clickOnNewSearch();
+		sessionsearch.multipleBasicContentSearch(Input.searchString1);
+		sessionsearch.addPureHit();
 		sessionsearch.bulkAssign();
+		
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		
+		String docId = docView.getDocumentWithoutRedaction();
+//		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		MiniDocListPage minidoc = new MiniDocListPage(driver);
+		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
+		
+//		Added on 
+		DocViewRedactions docRedact = new DocViewRedactions(driver);
+		docView.selectDocInMiniDocList(docId);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(docRedact.activeDocId());
+		String docID2 = docRedact.activeDocId().getText();
+	
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(5);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -607,7 +663,7 @@ public class DocView_Phase2_Regression {
 		docView.getCodeSameAsLast().waitAndClick(3);
 		baseClass.stepInfo("clicked codesameas");
 		baseClass.waitTime(5);
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(10);
 		docView.getAddComment1().isElementAvailable(5);
 		String afterText2 = docView.getAddComment1().getText();
@@ -674,7 +730,10 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("page is refreshed");
 		driver.scrollPageToTop();
 		docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		keywordPage.deleteKeywordByName(hitTerms);
+		loginPage.logout();
 	}
 
 	/**

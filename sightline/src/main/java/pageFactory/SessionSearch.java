@@ -28,6 +28,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
@@ -3141,18 +3142,18 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
-		driver.scrollingToBottomofAPage();
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			// System.out.println(iterable_element.getText());
-			base.waitTime(2);
-			if (iterable_element.getText().contains(SaveName)) {
-				base.waitTime(2);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				// System.out.println(iterable_element.getText());
-				iterable_element.click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
 			}
-		}
+		}), Input.wait30);
+		System.out.println("newNode"+SaveName);
+
+		driver.javascriptScrollTo(getCreatedNode(SaveName));
+		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
+		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		base.waitForElement(getCreatedNode(SaveName));
+		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
 		// added on 16-8-21
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(15);
@@ -3160,6 +3161,7 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 	}
 
+	
 	// Function to fetch pure hit count
 	public String verifyPureHitsCount() {
 
@@ -4720,11 +4722,13 @@ public class SessionSearch {
 
 			System.out.println("Navigated to docView to view docs");
 			UtilityLog.info("Navigated to docView to view docs");
+			base.waitTime(5);
 
 		} catch (Exception e) {
 			UtilityLog.info("Failed to Perform advanced Search With Content And MetaData Option");
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
@@ -4770,6 +4774,7 @@ public class SessionSearch {
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 
+		base.waitTime(5);
 	}
 
 	/**

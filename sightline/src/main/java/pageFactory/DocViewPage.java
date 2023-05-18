@@ -130,7 +130,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_TextFileType() {
-		return driver.FindElementByXPath("//*[@id=\"txtspanfileType\"]");
+		return driver.FindElementByXPath("//*[@id='txtspanfileType']");
 	}
 
 	public Element getDocView_IconPlay() {
@@ -850,8 +850,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");
 	}
 	public Element getTechIssue() {
-		return driver
-				.FindElementByXPath("//*[@id='0_radiogroup']/div[3]/div/label/span");
+		return driver.FindElementByXPath("//*[@id='0_radiogroup']/div[3]/div/label/span");
 	}
 	public Element getNonPrivilegeRadio() {
 		return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");
@@ -3702,6 +3701,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	
     public Element getDocView_PersistanceHit_PanelTextNew(String text) {
         return driver.FindElementByXPath("//span[@id='HitCount_" + text + "']");
+}
+    public Element get_AllAnotationsCount() {   
+        return driver.FindElementByXPath("//div[@id='divPersistentRedactions']//div[@id='counterAll']");
 }
 	
 	public DocViewPage(Driver driver) {
@@ -7300,6 +7302,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void openNearDupeComparisonWindow() throws InterruptedException {
 
 		driver.waitForPageToBeReady();
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		base.waitForElement(getDocView_NearDupeIcon());
@@ -7311,18 +7314,24 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			driver.waitForPageToBeReady();
 		}
 
-		for (int i = 1; i <= 3; i++) {
-			if (getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
 				System.out.println("Comparison Window is Ready to perform next steps");
 				break;
-			} else {
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
 				driver.Navigate().refresh();
 			}
+			
 		}
 
 		getDocView_NearDupe_DocID().WaitUntilPresent();
 		String docidinchildwinodw = getDocView_NearDupe_DocID().getText().toString();
 		System.out.println(docidinchildwinodw);
+		
 	}
 
 	/**
@@ -14543,6 +14552,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
             base.waitForElement(getSelectedAreaElement());
             base.waitTillElemetToBeClickable(getSelectedAreaElement());
             getSelectedAreaElement().waitAndClick(5);
+            actions.doubleClick(getSelectedAreaElement().getWebElement()).build().perform();
 			WebElement text = getPageNumberInputTextField().getWebElement();
 			int x = text.getLocation().getX();
 			int y = text.getLocation().getY();
@@ -14551,8 +14561,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			actions.release();
 			actions.build().perform();
 			driver.scrollPageToTop();
-			base.waitForElement(getAddRemarkbtn());
-			getAddRemarkbtn().javascriptclick(getAddRemarkbtn());
+			getAddRemarkbtn().getWebElement().click();
+			if(base.getErrorMsgHeader().isElementAvailable(3)) {        
+                base.waitTime(1);
+                base.waitForElement(remarkElement());
+                actions.click(remarkElement().getWebElement()).build().perform();
+			}
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getRemarkTextArea().isElementAvailable(10);
@@ -14575,16 +14589,16 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyRemarkIsAdded(String remark) {
 		try {
-			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
 			base.waitTime(4);
 			String panelItemValue = null;
+			if(!getAddRemarkbtn().Visible()) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
 				}
 			}), Input.wait60);
 			getNonAudioRemarkBtn().waitAndClick(10);
+			}
 			driver.waitForPageToBeReady();
 			List<WebElement> remarkPanelItems = getRemarkPanelItems().FindWebElements();
 			for (WebElement remarkPanelItem : remarkPanelItems) {
@@ -14610,16 +14624,16 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void editRemark(String remark) {
 		try {
-			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
 			base.waitTime(4);
 			String panelItemValue = null;
+			if(!getAddRemarkbtn().Visible()) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
 				}
 			}), Input.wait60);
 			getNonAudioRemarkBtn().waitAndClick(9);
+			}
 			driver.waitForPageToBeReady();
 			List<WebElement> remarkPanelItems = getRemarkPanelItems().FindWebElements();
 			List<WebElement> gettrashBasketsofRemarks = getPencilsofRemarks().FindWebElements();
@@ -19301,7 +19315,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		// base.waitTillElemetToBeClickable(getDociD(Doc));
 		// getDociD(Doc).waitAndClick(10);
-
+        base.waitTime(2);
+        selectDocInMiniDocList(Doc);
 		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());
 		String ActualValue = getDocView_IconFileType().getText();
@@ -19903,6 +19918,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		base.waitTime(3);
 		base.waitForElement(getPersistantHitEyeIcon());
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
 		getPersistantHitEyeIcon().waitAndClick(5);
 		base.waitForElementCollection(getHitPanels());
 		base.waitTime(3);
@@ -21241,6 +21257,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getDocView_Analytics_Thread_ViewDocument());
 		getDocView_Analytics_Thread_ViewDocument().waitAndClick(10);
 
+		base.waitForElement(getSelectRemarkDocArea());
 		driver.waitForPageToBeReady();
 
 		String docId2 = getDocView_CurrentDocId().getText();
@@ -22306,9 +22323,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void verifyDocumentIconIsNotClickable(String iconDocumentId) {
 		try {
 			driver.waitForPageToBeReady();
-			base.waitTillElemetToBeClickable(getDocumentByid(iconDocumentId));
 			base.waitTime(2);
-			getDocumentByid(iconDocumentId).Click();
+			selectDocInMiniDocList(iconDocumentId);
 			driver.scrollPageToTop();
 			getDefaultTabIcon().isElementAvailable(10);
 			driver.waitForPageToBeReady();
@@ -22813,6 +22829,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 *                              default view tab
 	 */
 	public void verifydocIdIconAfterClickOnallTabsOndocviewPanal(String docId, String ExpectedText) {
+		driver.Navigate().refresh();		
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocumentByid(docId));
@@ -23760,8 +23777,15 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyDisableRemarkWarningMessage() {
 		driver.waitForPageToBeReady();
-		base.waitForElement(getNonAudioRemarkBtn());
-		getNonAudioRemarkBtn().waitAndClick(5);
+        if(!getAddRemarkbtn().Visible()) {      
+            driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                    return getNonAudioRemarkBtn().isElementAvailable(10);
+      
+            }
+    }), Input.wait60);
+         getNonAudioRemarkBtn().waitAndClick(10);
+    }
 		base.waitForElement(getDisableRedactionWarningForRemarks());
 		if (getDisableRedactionWarningForRemarks().isElementAvailable(5)) {
 			base.passedStep("Remark/redaction is disabled ");
@@ -24645,7 +24669,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().javascriptclick(getAdvancedSearchAudioRemarkIcon());
+			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 			// Verify Remark Retained Datas
 			driver.waitForPageToBeReady();
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");
@@ -25119,6 +25143,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 	public void verifyWarningMessage(String highLightIcon) {
 		try {
+			base.waitTime(3);
 			base.stepInfo("Verifying warning message for " + highLightIcon);
 			switch (highLightIcon) {
 			case "Redaction":
@@ -25654,7 +25679,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			String[] pageCnt = pagesCount.split("of", 2);
 			String[] pageCnt2 = pageCnt[1].split("pages", 2);
 			int pagesCont = Integer.parseInt(pageCnt2[0].trim());
-			if (pagesCont < 500) {
+			if (pagesCont > 500) {
 				base.passedStep("Total pages greater than 500 pages is not loaded in docview");
 			} else {
 				base.failedStep("Total pages greater than 500 pages is loaded in docview");
@@ -27031,7 +27056,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getDocView_SearchButton());
-		getDocView_SearchButton().Click();
+		getDocView_SearchButton().waitAndClick(5);
 		if (!getDocView_SearchButton().isDisplayed() && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
 			base.passedStep("After clicking magnifying icon it is application should look for the corresponding text");
 		} else {
@@ -27041,7 +27066,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(searchTextBox());
 		searchTextBox().waitAndClick(5);
 		searchTextBox().WaitUntilPresent().SendKeys(text);
-		searchIcon().waitAndClick(5);
+		base.hitEnterKey(1);
+		base.waitTime(2);
 		String searchResult = searchResult().getText();
 		base.stepInfo("Highlighted corresponding text search result:" + searchResult);
 		if (searchResult.contains("1 of")) {
@@ -27416,10 +27442,13 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			for (int i = 0; i < 20; i++) {
 				try {
 					driver.waitForPageToBeReady();
-					// getDocView_DocId(docId).ScrollTo();
+					base.waitForElement(getDocView_DocId(docId));
+					 getDocView_DocId(docId).ScrollTo();
+					 driver.scrollingToElementofAPage( getDocView_DocId(docId));
 					base.waitForElement(getDocView_DocId(docId));
 					getDocView_DocId(docId).waitAndClick(15);
 					base.passedStep("Doc is selected from MiniDoclist successfully");
+					driver.waitForPageToBeReady();
 					break;
 				} catch (Exception e) {
 					driver.Navigate().refresh();
@@ -28344,11 +28373,14 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				return getCopyPasteIcon().Displayed();
 			}
 		}), Input.wait120);
+        base.waitTillElemetToBeClickable(getCopyPasteIcon());
+        getCopyPasteIcon().waitAndClick(5);
 		String status = getCopyPasteIconStatus().GetAttribute("class");
 		System.out.println(status);
 		if (status == "active") {
 			base.stepInfo("Copyandpaste icon is already clicked successfully");
 		} else {
+			base.waitTillElemetToBeClickable(getCopyPasteIcon());
 			getCopyPasteIcon().waitAndClick(5);
 			base.stepInfo("Copyandpaste icon is clicked successfully");
 		}
@@ -29178,6 +29210,67 @@ public Boolean highlightCheck() {
 		return false;
 	}
 }
-
+public String getDocumentWithoutRedaction() {
+    String docID = null;
+    driver.waitForPageToBeReady();
+    base.waitTime(3);
+    DocViewRedactions docRedact = new DocViewRedactions(driver);
+    base = new BaseClass(driver);
+    int totalDocs = verifyingDocCount();
+    base.waitForElement(redactionIcon());
+    redactionIcon().waitAndClick(5);
+    for(int i =1; i < totalDocs; i++) {
+            docRedact.selectMiniDocListAndViewInDocView(i);
+            driver.waitForPageToBeReady();
+            base.waitTime(3);
+            base.waitForElement(get_AllAnotationsCount());
+            if(get_AllAnotationsCount().getText().equals("0 / 0")) {
+                    docID = docRedact.activeDocId().getText();
+                    break;
+            }
+    }
+    
+    return docID;
+}
+public String getRequiredDocs(String reqDocsType) {
+    String document = null;
+    driver.Navigate().refresh();
+    driver.waitForPageToBeReady();
+    base.waitTime(1);
+    DocViewRedactions docRedact = new DocViewRedactions(driver);
+    base = new BaseClass(driver);
+    int totalDocs = verifyingDocCount();
+    for(int i = 1; i < totalDocs; i++) {
+            docRedact.selectMiniDocListAndViewInDocView(i);
+            driver.waitForPageToBeReady();
+            base.waitTime(1);
+            if(reqDocsType.equalsIgnoreCase("Pdf")) {
+            if(getDocView_TextFileType().getText().equalsIgnoreCase("PDF") && getDocView_IconFileType().getText().equalsIgnoreCase("P")) {
+                    document = docRedact.activeDocId().getText();
+                    break;
+            }
+            }else if(reqDocsType.equalsIgnoreCase("native")) {
+                    if(getDocView_TextFileType().getText().equalsIgnoreCase("Native") && getDocView_IconFileType().getText().equalsIgnoreCase("N")) {
+                            document = docRedact.activeDocId().getText();
+                            break;
+                    }
+            }else if(reqDocsType.equalsIgnoreCase("text")) {
+                    if(getDocView_TextFileType().getText().equalsIgnoreCase("Text") && getDocView_IconFileType().getText().equalsIgnoreCase("X")) {
+                            document = docRedact.activeDocId().getText();
+                            break;
+                    }
+            }else if(reqDocsType.equalsIgnoreCase("tiff")) {
+                    if(getDocView_TextFileType().getText().equalsIgnoreCase("Tiff") && getDocView_IconFileType().getText().equalsIgnoreCase("T")) {
+                            document = docRedact.activeDocId().getText();
+                            break;
+                    }
+            } else {
+                    base.failedStep("Failed to get document.");
+            }
+    }
+    
+    System.out.println(document);
+    return document;
+}
 
 }

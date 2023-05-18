@@ -835,14 +835,6 @@ public class ProjectFields_Phase2_Regression {
 		int lastfile = firstFile + docno;
 		page.extractFile();
 
-		System.out.println("____________________");
-		System.out.println(firstFile);
-		System.out.println(lastfile);
-		System.out.println(prefixID);
-		System.out.println(suffixID);
-		System.out.println("EmailThreadSequencelD" + ":");
-		System.out.println("____________________");
-
 		page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID,
 				"EmailThreadSequencelD" + ":");
 		baseClass.passedStep("verified EmailThreadSequenceID displays correct value in Production");
