@@ -984,7 +984,8 @@ public class SessionSearch {
 
 	// get select all folder option from tree
 	public Element getSelectAllFoldersOption() {
-		return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		//return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
 	}
 
 	// added on 28/9/21
@@ -1356,8 +1357,8 @@ public class SessionSearch {
 	}
 
 	public Element getSavedSearchQueryAS() {
-		//return driver.FindElementByXPath("//span[@class='editable editable-click']");
-		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input"); 
+		return driver.FindElementByXPath("//span[@class='editable editable-click']");
+		
 	}
 
 	public Element getValueTextArea() {
@@ -9276,7 +9277,8 @@ public class SessionSearch {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getWP_FolderBtn());
 			getWP_FolderBtn().Click();
-			selectFolderInTree(folderName);
+			getSelectAllFoldersOption().Click();
+			//selectFolderInTree(folderName); //Commented because it clicks only 1 folder, not all folders
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataInserQuery());
 			getMetaDataInserQuery().ScrollTo();
