@@ -64,8 +64,8 @@ public class UsersAndRoleManagement_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -109,6 +109,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo(
 				"Create new user with same username with different project and different role as previously created");
 		userManage.createNewUser(firstName, lastName, role2, emailId, " ", project2);
+		baseClass.waitTime(2);
 
 		baseClass.passedStep(
 				"Created new user with same username with different project and different role as previously created successfully..");

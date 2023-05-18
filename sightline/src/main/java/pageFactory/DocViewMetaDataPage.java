@@ -347,7 +347,7 @@ public class DocViewMetaDataPage {
 	}
 
 	public Element getTechnicalIssueRadioButton() {
-		return driver.FindElementByXPath("//input[@name='radiogroup_1' and @id='14_radio']/following-sibling::span");
+		return driver.FindElementByXPath("//input[@class='radiobox' and @id='14_radio']/following-sibling::span");
 	}
 
 	public Element getForeignLanguageCheckBox() {
@@ -1992,7 +1992,7 @@ public class DocViewMetaDataPage {
 			driver.scrollPageToTop();
 			base.waitForElement(getTechnicalIssueRadioButton());
 			getTechnicalIssueRadioButton().isElementAvailable(15);
-			getTechnicalIssueRadioButton().Click();
+			getTechnicalIssueRadioButton().javascriptclick(getTechnicalIssueRadioButton());
 			getTechnicalIssueRadioButton().isElementAvailable(15);
 			if (getTechnicalIssueRadioButton().Selected()) {
 				driver.scrollingToElementofAPage(getForeignLanguageCheckBox());
@@ -2055,7 +2055,8 @@ public class DocViewMetaDataPage {
 			getSaveLink().isElementAvailable(15);
 			base.waitForElement(getSaveLink());
 			getSaveLink().Click();
-			// base.VerifySuccessMessage("Document saved successfully");
+			base.CloseSuccessMsgpopup();
+			// base.VerifySuccessMessage("Applied coding saved successfully");
 			driver.Navigate().refresh();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2109,7 +2110,7 @@ public class DocViewMetaDataPage {
 			String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
 			getSaveAndNextLink().Click();
 			if (base.getSuccessMsgHeader().getText().toString().contains("Success")) {
-				base.VerifySuccessMessage("Document saved successfully");
+				base.VerifySuccessMessage("Applied coding saved successfully");
 				driver.waitForPageToBeReady();
 				driver.scrollPageToTop();
 				getPresentDocumentSelectedID().isElementAvailable(15);

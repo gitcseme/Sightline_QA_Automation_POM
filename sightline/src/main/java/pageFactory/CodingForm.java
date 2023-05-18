@@ -4675,6 +4675,7 @@ public class CodingForm {
 			selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
 			base.waitForElement(reusableDocView.getSaveAndNextButton());
 			reusableDocView.getSaveAndNextButton().waitAndClick(10);
+			base.waitForElement(geErrMsgInPreviewBox());
 			String errorMessage = geErrMsgInPreviewBox().getText();
 			softAssertion.assertEquals(errorMessage,
 					"If the document has technical issue cannot be reviewed,you must select reason why from the list above");

@@ -45,8 +45,6 @@ public class DocView_MetaData_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
-	
 	}
 
 	@BeforeMethod(alwaysRun = true)
