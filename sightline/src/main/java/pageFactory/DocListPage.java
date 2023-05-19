@@ -5577,7 +5577,6 @@ public class DocListPage {
 			base.waitForElement(getClickToMakeSelection());
 			getClickToMakeSelection().Click();
 			base.waitForElement(getSelectAuthor());
-			base.waitForElement(getSelectAuthor());
 			base.waitTillElemetToBeClickable(getSelectAuthor());
 			getSelectAuthor().Click();
 			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.]", "");
