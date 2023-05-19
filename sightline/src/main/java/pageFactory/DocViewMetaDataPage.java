@@ -347,7 +347,7 @@ public class DocViewMetaDataPage {
 	}
 
 	public Element getTechnicalIssueRadioButton() {
-		return driver.FindElementByXPath("//input[@name='radiogroup_1' and @id='14_radio']/following-sibling::span");
+		return driver.FindElementByXPath("//input[@class='radiobox' and @id='14_radio']/following-sibling::span");
 	}
 
 	public Element getForeignLanguageCheckBox() {
@@ -1148,13 +1148,15 @@ public class DocViewMetaDataPage {
 	 */
 	public void clickOnRedactAndRectangle() {
 		try {
+			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
 			getRedactIcon().isElementAvailable(15);
 			base.waitForElement(getRedactIcon());
 			getRedactIcon().waitAndClick(15);
 			base.waitForElement(getDocView_Redact_Rectangle());
+			base.waitTillElemetToBeClickable(getDocView_Redact_Rectangle());
 			getDocView_Redact_Rectangle().isElementAvailable(15);
-			getDocView_Redact_Rectangle().Click();
+			getDocView_Redact_Rectangle().waitAndClick(4);
 		} catch (Exception e) {
 			UtilityLog.info("Exception occcured while clicking on redact or rectangle" + e.getMessage());
 			e.printStackTrace();
@@ -1178,7 +1180,7 @@ public class DocViewMetaDataPage {
 			getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
 			getSaveButton().isElementAvailable(15);
 			base.waitForElement(getSaveButton());
-			getSaveButton().Click();
+			getSaveButton().waitAndClick(4);
 			base.VerifySuccessMessage("Redaction tags saved successfully.");
 			base.getCloseSucessmsg();
 		} catch (Exception e) {
@@ -1992,7 +1994,7 @@ public class DocViewMetaDataPage {
 			driver.scrollPageToTop();
 			base.waitForElement(getTechnicalIssueRadioButton());
 			getTechnicalIssueRadioButton().isElementAvailable(15);
-			getTechnicalIssueRadioButton().Click();
+			getTechnicalIssueRadioButton().javascriptclick(getTechnicalIssueRadioButton());
 			getTechnicalIssueRadioButton().isElementAvailable(15);
 			if (getTechnicalIssueRadioButton().Selected()) {
 				driver.scrollingToElementofAPage(getForeignLanguageCheckBox());
@@ -2016,7 +2018,7 @@ public class DocViewMetaDataPage {
 			base.waitTillElemetToBeClickable(getConfidentialRadioButton());
 			getConfidentialRadioButton().Click();
 			driver.scrollingToElementofAPage(getCommentTextField());
-			base.waitForElement(getCommentTextField());
+			base.waitTillElemetToBeClickable(getCommentTextField());
 			getCommentTextField().SendKeys(comment);
 
 		} catch (Exception e) {
@@ -2036,7 +2038,7 @@ public class DocViewMetaDataPage {
 			driver.waitForPageToBeReady();
 			getMetaDataTableOnPopup().isElementAvailable(15);
 			base.waitForElement(getMetaDataTableOnPopup());
-			getCloseButton().javascriptclick(getCloseButton());
+			getCloseButton().waitAndClick(15);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while closing metadata popup" + e.getMessage());
@@ -2055,7 +2057,8 @@ public class DocViewMetaDataPage {
 			getSaveLink().isElementAvailable(15);
 			base.waitForElement(getSaveLink());
 			getSaveLink().Click();
-			// base.VerifySuccessMessage("Document saved successfully");
+			base.CloseSuccessMsgpopup();
+			// base.VerifySuccessMessage("Applied coding saved successfully");
 			driver.Navigate().refresh();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2109,7 +2112,7 @@ public class DocViewMetaDataPage {
 			String nextDocIDToPresentDoc = getNextDocumentIdToSelectedDoc().getText().trim();
 			getSaveAndNextLink().Click();
 			if (base.getSuccessMsgHeader().getText().toString().contains("Success")) {
-				base.VerifySuccessMessage("Document saved successfully");
+				base.VerifySuccessMessage("Applied coding saved successfully");
 				driver.waitForPageToBeReady();
 				driver.scrollPageToTop();
 				getPresentDocumentSelectedID().isElementAvailable(15);
@@ -2387,6 +2390,7 @@ public class DocViewMetaDataPage {
 	public void openDuplicateTabOfAlreadyOpenedTab() {
 		try {
 			Robot robot = new Robot();
+			base.waitTime(3);
 			robot.keyPress(KeyEvent.VK_ALT);
 			driver.waitForPageToBeReady();
 			robot.keyPress(KeyEvent.VK_D);
@@ -3145,6 +3149,7 @@ public class DocViewMetaDataPage {
 			base.failedStep("Hidden properties in history table is not blank" + e.getMessage());
 			e.printStackTrace();
 		}
+		
 	}
 
 }

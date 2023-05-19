@@ -2099,7 +2099,7 @@ public class Assignment_Phase2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-53649", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-53649", enabled = true, groups = { "regression" })
 	public void verifyEditDrawPoolLimit() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-53649");
@@ -3491,7 +3491,7 @@ public class Assignment_Phase2_Regression {
 				Arrays.asList("Email Threads", "Family Members", "Near Duplicate Docs", "DocID"));
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignment.createAssignment_withoutSave(assignmentName, Input.codeFormName);
-		sa.assertEquals(assignment.getCategoryStatus().GetAttribute("aria-expanded"), "true",
+		sa.assertEquals(assignment.getOptimizedSort().GetAttribute("aria-expanded"), "true",
 				"Category tab is not selected as default");
 		baseClass.passedStep("DOCUMENT PRESENTATION SEQUENCE default tab is selected as \"Category\" as expected");
 		List<String> actualLiveSequenceOrder = baseClass

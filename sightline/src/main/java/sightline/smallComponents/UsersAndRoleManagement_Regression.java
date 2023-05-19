@@ -109,6 +109,7 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo(
 				"Create new user with same username with different project and different role as previously created");
 		userManage.createNewUser(firstName, lastName, role2, emailId, " ", project2);
+	
 
 		baseClass.passedStep(
 				"Created new user with same username with different project and different role as previously created successfully..");

@@ -1943,6 +1943,8 @@ public class UserManagement {
 		}
 		getSave().waitAndClick(10);
 		bc.VerifySuccessMessage("User profile was successfully created");
+		bc.waitForElement(bc.getCloseSucessmsg());
+		bc.CloseSuccessMsgpopup();
 
 	}
 
@@ -1978,7 +1980,7 @@ public class UserManagement {
 			}), Input.wait30);
 			getConfirmDelete().isElementAvailable(10);
 			getConfirmDelete().waitAndClick(5);
-			bc.waitTime(3);
+//			bc.waitTime(3);
 			bc.VerifySuccessMessage("User has been deactivated");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -158,6 +158,14 @@ public class KeywordPage {
 		return driver.FindElementByXPath("//span[text()='Select special characters are disallowed']");
 	}
 	
+	public Element getKeywordPaginationNextButton(){
+		return driver.FindElementByXPath("(//div[@id='KeywordsDatatable_paginate']/ul/li/a)[last()]");
+	}
+	
+	public ElementCollection getKeywordPaginationCount(){
+		return driver.FindElementsByXPath("//div[@id='KeywordsDatatable_paginate']/ul/li/a");
+	}
+	
 	// Annotation Layer added successfully
 	public KeywordPage(Driver driver) {
 
@@ -249,8 +257,24 @@ public class KeywordPage {
 	}
 
 	public void deleteKeyword(String keyword) {
-		base.waitForElement(getDeleteButton(keyword));
-		getDeleteButton(keyword).waitAndClick(5);
+		int count = ((getKeywordPaginationCount().size()) - 1);
+		for (int i = 0; i <= count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getDeleteButton(keyword).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getDeleteButton(keyword));
+				
+				getDeleteButton(keyword).waitAndClick(5);
+				base.stepInfo("Expected Keyword found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getKeywordPaginationNextButton().waitAndClick(3);
+				base.stepInfo("Expected Keyword not found in the page " + i);
+			}
+		}
+//		base.waitForElement(getDeleteButton(keyword));
+//		getDeleteButton(keyword).javascriptclick(getDeleteButton(keyword));
 		base.waitForElement(getYesButton());
 		getYesButton().waitAndClick(5);
 		base.VerifySuccessMessage("Keyword Highlighting Group successfully deleted");
@@ -957,5 +981,22 @@ public class KeywordPage {
 		}
 		return keywordGroupName;
 	}
+	
+    public void addKeywordAndVerifyExist(String name) {
+        boolean status = false;
+        List<String> allKeywords = getAllKeywords();
+        for(String keyword : allKeywords) {
+        if(keyword.equals(name)) {
+                System.out.println("Keyword already exists");
+                status = true;
+                break;
+        }
+        }
+        if(!status){
+         navigateToKeywordPage();
+         AddKeyword(name, name);
+         
+        }
+        }
 
 }
