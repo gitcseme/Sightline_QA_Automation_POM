@@ -642,6 +642,8 @@ public class DashBoard_Phase2_Regression {
 		 */
 		@Test(description = "RPMXCON-54177", enabled = true, groups = { "regression" })
 		public void verifyTotalReviewWidgetAdded() throws Exception {
+			
+			loginPage.logout();
 			String widgetName = "Total Review Progress";
 
 			// login As RMU
@@ -651,6 +653,7 @@ public class DashBoard_Phase2_Regression {
 			baseClass.stepInfo("To verify that RMU is able to add the Total Review Progress widget on Dashboard");
 
 			// Add Total review Progress Widget
+			Dashboard dashBoard = new Dashboard(driver);
 			dashBoard.AddNewWidgetToDashboard(widgetName);
 
 			// verify whether widget added in dashboard
@@ -670,6 +673,7 @@ public class DashBoard_Phase2_Regression {
 		 */
 		@Test(description = "RPMXCON-54185", enabled = true, groups = { "regression" })
 		public void verifyWidgetIsMaintained() throws Exception {
+			loginPage.logout();
 			String widgetName = "Total Review Progress";
 
 			// login As RMU
@@ -680,6 +684,7 @@ public class DashBoard_Phase2_Regression {
 					"To verify that RMU can Add the TRP widget and it will be maintained through the session");
 
 			// verify whether widget added in dashboard
+			Dashboard dashBoard = new Dashboard(driver);
 			dashBoard.navigateToDashboard();
 			driver.waitForPageToBeReady();
 			boolean widgetStatus = baseClass
@@ -695,6 +700,7 @@ public class DashBoard_Phase2_Regression {
 			List<String> widgetsBefore = baseClass.availableListofElements(dashBoard.countOfWidget());
 
 			// navigate to another page
+			SessionSearch session = new SessionSearch(driver);
 			session.navigateToSessionSearchPageURL();
 			baseClass.stepInfo("Navigated to SessionSearch Page");
 
@@ -721,6 +727,7 @@ public class DashBoard_Phase2_Regression {
 		 */
 		@Test(description = "RPMXCON-54181", enabled = true, groups = { "regression" })
 		public void verifyPreviewWindowDisplayed() throws Exception {
+			loginPage.logout();
 
 			// login As RMU
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -730,6 +737,7 @@ public class DashBoard_Phase2_Regression {
 					"To verify that on select widget in Widgets Library, RMU is displayed with preview window selected widget.");
 
 			// Click wheel icon & then Click add new btn & verify buttons & Popup.
+			Dashboard dashBoard = new Dashboard(driver);
 			dashBoard.ClickWheelIconAndVerify(true);
 
 			// verify respective widget Preview pop up is displayed.
@@ -748,6 +756,8 @@ public class DashBoard_Phase2_Regression {
 		 */
 		@Test(description = "RPMXCON-54189", enabled = true, groups = { "regression" })
 		public void verifyReviwerProductWidgetAdded() throws Exception {
+			loginPage.logout();
+			
 			String widgetName = "Reviewer Productivity";
 			String headerName = "TOP 6 REVIEWERS WITH LOWEST PRODUCTIVITY";
 
@@ -759,6 +769,7 @@ public class DashBoard_Phase2_Regression {
 					"To verify that RPR widget by default it will display \"Top 6 Reviewers with Lowest Productivity\" when added first time on Dashboard by RMU.");
 
 			// Add Reviewer Productivity Widget
+			Dashboard dashBoard = new Dashboard(driver);
 			dashBoard.AddNewWidgetToDashboard(widgetName);
 
 			// verify whether widget added in dashboard
