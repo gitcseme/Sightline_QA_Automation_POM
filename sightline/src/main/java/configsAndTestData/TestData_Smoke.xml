@@ -7,6 +7,8 @@
 	<searchString2>test</searchString2>
 	<pureHitSeachString1>9</pureHitSeachString1>
 	<pureHitSeachString2>3</pureHitSeachString2>
+	<expectedCombinedSearchHits1>12</expectedCombinedSearchHits1>
+	<expectedCombinedSearchHits2>2</expectedCombinedSearchHits2>
 	<searchString1ANDsearchString2>1</searchString1ANDsearchString2>
 	<searchString1ORsearchString2>11</searchString1ORsearchString2>
 	<searchString1NOTsearchString2>8</searchString1NOTsearchString2>
@@ -20,8 +22,6 @@
 	<totalNumberOfDocs>125</totalNumberOfDocs>
 	<!--  smoke Drag And Drop Data -->
 	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
-	<expectedCombinedSearchHits1>12</expectedCombinedSearchHits1>
-	<expectedCombinedSearchHits2>2</expectedCombinedSearchHits2>
 	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
 	<searchString5>commit</searchString5>
@@ -178,9 +178,25 @@
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
     <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
 			<collectionDataEmailId>Raghuram.A@consiliotest.com</collectionDataEmailId>
+			<collectionDatalistval>Raghuram A (Raghuram.A@consiliotest.com)</collectionDatalistval>
 	<collectionDataFirstName>Raghuram</collectionDataFirstName>
 	<collectionDataLastName>A</collectionDataLastName>
 	<collectionPageUrl>Collection/Collections</collectionPageUrl>
+	<collectionDataselectedApp>Outlook Mail</collectionDataselectedApp>
+	<collectionDataHeader1>Custodian Name</collectionDataHeader1>
+	<collectionDataHeader2>Selected App</collectionDataHeader2>
+	<collectionDataHeader3>Custodian Email</collectionDataHeader3>
+	<collectionDataHeader4>Dataset Name</collectionDataHeader4>
+	<collectionDataHeader5>Selected Folders</collectionDataHeader5>
+	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
+	<collectionIdHeader>Collection Id</collectionIdHeader>
+	<collectionStatusHeader>Collection Status</collectionStatusHeader>
+	<expectedDateInput>2019/08/05</expectedDateInput>
+	<expectedToDateInput>2022/08/08</expectedToDateInput>
+	<creatingDSstatus>Creating datasets</creatingDSstatus>
+	<retreivingDSstatus>Retrieving data from Source Location</retreivingDSstatus>
+	<virusScanStatus>Virus scan for datasets in progress</virusScanStatus>
+	<copyDSstatus>Copying of data for datasets in progress</copyDSstatus>
 	
 	<!-- Batch Print -->
 	<tag>tag</tag>
