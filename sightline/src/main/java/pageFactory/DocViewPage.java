@@ -2461,7 +2461,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element docViewEyeSearchTerm() {
-		return driver.FindElementByXPath("//*[text()='Search Term and Concept Hits:']");
+		return driver.FindElementByXPath("//*[text()='Term:' and 'Score:']");
 	}
 
 	// added by brundha
@@ -25302,14 +25302,14 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getEyeIcon().waitAndClick(10);
 		base.stepInfo("docView Eye Icon Clicked Successfully");
 		base.waitForElement(getDocView_NumTextBox());
-		String pagenum1 = getDocView_NumTextBox().getText();
+		String pagenum1 = getDocView_NumTextBox().Value();
 		System.out.println(pagenum1);
 
 		base.waitForElement(getDocView_NavigationBtn());
 		getDocView_NavigationBtn().waitAndClick(10);
 
 		base.waitForElement(getDocView_NumTextBox());
-		String pagenum2 = getDocView_NumTextBox().getText();
+		String pagenum2 = getDocView_NumTextBox().Value();
 		System.out.println(pagenum2);
 
 		softAssertion.assertTrue(docViewEyeSearchTerm().Displayed());
