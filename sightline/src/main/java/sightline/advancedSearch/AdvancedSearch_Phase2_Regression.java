@@ -2248,10 +2248,10 @@ public class AdvancedSearch_Phase2_Regression {
 
 		// Click on "Search" button
 		baseClass.stepInfo("Clicking on 'Search' button.");
-		sessionSearch.SearchBtnAction();
+		//sessionSearch.SearchBtnAction(); //Commenting this because search action is been handled in 'verifyWarningMessage' methods
 
 		// verify that application displays Proximity warning message
-		sessionSearch.verifyWarningMessage(false, true, 5);
+		sessionSearch.verifyWarningMessage(true, true, 5);
 		baseClass.passedStep("verified that application displays Proximity warning message.");
 
 		// Click on "Yes" button and Verify that correct result appears when combine
@@ -3325,7 +3325,8 @@ public class AdvancedSearch_Phase2_Regression {
 				"pureHit Count after resubmit doesn't match with the pureHit count before resubmit");
 
 		// deleting the folder
-		tagPage.DeleteFolderWithSecurityGroup(folderNmae, "All Groups");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagPage.DeleteFolderWithSecurityGroup(folderNmae, "All Groups"); 
 
 		// deleting the saved search
 		savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
@@ -3426,7 +3427,7 @@ public class AdvancedSearch_Phase2_Regression {
 		baseClass.selectproject();
 		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.getWorkproductBtn().waitAndClick(10);
-		sessionSearch.searchSavedSearch(Input.mySavedSearch);
+		sessionSearch.searchSavedSearch(Input.mySavedSearch); 
 		baseClass.stepInfo("Selecting All search group from work product tab.");
 
 		// configuring Content & Metadata search
@@ -3434,7 +3435,8 @@ public class AdvancedSearch_Phase2_Regression {
 		baseClass.stepInfo("Configuring Content & Metadata Search.");
 
 		// perform search
-		sessionSearch.searchAndReturnPureHit_BS();
+		//sessionSearch.searchAndReturnPureHit_BS(); //Commented this line and added searchSavedSearchResult to perform the correctSearch
+		sessionSearch.searchSavedSearchResult(searchGroup);
 		baseClass.passedStep(
 				"Verified that We Will get some search result based on search criteria applied on work product.");
 
