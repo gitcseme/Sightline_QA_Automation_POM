@@ -1729,6 +1729,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-48612", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
 	public void validateErrorSearchViaBatchUpload(String username, String password, String fullName) throws Exception {
 		String file = saveSearch.renameFile(Input.errorQueryFileLocation);
+		
 		String statusToCheck = "ERROR";
 		String warningMessage = "The selected search is not yet completed successfully. Please select a valid completed search.";
 		int Bgcount;
@@ -2021,7 +2022,7 @@ public class SavedSearch_Phase1_Regression3 {
 		saveSearch.navigateToSSPage();
 		saveSearch.selectNode1(nodeName);
 		saveSearch.getSavedSearchExecuteButton().javascriptclick(saveSearch.getSavedSearchExecuteButton());
-//		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+		saveSearch.getExecuteContinueBtn().waitAndClick(10);
 		saveSearch.verifyStatusByReSearch(SearchName, statusToCheck, 5);
 		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
 
@@ -2713,7 +2714,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// Multiple Node Creation
 		saveSearch.navigateToSSPage();
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
-		nodeToSelect = newNodeList.get(nodeIndex);
+		nodeToSelect= newNodeList.get(nodeIndex);
 		System.out.println("Next adding searches to the created nodes");
 		base.stepInfo("Next adding searches to the created nodes");
 
