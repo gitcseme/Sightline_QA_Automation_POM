@@ -1594,7 +1594,7 @@ public class SessionSearch {
 
 	// Method to avoid abnormal termination
 	public Element getSavedSearchNameResult(String savedSearchName) {
-		return driver.FindElementByXPath("//a[text()='" + savedSearchName + "']");
+		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchName + "')]");
 	}
 
 	// Added by Gopinath - 23/12/2021
@@ -2279,7 +2279,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='-1g']//i");
 	}
 	public Element savedSearchWPNodeExpansion(String node) {
-		return driver.FindElementByXPath("//a[text()='"+node+"']/preceding-sibling::i");
+		return driver.FindElementByXPath("//a[contains(text(),'"+node+"')]/preceding-sibling::i");
 	}
 	public Element assignmentWPNodeExpansion() {
 		return driver.FindElementByXPath("//a[text()='Root']/preceding-sibling::i");
@@ -3159,16 +3159,20 @@ public class SessionSearch {
 				return getTree_savedSearch().Visible();
 			}
 		}), Input.wait30);
-		System.out.println("newNode"+SaveName);
 
+		
 		driver.javascriptScrollTo(getCreatedNode(SaveName));
+if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
 		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+}
 		base.waitForElement(getCreatedNode(SaveName));
 		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
+		driver.scrollingToBottomofAPage();
 		// added on 16-8-21
+		driver.javascriptScrollTo(getMetaDataInserQuery());
 		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().waitAndClick(15);
+		getMetaDataInserQuery().javascriptclick(getMetaDataInserQuery());
 		// Click on Search button
 		driver.scrollPageToTop();
 	}
@@ -7167,7 +7171,7 @@ public class SessionSearch {
 		}
 
 		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(4)) {
-			getSavedSearch_MySearchesTabClosed().waitAndClick(5);
+			getSavedSearch_MySearchesTabClosed().javascriptclick(getSavedSearch_MySearchesTabClosed());
 		} else {
 			System.out.println("Already Expanded");
 		}
@@ -8255,6 +8259,7 @@ public class SessionSearch {
 		driver.waitForPageToBeReady();
 
 		if (notificationMsg.equals("ExecutionErrorInProgress")) {
+			base.waitForElement(base.getSuccessMsgHeader());
 			base.VerifyErrorMessage(Input.errMsgSinceExecutionInProgress);
 			base.stepInfo("User not able to save a session search onto an existing saved search that is progress.");
 
@@ -9655,14 +9660,15 @@ public class SessionSearch {
 		base.selectproject();
 		switchToWorkproduct();
 		// searchSavedSearch(saveSearchName);
+		
 
 		driver.waitForPageToBeReady();
 		getSavedSearchBtn().Click();
-
+driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 		if (getSavedSearchNameResult(SaveName).isDisplayed()) {
 			System.out.println(getSavedSearchNameResult(SaveName).getText());
 		}
-		driver.scrollingToBottomofAPage();
+//		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 
 		getSavedSearchNameResult(SaveName).getWebElement().click();
@@ -9675,6 +9681,7 @@ public class SessionSearch {
 		base.stepInfo("Selected a saved search " + SaveName + "and inserted into query text box ");
 
 	}
+	
 
 	/**
 	 * @Author :Brundha

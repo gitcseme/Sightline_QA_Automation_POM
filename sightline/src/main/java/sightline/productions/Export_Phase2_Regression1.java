@@ -2032,7 +2032,8 @@ public class Export_Phase2_Regression1 {
 		base.ValidateElement_Presence(base.text("Generate TIFF"), "Generating TIFF option");
 		base.ValidateElement_Presence(base.text("Generate PDF"), "Generating PDF option");
 		base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
-		page.getCheckBoxCheckedVerification(page.getGenrateTIFFRadioButton());
+		base.waitTime(5);
+		page.getCheckBoxCheckedVerification(page.getGenrateTIFFRadioButton1());
 
 		if (page.getTiffContainer("Generate TIFF").isDisplayed()&&page.getTiffContainer("Generate PDF").isDisplayed()) {
 			base.passedStep("Separate PDF section is not displayed in Component section.");

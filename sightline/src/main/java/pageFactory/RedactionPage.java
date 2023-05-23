@@ -223,6 +223,7 @@ public class RedactionPage {
   	 * @Author:Sowndarya.Velraj
   	 */
   	public void selectDefaultSecurityGroup() throws InterruptedException {
+  		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
   		try {
  			driver.WaitUntil((new Callable<Boolean>() {
  				public Boolean call() {

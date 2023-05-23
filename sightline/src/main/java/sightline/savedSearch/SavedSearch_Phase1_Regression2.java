@@ -777,6 +777,8 @@ public class SavedSearch_Phase1_Regression2 {
 		session.saveSearchInNewNode(search, null);
 
 		saveSearch.shareSearchFlow(search, Input.shareSearchDefaultSG, "RMU");
+		
+		
 
 		session.selectSavedsearchInASWp(Input.shareSearchDefaultSG);
 		int hitCount = session.saveAndReturnPureHitCount();
@@ -2514,10 +2516,13 @@ public class SavedSearch_Phase1_Regression2 {
 		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 		finalCount = assign.assignDocstoNewAssgn(assignName);
 		finalCountresult = Integer.parseInt(finalCount);
+		
 		base.stepInfo("Finalize count : " + finalCountresult);
 		assign.quickAssignCreation(assignName, Input.codeFormName);
 		session.switchToWorkproduct();
+		
 		purehitCount = session.selectAssignmentInWPSWs(assignName);
+		
 		base.stepInfo("PureHitcount via WP assignment selection : " + purehitCount);
 
 		base.stepInfo("Aggregate Hit count : " + aggregateHitCount);

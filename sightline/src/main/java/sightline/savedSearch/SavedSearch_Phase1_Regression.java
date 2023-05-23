@@ -70,8 +70,10 @@ public class SavedSearch_Phase1_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input in = new Input();
 		in.loadEnvConfig();
+		driver = new Driver();
 
 	}
 
@@ -4450,7 +4452,7 @@ public class SavedSearch_Phase1_Regression {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
 		// Open browser
-		driver = new Driver();
+		
 		base = new BaseClass(driver);
 		login = new LoginPage(driver);
 		saveSearch = new SavedSearch(driver);

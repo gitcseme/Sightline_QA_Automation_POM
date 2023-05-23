@@ -1961,6 +1961,7 @@ public class UserManagement {
 					return getManageFilterByDate().Visible();
 				}
 			}), Input.wait30);
+			passingUserName(firstName);
 			getManageFilterByDate().SendKeys("" + Keys.ENTER);
 
 			getFilerApplyBtn().Click();

@@ -1954,7 +1954,7 @@ public class SavedSearch_Phase1_Regression1 {
 		login.logout();
 
 		// Verify with Different Users
-		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair, rolesToVerify, passMessage);
 
 		// Login as PA
@@ -2031,7 +2031,7 @@ public class SavedSearch_Phase1_Regression1 {
 		login.logout();
 
 		// Verify with Different Users
-		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyListofsharedNodesandSearchesAcrossUsers(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair, rolesToVerify, passMessage);
 
 		// Login as PA
