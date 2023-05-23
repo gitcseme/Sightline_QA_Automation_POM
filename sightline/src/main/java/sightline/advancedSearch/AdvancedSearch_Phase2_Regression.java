@@ -2505,7 +2505,7 @@ public class AdvancedSearch_Phase2_Regression {
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Navigate to advanced search from search page");
-		sessionSearch.advanceSearchByFolder("All Folders");
+		sessionSearch.advanceSearchByFolder2("All Folders");
 		if (sessionSearch.getSearchCriteriaValue().isElementAvailable(10)) {
 			baseClass.passedStep("Able to select all folder under work product and set as search criteria");
 		} else {
@@ -3367,7 +3367,7 @@ public class AdvancedSearch_Phase2_Regression {
 
 		// getting the actual configured search query in Advanced Search Query builder
 		// screen
-		String actualConfiguredQuery = sessionSearch.getSavedSearchQueryAS().getText();
+		String actualConfiguredQuery = sessionSearch.getSavedSearchQueryAS1().getText();
 
 		// Verify that configured query with Document File Size and range operator get
 		// inserted properly into Advanced Search Query builder screen

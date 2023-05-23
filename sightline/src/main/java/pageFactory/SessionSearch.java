@@ -761,7 +761,8 @@ public class SessionSearch {
 
 	// search query alerts
 	public Element getQueryAlertGetText() {
-		return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
+	//	return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//div[contains(@style,'overflow:auto;height: 196px;')]"); 
 	}
 	
 	public Element getQueryAlertGetTextSingleLine() {
@@ -985,7 +986,12 @@ public class SessionSearch {
 
 	// get select all folder option from tree
 	public Element getSelectAllFoldersOption() {
-		//return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		//return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
+	}
+	
+	//get select all folder option2 from tree added on 23/05/2023
+	public Element getSelectAllFoldersOption2() {
 		return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
 	}
 
@@ -1356,8 +1362,14 @@ public class SessionSearch {
 				.FindElementByXPath("(//a[@class='jstree-anchor']/ancestor::ul//ul[@class='jstree-children']/li/a)[1]");
 
 	}
-
+	
 	public Element getSavedSearchQueryAS() {
+		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input");
+	}
+	
+	
+
+	public Element getSavedSearchQueryAS1() {
 		return driver.FindElementByXPath("//span[@class='editable editable-click']");
 		
 	}
@@ -9282,8 +9294,7 @@ public class SessionSearch {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getWP_FolderBtn());
 			getWP_FolderBtn().Click();
-			getSelectAllFoldersOption().Click();
-			//selectFolderInTree(folderName); //Commented because it clicks only 1 folder, not all folders
+			selectFolderInTree(folderName); 
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataInserQuery());
 			getMetaDataInserQuery().ScrollTo();
@@ -9298,6 +9309,38 @@ public class SessionSearch {
 			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author 
+	 * @Description : this method used for performing advanced search by Allfolder.
+	 * @param folderName : folderName is String value that name of folder to perform
+	 *                   advanced search.
+	 */
+	public void advanceSearchByFolder2(String folderName) {
+		try {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			switchToWorkproduct();
+			base.stepInfo("Navigated to advance search and work product is clicked");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getWP_FolderBtn());
+			getWP_FolderBtn().Click();
+			getSelectAllFoldersOption2().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().ScrollTo();
+			getMetaDataInserQuery().waitAndClick(15);
+			base.passedStep("Folders are selected from tree and inserted into query");
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQuerySearchButton());
+			getQuerySearchButton().waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
+		}
+	}
+	
+	
 
 	/**
 	 * @author Gopianth
