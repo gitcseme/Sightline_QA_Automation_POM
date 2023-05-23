@@ -1170,6 +1170,7 @@ public class Production_Phase2_Regression {
 		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
 		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 		page.verifyEnableNativelyProduceddocs();
+		page.tiffPrivilegeDocumentSelection(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		System.out.println("Bates Number is : " + beginningBates);
@@ -1196,6 +1197,7 @@ public class Production_Phase2_Regression {
 		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 		page.getPDFGenerateRadioButton().waitAndClick(10);
 		page.verifyEnableNativelyProduceddocs();
+		page.tiffPrivilegeDocumentSelection(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates2);
 		System.out.println("Bates Number is : " + beginningBates2);
@@ -2858,6 +2860,7 @@ public class Production_Phase2_Regression {
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 

@@ -7768,6 +7768,7 @@ public class Production_Phase1_Regression1 {
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		redactionpage.selectDefaultSecurityGroup();
@@ -7794,6 +7795,7 @@ public class Production_Phase1_Regression1 {
 
 		// Adding folder to bulkfolder
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExplorer.documentSelectionIteration();
 		docExplorer.bulkFolderExisting(foldername);
 
