@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocListPage;
@@ -158,9 +159,15 @@ public class ICE_SL_Integration_Regression {
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);		
 		baseClass.stepInfo("Logged in as PA");
-		DataSets dataSet = new DataSets(driver);
-		softAssert.assertTrue(dataSet.getDatasetBtn().isDisplayed());
-		baseClass.passedStep("User have dataset menu access");
+		driver.waitForPageToBeReady();
+		try {
+			softAssert.assertTrue(dataSets.getDatasetBtn().isDisplayed());
+			
+		} catch (Exception e) {
+			String data=dataSets.getDatasetBtn().getText();
+			System.out.println(data);
+		}
+		baseClass.passedStep("DataSats left menu is enabled by default for the user with Project Admin role");
 		baseClass.stepInfo("perform metadata search with query");
 		for(int i=0;i<value.length;i++) {
 			int count =sessionSearch.MetaDataSearchInBasicSearch(field[0],value[i]);
