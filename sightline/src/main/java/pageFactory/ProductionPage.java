@@ -1876,7 +1876,7 @@ public class ProductionPage {
 
 	public Element getChkBoxSelect(String tag) {
 		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element getbtnSelect() {
@@ -3033,6 +3033,11 @@ public class ProductionPage {
 	public Element getGenrateTIFFRadioButton() {
 		return driver.FindElementByXPath(
 				"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']/..//i");
+	}
+	
+	public Element getGenrateTIFFRadioButton1() {
+		return driver.FindElementByXPath(
+				"//*[@id='rbdGenerateTiff']");
 	}
 
 	public Element chkIsTIFFSelected() {
@@ -21063,7 +21068,7 @@ public class ProductionPage {
 		base.waitForElement(getChkBoxSelect(tagname));
 		getChkBoxSelect(tagname).waitAndClick(5);
 		base.waitForElement(getChkBoxSelect(Tagname2));
-		getChkBoxSelect(Tagname2).Click();
+		getChkBoxSelect(Tagname2).waitAndClick(5);
 		getbtnSelect().waitAndClick(10);
 		base.waitForElement(getInsertMetaDataLink());
 		getInsertMetaDataLink().Click();
