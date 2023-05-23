@@ -1875,8 +1875,7 @@ public class ProductionPage {
 	}
 
 	public Element getChkBoxSelect(String tag) {
-		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element getbtnSelect() {
@@ -3036,8 +3035,7 @@ public class ProductionPage {
 	}
 	
 	public Element getGenrateTIFFRadioButton1() {
-		return driver.FindElementByXPath(
-				"//*[@id='rbdGenerateTiff']");
+		return driver.FindElementByXPath("//*[@id='rbdGenerateTiff']");
 	}
 
 	public Element chkIsTIFFSelected() {
