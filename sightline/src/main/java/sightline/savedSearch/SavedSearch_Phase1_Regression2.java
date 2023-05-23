@@ -778,7 +778,7 @@ public class SavedSearch_Phase1_Regression2 {
 
 		saveSearch.shareSearchFlow(search, Input.shareSearchDefaultSG, "RMU");
 		
-		System.out.println(Input.shareSearchDefaultSG);
+		
 
 		session.selectSavedsearchInASWp(Input.shareSearchDefaultSG);
 		int hitCount = session.saveAndReturnPureHitCount();
@@ -2485,7 +2485,7 @@ public class SavedSearch_Phase1_Regression2 {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Get Count
-		session.searchSavedSearchResult(basicSearchName);
+		session.searchSavedSearchResult(Input.shareSearchDefaultSG);
 		aggregateHitCount = session.saveAndReturnPureHitCount();
 		base.stepInfo("Aggregate Count from Default Security Group: " + aggregateHitCount);
 		System.out.println("Aggregate Count from Default Security Group : " + aggregateHitCount);
@@ -2516,13 +2516,13 @@ public class SavedSearch_Phase1_Regression2 {
 		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 		finalCount = assign.assignDocstoNewAssgn(assignName);
 		finalCountresult = Integer.parseInt(finalCount);
-		System.out.println("finalCountresult"+finalCountresult);
+		
 		base.stepInfo("Finalize count : " + finalCountresult);
 		assign.quickAssignCreation(assignName, Input.codeFormName);
 		session.switchToWorkproduct();
 		
 		purehitCount = session.selectAssignmentInWPSWs(assignName);
-		System.out.println("purehitCount"+purehitCount);
+		
 		base.stepInfo("PureHitcount via WP assignment selection : " + purehitCount);
 
 		base.stepInfo("Aggregate Hit count : " + aggregateHitCount);

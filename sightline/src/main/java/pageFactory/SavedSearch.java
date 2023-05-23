@@ -3765,9 +3765,9 @@ public class SavedSearch {
 			throws InterruptedException {
 		String node = null;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
-			System.out.println(nodeSearchpair);
+			
 			node = newNodeList.get(i);
-			System.out.println(newNodeList);
+			
 			base.waitForElement(getSavedSearchGroupName(node));
 			Actions act=new Actions(driver.getWebDriver());
 			act.moveToElement(getSavedSearchGroupName(node).getWebElement()).click().build().perform();
@@ -3778,7 +3778,7 @@ public class SavedSearch {
 			if (verifySavedSearch_isEmpty()) {
 				// get Search ID
 				String searchiD = GetSearchID(nodeSearchpair.get(node));
-				System.out.println("searchiD :-"+searchiD);
+				
 				searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
 				try {
 					if (i != nodeSearchpair.size() - 1) {

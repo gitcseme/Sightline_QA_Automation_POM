@@ -3146,7 +3146,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 
-		System.out.println("//a[text()='" + SaveName + "']");
+		
 		driver.javascriptScrollTo(getCreatedNode(SaveName));
 if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
@@ -9607,7 +9607,7 @@ if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		base.selectproject();
 		switchToWorkproduct();
 		// searchSavedSearch(saveSearchName);
-		System.out.println(SaveName);
+		
 
 		driver.waitForPageToBeReady();
 		getSavedSearchBtn().Click();

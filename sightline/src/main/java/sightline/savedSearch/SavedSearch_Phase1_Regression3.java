@@ -2721,7 +2721,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// add save search in node
 		session.navigateToSessionSearchPageURL();
 		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
-System.out.println("nodeToSelect"+nodeToSelect);
+
 		// To Pick Expected Aggregate count
 		session.selectSavedsearchInASWp(nodeToSelect);
 		session.SearchBtnAction();
