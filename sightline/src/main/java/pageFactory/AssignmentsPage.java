@@ -5037,6 +5037,7 @@ public class AssignmentsPage {
 			if (status == true) {
 				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
 				getSelectAssignment(assignmentName).waitAndClick(5);
+				bc.waitForElement(getDocCountInAssgnPg(assignmentName));
 				docCount = getDocCountInAssgnPg(assignmentName).getText();
 				bc.stepInfo("Docs count displayed for " + assignmentName + " assignment is " + docCount);
 				break;
