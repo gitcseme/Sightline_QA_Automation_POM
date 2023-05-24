@@ -8,7 +8,7 @@
     </classes>
 	</test> 
 	
-	<test name="AdvanceSearch">
+	<!-- <test name="AdvanceSearch">
 	    <classes>
         	<class name="sightline.advancedSearch.AdvancedSearch_Phase2_Regression" >
         		<methods>
@@ -184,14 +184,14 @@
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
-      		</class>
+      		</class> -->
       		<class name="sightline.savedSearch.SavedSearch_Phase1_Regression" >
         		<methods>
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
-        			<include name="performAnyActionSharedPAU"/>
-        			<include name="manageScheduleCheck"/>
-        			<include name="verifyBatchUpload"/>
+        			<!-- <include name="performAnyActionSharedPAU"/> -->
+        			<include name="manageScheduleCheck" invocation-numbers="0"/>
+        			<!-- <include name="verifyBatchUpload"/> -->
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>

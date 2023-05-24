@@ -3928,13 +3928,13 @@ if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		base.waitForElement(getWP_TagBtn());
 		getWP_TagBtn().Click();
 		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(tagName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
+			if (iterable_element.getText().contains(tagName)) {				
+				driver.scrollingToElementofAPage(iterable_element);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				break;
 			}
 		}
@@ -3952,9 +3952,9 @@ if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(folderName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
+				driver.scrollingToElementofAPage(iterable_element);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+				
 				break;
 			}
 		}
