@@ -321,7 +321,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57407", groups = { "regression" })
 	public void verifyScheduleSearchAsPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57407");
@@ -367,7 +367,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57407", groups = { "regression" })
 	public void verifyScheduleSearchAsRMU() throws ParseException, InterruptedException {
 		String saveSearchName1 = "SearchRMU" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57407");
@@ -413,7 +413,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57411", groups = { "regression" })
 	public void verifyScheduleSearchPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57411");
@@ -453,7 +453,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57411", groups = { "regression" })
 	public void verifyScheduleSearchRMU() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57411");
@@ -492,7 +492,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57412", groups = { "regression" })
 	public void verifyScheduleSearchForDefaultTabPA() throws ParseException, InterruptedException {
 		String SearchNamePA = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57412");
@@ -540,7 +540,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57412", groups = { "regression" })
 	public void verifyScheduleSearchForDefaultTabRMU() throws ParseException, InterruptedException {
 		String SearchNameRMU = "SearchRMU" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57412");
@@ -1897,7 +1897,6 @@ public class SavedSearch_Phase1_Regression3 {
 		// Basic Search
 		int pureHit = session.basicContentSearch(Input.searchString4);
 		session.saveSearchInNewNode(savedSearchName, node1);
-
 		// Perform Bulk Assign
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.selectNode1(node1);
