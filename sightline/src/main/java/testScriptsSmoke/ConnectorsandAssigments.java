@@ -90,7 +90,7 @@ public class ConnectorsandAssigments {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59201 Assignments Sprint-10");
 		baseClass.stepInfo(
 				"Verify that after editing assignment group with cascading, changes should reflect in its respective assignment");
@@ -132,7 +132,7 @@ public class ConnectorsandAssigments {
 		String TagName = "ASTag" + Utility.dynamicNameAppender();
 		String FolderName = "ASFolder" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(UserName, PassWord);
-		if (UserName.equals(Input.rmu1userName)) {
+		if (UserName.equals(Input.rmu4userName)) {
 			search.advancedContentSearch(Input.searchString2);
 			search.bulkTag(TagName);
 			baseClass.selectproject();
@@ -158,15 +158,15 @@ public class ConnectorsandAssigments {
 	}
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
-				{ Input.rev1userName, Input.rev1password } };
+		Object[][] users = { { Input.rmu4userName, Input.rmu4password }, { Input.pa4userName, Input.pa4password },
+				{ Input.rev4userName, Input.rev4password } };
 		return users;
 	}
 	
 	@Test(description ="RPMXCON-49860",enabled = true, groups = { "regression" } )
 	public void validateSecurityGroupSharingSearch() throws InterruptedException, ParseException {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa4userName, Input.pa4password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49860 SavedSearch Sprint 08");
 		baseClass.stepInfo("Validate sharing search with Default Security Group");
 		String SGtoShare = Input.shareSearchDefaultSG;
@@ -186,13 +186,13 @@ public class ConnectorsandAssigments {
 		savedSearch.verifySearchContents(searchName, searchID, true, true, null, null, "No");
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		savedSearch.navigateToSSPage();
 		savedSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(5);
 		savedSearch.verifySearchContents(searchName, searchID, true, true, null, null, "No");
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa4userName, Input.pa4password);
 		savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		savedSearch.deleteSearch(searchName, SGtoShare, "Yes");
 		loginPage.logout();
@@ -208,7 +208,7 @@ public class ConnectorsandAssigments {
 				"Validate performing any action on searches/groups from the shared with PAU by any other PAU user");
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa4userName, Input.pa4password);
 		baseClass.stepInfo("Loggedin As : " + Input.pa1FullName);
 
 		// Landed on Saved Search
@@ -297,8 +297,8 @@ public class ConnectorsandAssigments {
 	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName } };
+		Object[][] users = { { Input.pa4userName, Input.pa4password, Input.pa3FullName },
+				{ Input.rmu4userName, Input.rmu4password, Input.rmu4userName } };
 		return users;
 	}
 	
@@ -309,7 +309,7 @@ public class ConnectorsandAssigments {
 		String File = savedSearch.renameFile(Input.WPbatchFile);
 		String nearDupe = "Near Duplicate Count";
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa4userName, Input.pa4password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48536  Saved Search");
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.uploadWPBatchFile(File);

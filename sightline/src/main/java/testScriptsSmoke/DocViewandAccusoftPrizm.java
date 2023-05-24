@@ -80,8 +80,8 @@ public class DocViewandAccusoftPrizm {
 	}
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
-				{ Input.rev1userName, Input.rev1password } };
+		Object[][] users = { { Input.rmu2userName, Input.rmu2password }, { Input.pa2userName, Input.pa2password },
+				{ Input.rev2userName, Input.rev2password } };
 		return users;
 	}
 	
@@ -98,7 +98,7 @@ public class DocViewandAccusoftPrizm {
 				"Verify that Advanced  Search works properly for EmailSentDate  date/time field  with \"Range\" operator.");
 
 		// login
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Configure MetaData Query in Advanced Search with MetaData as 'EmailSentDate'
 		// and Operator as 'Range'
@@ -121,7 +121,7 @@ public class DocViewandAccusoftPrizm {
 	public void verifyThatTwoSearchCriteriaCombinedWithAND_OR_NOTCondition() throws Exception {
 
 		// login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47612");
 		baseClass.stepInfo("Verify that 2 Search criteria gets combined with AND/OR/NOT condition");
@@ -201,7 +201,7 @@ public class DocViewandAccusoftPrizm {
 				"Verify that result appears for proximity having 2 Phrases within brackets in Advanced Search Query Screen.");
 
 		// login
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// configure search Query
 		sessionSearch.advanedContentDraftSearch(searchString);
@@ -262,7 +262,7 @@ public class DocViewandAccusoftPrizm {
 		// login as PA
 
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("57453 basic  Search");
 		SessionSearch sessionSearchPage = new SessionSearch(driver);
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -290,7 +290,7 @@ public class DocViewandAccusoftPrizm {
 	public void verifyReport() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		// will login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Tescase ID :RPMXCON-48807");
 		baseClass.stepInfo(
 				"Verify that once batch redaction is successful user should be able to view the report on click of 'Click here for report'"
@@ -332,8 +332,8 @@ public class DocViewandAccusoftPrizm {
 		String color = "Blue";
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa2userName + "");
 		String keywordName = "deleteKeyword01"+Utility.dynamicNameAppender();
 		
 		
@@ -349,8 +349,8 @@ public class DocViewandAccusoftPrizm {
 		loginPage.logout();
 		
 		// Login As Reviewer
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu2userName + "");
 		
 		// Navigate to Keywords Page and create keyword with Wildcard
 		keyWord.navigateToKeywordPage();
@@ -365,7 +365,7 @@ public class DocViewandAccusoftPrizm {
 	}
 	@Test(description ="RPMXCON-54934",enabled = true, groups = { "regression" })
 	public void VerifyMetaList_QuickBatch() throws InterruptedException, ParseException, IOException {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Test case Id: RPMXCON-54934");
 		baseClass.stepInfo("Quick Batch assignment - Default Metadata list is retained even after modifying Quick batch");
 		// Creating quick batch assignment
@@ -409,18 +409,18 @@ public class DocViewandAccusoftPrizm {
 		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
 
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa2userName + "");
 
 		baseClass.stepInfo("navigate To SecurityGroupPage Create and assign user");
 		sgpage.createSecurityGroups(SGname);
-		docViewRedact.assignAccesstoSGs(SGname, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(SGname, Input.rmu2userName);
 		sgpage.deleteSecurityGroups(SGname);
 		loginPage.logout();
 
 		// Login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu2userName + "");
 		baseClass.waitForElement(baseClass.getsgNames());
 		baseClass.getsgNames().waitAndClick(5);
 		if (!baseClass.getSelectsg(SGname).isDisplayed()) {
@@ -433,8 +433,8 @@ public class DocViewandAccusoftPrizm {
 	}
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
-				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
+		Object[][] users = { { Input.pa2userName, Input.pa2password, "Project Administrator" },
+				{ Input.rmu2userName, Input.rmu2password, "Review Manager" } };
 		return users;
 	}
 	@Test(description = "RPMXCON-52934", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })

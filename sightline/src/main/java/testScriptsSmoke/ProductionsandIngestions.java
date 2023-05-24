@@ -104,8 +104,8 @@ public class ProductionsandIngestions {
 		
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -136,7 +136,7 @@ public class ProductionsandIngestions {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -365,7 +365,7 @@ public class ProductionsandIngestions {
 		baseClass.stepInfo("Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -482,7 +482,7 @@ public class ProductionsandIngestions {
 		String textField = Input.fieldByValue;
 		baseClass.stepInfo("Step 1: Login as Project Admin");
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password, Input.projectName);
 		
 		
 		baseClass.stepInfo("Step 2: Go to Manage > Project Fields");
@@ -513,8 +513,8 @@ public class ProductionsandIngestions {
 		String editDesc = "edit" + Utility.dynamicNameAppender();
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 
 		// Custom Field created with INT DataType
 		baseClass.stepInfo("Adding new project fields");
@@ -546,7 +546,7 @@ public class ProductionsandIngestions {
 		baseClass.stepInfo(
 				"Verify that all the default fields are correctly released to a security group whether it is Default Security group or user created security group");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
 		String ExpectedString = "MASTERDATE";
 
@@ -563,7 +563,7 @@ public class ProductionsandIngestions {
 		sessionSearch.bulkRelease(securityGroup);
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Validting the default field in Default security Group");
@@ -582,10 +582,10 @@ public class ProductionsandIngestions {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 
 		baseClass.stepInfo("Assigning newly created securityGroup to RMU");
-		baseClass.SelectSecurityGrp(Input.rmu1userName, securityGroup);
+		baseClass.SelectSecurityGrp(Input.rmu3userName, securityGroup);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Validting the default field in " + securityGroup + "");
@@ -637,8 +637,8 @@ public class ProductionsandIngestions {
 	}
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.pa1userName, Input.pa1password, "PA" } };
+		Object[][] users = { { Input.rmu3userName, Input.rmu3password, "RMU" },
+				{ Input.pa3userName, Input.pa3password, "PA" } };
 		return users;
 	}
 
