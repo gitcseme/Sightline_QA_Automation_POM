@@ -191,7 +191,7 @@
         			<include name="beforeTestMethod"/>
         			<include name="performAnyActionSharedPAU"/> 
         			<include name="manageScheduleCheck" invocation-numbers="0"/>
-        			<!-- <include name="verifyBatchUpload"/> -->
+        			<include name="verifyBatchUpload"/> 
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
