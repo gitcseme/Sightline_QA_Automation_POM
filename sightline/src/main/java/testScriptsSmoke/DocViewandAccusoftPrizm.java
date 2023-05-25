@@ -57,7 +57,7 @@ public class DocViewandAccusoftPrizm {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		in = new Input();
+		Input in = new Input();
 		in.loadEnvConfig();
 	}
 	
@@ -243,7 +243,7 @@ public class DocViewandAccusoftPrizm {
 	public void verifyConceptualDefaultPS(String username, String password) throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 
-		SessionSearch session = new SessionSearch(driver);
+		 sessionSearch = new SessionSearch(driver);
 
 		loginPage.loginToSightLine(username, password);
 
@@ -251,9 +251,9 @@ public class DocViewandAccusoftPrizm {
 		baseClass.stepInfo(
 				"Verify that while performing conceptual search, slider value(Precision Sensitivity) and Precision Sensitivity text box value is same in its default value as well as when we change its slider value.");
 
-		session.navigateToAdvancedSearchPage();
-		String precisionValueBeforeSearch = session.verifyingPrecisionValue(true, Input.conceptualSearchString1 , true , true);
-		session.saveAndReturnPureHitCount();
+		sessionSearch.navigateToAdvancedSearchPage();
+		String precisionValueBeforeSearch = sessionSearch.verifyingPrecisionValue(true, Input.conceptualSearchString1 , true , true);
+		sessionSearch.saveAndReturnPureHitCount();
 
 		loginPage.logout();
 	}

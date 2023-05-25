@@ -5,6 +5,11 @@
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
+ <test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" > </class>  
+    </classes>
+	</test> 
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
 <test name="Smoke_run">
 <classes>

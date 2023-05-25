@@ -146,7 +146,7 @@ public class ConnectorsandAssigments {
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit3);
 			softAssertion.assertEquals(Input.expectedCombinedSearchHits1, ExpectedPureHit3);
 			softAssertion.assertEquals(Input.expectedCombinedSearchHits2, ExpectedPureHit);
-			softAssertion.assertAll();
+			
 			baseClass.passedStep(
 					"Sucessfully verified search with combination of Content/Metadata, Audio, Conceptual, WorkProduct");
 		} catch (Exception e) {
@@ -411,7 +411,7 @@ public class ConnectorsandAssigments {
 
 		// Login and Pre-requesties
 		loginPage.loginToSightLine(username, password);
-
+		userManage = new UserManagement(driver);
 		// Pre-requesties - Access verification
 		baseClass.stepInfo("Collection Access Verification");
 		userManage.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);

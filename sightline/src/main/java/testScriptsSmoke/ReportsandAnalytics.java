@@ -79,8 +79,7 @@ public class ReportsandAnalytics {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		
 	}
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
@@ -97,6 +96,7 @@ public class ReportsandAnalytics {
 	@Test(description ="RPMXCON-54947",groups = { "regression" })
 	public void verifyTagExcludeFilterOnDocExplorer() throws InterruptedException {
 		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-54947 Docexplorer of Sprint-4 ");
 		baseClass.stepInfo(
 				"####  Verify that Exclude filter functionality works properly when TAG name contains word between on Doc Explorer screen. ####");
@@ -127,6 +127,7 @@ public class ReportsandAnalytics {
 	@Test(description ="RPMXCON-54946",groups = { "regression" })
 	public void verifyTagIncludeFilterOnDocExplorer() throws InterruptedException {
 		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-54946 Docexplorer of Sprint-4 ");
 		baseClass.stepInfo(
 				"####  Verify that Include filter functionality works properly when TAG name contains word between on Doc Explorer screen.. ####");
@@ -157,6 +158,7 @@ public class ReportsandAnalytics {
 	 @Test(description ="RPMXCON-55001",groups={"regression"})
 	 public void verifyUserNavigateToDocListWithFilters(){
 		baseClass=new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 	    baseClass.stepInfo("Test case Id: RPMXCON-55001- DocExplorer Sprint 08");
 		baseClass.stepInfo("#### Verify that when a user configures MasterDate and EmailSubject filters and  selects check-boxes manually and navigates Doc-Explorer to DocList. ####");	
 		
@@ -283,48 +285,31 @@ public class ReportsandAnalytics {
 			loginPage.logout();
 		}
 	 
-	 @Test(enabled = true, alwaysRun = true, groups = { "smoke", "regression" }, priority = 1)
-
+	 @Test(description = "RPMXCON-51863", enabled = true, alwaysRun = true, groups = { "regression" })
 		public void verifyTextRemarks() throws Exception {
 	// Selecting Document from Session search
 			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 			Actions actions = new Actions(driver.getWebDriver());
 			baseClass.stepInfo("Test case Id: RPMXCON 51863");
-			loginPage = new LoginPage(driver);
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			SessionSearch sessionsearch = new SessionSearch(driver);
-			sessionsearch.basicMetaDataSearch("DocID", null, "ID00000101", null);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+			sessionsearch.basicContentSearch(Input.randomText);
 			baseClass.stepInfo("Search with text input --test-- completed");
 			sessionsearch.ViewInDocView();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return docViewRedact.remarksIcon().Visible() && docViewRedact.remarksIcon().Enabled();
-				}
-			}), Input.wait30);
-			docViewRedact.remarksIcon().waitAndClick(25);
-			wait.until(
-					ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
-			 try {
-				 docView.getDocView_Remark_DeleteIcon().waitAndClick(15);
-				 baseClass.getPopupYesBtn().waitAndClick(5);
-	 		} catch (Exception e) {
-	 			// TODO Auto-generated catch block
-	 			System.out.println("Remark not present");
-	 		}		
-			actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-					.moveByOffset(100, 20).release().build().perform();
-			baseClass.stepInfo("text for remarks has been selected");
-			actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-			actions.click().build().perform();
-			baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
-			actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-			actions.click();
-			actions.sendKeys("Remark by RMU");
-			actions.build().perform();
-			actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
-			actions.click().build().perform();
-			baseClass.waitForElement(docViewRedact.deleteRemarksBtn());
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			docView = new DocViewPage(driver);
+			String docId = docView.getDocumentWithoutRedaction();
+			driver.waitForPageToBeReady();
+			
+			docView.selectDocInMiniDocList(docId);
+			baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
+			
+//			Added on 11_04
+			docView = new DocViewPage(driver);
+			docView.addRemarkToNonAudioDocument(1, 20, "Remark by RMU");
 			if (docViewRedact.deleteRemarksBtn().Displayed() && docViewRedact.deleteRemarksBtn().Enabled()) {
 				assertTrue(true);
 				baseClass.passedStep("The Remark has been saved by RMU");
@@ -333,7 +318,7 @@ public class ReportsandAnalytics {
 			}
 			loginPage.logout();
 		}
-	 @Test(enabled = true, alwaysRun = true, groups = { "smoke", "regression" }, priority = 2)
+	 @Test(description = "RPMXCON-52030" ,enabled = true, alwaysRun = true, groups = { "smoke", "regression" })
 		public void verifyRedactionasReviewer() throws Exception {
 			
 			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -570,7 +555,7 @@ public class ReportsandAnalytics {
 
 		}
 	 @Test(description = "RPMXCON-46865", enabled = true , groups = { "regression" })
-		public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch(String username, String password, String fullName)
+		public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch()
 				throws Exception {
 
 			SessionSearch sessionSearch = new SessionSearch(driver);
@@ -587,7 +572,7 @@ public class ReportsandAnalytics {
 
 			// login as RMU/reviewer
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Loggedin As : " + fullName);
+			
 
 			// adding remark to audio documents
 			sessionSearch.audioSearch(Input.audioSearch, Input.language);
@@ -599,7 +584,7 @@ public class ReportsandAnalytics {
 
 			// login as RMU/reviewer
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Loggedin As : " + fullName);
+			
 
 			// SavedSearch to DocVIew
 			saveSearch.savedSearchToDocView(searchName);
@@ -710,7 +695,7 @@ public class ReportsandAnalytics {
 			docViewMetaDataPage = new DocViewMetaDataPage(driver);
 			baseClass.stepInfo("#### Verify Metadata tab from Doc view page for Reviewer user ####");
 			loginPage = new LoginPage(driver);
-			loginPage.logout();
+			
 			
 			baseClass.stepInfo("Login with Reviewer");
 			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -790,6 +775,7 @@ public class ReportsandAnalytics {
 
 			int rowNumber = 2;
 			docexp = new DocExplorerPage(driver);
+			docView = new DocViewPage(driver);
 			// login as Users
 			baseClass.stepInfo(
 					"**Step-1 Logged in as RMU/Reviewer user in same project and security group as per pre-requisites **");
@@ -847,12 +833,13 @@ public class ReportsandAnalytics {
 			loginPage.logout();
 
 		}
-	 @Test(description ="RPMXCON-xxxxxx",groups = { "smoke", "regression" })
+	 @Test(description ="RPMXCON-56909",groups = {  "regression" })
 		public void conceptExplorer() throws InterruptedException {
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 			ConceptExplorerPage conceptreport = new ConceptExplorerPage(driver);
 			conceptreport.ValidateConceptExplorerreport();
-
+			loginPage.logout();
 		}
 	 
 	 @Test(description ="RPMXCON-52633",enabled = true, groups = { "regression" })

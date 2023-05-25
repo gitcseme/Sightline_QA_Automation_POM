@@ -78,15 +78,13 @@ public class ProductionsandIngestions {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		
 	}
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -211,7 +209,7 @@ public class ProductionsandIngestions {
 		baseClass.stepInfo("Test case Id:RPMXCON-54212 Dashboard Component Sprint 17");
 		baseClass.stepInfo("To verify that details in End to End is displayed correctly.");
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		// Adding End to End Widget
 		Dashboard dashBoard = new Dashboard(driver);
 		dashBoard.AddNewWidgetToDashboard(Input.EndtoEnd);
@@ -227,7 +225,7 @@ public class ProductionsandIngestions {
 		softAssertion = new SoftAssert();
 		softAssertion.assertEquals(actual, expected);
 		softAssertion.assertAll();
-
+		loginPage.logout();
 	}
 	@Test(description = "RPMXCON-53154",enabled = true, groups = {"regression" })
 	public void validateProjectGridColum() throws InterruptedException  {
@@ -419,12 +417,13 @@ public class ProductionsandIngestions {
 		baseClass.stepInfo(
 				"Verify that production should be generated successfully with default enabled native placeholder under TIFF section");
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
