@@ -3726,7 +3726,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// Total no.of rows(searches) in sheet
 		rowCOuntFromExcel = base.getTotalNumOfRowsInExcel(fileLocationWithDir + "\\" + fileToSelect + fileFormat, 0, "",
 				0);
-		System.out.println("rowCOuntFromExcel :-"+rowCOuntFromExcel);
+		System.out.println(rowCOuntFromExcel);
 
 		// Upload batch file
 		saveSearch.uploadBatchFile_D(fileLocation, fileToSelect + fileFormat, false);
@@ -3749,10 +3749,10 @@ public class SavedSearch_Phase1_Regression3 {
 		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		searchIDlist = base.availableListofElements(saveSearch.getGridDataList(searchIDindex));
-		System.out.println("searchIDlist :-"+searchIDlist);
+		
 		// Mapping Search id and count
 		mapPair = saveSearch.collectionOfSearchIdAndItsCount(searchIDlist, countIDindex);
-		System.out.println("mapPair :-"+mapPair);
+		
 		// Click the notifications to launch
 		base.waitForElement(batch.getBullHornIcon());
 		batch.getBullHornIcon().waitAndClick(10);
@@ -3762,7 +3762,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// verify Background Task page
 		base.verifyUrlLanding(expBGURL, "Navigated to My backgroud task page.", "Navigation Failed");
 		bgHeaderIndex = base.getIndex(saveSearch.getBGgridDataList(), "ACTUAL DOCS");
-		System.out.println("bgHeaderIndex:-"+bgHeaderIndex);
+		
 		// SearchID data comparision
 		saveSearch.SearchIdAndDataToCompare(searchIDlist, mapPair, bgHeaderIndex);
 

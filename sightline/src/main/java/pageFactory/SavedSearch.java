@@ -163,11 +163,6 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//input[@id='fileupload']");
 	}
 	
-	public Element getChooseFile() {
-		return driver.FindElementByXPath("//input[@id='txtSelectedFile']");
-	}
-
-
 	public Element getSubmitToUpload() {
 		return driver.FindElementByXPath("//button[contains(text(),'Ok')]");
 	}
@@ -3783,8 +3778,6 @@ public class SavedSearch {
 			getSavedSearchRefresh().Click();
 			if (verifySavedSearch_isEmpty()) {
 				// get Search ID
-				System.out.println("Node :-"+ node);
-				System.out.println("Node :-"+ nodeSearchpair.get(node));
 				String searchiD = GetSearchID(nodeSearchpair.get(node));
 				
 				searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
@@ -4746,10 +4739,9 @@ public class SavedSearch {
 		UtilityLog.info("Clicked on Batch Upload Button.........");
 		// base.waitForElement(getSelectFile());
 		driver.waitForPageToBeReady();
-		base.stepInfo(System.getProperty("user.dir") + batchFilePath + fileName);
-		base.waitForElement(getSelectFile());
-		getSelectFile().javascriptclick(getSelectFile());
 		System.out.println(System.getProperty("user.dir") + batchFilePath + fileName);
+		base.stepInfo(System.getProperty("user.dir") + batchFilePath + fileName);
+
 		getSelectFile().SendKeys(System.getProperty("user.dir") + batchFilePath + fileName);
 		driver.waitForPageToBeReady();
 

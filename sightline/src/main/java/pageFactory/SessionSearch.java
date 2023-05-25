@@ -3145,7 +3145,7 @@ public class SessionSearch {
 				return getTree_savedSearch().Visible();
 			}
 		}), Input.wait30);
-		System.out.println(SaveName);
+		
 		base.waitForElement(getCreatedNode(SaveName));
 		driver.javascriptScrollTo(getCreatedNode(SaveName));
 		if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
