@@ -1208,7 +1208,7 @@ public class SessionSearch {
 	}
 
 	public Element getCreatedNode(String nodeName) {
-		return driver.FindElementByXPath("//a[text()='" + nodeName + "']");
+		return driver.FindElementByXPath("//a[contains(text(),'"+nodeName+"')]");
 	}
 
 	public Element getExpandCurrentNode() {
@@ -3159,13 +3159,43 @@ public class SessionSearch {
 				return getTree_savedSearch().Visible();
 			}
 		}), Input.wait30);
-
 		
+		base.waitForElement(getCreatedNode(SaveName));
 		driver.javascriptScrollTo(getCreatedNode(SaveName));
-if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
-		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
-		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
-}
+		if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
+			base.waitForElement(savedSearchWPNodeExpansion(SaveName));
+			savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		}
+		base.waitForElement(getCreatedNode(SaveName));
+		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
+		driver.scrollingToBottomofAPage();
+		// added on 16-8-21
+		driver.javascriptScrollTo(getMetaDataInserQuery());
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().javascriptclick(getMetaDataInserQuery());
+		// Click on Search button
+		driver.scrollPageToTop();
+	}
+	public void searchSavedSearch(final String SaveName,String Node) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearchBtn().Visible();
+			}
+		}), Input.wait60);
+		getSavedSearchBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
+			}
+		}), Input.wait30);
+		System.out.println(SaveName);
+		base.waitForElement(savedSearchWPNodeExpansion(Node));
+		driver.javascriptScrollTo(savedSearchWPNodeExpansion(Node));
+		if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
+			base.waitForElement(savedSearchWPNodeExpansion(Node));
+			savedSearchWPNodeExpansion(Node).javascriptclick(savedSearchWPNodeExpansion(Node));
+		}
 		base.waitForElement(getCreatedNode(SaveName));
 		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
 		driver.scrollingToBottomofAPage();
@@ -4474,6 +4504,17 @@ if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
 		base.selectproject();
 		switchToWorkproduct();
 		searchSavedSearch(saveSearchName);
+		UtilityLog.info("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+		base.stepInfo("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+
+	}
+	
+	public void selectSavedsearchInASWp(String saveSearchName,String Node) {
+		base = new BaseClass(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.selectproject();
+		switchToWorkproduct();
+		searchSavedSearch(saveSearchName,Node);
 		UtilityLog.info("Selected a saved search " + saveSearchName + "and inserted into query text box ");
 		base.stepInfo("Selected a saved search " + saveSearchName + "and inserted into query text box ");
 

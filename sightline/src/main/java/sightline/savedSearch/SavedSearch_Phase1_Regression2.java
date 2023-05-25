@@ -2218,10 +2218,15 @@ public class SavedSearch_Phase1_Regression2 {
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		base.selectproject(Input.highVolumeProject);
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchStringStar, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
 
-		int pureHit = session.basicContentSearch(Input.searchStringStar);
 		session.saveSearch(savedSearchName);
-		base.selectproject();
+
+		base.selectproject(Input.highVolumeProject);
 		session.basicContentSearch(Input.testData1);
 
 		// Execute
@@ -3863,7 +3868,7 @@ public class SavedSearch_Phase1_Regression2 {
 		session.advancedContentSearch(Input.searchString1);
 		session.saveSearchInNewNode(Search, node);
 
-		session.selectSavedsearchInASWp(Search);
+		session.selectSavedsearchInASWp(Search, node);
 		session.saveAndReturnPureHitCount();
 		driver.scrollPageToTop();
 		session.saveSearchInNewNode(Search2, node);

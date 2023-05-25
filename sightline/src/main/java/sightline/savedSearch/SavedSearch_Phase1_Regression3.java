@@ -3749,10 +3749,10 @@ public class SavedSearch_Phase1_Regression3 {
 		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		searchIDlist = base.availableListofElements(saveSearch.getGridDataList(searchIDindex));
-
+		
 		// Mapping Search id and count
 		mapPair = saveSearch.collectionOfSearchIdAndItsCount(searchIDlist, countIDindex);
-
+		
 		// Click the notifications to launch
 		base.waitForElement(batch.getBullHornIcon());
 		batch.getBullHornIcon().waitAndClick(10);
@@ -3762,7 +3762,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// verify Background Task page
 		base.verifyUrlLanding(expBGURL, "Navigated to My backgroud task page.", "Navigation Failed");
 		bgHeaderIndex = base.getIndex(saveSearch.getBGgridDataList(), "ACTUAL DOCS");
-
+		
 		// SearchID data comparision
 		saveSearch.SearchIdAndDataToCompare(searchIDlist, mapPair, bgHeaderIndex);
 
