@@ -401,6 +401,16 @@ public class Driver {
 			e.printStackTrace();
 		}
 	}
+	public void scrollingToElementofAPage(WebElement element) {
+
+		try {
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+			e.printStackTrace();
+		}
+	}
 	
 	public void javascriptScrollTo(Element element) {
 		try { ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",element.getWebElement()); 
