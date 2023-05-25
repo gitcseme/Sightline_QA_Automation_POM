@@ -563,7 +563,7 @@ public class SavedSearch_Phase1_Regression {
 		String exeDocCount;
 		String shareTo = Input.shareSearchPA;
 		String SearchName = "Search" + Utility.dynamicNameAppender();
-
+		
 		// Login as PA
 		login.loginToSightLine(username, password);
 		base.stepInfo("Test case Id: RPMXCON-57400 - Saved Search");
@@ -1089,7 +1089,7 @@ public class SavedSearch_Phase1_Regression {
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		base.stepInfo("-------Pre-requesties completed--------");
@@ -1114,7 +1114,7 @@ public class SavedSearch_Phase1_Regression {
 		base.stepInfo("ID verfication between shared searches");
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair2);
 
 		login.logout();
