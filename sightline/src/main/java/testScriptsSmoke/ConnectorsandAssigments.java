@@ -125,20 +125,21 @@ public class ConnectorsandAssigments {
 
 	}
 	
-	@Test(description ="RPMXCON-46980",dataProvider = "Users", groups = { "regression" } )
-	public void verifyCombinedSearch(String UserName, String PassWord) throws InterruptedException, AWTException {
+	@Test(description ="RPMXCON-46980", groups = { "regression" } )
+	public void verifyCombinedSearch() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Validate search with combination of Content/Metadata, " + "Audio, Conceptual, WorkProduct");
 		baseClass.stepInfo("Test case Id: RPMXCON-46980");
 		String TagName = "ASTag" + Utility.dynamicNameAppender();
 		String FolderName = "ASFolder" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(UserName, PassWord);
-		if (UserName.equals(Input.rmu4userName)) {
+		
+		loginPage.loginToSightLine(Input.rmu4userName, Input.rmu4password);
+		
 			search.advancedContentSearch(Input.searchString2);
 			search.bulkTag(TagName);
 			baseClass.selectproject();
 			search.advancedContentSearch(Input.searchString2);
 			search.bulkFolder(FolderName);
-		}
+		
 		try {
 			int ExpectedPureHit = search.verifyCombinedSearch(FolderName, "folder", "no", "AND", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
