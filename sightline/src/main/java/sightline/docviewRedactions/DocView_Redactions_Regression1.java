@@ -73,8 +73,8 @@ public class DocView_Redactions_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -423,29 +423,46 @@ public class DocView_Redactions_Regression1 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-		Actions actions = new Actions(driver.getWebDriver());
-		baseClass.stepInfo("Test case Id: RPMXCON-52222");
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.selectingFirstdataFromTable().Visible()
-						&& docViewRedact.selectingFirstdataFromTable().Enabled();
-			}
-		}), Input.wait30);
-		docViewRedact.selectingFirstdataFromTable().waitAndClick(10);
-		baseClass.stepInfo("The First document from Doc Explorer tab is selected");
-		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.docExplorerActions().getWebElement()));
-		actions.moveToElement(docViewRedact.docExplorerActions().getWebElement());
-		actions.click().build().perform();
-		robot.keyPress(KeyEvent.VK_TAB);
-		robot.keyRelease(KeyEvent.VK_TAB);
-		Thread.sleep(500);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		baseClass.stepInfo("The First document from Doc Explorer is viewed in Doc View");
+
+		baseClass.stepInfo("Test case id : RPMXCON-52222");
+		baseClass.stepInfo(
+				"Verify the page syntax user should be able to enter against Pages in multi page redactions pop up");
+
+		// Performing basic search  ID00000230
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch("ID00000230");
+
+		// Adding search results and view in docview
+		sessionSearch.ViewInDocView();
+//		baseClass = new BaseClass(driver);
+//		loginPage = new LoginPage(driver);
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+//		Robot robot = new Robot();
+//		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+//		Actions actions = new Actions(driver.getWebDriver());
+//		baseClass.stepInfo("Test case Id: RPMXCON-52222");
+//		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() throws Exception {
+//				return docViewRedact.selectingFirstdataFromTable().Visible()
+//						&& docViewRedact.selectingFirstdataFromTable().Enabled();
+//			}
+//		}), Input.wait30);
+//		docViewRedact.selectingFirstdataFromTable().waitAndClick(10);
+//		baseClass.stepInfo("The First document from Doc Explorer tab is selected");
+//		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.docExplorerActions().getWebElement()));
+//		actions.moveToElement(docViewRedact.docExplorerActions().getWebElement());
+//		actions.click().build().perform();
+//		robot.keyPress(KeyEvent.VK_TAB);
+//		robot.keyRelease(KeyEvent.VK_TAB);
+//		Thread.sleep(500);
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
+//		baseClass.stepInfo("The First document from Doc Explorer is viewed in Doc View");
 
 // Clicking Redaction icon and adding Redaction
 		docViewRedact.redactRectangleUsingOffset(-12, 20, 50, 200);
@@ -1312,6 +1329,7 @@ public class DocView_Redactions_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-46860");
 		baseClass.stepInfo("Verify user can delete the redaction in a document");
 		DocExplorerPage docexp = new DocExplorerPage(driver);
+		docexp.navigateToDocExplorerPage();
 		docexp.documentSelectionIteration();
 		docexp.docExpViewInDocView();
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);

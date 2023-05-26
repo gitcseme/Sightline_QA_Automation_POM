@@ -80,8 +80,8 @@ public class DocView_Redactions_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -123,9 +123,7 @@ public class DocView_Redactions_Regression {
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
-
 		String docId = Input.searchDocId;
-
 		baseClass.stepInfo("Test case Id: RPMXCON-52214");
 		baseClass.stepInfo("Verify that multiple Rectangle Redaction does not remain selected on DocView Screen");
 		sessionsearch.basicContentSearch(Input.searchDocId);
@@ -134,20 +132,17 @@ public class DocView_Redactions_Regression {
 		baseClass.stepInfo("Select the doc from mini doc list for redactions");
 		docViewPage.selectDocIdInMiniDocList(docId);
 		driver.waitForPageToBeReady();
-
+		
 		baseClass.stepInfo("Creation of Rectangle Redaction on First Page");
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 200);
-
+		docViewRedact.redactRectangleUsingOffset(0, 0, 15, 20);
 		docViewRedact.selectingRectangleRedactionTag();
-
 		baseClass.waitForElement(docViewRedact.docViewNextPage());
 		docViewRedact.docViewNextPage().waitAndClick(10);
-
 		baseClass.waitForElement(docViewRedact.redactionIcon());
-		docViewRedact.redactionIcon().waitAndClick(20);
-
+		docViewRedact.redactionIcon().waitAndClick(30);
+		
 		baseClass.stepInfo("Creation of Rectangle Redaction on Next Page");
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 200);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 15, 20);
 		docViewRedact.selectingRectangleRedactionTag();
 
 		baseClass.stepInfo("Prerequisites created successfully");
