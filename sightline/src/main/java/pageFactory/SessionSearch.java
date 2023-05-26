@@ -687,6 +687,18 @@ public class SessionSearch {
 	public Element getWP_SelectTagName(String TagName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + TagName + "')]");
 	}
+	
+	public Element getDefaultTag() {
+		return driver.FindElementByXPath("//a[contains(text(),'Default Tags')]");
+	}
+
+	public Element getDefaultTagsArrow() {
+		return driver.FindElementByXPath("//li[@id='1g']//i[@class='jstree-icon jstree-ocl']");
+	}
+	
+	public Element getPrivilegedTag() {
+		return driver.FindElementByXPath("//a[@data-content='Privileged']");
+	}
 
 	public Element getWP_SelectRedactionName(String redactName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + redactName + "')]");
@@ -764,6 +776,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
 	}
 	
+
 	public Element getQueryAlertGetTextSingleLine() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
@@ -986,6 +999,12 @@ public class SessionSearch {
 	// get select all folder option from tree
 	public Element getSelectAllFoldersOption() {
 		return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		//return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
+	}
+	
+	//get select all folder option2 from tree added on 23/05/2023
+	public Element getSelectAllFoldersOption2() {
+		return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
 	}
 
 	// added on 28/9/21
@@ -1355,10 +1374,16 @@ public class SessionSearch {
 				.FindElementByXPath("(//a[@class='jstree-anchor']/ancestor::ul//ul[@class='jstree-children']/li/a)[1]");
 
 	}
-
+	
 	public Element getSavedSearchQueryAS() {
-		//return driver.FindElementByXPath("//span[@class='editable editable-click']");
-		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input"); 
+		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input");
+	}
+	
+	
+
+	public Element getSavedSearchQueryAS1() {
+		return driver.FindElementByXPath("//span[@class='editable editable-click']");
+		
 	}
 
 	public Element getValueTextArea() {
@@ -3955,7 +3980,7 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	public void selectTagInASwp(String tagName) {
+	public void selectTagInASwp(String tagName) throws InterruptedException{
 		base.waitForElement(getWP_TagBtn());
 		getWP_TagBtn().Click();
 		driver.waitForPageToBeReady();
@@ -3974,6 +3999,24 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 
 	}
+	
+
+		// added on 24/05/2023
+		public void selectPrivTagInASwp(String tagName) throws InterruptedException {
+
+			base.waitForElement(getWP_TagBtn());
+			getWP_TagBtn().Click();
+			base.waitForElement(getDefaultTagsArrow());
+			getDefaultTagsArrow().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getPrivilegedTag());
+			getPrivilegedTag().Click();
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+			driver.scrollPageToTop();
+
+		}
 
 	public void selectFolderInASwp(String folderName) {
 		base.waitForElement(getWP_FolderBtn());
@@ -9327,7 +9370,7 @@ public class SessionSearch {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getWP_FolderBtn());
 			getWP_FolderBtn().Click();
-			selectFolderInTree(folderName);
+			selectFolderInTree(folderName); 
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataInserQuery());
 			getMetaDataInserQuery().ScrollTo();
@@ -9342,6 +9385,38 @@ public class SessionSearch {
 			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author 
+	 * @Description : this method used for performing advanced search by Allfolder.
+	 * @param folderName : folderName is String value that name of folder to perform
+	 *                   advanced search.
+	 */
+	public void advanceSearchByFolder2(String folderName) {
+		try {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			switchToWorkproduct();
+			base.stepInfo("Navigated to advance search and work product is clicked");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getWP_FolderBtn());
+			getWP_FolderBtn().Click();
+			getSelectAllFoldersOption2().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().ScrollTo();
+			getMetaDataInserQuery().waitAndClick(15);
+			base.passedStep("Folders are selected from tree and inserted into query");
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQuerySearchButton());
+			getQuerySearchButton().waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
+		}
+	}
+	
+	
 
 	/**
 	 * @author Gopianth
