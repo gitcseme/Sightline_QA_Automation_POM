@@ -3427,7 +3427,7 @@ public class AdvancedSearch_Phase2_Regression {
 		baseClass.selectproject();
 		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.getWorkproductBtn().waitAndClick(10);
-		sessionSearch.searchSavedSearch(Input.mySavedSearch); 
+		sessionSearch.searchSavedSearch(searchGroup); 
 		baseClass.stepInfo("Selecting All search group from work product tab.");
 
 		// configuring Content & Metadata search

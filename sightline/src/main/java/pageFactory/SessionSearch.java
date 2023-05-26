@@ -560,7 +560,7 @@ public class SessionSearch {
 	}
 
 	public ElementCollection getTree() {
-		return driver.FindElementsByXPath("//li[contains(@id,'-1g') or contains(@id,'1g')]/ul[@class='jstree-children']/li/a");
+		return driver.FindElementsByXPath("//a[@class='jstree-anchor']");
 	}
 
 	public ElementCollection getSecurityNamesTree() {
@@ -1376,7 +1376,7 @@ public class SessionSearch {
 	}
 	
 	public Element getSavedSearchQueryAS() {
-		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input");
+		return driver.FindElementByXPath("//ul[@id='xEdit']/li/span[@class='editable editable-click']");
 	}
 	
 	
@@ -3989,7 +3989,7 @@ public class SessionSearch {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(tagName)) {				
-				driver.scrollingToElementofAPage(iterable_element);
+				//driver.scrollingToElementofAPage(iterable_element);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				break;
 			}
@@ -4026,7 +4026,7 @@ public class SessionSearch {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(folderName)) {
-				driver.scrollingToElementofAPage(iterable_element);
+				//driver.scrollingToElementofAPage(iterable_element);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				
 				break;
