@@ -111,13 +111,14 @@ public class DocView_Redactions_Regression {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
-	 * Stabilization done
+	 * Stabilization done.
 	 */
 	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" } )
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("logged in as RMU");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);

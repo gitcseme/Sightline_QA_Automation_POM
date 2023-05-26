@@ -925,7 +925,7 @@ public class DocViewRedactions_Phase2_Regression {
 		String RedactName = "newRedac" + Utility.dynamicNameAppender();
 		RedactionPage redactac = new RedactionPage(driver);
 
-		// Login as RMU
+		// Login as RMU is successful 
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PAU as with " + Input.pa1userName + "");
 		baseClass.stepInfo("Verify the automatically selection of the redaction tag when RMU impersonates as Reviewer");
