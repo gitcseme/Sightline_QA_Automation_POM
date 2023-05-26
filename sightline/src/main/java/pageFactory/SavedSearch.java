@@ -337,7 +337,8 @@ public class SavedSearch {
 
 	public Element getSelectSearchWithID(String serachName) {
 		return driver
-				.FindElementByXPath("(//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[2])[last()]");
+				.FindElementByXPath("(//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[2])[last()]");
+		
 	}
 
 	public Element getSelectSearchWithResultCount(String serachName) {
@@ -3044,6 +3045,7 @@ public class SavedSearch {
 
 		// get Search ID
 		searchID = GetSearchID(searchName);
+		System.out.println(searchID);
 		base.stepInfo("Search ID before Share : " + searchID);
 		driver.getWebDriver().navigate().refresh();
 
@@ -3109,6 +3111,7 @@ public class SavedSearch {
 		if (compareSearchID) {
 			// softAssertion.assertNotSame(searchID, searchIDtoCompare);
 			if (!searchID.equalsIgnoreCase(searchIDtoCompare)) {
+				System.out.println(searchID);
 				base.stepInfo("Different Search ID");
 			} else {
 				base.stepInfo("Same Search ID");
@@ -3525,7 +3528,7 @@ public class SavedSearch {
 		try {
 			// savedSearch_SearchandSelect(searchName, "No");
 			base.waitForElement(getSelectSearchWithID(searchName));
-			base.wait(1);
+			base.waitTime(1);
 			searchiD = getSelectSearchWithID(searchName).getText();
 			System.out.println(searchiD);
 		} catch (Exception e) {
