@@ -437,32 +437,6 @@ public class DocView_Redactions_Regression1 {
 
 		// Adding search results and view in docview
 		sessionSearch.ViewInDocView();
-//		baseClass = new BaseClass(driver);
-//		loginPage = new LoginPage(driver);
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-//		Robot robot = new Robot();
-//		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-//		Actions actions = new Actions(driver.getWebDriver());
-//		baseClass.stepInfo("Test case Id: RPMXCON-52222");
-//		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-//		driver.WaitUntil((new Callable<Boolean>() {
-//			public Boolean call() throws Exception {
-//				return docViewRedact.selectingFirstdataFromTable().Visible()
-//						&& docViewRedact.selectingFirstdataFromTable().Enabled();
-//			}
-//		}), Input.wait30);
-//		docViewRedact.selectingFirstdataFromTable().waitAndClick(10);
-//		baseClass.stepInfo("The First document from Doc Explorer tab is selected");
-//		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.docExplorerActions().getWebElement()));
-//		actions.moveToElement(docViewRedact.docExplorerActions().getWebElement());
-//		actions.click().build().perform();
-//		robot.keyPress(KeyEvent.VK_TAB);
-//		robot.keyRelease(KeyEvent.VK_TAB);
-//		Thread.sleep(500);
-//		robot.keyPress(KeyEvent.VK_ENTER);
-//		robot.keyRelease(KeyEvent.VK_ENTER);
-//		baseClass.stepInfo("The First document from Doc Explorer is viewed in Doc View");
 
 // Clicking Redaction icon and adding Redaction
 		docViewRedact.redactRectangleUsingOffset(-12, 20, 50, 200);
