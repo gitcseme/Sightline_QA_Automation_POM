@@ -687,6 +687,18 @@ public class SessionSearch {
 	public Element getWP_SelectTagName(String TagName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + TagName + "')]");
 	}
+	
+	public Element getDefaultTag() {
+		return driver.FindElementByXPath("//a[contains(text(),'Default Tags')]");
+	}
+
+	public Element getDefaultTagsArrow() {
+		return driver.FindElementByXPath("//li[@id='1g']//i[@class='jstree-icon jstree-ocl']");
+	}
+	
+	public Element getPrivilegedTag() {
+		return driver.FindElementByXPath("//a[@data-content='Privileged']");
+	}
 
 	public Element getWP_SelectRedactionName(String redactName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + redactName + "')]");
@@ -761,10 +773,10 @@ public class SessionSearch {
 
 	// search query alerts
 	public Element getQueryAlertGetText() {
-	//	return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
-		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//div[contains(@style,'overflow:auto;height: 196px;')]"); 
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
 	}
 	
+
 	public Element getQueryAlertGetTextSingleLine() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
@@ -3968,7 +3980,7 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	public void selectTagInASwp(String tagName) {
+	public void selectTagInASwp(String tagName) throws InterruptedException{
 		base.waitForElement(getWP_TagBtn());
 		getWP_TagBtn().Click();
 		driver.waitForPageToBeReady();
@@ -3987,6 +3999,24 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 
 	}
+	
+
+		// added on 24/05/2023
+		public void selectPrivTagInASwp(String tagName) throws InterruptedException {
+
+			base.waitForElement(getWP_TagBtn());
+			getWP_TagBtn().Click();
+			base.waitForElement(getDefaultTagsArrow());
+			getDefaultTagsArrow().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getPrivilegedTag());
+			getPrivilegedTag().Click();
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+			driver.scrollPageToTop();
+
+		}
 
 	public void selectFolderInASwp(String folderName) {
 		base.waitForElement(getWP_FolderBtn());
