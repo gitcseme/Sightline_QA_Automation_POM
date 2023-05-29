@@ -476,8 +476,9 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
+		search.selectSavedsearchesInTree(Input.mySavedSearch);		//Moved up as element click interruption happening
 		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
-		search.selectSavedsearchesInTree(Input.mySavedSearch);
+		
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
 			search.getMetaDataInserQuery().waitAndClick(15);
@@ -520,8 +521,8 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Navigated to advance search and work product is clicked");
 		baseClass.waitForElement(search.getSavedSearchBtn1());
 		search.getSavedSearchBtn1().Click();
+		search.selectSavedsearchesInTree(Input.mySavedSearch);		//Moved up as element click interruption happening
 		search.selectSavedsearchesInTree(Input.shareSearchDefaultSG);
-		search.selectSavedsearchesInTree(Input.mySavedSearch);
 
 		try {
 			baseClass.waitForElement(search.getMetaDataInserQuery());
@@ -910,7 +911,8 @@ public class AdvancedSearch_Regression1 {
 
 	@DataProvider(name = "SavedSearchwithUsers")
 	public Object[][] SavedSearchwithUsers() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
+		Object[][] users = { 
+				{ Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
 	}
