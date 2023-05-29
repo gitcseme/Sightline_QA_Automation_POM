@@ -643,8 +643,8 @@ public class ProductionsandIngestions {
 		return users;
 	}
 
-	@Test(description = "RPMXCON-54138", enabled = true, dataProvider = "Users_PARMU", groups = { "regression" })
-	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role)
+	@Test(description = "RPMXCON-54138", enabled = true, groups = { "regression" })
+	public void verifyDocsFromCategorizeToDoclist()
 			throws InterruptedException {
 		String folderName = "FOLDER" + Utility.dynamicNameAppender();
 
@@ -653,7 +653,7 @@ public class ProductionsandIngestions {
 		DocListPage doclistPage = new DocListPage(driver);
 
 		// Login as PA
-		loginPage.loginToSightLine(username, password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 
 		baseClass.stepInfo("RPMXC0N-54138 Proview");
 		baseClass.stepInfo("To verify that user can view the total no of documents from Categorization to doc list.");
