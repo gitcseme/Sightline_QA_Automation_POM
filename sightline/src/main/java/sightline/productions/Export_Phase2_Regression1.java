@@ -85,7 +85,7 @@ public class Export_Phase2_Regression1 {
 	 * date: 08/17/2022
 	 * Description :To Verify Export using Production as Basis if there is count for "Number Of Export Document Selection Mismatch"
 	 */
-	@Test(description = "RPMXCON-47937", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47937", enabled = true, groups = { "regression" })
 	public void verifyProductionBasicWithExport() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -163,7 +163,7 @@ public class Export_Phase2_Regression1 {
 	 * date: 08/17/2022
 	 * Description :To Verify file group type (.mdb/.mdf) option on selection in Translations section, the corresponding translations should be considered for Export.
 	 */
-	@Test(description = "RPMXCON-48036", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48036", enabled = true, groups = { "regression" })
 	public void verifyMBDFileTypeInExport() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -217,7 +217,7 @@ public class Export_Phase2_Regression1 {
 	 * date: 08/17/2022
 	 * Description :Verify that if PA selects the Export with Production and has only tags selected in the native components section, then Component tab should Complete without any error.
 	 */
-	@Test(description = "RPMXCON-49358", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49358", enabled = true, groups = { "regression" })
 	public void verifyProductionComponentInExport() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -281,7 +281,7 @@ public class Export_Phase2_Regression1 {
 	 * date: 08/17/2022
 	 * Description :Verify  Native section in Production Components section
 	 */
-	@Test(description = "RPMXCON-49384", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49384", enabled = true, groups = { "regression" })
 	public void verifyNativeSection() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -323,7 +323,7 @@ public class Export_Phase2_Regression1 {
 	 * Description :Verify in Production-Export, if default option is selected in text section, Privileged placeholder is enabled 
 	 * in TIFF/PDF component,and no text file exists in the SL Workspace then Priv placeholder text is exported
 	 */
-	@Test(description = "RPMXCON-49135", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49135", enabled = true, groups = { "regression" })
 	public void verifyPrivPlaceholderTextExported() throws Exception {
 		
 		base.stepInfo("Test case Id: RPMXCON-49135");
@@ -383,7 +383,7 @@ public class Export_Phase2_Regression1 {
 	 * Author :Arunkumar date: 10/08/2022 TestCase Id:RPMXCON-47491
 	 * Description :To verify that in Production-Export-Slip Sheet, Calculated Field should be sorted by alpha ascending 
 	 */
-	@Test(description = "RPMXCON-47491", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47491", enabled = true, groups = { "regression" })
 	public void verifyCalculatedTabSortOrder() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -432,7 +432,7 @@ public class Export_Phase2_Regression1 {
 	 *                     new export
 	 **/
 
-	@Test(description = "RPMXCON-63067", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-63067", enabled = true, groups = { "regression" })
 	public void verifyTheProductionGenerationUsingTemplate() throws Exception {
 
 		base = new BaseClass(driver);
@@ -532,7 +532,7 @@ public class Export_Phase2_Regression1 {
 	 *                     additional placeholder sections in addition to the
 	 *                     default enabled native placeholder under TIFF/PDF section
 	 */
-	@Test(description = "RPMXCON-63077", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-63077", enabled = true, groups = { "regression" })
 
 	public void verifyTiffGenerationWhenNativeToggleOff() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -673,7 +673,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:Verify for new export Native, Spreadsheets, and Multimedia
 	 *                     checkbox should be checked
 	 */
-	@Test(description = "RPMXCON-64077", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-64077", enabled = true, groups = { "regression" })
 
 	public void verifyingNativeFilesInGenreratedExport() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -824,6 +824,7 @@ public class Export_Phase2_Regression1 {
 			}
 		}
 		base.stepInfo("getting the text inside pdf document");
+		for(int i=0;i<Values.length;i++) {
 		if (page.getFirstPDFImageFile(prefixID + suffixID, subBates).isElementAvailable(2)) {
 
 			page.getFirstPDFImageFile(prefixID + suffixID, subBates).waitAndClick(10);
@@ -838,9 +839,9 @@ public class Export_Phase2_Regression1 {
 					base.failedStep( "Comments are not displayed");
 				}
 
-		} else if (page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).isElementAvailable(2)) {
+		} else if (page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
 
-			page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).waitAndClick(10);
+			page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
 			String CurrentUrl=driver.getWebDriver().getCurrentUrl();
 			System.out.println(CurrentUrl);
 			 String DownloadedFile2 = page.getPdfContent(CurrentUrl);
@@ -848,6 +849,7 @@ public class Export_Phase2_Regression1 {
 			 base.passedStep("Comments are displayed in all pages of downloaded file");
 		} else {
 			base.failedStep("PDF file is not generated");
+		}
 		}
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
@@ -862,7 +864,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description: Verify that after Post Generation is completed, it will
 	 *               displays status on Export Progress bar Tile View as 'Completed'
 	 **/
-	@Test(description = "RPMXCON-50648", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50648", enabled = true, groups = { "regression" })
 	public void verifyCompletedStatusInTileView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50648");
@@ -918,7 +920,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description: Verify that after Post Generation is completed, it will
 	 *               displays status on Export generation page as 'Completed'
 	 **/
-	@Test(description = "RPMXCON-50647", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50647", enabled = true, groups = { "regression" })
 	public void verifyCompletedStatusInGenPage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50647");
@@ -967,7 +969,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description: Verify that after Pregen checks completed it should displays
 	 *               'Pre-Gen Checks Complete' status on Production-Export Grid View
 	 **/
-	@Test(description = "RPMXCON-50669", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50669", enabled = true, groups = { "regression" })
 	public void verifyPreGenCheckCompletedStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50669");
@@ -1019,7 +1021,7 @@ public class Export_Phase2_Regression1 {
 	 *               displays status on Export Generation page as 'Post-Gen QC
 	 *               checks in progress'
 	 **/
-	@Test(description = "RPMXCON-50646", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50646", enabled = true, groups = { "regression" })
 	public void verifyPostGenInProgressInGenPage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50646");
@@ -1072,7 +1074,7 @@ public class Export_Phase2_Regression1 {
 	 *               displays status on Production Progress bar ,Tile View as
 	 *               'Post-Gen checks in progress'
 	 **/
-	@Test(description = "RPMXCON-50645", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50645", enabled = true, groups = { "regression" })
 	public void verifyPostGenCheckInProgressStatusInTileView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50645");
@@ -1128,7 +1130,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:Verify that Production status displays as Draft on Production
 	 *                     Grid View
 	 **/
-	@Test(description = "RPMXCON-50666", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50666", enabled = true, groups = { "regression" })
 	public void verifyDraftStatusInGridView() throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-50666");
 		base.stepInfo("Verify that Production status displays as Draft on Production Grid View");
@@ -1183,7 +1185,7 @@ public class Export_Phase2_Regression1 {
 	 * @author  sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-49247
 	 * @Description: verify In Export DAT, provide the TIFFPageCount for each document
 	 **/
-	@Test(description = "RPMXCON-49247", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49247", enabled = true, groups = { "regression" })
 	public void verifyExportDatProvideTiffpageCount() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1303,7 +1305,7 @@ public class Export_Phase2_Regression1 {
      * @author  sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-47978
      * @Description: Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.
      **/
-    @Test(description = "RPMXCON-47978", enabled = true, groups = { "regression" })
+    //@Test(description = "RPMXCON-47978", enabled = true, groups = { "regression" })
     public void verifyBatesNumBrandinExpData() throws Exception {
         loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
         base.stepInfo("Test case Id: RPMXCON-47978");
@@ -1376,7 +1378,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-63853
 	 * @Description: Verify that for existing production/export/template with configured natively placeholdering,should be with enabled native placeholdering under TIFF/PDF section
 	 **/
-	@Test(description = "RPMXCON-63853", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-63853", enabled = true, groups = { "regression" })
 	public void verifyExisProdWithConfigNativPH() throws Exception {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case Id: RPMXCON-63853");
@@ -1449,7 +1451,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50659
 	 * @Description: Verify that user can download the Export by using the Shareable link for 'DAT Only'
 	 **/
-	@Test(description = "RPMXCON-50659", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50659", enabled = true, groups = { "regression" })
 	public void verifySharableLinkForDATOnlyFiles() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50659");
@@ -1494,7 +1496,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50658
 	 * @Description:Verify that user can download the Export by using the Shareable link for 'All Files'
 	 **/
-	@Test(description = "RPMXCON-50658", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50658", enabled = true, groups = { "regression" })
 	public void verifySharableLinkFoAllFiles() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50658");
@@ -1539,7 +1541,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50374
 	 * @Description:Verify that download option is available after post generation completed on Export-QC tab
 	 **/
-	@Test(description = "RPMXCON-50374", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50374", enabled = true, groups = { "regression" })
 	public void verifyDownloadAndCopyPath() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50374");
@@ -1586,7 +1588,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-49136
 	 * @Description:To verify that when text is exported for Exception file then it should export the text with the Placeholder (For Export)
 	 **/
-	@Test(description = "RPMXCON-49136", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49136", enabled = true, groups = { "regression" })
 	public void verifyTechIssuePlaceholder() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49136");
@@ -1639,7 +1641,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50686
 	 * @Description:Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully
 	 **/
-	@Test(description = "RPMXCON-50686", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50686", enabled = true, groups = { "regression" })
 	public void verifyGeneratePDF_MultiPage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50686");
@@ -1697,7 +1699,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50688
 	 * @Description:Verify If both TIFF and PDF are produced in the existing production (before upgrade) selected as the basis for export, in Export, you will only be able to export only TIFF.
 	 **/
-	@Test(description = "RPMXCON-50688", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50688", enabled = true, groups = { "regression" })
 	public void verifyGeneratePDF_SinglePage() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50688");
@@ -1753,7 +1755,7 @@ public class Export_Phase2_Regression1 {
 	 * @author sowndarya TESTCASE No:RPMXCON-50692
 	 * @Description:Verify that Export should generate successfully by selecting only DAT and 'Generate TIFF' option with Priv Placholder
 	 **/
-	@Test(description = "RPMXCON-50692", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50692", enabled = true, groups = { "regression" })
 	public void verifyPrivPlaceholder() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50692");
@@ -1814,7 +1816,7 @@ public class Export_Phase2_Regression1 {
 	 *               displays 'Reserving Bates Range Complete' status on Grid View
 	 *               on Production-export Home page
 	 **/
-	@Test(description = "RPMXCON-50672", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50672", enabled = true, groups = { "regression" })
 	public void verifyReservingBatesRangeCompleteStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50672");
@@ -1870,7 +1872,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:Verify that Production-Export status displays in Draft with
 	 *                     blank progress bar on Tile View
 	 **/
-	@Test(description = "RPMXCON-50333", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50333", enabled = true, groups = { "regression" })
 	public void verifyDraftStatusInTileView() throws Exception {
 		
 		base.stepInfo("Test case Id: RPMXCON-50333");
@@ -1912,7 +1914,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:To verify that in Export, 'Click here to View and select the
 	 *                 bates number(S)' link should not be shown
 	 **/
-	@Test(description = "RPMXCON-49256", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49256", enabled = true, groups = { "regression" })
 	public void verifyInVisiblityOfClickHerelink() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-49256");
@@ -1947,7 +1949,7 @@ public class Export_Phase2_Regression1 {
 	 *                     'Export File Complete' status on Grid View on
 	 *                     Production-Export Home page
 	 **/
-	@Test(description = "RPMXCON-50675", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50675", enabled = true, groups = { "regression" })
 	public void verifyExportFileCompleteStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50675");
@@ -2007,7 +2009,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:Verify that in Production-export components, TIFF/PDF section
 	 *                     displays options for Generating TIFF or Generating PDF
 	 **/
-	@Test(description = "RPMXCON-50680", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50680", enabled = true, groups = { "regression" })
 	public void verifyGenerateoptionInComponentTab() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50680");
@@ -2047,7 +2049,7 @@ public class Export_Phase2_Regression1 {
 	 * @author Brundha.T TESTCASE No:RPMXCON-47803
 	 * @Description:To Verify Changes in Basic Info Page ( for Export)
 	 **/
-	@Test(description = "RPMXCON-47803", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47803", enabled = true, groups = { "regression" })
 	public void verifyingBasicInfoTab() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-47803");
@@ -2100,7 +2102,7 @@ public class Export_Phase2_Regression1 {
 	 * @author Brundha.T TESTCASE No:RPMXCON-50689
 	 * @Description:Verify the error message for DAT component when 'In export don’t select DocID and Bate Bumber data field'
 	 **/
-	@Test(description = "RPMXCON-50689", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50689", enabled = true, groups = { "regression" })
 	public void verifyErrorMsgInDATSection() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50689");
@@ -2131,7 +2133,7 @@ public class Export_Phase2_Regression1 {
 	 *                     the basis for export then in export user can select
 	 *                     'Generate TIFF',export should complete sucessfully
 	 */
-	@Test(description = "RPMXCON-50687", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50687", enabled = true, groups = { "regression" })
 
 	public void verifyingExportWithTIFFAndText() throws Exception {
 
@@ -2227,7 +2229,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description: Verify that on Clicking on 'Copy Path' , it will copy the path
 	 *               to review the documents
 	 **/
-	@Test(description = "RPMXCON-50654", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50654", enabled = true, groups = { "regression" })
 	public void verifyExportedFileIsDisplayed() throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-50654");
 		base.stepInfo("Verify that on Clicking on 'Copy Path' , it will copy the path to review the documents");
@@ -2293,7 +2295,7 @@ public class Export_Phase2_Regression1 {
 	 *                     copying the Production URL if user is not part of
 	 *                     Project/SG
 	 **/
-	@Test(description = "RPMXCON-50331", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50331", enabled = true, groups = { "regression" })
 	public void verifyingErrorMsgInExport() throws Exception {
 		base.stepInfo("Test case Id: RPMXCON-50331");
 		base.stepInfo(
@@ -2347,7 +2349,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description: Verify that after Pre-gen checks is in progress, it will
 	 *               displays status on Production Grid view
 	 **/
-	@Test(description = "RPMXCON-50667", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50667", enabled = true, groups = { "regression" })
 	public void verifyPreGenCheckInProgressStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50667");
@@ -2410,7 +2412,7 @@ public class Export_Phase2_Regression1 {
 	 *                     Generating Load Files' status on Production-Export Grid
 	 *                     View
 	 **/
-	@Test(description = "RPMXCON-50676", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50676", enabled = true, groups = { "regression" })
 	public void verifyGeneratingloadFileStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50676");
@@ -2470,7 +2472,7 @@ public class Export_Phase2_Regression1 {
 	 *                     'Reserving Bates Range' status on Grid View on
 	 *                     Production-Export Home page
 	 **/
-	@Test(description = "RPMXCON-50670", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50670", enabled = true, groups = { "regression" })
 	public void verifyReservingBatesRangeStatusInGridView() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50670");
@@ -2529,7 +2531,7 @@ public class Export_Phase2_Regression1 {
 	 *                 ascending
 	 **/
 
-	@Test(description = "RPMXCON-49123", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49123", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2605,7 +2607,7 @@ public class Export_Phase2_Regression1 {
 	 * @author Brundha.T TESTCASE No:RPMXCON-50362
 	 * @Description:Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'
 	 **/
-	@Test(description = "RPMXCON-50362", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50362", enabled = true, groups = { "regression" })
 	public void verifyCompletedStatusInGenPage2() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-50362");
@@ -2658,7 +2660,7 @@ public class Export_Phase2_Regression1 {
 	 * @Description:Verify that in the Export components page 'Archive File from
 	 *                     FTP' component is not available
 	 **/
-	@Test(description = "RPMXCON-50372", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50372", enabled = true, groups = { "regression" })
 	public void verifyingInVisiblityOfArchiveFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50372");
@@ -2685,7 +2687,7 @@ public class Export_Phase2_Regression1 {
 	 * @throws Exception
 	 * @Description:To Verify Basic Info UI with Toggle option (For Export).
 	 **/
-	@Test(description = "RPMXCON-47804", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47804", enabled = true, groups = { "regression" })
 	public void verifyingBasicInfoTabInExport() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47804");
