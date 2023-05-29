@@ -1659,7 +1659,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 		sessionSearch.getNewSearch().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectTagInASwp("Privileged");
+		sessionSearch.selectPrivTagInASwp("Privileged");
 		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
 		sessionSearch.searchBtn().waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getPureHit_UsingLast());
@@ -1687,7 +1687,7 @@ public class AdvancedSearch_Phase2_Regression1 {
 		}
 		baseClass.waitTillElemetToBeClickable(sessionSearch.getWorkproductBtn());
 		sessionSearch.getWorkproductBtn().waitAndClick(5);
-		sessionSearch.selectTagInASwp("Privileged");
+		sessionSearch.selectPrivTagInASwp("Privileged");
 		baseClass.waitTillElemetToBeClickable(sessionSearch.searchBtn());
 		sessionSearch.searchBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();

@@ -680,8 +680,8 @@ public class AdvacncedSearch_BulkTag_Regression {
 	public void verifyConfigureQueryMasterDateAndRangeOperatorInsertedProperlyInAdvancedSearch(String username,
 			String password, String loginUser) {
 
-		String fromDate = "2015-01-01";
-		String toDate = "2015-05-04";
+		String fromDate = "2015-01-01"; 
+		String toDate = "2015-05-04"; 
 
 		// login as PA
 		loginPage.loginToSightLine(username, password);

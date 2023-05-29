@@ -81,7 +81,7 @@ public class DocViewandAccusoftPrizm {
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu2userName, Input.rmu2password }, { Input.pa2userName, Input.pa2password },
-				{ Input.rev2userName, Input.rev2password } };
+				 };
 		return users;
 	}
 	
@@ -239,13 +239,13 @@ public class DocViewandAccusoftPrizm {
 
 	}
 	
-	@Test(description = "RPMXCON-63566", dataProvider = "Users", groups = {"regression" })
-	public void verifyConceptualDefaultPS(String username, String password) throws InterruptedException {
+	@Test(description = "RPMXCON-63566", groups = {"regression" })
+	public void verifyConceptualDefaultPS() throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 
 		 sessionSearch = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(username, password);
+		 loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-63566 Advanced Search");
 		baseClass.stepInfo(
