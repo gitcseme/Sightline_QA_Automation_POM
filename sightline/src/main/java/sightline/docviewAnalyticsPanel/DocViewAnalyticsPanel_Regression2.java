@@ -1375,32 +1375,32 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		
 			
-			for (int i = 1; i <=3; i++) {
-				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+			for (int i = 1; i <=5; i++) {
+				if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled())&& !((docView.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 					System.out.println("Comparison Window is Ready to perform next steps");
+					baseClass.stepInfo("Step 6: Verify the different highlighting from Original and Near Dupe panel of near dupe comparison window");;
+					docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+					String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+					System.out.println(docidinchildwinodw);
+					baseClass.waitForElement(docView.get_textHighlightedColor());
+					String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
+					String hex2 = Color.fromString(color).asHex();
+					System.out.println(hex2);
+					baseClass.passedStep("Near Dupe comparison window is opened and the differences highlighted on the near dupe comparison window");
+					driver.switchTo().window(parentWindowID);
 					break;
-				}
-				else {
-					driver.Navigate().refresh();
-				}
-			}
 				
-		baseClass.stepInfo("Step 6: Verify the different highlighting from Original and Near Dupe panel of near dupe comparison window");;
-		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-		System.out.println(docidinchildwinodw);
-		baseClass.waitForElement(docView.get_textHighlightedColor());
-		String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color).asHex();
-		System.out.println(hex2);
-		baseClass.passedStep("Near Dupe comparison window is opened and the differences highlighted on the near dupe comparison window");
-		
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
-		
-		loginPage.logout();
-		
-		
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+				
+			}else {
+			
+				driver.Navigate().refresh();
+			}	
+		}
+			
+			loginPage.logout();
 	}
 	
 	/**
@@ -1467,28 +1467,35 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		
 			
-			for (int i = 1; i <=3; i++) {
-				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+			for (int i = 1; i <=5; i++) {
+				if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled())&& !((docView.getDocView_NearDupe_DocID().getText()).isEmpty()))  {
 					System.out.println("Comparison Window is Ready to perform next steps");
+					baseClass.stepInfo("Step 6: Verify the near dupe window");;
+					docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+					String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+					System.out.println(docidinchildwinodw);
+					baseClass.waitForElement(docView.get_textHighlightedColor());
+					String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
+					String hex2 = Color.fromString(color).asHex();
+					System.out.println(hex2);
+					baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+					driver.getWebDriver().close();
+					driver.switchTo().window(parentWindowID);
 					break;
+				}
+				else if(i==5) {
+					driver.close();
+					driver.switchTo().window(parentWindowID);
+					
 				}
 				else {
 					driver.Navigate().refresh();
 				}
 			}
 				
-		baseClass.stepInfo("Step 6: Verify the near dupe window");;
-		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-		System.out.println(docidinchildwinodw);
-		baseClass.waitForElement(docView.get_textHighlightedColor());
-		String color = docView.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color).asHex();
-		System.out.println(hex2);
-		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
 		
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
+		
+		
 		
 		loginPage.logout();
 		
@@ -1581,28 +1588,34 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 			
 				
-				for (int i = 1; i <=3; i++) {
-					if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+				for (int i = 1; i <=5; i++) {
+					if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled())&& !((docView.getDocView_NearDupe_DocID().getText()).isEmpty()))  {
 						System.out.println("Comparison Window is Ready to perform next steps");
+						baseClass.stepInfo("Step 6: Verify the near dupe window");
+						docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+						String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+						System.out.println(docidinchildwinodw);
+						
+						String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+						String hex2 = Color.fromString(color).asHex();
+						System.out.println(hex2);
+						baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+						driver.getWebDriver().close();
+						driver.switchTo().window(parentWindowID);
 						break;
+					}
+					else if(i==5) {
+						driver.close();
+						driver.switchTo().window(parentWindowID);
 					}
 					else {
 						driver.Navigate().refresh();
 					}
 				}
 					
-			baseClass.stepInfo("Step 6: Verify the near dupe window");;
-			docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-			String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-			System.out.println(docidinchildwinodw);
 			
-			String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
-			String hex2 = Color.fromString(color).asHex();
-			System.out.println(hex2);
-			baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
 			
-			driver.getWebDriver().close();
-			driver.switchTo().window(parentWindowID);
+			
 			
 			
 		}
@@ -1668,30 +1681,38 @@ public class DocViewAnalyticsPanel_Regression2 {
 			driver.waitForPageToBeReady();
 		}
 
-		
+		String docidinchildwinodw;
+		String color;
+		String hex2;
 			
-			for (int i = 1; i <=3; i++) {
-				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+			for (int i = 1; i <=5; i++) {
+				if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((docView.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 					System.out.println("Comparison Window is Ready to perform next steps");
+					baseClass.stepInfo("Step 6: Verify the near dupe window");;
+					docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+					docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+					System.out.println(docidinchildwinodw);
+					
+					color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+					hex2 = Color.fromString(color).asHex();
+					System.out.println(hex2);
+					baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+					driver.getWebDriver().close();
+					driver.switchTo().window(parentWindowID);
 					break;
+				}
+				else if(i==5) {
+					driver.close();
+					driver.switchTo().window(parentWindowID);
 				}
 				else {
 					driver.Navigate().refresh();
 				}
 			}
 				
-		baseClass.stepInfo("Step 6: Verify the near dupe window");;
-		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-		System.out.println(docidinchildwinodw);
 		
-		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color).asHex();
-		System.out.println(hex2);
-		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
 		
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
+		
 		
 		loginPage.logout();
 		
@@ -1728,28 +1749,33 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		
 			
-			for (int i = 1; i <=3; i++) {
-				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+			for (int i = 1; i <=5; i++) {
+				if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled())&& !((docView.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 					System.out.println("Comparison Window is Ready to perform next steps");
+					baseClass.stepInfo("Step 6: Verify the near dupe window");;
+					docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+					docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+					System.out.println(docidinchildwinodw);
+					
+					color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+					hex2 = Color.fromString(color).asHex();
+					System.out.println(hex2);
+					baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+					
+					driver.getWebDriver().close();
+					driver.switchTo().window(parentWindowID);
 					break;
 				}
+				 else if(i==5) {
+						driver.close();
+						driver.switchTo().window(parentWindowID);
+					}
 				else {
 					driver.Navigate().refresh();
 				}
 			}
 				
-		baseClass.stepInfo("Step 6: Verify the near dupe window");;
-		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-		docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-		System.out.println(docidinchildwinodw);
 		
-		color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
-		hex2 = Color.fromString(color).asHex();
-		System.out.println(hex2);
-		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
-		
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
 		
 		loginPage.logout();
 
@@ -1821,28 +1847,32 @@ public class DocViewAnalyticsPanel_Regression2 {
 
 		
 			
-			for (int i = 1; i <=3; i++) {
-				if (docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+			for (int i = 1; i <=5; i++) {
+				if ((docView.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((docView.getDocView_NearDupe_DocID().getText()).isEmpty())) {
 					System.out.println("Comparison Window is Ready to perform next steps");
+					baseClass.stepInfo("Step 6: Verify the near dupe window");;
+					docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+					String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+					System.out.println(docidinchildwinodw);
+					
+					String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
+					String hex2 = Color.fromString(color).asHex();
+					System.out.println(hex2);
+					baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
+					
+					driver.getWebDriver().close();
+					driver.switchTo().window(parentWindowID);
 					break;
+				} else if(i==5) {
+					driver.close();
+					driver.switchTo().window(parentWindowID);
 				}
 				else {
 					driver.Navigate().refresh();
 				}
 			}
 				
-		baseClass.stepInfo("Step 6: Verify the near dupe window");;
-		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
-		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
-		System.out.println(docidinchildwinodw);
 		
-		String color = docView.get_textHighlightedYellowColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color).asHex();
-		System.out.println(hex2);
-		baseClass.passedStep("Differences in two documents is highlighted in the near dupe window with yellow color");
-		
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
 		
 		loginPage.logout();
 		
