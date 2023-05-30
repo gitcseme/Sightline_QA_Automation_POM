@@ -824,6 +824,7 @@ public class Export_Phase2_Regression1 {
 			}
 		}
 		base.stepInfo("getting the text inside pdf document");
+		for(int i=0;i<Values.length;i++) {
 		if (page.getFirstPDFImageFile(prefixID + suffixID, subBates).isElementAvailable(2)) {
 
 			page.getFirstPDFImageFile(prefixID + suffixID, subBates).waitAndClick(10);
@@ -838,9 +839,9 @@ public class Export_Phase2_Regression1 {
 					base.failedStep( "Comments are not displayed");
 				}
 
-		} else if (page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).isElementAvailable(2)) {
+		} else if (page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
 
-			page.getFirstPDFImageFile(prefixID + "Auto4053606;Auto5208918" + suffixID, subBates).waitAndClick(10);
+			page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
 			String CurrentUrl=driver.getWebDriver().getCurrentUrl();
 			System.out.println(CurrentUrl);
 			 String DownloadedFile2 = page.getPdfContent(CurrentUrl);
@@ -848,6 +849,7 @@ public class Export_Phase2_Regression1 {
 			 base.passedStep("Comments are displayed in all pages of downloaded file");
 		} else {
 			base.failedStep("PDF file is not generated");
+		}
 		}
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
