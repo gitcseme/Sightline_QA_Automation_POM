@@ -2610,6 +2610,7 @@ public class Production_Phase1_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -5755,6 +5756,7 @@ public class Production_Phase1_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -5960,6 +5962,7 @@ public class Production_Phase1_Regression2 {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -6050,6 +6053,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 
 	}
 
@@ -6111,6 +6115,7 @@ public class Production_Phase1_Regression2 {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
