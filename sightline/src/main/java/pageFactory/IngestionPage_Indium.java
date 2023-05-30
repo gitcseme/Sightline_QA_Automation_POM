@@ -2991,6 +2991,7 @@ public class IngestionPage_Indium {
 		base.waitForElement(getIngestion_SaveAsDraft());
 		getIngestion_SaveAsDraft().waitAndClick(10);
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		base.CloseSuccessMsgpopup();
 		base.passedStep("Clicked on SaveAsDraft");
 	}
 
@@ -3005,7 +3006,9 @@ public class IngestionPage_Indium {
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
-
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getIngestionDetailPopup(1));
 		for (int i = 0; i < 20; i++) {
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
@@ -3144,6 +3147,7 @@ public class IngestionPage_Indium {
 		}
 		base.VerifySuccessMessage(
 				"Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+		base.CloseSuccessMsgpopup();
 		base.passedStep("Rollback Done Successfully");
 	}
 
@@ -3160,9 +3164,12 @@ public class IngestionPage_Indium {
 		getFilterByFAILED().waitAndClick(10);
 		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
-
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getIngestionDetailPopup(1));
 		// catlogging
 		for (int i = 0; i < 30; i++) {
+			base.waitForElement(getIngestionDetailPopup(1));
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Cataloged")) {
@@ -3568,7 +3575,7 @@ public class IngestionPage_Indium {
 
 			base.waitForElement(getMappingSourceField(2));
 			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
 			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
 
@@ -3632,6 +3639,7 @@ public class IngestionPage_Indium {
 		// catlogging
 		for (int i = 0; i < 60; i++) {
 			base.waitTime(2);
+			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
 			if (status.contains("Cataloged")) {
@@ -3664,6 +3672,7 @@ public class IngestionPage_Indium {
 		getElementStatus(getRunCopying());
 		getRunCopying().waitAndClick(10);
 		base.VerifySuccessMessage("Ingestion copy has Started.");
+		base.CloseSuccessMsgpopup();
 		UtilityLog.info(dataset + "'s copying is started.");
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3676,6 +3685,7 @@ public class IngestionPage_Indium {
 		//verifying copy status
 		for (int i = 0; i < 90; i++) {
 			base.waitTime(2);
+			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
 			if (status.contains("Copied")) {
@@ -3892,6 +3902,7 @@ public class IngestionPage_Indium {
 	 */
 	public int verifyMissedDocValuePresentInCopyTableColumn(String term) {
 		getRefreshButton().waitAndClick(10);
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 
 		driver.scrollingToElementofAPage(getRunIndexing());
@@ -4050,6 +4061,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
 		base.VerifySuccessMessage("Action done successfully");
+		base.CloseSuccessMsgpopup();
 		base.waitTime(2);
 		getRefreshButton().waitAndClick(10);
 
@@ -4342,7 +4354,7 @@ public class IngestionPage_Indium {
 		getRunIndexing().waitAndClick(10);
 		base.waitTime(2);
 		base.VerifySuccessMessage("Ingestion Indexing has Started.");
-
+		base.CloseSuccessMsgpopup();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCloseButton().Enabled();
@@ -4398,8 +4410,9 @@ public class IngestionPage_Indium {
 				base.failedStep("rollback failed");
 			}
 		}
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
-
+		base.waitForElement(getActionDropdownArrow());
 		driver.waitForPageToBeReady();
 
 		String catalogData = catalogSectionDetails().getText();
@@ -4429,6 +4442,7 @@ public class IngestionPage_Indium {
 			base.passedStep("Clicked on OK button to save as draft");
 		}
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		base.CloseSuccessMsgpopup();
 		navigateToIngestionPage();
 
 		driver.waitForPageToBeReady();
@@ -4520,6 +4534,7 @@ public class IngestionPage_Indium {
 			base.passedStep("Clicked on OK button to save as draft");
 		}
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		base.CloseSuccessMsgpopup();
 		navigateToIngestionPage();
 
 		driver.waitForPageToBeReady();
@@ -4688,7 +4703,7 @@ public class IngestionPage_Indium {
 			getRunCopying().waitAndClick(10);
 
 			base.VerifySuccessMessage("Ingestion copy has Started.");
-
+			
 			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -4830,6 +4845,7 @@ public class IngestionPage_Indium {
 
 		base.VerifySuccessMessage(
 				"Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+		base.CloseSuccessMsgpopup();
 		base.passedStep("Rollback Done Successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4951,14 +4967,18 @@ public class IngestionPage_Indium {
 		getFilterByAPPROVED().waitAndClick(5);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
+		base.waitTime(3);
 
 		try {
+			base.waitForElement(ingestionPaginationNext());
 			String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
 			String previousbuttonStatus = ingestionPaginationPrevious().GetAttribute("class").trim();
 			if (nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")
@@ -4968,7 +4988,9 @@ public class IngestionPage_Indium {
 				int currentPageNumber = Integer.parseInt(currentActivePage().getText());
 				ingestionNextButton().waitAndClick(5);
 				base.stepInfo("Clicked Next button");
-				base.waitTime(2);
+				driver.waitForPageToBeReady();
+				base.waitForElement(currentActivePage());
+				base.waitTime(3);
 				int currentPageNumberAfterNext = Integer.parseInt(currentActivePage().getText());
 				if (currentPageNumberAfterNext > currentPageNumber) {
 					base.passedStep("After clicking next button it displays next page");
@@ -4977,7 +4999,9 @@ public class IngestionPage_Indium {
 				}
 				ingestionPreviousButton().waitAndClick(5);
 				base.stepInfo("Clicked Previous button");
-				base.waitTime(2);
+				driver.waitForPageToBeReady();
+				base.waitForElement(currentActivePage());
+				base.waitTime(3);
 				int currentPageNumberAfterPrevious = Integer.parseInt(currentActivePage().getText());
 				if (currentPageNumberAfterPrevious == currentPageNumber) {
 					base.passedStep("After clicking previous button it displays previous page");
@@ -4986,7 +5010,9 @@ public class IngestionPage_Indium {
 				}
 				moveToNextPage().waitAndClick(5);
 				base.stepInfo("Clicked Next available page number");
-				base.waitTime(2);
+				driver.waitForPageToBeReady();
+				base.waitForElement(currentActivePage());
+				base.waitTime(3);
 				int currentPageAfterPagination = Integer.parseInt(currentActivePage().getText());
 				if (currentPageAfterPagination > currentPageNumber) {
 					base.passedStep("After clicking next available page number , it displays particular page");
@@ -5063,7 +5089,9 @@ public class IngestionPage_Indium {
 	public void ingestionCopying() {
 
 		base.waitTime(2);
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitForElement(getActionDropdownArrow());
 		driver.scrollingToElementofAPage(getRunCopying());
 		base.waitForElement(getRunCopying());
 		getRunCopying().waitAndClick(10);
@@ -5080,6 +5108,8 @@ public class IngestionPage_Indium {
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByCOPIED());
 		getFilterByCOPIED().waitAndClick(10);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
 
 		// copying
 		for (int i = 0; i < 50; i++) {
@@ -5140,6 +5170,7 @@ public class IngestionPage_Indium {
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitTime(5);
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		//start approve
@@ -5164,12 +5195,14 @@ public class IngestionPage_Indium {
 				base.waitTime(2);
 			}
 			String status = getStatus(j).getText().trim();
+			base.waitForElement(getRefreshButton());
 			getRefreshButton().waitAndClick(5);
 			if (status.contains("Approved")) {
 				base.passedStep("Approve completed for ingestion");
 				break;
 			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
+				base.waitForElement(getRefreshButton());
 				getRefreshButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
 			} else if (status.contains("Failed")) {
@@ -5184,6 +5217,7 @@ public class IngestionPage_Indium {
 	 */
 	public void verifyRollbackOptionForApprovedIngestion() {
 
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(5);
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(5);
@@ -5513,15 +5547,20 @@ public class IngestionPage_Indium {
 		getFilterByPUBLISHED().waitAndClick(10);
 		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(10);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestionPaginationNextButton());
 		base.waitTime(2);
+		base.waitForElement(gridTable());
 		String gridsizeBefore = gridTable().GetAttribute("style");
 		System.out.println(gridsizeBefore);
 
 		driver.Manage().window().maximize();
-		base.waitTime(2);
+		base.waitTime(3);
+		base.waitForElement(gridTable());
 		String gridsizeAfter = gridTable().GetAttribute("style");
 		System.out.println(gridsizeAfter);
 		if (gridsizeBefore.equalsIgnoreCase(gridsizeAfter)) {
@@ -5574,6 +5613,7 @@ public class IngestionPage_Indium {
 		getFilterByCATALOGED().waitAndClick(10);
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		// catlogging
@@ -5590,6 +5630,7 @@ public class IngestionPage_Indium {
 				break;
 			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
+				base.waitForElement(getRefreshButton());
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 			} else if (status.contains("Failed")) {
@@ -5613,7 +5654,7 @@ public class IngestionPage_Indium {
 				}
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
-				
+				base.waitForElement(getRefreshButton());
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				for(int j=1;j<=30;j++) {
@@ -5625,6 +5666,7 @@ public class IngestionPage_Indium {
 					}
 					else if(status.contains("Failed")) {
 						base.waitTime(1);
+						base.waitForElement(getRefreshButton());
 						getRefreshButton().waitAndClick(10);
 						driver.waitForPageToBeReady();
 					}
@@ -5645,6 +5687,7 @@ public class IngestionPage_Indium {
 		getFilterByCOPIED().waitAndClick(10);
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		//start copying
@@ -5658,6 +5701,7 @@ public class IngestionPage_Indium {
 		base.VerifySuccessMessage("Ingestion copy has Started.");
 		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(10);
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 400; i++) {
@@ -5728,6 +5772,7 @@ public class IngestionPage_Indium {
 	 *               the copying table column
 	 */
 	public void verifyDataPresentInCopyTableColumn(String term, String type) {
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getIngestionDetailPopup(1));
@@ -6145,6 +6190,7 @@ public class IngestionPage_Indium {
 		doneButton().waitAndClick(10);
 
 		base.VerifySuccessMessage("Action done successfully");
+		base.CloseSuccessMsgpopup();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return errorCountCatalogingStage().Enabled();
@@ -6298,6 +6344,7 @@ public class IngestionPage_Indium {
 	public void verifyStatusUpdatenInIngestionDetailPopup(String ingestionStage) {
 
 		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
 
@@ -6433,6 +6480,7 @@ public class IngestionPage_Indium {
 		base.passedStep("Clicked on Next button");
 
 		String warningMessage = mappingWarningMessage().getText();
+		System.out.println(warningMessage);
 		if (warningMessage.contains(Input.mappingWarningMessage)) {
 			base.passedStep("warning message displayed if configure mapping is not matched");
 		} else {
@@ -7089,12 +7137,10 @@ public class IngestionPage_Indium {
 	 *               approving stage
 	 */
 	public String verifyApprovedStatusForOverlayIngestion() {
+		
+		driver.waitForPageToBeReady();
 		//apply filter for approved stage
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
 		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(5);
@@ -7106,15 +7152,19 @@ public class IngestionPage_Indium {
 		getFilterByINDEXED().waitAndClick(10);
 		base.waitForElement(getFilterByAPPROVED());
 		getFilterByAPPROVED().waitAndClick(10);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(5);
 		base.waitTime(2);
 
 		getRefreshButton().waitAndClick(5);
+		base.waitForElement(getIngestionDetailPopup(1));
 		String ingestionName=getIngestionNameFromPopup();
 		String statusOfIngestion = getStatus(1).getText().trim();
 		for (int i = 0; i < 250; i++) {
 			base.waitTime(5);
 			getRefreshButton().waitAndClick(5);
 			base.waitTime(2);
+			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
 			if (status.contains("Cataloged")) {
@@ -7134,6 +7184,7 @@ public class IngestionPage_Indium {
 
 			} else if (status.contains("Approved")) {
 				base.passedStep("Approved completed");
+				statusOfIngestion=status;
 				break;
 
 			} else if (status.contains("In Progress")) {
@@ -7426,10 +7477,12 @@ public class IngestionPage_Indium {
 		getFilterByFAILED().waitAndClick(10);
 		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
-
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getRefreshButton());
 		getRefreshButton().waitAndClick(5);
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 70; i++) {
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Cataloged")) {
@@ -7451,8 +7504,9 @@ public class IngestionPage_Indium {
 				}
 				break;
 			} else {
-				base.waitTime(5);
+				base.waitTime(2);
 				getRefreshButton().waitAndClick(10);
+				base.waitForElement(getIngestionDetailPopup(1));
 			}
 		}
 		getCloseButton().waitAndClick(10);
@@ -8527,9 +8581,10 @@ public class IngestionPage_Indium {
 			base.waitForElement(getActionDropdownArrow());
 			getActionDropdownArrow().waitAndClick(10);
 			base.waitForElement(getActionDelete());
+			getDropdownOptionStatus(getActionDelete());
 			getActionDelete().waitAndClick(5);
 			
-			if (getApproveMessageOKButton().isElementAvailable(5)) {
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
 				getApproveMessageOKButton().waitAndClick(10);
 				base.passedStep("Clicked on OK button to delete ingestion");
 			}
@@ -9200,6 +9255,7 @@ public class IngestionPage_Indium {
 
 			for (int i = 0; i < 60; i++) {
 				base.waitTime(3);
+				base.waitForElement(getIngestionDetailPopup(1));
 				String status = getStatus(1).getText().trim();
 
 				if (status.contains("Draft")) {
@@ -9225,7 +9281,7 @@ public class IngestionPage_Indium {
 			getActionDropdownArrow().waitAndClick(5);
 			base.waitForElement(getActionRollBack());
 			getActionRollBack().waitAndClick(10);
-			if (getApproveMessageOKButton().isElementAvailable(5)) {
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
 				getApproveMessageOKButton().waitAndClick(10);
 				base.passedStep("Clicked on OK button to rollback ingestion");
 			}
@@ -9324,7 +9380,7 @@ public class IngestionPage_Indium {
 		
 		public void releaseAllIngestedDocsFromSecurityGroup() {
 			// unreleasing the documents from security group
-			base.selectproject();
+			base.selectproject(Input.ingestDataProject);
 			driver.waitForPageToBeReady();
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchStringStar);
@@ -9643,7 +9699,7 @@ public class IngestionPage_Indium {
 		 */
 		public void getDropdownOptionStatus(Element element) {
 			String optionStatus = element.GetAttribute("class");
-			for(int i=1;i<=10;i++) {
+			for(int i=1;i<=20;i++) {
 				if(optionStatus.contains("disable")) {
 					base.waitTime(1);
 				}
@@ -9698,14 +9754,16 @@ public class IngestionPage_Indium {
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			for (int i = 0; i < 200; i++) {
-				base.waitTime(1);
+				base.waitTime(2);
 				base.waitForElement(getIngestionDetailPopup(1));
 				String status = getStatus(1).getText().trim();
 				if (status.contains("Indexed")) {
 					base.passedStep("Indexing completed");
+					base.waitForElement(getCloseButton());
+					getCloseButton().waitAndClick(10);
 					break; 
 				} else if (status.contains("In Progress")){
-					base.waitTime(5);
+					base.waitTime(3);
 					getRefreshButton().waitAndClick(10);
 					driver.waitForPageToBeReady();
 				}else if (status.contains("Failed")) {

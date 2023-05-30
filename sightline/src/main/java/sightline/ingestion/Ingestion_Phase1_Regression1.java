@@ -66,7 +66,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49549",enabled = true, groups = { "regression" })
-	public void verifyDateFormatForIngestionWithSameDATFile() throws Exception {
+	public void TCG3verifyDateFormatForIngestionWithSameDATFile() throws Exception {
 		
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
@@ -90,7 +90,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49548",enabled = true, groups = { "regression" })
-	public void verifyDateFormatForIngestionWithSameDATFileAndRollBack() throws Exception {
+	public void TCG2verifyDateFormatForIngestionWithSameDATFileAndRollBack() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -112,7 +112,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify that if document has multipage TIFF then in Copying stage of Ingestion ,it should displays the 'Stitched TIFFs' under the Copy column.
 	 */
 	@Test(description ="RPMXCON-49702",enabled = true,  groups = {"regression" } )
-	public void verifyStitchedTiffTermUnderCopyColumn() throws InterruptedException  {
+	public void TCC3verifyStitchedTiffTermUnderCopyColumn() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -122,7 +122,8 @@ public class Ingestion_Phase1_Regression1 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
 			//rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
@@ -137,7 +138,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49537",enabled = true, groups = { "regression" })
-	public void verifyCatalogingErrorSelectedDateFormateIsDifferentThanInDAT() throws Exception {
+	public void TCG1verifyCatalogingErrorSelectedDateFormateIsDifferentThanInDAT() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -159,7 +160,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49518",enabled = true, groups = { "regression" })
-	public void verifyDateFormateYYYYDDMMWithSlashInIngestionSameAsInDATFile() throws Exception {
+	public void TCF9verifyDateFormateYYYYDDMMWithSlashInIngestionSameAsInDATFile() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -181,7 +182,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49515",enabled = true, groups = { "regression" })
-	public void verifyDateFormateMMDDYYYYInIngestionSameAsInDATFile() throws Exception {
+	public void TCF8verifyDateFormateMMDDYYYYInIngestionSameAsInDATFile() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -202,7 +203,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49514",enabled = true, groups = { "regression" })
-	public void verifyDateFormateDDMMYYYYWithSlashInIngestionSameAsInDATFile() throws Exception {
+	public void TCF7verifyDateFormateDDMMYYYYWithSlashInIngestionSameAsInDATFile() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -223,7 +224,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49513",enabled = true, groups = { "regression" })
-	public void verifyDateFormateMMDDYYYYWithSlashInIngestionSameAsInDATFile() throws Exception {
+	public void TCF6verifyDateFormateMMDDYYYYWithSlashInIngestionSameAsInDATFile() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -244,7 +245,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49517",enabled = true, groups = { "regression" })
-	public void verifyDateFormateYYYYMMDDWithSlashInIngestionSameAsInDATFile() throws Exception {
+	public void TCF5verifyDateFormateYYYYMMDDWithSlashInIngestionSameAsInDATFile() throws Exception {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -266,7 +267,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-49506",enabled = true, groups = { "regression" })
-	public void verifyNextButtonFromIngestionWizard() throws Exception{
+	public void TCF4verifyNextButtonFromIngestionWizard() throws Exception{
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -284,7 +285,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49733",enabled = true,  groups = {"regression" } )
-	public void verifyStitchedTiffCountUnderCopyColumn() throws InterruptedException   {
+	public void TCC4verifyStitchedTiffCountUnderCopyColumn() throws InterruptedException   {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -294,7 +295,8 @@ public class Ingestion_Phase1_Regression1 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
-			ingestionPage.IngestionCatlogtoCopying(Input.TiffImagesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
 			//rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
@@ -309,7 +311,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49522",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatMMDDYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCF3verifyDateFormatMMDDYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -331,7 +333,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49523",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatDDMMYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCF2verifyDateFormatDDMMYYYYHHMIInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -353,7 +355,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49525",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatDDMMYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCF1verifyDateFormatDDMMYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -375,7 +377,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49527",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforMMDDYYYYWithSlashFormat() throws InterruptedException  {
+	public void TCE9verifyCatalogingErrorDisplayforMMDDYYYYWithSlashFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -396,7 +398,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49528",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforDDMMYYYYWithSlashFormat() throws InterruptedException  {
+	public void TCE8verifyCatalogingErrorDisplayforDDMMYYYYWithSlashFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -418,7 +420,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49529",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforMMDDYYYYFormat() throws InterruptedException  {
+	public void TCE7verifyCatalogingErrorDisplayforMMDDYYYYFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -440,7 +442,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49530",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforDDMMYYYYFormat() throws InterruptedException  {
+	public void TCE6verifyCatalogingErrorDisplayforDDMMYYYYFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -462,7 +464,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49531",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforYYYYMMDDWithSlashFormat() throws InterruptedException  {
+	public void TCE5verifyCatalogingErrorDisplayforYYYYMMDDWithSlashFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -484,7 +486,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49532",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforYYYYDDMMWithSlashFormat() throws InterruptedException  {
+	public void TCE4verifyCatalogingErrorDisplayforYYYYDDMMWithSlashFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -506,7 +508,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49533",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforMMDDYYYYHHMIFormat() throws InterruptedException  {
+	public void TCE3verifyCatalogingErrorDisplayforMMDDYYYYHHMIFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -528,7 +530,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49534",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforDDMMYYYYHHMIFormat() throws InterruptedException  {
+	public void TCE2verifyCatalogingErrorDisplayforDDMMYYYYHHMIFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -550,7 +552,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49535",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforMMDDYYYYHHMISSFormat() throws InterruptedException  {
+	public void TCE1verifyCatalogingErrorDisplayforMMDDYYYYHHMISSFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -572,7 +574,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49536",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorDisplayforDDMMYYYYHHMISSFormat() throws InterruptedException  {
+	public void TCD9verifyCatalogingErrorDisplayforDDMMYYYYHHMISSFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -594,7 +596,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49516",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatDDMMYYYYInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCD8VerifyDateFormatDDMMYYYYInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -615,7 +617,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49540",enabled = true,  groups = {"regression" } )
-	public void verifyCatalogingErrorForDiferentDateFormat() throws InterruptedException  {
+	public void TCD7verifyCatalogingErrorForDiferentDateFormat() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -637,7 +639,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49541",enabled = true,  groups = {"regression" } )
-	public void verifyIgnoringCatalogingErrorAndContinueIngestion() throws InterruptedException  {
+	public void TCC5verifyIgnoringCatalogingErrorAndContinueIngestion() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -664,7 +666,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws Exception 
 	 */
 	@Test(description ="RPMXCON-47403",enabled = true,  groups = {"regression" } )
-	public void verifyHeadersDisplayOnMappingPage() throws Exception  {
+	public void TCD6verifyHeadersDisplayOnMappingPage() throws Exception  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -683,7 +685,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :To Verify Rollback in Ingestion after Copy is completed.
 	 */
 	@Test(description ="RPMXCON-48176",enabled = true,  groups = {"regression" } )
-	public void verifyRollbackAfterCopyCompleted() throws InterruptedException  {
+	public void TCA1verifyRollbackAfterCopyCompleted() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -693,7 +695,8 @@ public class Ingestion_Phase1_Regression1 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			//rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
 		}
@@ -706,7 +709,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :To Verify Ingestion details information after rollback
 	 */
 	@Test(description ="RPMXCON-48174",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionDetailsAfterRollback() throws InterruptedException  {
+	public void TCA2verifyIngestionDetailsAfterRollback() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -716,7 +719,8 @@ public class Ingestion_Phase1_Regression1 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			// Rollback and verify ingestion details
 			ingestionPage.rollBackIngestion();
@@ -730,7 +734,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :To verify that Admin is able to Rollback the ongoing Ingestion process.
 	 */
 	@Test(description ="RPMXCON-46932",enabled = false,  groups = {"regression" } )
-	public void verifyAdminAbleToRollbackIngestion() throws InterruptedException  {
+	public void TCA3verifyAdminAbleToRollbackIngestion() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -745,11 +749,13 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.performRollbackAndDeleteIngestion();
 			//Copying and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.performRollbackAndDeleteIngestion();
 			//indexing and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.performRollbackAndDeleteIngestion();
 		}
@@ -766,7 +772,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * must be selected in the mapping and  Verify the navigation upon selection of 'Go Back' option
 	 */
 	@Test(description ="RPMXCON-47300",enabled = true,  groups = {"regression" } )
-	public void verifyMappingFieldsWithGoBackOption() throws InterruptedException  {
+	public void TCD5verifyMappingFieldsWithGoBackOption() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -785,7 +791,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-47595",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionStatusAfterRollback() throws InterruptedException   {
+	public void TCA4verifyIngestionStatusAfterRollback() throws InterruptedException   {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -806,13 +812,15 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.deleteIngestion();
 			//Verify ingestion Draft status after Copying
 			ingestionPage.IngestionFromDraftMode();
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
 			//delete ingestion
 			ingestionPage.deleteIngestion();
 			// Verify ingestion Draft status after indexing
 			ingestionPage.IngestionFromDraftMode();
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
 			//delete ingestion
@@ -828,7 +836,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49020",enabled = true,  groups = {"regression" } )
-	public void verifyTwoIngestionFromCatalogToIndexingSimultaneously() throws InterruptedException   {
+	public void TCA5verifyTwoIngestionFromCatalogToIndexingSimultaneously() throws InterruptedException   {
 		
 		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
 		
@@ -855,7 +863,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49021",enabled = true,  groups = {"regression" } )
-	public void verifyTwoIngestionRunSimultaneously() throws InterruptedException   {
+	public void TCA6verifyTwoIngestionRunSimultaneously() throws InterruptedException   {
 		
 		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
 		
@@ -886,7 +894,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)
 	 */
 	@Test(description ="RPMXCON-48861",enabled = true,  groups = {"regression" } )
-	public void verifyWarningMessageNotPromptedWhenRollingbackIngestion() throws InterruptedException  {
+	public void TCA7verifyWarningMessageNotPromptedWhenRollingbackIngestion() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -903,13 +911,15 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.deleteIngestion();
 			//Copying and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
 			//delete ingestion
 			ingestionPage.deleteIngestion();
 			//indexing and rollback
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
 			//delete ingestion
@@ -925,7 +935,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-47593",enabled = true,  groups = {"regression" } )
-	public void verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
+	public void TCA8verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -945,13 +955,15 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.performRollbackAndDeleteIngestion();
 			//Verify rollback option status after Copying stage
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.verifyRollbackOptionStatus();
 			// rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
 			// Verify rollback option status after indexing stage
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ingestionCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyRollbackOptionStatus();	
 			// rollback and delete ingestion
@@ -966,7 +978,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-47258",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionTileContentInHomePage() throws InterruptedException {
+	public void TCA9verifyIngestionTileContentInHomePage() throws InterruptedException {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -990,7 +1002,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Ingestion error list changes for  ignore fields in UI
 	 */
 	@Test(description ="RPMXCON-47589",enabled = true,  groups = {"regression" } )
-	public void verifyIgnoreOptionInErrorList() throws InterruptedException  {
+	public void TCB1verifyIgnoreOptionInErrorList() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1016,7 +1028,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49526",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCD4verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1036,7 +1048,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify that after resize browser Ingestion grid does not resize
 	 */
 	@Test(description ="RPMXCON-50764",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionGridAfterResizeBrowser()  {
+	public void TCD3verifyIngestionGridAfterResizeBrowser()  {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
 		loginPage.logout();
@@ -1060,7 +1072,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion
 	 */
 	@Test(description ="RPMXCON-49732",enabled = true,  groups = {"regression" } )
-	public void verifyStitchedTiffDocCountAfterRollback() throws InterruptedException  {
+	public void TCB2verifyStitchedTiffDocCountAfterRollback() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1069,12 +1081,13 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
-			ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffLoadFile,"false");
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyDataPresentInCopyTableColumn(Input.StitchedTIFF, "source");
 			ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
 			ingestionPage.verifyValueInCopyingSectionAfterRollback(Input.StitchedTIFF);
+			ingestionPage.deleteIngestion();
 		}
 		loginPage.logout();
 		}
@@ -1084,7 +1097,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
 	 */
 	@Test(description ="RPMXCON-49497",enabled = true,  groups = {"regression" } )
-	public void verifyGeneratedSearchablePDFsErrorCountForTiff() throws InterruptedException  {
+	public void TCB3verifyGeneratedSearchablePDFsErrorCountForTiff() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1108,7 +1121,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
 	 */
 	@Test(description ="RPMXCON-49496",enabled = true,  groups = {"regression" } )
-	public void verifyGeneratedSearchablePDFsDocumentCountForTiff() throws InterruptedException  {
+	public void TCB4verifyGeneratedSearchablePDFsDocumentCountForTiff() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1132,7 +1145,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option
 	 */
 	@Test(description ="RPMXCON-59385",enabled = true,  groups = {"regression" } )
-	public void verifyErrorStatusWhenPdfPathInDatOption() throws InterruptedException  {
+	public void TCD2verifyErrorStatusWhenPdfPathInDatOption() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1148,7 +1161,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Ingestion with draft mode.
 	 */
 	@Test(description ="RPMXCON-47296",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionWithDraftMode() throws InterruptedException  {
+	public void TCD1verifyIngestionWithDraftMode() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1167,7 +1180,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :Verify Successful ingestion with ingestion details display with the help of Valid data and DAT file.
 	 */
 	@Test(description ="RPMXCON-47299",enabled = true,  groups = {"regression" } )
-	public void verifyIngestionDetailWithValidData() throws InterruptedException  {
+	public void TCC9verifyIngestionDetailWithValidData() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1186,7 +1199,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Description :To verify indexing for the Text file from Ingestion details pop up.
 	 */
 	@Test(description ="RPMXCON-47406",enabled = true,  groups = {"regression" } )
-	public void verifyIndexingForTextFile() throws InterruptedException  {
+	public void TCB5verifyIndexingForTextFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1212,7 +1225,7 @@ public class Ingestion_Phase1_Regression1 {
      * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-49524",enabled = true,  groups = {"regression" } )
-	public void verifyDateFormatMMDDYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+	public void TCC8verifyDateFormatMMDDYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1234,7 +1247,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-47590",enabled = true,  groups = {"regression" } )
-	public void verifyOptionsForErrorListedIngestion() throws InterruptedException  {
+	public void TCC7verifyOptionsForErrorListedIngestion() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1256,7 +1269,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * user is able to access all page by navigation controls.
 	 */
 	@Test(description ="RPMXCON-47362",enabled = true, groups = { "regression" } )
-	public void verifyIngestionHomePageNavigation() {
+	public void TCC6verifyIngestionHomePageNavigation() {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1274,7 +1287,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * copying, and Indexing Section in Ingestion Details Page
 	 */
 	@Test(description ="RPMXCON-47566",enabled = true, groups = { "regression" } )
-	public void verifyStatusUpdateInPopup() throws InterruptedException {
+	public void TCB6verifyStatusUpdateInPopup() throws InterruptedException {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1306,7 +1319,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47404",enabled = true, groups = { "regression" } )
-	public void verifyConfigureMappingWarningMessage() throws InterruptedException {
+	public void TCB7verifyConfigureMappingWarningMessage() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1333,7 +1346,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException 
 	 */
 	@Test(description ="RPMXCON-48175",enabled = true, groups = { "regression" } )
-	public void verifyRollbackReadOnlyAttribute() throws InterruptedException {
+	public void TCB8verifyRollbackReadOnlyAttribute() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1362,7 +1375,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Searchable PDFs" row on Ingestion details pop up
 	 */
 	@Test(description ="RPMXCON-49703",enabled = true, groups = { "regression" } )
-	public void verifyStitchedTiffBeforeGeneratedSearchablePDFs() throws InterruptedException {
+	public void TCB9verifyStitchedTiffBeforeGeneratedSearchablePDFs() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1373,7 +1386,7 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
-			ingestionPage.tiffImagesIngestion(Input.DATFile4, Input.tiffLoadFile, "true");
+			ingestionPage.tiffImagesIngestion(Input.DATFile3, Input.tiffLoadFile, "true");
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyTermPositionInCopyColumn(Input.StitchedTIFF);
@@ -1389,7 +1402,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * Window for media ;audio & Transcript Count.
 	 */
 	@Test(description ="RPMXCON-48194",enabled = true, groups = { "regression" } )
-	public void verifyMediaAndTranscriptDetailInPopup() throws InterruptedException {
+	public void TCC1verifyMediaAndTranscriptDetailInPopup() throws InterruptedException {
 
 		String[] selectedTerm = { "Native", "Text", "MP3 Variant", "Audio Transcript" };
 		String[] unselectedTerm = { "PDF", Input.StitchedTIFF, Input.generateSearchablePDF };
@@ -1424,7 +1437,7 @@ public class Ingestion_Phase1_Regression1 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47402",enabled = true, groups = { "regression" } )
-	public void verifyCopyIngestionUsingNewApproach() throws InterruptedException {
+	public void TCC2verifyCopyIngestionUsingNewApproach() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
 		baseClass.stepInfo("Logged in as PA");
@@ -1438,6 +1451,8 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
 					Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.performRollbackAndDeleteIngestion();
 		}
 		loginPage.logout();
 	}
