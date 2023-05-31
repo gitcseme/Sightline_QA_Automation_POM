@@ -844,6 +844,8 @@ public class Export_Phase1_Regression {
 	 */
 	@Test(description = "RPMXCON-50330", groups = { "regression" })
 	public void verifyTIFFExportWithBurnRedactionEnabled() throws Exception {
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
 		base = new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-50330");
 		base.stepInfo(
@@ -856,8 +858,7 @@ public class Export_Phase1_Regression {
 		String exportname = Input.randomText + Utility.dynamicNameAppender();
 		String prefixID = Utility.randomCharacterAppender(25);
 		String suffixID = Utility.randomCharacterAppender(25);
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
+		
 
 		base.stepInfo("Login with RMU");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);

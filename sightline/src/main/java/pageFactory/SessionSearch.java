@@ -560,7 +560,7 @@ public class SessionSearch {
 	}
 
 	public ElementCollection getTree() {
-		return driver.FindElementsByXPath("//li[contains(@id,'-1g') or contains(@id,'1g')]/ul[@class='jstree-children']/li/a");
+		return driver.FindElementsByXPath("//a[@class='jstree-anchor']");
 	}
 
 	public ElementCollection getSecurityNamesTree() {
@@ -687,6 +687,18 @@ public class SessionSearch {
 	public Element getWP_SelectTagName(String TagName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + TagName + "')]");
 	}
+	
+	public Element getDefaultTag() {
+		return driver.FindElementByXPath("//a[contains(text(),'Default Tags')]");
+	}
+
+	public Element getDefaultTagsArrow() {
+		return driver.FindElementByXPath("//li[@id='1g']//i[@class='jstree-icon jstree-ocl']");
+	}
+	
+	public Element getPrivilegedTag() {
+		return driver.FindElementByXPath("//a[@data-content='Privileged']");
+	}
 
 	public Element getWP_SelectRedactionName(String redactName) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'" + redactName + "')]");
@@ -764,6 +776,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]");
 	}
 	
+
 	public Element getQueryAlertGetTextSingleLine() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
 	}
@@ -986,6 +999,12 @@ public class SessionSearch {
 	// get select all folder option from tree
 	public Element getSelectAllFoldersOption() {
 		return driver.FindElementByXPath("//div[@id='folderJSTree']//a[text()='All Folders']");
+		//return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
+	}
+	
+	//get select all folder option2 from tree added on 23/05/2023
+	public Element getSelectAllFoldersOption2() {
+		return driver.FindElementByXPath("//a[@id='-1g_anchor']"); 
 	}
 
 	// added on 28/9/21
@@ -1201,7 +1220,7 @@ public class SessionSearch {
 	}
 
 	public Element getCreatedNode(String nodeName) {
-		return driver.FindElementByXPath("//a[text()='" + nodeName + "']");
+		return driver.FindElementByXPath("//a[contains(text(),'"+nodeName+"')]");
 	}
 
 	public Element getExpandCurrentNode() {
@@ -1355,10 +1374,16 @@ public class SessionSearch {
 				.FindElementByXPath("(//a[@class='jstree-anchor']/ancestor::ul//ul[@class='jstree-children']/li/a)[1]");
 
 	}
-
+	
 	public Element getSavedSearchQueryAS() {
-		//return driver.FindElementByXPath("//span[@class='editable editable-click']");
-		return driver.FindElementByXPath("//ul[@id='xEdit']/li/input"); 
+		return driver.FindElementByXPath("//ul[@id='xEdit']/li/span[@class='editable editable-click']");
+	}
+	
+	
+
+	public Element getSavedSearchQueryAS1() {
+		return driver.FindElementByXPath("//span[@class='editable editable-click']");
+		
 	}
 
 	public Element getValueTextArea() {
@@ -1581,7 +1606,7 @@ public class SessionSearch {
 
 	// Method to avoid abnormal termination
 	public Element getSavedSearchNameResult(String savedSearchName) {
-		return driver.FindElementByXPath("//a[text()='" + savedSearchName + "']");
+		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchName + "')]");
 	}
 
 	// Added by Gopinath - 23/12/2021
@@ -2266,7 +2291,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='-1g']//i");
 	}
 	public Element savedSearchWPNodeExpansion(String node) {
-		return driver.FindElementByXPath("//a[text()='"+node+"']/preceding-sibling::i");
+		return driver.FindElementByXPath("//a[contains(text(),'"+node+"')]/preceding-sibling::i");
 	}
 	public Element assignmentWPNodeExpansion() {
 		return driver.FindElementByXPath("//a[text()='Root']/preceding-sibling::i");
@@ -3146,16 +3171,50 @@ public class SessionSearch {
 				return getTree_savedSearch().Visible();
 			}
 		}), Input.wait30);
-		System.out.println("newNode"+SaveName);
-
+		
+		base.waitForElement(getCreatedNode(SaveName));
 		driver.javascriptScrollTo(getCreatedNode(SaveName));
-		base.waitForElement(savedSearchWPNodeExpansion(SaveName));
-		savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
+			base.waitForElement(savedSearchWPNodeExpansion(SaveName));
+			savedSearchWPNodeExpansion(SaveName).javascriptclick(savedSearchWPNodeExpansion(SaveName));
+		}
 		base.waitForElement(getCreatedNode(SaveName));
 		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
+		driver.scrollingToBottomofAPage();
 		// added on 16-8-21
+		driver.javascriptScrollTo(getMetaDataInserQuery());
 		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().waitAndClick(15);
+		getMetaDataInserQuery().javascriptclick(getMetaDataInserQuery());
+		// Click on Search button
+		driver.scrollPageToTop();
+	}
+	public void searchSavedSearch(final String SaveName,String Node) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearchBtn().Visible();
+			}
+		}), Input.wait60);
+		getSavedSearchBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTree_savedSearch().Visible();
+			}
+		}), Input.wait30);
+		System.out.println(SaveName);
+		base.waitForElement(savedSearchWPNodeExpansion(Node));
+		driver.javascriptScrollTo(savedSearchWPNodeExpansion(Node));
+		if(!(SaveName.equalsIgnoreCase("Shared with Default Security Group"))) {
+			base.waitForElement(savedSearchWPNodeExpansion(Node));
+			savedSearchWPNodeExpansion(Node).javascriptclick(savedSearchWPNodeExpansion(Node));
+		}
+		base.waitForElement(getCreatedNode(SaveName));
+		getCreatedNode(SaveName).javascriptclick(getCreatedNode(SaveName));
+		driver.scrollingToBottomofAPage();
+		// added on 16-8-21
+		driver.javascriptScrollTo(getMetaDataInserQuery());
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().javascriptclick(getMetaDataInserQuery());
 		// Click on Search button
 		driver.scrollPageToTop();
 	}
@@ -3921,17 +3980,17 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	public void selectTagInASwp(String tagName) {
+	public void selectTagInASwp(String tagName) throws InterruptedException{
 		base.waitForElement(getWP_TagBtn());
 		getWP_TagBtn().Click();
 		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getTree());
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(tagName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
+			if (iterable_element.getText().contains(tagName)) {				
+				//driver.scrollingToElementofAPage(iterable_element);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				break;
 			}
 		}
@@ -3940,6 +3999,24 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 
 	}
+	
+
+		// added on 24/05/2023
+		public void selectPrivTagInASwp(String tagName) throws InterruptedException {
+
+			base.waitForElement(getWP_TagBtn());
+			getWP_TagBtn().Click();
+			base.waitForElement(getDefaultTagsArrow());
+			getDefaultTagsArrow().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getPrivilegedTag());
+			getPrivilegedTag().Click();
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+			driver.scrollPageToTop();
+
+		}
 
 	public void selectFolderInASwp(String folderName) {
 		base.waitForElement(getWP_FolderBtn());
@@ -3949,9 +4026,9 @@ public class SessionSearch {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(folderName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
+				//driver.scrollingToElementofAPage(iterable_element);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+				
 				break;
 			}
 		}
@@ -4457,6 +4534,17 @@ public class SessionSearch {
 		base.selectproject();
 		switchToWorkproduct();
 		searchSavedSearch(saveSearchName);
+		UtilityLog.info("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+		base.stepInfo("Selected a saved search " + saveSearchName + "and inserted into query text box ");
+
+	}
+	
+	public void selectSavedsearchInASWp(String saveSearchName,String Node) {
+		base = new BaseClass(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.selectproject();
+		switchToWorkproduct();
+		searchSavedSearch(saveSearchName,Node);
 		UtilityLog.info("Selected a saved search " + saveSearchName + "and inserted into query text box ");
 		base.stepInfo("Selected a saved search " + saveSearchName + "and inserted into query text box ");
 
@@ -7154,7 +7242,7 @@ public class SessionSearch {
 		}
 
 		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(4)) {
-			getSavedSearch_MySearchesTabClosed().waitAndClick(5);
+			getSavedSearch_MySearchesTabClosed().javascriptclick(getSavedSearch_MySearchesTabClosed());
 		} else {
 			System.out.println("Already Expanded");
 		}
@@ -8242,6 +8330,7 @@ public class SessionSearch {
 		driver.waitForPageToBeReady();
 
 		if (notificationMsg.equals("ExecutionErrorInProgress")) {
+			base.waitForElement(base.getSuccessMsgHeader());
 			base.VerifyErrorMessage(Input.errMsgSinceExecutionInProgress);
 			base.stepInfo("User not able to save a session search onto an existing saved search that is progress.");
 
@@ -9281,7 +9370,7 @@ public class SessionSearch {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getWP_FolderBtn());
 			getWP_FolderBtn().Click();
-			selectFolderInTree(folderName);
+			selectFolderInTree(folderName); 
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataInserQuery());
 			getMetaDataInserQuery().ScrollTo();
@@ -9296,6 +9385,38 @@ public class SessionSearch {
 			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author 
+	 * @Description : this method used for performing advanced search by Allfolder.
+	 * @param folderName : folderName is String value that name of folder to perform
+	 *                   advanced search.
+	 */
+	public void advanceSearchByFolder2(String folderName) {
+		try {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			switchToWorkproduct();
+			base.stepInfo("Navigated to advance search and work product is clicked");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getWP_FolderBtn());
+			getWP_FolderBtn().Click();
+			getSelectAllFoldersOption2().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().ScrollTo();
+			getMetaDataInserQuery().waitAndClick(15);
+			base.passedStep("Folders are selected from tree and inserted into query");
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQuerySearchButton());
+			getQuerySearchButton().waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while performing advanced search by folder." + e.getMessage());
+		}
+	}
+	
+	
 
 	/**
 	 * @author Gopianth
@@ -9610,14 +9731,15 @@ public class SessionSearch {
 		base.selectproject();
 		switchToWorkproduct();
 		// searchSavedSearch(saveSearchName);
+		
 
 		driver.waitForPageToBeReady();
 		getSavedSearchBtn().Click();
-
+driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 		if (getSavedSearchNameResult(SaveName).isDisplayed()) {
 			System.out.println(getSavedSearchNameResult(SaveName).getText());
 		}
-		driver.scrollingToBottomofAPage();
+//		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 
 		getSavedSearchNameResult(SaveName).getWebElement().click();
@@ -9630,6 +9752,7 @@ public class SessionSearch {
 		base.stepInfo("Selected a saved search " + SaveName + "and inserted into query text box ");
 
 	}
+	
 
 	/**
 	 * @Author :Brundha

@@ -53,7 +53,7 @@
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
 	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
-	<mappingWarningMessage>Unique Document Code does not match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
+	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
 	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
 	<docIdKey>DOCID</docIdKey>
 	<selectNativeFile>natives.lst</selectNativeFile>
@@ -280,7 +280,8 @@
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>
-	<searchDocId>H16135-0188-001082</searchDocId>
+	<searchDocId>H16135-0188-001602</searchDocId>
+	<!-- added by Rakhim Kadyrov -->
 	<searchBulletDocId>ID00001228</searchBulletDocId>
 	<searchTestSG>TestingSG</searchTestSG>
 	<duplicateDocId>H16135-0188-001576</duplicateDocId>
@@ -826,6 +827,8 @@
 	<emailAddress2>CALXA@aol.com(CALXA@aol.com)</emailAddress2>
 	<emailDatFile>Large_39760.dat</emailDatFile>
 	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat</nonSearchablePdfLoadFile>
+	<bNum>BNum</bNum>
+	<cName>CName</cName>
 
 	<!-- Ingestion Related data END -->
 

@@ -574,7 +574,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getDocView_FolderActionPopup() {
 		return driver.FindElementById("divBulkAction");
 	}
-
+	public Element getRemarkDateandTime()
+	{ return driver.FindElementByXPath("//*[@id='newRemarks']//small");}
+	
 	public Element getDocView_ThreadedChild_Selectalldoc() {
 		return driver.FindElementById("threadMapSelectRows");
 	}
@@ -14580,7 +14582,46 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}
 
 	}
-
+	 public void RemarkVerification(String remark) throws InterruptedException {
+	    	base.waitForElement(getNonAudioRemarkBtn());
+	      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60);   
+	      softAssertion.assertTrue(getNonAudioRemarkBtn().Displayed());
+	   
+	 	base.waitForElement(getNonAudioRemarkBtn());
+	 	getNonAudioRemarkBtn().waitAndClick(15);
+	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+		 	System.out.println(getSelectRemarkDocArea().getText());
+		 try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+		 	Actions act=new Actions(driver.getWebDriver());
+		 	act.moveToElement(getSelectRemarkDocArea().getWebElement()).click();
+		 	act.build().perform();
+//		     getSelectRemarkDocArea().Click();
+		     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 			getAddRemarkbtn().Visible();}}), Input.wait30);   
+		     getAddRemarkbtn().waitAndClick(15);
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getRemarkTextArea().Visible();}}), Input.wait30);  
+	 	getRemarkTextArea().SendKeys(remark);
+	 	getSaveRemark().Click();
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+	 	System.out.println(getSelectRemarkDocArea().getText());
+	 	
+	 	getRemarkDateandTime().isElementPresent();
+		base.waitForElement(getRemarkDeletetIcon());
+	 	getRemarkDeletetIcon().waitAndClick(15);
+	 	
+	 	base.waitForElement(base.getPopupYesBtn());
+	 	base.getPopupYesBtn().waitAndClick(15);;
+			 // sa.assertAll();
+	    }	  
 	/**
 	 * @author Gopinath
 	 * @Description : Method for adding remark is added to document.
@@ -24404,23 +24445,36 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
 			driver.switchTo().window(winHandle);
 		}
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				driver.waitForPageToBeReady();
+				base.waitForElement(getNearDupeDocPageNumber());
+				String beforeNo = getNearDupeDocPageNumber().getText();
+				System.out.println(beforeNo);
+				base.waitForElement(getDocView_ChildPagination());
+				getDocView_ChildPagination().waitAndClick(10);
 
-		driver.waitForPageToBeReady();
-		base.waitForElement(getNearDupeDocPageNumber());
-		String beforeNo = getNearDupeDocPageNumber().getText();
-		System.out.println(beforeNo);
-		base.waitForElement(getDocView_ChildPagination());
-		getDocView_ChildPagination().waitAndClick(10);
+				base.waitForElement(getNearDupeDocPageNumber());
+				String afterNo = getNearDupeDocPageNumber().getText();
+				System.out.println(afterNo);
+				softAssertion.assertNotEquals(beforeNo, afterNo);
+				base.passedStep("Pagination is working near dupe child window Successfully");
+				driver.getWebDriver().close();
+				driver.switchTo().window(parentWindowID);
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				break;
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
+				driver.Navigate().refresh();
+			}
+		}
 
-		base.waitForElement(getNearDupeDocPageNumber());
-		String afterNo = getNearDupeDocPageNumber().getText();
-		System.out.println(afterNo);
-		softAssertion.assertNotEquals(beforeNo, afterNo);
-		base.passedStep("Pagination is working near dupe child window Successfully");
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
-		driver.getWebDriver().navigate().refresh();
-		driver.waitForPageToBeReady();
+		
 
 	}
 
@@ -27993,18 +28047,32 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
 			driver.switchTo().window(winHandle);
 		}
+		
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
+				getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
+				base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
 
-		base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
-		getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
-		base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
+				base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
+				getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
+				base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
 
-		base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
-		getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
-		base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
+				driver.getWebDriver().close();
 
-		driver.getWebDriver().close();
+				driver.switchTo().window(parentWindowID);
+				break;
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
+				driver.Navigate().refresh();
+			}
+		}
 
-		driver.switchTo().window(parentWindowID);
+		
 
 	}
 

@@ -249,6 +249,9 @@ public class Assignment_Regression3 {
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
 		agnmt.Checkclickedstatus(assignmentName1);
+		driver.Navigate().refresh();
+		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
+		agnmt.Checkclickedstatus(assignmentName1);
 		agnmt.assgnViewInAllDocView();
 		try {
 			Thread.sleep(1000);

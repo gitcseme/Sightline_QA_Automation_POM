@@ -1875,8 +1875,7 @@ public class ProductionPage {
 	}
 
 	public Element getChkBoxSelect(String tag) {
-		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element getbtnSelect() {
@@ -3033,6 +3032,10 @@ public class ProductionPage {
 	public Element getGenrateTIFFRadioButton() {
 		return driver.FindElementByXPath(
 				"//span//b[text()='Generate TIFF']/../..//input[@id='rbdGenerateTiff']/..//i");
+	}
+	
+	public Element getGenrateTIFFRadioButton1() {
+		return driver.FindElementByXPath("//*[@id='rbdGenerateTiff']");
 	}
 
 	public Element chkIsTIFFSelected() {
@@ -6210,12 +6213,12 @@ public class ProductionPage {
 		// asserting for disabled tag
 
 		base.waitForElement(getDisabledSelectRedactionTags());
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		String flag = getDisabledSelectRedactionTags().GetAttribute("class");
 		System.out.println(flag);
 		driver.waitForPageToBeReady();
@@ -17565,6 +17568,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
 
+		driver.scrollingToBottomofAPage();
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
 		getClkCheckBox_defaultRedactionTag().isDisplayed();
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
@@ -17581,7 +17585,7 @@ public class ProductionPage {
 		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
-		getDefaultTag().waitAndClick(10);
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
@@ -21063,7 +21067,7 @@ public class ProductionPage {
 		base.waitForElement(getChkBoxSelect(tagname));
 		getChkBoxSelect(tagname).waitAndClick(5);
 		base.waitForElement(getChkBoxSelect(Tagname2));
-		getChkBoxSelect(Tagname2).Click();
+		getChkBoxSelect(Tagname2).waitAndClick(5);
 		getbtnSelect().waitAndClick(10);
 		base.waitForElement(getInsertMetaDataLink());
 		getInsertMetaDataLink().Click();

@@ -1046,8 +1046,6 @@ public class TallyPage {
 		}), Input.wait30);
 		getTally_btnTallyApply().Click();
 
-		base.yesPopUp();
-
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_btnTallyAll().Visible();
@@ -1101,7 +1099,7 @@ public class TallyPage {
 		getTally_btnSubTallyApply().Click();
 
 		base = new BaseClass(driver);
-		base.yesPopUp();
+		//base.yesPopUp();
 
 		getTally_btnSubTallyAll().waitAndClick(30);
 
@@ -1127,11 +1125,7 @@ public class TallyPage {
 		}), Input.wait30);
 		getTally_SubTally_Action_ViewDocList().Click();
 
-		try {
-			getTallyContinue().waitAndClick(10);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
 		System.out.println("Navigated to Doclist page");
 		UtilityLog.info("Navigated to Doclist page");
 

@@ -70,8 +70,10 @@ public class SavedSearch_Phase1_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input in = new Input();
 		in.loadEnvConfig();
+		driver = new Driver();
 
 	}
 
@@ -561,7 +563,7 @@ public class SavedSearch_Phase1_Regression {
 		String exeDocCount;
 		String shareTo = Input.shareSearchPA;
 		String SearchName = "Search" + Utility.dynamicNameAppender();
-
+		
 		// Login as PA
 		login.loginToSightLine(username, password);
 		base.stepInfo("Test case Id: RPMXCON-57400 - Saved Search");
@@ -1087,7 +1089,7 @@ public class SavedSearch_Phase1_Regression {
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		base.stepInfo("-------Pre-requesties completed--------");
@@ -1112,7 +1114,7 @@ public class SavedSearch_Phase1_Regression {
 		base.stepInfo("ID verfication between shared searches");
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare,node, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair2);
 
 		login.logout();
@@ -4450,7 +4452,7 @@ public class SavedSearch_Phase1_Regression {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
 		// Open browser
-		driver = new Driver();
+		
 		base = new BaseClass(driver);
 		login = new LoginPage(driver);
 		saveSearch = new SavedSearch(driver);

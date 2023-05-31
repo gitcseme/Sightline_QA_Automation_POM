@@ -321,7 +321,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57407", groups = { "regression" })
 	public void verifyScheduleSearchAsPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57407");
@@ -367,7 +367,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57407", groups = { "regression" })
 	public void verifyScheduleSearchAsRMU() throws ParseException, InterruptedException {
 		String saveSearchName1 = "SearchRMU" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57407");
@@ -413,7 +413,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57411", groups = { "regression" })
 	public void verifyScheduleSearchPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57411");
@@ -453,7 +453,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57411", groups = { "regression" })
 	public void verifyScheduleSearchRMU() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57411");
@@ -492,7 +492,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57412", groups = { "regression" })
 	public void verifyScheduleSearchForDefaultTabPA() throws ParseException, InterruptedException {
 		String SearchNamePA = "SearchPA" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as pa
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case id: RPMXCON-57412");
@@ -540,7 +540,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-57412", groups = { "regression" })
 	public void verifyScheduleSearchForDefaultTabRMU() throws ParseException, InterruptedException {
 		String SearchNameRMU = "SearchRMU" + Utility.dynamicNameAppender();
-
+		SchedulesPage schedule=new SchedulesPage(driver);
 		// login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case id: RPMXCON-57412");
@@ -1729,6 +1729,7 @@ public class SavedSearch_Phase1_Regression3 {
 	@Test(description = "RPMXCON-48612", enabled = true, dataProvider = "AllTheUsers", groups = { "regression" })
 	public void validateErrorSearchViaBatchUpload(String username, String password, String fullName) throws Exception {
 		String file = saveSearch.renameFile(Input.errorQueryFileLocation);
+		
 		String statusToCheck = "ERROR";
 		String warningMessage = "The selected search is not yet completed successfully. Please select a valid completed search.";
 		int Bgcount;
@@ -1896,7 +1897,6 @@ public class SavedSearch_Phase1_Regression3 {
 		// Basic Search
 		int pureHit = session.basicContentSearch(Input.searchString4);
 		session.saveSearchInNewNode(savedSearchName, node1);
-
 		// Perform Bulk Assign
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.selectNode1(node1);
@@ -2021,7 +2021,7 @@ public class SavedSearch_Phase1_Regression3 {
 		saveSearch.navigateToSSPage();
 		saveSearch.selectNode1(nodeName);
 		saveSearch.getSavedSearchExecuteButton().javascriptclick(saveSearch.getSavedSearchExecuteButton());
-//		saveSearch.getExecuteContinueBtn().waitAndClick(10);
+		saveSearch.getExecuteContinueBtn().waitAndClick(10);
 		saveSearch.verifyStatusByReSearch(SearchName, statusToCheck, 5);
 		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
 
@@ -2713,7 +2713,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// Multiple Node Creation
 		saveSearch.navigateToSSPage();
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
-		nodeToSelect = newNodeList.get(nodeIndex);
+		nodeToSelect= newNodeList.get(nodeIndex);
 		System.out.println("Next adding searches to the created nodes");
 		base.stepInfo("Next adding searches to the created nodes");
 
@@ -3749,10 +3749,10 @@ public class SavedSearch_Phase1_Regression3 {
 		saveSearch.getCreatedNode(batchNodeToCheck).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		searchIDlist = base.availableListofElements(saveSearch.getGridDataList(searchIDindex));
-
+		
 		// Mapping Search id and count
 		mapPair = saveSearch.collectionOfSearchIdAndItsCount(searchIDlist, countIDindex);
-
+		
 		// Click the notifications to launch
 		base.waitForElement(batch.getBullHornIcon());
 		batch.getBullHornIcon().waitAndClick(10);
@@ -3762,7 +3762,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// verify Background Task page
 		base.verifyUrlLanding(expBGURL, "Navigated to My backgroud task page.", "Navigation Failed");
 		bgHeaderIndex = base.getIndex(saveSearch.getBGgridDataList(), "ACTUAL DOCS");
-
+		
 		// SearchID data comparision
 		saveSearch.SearchIdAndDataToCompare(searchIDlist, mapPair, bgHeaderIndex);
 

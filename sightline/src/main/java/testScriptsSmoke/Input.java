@@ -551,6 +551,8 @@ public class Input {
 	public static String emailGdDat;
 	public static String smallSetDat2;
 	public static String specialCjkDat;
+	public static String bNum;
+	public static String cName;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1829,6 +1831,8 @@ public class Input {
 		clientcollectionFirstName02 = testData.getClientcollectionFirstName02();
 		clientcollectionSecondName02 = testData.getClientcollectionSecondName02();
 		copyDSwithErr = testData.getCopyDSwithErr();
+		bNum = testData.getBNum();
+		cName = testData.getCName();
             
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

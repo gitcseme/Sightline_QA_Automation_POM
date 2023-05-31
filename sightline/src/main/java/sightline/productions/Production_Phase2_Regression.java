@@ -125,6 +125,7 @@ public class Production_Phase2_Regression {
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, batesWithHypen);
 		base.passedStep(
 				"verified that Audio production with Redaction should generate successfully if bates number contains Hypen");
+		loginPage.logout();
 	}
 
 	/**
@@ -177,6 +178,7 @@ public class Production_Phase2_Regression {
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, batesWithSpace);
 		base.passedStep(
 				"verified that Audio production with Redaction should generate successfully if bates number contains Space in between");
+		loginPage.logout();
 	}
 
 	/**
@@ -203,6 +205,7 @@ public class Production_Phase2_Regression {
 		page.addDATFieldAtSecondRow(Input.productionText, Input.tiffPageCountNam, Input.bates);
 		page.getComponentsMarkComplete().waitAndClick(5);
 		base.VerifyErrorMessage(expected);
+		loginPage.logout();
 	}
 
 	/**
@@ -240,6 +243,7 @@ public class Production_Phase2_Regression {
 		} else {
 			base.failedStep("Page level options are not displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -275,6 +279,7 @@ public class Production_Phase2_Regression {
 		} else {
 			base.failedStep("Email related source field not present");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -304,6 +309,7 @@ public class Production_Phase2_Regression {
 
 		// verify error message
 		base.VerifyErrorMessage(expectedMsg);
+		loginPage.logout();
 	}
 
 	/**
@@ -363,7 +369,7 @@ public class Production_Phase2_Regression {
 		String passMsg = "Saved Details are Retained after navigating back to Priv Guard page ";
 		String FailMsg = "Saved Details are not Retained";
 		base.listCompareEquals(valueAfterNavigate, valueBeforeNavigate, passMsg, FailMsg);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -401,6 +407,7 @@ public class Production_Phase2_Regression {
 		page.getNativeCheckBox(tagname).GetAttribute("class").contains("clicked");
 		base.passedStep(
 				"after clicking on InComplete button on Production Components, last selected Tags should be displayed");
+		loginPage.logout();
 	}
 
 	/**
@@ -446,6 +453,7 @@ public class Production_Phase2_Regression {
 		page.getbtnProductionGenerate().GetAttribute("disabled").contains("disabled");
 		base.passedStep(
 				"verified that after clicking on Generate button from Production-Generate tab, user cannot click on the Generate button again");
+		loginPage.logout();
 	}
 
 	/**
@@ -496,6 +504,7 @@ public class Production_Phase2_Regression {
 			base.failedStep(
 					"After clicking on Generate button from Production-Generate tab, status has not changed to  In Progress");
 		}
+		loginPage.logout();
 
 	}
 
@@ -529,7 +538,7 @@ public class Production_Phase2_Regression {
 		page.navigateToProductionPage();
 		page.getProdExport_ProductionSets().waitAndClick(10);
 		page.getProdExport_ProductionSets().selectFromDropdown().selectByIndex(1);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -586,7 +595,7 @@ public class Production_Phase2_Regression {
 		String docCountIncludingFamilies = page.navigatingToDocViewPage();
 		System.out.println(docCountIncludingFamilies);
 		base.passedStep("verified Production Document Selection to DocList");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -637,7 +646,7 @@ public class Production_Phase2_Regression {
 		softAssertion.assertAll();
 		base.passedStep(
 				"Verified Number of MP3 Files should be shown even when the count of MP3 Files among the selected document is 0.");
-
+		loginPage.logout();
 	}
 
 	////
@@ -695,6 +704,7 @@ public class Production_Phase2_Regression {
 		page.extractFile();
 		page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, lastFile, prefixID, suffixID, Input.searchString4);
 		base.stepInfo("verified placeholder in tiff");
+		loginPage.logout();
 	}
 
 	/**
@@ -776,6 +786,7 @@ public class Production_Phase2_Regression {
 			System.out.println("Automated QC check is available");
 		}
 		base.passedStep("verified QC Tab");
+		loginPage.logout();
 	}
 
 	/**
@@ -832,6 +843,7 @@ public class Production_Phase2_Regression {
 
 		}
 		base.passedStep("Bates Number is displayed on Production tile");
+		loginPage.logout();
 	}
 
 	/**
@@ -884,6 +896,7 @@ public class Production_Phase2_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Verified DAT section of a production configuration step availability of calculated fields");
+		loginPage.logout();
 	}
 
 	/**
@@ -940,6 +953,7 @@ public class Production_Phase2_Regression {
 		page.extractFile();
 		page.OCR_Verification_In_Generated_PDF(firstFile, lastFile, prefixID, suffixID, Input.searchString4);
 		base.stepInfo("verified placeholder in PDF");
+		loginPage.logout();
 	}
 
 	/**
@@ -995,6 +1009,7 @@ public class Production_Phase2_Regression {
 		page.extractFile();
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, beginningBates);
 		base.stepInfo("verified Bates Number Sync With Generates Files");
+		loginPage.logout();
 	}
 
 	/**
@@ -1053,6 +1068,7 @@ public class Production_Phase2_Regression {
 		page.extractFile();
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, datField);
 		base.stepInfo("Verified the key is the ID in generated load files,");
+		loginPage.logout();
 	}
 
 	/**
@@ -1123,6 +1139,7 @@ public class Production_Phase2_Regression {
 		if (redactedCount > count) {
 			base.passedStep("Redacted count displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1168,8 +1185,9 @@ public class Production_Phase2_Regression {
 		page.getTIFFChkBox().waitAndClick(10);
 		page.getTIFFTab().waitAndClick(10);
 		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
-		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+//		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 		page.verifyEnableNativelyProduceddocs();
+		page.tiffPrivilegeDocumentSelection(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		System.out.println("Bates Number is : " + beginningBates);
@@ -1193,9 +1211,10 @@ public class Production_Phase2_Regression {
 		page.getTIFFChkBox().waitAndClick(10);
 		page.getTIFFTab().waitAndClick(10);
 		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
-		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+//		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 		page.getPDFGenerateRadioButton().waitAndClick(10);
 		page.verifyEnableNativelyProduceddocs();
+		page.tiffPrivilegeDocumentSelection(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates2);
 		System.out.println("Bates Number is : " + beginningBates2);
@@ -1207,6 +1226,7 @@ public class Production_Phase2_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -1251,6 +1271,7 @@ public class Production_Phase2_Regression {
 
 		String defaultNewLineSeperator = page.defaultNewLineSeperator().getText();
 		System.out.println("Default New Line Seperator -" + defaultNewLineSeperator);
+		loginPage.logout();
 	}
 
 	/**
@@ -1309,6 +1330,7 @@ public class Production_Phase2_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		page.extractFile();
+		loginPage.logout();
 	}
 
 	/**
@@ -1697,7 +1719,7 @@ public class Production_Phase2_Regression {
 		base.clickButton(page.getAdvancedArrow("last"));
 		driver.scrollingToBottomofAPage();
 		page.verifyingToggleEnabledOrDisabled(page.getTranslationLSTToggle("last"), ActualColor);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1748,6 +1770,7 @@ public class Production_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		String name = page.getProduction().getText().trim();
+		System.out.println(name);
 		driver.waitForPageToBeReady();
 		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
 		page.isdatFileExist();
@@ -2858,6 +2881,7 @@ public class Production_Phase2_Regression {
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 
