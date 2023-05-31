@@ -245,8 +245,12 @@ public class Assignment_Regression3 {
 		ActualCount = sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
+		System.out.println(assignmentName1);
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
+		agnmt.Checkclickedstatus(assignmentName1);
+		driver.Navigate().refresh();
 		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
 		agnmt.Checkclickedstatus(assignmentName1);
 		agnmt.assgnViewInAllDocView();
