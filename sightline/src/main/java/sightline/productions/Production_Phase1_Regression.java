@@ -3394,6 +3394,7 @@ public class Production_Phase1_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -3469,6 +3470,7 @@ public class Production_Phase1_Regression {
 		} else {
 			base.failedStep("production in failed Status not Displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -4496,10 +4498,10 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		File Native1 = new File(
-				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".ogg");
+				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".doc");
 
 		if (Native1.exists()) {
-			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".ogg");
+			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".doc");
 			System.out.println("passeed");
 		} else {
 			base.failedStep("verification failed");
@@ -5317,6 +5319,7 @@ public class Production_Phase1_Regression {
 		loginPage.logout();
 		base.passedStep(
 				"Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
+		loginPage.logout();
 	}
 
 	/**
