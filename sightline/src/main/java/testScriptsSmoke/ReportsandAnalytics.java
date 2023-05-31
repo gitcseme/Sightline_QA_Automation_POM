@@ -306,7 +306,7 @@ public class ReportsandAnalytics {
 			loginPage.logout();
 		}
 
-	 @Test(groups = { "smoke", "regression" })
+	 @Test(description = "RPMXCON-56220",groups = { "smoke", "regression" })
 		public void tallySubTally() throws InterruptedException {
 		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			report = new ReportsPage(driver);

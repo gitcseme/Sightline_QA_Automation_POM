@@ -582,7 +582,7 @@ public class DocViewandAccusoftPrizm {
 		baseClass.stepInfo("Test case Id: RPMXCON-52508");
 		baseClass.stepInfo("To verify when RMU click to edit the comment [RPMXCON-11149]");
 		// Login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.sa1userName + "");
 		comments.AddComments(commentName);
 		//Navigate to Comments Page
