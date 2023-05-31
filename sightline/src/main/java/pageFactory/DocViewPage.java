@@ -574,7 +574,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getDocView_FolderActionPopup() {
 		return driver.FindElementById("divBulkAction");
 	}
-
+	public Element getRemarkDateandTime()
+	{ return driver.FindElementByXPath("//*[@id='newRemarks']//small");}
+	
 	public Element getDocView_ThreadedChild_Selectalldoc() {
 		return driver.FindElementById("threadMapSelectRows");
 	}
@@ -14580,7 +14582,46 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}
 
 	}
-
+	 public void RemarkVerification(String remark) throws InterruptedException {
+	    	base.waitForElement(getNonAudioRemarkBtn());
+	      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60);   
+	      softAssertion.assertTrue(getNonAudioRemarkBtn().Displayed());
+	   
+	 	base.waitForElement(getNonAudioRemarkBtn());
+	 	getNonAudioRemarkBtn().waitAndClick(15);
+	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+		 	System.out.println(getSelectRemarkDocArea().getText());
+		 try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+		 	Actions act=new Actions(driver.getWebDriver());
+		 	act.moveToElement(getSelectRemarkDocArea().getWebElement()).click();
+		 	act.build().perform();
+//		     getSelectRemarkDocArea().Click();
+		     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 			getAddRemarkbtn().Visible();}}), Input.wait30);   
+		     getAddRemarkbtn().waitAndClick(15);
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getRemarkTextArea().Visible();}}), Input.wait30);  
+	 	getRemarkTextArea().SendKeys(remark);
+	 	getSaveRemark().Click();
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+	 	System.out.println(getSelectRemarkDocArea().getText());
+	 	
+	 	getRemarkDateandTime().isElementPresent();
+		base.waitForElement(getRemarkDeletetIcon());
+	 	getRemarkDeletetIcon().waitAndClick(15);
+	 	
+	 	base.waitForElement(base.getPopupYesBtn());
+	 	base.getPopupYesBtn().waitAndClick(15);;
+			 // sa.assertAll();
+	    }	  
 	/**
 	 * @author Gopinath
 	 * @Description : Method for adding remark is added to document.

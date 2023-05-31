@@ -302,6 +302,12 @@ public class ConnectorsandAssigments {
 				{ Input.rmu4userName, Input.rmu4password, Input.rmu4userName } };
 		return users;
 	}
+	@DataProvider(name = "PA")
+	public Object[][] PA() {
+		Object[][] users = { { Input.pa4userName, Input.pa4password, Input.pa3FullName },
+				 };
+		return users;
+	}
 	
 	@Test(description = "RPMXCON-48536", enabled = true, groups = { "regression" })
 	public void verifyBatchUpload() throws Exception {
@@ -390,7 +396,7 @@ public class ConnectorsandAssigments {
 		loginPage.logout();
 
 	}
-	@Test(description = "RPMXCON-61034", dataProvider = "PAandRMU", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-61034", dataProvider = "PA", enabled = true, groups = { "regression" })
 	public void verifyCanInitiateCollection(String username, String password, String fullname) throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 
