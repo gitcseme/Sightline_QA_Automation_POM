@@ -71,8 +71,8 @@ public class Assignment_Regression3 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		ingestionDataName = Input.IngestionName_PT;
 		ingestionMetaData = Input.metadataIngestion;
 	}
@@ -245,7 +245,6 @@ public class Assignment_Regression3 {
 		ActualCount = sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-		System.out.println(assignmentName1);
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		agnmt.viewSelectedAssgnUsingPagination(assignmentName1);
