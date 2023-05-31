@@ -531,13 +531,14 @@ public class DataSets {
 			}
 			base.waitForElement(getDataSetViewInDocList(DataSet));
 			getDataSetViewInDocList(DataSet).waitAndClick(10);
-//			try {
-//				getInitatePopupYesBtn().waitAndClick(10);
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			base.stepInfo("DataSet is selected and viewed in DocList.");
+			if(getInitatePopupYesBtn().isDisplayed()) {
+			try {
+				getInitatePopupYesBtn().waitAndClick(10);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			base.stepInfo("DataSet is selected and viewed in DocList.");}
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("failed" + e.getMessage());

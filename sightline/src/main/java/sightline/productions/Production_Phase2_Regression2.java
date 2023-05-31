@@ -571,6 +571,7 @@ public class Production_Phase2_Regression2 {
 
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "Tag" + Utility.dynamicNameAppender();
+		String Tags = tagname + "," + tagname1;
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
@@ -589,8 +590,8 @@ public class Production_Phase2_Regression2 {
 		page.getMarkCompleteLink().waitAndClick(10);
 		base.VerifySuccessMessage("Mark Complete successful");
 		page.getNativeTab().waitAndClick(10);
+		page.getNativeTags().ScrollTo();
 		String NativeTag = page.getNativeTags().getText();
-		String Tags = tagname + "," + tagname1;
 		base.textCompareEquals(Tags, NativeTag, "Native tag is displayed in production component as expecetd",
 				"Tag is not displayed as expected");
 		loginPage.logout();
@@ -901,6 +902,7 @@ public class Production_Phase2_Regression2 {
 		} else {
 			base.failedStep("Family member is not displayed as expecetd");
 		}
+		loginPage.logout();
 
 	}
 
@@ -950,6 +952,7 @@ public class Production_Phase2_Regression2 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();
 	}
 
 	/**
@@ -1002,6 +1005,7 @@ public class Production_Phase2_Regression2 {
 		page.getClkBtnDownloadDATFiles().isElementAvailable(10);
 		page.getSelectSharableLinks().isElementAvailable(10);
 		base.passedStep("Verified the Download option on Production QC page");
+		loginPage.logout();
 	}
 
 	/**
@@ -1054,6 +1058,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("Verified Productions Generation for MP3 files using document level numbering");
+		loginPage.logout();
 	}
 
 	/**
@@ -1107,6 +1112,7 @@ public class Production_Phase2_Regression2 {
 		page.extractFile();
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, endingBates);
 		base.passedStep("Verified In Productions, Ending Bates generated in a production Should have correct Value");
+		loginPage.logout();
 	}
 
 	/**
@@ -1160,6 +1166,7 @@ public class Production_Phase2_Regression2 {
 		page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, lastFile, prefixID, suffixID, Input.technicalIssue);
 		base.passedStep(
 				"verified that document should produced with 'Tech Issues Docs' placeholdering by selecting only one Tag");
+		loginPage.logout();
 	}
 
 	/**
@@ -1197,7 +1204,7 @@ public class Production_Phase2_Regression2 {
 		base.waitForElement(page.getMarkCompleteLink());
 		page.getMarkCompleteLink().waitAndClick(10);
 		base.VerifyWarningMessage(expectedMsg);
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1232,7 +1239,7 @@ public class Production_Phase2_Regression2 {
 		page.getNative_GenerateLoadFileLST().isElementAvailable(10);
 		base.passedStep(
 				"Verified Native Section with various options Produce Native Files selection/Produce Load/Select Tags/Advance Show Hide/and Toggles in Advance");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1265,6 +1272,7 @@ public class Production_Phase2_Regression2 {
 		page.slipSheetsText().ScrollTo();
 		page.slipSheetsText().isElementAvailable(10);
 		base.passedStep("Verified TIFF Section with various options");
+		loginPage.logout();
 	}
 
 	/**
@@ -1314,6 +1322,7 @@ public class Production_Phase2_Regression2 {
 		page.loadFilePath().isElementAvailable(10);
 		page.GetVolumeName().isElementAvailable(10);
 		base.passedStep("Verified Production Location component");
+		loginPage.logout();
 	}
 
 	/**
@@ -1390,7 +1399,7 @@ public class Production_Phase2_Regression2 {
 		System.out.println("Documents of TIFF" + page.getDocumentsOfTIFF().getText());
 
 		base.passedStep(" Verified Summary and Preview  Component");
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1427,6 +1436,7 @@ public class Production_Phase2_Regression2 {
 
 		base.passedStep(
 				"Verified Filler Audio is available only on enabling Burn Redaction for MP3 Files under Advanced Production Components");
+		loginPage.logout();
 	}
 
 	/**
@@ -1479,6 +1489,7 @@ public class Production_Phase2_Regression2 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.passedStep("verified MP3 productions with DAT and PDF.");
+		loginPage.logout();
 	}
 
 	/**
@@ -1531,5 +1542,6 @@ public class Production_Phase2_Regression2 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		base.passedStep("verified MP3 productions with DAT and Native");
+		loginPage.logout();
 	}
 }

@@ -21337,7 +21337,8 @@ public class ProductionPage {
 			getNativeCheckBox(Tag).Click();
 			driver.waitForPageToBeReady();
 			base.waitForElement(getNativeCheckBox(Tag1));
-			getNativeCheckBox(Tag1).Click();
+			getNativeCheckBox(Tag1).ScrollTo();
+			getNativeCheckBox(Tag1).waitAndClick(3);
 			base.waitForElement(getNativeSelect());
 			getNativeSelect().Click();
 			base.stepInfo("Native section is filled");
