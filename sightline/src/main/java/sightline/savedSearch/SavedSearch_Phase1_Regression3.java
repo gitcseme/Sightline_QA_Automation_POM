@@ -1183,7 +1183,7 @@ public class SavedSearch_Phase1_Regression3 {
 		base.stepInfo("Test case Id: RPMXCON-48122 Saved Search");
 		base.stepInfo(
 				"Reviewer User - Verify that appropriate Search Group appears under the respective Security Group on Saved Search Screen.");
-
+		base.selectproject();
 		// Create security group
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
@@ -1194,7 +1194,8 @@ public class SavedSearch_Phase1_Regression3 {
 		login.logout();
 
 		login.loginToSightLine(Input.rev1userName, Input.rev1password);
-
+		
+		base.selectproject();
 		// select default SG and create Search group
 		base.selectsecuritygroup(Input.securityGroup);
 		base.stepInfo("Select Security Group : " + Input.securityGroup);
@@ -1528,6 +1529,7 @@ public class SavedSearch_Phase1_Regression3 {
 		base.stepInfo(
 				"RMU User - Verify that User can Share Query under the respective Security Group on Saved Search Screen.");
 
+		base.selectproject();
 		// Create security group
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
@@ -1539,7 +1541,8 @@ public class SavedSearch_Phase1_Regression3 {
 		login.logout();
 
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
+		
+		base.selectproject();
 		// select default SG and create Search group
 		base.selectsecuritygroup(Input.securityGroup);
 		base.stepInfo("Select Security Group : " + Input.securityGroup);

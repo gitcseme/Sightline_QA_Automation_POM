@@ -1141,7 +1141,7 @@ public class AssignmentsPage {
 	}
 	
 	public Element getOptimizedSort() {
-		return driver.FindElementByXPath("//a[text()='Optimized Sort']/parent::li[@aria-disabled='true']");
+		return driver.FindElementByXPath("//a[text()='Optimized Sort']/parent::li[@aria-selected='true']");
 	}
 
 	public Element getRoot() {
@@ -5887,7 +5887,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getAssignmentActionDropdown());
 		getAssignmentActionDropdown().waitAndClick(10);
 		bc.waitForElement(getAssignmentAction_ViewinDocView());
-		getAssignmentAction_ViewinDocView().waitAndClick(5);
+		getAssignmentAction_ViewinDocView().javascriptclick(getAssignmentAction_ViewinDocView());
 		bc.stepInfo("Assignment selected and viewAllDocs in docview");
 	}
 
