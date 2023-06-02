@@ -3991,6 +3991,7 @@ public class Assignment_Phase2_Regression {
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
 		baseClass.waitTime(2);
+		baseClass.waitForElementCollection(dashBoard.getReviewerslist());
 		int Size = dashBoard.getReviewerslist().size();
 		baseClass.ValidateElementCollection_Presence(dashBoard.getReviewerslist(), "Reviewers in dashboard");
 		List<String> Reviewers = new ArrayList<>();
