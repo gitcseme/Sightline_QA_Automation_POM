@@ -5821,7 +5821,7 @@ public class Production_Phase1_Regression {
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-55979
-	 * @Description: Verify that after LST generation completed it should displays 'RPMXCON-60903
+	 * @Description: Verify that after LST generation completed it should displays '
 	 *               Generating Load Files Complete' status on Production Progress
 	 *               bar Tile View
 	 */
