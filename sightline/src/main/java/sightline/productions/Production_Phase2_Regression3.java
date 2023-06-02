@@ -289,7 +289,7 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		File file = new File(home + "/Downloads/VOL0001/Natives/0001");
 		File imageFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(imageFile);
 		if (file.exists()) {
 			base.passedStep("Mp3 document generatd successfully");
@@ -620,7 +620,7 @@ public class Production_Phase2_Regression3 {
 			base.failedStep("Tiff image is not generated for all pages");
 		}
 		String firstFile = prefixID + beginningBates + suffixID;
-		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
+		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tif");
 		page.isfileisExists(file);
 		page.OCR_Verification_In_Generated_Tiff_tess4j(file, "Crammer");
 
@@ -846,7 +846,7 @@ public class Production_Phase2_Regression3 {
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 		File TiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		if (TiffFile.exists()) {
 			base.passedStep("Tiff  file is displayed as expected");
 		} else {
@@ -999,7 +999,7 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		String firstFile = prefixID + beginningBates + suffixID;
-		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
+		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tif");
 		driver.waitForPageToBeReady();
 		BufferedImage bimg = ImageIO.read(file);
 		int width = bimg.getWidth();
@@ -1073,7 +1073,7 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		String firstFile = prefixID + beginningBates + suffixID;
-		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".ss.tiff");
+		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".ss.tif");
 
 		ITesseract instance = new Tesseract1();
 		File tessDataFolder = LoadLibs.extractTessResources("tessdata");
@@ -2280,7 +2280,7 @@ public class Production_Phase2_Regression3 {
 				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
 		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
 		File tiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		System.out.println(DatFile);
 
 		if (Native.exists()) {
@@ -2523,6 +2523,10 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getQC_Download().waitAndClick(3);
+		base.waitForElement(page.getQC_Downloadbutton_allfiles());
+		page.getQC_Downloadbutton_allfiles().Click();
+		base.waitUntilFileDownload();
 		String PDocCount = page.getProductionDocCount().getText();
 		int DocCount = Integer.parseInt(PDocCount);
 		int lastfile = firstFile + DocCount;
@@ -3452,7 +3456,7 @@ public class Production_Phase2_Regression3 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, tagName);
 		loginPage.logout();
 	}
@@ -4489,9 +4493,9 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		int Lastile = FirstFile + doc;
 		File TiffFile1 = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + FirstFile + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + FirstFile + suffixID + ".tif");
 		File TiffFile2 = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + Lastile + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + Lastile + suffixID + ".tif");
 		String tiff1 = page.extractTextFromTiff(TiffFile1);
 		String tiff2 = page.extractTextFromTiff(TiffFile2);
 		softAssertion.assertTrue(tiff1.contains("Document Produced in Native Format") || tiff1.contains(tagName));
@@ -4605,9 +4609,9 @@ public class Production_Phase2_Regression3 {
 		int Lastile = FirstFile + doc;
 		base.stepInfo("Production should be generate successfully along with placeholder");
 		File TiffFile1 = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + FirstFile + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + FirstFile + suffixID + ".tif");
 		File TiffFile2 = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + Lastile + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + Lastile + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(TiffFile1, "Document Produced in Native Format");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(TiffFile2, tagName);
 		base.passedStep("Verified In production, the file-based placeholdering for certain file types");
@@ -4765,7 +4769,7 @@ public class Production_Phase2_Regression3 {
 		base.stepInfo(
 				"Tech placeholder should be generated for TIFF file for the selected file type as part of selected source of document selection");
 		File tiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, Input.tagNameTechnical);
 		base.passedStep(
 				"Verify that if spreadsheet is tech issue and Tech issue, Native placeholder is default enabled "
@@ -4830,7 +4834,7 @@ public class Production_Phase2_Regression3 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Lef");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Center Multiple Line Branding");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Right Multiple Line Branding");
@@ -5054,7 +5058,7 @@ public class Production_Phase2_Regression3 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
-				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Left");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Center");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Right");
