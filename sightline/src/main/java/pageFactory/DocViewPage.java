@@ -3389,11 +3389,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 	
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields() {
-		return driver.FindElementByXPath("//*[@id=\"divColumnDisplay\"]//li[text()='FamilyRelationship']//following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='divColumnDisplay']//li[text()='FamilyRelationship']//following-sibling::i");
 	}
 
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount() {
-		return driver.FindElementByXPath("//*[@id=\"divColumnDisplay\"]//li[text()='FamilyMemberCount']//following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='divColumnDisplay']//li[text()='FamilyMemberCount']//following-sibling::i");
 	}
 
 	public Element getDocView_MiniDoclist_Header_Webfields(String fieldName) {
