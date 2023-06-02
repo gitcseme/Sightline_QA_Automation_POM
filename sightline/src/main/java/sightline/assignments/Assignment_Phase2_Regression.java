@@ -58,8 +58,8 @@ public class Assignment_Phase2_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+//		in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
