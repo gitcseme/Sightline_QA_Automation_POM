@@ -1238,8 +1238,7 @@ public class Production_Phase1_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATWithMultipleDropDown();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
-				beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname, beginningBates);
 		loginPage.logout();
 	}
 
@@ -5316,7 +5315,6 @@ public class Production_Phase1_Regression {
 			}
 		}
 		brReader.close();
-		loginPage.logout();
 		base.passedStep(
 				"Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
 		loginPage.logout();
@@ -5823,7 +5821,7 @@ public class Production_Phase1_Regression {
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-55979
-	 * @Description: Verify that after LST generation completed it should displays '
+	 * @Description: Verify that after LST generation completed it should displays 'RPMXCON-60903
 	 *               Generating Load Files Complete' status on Production Progress
 	 *               bar Tile View
 	 */
