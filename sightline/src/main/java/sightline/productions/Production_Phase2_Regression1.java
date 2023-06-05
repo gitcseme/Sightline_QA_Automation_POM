@@ -3825,6 +3825,7 @@ public class Production_Phase2_Regression1 {
 		} else {
 			base.failedStep("Advanced option is not removed");
 		}
+		loginPage.logout();
 
 	}
 
