@@ -777,6 +777,10 @@ public class UserManagement {
 	public Element getUserListNextButton() {
 		return driver.FindElementByXPath("//a[text()='Next']");
 	}
+	
+	public ElementCollection getUserPaginationCount() {
+		return driver.FindElementsByXPath("//div[@id='dtUserList_paginate']/ul/li");
+	}
 
 	public Element getUserPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
@@ -934,8 +938,12 @@ public class UserManagement {
 		return driver.FindElementByXPath("//a[text()='Details']");
 	}
 
+//	public Element selectProject() {
+//		return driver.FindElementById("ddlProject");
+//	}
+	
 	public Element selectProject() {
-		return driver.FindElementById("ddlProject");
+		return driver.FindElementByXPath("//select[@id='ddlProject']");
 	}
 
 	public ElementCollection getAssignedUserListPA() {
@@ -2026,8 +2034,25 @@ public class UserManagement {
 	 */
 	public void editFunctionality(String project) throws Exception {
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getSelectUserToEdit(project));
-		getSelectUserToEdit(project).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getUserPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getUserPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			Boolean status = getSelectUserToEdit(project).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectUserToEdit(project));
+				getSelectUserToEdit(project).waitAndClick(5);
+				bc.stepInfo("Expected user found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(3);
+				bc.stepInfo("Expected user not found in the page " + i);
+			}
+		}
 	}
 
 	/**
@@ -5773,6 +5798,7 @@ public class UserManagement {
 				if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
@@ -5812,6 +5838,7 @@ public class UserManagement {
 				} else if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
