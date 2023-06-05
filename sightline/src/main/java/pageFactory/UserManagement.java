@@ -5798,7 +5798,7 @@ public class UserManagement {
 				if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
-					System.out.println(selectProject);
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
@@ -5838,7 +5838,7 @@ public class UserManagement {
 				} else if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
-					System.out.println(selectProject);
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
