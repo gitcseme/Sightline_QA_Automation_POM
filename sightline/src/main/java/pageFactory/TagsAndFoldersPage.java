@@ -55,7 +55,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getAllTagRoot() {
-		return driver.FindElementById("-1_anchor");
+		return driver.FindElementByXPath("//*[@id='-1_anchor']");
 	}
 
 	public Element getAddTag() {
@@ -1943,11 +1943,14 @@ public class TagsAndFoldersPage {
 			base.waitForElement(getSecurityGroupTag());
 
 			getSecurityGroupTag().selectFromDropdown().selectByVisibleText("Default Security Group");
-			base.waitForElement(getAddTagTable());
-			getAddTagTable().waitAndClick(5);
-			driver.scrollPageToTop();
-			base.waitForElement(getAllTagRoot());
-			Thread.sleep(1000);
+//			base.waitForElement(getAddTagTable());
+//			getAddTagTable().waitAndClick(5);
+//			driver.scrollPageToTop();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAllTagRoot().Visible();
+				}
+			}), Input.wait30);
 			getAllTagRoot().waitAndClick(10);
 			base.waitForElement(getTagActionDropDownArrow());
 			getTagActionDropDownArrow().waitAndClick(10);
