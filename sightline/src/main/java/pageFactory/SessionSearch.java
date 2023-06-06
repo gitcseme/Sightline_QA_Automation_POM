@@ -3667,6 +3667,7 @@ public class SessionSearch {
 
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
+		base.waitTime(5);
 
 	}
 
@@ -5142,7 +5143,7 @@ public class SessionSearch {
 		}
 		base.waitForElement(getDocViewActionDL());
 		getDocViewActionDL().waitAndClick(5);
-
+		base.waitTime(3);
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");
 	}

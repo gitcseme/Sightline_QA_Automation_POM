@@ -2517,7 +2517,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getDocListOkBtn() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' OK']");
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' Ok']");
 	}
 
 	// Added By Vijaya.Rani
@@ -3707,6 +3707,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
     public Element get_AllAnotationsCount() {   
         return driver.FindElementByXPath("//div[@id='divPersistentRedactions']//div[@id='counterAll']");
 }
+    public Element getFirstLineinDoc() {
+        return driver.FindElementByCssSelector("*[class=igViewerGraphics]>div>svg>g>g>svg>g>g>text");
+  }
 	
 	public DocViewPage(Driver driver) {
 
@@ -12727,6 +12730,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getCodingFormSaveButton().waitAndClick(5);
 		base.stepInfo("Applied coding saved successfully");
 		for (int i = 5; i <= 5; i++) {
+			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
@@ -14564,10 +14568,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			actions.build().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
-			if(base.getErrorMsgHeader().isElementAvailable(3)) {        
+			if(base.getErrorMsgHeader().isElementAvailable(1)) {
+				base.CloseSuccessMsgpopup();
                 base.waitTime(1);
-                base.waitForElement(remarkElement());
-                actions.click(remarkElement().getWebElement()).build().perform();
+                base.waitForElement(getFirstLineinDoc());
+                actions.click(getFirstLineinDoc().getWebElement()).build().perform();
+                getAddRemarkbtn().getWebElement().click();
 			}
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -25728,6 +25734,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyTotalPagesOfDocumentCountGreaterThan500() {
 		try {
+			base.waitTime(5);
 			driver.waitForPageToBeReady();
 			String pagesCount = totalPageCount().getText().trim();
 			String[] pageCnt = pagesCount.split("of", 2);
@@ -29336,8 +29343,12 @@ public String getRequiredDocs(String reqDocsType) {
                     base.failedStep("Failed to get document.");
             }
     }
-    
+    if(!document.isBlank()) {
     System.out.println(document);
+    base.passedStep("Document ID : " + document);
+    } else {
+    base.failedStep("Document ID couldn't fetch Properly");
+    }
     return document;
 }
 

@@ -66,8 +66,8 @@ public class DocView_ProductionFlow_Regression {
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
