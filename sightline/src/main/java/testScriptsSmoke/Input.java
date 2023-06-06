@@ -29,7 +29,7 @@ public class Input {
 
 	
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -81,6 +81,7 @@ public class Input {
 	public static String projectNameCjk;
 	public static String sa1password;
 	public static String sa1userName;
+	public static String da1FullName;
 	public static String da1password;
 	public static String da1userName;
 	public static String pa1userName;
@@ -111,13 +112,13 @@ public class Input {
 	public static String rev3FullName;
 	public static String rev3userName;
 	public static String rev3password;
-//	public static String pa4FullName;
+	public static String pa4FullName;
 	public static String pa4userName;
 	public static String pa4password;
-//	public static String rmu4FullName;
+	public static String rmu4FullName;
 	public static String rmu4userName;
 	public static String rmu4password;
-//	public static String rev4FullName;
+	public static String rev4FullName;
 	public static String rev4userName;
 	public static String rev4password;
 //	public static String pa5FullName;
@@ -178,7 +179,6 @@ public class Input {
 	public static String rev11userName;
 	public static String rev11password;
 	public static String domainName;
-	public static String da1FullName;
 	public static String Onnapa1userName;
 	public static String Onnarmu1userName;
 	public static String Onnada1userName;
@@ -1233,6 +1233,12 @@ public class Input {
 		rmu1FullName = envConfig.getRmu1FullName();
 		rev1FullName = envConfig.getRev1FullName();
 		pa2FullName = envConfig.getPa2FullName();
+		pa3FullName= envConfig.getPa3FullName();
+		pa4FullName= envConfig.getPa4FullName();
+		rmu3FullName= envConfig.getRmu3FullName();
+		rmu4FullName= envConfig.getRmu4FullName();
+		rev3FullName= envConfig.getRev3FullName();
+		rev4FullName= envConfig.getRev4FullName();
 		rmu2FullName = envConfig.getRmu2FullName();
 		rev2FullName = envConfig.getRev2FullName();
 		da1FullName = envConfig.getDa1FullName();
@@ -1243,6 +1249,7 @@ public class Input {
 			projectNameCjk = System.getProperty("projectNameCjk");
 			ICEProjectName = System.getProperty("ICEProjectName");
 			domainName = System.getProperty("domainName");
+			da1FullName=System.getProperty("da1FullName");
 			da1userName = System.getProperty("da1userName");
 			da1password = System.getProperty("da1password");
 			sa1userName = System.getProperty("sa1userName");
@@ -1259,16 +1266,22 @@ public class Input {
 			rmu2password = System.getProperty("rmu2password");
 			rev2userName = System.getProperty("rev2userName");
 			rev2password = System.getProperty("rev2password");
+			pa3FullName= System.getProperty("pa3FullName");
 			pa3userName = System.getProperty("pa3userName");
 			pa3password = System.getProperty("pa3password");
+			rmu3FullName= System.getProperty("rmu3FullName");
 			rmu3userName = System.getProperty("rmu3userName");
 			rmu3password = System.getProperty("rmu3password");
+			rev3FullName= System.getProperty("rev3FullName");
 			rev3userName = System.getProperty("rev3userName");
 			rev3password = System.getProperty("rev3password");
+			pa4FullName= System.getProperty("pa4FullName");
 			pa4userName = System.getProperty("pa4userName");
 			pa4password = System.getProperty("pa4password");
+			rmu4FullName= System.getProperty("rmu4FullName");
 			rmu4userName = System.getProperty("rmu4userName");
 			rmu4password = System.getProperty("rmu4password");
+			rev4FullName=System.getProperty("rev4FullName");
 			rev4userName = System.getProperty("rev4userName");
 			rev4password = System.getProperty("rev4password");		
 			pa5userName = System.getProperty("pa5userName");
