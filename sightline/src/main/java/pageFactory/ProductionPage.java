@@ -12620,6 +12620,7 @@ public class ProductionPage {
 			driver.waitForPageToBeReady();
 			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
 
+			driver.scrollingToBottomofAPage();
 			base.waitForElement(getClkCheckBox_defaultRedactionTag());
 			getClkCheckBox_defaultRedactionTag().isDisplayed();
 			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
@@ -12635,13 +12636,11 @@ public class ProductionPage {
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).ScrollTo();
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).isDisplayed();
-			driver.waitForPageToBeReady();
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.waitForElement(redactionTagInBurnRedaction2CheckBox(redactiontag2));
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).ScrollTo();
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).isDisplayed();
-			driver.waitForPageToBeReady();
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).waitAndClick(10);
 
 			base.waitForElement(getClk_selectBtn());
@@ -17239,11 +17238,12 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		if (exptext.equals("The configured format (above) is applicable only to OCRed and production generated text."
-			    +"The selected Format does not apply to ingested or mapped text."
-				+"Redacted documents are automatically OCRed to export the updated text."
-				+"Original extracted text is exported for Natively produced documents."
-				+"For Tech Issue and Privileged Placeholdered documents, the Placeholder text is exported.")) {
+		base.waitForElement( getTextcomponent_text());;
+		if (exptext.equals("The configured format (above) is applicable only to OCRed and production generated text.\r\n"
+				+ "The selected Format does not apply to ingested or mapped text.\r\n"
+				+ "Redacted documents are automatically OCRed to export the updated text.\r\n"
+				+ "Original extracted text is exported for Natively produced documents.\r\n"
+				+ "For Tech Issue and Privileged Placeholdered documents, the Placeholder text is exported.")) {
 			base.passedStep("" + exptext + " is displayed as expected");
 		} else {
 			base.failedStep("" + exptext + " is not displayed as expected");
@@ -18168,7 +18168,8 @@ public class ProductionPage {
 		base.clickButton(getMP3CheckReductionBoxEnable());
 		getMP3CheckReductionBoxEnable().Enabled();
 		base.clickButton(getMP3RatiobtnRedactiontag());
-		driver.waitForPageToBeReady();        
+		driver.waitForPageToBeReady(); 
+		driver.scrollingToBottomofAPage();
 		getMP3FilesRedactionTag().waitAndClick(10);;
 		driver.scrollingToBottomofAPage();
 		getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();

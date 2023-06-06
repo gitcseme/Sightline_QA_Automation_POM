@@ -7650,7 +7650,7 @@ public class Production_Phase1_Regression1 {
 
 				System.out.println("the value is" + part);
 
-				if (part.contains("Z:\\VOL0001\\Images") && part.contains("tiff")) {
+				if (part.contains("Z:\\VOL0001\\Images") && part.contains("tif")) {
 					System.out.println("Text is displayed as expected");
 				} else {
 					base.failedStep("the text is not displayed as expected");
