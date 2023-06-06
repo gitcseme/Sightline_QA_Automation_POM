@@ -29,7 +29,7 @@ public class Input {
 
 	
 	// Default should be true, Make it false during Development
-	public static boolean mode = false;
+	public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
