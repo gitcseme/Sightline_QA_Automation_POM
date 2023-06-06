@@ -71,6 +71,7 @@ public class AddProjectAssignUser_MappedSmokeIngestion {
 				baseClass.stepInfo("Ingestion Access Verification");
 				userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 				ingestionPage.navigateToIngestionPage();
+				System.out.println(Input.AllSourcesFolder);
 				ingestionPage.IngestionSmoke(Input.AllSourcesFolder);
 				ingestionPage.publishedIngestionName();
 				 SessionSearch search = new SessionSearch(driver);
@@ -94,13 +95,19 @@ public class AddProjectAssignUser_MappedSmokeIngestion {
         user.AssignUserToProject(ProjectName, "Project Administrator", Input.pa4FullName);
         user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu1FullName);
         user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu2FullName);
-        user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu2FullName);
-        user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu2FullName);
+        user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu3FullName);
+        user.AssignUserToProject(ProjectName, "Review Manager", Input.rmu4FullName);
         user.AssignUserToProject(ProjectName, "Reviewer", Input.rev1FullName);
         user.AssignUserToProject(ProjectName, "Reviewer", Input.rev2FullName);
-        user.AssignUserToProject(ProjectName, "Reviewer", Input.rev2FullName);
-        user.AssignUserToProject(ProjectName, "Reviewer", Input.rev2FullName);
-        user.AssignUserToDomain(Input.domainName, Input.da1FullName);
+        user.AssignUserToProject(ProjectName, "Reviewer", Input.rev3FullName);
+        user.AssignUserToProject(ProjectName, "Reviewer", Input.rev4FullName);
+        boolean isUserAlreadyAssigned=user.verifyDomainUserIsAssignedOrNot(Input.domainName, Input.da1FullName);
+        if(isUserAlreadyAssigned==false) {
+        	user.AssignUserToDomain(Input.domainName, Input.da1FullName);
+        }else {
+        	baseClass.stepInfo("Domain user is already Assigned");
+        }
+        
         loginPage.logout();
 	}
 	
