@@ -1241,6 +1241,9 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		String lastName = Input.randomText + Utility.dynamicNameAppender();
 		String role = Input.ProjectAdministrator;
 		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		System.out.println("First Name :-"+firstName);
+		System.out.println("Last Name :-"+lastName);
+		System.out.println("emailId :-"+emailId);
 		String expectedErrorMsg = "20001000027 : The specified user cannot be added, since an identical user with the same role already exists in the system.";
 		userManage = new UserManagement(driver);
 
@@ -1272,7 +1275,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		driver.Navigate().refresh();
 		userManage.passingUserName(emailId);
 		userManage.applyFilter();
-		userManage.verifyDeleteUserPopup(true, Input.projectName);
+		userManage.verifyRemoveUserPopup(true, Input.projectName);
 
 		// logout
 		loginPage.logout();

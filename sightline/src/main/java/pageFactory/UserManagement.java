@@ -5281,7 +5281,7 @@ public class UserManagement {
 	 * @param projectName
 	 */
 	public void verifyRemoveUserPopup(boolean delete, String projectName) {
-		bc.waitForElement(getSelectUserToDelete(projectName));
+		bc.waitForElement(getSelectUserToRemove(projectName));
 		getSelectUserToRemove(projectName).waitAndClick(10);
 		if (getBellyBandMsg().isElementAvailable(10)) {
 			bc.stepInfo("Remove User Popup is Displayed");
