@@ -231,7 +231,7 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
@@ -349,8 +349,8 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that after moving the annotation should be saved for the document when same annotation layer is mapped to different security groups ####");
@@ -614,8 +614,8 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks ####");
@@ -743,8 +743,8 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that after deleting the annotation layer by RMU user should not present respective redactions/annotations/remarks. ####");
@@ -875,11 +875,11 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(securityGroupName);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rmu2userName);
-		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rev2userName);
+		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(securityGroupName, Input.rev1userName);
 		loginPage.logout();
 		// Login as RMU and verify
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("logged in as RMU");
 		docViewRedact.selectsecuritygroup(securityGroupName);
 		driver.waitForPageToBeReady();
@@ -890,7 +890,7 @@ public class DocView_Regression3 {
 		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
 		loginPage.logout();
 		// Login as Reviewer and verify
-		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("logged in as reviewer");
 		docViewRedact.selectsecuritygroup(securityGroupName);
 		sessionsearch.basicContentSearch(Input.testData1);
@@ -901,13 +901,13 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Select security group for RMU");
 		docViewRedact.selectsecuritygroup("Default Security Group");
 		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Select security group for REVIEWER");
 		docViewRedact.selectsecuritygroup("Default Security Group");
 		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
@@ -1662,7 +1662,7 @@ public class DocView_Regression3 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(

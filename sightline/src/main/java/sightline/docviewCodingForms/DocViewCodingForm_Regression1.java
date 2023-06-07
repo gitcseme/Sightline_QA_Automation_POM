@@ -1460,12 +1460,14 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52094");
 		baseClass.stepInfo("Verify that on clicking 'Save and Next' "
 				+ "when hits panel is open then enable/disable should be " + "retained in context of security group");
-		String hitTerms = "Than" + Utility.dynamicNameAppender();
+		String hitTerms = "test" + Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		codingForm.selectDefaultCodingFormAsDefault();
+		
 //		Add keywords
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
@@ -1479,8 +1481,7 @@ public class DocViewCodingForm_Regression1 {
 
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		driver.waitForPageToBeReady();
-		keywordPage.getDeleteButton(hitTerms).waitAndClick(5);
-		keywordPage.getYesButton().waitAndClick(5);
+		keywordPage.deleteKeywordByName(hitTerms);
 		driver.waitForPageToBeReady();
 
 		loginPage.logout();
@@ -2231,7 +2232,7 @@ public class DocViewCodingForm_Regression1 {
 	 */
 
 	@Test(description = "RPMXCON-51576", enabled = true, groups = { "regression" })
-	public void verifySavedStampToolTipByCompleteSameAsLast() throws InterruptedException {
+	public void verifySavedStampToolTipByCompvalidateAfterImpersonateCheckMarkleteSameAsLast() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51576");
 		baseClass.stepInfo("On mouse hover tool tip should be displayed for the saved stamp with the coding form of "
 				+ "completed document when document completed by Complete same as last");
@@ -4130,7 +4131,9 @@ public class DocViewCodingForm_Regression1 {
 		assignmentPage.SelectAssignmentByReviewer(assign);
 
 		List<String> cfDefault = reusableDocView.getDefaultPopUpStampColour();
+		System.out.println(cfDefault);
 		List<String> popUpDefault = reusableDocView.getDefaultCodingFormColour();
+		System.out.println(popUpDefault);
 		softAssertion.assertEquals(cfDefault, popUpDefault);
 		baseClass.passedStep("Default stamp colour are same in popup window and coding form via assignment");
 
@@ -4411,6 +4414,7 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("User navigated to docview page from doclist page");
 
 		// CodingStamp popup verfiy
+		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_CFName());
 		softAssertion.assertEquals(Input.codingFormName, docViewPage.getDocView_CFName().getText());
@@ -4788,6 +4792,7 @@ public class DocViewCodingForm_Regression1 {
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
+		baseClass.waitTime(5);
 		baseClass.stepInfo("User navigated to docview page ");
 
 		// CodingStamp popup verfiy
@@ -4885,6 +4890,7 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
 
+		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rev1userName + "'");
 		// search to and go to docview from rmu
@@ -5079,7 +5085,7 @@ public class DocViewCodingForm_Regression1 {
 		// session search to docview panel
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
-
+		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_CFName());
 		softAssertion.assertEquals(Input.codingFormName, docViewPage.getDocView_CFName().getText());
@@ -5942,7 +5948,7 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51748");
 		baseClass.stepInfo("Verify that on completing the document same as last with code same as action "
 				+ "for other documents when hits panel is open then enable/disable should be retained");
-		String hitTerms = "Than" + Utility.dynamicNameAppender();
+		String hitTerms = "test" + Utility.dynamicNameAppender();
 		String Assignment = "AAsign" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 
@@ -5950,6 +5956,8 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
+		codingForm.selectDefaultCodingFormAsDefault();
+		
 //		Add keywords
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
