@@ -623,13 +623,13 @@ public class ProjectPage {
 		driver.scrollingToBottomofAPage();
 
 		getProjectFolder().Clear();
-		getProjectFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getProjectFolder().SendKeys(Input.SourceLocation);
 
 		getIngestionFolder().Clear();
-		getIngestionFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getIngestionFolder().SendKeys(Input.SourceLocation);
 
 		getProductionFolder().Clear();
-		getProductionFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getProductionFolder().SendKeys(Input.SourceLocation);
 
 		driver.scrollPageToTop();
 
