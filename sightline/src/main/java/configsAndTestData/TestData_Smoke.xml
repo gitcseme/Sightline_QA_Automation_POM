@@ -31,15 +31,7 @@
 	<comment>testing</comment>
 
 	
-	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
-    <TextFile_S>RegressionAllDatasetText.lst</TextFile_S>
-    <NativeFile_S>RegressionAllDatasetNatives.lst</NativeFile_S> 
-    <TIFFFile_S>RegressionAllDatasetTIFFImages.lst</TIFFFile_S>
-    <TIFFFile1_S> RegressionAllDatasetTIFFImages.OPT</TIFFFile1_S>
-    <TranslationFile_S>RegressionAllDatasetTranslation.lst</TranslationFile_S>
-    <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
-    <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
-   <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>
+
    
     <!--Indium Search strings and expected pure hit counts -->
 	<!--  Docview Analytics -->
@@ -132,20 +124,19 @@
 	<ingestionProjectName>AutomationIngestionProject</ingestionProjectName>
 	<ingestionType>Add Only</ingestionType>
 	<sourceSystem>TRUE</sourceSystem>
-	<sourceLocation>IngestionTestData\Automation\RegressionAllDatasetConsilio</sourceLocation>
+	<sourceLocation>IngestionTestData\Automation</sourceLocation>
 	<AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
 	<fieldSeperator>ASCII(20)</fieldSeperator>
 	<textQualifier>ASCII(254)</textQualifier>
 	<multiValue>ASCII(174)</multiValue>
-	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
-    <TextFile_S>RegressionAllDatasetText.lst</TextFile_S>
-    <NativeFile_S>RegressionAllDatasetNatives.lst</NativeFile_S> 
-    <TIFFFile_S>RegressionAllDatasetTIFFImages.lst</TIFFFile_S>
-    <TIFFFile1_S> RegressionAllDatasetTIFFImages.OPT</TIFFFile1_S>
-    <TranslationFile_S>RegressionAllDatasetTranslation.lst</TranslationFile_S>
-    <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
-    <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
-   <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>  
+	<DATFile_S>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile_S>
+    <TextFile_S>DAT4_STC_09172014_Text.lst</TextFile_S>
+    <NativeFile_S>Natives.lst</NativeFile_S> 
+    <TIFFFile_S>Images.lst</TIFFFile_S>
+    <TranslationFile_S>Translation.lst</TranslationFile_S>
+    <PDFFile_S>PDFs.lst</PDFFile_S>
+    <TranscriptFile_S>Transcript.lst</TranscriptFile_S>
+   	<MP3File_S>MP3.lst</MP3File_S>  
    
    
    <!-- Added by Gopinath Created date - 15/12/2021 -->
