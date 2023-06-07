@@ -539,6 +539,10 @@ public class UserManagement {
 	public Element getSelectAssignedUserDomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
+	
+	public Element getcheckAssignedUserDomain(String userName) {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']/option[text()='"+userName+"']");
+	}
 
 	public ElementCollection userDetailsTableHeader() {
 		return driver.FindElementsByXPath("//*[@id='dtUserList_wrapper']/div/div/div/table/thead/tr/th");
@@ -6280,6 +6284,27 @@ public class UserManagement {
 		else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
+	}
+	
+	public boolean verifyDomainUserIsAssignedOrNot(String domainName,String UnAssignUser) {
+		boolean flag=false;
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+		bc.waitTime(5);
+		UnAssignUser=UnAssignUser+" || IsBillable: false";
+		if(getcheckAssignedUserDomain(UnAssignUser).isElementAvailable(2)) {
+			getDomainUserCancelButton().waitAndClick(5);
+			flag=true;
+		}else {
+			getDomainUserCancelButton().waitAndClick(5);
+			flag=false;
+			System.out.println("User is not asigned");
+			bc.stepInfo("Domain User is not assigned");
+		}
+		return flag;
 	}
 
 }
