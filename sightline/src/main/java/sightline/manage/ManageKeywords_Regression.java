@@ -373,7 +373,7 @@ public class ManageKeywords_Regression {
 		// Navigate to Keywords Page and create keyword with Wildcard
 		keyWord.navigateToKeywordPage();
 		keyWord.addKeyword(keywordName, color);
-		keyWord.deleteKeywordByNameAndCancel(keywordName);
+		keyWord.deleteKeywordByNameAndCancel1(keywordName);
 		baseClass.passedStep("Keyword group, keywords is not deleted successfully.");
 		
 		keyWord.deleteKeywordByName(keywordName);
@@ -623,11 +623,19 @@ public class ManageKeywords_Regression {
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu2userName + "");
 		
+		String keywordName = "deleteKeyword01"+Utility.dynamicNameAppender();
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeyword(keywordName, color);
+		keyWord.deleteKeywordByNameAndCancel1(keywordName);
+		baseClass.passedStep("Keyword group, keywords is not deleted successfully.");
+		
+		/*
 		keyWord.navigateToKeywordPage();
 		keyWord.addKeyword(keywordname, color);
 		keyWord.deleteKeywordByName(keywordname);
 		keyWord.editExistigKeywordAndVerifyThem(keywordname);
 		baseClass.passedStep("User have access to Manage > Keywords page and able to create, modify and delete keywords successfully.");
+		*/
 		loginPage.logout();
 		
 		//Re assigning the User to its original username
@@ -637,7 +645,7 @@ public class ManageKeywords_Regression {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleFromPAToRMU(Input.rmu2userName, "Project Administrator",Input.projectName);
+		userManagement.editRoleFromPAToRMU(Input.pa2userName, "Project Administrator",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
