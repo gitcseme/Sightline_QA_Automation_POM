@@ -5779,7 +5779,7 @@ public class UserManagement {
 	 * @param role, projectName , securityGroup
 	 */
 	public void changeRoleToAnyUser(String role, String projectName, String securityGroup) {
-//		try {
+		try {
 			driver.waitForPageToBeReady();
 			if (role.contains("Project")) {
 				bc.waitForElement(getUserChangeDropDown());
@@ -5856,9 +5856,9 @@ public class UserManagement {
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("User profile is modified successfully");
-//		} catch (Exception e) {
-//			bc.failedStep("User profile is not updated");
-//		}
+		} catch (Exception e) {
+			bc.failedStep("User profile is not updated");
+		}
 	}
 
 	/**

@@ -5605,13 +5605,11 @@ public class AssignmentsPage {
 			}
 		}), Input.wait60);
 		int ExpectedDocCount = Integer.parseInt(FinalCount);
-		System.out.println("ExpectedDocCount :-"+ExpectedDocCount);
 		try {
 			int ActualDocCount = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName));
 			assertion.assertEquals(ActualDocCount, ExpectedDocCount);
 			if (assignmentName2 != null) {
 				int ActualDocCount2 = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName2));
-				System.out.println("ActualDocCount2 :-"+ActualDocCount2);
 				assertion.assertEquals(ActualDocCount2, ExpectedDocCount);
 				bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets using " + samplemethod
 						+ " method for two Assignments");
