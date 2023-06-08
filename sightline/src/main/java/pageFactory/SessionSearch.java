@@ -2090,6 +2090,10 @@ public class SessionSearch {
 	public Element getSelectSavedSearchResult(String savedSearchResult) {
 		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchResult + "')]");
 	}
+	
+	public Element getSelectSavedSearchResultExpand(String savedSearchResult) {
+		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchResult + "')]/../i");
+	}
 
 	public Element getExistingAssignmentToUnAssign(String assignName) {
 		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[text()='" + assignName + "']");
@@ -3988,15 +3992,28 @@ public class SessionSearch {
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(tagName)) {				
-				//driver.scrollingToElementofAPage(iterable_element);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+			if (iterable_element.getText().contains(tagName)) {
+				try {
+				driver.scrollingToElementofAPage(iterable_element);
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();			
+				System.out.println(iterable_element.getText());
+				//iterable_element.click();
 				break;
 			}
 		}
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().Click();
+		getMetaDataInserQuery().waitAndClick(10);
 		driver.scrollPageToTop();
+
 
 	}
 	
@@ -4018,7 +4035,7 @@ public class SessionSearch {
 
 		}
 
-	public void selectFolderInASwp(String folderName) {
+	public void selectFolderInASwp(String folderName) throws InterruptedException {
 		base.waitForElement(getWP_FolderBtn());
 		getWP_FolderBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -4026,11 +4043,21 @@ public class SessionSearch {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(folderName)) {
-				//driver.scrollingToElementofAPage(iterable_element);
+				try {
+					driver.scrollingToElementofAPage(iterable_element);
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				
 				break;
 			}
+		}
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
@@ -4096,7 +4123,12 @@ public class SessionSearch {
 			if (iterable_element.getText().contains(redactName)) {
 
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				try {
 				driver.scrollingToBottomofAPage();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+				Thread.sleep(2000);				
 				System.out.println(iterable_element.getText());
 				iterable_element.click();
 				break;
@@ -4105,7 +4137,13 @@ public class SessionSearch {
 		//
 		// driver.scrollingToBottomofAPage();
 		// added on 24/8/21
-		driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
 
@@ -13669,6 +13707,7 @@ driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
 			getSelectSavedSearchResult(SaveName).waitAndClick(10);
+			getSelectSavedSearchResultExpand(SaveName).waitAndClick(10);
 		}
 		// added on 16-8-21
 		base.waitForElement(getMetaDataInserQuery());
