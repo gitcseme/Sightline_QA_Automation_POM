@@ -355,7 +355,7 @@ public class O365_Phase2_Regression1 {
 	 */
 	@Test(description = "RPMXCON-61252", enabled = true, groups = { "regression" })
 	public void verifyAutoSuggestionIsDisplayedForCustodian() throws Exception {
-
+		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 
@@ -369,10 +369,10 @@ public class O365_Phase2_Regression1 {
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
-
+		
 		// Select source location & Add collection Information.
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-//		collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.createNewCollection(collectionData, collectionName, true, null, false);
 
 		// Click to add dataset from Dataset Selection tab
 		collection.addNewDataSetCLick("Button");
@@ -1292,6 +1292,7 @@ public class O365_Phase2_Regression1 {
 		collectionName = collectionName + "Re";
 		colllectionData2 = collection.dataSetsCreationBasedOntheGridAvailabilityT(collectionName, colllectionData2,
 				false);
+		
 		collectionName = base.returnKey(colllectionData2, "", false);
 		System.out.println(collectionName);
 		collectionID = colllectionData.get(collectionName);
@@ -1666,7 +1667,6 @@ public class O365_Phase2_Regression1 {
 		// Initiate collection process
 		String destinationPath = collection.getDestinationPathLocation().getText();
 		collection.selectInitiateCollectionOrClickNext(false, true, true);
-
 		// DataSet creation
 		collection.fillinDS(collectionName,collectiondatalistVal, firstName, lastName, collectionEmailId, selectedApp, colllectionData,
 				selectedFolder, headerListDS, "Button", 3, false, "Save", false, "");
@@ -2416,10 +2416,10 @@ public class O365_Phase2_Regression1 {
 		colllectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, true);
 		collectionName = base.returnKey(colllectionData, "", false);
 		collectionId = colllectionData.get(collectionName);
-
+		System.out.println("colllectionData.get(collectionName)-"+ colllectionData.get(collectionName));
 		// DataSet creation
-		collection.fillinDS(collectionName, firstName,collectiondatalistVal, lastName, collectionEmailId, selectedApp, colllectionData,
-				selectedFolder, headerListDS, "Button", 3, false, "Save", false, "");
+		collection.fillinDS(collectionName, collectiondatalistVal,firstName, lastName, collectionEmailId, selectedApp, colllectionData,
+				selectedFolder, headerListDS, "Button", 5, false, "Save", false, "");
 		driver.waitForPageToBeReady();
 
 		// Start collection
