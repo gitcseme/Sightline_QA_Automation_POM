@@ -2725,10 +2725,8 @@ public class Production_Phase2_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.getbtnProductionGenerate().isElementAvailable(10);
-		page.getbtnProductionGenerate().waitAndClick(5);
+		page.clickOnGenerateButton();
 		page.verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
-		page.navigateToProductionPage();
 		page.getGearIconForProdName(productionname).waitAndClick(5);
 		String ActualText = page.getDeletOption(productionname).GetAttribute("class");
 		driver.waitForPageToBeReady();
