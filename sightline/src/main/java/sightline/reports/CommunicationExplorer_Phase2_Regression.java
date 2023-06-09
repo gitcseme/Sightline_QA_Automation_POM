@@ -57,7 +57,7 @@ public class CommunicationExplorer_Phase2_Regression {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
 		driver = new Driver();
-
+		softAssertion = new SoftAssert();
 		sessionSearch = new SessionSearch(driver);
 		reports = new ReportsPage(driver);
 		conceptExplorer = new ConceptExplorerPage(driver);
@@ -394,7 +394,7 @@ public class CommunicationExplorer_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56886");
 		baseClass.stepInfo("Validate Masterdate range on Communication Explorer report");
 
-		String searchText = Input.searchString10;
+		String searchText = Input.searchString1;
 		String sourceToSelect = "Searches";
 		String sgToSelect = Input.mySavedSearch;
 		String savedSearchName = "SavedSearch-" + UtilityLog.dynamicNameAppender();
@@ -1052,6 +1052,7 @@ public class CommunicationExplorer_Phase2_Regression {
 	@Test(description = "RPMXCON-48695", dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void verifyBulkActionsFromCommunicationExplorerReportPage(String username, String password, String role)
 			throws InterruptedException {
+		
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48695");
 		baseClass.stepInfo(

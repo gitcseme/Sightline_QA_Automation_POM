@@ -891,12 +891,14 @@ public class Reports_Phase2_Regression {
 		String reportName2 = searchterm.ValidateSearchTermreportSaveandImpact(saveSearch1, true);
 
 		// Overwrite the Custom Report , verify popup & click yes button
-		reports.getCustomReport(reportName2).waitAndClick(10);
-		searchterm.CustomStrOverwriteOrUpdate(reportName2, true, reportName1, true, true);
+		reports.getCustomReport(reportName2).waitAndClick(1);
+		searchterm.CustomStrOverwriteOrUpdate(reportName2, true, reportName2, true, true);
 
 		// Overwrite the Custom Report , verify popup & click No button
-		searchterm.CustomStrOverwriteOrUpdate(reportName2, false, reportName1, true, false);
-
+		reports.getCustomReport(reportName2).waitAndClick(1);
+		searchterm.CustomStrOverwriteOrUpdate(reportName2, true, reportName2, true, false);
+		
+		
 		// delete search
 		savedSearch.deleteSearch(saveSearch1, Input.mySavedSearch, Input.yesButton);
 
@@ -993,7 +995,8 @@ public class Reports_Phase2_Regression {
 		custom.getCloseBtn_ScrubPopup().waitAndClick(5);
 
 		// Modify
-		driver.waitForPageToBeReady();
+		//driver.waitForPageToBeReady();
+		base.waitForElement(custom.getSpecialCharDDLast());
 		String expSpcOptMod = custom.selectSpecialORReplaceCharByIndex("Special Character", 2, 3);
 		String expRplcOptMod = custom.selectSpecialORReplaceCharByIndex("Replacement Character", 2, 3);
 		System.out.println(expSpcOptMod);
