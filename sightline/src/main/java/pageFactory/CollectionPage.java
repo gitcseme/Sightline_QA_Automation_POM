@@ -34,7 +34,7 @@ public class CollectionPage {
 	}
 
 	public Element getPopupMsg() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']");
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");
 	}
 
 	public Element getNewCollectionBtn() {
@@ -970,6 +970,7 @@ public class CollectionPage {
 	public void addNewDataSetCLick(String type) {
 		try {
 			if (type.equalsIgnoreCase("Button")) {
+				driver.waitForPageToBeReady();
 				getAddDataSetBtn().javascriptclick(getAddDataSetBtn());
 			} else if (type.equalsIgnoreCase("Link")) {
 
@@ -1159,7 +1160,8 @@ public class CollectionPage {
 	 */
 	public void folderToSelect(String folderName, Boolean toExpand, Boolean additional1) {
 		if (toExpand) {
-			getFolderabLabel().waitAndClick(5);
+			base.waitForElement(getFolderabLabel());
+			getFolderabLabel().javascriptclick(getFolderabLabel());
 		}
 		// Respective folder to select
 		try {
@@ -1258,8 +1260,9 @@ public class CollectionPage {
 			System.out.println("Attempt : " + i);
 			if (!status) {
 				// Add Dataset
+				
 				addNewDataSetCLick(addNewDataSetType);
-				actualValue = custodianNameSelectionInNewDataSet(firstName,datalistVal, collectionEmailId, true, false, "");
+				actualValue = custodianNameSelectionInNewDataSet(firstName,datalistVal,collectionEmailId, true, false, "");
 				status = verifyRetrivedDataMatches(firstName, lastName, colllectionData.get(dataName), selectedApp,
 						actualValue, false, false, "");
 				if (!status && i != retry) {
@@ -1535,7 +1538,6 @@ public class CollectionPage {
 
 			// Select source and Click create New Collection
 			String dataSourceName = selectSourceFromTheListAvailable();
-
 			// click created source location and verify navigated page
 			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
 
@@ -1657,7 +1659,6 @@ public class CollectionPage {
 
 			// Select source and Click create New Collection
 			String dataSourceName = selectSourceFromTheListAvailable();
-
 			// click created source location and verify navigated page
 			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
 
@@ -2501,7 +2502,6 @@ public class CollectionPage {
 				// Get Collection Status
 				collStatus = getDataSetDetails(collectionName,
 						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
-
 				base.stepInfo("Collection Status : " + collStatus);
 				base.textCompareEquals(collStatus, expectedStatus,
 						"Collection is in " + expectedStatus + " state as Expected",
@@ -3122,8 +3122,7 @@ public class CollectionPage {
 		String dataSetNameGenerated = addDataSetWithHandles(creationType,CustodiandatalistVal, firstName, lastName, collectionEmailId,
 				selectedApp, colllectionData, dataName, retryAttempt);
 
-		System.out.println("dataSetNameGenerated" + dataSetNameGenerated);
-
+		
 		// Folder Selection
 		if (subFolderFlag) {
 			folderToSelect(selectedFolder, true, true, subFolderName);
@@ -3241,6 +3240,7 @@ public class CollectionPage {
 			base.stepInfo("Clicked : " + actionType);
 
 			if (bellyBandText) {
+				base.waitForElement(getPopupMsg());
 				String actualTxt = getPopupMsg().getText();
 				String passMsg = "Displayed Popup Msg : " + actualTxt;
 				String failMsg = "Belly band msg is not as expected";
