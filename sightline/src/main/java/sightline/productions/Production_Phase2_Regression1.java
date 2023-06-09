@@ -4399,7 +4399,7 @@ public class Production_Phase2_Regression1 {
 		int count = doc.getNumberOfPages();
 		System.out.println(count);
 		base.digitCompareEquals(TotalPages, count, "Blank Page is not removed as expected", "Blank Page is Removed");
-		// loginPage.logout();
+		loginPage.logout();
 	}
 
 	/**
