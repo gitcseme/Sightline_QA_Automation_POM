@@ -539,6 +539,10 @@ public class UserManagement {
 	public Element getSelectAssignedUserDomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
+	
+	public Element getcheckAssignedUserDomain(String userName) {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']/option[text()='"+userName+"']");
+	}
 
 	public ElementCollection userDetailsTableHeader() {
 		return driver.FindElementsByXPath("//*[@id='dtUserList_wrapper']/div/div/div/table/thead/tr/th");
@@ -777,6 +781,10 @@ public class UserManagement {
 	public Element getUserListNextButton() {
 		return driver.FindElementByXPath("//a[text()='Next']");
 	}
+	
+	public ElementCollection getUserPaginationCount() {
+		return driver.FindElementsByXPath("//div[@id='dtUserList_paginate']/ul/li");
+	}
 
 	public Element getUserPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
@@ -934,8 +942,12 @@ public class UserManagement {
 		return driver.FindElementByXPath("//a[text()='Details']");
 	}
 
+//	public Element selectProject() {
+//		return driver.FindElementById("ddlProject");
+//	}
+	
 	public Element selectProject() {
-		return driver.FindElementById("ddlProject");
+		return driver.FindElementByXPath("//select[@id='ddlProject']");
 	}
 
 	public ElementCollection getAssignedUserListPA() {
@@ -2026,8 +2038,25 @@ public class UserManagement {
 	 */
 	public void editFunctionality(String project) throws Exception {
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getSelectUserToEdit(project));
-		getSelectUserToEdit(project).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getUserPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getUserPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			Boolean status = getSelectUserToEdit(project).isElementAvailable(5);
+			if (status == true) {
+				driver.scrollingToElementofAPage(getSelectUserToEdit(project));
+				getSelectUserToEdit(project).waitAndClick(5);
+				bc.stepInfo("Expected user found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(3);
+				bc.stepInfo("Expected user not found in the page " + i);
+			}
+		}
 	}
 
 	/**
@@ -2911,14 +2940,15 @@ public class UserManagement {
 	public void addingSGToUser(String defaultName, String newSG) throws InterruptedException, AWTException {
 		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
 		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_CONTROL);
+//		robot.keyPress(KeyEvent.VK_CONTROL);
 		selectSG.selectByVisibleText(defaultName);
+		Thread.sleep(2000); 
 		selectSG.selectByVisibleText(newSG);
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
+//		robot.keyRelease(KeyEvent.VK_CONTROL);
+//		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
 
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
 		bc.passedStep("Given access for these SG's " + defaultName + " " + newSG + "  for this user" + " Rmu user");
 	}
@@ -5256,7 +5286,7 @@ public class UserManagement {
 	 * @param projectName
 	 */
 	public void verifyRemoveUserPopup(boolean delete, String projectName) {
-		bc.waitForElement(getSelectUserToDelete(projectName));
+		bc.waitForElement(getSelectUserToRemove(projectName));
 		getSelectUserToRemove(projectName).waitAndClick(10);
 		if (getBellyBandMsg().isElementAvailable(10)) {
 			bc.stepInfo("Remove User Popup is Displayed");
@@ -5773,6 +5803,7 @@ public class UserManagement {
 				if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
@@ -5812,6 +5843,7 @@ public class UserManagement {
 				} else if (selectProject().isElementAvailable(5)) {
 					bc.waitForElement(selectProject());
 					String selectProject = selectProject().GetAttribute("class");
+					
 					if (selectProject.contains("form")) {
 						bc.waitForElement(selectProject());
 						selectProject().selectFromDropdown().selectByVisibleText(projectName);
@@ -6253,6 +6285,27 @@ public class UserManagement {
 		else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
+	}
+	
+	public boolean verifyDomainUserIsAssignedOrNot(String domainName,String UnAssignUser) {
+		boolean flag=false;
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+		bc.waitTime(5);
+		UnAssignUser=UnAssignUser+" || IsBillable: false";
+		if(getcheckAssignedUserDomain(UnAssignUser).isElementAvailable(2)) {
+			getDomainUserCancelButton().waitAndClick(5);
+			flag=true;
+		}else {
+			getDomainUserCancelButton().waitAndClick(5);
+			flag=false;
+			System.out.println("User is not asigned");
+			bc.stepInfo("Domain User is not assigned");
+		}
+		return flag;
 	}
 
 }

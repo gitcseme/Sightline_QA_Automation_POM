@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -26,6 +27,7 @@ import pageFactory.ClientsPage;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.Dashboard;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -69,6 +71,7 @@ public class ProductionsandIngestions {
 	ProductionPage page;
 	Categorization categorize;
 	ProjectFieldsPage projectFieldsPage;
+	DataSets dataSets;
 	String helpMsg1 = "Is there some reason that review cannot determined?";
 	String helpMsg2 = "Does this doc contain some type of issue that prohibits the ability for the record to be reviewed";
 	String helpMsg3 = "Does this doc contain some language besides what you can review?";
@@ -722,6 +725,58 @@ public class ProductionsandIngestions {
 
 		// logout
 		loginPage.logout();
+	}
+	
+	@Test(enabled = true, groups = { "regression" })
+	public void DragNDropUpload() throws Exception {
+		UserManagement userManagement=new UserManagement(driver);
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String datasetname=Input.SmokeDatasetUploadData;
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		baseClass.selectproject();
+				baseClass.stepInfo("Dataset Access Verification");
+				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+				baseClass.stepInfo("Ingestion started for dataset ****"+datasetname+"***");
+		 		String testFolderPath = System.getProperty("user.dir")+"\\ICETestData\\"+datasetname+"";
+		 		baseClass.stepInfo(testFolderPath);
+		 		baseClass.passedStep("User logged in successfully for PA user");
+
+		 		dataSets=new DataSets(driver);
+		 		
+		 		Actions actions = new Actions(driver.getWebDriver());
+		 		baseClass.waitForElement(dataSets.getdatasetleftmenuBtn());
+				actions.moveToElement(dataSets.getdatasetleftmenuBtn().getWebElement()).clickAndHold().build().perform();
+				dataSets.getdatasetleftsubmenuBtn().Click();
+				
+		 		String dataset = datasetname+ Utility.dynamicNameAppender();
+		 		String dcustodian ="Auto" + Utility.dynamicNameAppender();
+		 		String ddisc = datasetname+ Utility.dynamicNameAppender();
+		 		dataSets.setdatasetdetails(dataset,dcustodian, ddisc);
+		 		baseClass.passedStep("Dataset has been created successfully");
+				driver.waitForPageToBeReady();
+				System.out.println(testFolderPath);
+				
+				dataSets.uploadFilesByFolder(testFolderPath);
+				baseClass.passedStep(datasetname+" folder has been uploaded");
+				Thread.sleep(2000);
+				dataSets.getUploadFilesBtn().waitAndClick(10);
+				dataSets.getInitatePopupYesBtn().waitAndClick(20);
+				 baseClass.passedStep("Clicked on Yes button");
+				 baseClass.passedStep("Processing has been started"); 
+				 System.out.println("Processing has been started");
+
+				
+				driver.getWebDriver().get(Input.url+"DocExplorer/Explorer");
+				dataSets.navigateToDataSetsPage();
+				driver.waitForPageToBeReady();
+				baseClass.waitForElement(dataSets.getSearchTheFile());
+				dataSets.getSearchTheFile().SendKeys(dataset);
+				baseClass.waitForElement(dataSets.getClkSearch());
+				dataSets.getClkSearch().waitAndClick(5);
+				 System.out.println(dataset);
+				dataSets.VerifyLastStatusOfCollection("Published", 25, dataset);
+
 	}
 	@AfterClass(alwaysRun = true)
 	public void close() {

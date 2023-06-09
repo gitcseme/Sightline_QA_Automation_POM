@@ -1272,7 +1272,7 @@ public class UsersAndRoleManagement_Phase2_Regression2 {
 		driver.Navigate().refresh();
 		userManage.passingUserName(emailId);
 		userManage.applyFilter();
-		userManage.verifyDeleteUserPopup(true, Input.projectName);
+		userManage.verifyRemoveUserPopup(true, Input.projectName);
 
 		// logout
 		loginPage.logout();

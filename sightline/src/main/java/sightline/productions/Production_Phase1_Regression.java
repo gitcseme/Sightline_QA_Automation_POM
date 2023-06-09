@@ -1236,8 +1236,7 @@ public class Production_Phase1_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATWithMultipleDropDown();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
-				beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname, beginningBates);
 		loginPage.logout();
 	}
 
@@ -5313,7 +5312,6 @@ public class Production_Phase1_Regression {
 			}
 		}
 		brReader.close();
-		loginPage.logout();
 		base.passedStep(
 				"Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
 		loginPage.logout();

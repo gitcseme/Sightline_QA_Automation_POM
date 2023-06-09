@@ -775,6 +775,7 @@ public class SecurityGroupsPage {
 		bc.waitForElement(getSG_ProjectFieldButton());
 		bc.waitTillElemetToBeClickable(getSG_ProjectFieldButton());
 		getSG_ProjectFieldButton().waitAndClick(10);
+		 bc.VerifySuccessMessage("Your selections were saved successfully");
 	}
 
 	/**
@@ -889,6 +890,7 @@ public class SecurityGroupsPage {
 	 */
 	public void selectSecurityGroup(String securityGroupName) {
 		try {
+			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getSelectSecurityGroup());
 			bc.waitTillElemetToBeClickable(getSelectSecurityGroup());

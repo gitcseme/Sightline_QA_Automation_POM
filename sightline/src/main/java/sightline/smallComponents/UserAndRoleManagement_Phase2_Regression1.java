@@ -162,7 +162,7 @@ public class UserAndRoleManagement_Phase2_Regression1 {
 		// change role from DA to PA
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.da1userName);
-		userManage.selectEditUserUsingPagination("Indium", null, null);
+		userManage.selectEditUserUsingPagination(Input.domainName, null, null);
 		baseClass.stepInfo("Change Role from DA to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
 		userManage.navigateToUsersPAge();
@@ -945,7 +945,7 @@ public class UserAndRoleManagement_Phase2_Regression1 {
 		// change role from DA to PA
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.da1userName);
-		userManage.selectEditUserUsingPagination("Indium", null, null);
+		userManage.selectEditUserUsingPagination(Input.domainName, null, null);
 		baseClass.stepInfo("Change Role from DA to PA");
 		userManage.changeRoleToAnyUser(Input.ProjectAdministrator, Input.projectName, null);
 		userManage.navigateToUsersPAge();
@@ -957,7 +957,7 @@ public class UserAndRoleManagement_Phase2_Regression1 {
 		// change role from DA to RMU
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.da1userName);
-		userManage.selectEditUserUsingPagination("Indium", null, null);
+		userManage.selectEditUserUsingPagination(Input.domainName, null, null);
 		baseClass.stepInfo("Change Role from DA to RMU");
 		userManage.changeRoleToAnyUser(Input.ReviewManager, Input.projectName, Input.securityGroup);
 		userManage.navigateToUsersPAge();
@@ -969,7 +969,7 @@ public class UserAndRoleManagement_Phase2_Regression1 {
 		// change role from DA to Reviewer
 		userManage.navigateToUsersPAge();
 		userManage.filterByName(Input.da1userName);
-		userManage.selectEditUserUsingPagination("Indium", null, null);
+		userManage.selectEditUserUsingPagination(Input.domainName, null, null);
 		baseClass.stepInfo("Change Role from DA to Reviewer");
 		userManage.changeRoleToAnyUser(Input.Reviewer, Input.projectName, Input.securityGroup);
 		userManage.navigateToUsersPAge();

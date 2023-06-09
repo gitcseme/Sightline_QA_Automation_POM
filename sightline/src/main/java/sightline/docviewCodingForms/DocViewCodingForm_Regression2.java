@@ -1485,6 +1485,7 @@ public class DocViewCodingForm_Regression2 {
 			System.out.println(assignFive);
 		}
 		// selecting the assignment as reviewer
+		baseClass.selectproject();
 		assignmentPage.SelectAssignmentByReviewer(assignFive);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
@@ -2397,6 +2398,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
 
 		// Edit comments
+		baseClass.waitForElement(docViewPage.getAddComment1());
 		docViewPage.getAddComment1().Clear();
 		docViewPage.getAddComment1().SendKeys(comments);
 		baseClass.stepInfo("Coding form input : " + comments);
@@ -2475,7 +2477,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("To verify that Project Admin cannot view the coding form.");
 
 		// Login as Rmu
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 
 		// Assign coding form
 		codingForm.selectDefaultCodingFormAsDefault();
@@ -2489,10 +2491,10 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		// navigation to docview page from session search page
-		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
-
+		baseClass.waitTime(5);
 		// validation for pa user in coding form
 		docViewPage.validateCodingFormDisplayAsPaUser(Input.codingFormName);
 		docViewPage.paWarningMsgForCodingForm();
@@ -2904,7 +2906,7 @@ public class DocViewCodingForm_Regression2 {
 					.perform();
 			driver.waitForPageToBeReady();
 			String ActualText = docViewPage.getSavedCodingStamp(Input.stampSelection).getWebElement()
-					.getAttribute("title");
+					.getAttribute("data-title");
 			baseClass.textCompareEquals(ActualText, fieldText, "Mouseover Text is displayed as expected",
 					"Mouseover text is not displayed as expected");
 		} else {
@@ -5524,6 +5526,9 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.logout();
 		// Delete assignment and codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -5596,6 +5601,9 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.logout();
 		// Delete assignments,codingform and tag
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -5670,7 +5678,11 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.logout();
 		// Delete assignment,codingform and tag
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
+		
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
 		codingForm.verifyCodingFormIsDeleted(codingform);
@@ -5752,6 +5764,9 @@ public class DocViewCodingForm_Regression2 {
 		// delete codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		System.out.println(assgnCoding);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -6122,6 +6137,7 @@ public class DocViewCodingForm_Regression2 {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
+		baseClass.waitTime(5);
 
 		codingForm.ViewCFinDocViewThrSearch(cfName);
 		docViewPage.verifyPanels();
@@ -8136,11 +8152,7 @@ public class DocViewCodingForm_Regression2 {
 				return sessionSearch.getBulkActionButton().Visible();
 			}
 		}), Input.wait30);
-		Thread.sleep(2000); // App synch
-		sessionSearch.getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000); // App Synch
-		docViewPage.getDocViewAction().waitAndClick(10);
-		baseClass.waitTime(3); // added for stabilization
+		sessionSearch.addDocsMetCriteriaToActionBoard();
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 		driver.waitForPageToBeReady();
@@ -8188,13 +8200,7 @@ public class DocViewCodingForm_Regression2 {
 				return sessionSearch.getBulkActionButton().Visible();
 			}
 		}), Input.wait30);
-		Thread.sleep(2000); // App synch
-		sessionSearch.getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000); // App Synch
-
-		docViewPage.getDocViewAction().waitAndClick(10);
-		baseClass.waitTime(3); // added for stabilization
-
+		sessionSearch.addDocsMetCriteriaToActionBoard();
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 		driver.waitForPageToBeReady();
@@ -8248,10 +8254,7 @@ public class DocViewCodingForm_Regression2 {
 				return sessionSearch.getBulkActionButton().Visible();
 			}
 		}), Input.wait30);
-		Thread.sleep(2000); // App synch
-		sessionSearch.getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000); // App Synch
-		docViewPage.getDocViewAction().waitAndClick(10);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
 		baseClass.waitTime(3); // added for stabilization
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
@@ -8540,6 +8543,7 @@ public class DocViewCodingForm_Regression2 {
 				"Verify after impersonation document not marked as completed in an assignment, custom coding form is editable on doc view page");
 
 		// login as RMU
+		String codingform = "CF" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Successfully login as " + user);
 		// create new coding form
@@ -8580,10 +8584,14 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.verifyCodingFormName(codingform);
 		docViewPage.verifyTagsAreEnabled(0);
 		docViewPage.verifyTagsAreEnabled(1);
-		if (user == "RMU") {
+		if (user == "rmu") {
 			loginPage.logout();
 			// delete assignment and codinform
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignmentPage.navigateToAssignmentsPage();
+			assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+			assignmentPage.SelectCodingform(Input.codeFormName);
+			driver.Navigate().refresh();
 			assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 			codingForm.assignCodingFormToSG(Input.codeFormName);
 			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -8676,7 +8684,7 @@ public class DocViewCodingForm_Regression2 {
 	@DataProvider(name = "ImpersonationOfUsers")
 	public Object[][] ImpersonationOfUsers() {
 		Object[][] users = { { Input.sa1userName, Input.sa1password, "SA" },
-				{ Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+				{ Input.pa1userName, Input.pa1password, "PA" }, { Input.rmu1userName, Input.rmu1password, "RMU" }, { Input.rmu1userName, Input.rmu1password, "rmu" } };
 		return users;
 	}
 
