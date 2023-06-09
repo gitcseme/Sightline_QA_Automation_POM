@@ -1538,7 +1538,6 @@ public class CollectionPage {
 
 			// Select source and Click create New Collection
 			String dataSourceName = selectSourceFromTheListAvailable();
-			System.out.println("dataSourceName :-"+dataSourceName);
 			// click created source location and verify navigated page
 			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
 
@@ -1660,7 +1659,6 @@ public class CollectionPage {
 
 			// Select source and Click create New Collection
 			String dataSourceName = selectSourceFromTheListAvailable();
-			System.out.println("dataSourceName :-"+dataSourceName);
 			// click created source location and verify navigated page
 			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
 
@@ -2504,8 +2502,6 @@ public class CollectionPage {
 				// Get Collection Status
 				collStatus = getDataSetDetails(collectionName,
 						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
-				System.out.println("collStatus:-"+collStatus);
-				System.out.println("expectedStatus:-"+expectedStatus);
 				base.stepInfo("Collection Status : " + collStatus);
 				base.textCompareEquals(collStatus, expectedStatus,
 						"Collection is in " + expectedStatus + " state as Expected",

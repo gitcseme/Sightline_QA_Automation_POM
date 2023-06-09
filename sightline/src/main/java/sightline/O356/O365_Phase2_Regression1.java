@@ -2416,7 +2416,6 @@ public class O365_Phase2_Regression1 {
 		colllectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, true);
 		collectionName = base.returnKey(colllectionData, "", false);
 		collectionId = colllectionData.get(collectionName);
-		System.out.println("colllectionData.get(collectionName)-"+ colllectionData.get(collectionName));
 		// DataSet creation
 		collection.fillinDS(collectionName, collectiondatalistVal,firstName, lastName, collectionEmailId, selectedApp, colllectionData,
 				selectedFolder, headerListDS, "Button", 5, false, "Save", false, "");
