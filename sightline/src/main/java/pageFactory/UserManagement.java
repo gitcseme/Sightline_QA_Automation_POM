@@ -2940,14 +2940,15 @@ public class UserManagement {
 	public void addingSGToUser(String defaultName, String newSG) throws InterruptedException, AWTException {
 		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
 		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_CONTROL);
+//		robot.keyPress(KeyEvent.VK_CONTROL);
 		selectSG.selectByVisibleText(defaultName);
+		Thread.sleep(2000); 
 		selectSG.selectByVisibleText(newSG);
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
+//		robot.keyRelease(KeyEvent.VK_CONTROL);
+//		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
 
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
 		bc.passedStep("Given access for these SG's " + defaultName + " " + newSG + "  for this user" + " Rmu user");
 	}
