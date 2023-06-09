@@ -5022,6 +5022,7 @@ public class AssignmentsPage {
 	public String verifydocsCountInAssgnPage(String assignmentName) throws InterruptedException {
 		String docCount = null;
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.Navigate().refresh();
 		bc.waitForElement(getNumberOfAssignmentsToBeShown());
 		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
 		driver.scrollingToBottomofAPage();
