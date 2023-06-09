@@ -389,12 +389,12 @@ public class KeywordPage {
 		base.waitForElement(getKeywords());
 		getKeywords().SendKeys(keywordname);
 		getSelectColor().selectFromDropdown().selectByVisibleText(color);
-		getIntoFullScreen();
+		//getIntoFullScreen();
 		base.waitForElement(getSaveBtn());
 		getSaveBtn().waitAndClick(5);
 		base.waitForElement(getYesButton());
 		getYesButton().waitAndClick(5);
-		getExitFullScreen();
+		//getExitFullScreen();
 
 	}
 

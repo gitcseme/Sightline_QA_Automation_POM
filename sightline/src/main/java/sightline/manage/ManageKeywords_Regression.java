@@ -568,7 +568,8 @@ public class ManageKeywords_Regression {
 		userManagement.editRoleFromReviewerToRMU(Input.rev2userName, "Reviewer","1",Input.projectName);
 		
 		loginPage.logout();
-		
+		Thread.sleep(5000);
+		driver.Navigate().refresh();
 		// Login As RMU from Reviewer
 		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.selectproject();
@@ -618,24 +619,21 @@ public class ManageKeywords_Regression {
 		userManagement.editRoleFromPAUToRMU(Input.rmu2userName, "Review Manager","0",Input.projectName);
 		
 		loginPage.logout();
-		
+		Thread.sleep(5000);
+		driver.Navigate().refresh();
 		// Login As PA from RMU
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu2userName + "");
 		
-		String keywordName = "deleteKeyword01"+Utility.dynamicNameAppender();
-		keyWord.navigateToKeywordPage();
-		keyWord.addKeyword(keywordName, color);
-		keyWord.deleteKeywordByNameAndCancel1(keywordName);
-		baseClass.passedStep("Keyword group, keywords is not deleted successfully.");
+	
 		
-		/*
 		keyWord.navigateToKeywordPage();
 		keyWord.addKeyword(keywordname, color);
 		keyWord.deleteKeywordByName(keywordname);
 		keyWord.editExistigKeywordAndVerifyThem(keywordname);
 		baseClass.passedStep("User have access to Manage > Keywords page and able to create, modify and delete keywords successfully.");
-		*/
+		
+		
 		loginPage.logout();
 		
 		//Re assigning the User to its original username

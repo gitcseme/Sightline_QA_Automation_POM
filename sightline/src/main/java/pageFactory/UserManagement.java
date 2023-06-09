@@ -3482,8 +3482,9 @@ public class UserManagement {
 	 * @description: To change role from RMU,PA and Reviewer to reviewer and PA
 	 * @param username
 	 * @param role
+	 * @throws InterruptedException 
 	 */
-	public void editRoleForRMUANdPAUsers(String username, String role, String projectName) {
+	public void editRoleForRMUANdPAUsers(String username, String role, String projectName) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
@@ -3491,10 +3492,11 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-
+		Thread.sleep(2000);
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
+		Thread.sleep(2000);
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 
 			bc.waitForElement(getUserChangeDropDown());
@@ -3510,7 +3512,7 @@ public class UserManagement {
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
-
+			Thread.sleep(2000);
 			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage").GetAttribute("style");
 			System.out.println(checkBoxStatus);
 
@@ -3553,8 +3555,9 @@ public class UserManagement {
 	 * @description: To change role from PA to reviewer manager and Reviewer
 	 * @param username
 	 * @param role
+	 * @throws InterruptedException 
 	 */
-	public void editRoleFromPAToRMU(String username, String role, String projectName) {
+	public void editRoleFromPAToRMU(String username, String role, String projectName) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
@@ -3563,11 +3566,11 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-
+		Thread.sleep(2000);
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-
+		Thread.sleep(2000);
 		if (role.contains("Project Administrator")) {
 			getUserChangeDropDown().isElementAvailable(5);
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
@@ -3577,7 +3580,7 @@ public class UserManagement {
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-
+			Thread.sleep(2000);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
@@ -3620,8 +3623,9 @@ public class UserManagement {
 	 * @description: To change role from PA to reviewer manager and Reviewer
 	 * @param username
 	 * @param role
+	 * @throws InterruptedException 
 	 */
-	public void editRoleFromPAUToRMU(String username, String role, String select, String projectName) {
+	public void editRoleFromPAUToRMU(String username, String role, String select, String projectName) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
@@ -3642,11 +3646,11 @@ public class UserManagement {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-
+			Thread.sleep(2000);
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-
+			Thread.sleep(2000);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
@@ -3675,10 +3679,10 @@ public class UserManagement {
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
-
+			Thread.sleep(2000);
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
-
+			Thread.sleep(2000);
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled for the user");
 
@@ -3690,7 +3694,7 @@ public class UserManagement {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-
+			Thread.sleep(2000);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
@@ -6203,7 +6207,7 @@ public class UserManagement {
 
 	}
 
-	public void editRoleFromReviewerToRMU(String username, String role,String manageButton, String projectName) {
+	public void editRoleFromReviewerToRMU(String username, String role,String manageButton, String projectName) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
@@ -6212,28 +6216,28 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-
+		Thread.sleep(2000);
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-
+		Thread.sleep(2000);
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
-
+			Thread.sleep(2000);
 			if (getConfirmTab().isElementAvailable(5)) {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-
+			Thread.sleep(2000);
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-
+			Thread.sleep(2000);
 			bc.waitForElement(getFunctionalityButton());
 			getFunctionalityButton().waitAndClick(5);
 
-
+			Thread.sleep(2000);
 			if (manageButton.contains("0")) {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
