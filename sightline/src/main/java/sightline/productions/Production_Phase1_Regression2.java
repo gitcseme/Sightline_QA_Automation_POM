@@ -167,7 +167,7 @@ public class Production_Phase1_Regression2 {
 	 *               'Reserving Bates Range' status on Progress bar in Tile View on
 	 *               Production Home page
 	 */
-	//@Test(description = "RPMXCON-55975", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55975", enabled = true, groups = { "regression" })
 	public void reservingBateRangeStatusVerifyOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55975 -Production Sprint 06");
@@ -229,7 +229,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that after Pre-gen checks is in progress, it will
 	 *               displays status on Production Progress bar Tile View
 	 */
-	//@Test(description = "RPMXCON-55973", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55973", enabled = true, groups = { "regression" })
 	public void preGenChecksStatusVerifyOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55973 -Production Sprint 06");
@@ -325,7 +325,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that for the saved template under Translations
 	 *               component- File Type Options should be disabled.
 	 */
-	//@Test(description = "RPMXCON-56136", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56136", enabled = true, groups = { "regression" })
 	public void verifyTranslationComponentDisableAtMangeTemp() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON_56136 Production- Sprint 06");
@@ -371,7 +371,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that PDF should generate with Burned Redaction if
 	 *               Only Burn Redaction is enabled.
 	 */
-	//@Test(description = "RPMXCON-56091", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56091", enabled = true, groups = { "regression" })
 	public void getPdfWithBurnRedactionTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56091 -Production Sprint 06");
@@ -427,7 +427,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that Production should export Text files for Document
 	 *               level successfully.
 	 */
-	//@Test(description = "RPMXCON-56073", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56073", enabled = true, groups = { "regression" })
 	public void getExortTextforDocument() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56073 -Production Sprint 06");
@@ -485,7 +485,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that Production should generate successfully by
 	 *               selecting only DAT and 'Generate TIFF' option.
 	 */
-	//@Test(description = "RPMXCON-56083", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56083", enabled = true, groups = { "regression" })
 	public void getProductionPageWithDatTiff() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56083 -Production Sprint 06");
@@ -543,7 +543,7 @@ public class Production_Phase1_Regression2 {
 	 *               selecting only DAT and 'Generate PDF' option with Priv
 	 *               Placholder.
 	 */
-	//@Test(description = "RPMXCON-56086", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56086", enabled = true, groups = { "regression" })
 	public void getProductionPageWithDatPdf() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56086 -Production Sprint 06");
@@ -599,7 +599,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To Verify that Regenerate button Popup should close on clicking
 	 *                 on Cancel button.
 	 */
-	//@Test(description = "RPMXCON-56151", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56151", enabled = true, groups = { "regression" })
 	public void regeneratePopUpClickCancel() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56151 -Production Sprint 07");
@@ -652,7 +652,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To Verify the error message for MP3 component when 'Disable
 	 *                 generate load File.
 	 */
-	//@Test(description = "RPMXCON-56109", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56109", enabled = true, groups = { "regression" })
 	public void getMp3DisableGenarateLoadFile() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56109 -Production Sprint 07");
@@ -683,7 +683,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To Verify the error message for TIFF/PDF component when 'Enabled
 	 *                 privileg doc without tag or text'.
 	 */
-	//@Test(description = "RPMXCON-56101", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56101", enabled = true, groups = { "regression" })
 	public void verifyErrormsgTiffPdf() throws InterruptedException {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56101 -Production Sprint 07");
@@ -734,7 +734,7 @@ public class Production_Phase1_Regression2 {
 	 *               displays 'Reserving Bates Range Complete' status on Grid View
 	 *               on Production Home page.
 	 */
-	//@Test(description = "RPMXCON-56041", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56041", enabled = true, groups = { "regression" })
 	public void verifyBatesRangecompletedOnGridView() throws Exception {
 		loginPage.logout();
 
@@ -800,7 +800,7 @@ public class Production_Phase1_Regression2 {
 	 *               'Creating Archive Complete' status on Production Generation
 	 *               page.
 	 */
-	//@Test(description = "RPMXCON-56034", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56034", enabled = true, groups = { "regression" })
 	public void createArchivingStatusVerifyOnGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56034 -Production Sprint 07");
@@ -858,7 +858,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that Production status displays as Draft on
 	 *               Production Grid View.
 	 */
-	//@Test(description = "RPMXCON-56035", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56035", enabled = true, groups = { "regression" })
 	public void verifyDraftStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56035 -Production Sprint 07");
@@ -949,7 +949,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that after Pre-gen checks is in progress, it will
 	 *               displays status on Production Grid view.
 	 */
-	//@Test(description = "RPMXCON-56036", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56036", enabled = true, groups = { "regression" })
 	public void verifyPreGenStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56036 -Production Sprint 07");
@@ -1046,7 +1046,7 @@ public class Production_Phase1_Regression2 {
 	 *               displays 'Exporting Files' status on Production Progress bar
 	 *               Tile View.
 	 */
-	//@Test(description = "RPMXCON-56029", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56029", enabled = true, groups = { "regression" })
 	public void verifyExportinFilesStatusOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56029 -Production Sprint 07");
@@ -1105,7 +1105,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that after destination copy is completed it should
 	 *               displays 'Exporting Files' status on Production Generate tab.
 	 */
-	//@Test(description = "RPMXCON-56030", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56030", enabled = true, groups = { "regression" })
 	public void verifyExportinFilesStatusOnGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56030 -Production Sprint 07");
@@ -1161,7 +1161,7 @@ public class Production_Phase1_Regression2 {
 	 *               progress, it will displays status as 'Exporting Files' on
 	 *               Production Grid View.
 	 */
-	//@Test(description = "RPMXCON-56048", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56048", enabled = true, groups = { "regression" })
 	public void verifyExportinFilesStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56048 -Production Sprint 08");
@@ -1225,7 +1225,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify if currently 'AllProductionBatesRanges' is searchable,
 	 *               then we should leave the field to be searchable..
 	 */
-	////@Test(description = "RPMXCON-50017", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-50017", enabled = true, groups = { "regression" })
 	public void verifyAllProductionBatesRangesSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50017 -Production Sprint 09");
@@ -1265,7 +1265,7 @@ public class Production_Phase1_Regression2 {
 	 *               non-searchable, then this field cannot make as searchable again
 	 */
 	// commenting since the functionality is not present
-	// //@Test(description="RPMXCON-50018",enabled = true, groups = { "regression" } )
+	// @Test(description="RPMXCON-50018",enabled = true, groups = { "regression" } )
 	public void verifyAllProductionBatesRangesNotSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50018 -Production Sprint 09");
@@ -1304,7 +1304,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description In production, Preview should displays correctly
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49099", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49099", enabled = true, groups = { "regression" })
 	public void verifyPreviewInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49099 -Production Sprint 09");
@@ -1364,7 +1364,7 @@ public class Production_Phase1_Regression2 {
 	 *              correct format in the Production, DAT.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49104", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49104", enabled = true, groups = { "regression" })
 	public void verifyDatFieldsAreExport() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49104 -Production Sprint 09");
@@ -1436,7 +1436,7 @@ public class Production_Phase1_Regression2 {
 	 *              a PDF file.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48978", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48978", enabled = true, groups = { "regression" })
 	public void verifyBrandingTextToSixLocation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48978 -Production Sprint 09");
@@ -1496,7 +1496,7 @@ public class Production_Phase1_Regression2 {
 	 *              produced. It should not export Natives
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48660", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48660", enabled = true, groups = { "regression" })
 	public void verifyDoNotProduceTiffToggleOn() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1611,7 +1611,7 @@ public class Production_Phase1_Regression2 {
 	 *              docs.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48454", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48454", enabled = true, groups = { "regression" })
 	public void verifyProdGenSuccesInPdfDoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48454 -Production Sprint 09");
@@ -1668,7 +1668,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description To Verify Enabling Placeholder for Privilege Doc at PrivGuard.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48279", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48279", enabled = true, groups = { "regression" })
 	public void verifiyEnablePlaceholderAtPrivDoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48279 -Production Sprint 09");
@@ -1745,7 +1745,7 @@ public class Production_Phase1_Regression2 {
 	 *               progress, it will displays status as 'Exporting Files' on
 	 *               Production Generation tab
 	 */
-	//@Test(description = "RPMXCON-55981", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55981", enabled = true, groups = { "regression" })
 	public void verifyLstGenExportinFilesStatusOnGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55981 -Production Sprint 09");
@@ -1812,7 +1812,7 @@ public class Production_Phase1_Regression2 {
 	 *               progress, it will displays status as 'Exporting Files' on
 	 *               Production Progress bar Tile View.
 	 */
-	//@Test(description = "RPMXCON-55980", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55980", enabled = true, groups = { "regression" })
 	public void verifyLstGenExportinFilesStatusOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55980 -Production Sprint 09");
@@ -1883,7 +1883,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that 'Production Creation Date' should displayed when
 	 *               it saved first time.
 	 */
-	//@Test(description = "RPMXCON-49040", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49040", enabled = true, groups = { "regression" })
 	public void verifyProductionCreationDate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49040 -Production Sprint 09");
@@ -1928,7 +1928,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that 'Bates Range' should be blank before pre-gen
 	 *               check completed.
 	 */
-	//@Test(description = "RPMXCON-48569", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48569", enabled = true, groups = { "regression" })
 	public void verifyBateRangeBlankGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48569 -Production Sprint 09");
@@ -1992,7 +1992,7 @@ public class Production_Phase1_Regression2 {
 	 *               Burn redactions and File group/tag based placeholdering is
 	 *               exists.
 	 */
-	//@Test(description = "RPMXCON-48344", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48344", enabled = true, groups = { "regression" })
 	public void verifyGenWithPrivplcholderTechIssueRedactionTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48344 -Production Sprint 09");
@@ -2070,7 +2070,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that if Blank Page Removal toggle is OFF then it
 	 *               should produced the PDF with blank pages
 	 */
-	//@Test(description = "RPMXCON-48533", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48533", enabled = true, groups = { "regression" })
 	public void verifyBlankRemovalToggleWithpdfGen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48533 -Production Sprint 09");
@@ -2125,7 +2125,7 @@ public class Production_Phase1_Regression2 {
 	 *               only tags selected in the native components, then Component tab
 	 *               should Complete without any error.
 	 */
-	//@Test(description = "RPMXCON-55920", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55920", enabled = true, groups = { "regression" })
 	public void verifiyProdComponentTabWithoutError() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55920 -Production Sprint 10");
@@ -2210,7 +2210,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify Document Selection Page (for Folder/Tag/Search;
 	 *               Include Family ;Total Count)
 	 */
-	//@Test(description = "RPMXCON-48183", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48183", enabled = true, groups = { "regression" })
 	public void verifyDocmentSelectionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48183 -Production Sprint 10");
@@ -2270,7 +2270,7 @@ public class Production_Phase1_Regression2 {
 	 *               displays 'Reserving Bates Range Completed' status on Progress
 	 *               bar in Tile View on Production Home page
 	 */
-	//@Test(description = "RPMXCON-56019", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56019", enabled = true, groups = { "regression" })
 	public void verifiyBateRangeCompletedOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56019 -Production Sprint 10");
@@ -2331,7 +2331,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Tile View
 	 */
-	//@Test(description = "RPMXCON-56022", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56022", enabled = true, groups = { "regression" })
 	public void verifiyLSTGenOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56022 -Production Sprint 10");
@@ -2399,7 +2399,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that once LST generation is started it should displays '
 	 *               Generating Load Files' status on Production Grid View
 	 */
-	//@Test(description = "RPMXCON-56045", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56045", enabled = true, groups = { "regression" })
 	public void verifiyGenarationloadFilesOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56045 -Production Sprint 10");
@@ -2467,7 +2467,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that if Production is regeneate then previous sharable
 	 *               link should not be usabel
 	 */
-	//@Test(description = "RPMXCON-56012", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56012", enabled = true, groups = { "regression" })
 	public void verifyRegenarateSharable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56012 -Production Sprint 10");
@@ -2543,7 +2543,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that after the regenerate the new links, previous links
 	 *               and password will no longer work,
 	 */
-	//@Test(description = "RPMXCON-56006", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56006", enabled = true, groups = { "regression" })
 	public void verifyRegenareOldLinkNoLongerWork() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56006 -Production Sprint 10");
@@ -2619,7 +2619,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that in the Production components page 'Archive File
 	 *               from FTP' component is not available
 	 */
-	//@Test(description = "RPMXCON-55997", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55997", enabled = true, groups = { "regression" })
 	public void verifyArchiveFileFromFTPNotDisplayed() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55997 -Production Sprint 10");
@@ -2653,7 +2653,7 @@ public class Production_Phase1_Regression2 {
 	 *                 clicking on document count link it should redirect to Doc
 	 *                 List page with correct document count
 	 */
-	//@Test(description = "RPMXCON-49236", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49236", enabled = true, groups = { "regression" })
 	public void verifyNavigationToDocListPageFromDocumentSelectionTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49236 -Production Sprint 08");
@@ -2706,7 +2706,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify that after selecting the Next BatesNumbers, value
 	 *                 should be auto-populated
 	 */
-	//@Test(description = "RPMXCON-49239", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49239", enabled = true, groups = { "regression" })
 	public void SelectNextBatesNumberAndVerifyingAutoPopulatedValue() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49239 -Production Sprint 08");
@@ -2751,7 +2751,7 @@ public class Production_Phase1_Regression2 {
 	 *                 number(S)' link should not be available in Mark Complete
 	 *                 mode.
 	 */
-	//@Test(description = "RPMXCON-49241", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49241", enabled = true, groups = { "regression" })
 	public void verifyClickHerelinkNotAvailableInMarkComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49241 -Production Sprint 08");
@@ -2772,7 +2772,7 @@ public class Production_Phase1_Regression2 {
 	 *                 ''Click here to View and select the bates number(S)'' should
 	 *                 be available and user can select the bates numbers
 	 */
-	//@Test(description = "RPMXCON-49243", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49243", enabled = true, groups = { "regression" })
 	public void verifyClickHerelinkAvailableInMarkInComplete() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49243 -Production Sprint 08");
@@ -2794,7 +2794,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify that when text is exported for Priv file then it
 	 *                 should export the text with the Placeholder
 	 */
-	//@Test(description = "RPMXCON-49133", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49133", enabled = true, groups = { "regression" })
 	public void verifyExportInTIFFAndPDFPriviledgedPlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49133 -Production Sprint 08");
@@ -2874,7 +2874,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify that ' Number Of Custodians' on Production Summary
 	 *                 page
 	 */
-	//@Test(description = "RPMXCON-49108", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49108", enabled = true, groups = { "regression" })
 	public void verifyingUniqueCustodianInSummaryAndPreviewTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49108 -Production Sprint 08");
@@ -2917,7 +2917,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:Create a Production with the Prerequisite: MP3 files and by
 	 *                     selecting just the DAT file as a production component
 	 */
-	//@Test(description = "RPMXCON-48662", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48662", enabled = true, groups = { "regression" })
 	public void verifyProductionGenerateForMP3Docs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48662 -Production Sprint 09");
@@ -2962,7 +2962,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:Verify that production should be generated successfully for
 	 *                     audio files
 	 */
-	//@Test(description = "RPMXCON-48661", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48661", enabled = true, groups = { "regression" })
 	public void verifyProductionGenerateForAudioFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48661 -Production Sprint 09");
@@ -3009,7 +3009,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify that If user select PrivTag and if Audio document is
 	 *                 associated to that tag then Native should not produced
 	 */
-	//@Test(description = "RPMXCON-48492", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48492", enabled = true, groups = { "regression" })
 	public void SelectPrivTagWithAudioDocumentAndNativeNotProduced() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48492 -Production Sprint 09");
@@ -3065,7 +3065,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify that If user select PrivTag and if Audio document is
 	 *                 not associated to that tag then Native should be produced
 	 */
-	//@Test(description = "RPMXCON-48493", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48493", enabled = true, groups = { "regression" })
 	public void SelectPrivTagWithAudioDocumentAndNativeProduced() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48493 -Production Sprint 09");
@@ -3119,7 +3119,7 @@ public class Production_Phase1_Regression2 {
 	 *                 even though Burn redactions and File group/tag based
 	 *                 placeholdering is exists.
 	 */
-	//@Test(description = "RPMXCON-48504", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48504", enabled = true, groups = { "regression" })
 	public void ProductionGenerateWithPrivHolderWithBurnRedaction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -3220,7 +3220,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each
 	 *                 document produced
 	 */
-	//@Test(description = "RPMXCON-48204", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48204", enabled = true, groups = { "regression" })
 	public void verifyProductionDATProvideTIFFPageCount() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48204 -Production Sprint 09");
@@ -3301,7 +3301,7 @@ public class Production_Phase1_Regression2 {
 	 *              should not produced
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48379", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48379", enabled = true, groups = { "regression" })
 	public void verifyNativeIsNotProducedAtGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3400,7 +3400,7 @@ public class Production_Phase1_Regression2 {
 	 *              Native should produced
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48380", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48380", enabled = true, groups = { "regression" })
 	public void verifyNativeIsProducedAtGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3475,7 +3475,7 @@ public class Production_Phase1_Regression2 {
 	 *              produced.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48376", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48376", enabled = true, groups = { "regression" })
 	public void VerifyPrivTagNotAssociatedNativeProduced() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -3527,7 +3527,7 @@ public class Production_Phase1_Regression2 {
 	 *              sections are not selected then Native should be generated
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48378", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48378", enabled = true, groups = { "regression" })
 	public void verifyPDFOrTIFFNotSelectedNativeGenerate() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -3577,7 +3577,7 @@ public class Production_Phase1_Regression2 {
 	 *              is associated to that tag then Native should not produced
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48375", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48375", enabled = true, groups = { "regression" })
 	public void verifyNativeNotProduced() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3653,7 +3653,7 @@ public class Production_Phase1_Regression2 {
 	 *              message, Tiff/PDF should produced with blank pages
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48534", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48534", enabled = true, groups = { "regression" })
 	public void verifyTiffWithBlankPagesAfterGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3702,7 +3702,7 @@ public class Production_Phase1_Regression2 {
 	 *              Beginning bates of the parent of the family on Production
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48304", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48304", enabled = true, groups = { "regression" })
 	public void BeginningAttachBatesInDatAndGenerateProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3752,7 +3752,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description To verify that Production should be generated successfully if
 	 *              there is one single non-redacted area.
 	 */
-	//@Test(description = "RPMXCON-48318", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48318", enabled = true, groups = { "regression" })
 	public void verifyProductionGeneratedwithNonRedactedArea() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3822,7 +3822,7 @@ public class Production_Phase1_Regression2 {
 	 *              sections are not selected then Native should be generated
 	 * 
 	 */
-	//@Test(description = "RPMXCON-48381", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48381", enabled = true, groups = { "regression" })
 	public void verifyNativeProducedAtGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -3921,7 +3921,7 @@ public class Production_Phase1_Regression2 {
 	 *              Production.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49055", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49055", enabled = true, groups = { "regression" })
 	public void verifyRemoveDocumentOptionNotDisplay() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -3975,7 +3975,7 @@ public class Production_Phase1_Regression2 {
 	 *              Production.
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49053", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49053", enabled = true, groups = { "regression" })
 	public void verifyAddDocumentOptionNotDisplay() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -4030,7 +4030,7 @@ public class Production_Phase1_Regression2 {
 	 *              Burn Redactions option was disabled-2
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49058", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49058", enabled = true, groups = { "regression" })
 	public void productionWithBurnedRedaction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4110,7 +4110,7 @@ public class Production_Phase1_Regression2 {
 	 *              selects the Redaction Tag in TIFF
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49102", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49102", enabled = true, groups = { "regression" })
 	public void verifyPlaceholderInTIFFBurnRedaction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4138,7 +4138,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Mapping should be disabled
 	 */
 
-	//@Test(description = "RPMXCON-56132", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56132", enabled = true, groups = { "regression" })
 	public void verifySavedTemplateControlIsDisabled() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4200,7 +4200,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Production preview is displays without any error
 	 * 
 	 */
-	//@Test(description = "RPMXCON-56163", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56163", enabled = true, groups = { "regression" })
 	public void passingSubBatesNullAndPreview() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -4252,7 +4252,7 @@ public class Production_Phase1_Regression2 {
 	 *                     then error message should be displays on 'Numbering and
 	 *                     Sorting' tab
 	 */
-	//@Test(description = "RPMXCON-56164", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56164", enabled = true, groups = { "regression" })
 	public void passingSubBatesNullAndVerifyErrorMessage() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -4296,7 +4296,7 @@ public class Production_Phase1_Regression2 {
 	 *                     will inform the user about the privileged and redacted
 	 *                     docs from Production
 	 */
-	//@Test(description = "RPMXCON-56149", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56149", enabled = true, groups = { "regression" })
 	public void verifyTooltipDisplayedOnPreview() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4352,7 +4352,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Tags:'
 	 * 
 	 */
-	//@Test(description = "RPMXCON-56120", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56120", enabled = true, groups = { "regression" })
 	public void verifyTiffSectionRedactionTag() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -4376,7 +4376,7 @@ public class Production_Phase1_Regression2 {
 	 *                     Native component without tag and file type
 	 */
 
-	////@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-56099", enabled = true, groups = { "regression" })
 	public void AssertionOnNativeSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -4397,7 +4397,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that user can regenerate the Shareable links and reset
 	 *               the expiration time
 	 */
-	//@Test(description = "RPMXCON-56005", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56005", enabled = true, groups = { "regression" })
 	public void verifySharableLinkExpirationTime() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56005 -Production Sprint 10");
@@ -4485,7 +4485,7 @@ public class Production_Phase1_Regression2 {
 	 *              the Production URL if user does not have Production rights
 	 * 
 	 */
-	//@Test(description = "RPMXCON-55949", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55949", enabled = true, groups = { "regression" })
 	public void verifyingProductionAccessPAtoRMU() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4531,7 +4531,7 @@ public class Production_Phase1_Regression2 {
 	 *              of that Project
 	 * 
 	 */
-	//@Test(description = "RPMXCON-55950", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55950", enabled = true, groups = { "regression" })
 	public void verifyingProductionAccessPAtoRMUdiffProject() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4582,7 +4582,7 @@ public class Production_Phase1_Regression2 {
 	 *               'Creating Archive Complete' status on Production Progress bar
 	 *               Tile View
 	 */
-	//@Test(description = "RPMXCON-56033", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56033", enabled = true, groups = { "regression" })
 	public void verifiyCreateArchiCompleteOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56033 -Production Sprint 10");
@@ -4649,7 +4649,7 @@ public class Production_Phase1_Regression2 {
 	 *              of that Project
 	 * 
 	 */
-	//@Test(description = "RPMXCON-55951", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55951", enabled = true, groups = { "regression" })
 	public void verifyingProductionAccessPAtoPAdiffProject() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4699,7 +4699,7 @@ public class Production_Phase1_Regression2 {
 	 *               wrap, even when the user zooms out/in the browser with
 	 *               different screen resolution on tile view
 	 */
-	//@Test(description = "RPMXCON-55994", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55994", enabled = true, groups = { "regression" })
 	public void verifyStatusBarTextWithResolutionAndZoomSize() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4793,7 +4793,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description Verify that the production field PageCount is renamed to
 	 *              TIFFPageCount
 	 */
-	//@Test(description = "RPMXCON-55909", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55909", enabled = true, groups = { "regression" })
 	public void verifyProductionFieldRenamed() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4819,7 +4819,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that production should generated with modified Redaction
 	 *               placeholder text
 	 */
-	//@Test(description = "RPMXCON-49967", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49967", enabled = true, groups = { "regression" })
 	public void verifyReductionPlacholderText() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49967 -Production Sprint 10");
@@ -4886,7 +4886,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that Production should generate successfully if
 	 *               Prefix is up to 50 characters
 	 */
-	//@Test(description = "RPMXCON-49815", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49815", enabled = true, groups = { "regression" })
 	public void verifyPrifixWith50char() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49815 -Production Sprint 10");
@@ -4941,7 +4941,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description Verify that TIFF files should be copied to folder when 'Split
 	 *              Sub Folders' is OFF with split count as 1000
 	 */
-	//@Test(description = "RPMXCON-47174", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47174", enabled = true, groups = { "regression" })
 	public void genaratetDocumentswithMultipleBrandingTagsnotsplit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -5016,7 +5016,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description To Verify the availability of 'Translations' under the Advanced
 	 *              Production Types show/hide section (in Production Component).
 	 */
-	//@Test(description = "RPMXCON-55653", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55653", enabled = true, groups = { "regression" })
 	public void verifyAvailabilityOfTranslationComponent() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -5088,7 +5088,7 @@ public class Production_Phase1_Regression2 {
 	 *               Files selection/Generate Load LST/Advance Show Hide/and Toggles
 	 *               in Advance)
 	 */
-	//@Test(description = "RPMXCON-47884", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47884", enabled = true, groups = { "regression" })
 	public void verifyNativeSectionElements() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47884 -Production Sprint 11");
@@ -5146,7 +5146,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify On grid view of the productions the start date and
 	 *               end date for a production that is still in Completed state.
 	 */
-	//@Test(description = "RPMXCON-47944", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47944", enabled = true, groups = { "regression" })
 	public void startDateEndDateVarification() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47944 -Production Sprint 11");
@@ -5233,7 +5233,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that Production should export Native with the Text file
 	 *               in selected format if Text is not ingested
 	 */
-	//@Test(description = "RPMXCON-56078", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56078", enabled = true, groups = { "regression" })
 	public void verifyTextFileWithSelectedFormat() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56078 -Production Sprint 11");
@@ -5285,7 +5285,7 @@ public class Production_Phase1_Regression2 {
 	 *         No:RPMXCON-47889
 	 * @Description: To Verify Generate Section for Production Name and Status.
 	 */
-	//@Test(description = "RPMXCON-47889", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47889", enabled = true, groups = { "regression" })
 	public void verifyProdNameAndSatatus() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47889 -Production Sprint 11");
@@ -5351,7 +5351,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that Production should generated with redaction text if
 	 *               user selects the annotation layer
 	 */
-	//@Test(description = "RPMXCON-49968", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49968", enabled = true, groups = { "regression" })
 	public void verifyProductionRedactionTextWithAnnotation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49968 -Production Sprint 11");
@@ -5409,7 +5409,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that branding is applied on all pages for redacted image
 	 *               based documents
 	 */
-	//@Test(description = "RPMXCON-49728", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49728", enabled = true, groups = { "regression" })
 	public void verifyBrandingRedactedImage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49728 -Production Sprint 11");
@@ -5483,7 +5483,7 @@ public class Production_Phase1_Regression2 {
 	 *              Burn Redactions option was enabled
 	 * 
 	 */
-	//@Test(description = "RPMXCON-49057", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49057", enabled = true, groups = { "regression" })
 	public void verifyBurnRedactionIsEnabled() throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -5571,7 +5571,7 @@ public class Production_Phase1_Regression2 {
 	 *               orphan redactions documents, if user selects the option as 'All
 	 *               redactions in annotation layer' for Burn Redactions
 	 */
-	//@Test(description = "RPMXCON-48816", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48816", enabled = true, groups = { "regression" })
 	public void verifyProductionRedactionTextWithAnnotationLayer() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48816 -Production Sprint 11");
@@ -5629,7 +5629,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify The format of the date produced in the Production DAT
 	 *               should honor the date format configured in DAT section
 	 */
-	//@Test(description = "RPMXCON-47987", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47987", enabled = true, groups = { "regression" })
 	public void verifyDatWithDeffDateFormate() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47987 -Production Sprint 11");
@@ -5683,7 +5683,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify the View of the already created Template with
 	 *               existing Project and Production Set
 	 */
-	//@Test(description = "RPMXCON-47846", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47846", enabled = true, groups = { "regression" })
 	public void verifyTemplateforexitingProductionSet() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47846 Production- Sprint 11");
@@ -5765,7 +5765,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify selection of one or more tags for placeholdering with
 	 *               File type a set of documents (For Production)
 	 */
-	//@Test(description = "RPMXCON-48061", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48061", enabled = true, groups = { "regression" })
 	public void verifyNativelyPlaceHolderWithFileType() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48061 -Production Sprint 11");
@@ -5834,7 +5834,7 @@ public class Production_Phase1_Regression2 {
 	 *               file types for placeholdering a set of documents (For
 	 *               Production)
 	 */
-	//@Test(description = "RPMXCON-48062", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48062", enabled = true, groups = { "regression" })
 	public void verifyNativelyPlaceHolderWithoutFileType() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48062 -Production Sprint 11");
@@ -5904,7 +5904,7 @@ public class Production_Phase1_Regression2 {
 	 *               tags), the precedence will be from top to bottom.(For
 	 *               Production)
 	 */
-	//@Test(description = "RPMXCON-48065", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48065", enabled = true, groups = { "regression" })
 	public void verifyNativelyPlaceHolderWithFileTypeAndTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48065 -Production Sprint 11");
@@ -5970,7 +5970,7 @@ public class Production_Phase1_Regression2 {
 	 *         No:RPMXCON-47887
 	 * @Description: To Verify Priv Guard with various tag and redaction options;
 	 */
-	//@Test(description = "RPMXCON-47887", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47887", enabled = true, groups = { "regression" })
 	public void verifyPrivGuardVariousTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47887 -Production Sprint 11");
@@ -6062,7 +6062,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description To Verify Production for a document with no error message as
 	 *              'WidthAndHeightCannotBeNegative'
 	 */
-	//@Test(description = "RPMXCON-48288", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48288", enabled = true, groups = { "regression" })
 	public void verifyNotDisplayOfErrorMessage() throws Exception {
 
 		base.stepInfo("RPMXCON-48288-Production Sprint 11");
@@ -6124,7 +6124,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that Rotate 90 degrees clockwise page is rotated
 	 *               before the branding is applied
 	 */
-	//@Test(description = "RPMXCON-48095", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48095", enabled = true, groups = { "regression" })
 	public void verify90DegreeRotationbeforeBrandingApply() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48095 -Production Sprint 11");
@@ -6172,7 +6172,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: Verify that production should be generated successfully for
 	 *               audio files
 	 */
-	//@Test(description = "RPMXCON-46905", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-46905", enabled = true, groups = { "regression" })
 	public void verifyAudiofileGenaratedSuccessfully() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-46905 -Production Sprint 11");
@@ -6228,7 +6228,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify ordering sequence for production status for 'Filter
 	 *               By:' field. Verify for both Grid and Tile view.
 	 */
-	//@Test(description = "RPMXCON-55627", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55627", enabled = true, groups = { "regression" })
 	public void verifyProductionState() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-55627");
@@ -6366,7 +6366,7 @@ public class Production_Phase1_Regression2 {
 	 *               production information to be included in a slip sheet, similar
 	 *               to existing RPM
 	 */
-	//@Test(description = "RPMXCON-55650", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55650", enabled = true, groups = { "regression" })
 	public void verifySlipSheetflow() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-55650");
@@ -6493,7 +6493,7 @@ public class Production_Phase1_Regression2 {
 	 *               file based or tag based placeholdering is exists in the
 	 *               document
 	 */
-	//@Test(description = "RPMXCON-48341", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48341", enabled = true, groups = { "regression" })
 	public void verifyProductionTiffPdfRedactionTextWithAnnotation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48341 ");
@@ -6569,7 +6569,7 @@ public class Production_Phase1_Regression2 {
 	 *         No:RPMXCON-48072
 	 * @Description: To Verify Field EndingBates in Production
 	 */
-	//@Test(description = "RPMXCON-48072", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48072", enabled = true, groups = { "regression" })
 	public void verifyEndBatesInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48072 ");
@@ -6657,7 +6657,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To verify that the 'Production End Date' should contain and
 	 *               present the date when the post-gen checks are completed
 	 */
-	//@Test(description = "RPMXCON-49062", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49062", enabled = true, groups = { "regression" })
 	public void verifyEndDateafterPostGenCheckCompleted() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id : RPMXCON-49062");
@@ -6738,7 +6738,7 @@ public class Production_Phase1_Regression2 {
 	 *               Native Files and Tags selected in the native components, then
 	 *               Component tab should Complete without any error.
 	 */
-	//@Test(description = "RPMXCON-49361", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49361", enabled = true, groups = { "regression" })
 	public void verifiyProdTempInComponentTabWithoutAnyError() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id : RPMXCON-49361");
@@ -6820,7 +6820,7 @@ public class Production_Phase1_Regression2 {
 	 *         No:RPMXCON-47903
 	 * @Description: To Verify regenerate Option in Production
 	 */
-	//@Test(description = "RPMXCON-47903", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47903", enabled = true, groups = { "regression" })
 	public void verifyRegenerationOptions() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Case ID : RPMXCON-47903");
@@ -6909,7 +6909,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify All the Parameters configured for MP3 is saved for
 	 *               the production on save Production as Template.
 	 */
-	//@Test(description = "RPMXCON-48166", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48166", enabled = true, groups = { "regression" })
 	public void verifyProductionTempSaveSuccessfully() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id : RPMXCON-48166");
@@ -6972,7 +6972,7 @@ public class Production_Phase1_Regression2 {
 	 *               last bates range of last production, which is completed with
 	 *               only pre-gen check
 	 */
-	//@Test(description = "RPMXCON-48573", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48573", enabled = true, groups = { "regression" })
 	public void verifyNextBatesRage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48573 ");
@@ -7066,7 +7066,7 @@ public class Production_Phase1_Regression2 {
 	 *                Native Directory).
 	 * 
 	 */
-	//@Test(description = "RPMXCON-47912", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47912", enabled = true, groups = { "regression" })
 	public void verifyProductionDirectory() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -7229,7 +7229,7 @@ public class Production_Phase1_Regression2 {
 	 *              counts
 	 * 
 	 */
-	//@Test(description = "RPMXCON-47930", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47930", enabled = true, groups = { "regression" })
 	public void verifyPrivGuardDocCount() throws Exception {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
@@ -7335,7 +7335,7 @@ public class Production_Phase1_Regression2 {
 	 *               selected tags are produced unless they are to excluded due to
 	 *               Redaction or PrivTags.
 	 */
-	//@Test(description = "RPMXCON-48020", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48020", enabled = true, groups = { "regression" })
 	public void verifyNativeDocs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48020 ");
