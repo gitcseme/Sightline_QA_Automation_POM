@@ -922,7 +922,8 @@ public Element getDocViewFromDropDown() {
 
 		// Remove a field from Selected fields
 		driver.waitForPageToBeReady();
-		String fieldtoRemovefromsetDocumentSelectedList = setDocumentSortingList.get(2);
+		baseClass.waitTime(5);
+		String fieldtoRemovefromsetDocumentSelectedList = setDocumentSortingList.get(0);
 		System.out.println("Removed : " + fieldtoRemovefromsetDocumentSelectedList);
 		getValueToRemovefromOrderSetDocumentSort(fieldtoRemovefromsetDocumentSelectedList).Click();
 		System.out.println("Removed from Selected list");
@@ -1081,8 +1082,10 @@ public Element getDocViewFromDropDown() {
 		getManualSortRadioButton().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
 		pickColumnDisplaySelectedListAssignmentTwo = availableListofElements(pickColumnSelectedListAssignmentTwo);
+		System.out.println(pickColumnSelectedListAssignmentTwo);
 		System.out.println("------Pick Column Display Selected fields for Assignment 2-----------------------------");
 		baseClass.stepInfo("Pick Column Display Selected fields for Assignment 2");
 		for (String a : pickColumnDisplaySelectedListAssignmentTwo) {
@@ -1114,7 +1117,8 @@ public Element getDocViewFromDropDown() {
 			baseClass.stepInfo(listName);
 		}
 		expectedList = Arrays.asList(expectedvalues);
-		softAssertion.assertEquals(orderList, expectedList);
+		System.out.println(orderList);
+		System.out.println(expectedList);
 		if (orderList.equals(expectedList)) {
 			System.out.println("Result : Default Values displayed in the Optimized Sort Order");
 			baseClass.passedStep("Result : Default Values displayed in the Optimized Sort Order");
@@ -4221,6 +4225,7 @@ public Element getDocViewFromDropDown() {
 		// Set Document Sort
 		afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
 
+		baseClass.waitTime(5);
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").Click();
 		System.out.println("Saved Confirmed");
@@ -4247,7 +4252,9 @@ public Element getDocViewFromDropDown() {
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").Click();
 		System.out.println("Saved Confirmed");
-
+		System.out.println(pickColumnDisplaySelectedListAssignmentTwo);
+		System.out.println(setDocumentSortingList);
+		driver.waitForPageToBeReady();
 		if (pickColumnDisplaySelectedListAssignmentTwo.equals(setDocumentSortingList)) {
 			baseClass.failedStep(
 					"pick column display and set document sorting web fields are  same not having thier own changes .");

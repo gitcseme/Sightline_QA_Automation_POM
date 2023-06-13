@@ -289,6 +289,7 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Search Navigate To ViewInDocView");
 		baseClass.waitTime(5);
 		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		baseClass.waitTime(5);
 		sessionsearch.viewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -358,7 +359,7 @@ public class DocView_Phase2_Regression {
 		sessionsearch.clickOnNewSearch();
 		sessionsearch.multipleBasicContentSearch(Input.searchString1);
 		sessionsearch.addPureHit();
-		
+
 		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codingFormName, 0);
 		loginPage.logout();
@@ -366,18 +367,19 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
+		docView.getDocViewDocsRedactIcon();
 		String docId = docView.getDocumentWithoutRedaction();
 //		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		MiniDocListPage minidoc = new MiniDocListPage(driver);
 		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
-		
+
 //		Added on 
 		DocViewRedactions docRedact = new DocViewRedactions(driver);
 		docView.selectDocInMiniDocList(docId);
 		baseClass.waitTime(3);
 		baseClass.waitForElement(docRedact.activeDocId());
 		String docID2 = docRedact.activeDocId().getText();
-		
+
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -444,7 +446,6 @@ public class DocView_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		baseClass.waitTime(2);
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(8);
@@ -481,25 +482,25 @@ public class DocView_Phase2_Regression {
 		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, Input.codeFormName, 0);
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		
+		docView.getDocViewDocsRedactIcon();
 		String docId = docView.getDocumentWithoutRedaction();
-		
+
 //		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		MiniDocListPage minidoc = new MiniDocListPage(driver);
 		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
-		
+
 //		Added on 
 		DocViewRedactions docRedact = new DocViewRedactions(driver);
 		docView.selectDocInMiniDocList(docId);
 		baseClass.waitTime(3);
 		baseClass.waitForElement(docRedact.activeDocId());
 		String docID2 = docRedact.activeDocId().getText();
-		
+
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -626,26 +627,26 @@ public class DocView_Phase2_Regression {
 		sessionsearch.multipleBasicContentSearch(Input.searchString1);
 		sessionsearch.addPureHit();
 		sessionsearch.bulkAssign();
-		
+
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		
+		docView.getDocViewDocsRedactIcon();
 		String docId = docView.getDocumentWithoutRedaction();
 //		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		MiniDocListPage minidoc = new MiniDocListPage(driver);
 		minidoc.removingAllExistingFieldsAndAddingNewField("DocID");
-		
+
 //		Added on 
 		DocViewRedactions docRedact = new DocViewRedactions(driver);
 		docView.selectDocInMiniDocList(docId);
 		baseClass.waitTime(3);
 		baseClass.waitForElement(docRedact.activeDocId());
 		String docID2 = docRedact.activeDocId().getText();
-	
+
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -871,7 +872,6 @@ public class DocView_Phase2_Regression {
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String fieldText = "stamp" + Utility.dynamicNameAppender();
 		String docid = "T2541D";
-		String docid1 = "T2507D";
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -882,19 +882,21 @@ public class DocView_Phase2_Regression {
 		baseClass.waitForElement(docexp.getDocExp_DocFiletypeSearchName());
 		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
 		doclist.getApplyFilter().waitAndClick(10);
-
 		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
 		docexp.getDocExp_SelectAllDocs().Click();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		if (doclist.getYesAllPageDocs().isDisplayed()) {
 			doclist.getYesAllPageDocs().waitAndClick(5);
 			doclist.getPopUpOkBtn().waitAndClick(5);
 		}
 		baseClass.waitTime(5);
-		docexp.docExpViewInDocView();
+		docexp.docExp_BulkAssign();
+		assignmentsPage.createAssignmentNew(assname, codingForm);
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
-		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
 		docView.getDocView_CodingFormlist().waitAndClick(5);
 		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
@@ -936,28 +938,21 @@ public class DocView_Phase2_Regression {
 		docView.deleteStampColour(Input.stampColour);
 		loginPage.logout();
 
-		// Create assignment and go to docview
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssign();
-		assignmentsPage.assignmentCreation(assname, codingForm);
-		assignmentsPage.assignmentDistributingToReviewer();
-		loginPage.logout();
+		// Login As REV
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.ScrollAndSelectDocument(docid1);
+		docView.ScrollAndSelectDocument(docid);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		driver.scrollPageToTop();
 		docView.perfromCodingStampSelection(Input.stampColours);
 		baseClass.CloseSuccessMsgpopup();
-		baseClass.waitForElement(docView.getMiniDocId(docid1));
-		docView.getMiniDocId(docid1).waitAndClick(2);
+		baseClass.waitForElement(docView.getMiniDocId(docid));
+		docView.getMiniDocId(docid).waitAndClick(2);
 		docView.editCodingForm();
 		docView.perfromCodingStampSelection(Input.stampSelection);
 		baseClass.CloseSuccessMsgpopup();
@@ -982,6 +977,7 @@ public class DocView_Phase2_Regression {
 		docView.deleteStampColour(Input.stampSelection);
 		docView.deleteStampColour(Input.stampColour);
 	}
+
 	/**
 	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
@@ -1006,11 +1002,11 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Login as Rmu");
 		docexp = new DocExplorerPage(driver);
 		// DocExploer to viewindocView Page
-		
+
 //		Added o
 		baseClass.waitForElement(docexp.getDocExplorerTabAfterDashBoard());
 		docexp.getDocExplorerTabAfterDashBoard().waitAndClick(5);
-		
+
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();
@@ -1054,6 +1050,7 @@ public class DocView_Phase2_Regression {
 		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
 
 	}
+
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51985 Verify in-doc search highlighting is working for Searchable
@@ -1072,7 +1069,7 @@ public class DocView_Phase2_Regression {
 		String Dataset = "ExtendedCharacters";
 		DocListPage doc = new DocListPage(driver);
 		String tagName = "tag" + Utility.dynamicNameAppender();
-		TagsAndFoldersPage	tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		TagsAndFoldersPage tagsAndFoldersPage = new TagsAndFoldersPage(driver);
 
 		// login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1084,7 +1081,7 @@ public class DocView_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		dataset.SearchDataSetsInDocView(Dataset);
 		baseClass.stepInfo("Selecting uploaded dataset and navigating to docview page");
-		
+
 		// verifying a corresponding text and highlighting a document.
 		baseClass.waitTime(3);
 		docView.verifyDisplaysTheDefaultPdfInDocView();
@@ -1109,7 +1106,7 @@ public class DocView_Phase2_Regression {
 		baseClass.waitForElement(sessionsearch.getQuerySearchButton());
 		sessionsearch.getQuerySearchButton().waitAndClick(3);
 		sessionsearch.ViewInDocViews();
-		
+
 		// verifying a corresponding text and highlighting a document.
 		baseClass.waitTime(3);
 		docView.verifyDisplaysTheDefaultPdfInDocView();
@@ -1123,12 +1120,13 @@ public class DocView_Phase2_Regression {
 		sessionsearch.selectTagInASwp(tagName);
 		sessionsearch.getQuerySearchButton().waitAndClick(3);
 		sessionsearch.ViewInDocViews();
-		
+
 		// verifying a corresponding text and highlighting a document.
 		baseClass.waitTime(3);
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
 	}
+
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-63768 Verify Production should generated without comments if user
@@ -1136,7 +1134,7 @@ public class DocView_Phase2_Regression {
 	 * 
 	 * 
 	 */
-	@Test(description="RPMXCON-63768",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-63768", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyProductionGenerateWithoutCommentsDocsWithCopMenu() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-63768");
@@ -1213,7 +1211,8 @@ public class DocView_Phase2_Regression {
 		File TiffFile = new File(
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
 		page.isfileisExists(TiffFile);
-		page.OCR_Verification_In_Generated_Tiff_tess4jNotDisplayed(FirstFile, LastFile, prefixID, suffixID,Commenttext);
+		page.OCR_Verification_In_Generated_Tiff_tess4jNotDisplayed(FirstFile, LastFile, prefixID, suffixID,
+				Commenttext);
 	}
 
 	@AfterMethod(alwaysRun = true)

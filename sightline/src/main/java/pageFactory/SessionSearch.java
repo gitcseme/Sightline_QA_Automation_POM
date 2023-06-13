@@ -380,7 +380,7 @@ public class SessionSearch {
 	}
 
 	public Element getSaveSearch_Name() {
-		return driver.FindElementById("txtSaveSearchName");
+		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
 
 	public Element getSaveSearch_SaveButton() {
@@ -693,7 +693,7 @@ public class SessionSearch {
 	}
 
 	public Element getDefaultTagsArrow() {
-		return driver.FindElementByXPath("//li[@id='1g']//i[@class='jstree-icon jstree-ocl']");
+		return driver.FindElementByXPath("//li[@id='-1']//i[@class='jstree-icon jstree-ocl']");
 	}
 	
 	public Element getPrivilegedTag() {
@@ -2299,6 +2299,7 @@ public class SessionSearch {
 	public Element selectAssignmentFromWP(String AssignmentName) {
 		return driver.FindElementByXPath("//a[text()='"+AssignmentName+"']");
 	}
+	
 	//a[text()='Root']/preceding-sibling::i
 
 	public SessionSearch(Driver driver) {
@@ -3761,7 +3762,8 @@ public class SessionSearch {
 	// Bulk release to default security group
 	public void bulkRelease(final String SecGroup) {
 
-		if (getPureHitAddButton().isElementAvailable(2)) {
+		
+		if (getPureHitAddButton().isElementAvailable(10)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -4176,6 +4178,7 @@ public class SessionSearch {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait30);
+		base.waitTime(5);
 		getPureHitsCount().waitAndClick(10);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		base.stepInfo("Search is done and PureHit is : " + pureHit);
@@ -5867,10 +5870,13 @@ public class SessionSearch {
 	 */
 	public void selectSavedsearchesInTree(String SaveName) throws InterruptedException {
 
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		base.waitForElement(getSavedSearchName(SaveName));
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(SaveName)) {
+				base.waitTime(2);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				base.waitTime(2);
@@ -5987,6 +5993,9 @@ public class SessionSearch {
 			System.out.println("Radio button already selected");
 			UtilityLog.info("Radio button already selected");
 		}
+		
+		base.waitTillElemetToBeClickable(getDefaultTagsArrow());
+		getDefaultTagsArrow().waitAndClick(5);
 		try {
 			driver.waitForPageToBeReady();
 			base.waitTime(4);
@@ -6004,11 +6013,14 @@ public class SessionSearch {
 		}
 
 		base.waitForElement(getSaveSearch_Name());
-		getSaveSearch_Name().Click();
+		base.waitTime(5);
+		getSaveSearch_Name().waitAndClick(5);
 		getSaveSearch_Name().SendKeys(searchName);
 
 		base.waitForElement(getSaveSearch_SaveButton());
-		getSaveSearch_SaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		Thread.sleep(2000);
+		getSaveSearch_SaveButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");

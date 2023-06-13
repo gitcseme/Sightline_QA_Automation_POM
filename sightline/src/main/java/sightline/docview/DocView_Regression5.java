@@ -840,6 +840,7 @@ public class DocView_Regression5 {
 		sessionSearch.searchAndReturnPureHit_BS();
 		sessionSearch.ViewInDocView();
 	
+		baseClass.waitTime(3);
 		docView.clickOnPersistantHitEyeIcon();
 		baseClass.waitTime(3);
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keyWord);
