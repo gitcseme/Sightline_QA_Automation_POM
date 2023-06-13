@@ -86,7 +86,8 @@ public class O365_Phase2_Regression2 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "Review Manager" },
+		Object[][] users = { 
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager" },
 				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, 
 				};
 		return users;
@@ -1123,16 +1124,19 @@ public class O365_Phase2_Regression2 {
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-
+		
+		base.selectproject(Input.ingestDataProject);
 		// Collection Draft creation
 		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password, userRole, "SA",
 				Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
 		collectionId = base.returnKey(colllectionData, "", false);
 		collectionName = colllectionData.get(collectionId);
-
+		driver.Navigate().refresh();
+		base.waitTime(2);
 		// Edit The collection which is in Draft
-		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
-		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		collection.getCollectionsPageAction(collectionId).javascriptclick(collection.getCollectionsPageAction(collectionId));
+		collection.getCollectionsPageActionList(collectionId, "Edit").javascriptclick(collection.getCollectionsPageActionList(collectionId, "Edit"));
+		
 		driver.waitForPageToBeReady();
 
 		// Verify whether it is selecting already configured source location &
@@ -1858,12 +1862,12 @@ public class O365_Phase2_Regression2 {
 				"Verify that user should be able to edit/modify an existing custodian dataset folder, filters and save the modifications");
 
 		// Login as User
-//		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-//		userManagement.navigateToUsersPAge();
-//		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-//
-//		// Logout
-//		login.logout();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
 
 		// Login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1889,8 +1893,8 @@ public class O365_Phase2_Regression2 {
 
 		// Edit Custodians Name and verify folders And application is Reset
 		driver.waitForPageToBeReady();
-		collection.editDatasetAndVerify("Button",true,collectiondatalistVal2, collectionEmailId, true, secondFirstName,secondlastName,
-				collection2ndEmailId,selectedApp, collectionData,collectionName, true, true, "Archive", selectedFolder, "Disabled", true,3);
+		collection.editDatasetAndVerify(true,collectiondatalistVal2, collectionEmailId, true, secondFirstName, collection2ndEmailId, true,
+				true, "Archive", selectedFolder, "Disabled", true);
 
 		// Logout
 		login.logout();
