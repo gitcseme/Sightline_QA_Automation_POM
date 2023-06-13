@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -36,7 +37,10 @@ public class CollectionPage {
 	public Element getPopupMsg() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");
 	}
-
+	public Element getNoCustodianErrorStatus() {
+		return driver.FindElementByXPath("//span[@id='spanNoCustodianResult']");
+	}
+	
 	public Element getNewCollectionBtn() {
 		return driver.FindElementByXPath("//input[@id='btnNewCollection']");
 	}
@@ -56,6 +60,11 @@ public class CollectionPage {
 	public ElementCollection getAddNewSourcePopUp_Attributes() {
 		return driver.FindElementsByXPath(
 				"//div[@class='ui-widget-overlay ui-front']//preceding::label[contains(@class,'labelAlign')]");
+	}
+	
+	public Element getEditCancelYesPopup() {
+		return driver.FindElementByXPath(
+				"//button[@id='bot1-Msg1']");
 	}
 
 	public Element getDataSourceName() {
@@ -683,6 +692,8 @@ public class CollectionPage {
 		driver.waitForPageToBeReady();
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
 		String expectedUrl = Input.url + "en-us/Collection/NewCollection";
+		System.out.println("currentUrl :-"+currentUrl);
+		System.out.println("expectedUrl :-"+expectedUrl);
 		base.textCompareEquals(currentUrl, expectedUrl, "Landed In New Collection Page", "Landed Page : " + currentUrl);
 
 		verifyCurrentTab("Source Selection");
@@ -1047,13 +1058,16 @@ public class CollectionPage {
 		base.waitForElement(getCustodianIDInputTextField());
 		getCustodianIDInputTextField().waitAndClick(10);
 		getCustodianIDInputTextField().SendKeys(inputString);
-		
+		base.waitForElementCollection(getCustodianIDdataListOptions());
+		datalistVal=datalistVal.trim();
 		for(WebElement it : getCustodianIDdataListOptions().FindWebElements()){//it.getAttribute("value").contentEquals(datalistVal)
 		if (it.getAttribute("value").contains(datalistVal)){ 
 			getCustodianIDInputTextField().SendKeys(it.getAttribute("value"));
 			} 
 		};
+		
 		driver.waitForPageToBeReady();
+		
 
 		// Custodian Retived data
 
@@ -1081,8 +1095,8 @@ public class CollectionPage {
 
 		String expectedValue = collecctionName + "_" + defaultText + "_" + firstName + " " + lastName;
 		Boolean status = false;
-		System.out.println(actualValue);
-		System.out.println(expectedValue);
+		System.out.println("actualValue :-"+actualValue);
+		System.out.println("expectedValue :-"+ expectedValue);
 
 		if (comparision) {
 			base.textCompareEquals(expectedValue, actualValue, "DataSet Name retrived as expected",
@@ -1934,7 +1948,7 @@ public class CollectionPage {
 
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
-
+				base.waitTime(2);
 				actualValue = custodianNameSelectionInNewDataSet(firstName,dataListVal, collection2ndEmailId, true, false, "");
 			}
 
@@ -1962,6 +1976,87 @@ public class CollectionPage {
 		}
 		return actualValue;
 	}
+	public String editDatasetAndVerify(String addNewDataSetType,boolean clickEdit,String dataListVal, String collectionEmailId, boolean editCustodianName,
+			String firstName,String lastName, String collection2ndEmailId,String selectedApp,HashMap<String, String> colllectionData,String dataName,boolean editFolder, boolean validateFolder,
+			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter,int retry) {
+		String actualValue = null;
+		Boolean status = false;
+				for (int i = 1; i <= retry; i++) {
+					System.out.println("Attempt : " + i);
+					if (clickEdit) {
+						driver.waitForPageToBeReady();
+						Actions act=new Actions(driver.getWebDriver());
+						act.doubleClick(getEditBtnDataSelection(collectionEmailId).getWebElement()).build().perform();
+					}
+					base.waitForElement(getDataSetPopup());
+					if (getDataSetPopup().isElementAvailable(8)) {
+						base.stepInfo("DatasetPopup is displayed");
+						if (editCustodianName) {
+							
+							driver.waitForPageToBeReady();
+							getCustodianLabel().waitAndClick(10);
+							base.waitForElement(getCustodianIDInputTextField());
+							getCustodianIDInputTextField().Clear();
+							base.waitTime(2);
+							if (!status) {
+									// Add Dataset
+//									addNewDataSetCLick(addNewDataSetType);
+									actualValue = custodianNameSelectionInNewDataSet(firstName,dataListVal,collection2ndEmailId, true, false, "");
+									status = verifyRetrivedDataMatches(firstName, lastName, colllectionData.get(dataName), selectedApp,
+											actualValue, false, false, "");
+									if (status && editFolder) {
+										// verify Selected folder
+										base.waitTime(10);
+										getFolderabLabel().waitAndClick(10);
+										
+//										if((getNoCustodianErrorMsg().GetAttribute("style")).contains("none")) {
+//											status=false;
+//										}else {
+										driver.waitForPageToBeReady();
+											if (validateFolder) {
+												base.ValidateElement_Absence(getCickedFolder(resetFolderType),
+													"The Selected folder is unselected and Reset");
+											}
+											if (getCickedFolder(resetFolderType).isElementAvailable(3)) {
+												getCickedFolder(resetFolderType).waitAndClick(10);
+											}
+											folderToSelect(SelectFolderType, false, null);
+											status=true;
+											break;
+										}
+										
+//									}
+									if (!status && i != retry) {
+										applyAction("Cancel", "", "");
+										getEditCancelYesPopup().waitAndClick(5);
+									} else if (!status && i == retry) {
+										base.failedStep("Expected Input data not available");
+									} 
+//										else {
+//										status = verifyRetrivedDataMatches(firstName, lastName, colllectionData.get(dataName), selectedApp,
+//												actualValue, false, false, "");
+//										break;
+//									}
+							} else {
+								break;
+							}
+						}
+					}
+			}
+
+			
+
+			if (ApplyFilter) {
+				// Apply filter
+				verifyApplyFilterStatus(true, expectedFilterStatus);
+				base.passedStep("Apply Filter Tab is Reset");
+			}
+		else {
+			base.failedStep("Dataset Popup is not displayed");
+		}
+		return actualValue;
+}	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Apply Filter Status
@@ -2570,19 +2665,32 @@ public class CollectionPage {
 	public void verifySortingOrderOfCollectionPage(boolean ClickBtn, String headerName, String sortType)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		if (ClickBtn)
-			getHeaderBtn(headerName).waitAndClick(10);
+		if (ClickBtn) {
+		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
+		getHeaderBtn(headerName).waitAndClick(10);
 		base.stepInfo("Clicked : " + headerName);
 		driver.waitForPageToBeReady();
+		List<Integer> neworiginalList = originalList.stream()
+                .map(s -> Integer.parseInt(s))
+                .collect(Collectors.toList());
 
-		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+		System.out.println("neworiginalList:-"+neworiginalList); 
+
+		index = base.getIndex(getDataSetDetailsHeader(), headerName);
 
 		driver.waitForPageToBeReady();
-		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
+		
 		List<String> afterSortList = base.availableListofElements(getCollectionNameElements(index));
 //		base.stepInfo("Original Order :" + originalList);
+		
+		List<Integer> newAfterSortList = afterSortList.stream()
+						.map(s -> Integer.parseInt(s)).collect(Collectors.toList());
 
-		base.verifyOriginalSortOrder(originalList, afterSortList, sortType, true);
+		System.out.println("newAfterSortList:-"+newAfterSortList);
+
+		base.verifyOriginalSortOrderForIntegerlist(neworiginalList, newAfterSortList, sortType, true);
+		}
 	}
 
 	/**

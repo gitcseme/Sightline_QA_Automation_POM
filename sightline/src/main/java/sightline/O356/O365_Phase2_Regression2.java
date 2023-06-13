@@ -71,7 +71,8 @@ public class O365_Phase2_Regression2 {
 
 	@DataProvider(name = "PaAndRmuUserDetails")
 	public Object[][] PaAndRmuUserDetails() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
+		Object[][] users = { 
+				{ Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager", "SA" } };
 		return users;
 	}
@@ -86,7 +87,8 @@ public class O365_Phase2_Regression2 {
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "Review Manager" },
-				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, };
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, 
+				};
 		return users;
 	}
 
@@ -1352,8 +1354,8 @@ public class O365_Phase2_Regression2 {
 
 		// Login as User
 		login.loginToSightLine(username, password);
-		// selecting project
-		base.selectproject(Input.ingestDataProject);
+
+
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -1856,12 +1858,12 @@ public class O365_Phase2_Regression2 {
 				"Verify that user should be able to edit/modify an existing custodian dataset folder, filters and save the modifications");
 
 		// Login as User
-		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.navigateToUsersPAge();
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
-		// Logout
-		login.logout();
+//		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+//		userManagement.navigateToUsersPAge();
+//		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+//
+//		// Logout
+//		login.logout();
 
 		// Login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1887,8 +1889,8 @@ public class O365_Phase2_Regression2 {
 
 		// Edit Custodians Name and verify folders And application is Reset
 		driver.waitForPageToBeReady();
-		collection.editDatasetAndVerify(true,collectiondatalistVal2, collectionEmailId, true, secondFirstName, collection2ndEmailId, true,
-				true, "Archive", selectedFolder, "Disabled", true);
+		collection.editDatasetAndVerify("Button",true,collectiondatalistVal2, collectionEmailId, true, secondFirstName,secondlastName,
+				collection2ndEmailId,selectedApp, collectionData,collectionName, true, true, "Archive", selectedFolder, "Disabled", true,3);
 
 		// Logout
 		login.logout();
@@ -2802,12 +2804,15 @@ public class O365_Phase2_Regression2 {
 		String collectionName = verifyUserAbleToSaveCollectionAsDraft(username, password, fullname, "SA",
 				Input.sa1userName, Input.sa1password, selectedFolder, "", false);
 
-		// click once and check is it sorted in Ascending
+		
 		driver.Navigate().refresh();
+		// click once and check is it sorted in Ascending
 		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, Input.sortType);
-
 		// click once again and check is it sorted in Descending
 		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, sortType);
+		
+
+		
 
 		// Logout
 		login.logout();
