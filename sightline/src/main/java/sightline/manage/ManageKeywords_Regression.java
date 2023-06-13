@@ -568,8 +568,8 @@ public class ManageKeywords_Regression {
 		userManagement.editRoleFromReviewerToRMU(Input.rev2userName, "Reviewer","1",Input.projectName);
 		
 		loginPage.logout();
-		Thread.sleep(5000);
-		driver.Navigate().refresh();
+		baseClass.waitTime(5);
+		driver.Navigate().refresh();		//Refreshing page is required as role changes are not reflecting immediately
 		// Login As RMU from Reviewer
 		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.selectproject();
@@ -619,8 +619,8 @@ public class ManageKeywords_Regression {
 		userManagement.editRoleFromPAUToRMU(Input.rmu2userName, "Review Manager","0",Input.projectName);
 		
 		loginPage.logout();
-		Thread.sleep(5000);
-		driver.Navigate().refresh();
+		baseClass.waitTime(5);
+		driver.Navigate().refresh();		//Refreshing page is required as role changes are not reflecting immediately
 		// Login As PA from RMU
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu2userName + "");
@@ -643,7 +643,7 @@ public class ManageKeywords_Regression {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleFromPAToRMU(Input.pa2userName, "Project Administrator",Input.projectName);
+		userManagement.editRoleFromPAToRMU(Input.rmu2userName, "Project Administrator",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		

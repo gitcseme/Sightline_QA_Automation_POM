@@ -47,16 +47,16 @@ public class BasicSearch_Phase2_Regression1 {
 
 	@DataProvider(name = "reserveWords")
 	public Object[][] dataMethod() {
-		return new Object[][] { { Input.pa2userName, Input.pa2password, "(\"test test\"" },
-				{ Input.rmu2userName, Input.rmu2password, "(\"test test\"" },
-				{ Input.pa2userName, Input.pa2password, "\"test test\")" },
-				{ Input.rmu2userName, Input.rmu2password, "\"test test\")" } };
+		return new Object[][] { { Input.pa4userName, Input.pa4password, "(\"test test\"" },
+				{ Input.rmu4userName, Input.rmu4password, "(\"test test\"" },
+				{ Input.pa4userName, Input.pa4password, "\"test test\")" },
+				{ Input.rmu4userName, Input.rmu4password, "\"test test\")" } };
 	}
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa2userName, Input.pa2password }, { Input.rmu2userName, Input.rmu2password },
-				{ Input.rev2userName, Input.rev2password } };
+		Object[][] users = { { Input.pa4userName, Input.pa4password }, { Input.rmu4userName, Input.rmu4password },
+				{ Input.rev4userName, Input.rev4password } };
 		return users;
 	}
 
@@ -158,7 +158,7 @@ public class BasicSearch_Phase2_Regression1 {
 	public void verifyPhraseForSearch(String data1) throws InterruptedException {
 
 		// login as Users
-		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		login.loginToSightLine(Input.pa4userName, Input.pa4password);
 
 		base.stepInfo("RPMXCON-57277 Basic Search");
 		base.stepInfo("Verify that result appears for phrase(in double quote) search in Basic Search Query Screen.");
@@ -183,7 +183,7 @@ public class BasicSearch_Phase2_Regression1 {
 	public void verifyWarningMsgOnAdvPage() throws InterruptedException {
 
 		// login as Users
-		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		login.loginToSightLine(Input.pa4userName, Input.pa4password);
 
 		base.stepInfo("RPMXCON-57117 Basic Search");
 		base.stepInfo(
@@ -216,7 +216,7 @@ public class BasicSearch_Phase2_Regression1 {
 	public void verifyWarningMsgOnBsPage() throws InterruptedException {
 
 		// login as Users
-		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		login.loginToSightLine(Input.pa4userName, Input.pa4password);
 
 		base.stepInfo("RPMXCON-57115 Basic Search");
 		base.stepInfo(

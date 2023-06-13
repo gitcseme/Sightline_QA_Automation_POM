@@ -3492,11 +3492,11 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-		Thread.sleep(2000);
+		bc.waitTime(2); //Required
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-		Thread.sleep(2000);
+		bc.waitTime(2);
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 
 			bc.waitForElement(getUserChangeDropDown());
@@ -3512,7 +3512,7 @@ public class UserManagement {
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage").GetAttribute("style");
 			System.out.println(checkBoxStatus);
 
@@ -3566,11 +3566,11 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-		Thread.sleep(2000);
+		bc.waitTime(2); //Required
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-		Thread.sleep(2000);
+		bc.waitTime(2);
 		if (role.contains("Project Administrator")) {
 			getUserChangeDropDown().isElementAvailable(5);
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
@@ -3580,12 +3580,12 @@ public class UserManagement {
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
-			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			//bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			//getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
@@ -3646,22 +3646,17 @@ public class UserManagement {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
-			if (select.contains("0")) {
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			} else if (select.contains("1")) {
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			}
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 
@@ -3679,10 +3674,17 @@ public class UserManagement {
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
-			Thread.sleep(2000);
+			bc.waitTime(2);
+			if (select.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			} else if (select.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled for the user");
 
@@ -3694,7 +3696,7 @@ public class UserManagement {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
@@ -6216,28 +6218,28 @@ public class UserManagement {
 		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
-		Thread.sleep(2000);
+		bc.waitTime(2); //Required
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-		Thread.sleep(2000);
+		bc.waitTime(2); 
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			if (getConfirmTab().isElementAvailable(5)) {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			bc.waitForElement(getFunctionalityButton());
 			getFunctionalityButton().waitAndClick(5);
 
-			Thread.sleep(2000);
+			bc.waitTime(2);
 			if (manageButton.contains("0")) {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
