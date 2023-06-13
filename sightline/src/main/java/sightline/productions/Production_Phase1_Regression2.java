@@ -99,7 +99,7 @@ public class Production_Phase1_Regression2 {
 	 * @Description: To Verify that after Archiving is completed it should displays
 	 *               'Creating Archive Complete' status on Production Grid View
 	 */
-	//@Test(description = "RPMXCON-56052", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-56052", enabled = true, groups = { "regression" })
 	public void archivingStatusVerifyOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56052 -Production Sprint 06");
