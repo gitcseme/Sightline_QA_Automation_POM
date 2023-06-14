@@ -275,7 +275,7 @@ public class ProductionPage {
 	}
 
 	public Element getbtnProductionGenerate() {
-		return driver.FindElementById("btnProductionGenerate");
+		return driver.FindElementByXPath("//*[@id='btnProductionGenerate']");
 	}
 
 	public Element getProductionSettxt() {
@@ -6213,13 +6213,20 @@ public class ProductionPage {
 		// asserting for disabled tag
 
 		base.waitForElement(getDisabledSelectRedactionTags());
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//
+//			Thread.sleep(1000);
+//
+//		} catch (InterruptedException e) {
+//
+//			// TODO Auto-generated catch block
+//
+//			e.printStackTrace();
+//
+//		}
+		base.waitTime(10);
 		String flag = getDisabledSelectRedactionTags().GetAttribute("class");
+
 		System.out.println(flag);
 		driver.waitForPageToBeReady();
 		if (flag.contains("disabled")) {
@@ -12620,6 +12627,7 @@ public class ProductionPage {
 			driver.waitForPageToBeReady();
 			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
 
+			driver.scrollingToBottomofAPage();
 			base.waitForElement(getClkCheckBox_defaultRedactionTag());
 			getClkCheckBox_defaultRedactionTag().isDisplayed();
 			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
@@ -12635,13 +12643,11 @@ public class ProductionPage {
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).ScrollTo();
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).isDisplayed();
-			driver.waitForPageToBeReady();
 			redactionTagInBurnRedaction2CheckBox(redactiontag1).waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.waitForElement(redactionTagInBurnRedaction2CheckBox(redactiontag2));
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).ScrollTo();
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).isDisplayed();
-			driver.waitForPageToBeReady();
 			redactionTagInBurnRedaction2CheckBox(redactiontag2).waitAndClick(10);
 
 			base.waitForElement(getClk_selectBtn());
@@ -17239,11 +17245,12 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		if (exptext.equals("The configured format (above) is applicable only to OCRed and production generated text."
-			    +"The selected Format does not apply to ingested or mapped text."
-				+"Redacted documents are automatically OCRed to export the updated text."
-				+"Original extracted text is exported for Natively produced documents."
-				+"For Tech Issue and Privileged Placeholdered documents, the Placeholder text is exported.")) {
+		base.waitForElement( getTextcomponent_text());;
+		if (exptext.equals("The configured format (above) is applicable only to OCRed and production generated text.\r\n"
+				+ "The selected Format does not apply to ingested or mapped text.\r\n"
+				+ "Redacted documents are automatically OCRed to export the updated text.\r\n"
+				+ "Original extracted text is exported for Natively produced documents.\r\n"
+				+ "For Tech Issue and Privileged Placeholdered documents, the Placeholder text is exported.")) {
 			base.passedStep("" + exptext + " is displayed as expected");
 		} else {
 			base.failedStep("" + exptext + " is not displayed as expected");
@@ -17568,6 +17575,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
 
+		driver.scrollingToBottomofAPage();
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
 		getClkCheckBox_defaultRedactionTag().isDisplayed();
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
@@ -17584,7 +17592,7 @@ public class ProductionPage {
 		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
-		getDefaultTag().waitAndClick(10);
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
@@ -18167,7 +18175,8 @@ public class ProductionPage {
 		base.clickButton(getMP3CheckReductionBoxEnable());
 		getMP3CheckReductionBoxEnable().Enabled();
 		base.clickButton(getMP3RatiobtnRedactiontag());
-		driver.waitForPageToBeReady();        
+		driver.waitForPageToBeReady(); 
+		driver.scrollingToBottomofAPage();
 		getMP3FilesRedactionTag().waitAndClick(10);;
 		driver.scrollingToBottomofAPage();
 		getMP3FilesBurnRedactionTag(redactionTag).ScrollTo();
@@ -21336,7 +21345,8 @@ public class ProductionPage {
 			getNativeCheckBox(Tag).Click();
 			driver.waitForPageToBeReady();
 			base.waitForElement(getNativeCheckBox(Tag1));
-			getNativeCheckBox(Tag1).Click();
+			getNativeCheckBox(Tag1).ScrollTo();
+			getNativeCheckBox(Tag1).waitAndClick(3);
 			base.waitForElement(getNativeSelect());
 			getNativeSelect().Click();
 			base.stepInfo("Native section is filled");
@@ -22954,7 +22964,7 @@ public class ProductionPage {
 
 		for (int i = firstFile; i < lastFile; i++) {
 			driver.waitForPageToBeReady();
-			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
 			ITesseract instance = new Tesseract1();
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata");
 			instance.setDatapath(tessDataFolder.getPath());

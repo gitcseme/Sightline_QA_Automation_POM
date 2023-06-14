@@ -53,7 +53,7 @@
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
 	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
-	<mappingWarningMessage>Unique Document Code does not match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
+	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
 	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
 	<docIdKey>DOCID</docIdKey>
 	<selectNativeFile>natives.lst</selectNativeFile>
@@ -139,7 +139,10 @@
 	<emailGdDat>GDEmailConversation_DAT.dat</emailGdDat>
 	<smallSetDat2>loadfile_updated_trimming_n_mp3.DAT</smallSetDat2>
 	<specialCjkDat>DAT4_STC_Special_CJKChar.dat</specialCjkDat>
+	<bNum>BNum</bNum>
+	<cName>CName</cName>
 	
+	<ProductionPathAdditonal>Productions PT WorkSpace\Automation</ProductionPathAdditonal>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -373,6 +376,7 @@
 	<collectionPageUrl>Collection/Collections</collectionPageUrl>
 	<sourceLocationPageUrl>Collection/SourceLocation</sourceLocationPageUrl>
 	<collectionDataEmailId>Raghuram.A@consiliotest.com</collectionDataEmailId>
+	<collectionDatalistval>Raghuram A (Raghuram.A@consiliotest.com)</collectionDatalistval>
 	<collectionDataFirstName>Raghuram</collectionDataFirstName>
 	<collectionDataLastName>A</collectionDataLastName>
 	<collectionDataselectedApp>Outlook Mail</collectionDataselectedApp>
@@ -404,9 +408,11 @@
    <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
    <clientCollectionEmail01>ppatil@consiliotest.com</clientCollectionEmail01>
+   <clientEmaildatalistVal01>Paresh Patil (ppatil@consiliotest.com)</clientEmaildatalistVal01>
    <clientcollectionFirstName01>Paresh</clientcollectionFirstName01>
    <clientcollectionSecondName01>Patil</clientcollectionSecondName01>
    <clientCollectionEmail02>Gouri.Dhavalikar@consiliotest.com</clientCollectionEmail02>
+   <clientEmaildatalistVal02>Gouri Dhavalikar (Gouri.Dhavalikar@consiliotest.com)</clientEmaildatalistVal02>
    <clientcollectionFirstName02>Gouri</clientcollectionFirstName02>
    <clientcollectionSecondName02>Dhavalikar</clientcollectionSecondName02>
    <copyDSwithErr>Copied datasets with errors</copyDSwithErr>
@@ -441,8 +447,9 @@
 	<!-- Added By Jeevitha [Collection] -->
      <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
-    <ApplicationKey>Grj8Q~PKtS-NnDFYvGpqNE16MoZgyifvpgwRwbli</ApplicationKey>
+    <ApplicationKey>AZz8Q~SHNlx57.3FbQHYWs9_wOBBsqcGCiz~ccp7</ApplicationKey>
     <collection2ndEmailId>Jeevitha.Rajendran@consiliotest.com</collection2ndEmailId>
+    <collection2nddatalistVal>Jeevitha Rajendran (Jeevitha.Rajendran@consiliotest.com)</collection2nddatalistVal>
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
@@ -453,6 +460,8 @@
     <ApplicationIDJeb>6d76a630-be97-4493-9f7a-edf318c03c18</ApplicationIDJeb>
     <ApplicationKeyJeb>dlh7Q~fNgOWVJ3sTtQvA8KsA0lV2bqRtZAIaK</ApplicationKeyJeb>
     <collectionJebEmailId>jbush@consiliodeveloper.onmicrosoft.com</collectionJebEmailId>
+    <collectionJebDatalistval>Jeb Bush (jbush@consiliodeveloper.onmicrosoft.com)</collectionJebDatalistval>
+
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -580,7 +589,7 @@
 	<audioSearchString5>evidence</audioSearchString5>
 	<audioSearchString6>market</audioSearchString6>
 	<audioSearchString7>transaction</audioSearchString7>
-	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
+	<pdfDataSet>27Mar_SinglePageTIFF</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>
@@ -685,7 +694,7 @@
 	<familyDocumentForReviewer>T2421D</familyDocumentForReviewer>
 	<nearDupeDocId>T556D</nearDupeDocId>
 	<nearDupeDocument>ID00001175</nearDupeDocument>
-	<threadDocWithToolTip>ID00001224</threadDocWithToolTip>
+	<threadDocWithToolTip>T486D</threadDocWithToolTip>
 	<nearDupeDocumentForReviewer>T556D</nearDupeDocumentForReviewer>
 	<nearDoc1>T2541D</nearDoc1>
 	<familyDoc1>T2378D</familyDoc1>
@@ -723,6 +732,8 @@
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
 	<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
 
+<!--  smoke Drag And Drop Data -->
+	<SmokeDatasetUploadData>RPMXCON42400</SmokeDatasetUploadData>
 
 	<!-- Ingetion Related data Start -->
 	<Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
@@ -739,16 +750,27 @@
 	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
-
-	<DATFile>DAT4_STC_09172014.dat</DATFile>
-	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
-	<NativeFile>Natives.lst</NativeFile>
-	<TIFFFile>Images.lst</TIFFFile>
+	
+	<DATFile>DAT4_STC_09172014.dat</DATFile>		   
+	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>	           
+	<NativeFile>Natives.lst</NativeFile>	                   
+	<TIFFFile>Images.lst</TIFFFile>	                           
 	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
-	<TranslationFile>Translation.lst</TranslationFile>
-	<PDFFile>PDFs.lst</PDFFile>
-	<TranscriptFile>Transcript.lst</TranscriptFile>
+	<TranslationFile>Translation.lst</TranslationFile>	   
+	<PDFFile>PDFs.lst</PDFFile>	                           
+	<TranscriptFile>Transcript.lst</TranscriptFile>	           
 	<MP3File>MP3.lst</MP3File>
+	
+
+	<DATFile_S>RegressionAllDataset.dat</DATFile_S>
+    <TextFile_S>RegressionAllDatasetText.lst</TextFile_S>
+    <NativeFile_S>RegressionAllDatasetNatives.lst</NativeFile_S> 
+    <TIFFFile_S>RegressionAllDatasetTIFFImages.lst</TIFFFile_S>
+    <TIFFFile1_S> RegressionAllDatasetTIFFImages.OPT</TIFFFile1_S>
+    <TranslationFile_S>RegressionAllDatasetTranslation.lst</TranslationFile_S>
+    <PDFFile_S>RegressionAllDatasetPDFs.lst</PDFFile_S>
+    <TranscriptFile_S>RegressionAllDatasetTranscript.lst</TranscriptFile_S>
+   <MP3File_S>RegressionAllDatasetTrimmedAudioMP3.lst</MP3File_S>  
 
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
@@ -879,6 +901,7 @@
 	<telecom>telecom</telecom>
 	<regressionRun>Indium_Regressionrun</regressionRun>
 	<sourceBlank>ID00005105</sourceBlank>
+	<sourceBlank1>ID00005113</sourceBlank1>
 	<sourceParentBlank>ID00005117</sourceParentBlank>
 	<ingestionOneHour>ID00001298</ingestionOneHour>
 	<ingestionLessThanHour>ID00001294</ingestionLessThanHour>
@@ -965,4 +988,32 @@
 	<Ingestions>Ingestions</Ingestions>
 	<OutsideHelp>Yes. The problem is we're behind on the project. Can you help us get caught up? > You're right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</OutsideHelp>
     <SalaryMatch>You are right. Ive decided to come to your company. > > Can you match my salary of 85k per year?</SalaryMatch>
+    
+    <!-- Added By Hema ONNA Connect -->
+    <OnnaUrl>https://enterprise.onna.com/oneconsilio/</OnnaUrl>
+    <OnnaDirectUrl>Collection/Initiate</OnnaDirectUrl>
+    
+     <!--Added By Hema Onna Test users -->
+    <Onnasa1userName>qasa5@consilio.com</Onnasa1userName> 
+    <Onnasa1password>Q@test_1992</Onnasa1password>
+    
+    <Onnada1userName>qada7@consilio.com</Onnada1userName> 
+    <Onnada1password>Q@test_1995</Onnada1password> 
+    
+    <Onnapa1FullName>Hema PAQA24</Onnapa1FullName>
+  	<Onnapa1userName>qapau24@consilio.com</Onnapa1userName>  
+  	<Onnapa1password>Q@test_1994</Onnapa1password>
+  	
+  	<Onnarmu1FullName>Hema RMUQA24</Onnarmu1FullName>
+  	<Onnarmu1userName>qarmu24@consilio.com</Onnarmu1userName>
+    <Onnarmu1password>Q@test_1994</Onnarmu1password> 
+    
+    <Onnaeditpa1FullName>QA PA 27</Onnaeditpa1FullName>
+  	<Onnaeditpa1userName>qapau27@consilio.com</Onnaeditpa1userName>  
+  	<Onnaeditpa1password>Q@test_1994</Onnaeditpa1password>
+  	
+  	<Onnaeditrmu1FullName>QA RMU 27</Onnaeditrmu1FullName>
+  	<Onnaeditrmu1userName>qarmu27@consilio.com</Onnaeditrmu1userName>
+    <Onnaeditrmu1password>Q@test_1994</Onnaeditrmu1password> 
+    
 </TestData>

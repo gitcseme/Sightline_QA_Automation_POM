@@ -27,6 +27,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
 import pageFactory.BatchRedactionPage;
+import pageFactory.CommentsPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
@@ -572,6 +573,22 @@ public class DocViewandAccusoftPrizm {
 		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
 
 		loginPage.logout();
+	}
+	
+	@Test(description = "RPMXCON-52508", enabled = true, groups = { "regression" })
+	public void verifyRMUClicksEditForComments() throws InterruptedException, AWTException {
+		CommentsPage comments = new CommentsPage(driver);
+		String commentName = "Doc_Comment"+Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-52508");
+		baseClass.stepInfo("To verify when RMU click to edit the comment [RPMXCON-11149]");
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.sa1userName + "");
+		comments.AddComments(commentName);
+		//Navigate to Comments Page
+		comments.EditCommentsIsDisabled();
+		loginPage.logout();
+	
 	}
 	@AfterClass(alwaysRun = true)
 	public void close() {

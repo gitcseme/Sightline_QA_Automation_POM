@@ -352,6 +352,8 @@ public class TestData {
 	public String emailGdDat;
 	public String smallSetDat2;
 	public String specialCjkDat;
+	public String bNum;
+	public String cName;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

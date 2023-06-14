@@ -1035,7 +1035,7 @@ public class SavedSearch_Phase1_Regression4 {
 
 		login.loginToSightLine(userName, password);
 		base.stepInfo("Loggedin As : " + fullName);
-
+		base.selectproject();
 		session.basicContentSearch(Input.searchString2);
 		session.saveSearch(searchName);
 
@@ -1047,10 +1047,11 @@ public class SavedSearch_Phase1_Regression4 {
 
 		saveSearch.verifySharedGroupSearch(SGtoShare, searchName);
 		login.logout();
-
+		
 		login.loginToSightLine(userName, password);
 		base.stepInfo("Loggedin As : " + fullName);
 		base.stepInfo("Initiating Delete Search");
+		base.selectproject();
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		saveSearch.deleteSearch(searchName, Input.securityGroup, "Yes");
 

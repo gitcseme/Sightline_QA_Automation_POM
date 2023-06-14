@@ -480,8 +480,7 @@ public class Production_Phase1_Regression {
 
 		softAssertion = new SoftAssert();
 		softAssertion.assertEquals(actual, expected);
-		base.passedStep(
-				"Error message displayed in DAT as Multiple project fields are not allowed to be mapped to the same field in DAT. Please check.");
+		base.passedStep("Error message displayed in DAT as Multiple project fields are not allowed to be mapped to the same field in DAT. Please check.");
 		loginPage.logout();
 	}
 
@@ -513,8 +512,7 @@ public class Production_Phase1_Regression {
 
 		softAssertion = new SoftAssert();
 		softAssertion.assertEquals(actual, expected);
-		base.passedStep(
-				"Error message displayed in DAT as Special characters other than underscore (_) are not allowed in the  DAT field names. Please check.");
+		base.passedStep("Error message displayed in DAT as Special characters other than underscore (_) are not allowed in the  DAT field names. Please check.");
 		loginPage.logout();
 	}
 
@@ -1238,8 +1236,7 @@ public class Production_Phase1_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATWithMultipleDropDown();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname,
-				beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, tagname, beginningBates);
 		loginPage.logout();
 	}
 
@@ -3394,6 +3391,7 @@ public class Production_Phase1_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 
 	/**
@@ -3469,6 +3467,7 @@ public class Production_Phase1_Regression {
 		} else {
 			base.failedStep("production in failed Status not Displayed");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -4121,8 +4120,7 @@ public class Production_Phase1_Regression {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49374 -Production Component");
-		base.stepInfo(
-				"To verify that all produced Natives files should be provided by file types for NUIX processed data.");
+		base.stepInfo("To verify that all produced Natives files should be provided by file types for NUIX processed data.");
 
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String tagname = "Tag" + Utility.dynamicNameAppender();
@@ -4177,7 +4175,7 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		for (int i = number; i < lastfile; i++) {
-			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".pdf");
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
 			
 			if (Native.exists()) {
 				base.passedStep("Native file are generated correctly");
@@ -4496,10 +4494,10 @@ public class Production_Phase1_Regression {
 		driver.waitForPageToBeReady();
 
 		File Native1 = new File(
-				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".ogg");
+				home + "\\Downloads\\VOL0001\\Natives\\0001\\" + prefixID + NativeDocStart + suffixID + ".doc");
 
 		if (Native1.exists()) {
-			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".ogg");
+			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".doc");
 			System.out.println("passeed");
 		} else {
 			base.failedStep("verification failed");
@@ -5314,9 +5312,9 @@ public class Production_Phase1_Regression {
 			}
 		}
 		brReader.close();
-		loginPage.logout();
 		base.passedStep(
 				"Verified PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production");
+		loginPage.logout();
 	}
 
 	/**
@@ -6408,8 +6406,7 @@ public class Production_Phase1_Regression {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48316 -Production Component");
-		base.stepInfo(
-				"Verify the production for Audio files which includes the Audio redaction extend to end of the audio file");
+		base.stepInfo("Verify the production for Audio files which includes the Audio redaction extend to end of the audio file");
 
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String tagname = "Tag" + Utility.dynamicNameAppender();
@@ -6482,8 +6479,7 @@ public class Production_Phase1_Regression {
 		page.extractFile();
 
 		page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
-		base.passedStep(
-				"Verified the production for Audio files which includes the Audio redaction extend to end of the audio file");
+		base.passedStep("Verified the production for Audio files which includes the Audio redaction extend to end of the audio file");
 
 		page.deleteFiles();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);

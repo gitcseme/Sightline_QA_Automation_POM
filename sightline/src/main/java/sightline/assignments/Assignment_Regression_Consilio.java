@@ -1,5 +1,7 @@
 package sightline.assignments;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -131,6 +133,9 @@ public class Assignment_Regression_Consilio {
 			System.out.println("errorclassName :- "+errorclassName);
 			a.assertEquals(errorclassName, "You cannot specify any special characters in the field value");
 			String errorClassVal=clssp.getClassificationRatevalueErrormsgQC().getText();
+			Robot r=new Robot();
+			r.keyPress(KeyEvent.VK_ENTER);
+			r.keyRelease(KeyEvent.VK_ENTER);
 			System.out.println("errorClassVal :- "+errorClassVal);
 			a.assertEquals(errorClassVal, "The currency value specified is invalid.");
 			

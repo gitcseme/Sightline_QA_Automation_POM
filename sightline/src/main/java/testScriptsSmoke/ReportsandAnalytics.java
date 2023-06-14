@@ -41,11 +41,13 @@ import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ProjectPage;
+import pageFactory.ReportsPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import pageFactory.WorkflowPage;
@@ -73,6 +75,7 @@ public class ReportsandAnalytics {
 	DocViewPage docView;
 	DocViewMetaDataPage docViewMetaDataPage;
 	String hitsCount;
+	ReportsPage report;
 	
 	
 	
@@ -286,39 +289,34 @@ public class ReportsandAnalytics {
 			loginPage.logout();
 		}
 	 
-	 @Test(description = "RPMXCON-51863", enabled = true, alwaysRun = true, groups = { "regression" })
-		public void verifyTextRemarks() throws Exception {
-	// Selecting Document from Session search
-			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-			Actions actions = new Actions(driver.getWebDriver());
-			baseClass.stepInfo("Test case Id: RPMXCON 51863");
+	 @Test(description = "RPMXCON-51023", enabled = true, alwaysRun = true, groups = { "regression" })
+		public void addRemarkToFirstDoc() throws InterruptedException {
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("TC id RPMXCON-51023 :-To verify that remarks can add/edit/delete if document is marked as Completed.");
+			baseClass.selectproject();
 			SessionSearch sessionsearch = new SessionSearch(driver);
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-			sessionsearch.basicContentSearch(Input.randomText);
-			baseClass.stepInfo("Search with text input --test-- completed");
+			sessionsearch.basicMetaDataSearch("SourceDocID", null, "STC4_00001018", null);
 			sessionsearch.ViewInDocView();
-			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
-			docView = new DocViewPage(driver);
-			String docId = docView.getDocumentWithoutRedaction();
-			driver.waitForPageToBeReady();
+			String remark = "remark"+ Utility.dynamicNameAppender();
+			 docView =new DocViewPage(driver);
+		   
+		
+			docView.RemarkVerification(remark);
 			
-			docView.selectDocInMiniDocList(docId);
-			baseClass.waitForElement(docViewRedact.getDocView_Redactrec_textarea());
-			
-//			Added on 11_04
-			docView = new DocViewPage(driver);
-			docView.addRemarkToNonAudioDocument(1, 20, "Remark by RMU");
-			if (docViewRedact.deleteRemarksBtn().Displayed() && docViewRedact.deleteRemarksBtn().Enabled()) {
-				assertTrue(true);
-				baseClass.passedStep("The Remark has been saved by RMU");
-			} else {
-				assertTrue(false);
-			}
 			loginPage.logout();
 		}
+
+	 @Test(description = "RPMXCON-56220",groups = { "smoke", "regression" })
+		public void tallySubTally() throws InterruptedException {
+		 loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			report = new ReportsPage(driver);
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			report.TallyReportButton();
+			TallyPage tally = new TallyPage(driver);
+			tally.ValidateTallySubTally();
+			loginPage.logout();
+		}
+			
 	 @Test(description = "RPMXCON-52030" ,enabled = true, alwaysRun = true, groups = { "smoke", "regression" })
 		public void verifyRedactionasReviewer() throws Exception {
 			

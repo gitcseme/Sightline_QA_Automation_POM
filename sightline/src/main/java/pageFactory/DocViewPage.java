@@ -574,7 +574,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getDocView_FolderActionPopup() {
 		return driver.FindElementById("divBulkAction");
 	}
-
+	public Element getRemarkDateandTime()
+	{ return driver.FindElementByXPath("//*[@id='newRemarks']//small");}
+	
 	public Element getDocView_ThreadedChild_Selectalldoc() {
 		return driver.FindElementById("threadMapSelectRows");
 	}
@@ -2515,7 +2517,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getDocListOkBtn() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' OK']");
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' Ok']");
 	}
 
 	// Added By Vijaya.Rani
@@ -3389,11 +3391,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 	
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields() {
-		return driver.FindElementByXPath("//li[text()='FamilyRelationship']//following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='divColumnDisplay']//li[text()='FamilyRelationship']//following-sibling::i");
 	}
 
 	public Element getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount() {
-		return driver.FindElementByXPath("//li[text()='FamilyMemberCount']//following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='divColumnDisplay']//li[text()='FamilyMemberCount']//following-sibling::i");
 	}
 
 	public Element getDocView_MiniDoclist_Header_Webfields(String fieldName) {
@@ -3705,6 +3707,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
     public Element get_AllAnotationsCount() {   
         return driver.FindElementByXPath("//div[@id='divPersistentRedactions']//div[@id='counterAll']");
 }
+    public Element getFirstLineinDoc() {
+        return driver.FindElementByCssSelector("*[class=igViewerGraphics]>div>svg>g>g>svg>g>g>text");
+  }
 	
 	public DocViewPage(Driver driver) {
 
@@ -12725,6 +12730,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getCodingFormSaveButton().waitAndClick(5);
 		base.stepInfo("Applied coding saved successfully");
 		for (int i = 5; i <= 5; i++) {
+			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 		}
 		driver.waitForPageToBeReady();
@@ -14562,10 +14568,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			actions.build().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
-			if(base.getErrorMsgHeader().isElementAvailable(3)) {        
+			if(base.getErrorMsgHeader().isElementAvailable(1)) {
+				base.CloseSuccessMsgpopup();
                 base.waitTime(1);
-                base.waitForElement(remarkElement());
-                actions.click(remarkElement().getWebElement()).build().perform();
+                base.waitForElement(getFirstLineinDoc());
+                actions.click(getFirstLineinDoc().getWebElement()).build().perform();
+                getAddRemarkbtn().getWebElement().click();
 			}
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -14580,7 +14588,46 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}
 
 	}
-
+	 public void RemarkVerification(String remark) throws InterruptedException {
+	    	base.waitForElement(getNonAudioRemarkBtn());
+	      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60);   
+	      softAssertion.assertTrue(getNonAudioRemarkBtn().Displayed());
+	   
+	 	base.waitForElement(getNonAudioRemarkBtn());
+	 	getNonAudioRemarkBtn().waitAndClick(15);
+	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+		 	System.out.println(getSelectRemarkDocArea().getText());
+		 try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+		 	Actions act=new Actions(driver.getWebDriver());
+		 	act.moveToElement(getSelectRemarkDocArea().getWebElement()).click();
+		 	act.build().perform();
+//		     getSelectRemarkDocArea().Click();
+		     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 			getAddRemarkbtn().Visible();}}), Input.wait30);   
+		     getAddRemarkbtn().waitAndClick(15);
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getRemarkTextArea().Visible();}}), Input.wait30);  
+	 	getRemarkTextArea().SendKeys(remark);
+	 	getSaveRemark().Click();
+	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
+	 	System.out.println(getSelectRemarkDocArea().getText());
+	 	
+	 	getRemarkDateandTime().isElementPresent();
+		base.waitForElement(getRemarkDeletetIcon());
+	 	getRemarkDeletetIcon().waitAndClick(15);
+	 	
+	 	base.waitForElement(base.getPopupYesBtn());
+	 	base.getPopupYesBtn().waitAndClick(15);;
+			 // sa.assertAll();
+	    }	  
 	/**
 	 * @author Gopinath
 	 * @Description : Method for adding remark is added to document.
@@ -24404,23 +24451,36 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
 			driver.switchTo().window(winHandle);
 		}
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				driver.waitForPageToBeReady();
+				base.waitForElement(getNearDupeDocPageNumber());
+				String beforeNo = getNearDupeDocPageNumber().getText();
+				System.out.println(beforeNo);
+				base.waitForElement(getDocView_ChildPagination());
+				getDocView_ChildPagination().waitAndClick(10);
 
-		driver.waitForPageToBeReady();
-		base.waitForElement(getNearDupeDocPageNumber());
-		String beforeNo = getNearDupeDocPageNumber().getText();
-		System.out.println(beforeNo);
-		base.waitForElement(getDocView_ChildPagination());
-		getDocView_ChildPagination().waitAndClick(10);
+				base.waitForElement(getNearDupeDocPageNumber());
+				String afterNo = getNearDupeDocPageNumber().getText();
+				System.out.println(afterNo);
+				softAssertion.assertNotEquals(beforeNo, afterNo);
+				base.passedStep("Pagination is working near dupe child window Successfully");
+				driver.getWebDriver().close();
+				driver.switchTo().window(parentWindowID);
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				break;
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
+				driver.Navigate().refresh();
+			}
+		}
 
-		base.waitForElement(getNearDupeDocPageNumber());
-		String afterNo = getNearDupeDocPageNumber().getText();
-		System.out.println(afterNo);
-		softAssertion.assertNotEquals(beforeNo, afterNo);
-		base.passedStep("Pagination is working near dupe child window Successfully");
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
-		driver.getWebDriver().navigate().refresh();
-		driver.waitForPageToBeReady();
+		
 
 	}
 
@@ -25674,6 +25734,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyTotalPagesOfDocumentCountGreaterThan500() {
 		try {
+			base.waitTime(5);
 			driver.waitForPageToBeReady();
 			String pagesCount = totalPageCount().getText().trim();
 			String[] pageCnt = pagesCount.split("of", 2);
@@ -27993,18 +28054,32 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
 			driver.switchTo().window(winHandle);
 		}
+		
+		for (int i = 1; i <= 5; i++) {
+			if ((getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) && !((getDocView_NearDupe_DocID().getText()).isEmpty())) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
+				getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
+				base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
 
-		base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
-		getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
-		base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
+				base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
+				getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
+				base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
 
-		base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
-		getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
-		base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
+				driver.getWebDriver().close();
 
-		driver.getWebDriver().close();
+				driver.switchTo().window(parentWindowID);
+				break;
+			} else if(i==5) {
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}else {
+			
+				driver.Navigate().refresh();
+			}
+		}
 
-		driver.switchTo().window(parentWindowID);
+		
 
 	}
 
@@ -29268,8 +29343,12 @@ public String getRequiredDocs(String reqDocsType) {
                     base.failedStep("Failed to get document.");
             }
     }
-    
+    if(!document.isBlank()) {
     System.out.println(document);
+    base.passedStep("Document ID : " + document);
+    } else {
+    base.failedStep("Document ID couldn't fetch Properly");
+    }
     return document;
 }
 

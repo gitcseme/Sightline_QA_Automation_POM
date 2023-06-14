@@ -623,13 +623,13 @@ public class ProjectPage {
 		driver.scrollingToBottomofAPage();
 
 		getProjectFolder().Clear();
-		getProjectFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getProjectFolder().SendKeys(Input.SourceLocation);
 
 		getIngestionFolder().Clear();
-		getIngestionFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getIngestionFolder().SendKeys(Input.SourceLocation);
 
 		getProductionFolder().Clear();
-		getProductionFolder().SendKeys("Automation\\RegressionAllDatasetConsilio");
+		getProductionFolder().SendKeys(Input.SourceLocation);
 
 		driver.scrollPageToTop();
 
@@ -637,12 +637,12 @@ public class ProjectPage {
 //		bc.mouseHoverOnElement(getManageProjectBtn());
 //		bc.mouseHoverOnElement(getSelectClientName());
 
-		bc.waitForElement(getAddProject_SettingsTab());
-		getAddProject_SettingsTab().waitAndClick(10);
-
-		bc.waitForElement(getNoOfDocuments());
-		getNoOfDocuments().waitAndClick(10);
-		getNoOfDocuments().SendKeys("20000");
+//		bc.waitForElement(getAddProject_SettingsTab());
+//		getAddProject_SettingsTab().waitAndClick(10);
+//
+//		bc.waitForElement(getNoOfDocuments());
+//		getNoOfDocuments().waitAndClick(10);
+//		getNoOfDocuments().SendKeys("20000");
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();

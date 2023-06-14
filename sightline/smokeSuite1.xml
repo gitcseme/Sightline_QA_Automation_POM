@@ -71,7 +71,7 @@
         		<methods>
         		<include name="TestStart"/>
         		<include name="beforeTestMethod"/>
-        		<include name="AddComments"/>
+        		<include name="verifyRMUClicksEditForComments"/>
         		<include name="afterMethod"/>
         		<include name="close"/>
           		</methods>
@@ -189,9 +189,9 @@
         		<methods>
         			<include name="preCondition"/>
         			<include name="beforeTestMethod"/>
-        			<include name="performAnyActionSharedPAU"/> 
+        			<include name="performAnyActionSharedPAU"/>
         			<include name="manageScheduleCheck" invocation-numbers="0"/>
-        			<include name="verifyBatchUpload"/> 
+        			<include name="verifyBatchUpload"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
@@ -515,19 +515,11 @@
         			<include name="beforeClass"/>
         			<include name="beforeTestMethod"/>
         			<include name="conceptExplorer"/>
+        			<include name="tallySubTally"/>
         			<include name="takeScreenShot"/>
         			<include name="close"/>
           		</methods>
       		</class>
-      		<class name="testScriptsRegression.TS_006_Tally_Report" >
-        		<methods>
-        			<include name="beforeClass"/>
-        			<include name="beforeTestMethod"/>
-        			<include name="subTallyMetadata"/>
-        			<include name="takeScreenShot"/>
-        			<include name="close"/>
-          		</methods>
-      		</class> 
       		</classes>		
       </test>
       
