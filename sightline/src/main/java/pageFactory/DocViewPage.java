@@ -2463,7 +2463,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element docViewEyeSearchTerm() {
-		return driver.FindElementByXPath("//*[text()='Term:' and 'Score:']");
+		return driver.FindElementByXPath("//h4[@class='remark-title']");
 	}
 
 	// added by brundha
@@ -3710,7 +3710,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
     public Element getFirstLineinDoc() {
         return driver.FindElementByCssSelector("*[class=igViewerGraphics]>div>svg>g>g>svg>g>g>text");
   }
-	
+    
+   	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7573,6 +7574,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //					getDocView_DocId(docId).ScrollTo();
 					base.waitForElement(getDocView_DocId(Document));
 					getDocView_DocId(Document).waitAndClick(15);
+					base.waitTime(3);
 //					base.waitForElement(getDocView_MiniDoc_SelectRow(1));
 //					getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
 					base.passedStep("Doc is selected from MiniDoclist successfully");
@@ -7603,8 +7605,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 			base.waitTime(2);
 
-			if (getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().isElementAvailable(2)
-					|| getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().isElementAvailable(2)) {
+			if (getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().isElementAvailable(10)
+					|| getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().isElementAvailable(10)) {
 				base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
 				getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
 
@@ -22176,18 +22178,23 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 
 		try {
+			base.waitTime(5);
 			base.waitForElement(getClickDocviewID(Integer.parseInt(DocIdOrRwNo)));
 			getClickDocviewID(Integer.parseInt(DocIdOrRwNo)).waitAndClick(3);
 
 		} catch (Exception e) {
+			base.waitTime(5);
 			base.waitForElement(getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo));
 			getDocView_MiniDoc_SelectDOcId(DocIdOrRwNo).waitAndClick(5);
 
 		}
 
 		base.waitForElement(getSelectedDocIdMiniDocList());
-
+        System.out.println(getSelectedDocIdMiniDocList());
 		base.waitForElement(getDocViewSelectedDocId());
+		System.out.println(getDocViewSelectedDocId());
+		driver.waitForPageToBeReady();
+		base.waitTime(5);
 		if (getDocViewSelectedDocId().getText().trim().equals(getSelectedDocIdMiniDocList().getText().trim())) {
 			base.passedStep("selected document loaded in docview panal");
 		} else {
@@ -23457,7 +23464,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.passedStep("DocView Reviewer Page Is Displayed");
 
 		driver.waitForPageToBeReady();
-		getDocView_Analytics_FamilyTab().waitAndClick(30);
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
@@ -28394,6 +28402,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				return getCopyPasteIcon().Displayed();
 			}
 		}), Input.wait120);
+		base.waitTime(5);
+		getCopyPasteIconStatus().waitAndClick(10);
 		String status = getCopyPasteIconStatus().GetAttribute("class");
 		System.out.println(status);
 		if (status == "active") {
@@ -28415,7 +28425,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		editCodingForm();
 		getAddComment1().Clear();
-		getAddComment1().waitAndClick(2);
+		getAddComment1().waitAndClick(5);
 		// Paste the text
 		driver.waitForPageToBeReady();
 		actions.moveToElement(getAddComment1().getWebElement()).contextClick().build().perform();
@@ -29149,9 +29159,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
                 return getCopyPasteIconStatus().Displayed();
             }
         }), Input.wait120);
-        String status = getCopyPasteIconStatus().GetAttribute("class");
+        base.waitTime(5);
+        getCopyPasteIconStatus().waitAndClick(10);
+        String status = getCopyPasteIconStatus().GetAttribute("class").trim();
         System.out.println(status);
         base.waitForElement(getCopyPasteIconStatus());
+        driver.waitForPageToBeReady();
         if (status.equals("active")) {
             base.passedStep("Copy and paste icon is in enabled state");
         } else {
@@ -29351,5 +29364,23 @@ public String getRequiredDocs(String reqDocsType) {
     }
     return document;
 }
+
+	
+	
+	public void getDocViewDocsRedactIcon(){
+		driver.waitForPageToBeReady();
+		base.waitForElementCollection(getDocumetCountMiniDocList());
+		int miniDocsCount = getDocumetCountMiniDocList().WaitUntilPresent().size();
+		System.out.println(miniDocsCount);
+		driver.waitForPageToBeReady();
+		for(int i=1;i<miniDocsCount;i++){
+			driver.waitForPageToBeReady();
+			getDocView_MiniDocListIds(i).waitAndClick(5);
+			if(redactionIcon().isDisplayed()){
+			break;
+			}
+		}
+		
+	}
 
 }

@@ -761,7 +761,7 @@ public class DocViewRedactions {
 	}
 
 	public Element get_hitsValue(int i) {
-		return driver.FindElementByXPath("(//div[@class='message-1 col-md-12 yellow-border'])[" + i + "]/p/span");
+		return driver.FindElementByXPath("(//div[@class='message-1 col-md-12 yellow-border'])[" + i + "]//span//following-sibling::span");
 	}
 	// *** Jagadeesh.Jana _ Ends ***
 
@@ -2306,10 +2306,11 @@ public class DocViewRedactions {
 		base.stepInfo("No of Term Hits are : " + termCounts);
 		for (int i = 1; i <= termCounts; i++) {
 			base.waitForElement(get_hitsValue(i));
-			String hitvalue = get_hitsValue(i).getText().split(" ")[0].trim();
+			String hitvalue = get_hitsValue(i).getText();
 			System.out.println("Hitvalue : " + hitvalue);
-			if (hitvalue.equals("0")) {
+			if (hitvalue.contains("0 Hit")) {
 				zeroHitsPresent = true;
+				break;
 			}
 		}
 		if (zeroHitsPresent == true) {
