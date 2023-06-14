@@ -429,17 +429,15 @@ public class ConceptExplorer_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56887");
 		baseClass.stepInfo("Validate Masterdate range on Concept Explorer report");
 
-		String searchText = "Jack";
+		String searchText = Input.custodianName_allen;
 		String sourceToSelect = "Searches";
 		String sgToSelect = Input.mySavedSearch;
 		String savedSearchName = "SavedSearch-" + UtilityLog.dynamicNameAppender();
 		String[] selectSourceList = { "Security Groups", "Searches", "Project", "Folders" };
 		String[] conditionsToCheck = { "Before", "After", "On", "Between" };
-		//String expectedDateInput = Input.expectedDateInput;
-		//String expectedToDateInput = Input.expectedToDateInput;
-		String expectedDateInput = "2000/12/10"; 
-		String expectedToDateInput = "2001/08/06";
-
+		String expectedDateInput = Input.expectedDateInput2;
+		String expectedToDateInput = Input.expectedToDateInput2;
+		
 		// Login as PA
 		baseClass.stepInfo("**Step-1 Login as Project Admin**");
 		loginPage.loginToSightLine(userName, password);
