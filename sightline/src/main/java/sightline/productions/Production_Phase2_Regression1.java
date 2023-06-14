@@ -3229,12 +3229,12 @@ public class Production_Phase2_Regression1 {
 		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
 		int DocFileExtension = base.getIndex(doc.getHeaderText(), Input.docFileExt);
 		List<String> FileExtense = base.availableListofElements(doc.GetColumnData(DocFileExtension));
-		/*String FirstFile = FileExtense.get(0);
-		System.out.println(FirstFile);
-		String SecondFileFile = FileExtense.get(1);
-		System.out.println(SecondFileFile);
-		String ThirdFile = FileExtense.get(2).toString().trim();
-		System.out.println(ThirdFile); */
+		/*
+		 * String FirstFile = FileExtense.get(0); System.out.println(FirstFile); String
+		 * SecondFileFile = FileExtense.get(1); System.out.println(SecondFileFile);
+		 * String ThirdFile = FileExtense.get(2).toString().trim();
+		 * System.out.println(ThirdFile);
+		 */
 		doc.documentSelection(3);
 		doc.bulkTagExistingFromDoclist(tagname);
 
@@ -3268,8 +3268,7 @@ public class Production_Phase2_Regression1 {
 		int ThirdDoc = Count + +Integer.valueOf(Input.pageCount);
 		File Native = new File(
 				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
-		File Native2File = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + Count + suffixID + ".docx");
+		File Native2File = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + Count + suffixID + ".docx");
 		File Native3File = new File(
 				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + ThirdDoc + suffixID + ".docx");
 		if (Native.exists()) {
@@ -3324,7 +3323,7 @@ public class Production_Phase2_Regression1 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.metaDataSearchInAdvancedSearch("RequirePDFGeneration", Input.pageCount);
-		//sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
+		// sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
 		sessionSearch.ViewInDocList();
 
 		DocListPage doc = new DocListPage(driver);
@@ -3958,6 +3957,10 @@ public class Production_Phase2_Regression1 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(page.getQC_Download());
+		base.waitForElement(page.getQC_Downloadbutton_allfiles());
+		page.getQC_Downloadbutton_allfiles().Click();
+		base.waitUntilFileDownload();
 		int Count = Integer.valueOf(beginningBates) + PageCount;
 		int LastDoc = Count + PageCount2Doc;
 		page.extractFile();
@@ -4332,7 +4335,7 @@ public class Production_Phase2_Regression1 {
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
 		page.isfileisExists(TiffFile);
 		page.verificationOfTiffFile(firstFile, ImageFiles, prefixID, suffixID);
-		//loginPage.logout();
+		// loginPage.logout();
 	}
 
 	/**
@@ -4397,7 +4400,7 @@ public class Production_Phase2_Regression1 {
 		int count = doc.getNumberOfPages();
 		System.out.println(count);
 		base.digitCompareEquals(TotalPages, count, "Blank Page is not removed as expected", "Blank Page is Removed");
-		//loginPage.logout();
+		loginPage.logout();
 	}
 
 	/**

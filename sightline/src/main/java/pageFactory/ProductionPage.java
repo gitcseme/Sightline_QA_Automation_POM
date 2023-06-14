@@ -275,7 +275,7 @@ public class ProductionPage {
 	}
 
 	public Element getbtnProductionGenerate() {
-		return driver.FindElementById("btnProductionGenerate");
+		return driver.FindElementByXPath("//*[@id='btnProductionGenerate']");
 	}
 
 	public Element getProductionSettxt() {
@@ -6214,12 +6214,19 @@ public class ProductionPage {
 
 		base.waitForElement(getDisabledSelectRedactionTags());
 //		try {
+//
 //			Thread.sleep(1000);
+//
 //		} catch (InterruptedException e) {
+//
 //			// TODO Auto-generated catch block
+//
 //			e.printStackTrace();
+//
 //		}
+		base.waitTime(10);
 		String flag = getDisabledSelectRedactionTags().GetAttribute("class");
+
 		System.out.println(flag);
 		driver.waitForPageToBeReady();
 		if (flag.contains("disabled")) {
@@ -22957,7 +22964,7 @@ public class ProductionPage {
 
 		for (int i = firstFile; i < lastFile; i++) {
 			driver.waitForPageToBeReady();
-			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tif");
 			ITesseract instance = new Tesseract1();
 			File tessDataFolder = LoadLibs.extractTessResources("tessdata");
 			instance.setDatapath(tessDataFolder.getPath());

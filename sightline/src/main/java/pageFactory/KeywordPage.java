@@ -152,25 +152,29 @@ public class KeywordPage {
 	public Element getKeywordTableEditKeyword(String keyword) {
 		return driver.FindElementByXPath(
 				"//*[@id='KeywordsDatatable']/tbody/tr//td[@class='width_blankSpaces sorting_1'][text()='" + keyword
-						+ "']//following::a[text()='Edit']");
+				+ "']//following::a[text()='Edit']");
 	}
 	public Element getKeywordHighlightingGroupErrorMessage() {
 		return driver.FindElementByXPath("//span[text()='Select special characters are disallowed']");
 	}
-	
+
 	public Element getKeywordPaginationNextButton(){
 		return driver.FindElementByXPath("(//div[@id='KeywordsDatatable_paginate']/ul/li/a)[last()]");
 	}
-	
+
 	public ElementCollection getKeywordPaginationCount(){
 		return driver.FindElementsByXPath("//div[@id='KeywordsDatatable_paginate']/ul/li/a");
 	}
-	
+	public Element getDataInfo(){
+		return driver.FindElementByXPath("//div[@id='KeywordsDatatable_info']");
+	}
+
+
 	// Annotation Layer added successfully
 	public KeywordPage(Driver driver) {
 
 		this.driver = driver;
-//		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		//		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 	}
@@ -263,7 +267,7 @@ public class KeywordPage {
 			Boolean status = getDeleteButton(keyword).isElementAvailable(5);
 			if (status == true) {
 				driver.scrollingToElementofAPage(getDeleteButton(keyword));
-				
+
 				getDeleteButton(keyword).waitAndClick(5);
 				base.stepInfo("Expected Keyword found in the page " + i);
 				break;
@@ -273,8 +277,8 @@ public class KeywordPage {
 				base.stepInfo("Expected Keyword not found in the page " + i);
 			}
 		}
-//		base.waitForElement(getDeleteButton(keyword));
-//		getDeleteButton(keyword).javascriptclick(getDeleteButton(keyword));
+		//		base.waitForElement(getDeleteButton(keyword));
+		//		getDeleteButton(keyword).javascriptclick(getDeleteButton(keyword));
 		base.waitForElement(getYesButton());
 		getYesButton().waitAndClick(5);
 		base.VerifySuccessMessage("Keyword Highlighting Group successfully deleted");
@@ -713,6 +717,50 @@ public class KeywordPage {
 
 	}
 
+	public void deleteKeywordByNameAndCancel1(String keyword) {
+
+		driver.waitForPageToBeReady();
+		String s = getDataInfo().getWebElement().getText();
+		String ss = s.substring(19,21);
+		int pageCount = Integer.parseInt(ss);
+
+		for (int i = 0; i < pageCount/10; i++) {
+			try {
+				driver.waitForPageToBeReady();
+				ElementCollection tableValues = getKeywordTableValues(keyword);
+				int val = tableValues.size();
+				System.out.println(val);
+				if (val >= 1) {
+					base.waitForElement(getDeleteButton(keyword));
+					getDeleteButton(keyword).waitAndClick(5);
+					base.waitForElement(getNoButton());
+					getNoButton().waitAndClick(5);
+					base.waitForElementCollection(getKeywordTableValues(keyword));
+					ElementCollection keywordTableValues = getKeywordTableValues(keyword);
+					int size = keywordTableValues.size();
+					System.out.println(size);
+					base.stepInfo("Keyword Group is not deleted and Present in the Tabel");
+					break;
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+				String getNextButtonAtt = getNextButton().GetAttribute("class");
+				if (!(getNextButtonAtt.contains("disabled"))) {
+					driver.scrollingToBottomofAPage();
+					driver.waitForPageToBeReady();
+					getNextButtonEle().isElementAvailable(8);
+					getNextButtonEle().Click();
+					driver.waitForPageToBeReady();
+
+				}
+			}
+
+		}
+
+
+	}
+
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @Description: Method for creating with 4000 characters
@@ -932,9 +980,9 @@ public class KeywordPage {
 		base.waitForElement(getYesButton());
 		getYesButton().waitAndClick(5);
 		VerifyerrorMessageForDisallowedSpecialCharecters("Select special characters are disallowed");
-		
+
 	}
-	
+
 	public void VerifyerrorMessageForDisallowedSpecialCharecters(String ErrorMessage) {
 		String errorMessage = getKeywordHighlightingGroupErrorMessage().getText();
 		SoftAssert softAssert = new SoftAssert();
@@ -981,22 +1029,22 @@ public class KeywordPage {
 		}
 		return keywordGroupName;
 	}
-	
-    public void addKeywordAndVerifyExist(String name) {
-        boolean status = false;
-        List<String> allKeywords = getAllKeywords();
-        for(String keyword : allKeywords) {
-        if(keyword.equals(name)) {
-                System.out.println("Keyword already exists");
-                status = true;
-                break;
-        }
-        }
-        if(!status){
-         navigateToKeywordPage();
-         AddKeyword(name, name);
-         
-        }
-        }
+
+	public void addKeywordAndVerifyExist(String name) {
+		boolean status = false;
+		List<String> allKeywords = getAllKeywords();
+		for(String keyword : allKeywords) {
+			if(keyword.equals(name)) {
+				System.out.println("Keyword already exists");
+				status = true;
+				break;
+			}
+		}
+		if(!status){
+			navigateToKeywordPage();
+			AddKeyword(name, name);
+
+		}
+	}
 
 }

@@ -2262,7 +2262,7 @@ public class BaseClass {
 
 			if (sourceString.equals(compreString)) {
 				passedStep(passMsg);
-			} else if (!sourceString.equals(compreString)) {
+			} else if (!(sourceString.equals(compreString))) {
 				failedStep(failMessage);
 			}
 		} catch (Exception E) {
@@ -2657,6 +2657,27 @@ public class BaseClass {
 		}
 		softAssertion.assertAll();
 	}
+	
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : listCompareEquals with Pass and Fail Message
+	 */
+	public void IntegerlistCompareEquals(List<Integer> sourceList, List<Integer> compreList, String passMsg,
+			String failMessage) {
+		System.out.println("Source String  : " + sourceList);
+		System.out.println("Compare String  : " + compreList);
+
+		stepInfo("Source String  : " + sourceList);
+		stepInfo("Compare String  : " + compreList);
+
+		softAssertion.assertEquals(sourceList, compreList);
+		if (sourceList.equals(compreList)) {
+			passedStep(passMsg);
+		} else if (!(sourceList.equals(compreList))) {
+			failedStep(failMessage);
+		}
+		softAssertion.assertAll();
+	}
 
 	/**
 	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by:N/A
@@ -2764,6 +2785,7 @@ public class BaseClass {
 			System.out.println("Compare String  : " + compreString);
 
 			if (sourceString.contains(compreString)) {
+				System.out.println("Its pass 2");
 				passedStep(passMsg);
 			} else {
 				failedStep(sourceString + " : " + failMessage);
@@ -2920,23 +2942,52 @@ public class BaseClass {
 			Boolean sortOrder) throws InterruptedException, AWTException {
 
 		System.out.println("Original Order");
-		for (String a : originalOrderedList) {
+		
+		for (String a : afterSortList) {
 			System.out.println(a);
 		}
 
 		if (sortType.equals("Ascending")) {
-			Collections.sort(afterSortList);
+			Collections.sort(originalOrderedList);
+			System.out.println("AscendingoriginalOrderedList:-"+originalOrderedList);
 		} else if (sortType.equals("Descending")) {
-			Collections.sort(afterSortList, Collections.reverseOrder());
+			Collections.sort(originalOrderedList, Collections.reverseOrder());
+			System.out.println("DescendingoriginalOrderedList:-"+originalOrderedList);
 		}
 
 		System.out.println("Sorted Order");
-		for (String b : afterSortList) {
+		for (String b : originalOrderedList) {
 			System.out.println(b);
 		}
 
 		if (sortOrder) {
 			listCompareEquals(originalOrderedList, afterSortList, "Sorting order maintained", "Sorting order failed");
+		}
+
+	}
+	
+	public void verifyOriginalSortOrderForIntegerlist(List<Integer> originalOrderedList, List<Integer> afterSortList, String sortType,
+			Boolean sortOrder) throws InterruptedException, AWTException {
+
+		System.out.println("Original Order");
+		
+		for (int a : afterSortList) {
+			System.out.println(a);
+		}
+
+		if (sortType.equals("Ascending")) {
+			Collections.sort(originalOrderedList);
+		} else if (sortType.equals("Descending")) {
+			Collections.sort(originalOrderedList, Collections.reverseOrder());
+		}
+
+		System.out.println("Sorted Order");
+		for (int b : originalOrderedList) {
+			System.out.println(b);
+		}
+
+		if (sortOrder) {
+			IntegerlistCompareEquals(originalOrderedList, afterSortList, "Sorting order maintained", "Sorting order failed");
 		}
 
 	}

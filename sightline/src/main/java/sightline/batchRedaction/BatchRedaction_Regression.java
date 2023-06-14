@@ -1428,6 +1428,9 @@ public class BatchRedaction_Regression {
 		security.AddSecurityGroup(securityGroup);
 
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
+		driver.Navigate().refresh(); //Required because Created Security group is taking time to reflect in the dropdown
+		base.waitTime(5);
 		security.selectSecurityGroup(securityGroup);
 		annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
@@ -1621,6 +1624,9 @@ public class BatchRedaction_Regression {
 		security.AddSecurityGroup(securityGroup);
 
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
+		driver.Navigate().refresh(); //Required because Created Security group is taking time to reflect in the dropdown
+		base.waitTime(5);
 		security.selectSecurityGroup(securityGroup);
 		security.assignRedactionTagtoSG("Default Redaction Tag");
 		annotation = new AnnotationLayer(driver);

@@ -560,30 +560,22 @@ public class BatchRedaction_Phase2_Regression {
 		saveSearch = new SavedSearch(driver);
 	}
 
+	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
-
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-//			login.switchProjectToEnglish();
-			try {
-				login.logout();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
-			login.clearBrowserCache();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
+
 
 	@AfterClass(alwaysRun = true)
 
