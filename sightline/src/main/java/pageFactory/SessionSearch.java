@@ -10291,6 +10291,7 @@ driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 		// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
 		base.waitForElement(getSelectMetaData());
 		getSelectMetaData().waitAndClick(3);
+		driver.scrollingToElementofAPage(SelectFromDropDown(metaDataField));
 		base.waitForElement(SelectFromDropDown(metaDataField));
 		SelectFromDropDown(metaDataField).waitAndClick(10);
 		base.waitForElement(getMetaDataSearchText1());
