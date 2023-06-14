@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -36,7 +37,10 @@ public class CollectionPage {
 	public Element getPopupMsg() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']/p");
 	}
-
+	public Element getNoCustodianErrorStatus() {
+		return driver.FindElementByXPath("//span[@id='spanNoCustodianResult']");
+	}
+	
 	public Element getNewCollectionBtn() {
 		return driver.FindElementByXPath("//input[@id='btnNewCollection']");
 	}
@@ -56,6 +60,11 @@ public class CollectionPage {
 	public ElementCollection getAddNewSourcePopUp_Attributes() {
 		return driver.FindElementsByXPath(
 				"//div[@class='ui-widget-overlay ui-front']//preceding::label[contains(@class,'labelAlign')]");
+	}
+	
+	public Element getEditCancelYesPopup() {
+		return driver.FindElementByXPath(
+				"//button[@id='bot1-Msg1']");
 	}
 
 	public Element getDataSourceName() {
@@ -1047,13 +1056,16 @@ public class CollectionPage {
 		base.waitForElement(getCustodianIDInputTextField());
 		getCustodianIDInputTextField().waitAndClick(10);
 		getCustodianIDInputTextField().SendKeys(inputString);
-		
+		base.waitForElementCollection(getCustodianIDdataListOptions());
+		datalistVal=datalistVal.trim();
 		for(WebElement it : getCustodianIDdataListOptions().FindWebElements()){//it.getAttribute("value").contentEquals(datalistVal)
 		if (it.getAttribute("value").contains(datalistVal)){ 
 			getCustodianIDInputTextField().SendKeys(it.getAttribute("value"));
 			} 
 		};
+		
 		driver.waitForPageToBeReady();
+		
 
 		// Custodian Retived data
 
@@ -1361,7 +1373,7 @@ public class CollectionPage {
 	 */
 	public void collectionSaveAsDraft() {
 		try {
-			getActionDiv("Save as Draft").waitAndClick(5);
+			getActionDiv("Save as Draft").javascriptclick(getActionDiv("Save as Draft"));
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage("Collection saved as draft successfully");
 			base.CloseSuccessMsgpopup();
@@ -1934,7 +1946,7 @@ public class CollectionPage {
 
 				base.waitForElement(getCustodianIDInputTextField());
 				getCustodianIDInputTextField().Clear();
-
+				base.waitTime(2);
 				actualValue = custodianNameSelectionInNewDataSet(firstName,dataListVal, collection2ndEmailId, true, false, "");
 			}
 
@@ -1962,6 +1974,8 @@ public class CollectionPage {
 		}
 		return actualValue;
 	}
+	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Apply Filter Status
@@ -2570,19 +2584,32 @@ public class CollectionPage {
 	public void verifySortingOrderOfCollectionPage(boolean ClickBtn, String headerName, String sortType)
 			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
-		if (ClickBtn)
-			getHeaderBtn(headerName).waitAndClick(10);
+		if (ClickBtn) {
+		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
+		getHeaderBtn(headerName).waitAndClick(10);
 		base.stepInfo("Clicked : " + headerName);
 		driver.waitForPageToBeReady();
+		List<Integer> neworiginalList = originalList.stream()
+                .map(s -> Integer.parseInt(s))
+                .collect(Collectors.toList());
 
-		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+		System.out.println("neworiginalList:-"+neworiginalList); 
+
+		index = base.getIndex(getDataSetDetailsHeader(), headerName);
 
 		driver.waitForPageToBeReady();
-		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
+		
 		List<String> afterSortList = base.availableListofElements(getCollectionNameElements(index));
 //		base.stepInfo("Original Order :" + originalList);
+		
+		List<Integer> newAfterSortList = afterSortList.stream()
+						.map(s -> Integer.parseInt(s)).collect(Collectors.toList());
 
-		base.verifyOriginalSortOrder(originalList, afterSortList, sortType, true);
+		System.out.println("newAfterSortList:-"+newAfterSortList);
+
+		base.verifyOriginalSortOrderForIntegerlist(neworiginalList, newAfterSortList, sortType, true);
+		}
 	}
 
 	/**
