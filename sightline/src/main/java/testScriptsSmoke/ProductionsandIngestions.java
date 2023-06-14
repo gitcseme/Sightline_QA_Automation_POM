@@ -727,7 +727,7 @@ public class ProductionsandIngestions {
 		loginPage.logout();
 	}
 	
-	@Test(enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-73270",enabled = true, groups = { "regression" })
 	public void DragNDropUpload() throws Exception {
 		UserManagement userManagement=new UserManagement(driver);
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
