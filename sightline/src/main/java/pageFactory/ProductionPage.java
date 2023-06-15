@@ -21460,9 +21460,10 @@ public class ProductionPage {
 		getTiff_NativeDoc().Click();
 		getFileTypeNativelyProducedDocs().Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().Click();
-		getNativeDocsPlaceholder().SendKeys(Text);
+//		driver.scrollingToElementofAPage(getNativeDocsPlaceholder());
+//		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder1().Click();
+		getNativeDocsPlaceholder1().SendKeys(Text);
 
 	}
 
@@ -22371,6 +22372,9 @@ public class ProductionPage {
 		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder());
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname);
+		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder1());
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(tagname);
 	}
 
 	/**
