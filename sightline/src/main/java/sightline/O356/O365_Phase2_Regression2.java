@@ -71,7 +71,8 @@ public class O365_Phase2_Regression2 {
 
 	@DataProvider(name = "PaAndRmuUserDetails")
 	public Object[][] PaAndRmuUserDetails() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
+		Object[][] users = { 
+				{ Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager", "SA" } };
 		return users;
 	}
@@ -85,8 +86,10 @@ public class O365_Phase2_Regression2 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "Review Manager" },
-				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, };
+		Object[][] users = { 
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager" },
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, 
+				};
 		return users;
 	}
 
@@ -1121,16 +1124,19 @@ public class O365_Phase2_Regression2 {
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
-
+		
+		base.selectproject(Input.ingestDataProject);
 		// Collection Draft creation
 		colllectionData = collection.verifyUserAbleToSaveCollectionAsDraft(username, password, userRole, "SA",
 				Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
 		collectionId = base.returnKey(colllectionData, "", false);
 		collectionName = colllectionData.get(collectionId);
-
+		driver.Navigate().refresh();
+		base.waitTime(2);
 		// Edit The collection which is in Draft
-		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
-		collection.getCollectionsPageActionList(collectionId, "Edit").waitAndClick(5);
+		collection.getCollectionsPageAction(collectionId).javascriptclick(collection.getCollectionsPageAction(collectionId));
+		collection.getCollectionsPageActionList(collectionId, "Edit").javascriptclick(collection.getCollectionsPageActionList(collectionId, "Edit"));
+		
 		driver.waitForPageToBeReady();
 
 		// Verify whether it is selecting already configured source location &
@@ -1352,8 +1358,8 @@ public class O365_Phase2_Regression2 {
 
 		// Login as User
 		login.loginToSightLine(username, password);
-		// selecting project
-		base.selectproject(Input.ingestDataProject);
+
+
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
@@ -2802,12 +2808,15 @@ public class O365_Phase2_Regression2 {
 		String collectionName = verifyUserAbleToSaveCollectionAsDraft(username, password, fullname, "SA",
 				Input.sa1userName, Input.sa1password, selectedFolder, "", false);
 
-		// click once and check is it sorted in Ascending
+		
 		driver.Navigate().refresh();
+		// click once and check is it sorted in Ascending
 		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, Input.sortType);
-
 		// click once again and check is it sorted in Descending
 		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, sortType);
+		
+
+		
 
 		// Logout
 		login.logout();

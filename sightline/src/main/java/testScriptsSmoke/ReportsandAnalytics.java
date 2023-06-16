@@ -176,7 +176,7 @@ public class ReportsandAnalytics {
 		
 		baseClass.stepInfo("Selecting the document in docExplorer page");
 		docExplorer.selectDocument(1);
-		docExplorer.getDocumentsCheckBoxbyRowNum(1).waitAndClick(10);
+		docExplorer.getDocExp_SelectAllDocs().waitAndClick(10);
 		
 		
 		baseClass.stepInfo("View document in doc view on doc explorer");

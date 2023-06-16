@@ -332,6 +332,7 @@ public class DocView_Regression4 {
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.impersonateRMUtoReviewer();
+		baseClass.waitTime(5);
 		assignmentsPage.SelectAssignmentByReviewer(assignmentName);
 		driver.waitForPageToBeReady();
 //		Added on 10_04
@@ -431,25 +432,31 @@ public class DocView_Regression4 {
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.getCommentsOrRemarksCount("Remark", "\"Remark by Rmu\"");
 		sessionSearch.bulkAssign();
+		baseClass.waitTime(5);
 		assignmentsPage.assignDocstoExisting(assignmentName);
 		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Distributing docs to RMU");
+		baseClass.waitTime(5);
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		assignmentsPage.selectAssignmentToViewinDocview(assignmentName);
 //		Added 10_04
 //		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		docViewRedact.verifyHighLightingTextInDocView();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
 		baseClass.impersonateReviewertoRMU();
 //		Added 10_04
+		baseClass.waitTime(5);
 		assignmentsPage.deleteAssgnmntUsingPagination(assignmentName);
 		baseClass.stepInfo("Deleting Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+		baseClass.waitTime(5);
 		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
 		docViewRedact.clickingRemarksIcon();
@@ -1160,6 +1167,7 @@ public class DocView_Regression4 {
 //			
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+			baseClass.waitTime(5);
 			sessionSearch.saveSearchAtAnyRootGroup(searchName, Input.shareSearchDefaultSG);
 			loginPage.logout();
 			
@@ -1819,7 +1827,7 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
-		baseClass.stepInfo("Test case id : RPMXCON-51008");
+		baseClass.stepInfo("Test case id : RPMXCON-51028");
 		baseClass.stepInfo("To verify that after impersonation user can see remarks for selected document");
 
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -1838,6 +1846,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 3: Select document and click to see Reviewer Remarks");
 		docView = new DocViewPage(driver);
 		String docId = docView.getDocumentWithoutRedaction();
+		System.out.println(docId);
 		docView.selectDocInMiniDocList(docId);
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
@@ -2674,16 +2683,19 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 2: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 
+		driver.waitForPageToBeReady();
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// perform MiniDocList CodeSame As
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		docView.selectDocsFromMiniDocsAndCodeSameAs();
 		// edit coding form
 		docView.editCodingFormComplete();
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		baseClass.waitForElement(docView.getDashboardButton());
-		docView.getDashboardButton().Click();
+		docView.getDashboardButton().waitAndClick(5);
 
 		// verify assignment progress bar in completed docs
 		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
@@ -2705,13 +2717,14 @@ public class DocView_Regression4 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		// perform MiniDocList CodeSame As
+		driver.waitForPageToBeReady();
 		docView.selectDocsFromMiniDocsAndCodeSameAs();
 		// edit coding form
 		docView.editCodingFormComplete();
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		baseClass.waitForElement(docView.getDashboardButton());
-		docView.getDashboardButton().Click();
+		docView.getDashboardButton().waitAndClick(5);
 
 		// verify assignment progress bar in completed docs
 		baseClass.waitForElement(assignmentsPage.getBatchAssignmentBar(assname));
@@ -3071,6 +3084,7 @@ public class DocView_Regression4 {
 	 */
 	@Test(description = "RPMXCON-59583", alwaysRun = true, groups = { "regression" })
 	public void verifyConfigureManualMode_RMUDashboard() throws Exception {
+		
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		docView = new DocViewPage(driver);

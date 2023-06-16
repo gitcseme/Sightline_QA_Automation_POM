@@ -380,7 +380,7 @@ public class SessionSearch {
 	}
 
 	public Element getSaveSearch_Name() {
-		return driver.FindElementById("txtSaveSearchName");
+		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
 
 	public Element getSaveSearch_SaveButton() {
@@ -693,7 +693,7 @@ public class SessionSearch {
 	}
 
 	public Element getDefaultTagsArrow() {
-		return driver.FindElementByXPath("//li[@id='1g']//i[@class='jstree-icon jstree-ocl']");
+		return driver.FindElementByXPath("//li[@id='-1']//i[@class='jstree-icon jstree-ocl']");
 	}
 	
 	public Element getPrivilegedTag() {
@@ -2090,6 +2090,10 @@ public class SessionSearch {
 	public Element getSelectSavedSearchResult(String savedSearchResult) {
 		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchResult + "')]");
 	}
+	
+	public Element getSelectSavedSearchResultExpand(String savedSearchResult) {
+		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchResult + "')]/../i");
+	}
 
 	public Element getExistingAssignmentToUnAssign(String assignName) {
 		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[text()='" + assignName + "']");
@@ -2299,6 +2303,7 @@ public class SessionSearch {
 	public Element selectAssignmentFromWP(String AssignmentName) {
 		return driver.FindElementByXPath("//a[text()='"+AssignmentName+"']");
 	}
+	
 	//a[text()='Root']/preceding-sibling::i
 
 	public SessionSearch(Driver driver) {
@@ -3761,7 +3766,8 @@ public class SessionSearch {
 	// Bulk release to default security group
 	public void bulkRelease(final String SecGroup) {
 
-		if (getPureHitAddButton().isElementAvailable(2)) {
+		
+		if (getPureHitAddButton().isElementAvailable(10)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -3989,15 +3995,28 @@ public class SessionSearch {
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(tagName)) {				
-				//driver.scrollingToElementofAPage(iterable_element);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
+			if (iterable_element.getText().contains(tagName)) {
+				try {
+				driver.scrollingToElementofAPage(iterable_element);
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();			
+				System.out.println(iterable_element.getText());
+				//iterable_element.click();
 				break;
 			}
 		}
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		base.waitForElement(getMetaDataInserQuery());
-		getMetaDataInserQuery().Click();
+		getMetaDataInserQuery().waitAndClick(10);
 		driver.scrollPageToTop();
+
 
 	}
 	
@@ -4019,7 +4038,7 @@ public class SessionSearch {
 
 		}
 
-	public void selectFolderInASwp(String folderName) {
+	public void selectFolderInASwp(String folderName) throws InterruptedException {
 		base.waitForElement(getWP_FolderBtn());
 		getWP_FolderBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -4027,11 +4046,21 @@ public class SessionSearch {
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(folderName)) {
-				//driver.scrollingToElementofAPage(iterable_element);
+				try {
+					driver.scrollingToElementofAPage(iterable_element);
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().build().perform();
 				
 				break;
 			}
+		}
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
@@ -4097,7 +4126,12 @@ public class SessionSearch {
 			if (iterable_element.getText().contains(redactName)) {
 
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				try {
 				driver.scrollingToBottomofAPage();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+				Thread.sleep(2000);				
 				System.out.println(iterable_element.getText());
 				iterable_element.click();
 				break;
@@ -4106,7 +4140,13 @@ public class SessionSearch {
 		//
 		// driver.scrollingToBottomofAPage();
 		// added on 24/8/21
-		driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		Thread.sleep(2000);
+		try {
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(10);
 
@@ -4176,6 +4216,7 @@ public class SessionSearch {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait30);
+		base.waitTime(5);
 		getPureHitsCount().waitAndClick(10);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		base.stepInfo("Search is done and PureHit is : " + pureHit);
@@ -5867,10 +5908,13 @@ public class SessionSearch {
 	 */
 	public void selectSavedsearchesInTree(String SaveName) throws InterruptedException {
 
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		base.waitForElement(getSavedSearchName(SaveName));
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(SaveName)) {
+				base.waitTime(2);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				base.waitTime(2);
@@ -5987,6 +6031,9 @@ public class SessionSearch {
 			System.out.println("Radio button already selected");
 			UtilityLog.info("Radio button already selected");
 		}
+		
+		base.waitTillElemetToBeClickable(getDefaultTagsArrow());
+		getDefaultTagsArrow().waitAndClick(5);
 		try {
 			driver.waitForPageToBeReady();
 			base.waitTime(4);
@@ -6004,11 +6051,14 @@ public class SessionSearch {
 		}
 
 		base.waitForElement(getSaveSearch_Name());
-		getSaveSearch_Name().Click();
+		base.waitTime(5);
+		getSaveSearch_Name().waitAndClick(5);
 		getSaveSearch_Name().SendKeys(searchName);
 
 		base.waitForElement(getSaveSearch_SaveButton());
-		getSaveSearch_SaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		Thread.sleep(2000);
+		getSaveSearch_SaveButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
@@ -13671,6 +13721,7 @@ driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
 			getSelectSavedSearchResult(SaveName).waitAndClick(10);
+			getSelectSavedSearchResultExpand(SaveName).waitAndClick(10);
 		}
 		// added on 16-8-21
 		base.waitForElement(getMetaDataInserQuery());

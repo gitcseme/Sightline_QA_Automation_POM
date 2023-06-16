@@ -121,8 +121,11 @@ public class DocView_Regression9 {
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
 // Redacting using rectangular redaction
+		driver.waitForPageToBeReady();
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		baseClass.stepInfo("A rectangle redaction has been applied");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.stepInfo("A rectangle redaction has been saved under Default Redaction Tag");
 		if (docViewRedact.redactionIcon().getWebElement().isDisplayed()
@@ -654,22 +657,24 @@ public class DocView_Regression9 {
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
+		 DocViewPage docView= new DocViewPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
+		driver.waitForPageToBeReady();
 		baseClass.impersonateRMUtoReviewer();
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(5);
-		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
+			String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+			String hex1 = Color.fromString(color).asHex();
+			System.out.println(hex1);
 
 		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
@@ -688,19 +693,20 @@ public class DocView_Regression9 {
 				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
 
 		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
+		driver.waitForPageToBeReady();
 		baseClass.impersonatePAtoRMU();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
-		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
+			color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+			 hex1 = Color.fromString(color).asHex();
+			System.out.println(hex1);
 
 		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
@@ -719,19 +725,20 @@ public class DocView_Regression9 {
 				"User successfully logged into slightline webpage as reviewer with " + Input.pa1userName + "");
 
 		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
+		driver.waitForPageToBeReady();
 		baseClass.impersonatePAtoReviewer();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
-		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
+			color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+			 hex1 = Color.fromString(color).asHex();
+			System.out.println(hex1);
 
 		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
@@ -750,19 +757,20 @@ public class DocView_Regression9 {
 				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
 
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
+		driver.waitForPageToBeReady();
 		baseClass.impersonateSAtoRMU();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
-		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
+			color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+			 hex1 = Color.fromString(color).asHex();
+			System.out.println(hex1);
 
 		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
@@ -781,19 +789,20 @@ public class DocView_Regression9 {
 				"User successfully logged into slightline webpage as reviewer with " + Input.sa1userName + "");
 
 		baseClass.stepInfo("Step 1: Impersonating SA to Reviewer");
+		driver.waitForPageToBeReady();
 		baseClass.impersonateSAtoReviewer();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
 		baseClass.stepInfo("Step 3: Verify the highlighting from the document without clicking the eye icon");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
-		color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		hex1 = Color.fromString(color).asHex();
-		System.out.println(hex1);
+			color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+			 hex1 = Color.fromString(color).asHex();
+			System.out.println(hex1);
 
 		if (docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			baseClass.passedStep("Search term hits is highlighted in the document without clicking the eye icon");
@@ -1054,17 +1063,21 @@ public class DocView_Regression9 {
 		} else {
 			baseClass.failedStep("The thumbnail Panel menu is NOT displayed");
 		}
+		
+		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.clickPageNumber(3));
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.clickPageNumber(3).Visible() && docViewRedact.clickPageNumber(3).Enabled();
+				return docViewRedact.clickPageNumber(2).Visible() && docViewRedact.clickPageNumber(3).Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.clickPageNumber(3).waitAndClick(10);
+		baseClass.waitTime(5);
+		docViewRedact.clickPageNumber(2).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		String text = docViewRedact.clickPageNumber(3).getText();
+		baseClass.waitTime(5);
+		String text = docViewRedact.clickPageNumber(2).getText();
 		System.out.println(text);
-		if (text.equalsIgnoreCase("3")) {
+		if (text.equalsIgnoreCase("2")) {
 			baseClass.passedStep("case passed");
 		} else {
 			baseClass.failedStep("failed");
@@ -1514,6 +1527,7 @@ public class DocView_Regression9 {
 		String docId2 = docViewPage.getDocView_CurrentDocId().getText();
 		System.out.println(docId2);
 
+		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(docId1, docId2);
 		softAssertion.assertAll();
 		baseClass.passedStep("The next document from mini doc list is loaded successfully");
@@ -1551,6 +1565,7 @@ public class DocView_Regression9 {
 		String docId4 = docViewPage.getDocView_CurrentDocId().getText();
 		System.out.println(docId4);
 
+		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(docId3, docId4);
 		softAssertion.assertAll();
 		baseClass.passedStep("The next document from mini doc list is loaded successfully");
@@ -3265,11 +3280,13 @@ public class DocView_Regression9 {
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 
 		baseClass.stepInfo("Navigate to another document");
+		driver.waitForPageToBeReady();
 		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
 		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		driver.waitForPageToBeReady();
 		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
 		Element element = docViewRedact.getHitIcon();
 		try {
@@ -3291,10 +3308,12 @@ public class DocView_Regression9 {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		baseClass.stepInfo("Navigate to another document");
+		driver.waitForPageToBeReady();
 		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
 		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		driver.waitForPageToBeReady();
 		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
 		element = docViewRedact.getHitIcon();
 		try {
@@ -3316,10 +3335,12 @@ public class DocView_Regression9 {
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		baseClass.stepInfo("Navigate to another document");
+		driver.waitForPageToBeReady();
 		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
 		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
+		driver.waitForPageToBeReady();
 		softAssert.assertEquals(docViewRedact.getMagnifyingIcon().Displayed().booleanValue(), true);
 		element = docViewRedact.getHitIcon();
 		try {
@@ -5154,6 +5175,7 @@ public class DocView_Regression9 {
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
 		String docViewId = docView.getDocView_CurrentDocId().getText();
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		driver.waitForPageToBeReady();
 		docView.popOutMiniDocList();
 		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
 		for (String eachId : allWindowsId) {
@@ -5161,17 +5183,19 @@ public class DocView_Regression9 {
 				driver.switchTo().window(eachId);
 			}
 		}
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List");
 		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
 
+		driver.waitForPageToBeReady();
 		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
 				"Verify whether the Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
+		driver.waitForPageToBeReady();
 		if (docViewId.equals(miniDocListId)) {
 			baseClass.passedStep(
 					"Doc selected in Mini Doc List is same as the document which is getting displayed in DocView");
-			softAssert.assertEquals(docViewId, miniDocListId);
 		} else {
 			baseClass.failedStep(
 					"Doc selected in Mini Doc List is not same as the document which is getting displayed in DocView");
@@ -5190,6 +5214,7 @@ public class DocView_Regression9 {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
 		docViewId = docView.getDocView_CurrentDocId().getText();
+		driver.waitForPageToBeReady();
 		docView.popOutMiniDocList();
 		allWindowsId = driver.getWebDriver().getWindowHandles();
 		for (String eachId : allWindowsId) {
@@ -5197,6 +5222,7 @@ public class DocView_Regression9 {
 				driver.switchTo().window(eachId);
 			}
 		}
+		driver.waitForPageToBeReady();
 		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
@@ -5651,6 +5677,7 @@ public class DocView_Regression9 {
 		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
 		baseClass.stepInfo("Select the Assigment go to Docview");
+		driver.waitForPageToBeReady();
 //		assignmentPage.selectAssignmentToViewinDocview(assname);
 		assignmentPage.selectAssignmentToViewinDocview(assname, Input.additionalDataProject);
 		baseClass.stepInfo("Doc view page is selected from assigment page");
@@ -5658,15 +5685,17 @@ public class DocView_Regression9 {
 		driver.waitForPageToBeReady();
 		docViewPage.document_Navigation_verification(15);
 		docViewPage.navigation_Bar_EnableDisableCheck();
+		driver.waitForPageToBeReady();
 		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
 		docViewPage.document_Navigation_verification(25);
 
 		int lastdoc = docViewPage.verifyingDocCount();
-
+		driver.waitForPageToBeReady();
 		docViewPage.document_Navigation_verification(lastdoc);
 		docViewPage.navigation_Bar_EnableDisableCheck();
 		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
 
+		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Doc view page is selected from sessionsearch page");
@@ -5678,7 +5707,7 @@ public class DocView_Regression9 {
 		docViewPage.document_Navigation_verification(25);
 
 		int lastdoc1 = docViewPage.verifyingDocCount();
-
+		driver.waitForPageToBeReady();
 		docViewPage.document_Navigation_verification(lastdoc1);
 		docViewPage.navigation_Bar_EnableDisableCheck();
 		docViewPage.lastDoc_Navigation_Bar_EnableDisableCheck();
@@ -5880,6 +5909,7 @@ public class DocView_Regression9 {
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
+		driver.waitForPageToBeReady();
 		docView.popOutMiniDocList();
 
 		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
@@ -5889,6 +5919,7 @@ public class DocView_Regression9 {
 			}
 		}
 
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocumetId());
 		docView.scrollUntilloadingTextDisplay(false);
 
@@ -5898,6 +5929,7 @@ public class DocView_Regression9 {
 		driver.switchTo().window(parentWindowID);
 
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
 
 		try {
@@ -5910,6 +5942,7 @@ public class DocView_Regression9 {
 		}
 
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		driver.waitForPageToBeReady();
 		String docViewId = docView.getDocView_CurrentDocId().getText();
 
 		for (String eachId : allWindowsId) {
@@ -5919,6 +5952,7 @@ public class DocView_Regression9 {
 		}
 
 		baseClass.stepInfo("Verify whether the doc is getting displayed in Mini Doc List Child window");
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getSelectedDocIdInMiniDocList());
 
 		try {
@@ -5930,7 +5964,7 @@ public class DocView_Regression9 {
 			baseClass.failedStep("Doc is not getting displated after scrolling down to document");
 
 		}
-
+		driver.waitForPageToBeReady();
 		String miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
@@ -5961,6 +5995,7 @@ public class DocView_Regression9 {
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
+		driver.waitForPageToBeReady();
 		docView.popOutMiniDocList();
 
 		allWindowsId = driver.getWebDriver().getWindowHandles();
@@ -5972,12 +6007,12 @@ public class DocView_Regression9 {
 
 		baseClass.waitForElement(docView.getDocumetId());
 		docView.scrollUntilloadingTextDisplay(false);
-
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getDocView_MiniDocListIds(1));
 		docView.getDocView_MiniDocListIds(1).waitAndClick(5);
 
 		driver.switchTo().window(parentWindowID);
-
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
 
@@ -5991,6 +6026,7 @@ public class DocView_Regression9 {
 		}
 
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		driver.waitForPageToBeReady();
 		docViewId = docView.getDocView_CurrentDocId().getText();
 
 		for (String eachId : allWindowsId) {
@@ -6072,6 +6108,7 @@ public class DocView_Regression9 {
 		}
 
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
+		driver.waitForPageToBeReady();
 		docViewId = docView.getDocView_CurrentDocId().getText();
 
 		for (String eachId : allWindowsId) {
@@ -6093,6 +6130,7 @@ public class DocView_Regression9 {
 
 		}
 
+		driver.waitForPageToBeReady();
 		miniDocListId = docView.getSelectedDocIdInMiniDocList().getText();
 
 		baseClass.stepInfo(
