@@ -2785,7 +2785,6 @@ public class BaseClass {
 			System.out.println("Compare String  : " + compreString);
 
 			if (sourceString.contains(compreString)) {
-				System.out.println("Its pass 2");
 				passedStep(passMsg);
 			} else {
 				failedStep(sourceString + " : " + failMessage);
@@ -2949,10 +2948,8 @@ public class BaseClass {
 
 		if (sortType.equals("Ascending")) {
 			Collections.sort(originalOrderedList);
-			System.out.println("AscendingoriginalOrderedList:-"+originalOrderedList);
 		} else if (sortType.equals("Descending")) {
 			Collections.sort(originalOrderedList, Collections.reverseOrder());
-			System.out.println("DescendingoriginalOrderedList:-"+originalOrderedList);
 		}
 
 		System.out.println("Sorted Order");

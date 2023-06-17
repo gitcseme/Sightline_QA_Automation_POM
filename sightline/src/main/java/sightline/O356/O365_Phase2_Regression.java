@@ -804,10 +804,11 @@ public class O365_Phase2_Regression {
 		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
 
 		// Login as User
-		login.loginToSightLine(username, password);
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
+		login.logout();
+		login.loginToSightLine(username, password);
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 
