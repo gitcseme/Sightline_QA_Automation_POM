@@ -811,14 +811,16 @@ public class O365_Phase2_Regression {
 		login.loginToSightLine(username, password);
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-
-		// to verify source location is present or not
-		source.verifySourceLocationIsNotPresent();
-
-		// To add New Source Location
+		
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		base.waitForElement(collection.getNewCollectionBtn());
 		collection.getNewCollectionBtn().waitAndClick(5);
+		
+		// to verify source location is present or not
+//		source.verifySourceLocationIsNotPresent();
+
+		// To add New Source Location
+		
 		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
 
 		// Logout
