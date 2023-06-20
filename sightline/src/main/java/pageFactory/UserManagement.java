@@ -320,7 +320,6 @@ public class UserManagement {
 
 	// Added by baskar
 	public Element getSelectUserToEdit(String projectName) {
-		System.out.println("//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Edit')]");
 		return driver.FindElementByXPath(
 				"//table[@id='dtUserList']//tr//td[text()='" + projectName + "']//..//a[contains(text(),'Edit')]");
 	}
