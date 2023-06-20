@@ -410,7 +410,7 @@ public class Production_Phase2_Regression3 {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		base.waitTime(2);
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
@@ -919,11 +919,10 @@ public class Production_Phase2_Regression3 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		base.waitTime(2);
-		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
@@ -1831,6 +1830,15 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
+		
 		page.extractFile();
 
 		driver.waitForPageToBeReady();
@@ -1921,6 +1929,7 @@ public class Production_Phase2_Regression3 {
 
 		// view all state
 		page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		base.waitForElement(page.getFilterByButton());
 		page.getFilterByButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -4439,6 +4448,8 @@ public class Production_Phase2_Regression3 {
 		int doc = 1;
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String prefixIDA = "B_" + Utility.dynamicNameAppender();
+		String suffixIDB = "_Q" + Utility.dynamicNameAppender();
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		base.stepInfo("Verify that new production should be generated with additional placeholder sections "
 				+ "in addition to the default enabled native placeholdering under TIFF/PDF section");
@@ -4484,11 +4495,20 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
+		
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		int Lastile = FirstFile + doc;
@@ -4503,7 +4523,8 @@ public class Production_Phase2_Regression3 {
 
 		base.stepInfo(
 				"Native placeholder should be generated in TIFF for the selected file type as part of selected source of document selection.Make sure that for other file types apart from Native placeholder TIFF file should be generated");
-
+		String beginningBates1 = page.getRandomNumber(2);
+		int FirstFile1 = Integer.valueOf(beginningBates1);
 		page.navigateToProductionPage();
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -4515,7 +4536,7 @@ public class Production_Phase2_Regression3 {
 				"Native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files");
 		driver.waitForPageToBeReady();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixIDA, suffixIDB, beginningBates1);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagName);
 		page.navigateToNextSection();
@@ -4524,13 +4545,22 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
-		File pdfFile1 = new File(home + "/Downloads/" + "VOL0001/PDF/0001/" + prefixID + FirstFile + suffixID + ".pdf");
-		File pdfFile2 = new File(home + "/Downloads/" + "VOL0001/PDF/0001/" + prefixID + Lastile + suffixID + ".pdf");
+		int Lastile1 = FirstFile1 + doc;
+		File pdfFile1 = new File(home + "/Downloads/" + "VOL0001/PDF/0001/" + prefixIDA + FirstFile1 + suffixIDB + ".pdf");
+		File pdfFile2 = new File(home + "/Downloads/" + "VOL0001/PDF/0001/" + prefixIDA + Lastile1 + suffixIDB + ".pdf");
 		String pdf1 = page.extractTextFromPdf(pdfFile1);
 		String pdf2 = page.extractTextFromPdf(pdfFile2);
 		softAssertion.assertTrue(pdf1.contains("Document Produced in Native Format") || pdf1.contains(tagName));

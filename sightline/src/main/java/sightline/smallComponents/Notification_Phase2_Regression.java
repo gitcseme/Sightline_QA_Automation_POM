@@ -1422,7 +1422,7 @@ public void verifyStatusInprogressPurHitReady(String userName, String passWord) 
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			login.logoutWithoutAssert();
+//			login.logoutWithoutAssert();
 		}
 		try {
 			login.quitBrowser();

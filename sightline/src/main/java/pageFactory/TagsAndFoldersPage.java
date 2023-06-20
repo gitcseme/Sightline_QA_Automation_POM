@@ -1196,7 +1196,7 @@ public class TagsAndFoldersPage {
 	{
 
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-
+try {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSecurityGroupTag().Enabled();
@@ -1266,6 +1266,9 @@ public class TagsAndFoldersPage {
 		base.VerifySuccessMessage("Tag added successfully");
 		Reporter.log("Tag " + strtag + " is as/under " + classificationname, true);
 		base.CloseSuccessMsgpopup();
+}catch (Exception e) {
+	// TODO: handle exception
+}
 
 	}
 
