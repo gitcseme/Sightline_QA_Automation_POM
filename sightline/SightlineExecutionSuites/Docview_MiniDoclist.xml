@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sightline-Jenkins-Assignment-CodingForm-Audio" preserve-order="true">
+<suite name="Docview_MiniDoclist" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Docview_CodingFormandCodingform">
+<test name="Docview_MiniDoclist">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression2" />
-<class name= "sightline.docviewCodingForms.DocViewCodingForm_Regression1" />
-<class name= "sightline.docviewCodingForms.DocviewCodingForm_Phase2_Regression" />
 
 
-
+<class name= "sightline.docviewMiniDocList.DocViewMiniDocList_Phase2_Regression" />
+<class name= "sightline.docviewMiniDocList.DocViewMiniDocList_Regression" />
+<class name= "sightline.docviewMiniDocList.DocViewMiniDocList_Regression1" />
 </classes>
 </test>
 

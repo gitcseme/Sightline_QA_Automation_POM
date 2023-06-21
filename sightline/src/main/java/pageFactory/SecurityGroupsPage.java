@@ -1142,6 +1142,7 @@ public class SecurityGroupsPage {
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getSG_AnnSaveButton());
 		getSG_AnnSaveButton().waitAndClick(20);
+		bc.waitTime(3);
 		try {
 			bc.VerifySuccessMessage("Your selections were saved successfully");
 		} catch (Exception e) {

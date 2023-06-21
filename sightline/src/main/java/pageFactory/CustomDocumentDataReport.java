@@ -14,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -859,19 +860,23 @@ public class CustomDocumentDataReport {
 		driver.scrollingToBottomofAPage();
 		if (type.equalsIgnoreCase("special character")) {
 			driver.waitForPageToBeReady();
-			bc.waitForElement(getSpecialCharDD(ddNo));
+			bc.waitForElement(getSpecialCharDD(ddNo)); 
 			getSpecialCharDD(ddNo).selectFromDropdown().selectByIndex(valueIndex);
 			driver.waitForPageToBeReady();
 			value = getSpecialCharDD(ddNo).selectFromDropdown().getFirstSelectedOption().getText();
 		} else {
+			driver.waitForPageToBeReady();
 			bc.waitForElement(getReplaceCharDD(ddNo));
 			getReplaceCharDD(ddNo).selectFromDropdown().selectByIndex(valueIndex);
+			driver.waitForPageToBeReady();
 			value = getReplaceCharDD(ddNo).selectFromDropdown().getFirstSelectedOption().getText();
+		
 		}
 		bc.waitForElement(getCloseBtn_ScrubPopup());
 		getCloseBtn_ScrubPopup().waitAndClick(10);
 		return value;
-	}
+	
+	}	
 
 	/**
 	 * @author sowndarya

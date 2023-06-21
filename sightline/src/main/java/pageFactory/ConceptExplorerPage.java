@@ -244,6 +244,10 @@ public class ConceptExplorerPage {
 	public Element getFilterDocumentsBy_options(String option) {
 		return driver.FindElementByXPath("//ul[@id='optionFilters']//li[text()='" + option + "']");
 	}
+	
+	public Element getFilterDocumentsBy_masterDate() {
+		return driver.FindElementByXPath("//li[@id='option-DATETIME--82']");
+	}
 
 	public Element getIncludeExcludeRadioBtn(String option) {
 		return driver
@@ -323,6 +327,11 @@ public class ConceptExplorerPage {
 	public Element getMasterToDateInput() {
 		return driver
 				.FindElementByXPath("// div[@class='popover bottom in']//input[@id='MasterDate-2-CONCEPTEXPLORER']");
+	}
+	
+	public Element getMasterDateInputSelection() {
+		return driver
+				.FindElementByXPath("//input[@id='MasterDate-1-CONCEPTEXPLORER']");
 	}
 
 	public Element getSetDateRange() {
@@ -936,11 +945,13 @@ public class ConceptExplorerPage {
 	 */
 	public void masterDateAsInputString(String expectedDateInput, String expectedToDateInput, String actionType) {
 		// MasterDate as filter.
-		getFilterDocumentsBy_options("MasterDate").waitAndClick(10);
+		//getFilterDocumentsBy_options("MasterDate").waitAndClick(10);
+		getFilterDocumentsBy_masterDate().waitAndClick(10); 
 		driver.waitForPageToBeReady();
 		getSetDateRange().selectFromDropdown().selectByVisibleText(actionType);
 		driver.waitForPageToBeReady();
-		getMasterDateInput().SendKeys(expectedDateInput);
+		getMasterDateInputSelection().SendKeys(expectedDateInput);
+		//getMasterDateInput().SendKeys(expectedDateInput);
 		driver.waitForPageToBeReady();
 
 		if (actionType.equalsIgnoreCase("Between")) {

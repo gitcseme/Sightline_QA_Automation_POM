@@ -543,8 +543,10 @@ public class DataSets {
 			}*/
 			base.stepInfo("DataSet is selected and viewed in DocList.");
 
+
 			}
 		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("failed" + e.getMessage());
 		}

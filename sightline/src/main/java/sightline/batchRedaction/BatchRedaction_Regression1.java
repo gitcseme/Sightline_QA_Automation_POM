@@ -855,6 +855,7 @@ public class BatchRedaction_Regression1 {
 
 		// create new search group
 		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "RMU", "Yes");
+		base.waitTime(5);
 		String newNode1 = saveSearch.createSearchGroupAndReturn(Input.shareSearchDefaultSG, "RMU", "Yes");
 
 		// pre -req
