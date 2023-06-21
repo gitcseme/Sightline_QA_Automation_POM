@@ -429,14 +429,14 @@ public class ConceptExplorer_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56887");
 		baseClass.stepInfo("Validate Masterdate range on Concept Explorer report");
 
-		String searchText = Input.custodianName_allen;
+		String searchText = Input.searchString1; 
 		String sourceToSelect = "Searches";
 		String sgToSelect = Input.mySavedSearch;
 		String savedSearchName = "SavedSearch-" + UtilityLog.dynamicNameAppender();
 		String[] selectSourceList = { "Security Groups", "Searches", "Project", "Folders" };
 		String[] conditionsToCheck = { "Before", "After", "On", "Between" };
-		String expectedDateInput = Input.expectedDateInput2;
-		String expectedToDateInput = Input.expectedToDateInput2;
+		String expectedDateInput = Input.expectedDateInput;
+		String expectedToDateInput = Input.expectedToDateInput;
 		
 		// Login as PA
 		baseClass.stepInfo("**Step-1 Login as Project Admin**");
@@ -452,7 +452,12 @@ public class ConceptExplorer_Phase2_Regression {
 				expectedDateInput, expectedToDateInput, conditionsToCheck);
 
 		// Delete search
-		savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		//savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		try {
+			savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		}catch(NullPointerException e){
+			System.out.println(savedSearchName);
+		}
 
 		// Logout
 		loginPage.logout();

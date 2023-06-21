@@ -995,8 +995,10 @@ public class Reports_Phase2_Regression {
 		custom.getCloseBtn_ScrubPopup().waitAndClick(5);
 
 		// Modify
-		//driver.waitForPageToBeReady();
-		base.waitForElement(custom.getSpecialCharDDLast());
+		base.waitForElement(custom.getScrubLink());
+		custom.getScrubLink().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(custom.getSpecialCharDD(0));
 		String expSpcOptMod = custom.selectSpecialORReplaceCharByIndex("Special Character", 2, 3);
 		String expRplcOptMod = custom.selectSpecialORReplaceCharByIndex("Replacement Character", 2, 3);
 		System.out.println(expSpcOptMod);
