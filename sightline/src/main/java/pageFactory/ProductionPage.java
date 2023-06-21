@@ -43,6 +43,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -2466,7 +2467,7 @@ public class ProductionPage {
 	public Element redactionTagInBurnRedaction2CheckBox(String RedactionTag2) {
 		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"+ RedactionTag2 + "']/i[@class='jstree-icon jstree-checkbox']");
 	}
-
+	
 	// Added by Gopinath- 29-10-2021
 	public Element getAllFilesLink() {
 		return driver.FindElementById("txtShareableLinksAllFilesPath");
@@ -12639,16 +12640,14 @@ public class ProductionPage {
 			base.waitForElement(getClkBtn_selectingRedactionTags());
 			getClkBtn_selectingRedactionTags().isDisplayed();
 			getClkBtn_selectingRedactionTags().waitAndClick(10);
-
+			
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
-			redactionTagInBurnRedaction2CheckBox(redactiontag1).ScrollTo();
-			redactionTagInBurnRedaction2CheckBox(redactiontag1).isDisplayed();
-			redactionTagInBurnRedaction2CheckBox(redactiontag1).waitAndClick(10);
+			redactionTagInBurnRedactionCheckBox(redactiontag1).Displayed();
+			redactionTagInBurnRedactionCheckBox(redactiontag1).Click();
 			driver.waitForPageToBeReady();
-			base.waitForElement(redactionTagInBurnRedaction2CheckBox(redactiontag2));
-			redactionTagInBurnRedaction2CheckBox(redactiontag2).ScrollTo();
-			redactionTagInBurnRedaction2CheckBox(redactiontag2).isDisplayed();
-			redactionTagInBurnRedaction2CheckBox(redactiontag2).waitAndClick(10);
+			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag2));
+			redactionTagInBurnRedactionCheckBox(redactiontag2).Displayed();
+			redactionTagInBurnRedactionCheckBox(redactiontag2).Click();
 
 			base.waitForElement(getClk_selectBtn());
 			getClk_selectBtn().isDisplayed();
@@ -21460,9 +21459,10 @@ public class ProductionPage {
 		getTiff_NativeDoc().Click();
 		getFileTypeNativelyProducedDocs().Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().Click();
-		getNativeDocsPlaceholder().SendKeys(Text);
+//		driver.scrollingToElementofAPage(getNativeDocsPlaceholder());
+//		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder1().Click();
+		getNativeDocsPlaceholder1().SendKeys(Text);
 
 	}
 
@@ -22371,6 +22371,9 @@ public class ProductionPage {
 		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder());
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname);
+		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder1());
+		base.waitForElement(getNativeDocsPlaceholder1());
+		getNativeDocsPlaceholder1().SendKeys(tagname);
 	}
 
 	/**

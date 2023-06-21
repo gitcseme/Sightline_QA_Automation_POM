@@ -5,6 +5,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import org.apache.commons.collections4.Get;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -33,6 +34,9 @@ public class Dashboard {
 
 	public Element btnAddToDashboard() {
 		return driver.FindElementById("btnAddToDashboard");
+	}
+	public Element ReviewerProdPopUp() {
+		return driver.FindElementByXPath("//h4[contains(text(),' Reviewer Productivity')]");
 	}
 
 	public Element warningPopup() {
@@ -312,7 +316,7 @@ public class Dashboard {
 	public void AddNewWidgetToDashboard(String widget) {
 
 		navigateToDashboard();
-
+		UserManagement userManage=new UserManagement(driver);
 		base.waitForElementCollection(countOfWidget());
 		int count = countOfWidget().size();
 		System.out.println("count of widget : " + count);
@@ -322,7 +326,7 @@ public class Dashboard {
 			btnAddNewWidget().waitAndClick(10);
 			selectWidget(widget).waitAndClick(10);
 			driver.scrollingToBottomofAPage();
-			btnAddToDashboard().waitAndClick(10);
+			btnAddToDashboard().javascriptclick(btnAddToDashboard());
 
 		} else if (count == 3) {
 			navigateToDashboard();
@@ -345,7 +349,7 @@ public class Dashboard {
 			base.waitForElement(selectWidget(widget));
 			selectWidget(widget).waitAndClick(10);
 			driver.scrollingToBottomofAPage();
-			btnAddToDashboard().waitAndClick(10);
+			btnAddToDashboard().javascriptclick(btnAddToDashboard());
 			base.stepInfo("New widget is added");
 		}
 

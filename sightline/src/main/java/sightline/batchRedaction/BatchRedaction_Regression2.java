@@ -238,6 +238,8 @@ public class BatchRedaction_Regression2 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
@@ -306,12 +308,12 @@ public class BatchRedaction_Regression2 {
 		session.ViewNearDupeDocumentsInDocView();
 		docview.verifyRedactionPanel();
 
-		base.selectsecuritygroup(Input.securityGroup);
+		base.selectsecuritygroup(Input.securityGroup);  
 
 		login.logout();
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		
 		// Delete Sg
 		redact.DeleteRedaction(tagName);
 		security.deleteSecurityGroups(securityGroup);
@@ -348,6 +350,8 @@ public class BatchRedaction_Regression2 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
@@ -360,6 +364,7 @@ public class BatchRedaction_Regression2 {
 		security.assignRedactionTagtoSG(Input.defaultRedactionTag);
 
 		// access to security group to Rmu
+
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
 
 		// Create saved search
@@ -395,12 +400,12 @@ public class BatchRedaction_Regression2 {
 		session.ViewInDocView();
 		docview.verifyRedactionPanel();
 
-		base.selectsecuritygroup(Input.securityGroup);
+		base.selectsecuritygroup(Input.securityGroup); 
 		login.logout();
 
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		
 		// delete Security Group
 		security.deleteSecurityGroups(securityGroup);
 		login.logout();
@@ -680,6 +685,8 @@ public class BatchRedaction_Regression2 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		sg.AddSecurityGroup(othSG);
 		base.stepInfo(othSG + " : created");
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		sg.selectSecurityGroup(othSG);
 		sg.assignRedactionTagtoSG(Input.defaultRedactionTag);
