@@ -802,12 +802,15 @@ public class UserManagement {
 	// Added by Raghuram
 	public Element getComponentName(String componentName) {
 //		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
-		return driver.FindElementByXPath("//label[contains(.,'" + componentName + "')]");
+		return driver.FindElementByXPath("//label[contains(.,'"+componentName+"')]");
 	}
-
+	
 	public Element getComponentBoxBlocked(String componentName) {
-		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName
-				+ "']//i[@style='background-color: grey;']");
+		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='"+componentName+"']//i[@style='background-color: grey;']");
+	}
+	
+	public Element getComponentBoxHidden(String componentName) {
+		return driver.FindElementByXPath("//label[contains(.,'"+componentName+"')]/input[@type='hidden']");
 	}
 
 	public Element getComponentCheckBoxClick(String componentName) {
@@ -3812,7 +3815,7 @@ public class UserManagement {
 			passingUserName(userRolesData[i][0]);
 			applyFilter();
 			if (actionUser.equalsIgnoreCase("Project Administrator") || actionUser.equalsIgnoreCase("Review Manager")) {
-				editLoginUser();
+				selectEditUserUsingPagination(Input.projectName, false, "");
 			} else {
 				selectEditUserUsingPagination(Input.projectName, false, "");
 			}
@@ -3851,7 +3854,7 @@ public class UserManagement {
 				if (checkUpdateCollections.equals("Yes") && actionTaken == true) {
 					if (actionUser.equalsIgnoreCase("Project Administrator")
 							|| actionUser.equalsIgnoreCase("Review Manager")) {
-						editLoginUser();
+						selectEditUserUsingPagination(Input.projectName, false, "");
 					} else {
 						// Edit functionality
 						selectEditUserUsingPagination(Input.projectName, false, "");
@@ -3860,6 +3863,7 @@ public class UserManagement {
 					// Launch functionality pop-up
 					bc.waitForElement(getFunctionalityTab());
 					getFunctionalityTab().waitAndClick(5);
+					bc.waitTime(2);
 
 					bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "
 							+ userRolesData[i][1]
@@ -3883,13 +3887,13 @@ public class UserManagement {
 			} else if (userRolesData[i][1].equalsIgnoreCase("Reviewer")) {
 				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Datasets")),
 						"DataSets option is blocked", "Datasets option has Access", "Pass");
-
-				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "
+				
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxHidden("Collections")), "For "
 						+ userRolesData[i][1]
 						+ " - Collections option is not available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Disabled] ",
 						"For " + userRolesData[i][1]
 								+ " - Collections option is  available Under “Datasets” access control on “Edit User >> Functionality” TAB. [Enabled]",
-						"Fail");
+						"Pass");
 			}
 
 			// Close pop-up
