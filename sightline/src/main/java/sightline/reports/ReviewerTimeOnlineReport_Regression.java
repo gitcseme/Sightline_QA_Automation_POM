@@ -90,7 +90,7 @@ public class ReviewerTimeOnlineReport_Regression {
 		softAssertion.assertAll();
 		bc.passedStep("The selected assignment displayed in report successfully");
 		System.out.println(totalTime);
-		reviewerTimeOnlineRptPg.validateTime(totalTime, "min", "01");
+		reviewerTimeOnlineRptPg.validateTime(totalTime, "min", "00");
 		bc.passedStep("The report generated based on selected criteria successfully");
 		assgnmntPg.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();		

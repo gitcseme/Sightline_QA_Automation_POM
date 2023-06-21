@@ -387,8 +387,8 @@
 	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
 	<collectionIdHeader>Collection Id</collectionIdHeader>
 	<collectionStatusHeader>Collection Status</collectionStatusHeader>
-	<expectedDateInput>2019/08/05</expectedDateInput>
-	<expectedToDateInput>2022/08/08</expectedToDateInput>
+	<expectedDateInput>1989/02/10</expectedDateInput>
+	<expectedToDateInput>2001/02/21</expectedToDateInput>
 	<searchString10>Auto</searchString10>
 	<dataSourceHeader>DataSource</dataSourceHeader>
 	<creatingDSstatus>Creating datasets</creatingDSstatus>

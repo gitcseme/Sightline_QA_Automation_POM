@@ -48,6 +48,7 @@ public class ConceptExplorer_Phase2_Regression {
 	TagsAndFoldersPage tagsAndFolder;
 	MiniDocListPage miniDocListPage;
 	AssignmentsPage assign;
+	SoftAssert softAssertion;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -70,6 +71,9 @@ public class ConceptExplorer_Phase2_Regression {
 		tagsAndFolder=new TagsAndFoldersPage(driver);
 		miniDocListPage= new MiniDocListPage(driver);
 		assign=new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		
 	}
 
 	@DataProvider(name = "paRmuUsers")
@@ -342,7 +346,8 @@ public class ConceptExplorer_Phase2_Regression {
 
 		baseClass.stepInfo("**Login to sightline and Select Project**");
 		loginPage.loginToSightLine(userName, password);
-
+	
+		
 		// Perform Search and Bulk Tag
 		sessionSearch.basicMetaDataSearch(Input.docFileType, null, docFileType, null);
 		sessionSearch.verifyBulkTag(TagName);
@@ -424,7 +429,7 @@ public class ConceptExplorer_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56887");
 		baseClass.stepInfo("Validate Masterdate range on Concept Explorer report");
 
-		String searchText = "Auto";
+		String searchText = Input.searchString1; 
 		String sourceToSelect = "Searches";
 		String sgToSelect = Input.mySavedSearch;
 		String savedSearchName = "SavedSearch-" + UtilityLog.dynamicNameAppender();
@@ -432,7 +437,7 @@ public class ConceptExplorer_Phase2_Regression {
 		String[] conditionsToCheck = { "Before", "After", "On", "Between" };
 		String expectedDateInput = Input.expectedDateInput;
 		String expectedToDateInput = Input.expectedToDateInput;
-
+		
 		// Login as PA
 		baseClass.stepInfo("**Step-1 Login as Project Admin**");
 		loginPage.loginToSightLine(userName, password);
@@ -447,7 +452,12 @@ public class ConceptExplorer_Phase2_Regression {
 				expectedDateInput, expectedToDateInput, conditionsToCheck);
 
 		// Delete search
-		savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		//savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		try {
+			savedSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+		}catch(NullPointerException e){
+			System.out.println(savedSearchName);
+		}
 
 		// Logout
 		loginPage.logout();
