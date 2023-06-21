@@ -1183,7 +1183,7 @@ public class DocListPage {
 
 	// Added by Gopinath - 25/11/2021
 	public Element getChildDocument() {
-		return driver.FindElementByXPath("(//td[@class=' details-control'])[1]/../following-sibling::tr[1]//i");
+		return driver.FindElementByXPath("(//td[@class='details-control'])[1]/../following-sibling::tr[1]//i");
 	}
 
 	// added by Brundha

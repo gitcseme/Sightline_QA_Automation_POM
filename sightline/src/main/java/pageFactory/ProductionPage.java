@@ -13193,8 +13193,8 @@ public class ProductionPage {
 			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 			getTIFF_EnableforPrivilegedDocs().Enabled();
 			getTIFF_EnableforPrivilegedDocs().Click();
-			base.waitForElement(getTiff_NativeDoc());
-			getTiff_NativeDoc().Click();
+//			base.waitForElement(getTiff_NativeDoc());
+//			getTiff_NativeDoc().Click();
 			base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
 			getFileTypeNativelyProducedDocs().Click();
 			base.waitForElement(getNativeDocsPlaceholder());
@@ -15299,9 +15299,8 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnContinueGeneration().isElementAvailable(540);
 		if (getbtnContinueGeneration().isDisplayed()) {
-			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().isElementAvailable(540);
 			getbtnContinueGeneration().waitAndClick(10);
 		}
 
@@ -15309,10 +15308,11 @@ public class ProductionPage {
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
 		String PrefixValue = getBatesRange().getText();
 		System.out.println(PrefixValue);
 		// String Actualtext=suffixID;
-
+		base.waitTime(3);
 		if (PrefixValue.contains(Batesvalue)) {
 			base.passedStep("Batesrange is with 50 character as expected");
 		} else {

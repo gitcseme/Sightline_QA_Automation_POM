@@ -9057,7 +9057,7 @@ public class Production_Phase1_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			// LoginPage.clearBrowserCache();
+			LoginPage.clearBrowserCache();
 
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
