@@ -86,7 +86,10 @@ public class UserManagement {
 	public Element getSavePassword() {
 		return driver.FindElementById("btnSubmit");
 	}
-
+	public Element getSavePassword1() {
+		return driver.FindElementByXPath("//button[contains(text(),'Save')]");
+	}
+	
 	public Element getSuccessMsgHeader() {
 		return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span");
 	}
@@ -1884,10 +1887,12 @@ public class UserManagement {
 		actions.moveToElement(userFiletersBtn().getWebElement());
 		actions.click().build().perform();
 		Thread.sleep(4000);
+
 		wait.until(ExpectedConditions.elementToBeClickable(userEditBtn().getWebElement()));
 		actions.moveToElement(userEditBtn().getWebElement());
 		actions.click();
 		actions.build().perform();
+
 		Thread.sleep(4000);// Required
 		driver.scrollingToBottomofAPage();
 		Select assignSG1 = new Select(userSelectSecurityGroup().getWebElement());
@@ -1899,10 +1904,11 @@ public class UserManagement {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		if (getSavePassword().isElementAvailable(5)) {
+		/*if (getSavePassword().isElementAvailable(5)) {
 			getSavePassword().waitAndClick(20);
-			driver.waitForPageToBeReady();
-		}
+		}*/
+		getSavePassword1().waitAndClick(20);
+		driver.waitForPageToBeReady();
 	}
 
 	/**

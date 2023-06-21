@@ -2127,7 +2127,7 @@ public class SavedSearch {
 		navigateToSavedSearchPage();
 		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		System.out.println("Clicked MY saved Search Tab");
-
+		base.waitTime(3);
 		// Select specified Root group
 		selectRootGroupTab(groupName);
 
