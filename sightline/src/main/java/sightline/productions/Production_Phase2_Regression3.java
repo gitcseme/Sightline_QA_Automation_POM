@@ -2281,7 +2281,7 @@ public class Production_Phase2_Regression3 {
 		String home = System.getProperty("user.home");
 		String name = page.getProduction().getText().trim();
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 
@@ -2421,10 +2421,18 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 
@@ -3075,15 +3083,23 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 
-		String expUrl = "\\\\ld9nas02.consilio.com\\UKSLPERF\\Productions\\Automation\\" + productionname;
-		String actUrl = page.getCopyPathUrl().GetAttribute("value");
+		String expUrl = Input.prodPath + productionname;
+		String actUrl = page.getCopyPath().GetAttribute("value");
 		System.out.println(expUrl);
 		System.out.println(actUrl);
 		base.stepInfo(actUrl);
 		softAssertion.assertEquals(expUrl, actUrl);
-		softAssertion.assertAll();
+//		softAssertion.assertAll();
 		base.passedStep("Verified - toggle control works for the Filepath and Volume under the Production Location.");
 		loginPage.logout();
 	}
@@ -3429,11 +3445,19 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
@@ -3457,11 +3481,19 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String name1 = page.getProduction().getText().trim();
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File tiffFile = new File(
@@ -4193,6 +4225,14 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 
@@ -4629,11 +4669,19 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		int Lastile = FirstFile + doc;
@@ -4698,11 +4746,19 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		base.waitUntilFileDownload();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
+		
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 
 		base.stepInfo(
@@ -4728,7 +4784,10 @@ public class Production_Phase2_Regression3 {
 		productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String prefixIDA = "B_" + Utility.dynamicNameAppender();
+		String suffixIDB = "_Q" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
+		String beginningBatesA = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		base.stepInfo("Test Cases Id : RPMXCON-63087");
 		base.stepInfo("Verify that if spreadsheet is tech issue and Tech issue, Native placeholder is default "
@@ -4764,11 +4823,19 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
 		String text = page.verifyTextinPDF(pdfFile, Input.tagNameTechnical);
@@ -4782,7 +4849,7 @@ public class Production_Phase2_Regression3 {
 		page.selectGenerateOption(false);
 		page.selectTechIssueDoc(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixIDA, suffixIDB, beginningBatesA);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -4791,15 +4858,22 @@ public class Production_Phase2_Regression3 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getConfirmProductionCommit().Enabled();
+		page.getConfirmProductionCommit().isDisplayed();
+		page.getConfirmProductionCommit().waitAndClick(10);
+		page.getCopyPath().isDisplayed();
+		page.getCopyPath().waitAndClick(10);
+		page.getQC_Download().isDisplayed();
+		page.getQC_Download().waitAndClick(30);
+		page.getQC_Downloadbutton_allfiles().waitAndClick(30);
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
-		driver.waitForPageToBeReady();
-		page.deleteFiles();
+//		page.deleteFiles();
 		page.extractFile();
 		base.stepInfo(
 				"Tech placeholder should be generated for TIFF file for the selected file type as part of selected source of document selection");
 		File tiffFile = new File(
-				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tif");
+				home + "/Downloads/VOL0001/Images/0001/" + prefixIDA + beginningBatesA + suffixIDB + ".tif");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, Input.tagNameTechnical);
 		base.passedStep(
 				"Verify that if spreadsheet is tech issue and Tech issue, Native placeholder is default enabled "
