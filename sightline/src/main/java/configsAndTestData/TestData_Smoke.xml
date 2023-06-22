@@ -124,7 +124,6 @@
 	<ingestionProjectName>AutomationIngestionProject</ingestionProjectName>
 	<ingestionType>Add Only</ingestionType>
 	<sourceSystem>TRUE</sourceSystem>
-	<sourceLocation>Automation</sourceLocation>
 	<AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
 	<fieldSeperator>ASCII(20)</fieldSeperator>
 	<textQualifier>ASCII(254)</textQualifier>
