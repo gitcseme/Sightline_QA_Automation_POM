@@ -3821,7 +3821,7 @@ public class UserManagement {
 			passingUserName(userRolesData[i][0]);
 			applyFilter();
 			if (actionUser.equalsIgnoreCase("Project Administrator") || actionUser.equalsIgnoreCase("Review Manager")) {
-				selectEditUserUsingPagination(Input.projectName, false, "");
+				editLoginUser();
 			} else {
 				selectEditUserUsingPagination(Input.projectName, false, "");
 			}
