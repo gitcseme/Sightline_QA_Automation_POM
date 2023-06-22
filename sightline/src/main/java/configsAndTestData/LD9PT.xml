@@ -2,6 +2,7 @@
 <LD9PT>
 <url>https://sightlinept.consilio.com/</url>
 <prodpath>Productions PT WorkSpace\Automation</prodpath>
+<projectSourceLocation>Automation</projectSourceLocation>
 <SourceLocation>IngestionTestData\Automation\RegressionAllDatasetConsilio</SourceLocation>            
 <domainName>Vinod_Automation_DND</domainName>             
 <projectName>06-Jun-SMoke</projectName>
