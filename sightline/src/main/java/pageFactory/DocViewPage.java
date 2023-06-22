@@ -26716,7 +26716,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_NearDupeIcon().waitAndClick(10);
 		String parentWindow = reusableDocView.switchTochildWindow();
 		driver.waitForPageToBeReady();
-		//driver.Navigate().refresh();
+		driver.Navigate().refresh();
 	
 		if (getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
