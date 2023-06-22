@@ -806,7 +806,7 @@ public class TestData {
 	public String ingestionProjectName;
 	public String ingestionType;
 	public String sourceSystem;
-	public String sourceLocation;
+//	public String sourceLocation;
 	public String sourceFolder;
 	public String fieldSeperator;
 	public String textQualifier;
