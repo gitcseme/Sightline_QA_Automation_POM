@@ -38,6 +38,10 @@ public class TestData {
 	public String clientEmaildatalistVal01;
 	public String clientEmaildatalistVal02; 
 	public String collectionJebDatalistval;
+	public String hiddenProDocID;
+	public String withoutHiddenDocId;
+	public String multiWordDocID;
+	public String pdfSourceDocID;
 	
 
 	// Mohan Indium Docview Analytics

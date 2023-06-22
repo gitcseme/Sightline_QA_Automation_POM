@@ -22262,7 +22262,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 							}
 							if (flag == false) {
 								System.out.println("unable to download" + DownloadOption + " for selected document");
-								base.passedStep(
+								base.failedStep(
 										"failed : unable to download" + DownloadOption + " for selected document");
 							}
 
