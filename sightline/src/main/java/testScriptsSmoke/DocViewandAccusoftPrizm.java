@@ -438,8 +438,8 @@ public class DocViewandAccusoftPrizm {
 				{ Input.rmu2userName, Input.rmu2password, "Review Manager" } };
 		return users;
 	}
-	@Test(description = "RPMXCON-52934", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void tagFoderGroupDocToggleAction(String userName, String password, String role) throws Exception {
+	@Test(description = "RPMXCON-52934",  enabled = true, groups = { "regression" })
+	public void tagFoderGroupDocToggleAction() throws Exception {
 
 		String tagGroupName = "aTagGroupR" + Utility.dynamicNameAppender();
 		String TagName = "aTagR" + Utility.dynamicNameAppender();
@@ -453,8 +453,8 @@ public class DocViewandAccusoftPrizm {
 		baseClass.stepInfo(
 				"Verify the count is displayed correctly instead of number of documents in tag group /folder group.");
 
-		loginPage.loginToSightLine(userName, password);
-		baseClass.stepInfo("Logged in as : " + userName);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		
 
 		// Tags And Folder
 		tagPage.navigateToTagsAndFolderPage();
@@ -529,13 +529,13 @@ public class DocViewandAccusoftPrizm {
 		loginPage.logout();
 
 	}
-	@Test(description = "RPMXCON-47833", dataProvider = "Users", enabled = true, groups = { "regression" })
-	public void validatePdfFileIsGeneratedAsDesc(String username, String password)
+	@Test(description = "RPMXCON-47833", enabled = true, groups = { "regression" })
+	public void validatePdfFileIsGeneratedAsDesc()
 			throws InterruptedException, IOException, AWTException {
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 
 		// Login As User
-		loginPage.loginToSightLine(username, password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47833 Batch Print");
 		baseClass.stepInfo(

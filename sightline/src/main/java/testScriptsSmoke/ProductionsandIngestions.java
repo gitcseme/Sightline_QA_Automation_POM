@@ -727,16 +727,16 @@ public class ProductionsandIngestions {
 		loginPage.logout();
 	}
 	
-	@Test(description = "RPMXCON-73270",enabled = true, groups = { "regression" })
-	public void DragNDropUpload() throws Exception {
+	@Test(description = "RPMXCON-73270", groups = { "regression" })
+	public void ZDragNDropUpload() throws Exception {
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa3userName, "Project Administrator", "SA" } };
 		String datasetname=Input.SmokeDatasetUploadData;
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		
 		baseClass.selectproject();
 				baseClass.stepInfo("Dataset Access Verification");
-				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa3password);
 				baseClass.stepInfo("Ingestion started for dataset ****"+datasetname+"***");
 		 		String testFolderPath = System.getProperty("user.dir")+"\\ICETestData\\"+datasetname+"";
 		 		baseClass.stepInfo(testFolderPath);
