@@ -864,7 +864,7 @@ public class DocViewRedactions {
 	}
 
 	public Element nextKeywordTest() {
-		return driver.FindElementById("NextHit_test");
+		return driver.FindElementByXPath("//i[@id='NextHit_Test']");
 	}
 
 	public Element saveClick() {

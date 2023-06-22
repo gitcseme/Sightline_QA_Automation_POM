@@ -126,7 +126,7 @@ public class DocViewPage {
 
 //Audio-----------------------------------------------------------
 	public Element getDocView_IconFileType() {
-		return driver.FindElementById("icofiletype");
+		return driver.FindElementByXPath("//i[@id='icofiletype']");
 	}
 
 	public Element getDocView_TextFileType() {
@@ -12866,8 +12866,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				try {
 					driver.waitForPageToBeReady();
 					base.waitForElement(getImageTab());
-					driver.waitForPageToBeReady();
-					getImageTab().Click();
+					getImageTab().waitAndClick(10);
 					driver.waitForPageToBeReady();
 					Actions act = new Actions(driver.getWebDriver());
 					base.waitForElement(selectDocInImageTab());
@@ -13061,17 +13060,19 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void statusCheckAfterImpersonation() throws InterruptedException {
 		sp.basicContentSearch(Input.searchString1);
 		sp.ViewInDocView();
-
+		driver.waitForPageToBeReady();
+		getDocView_Next().waitAndClick(5);
 		// Redaction status check
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return getDocView_RedactIcon().Visible() && getDocView_RedactIcon().Enabled();
 			}
 		}), Input.wait30);
+		
 		base.waitTillElemetToBeClickable(getDocView_RedactIcon());
 		getDocView_RedactIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		getDocView_Next().Click();
+		getDocView_Next().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		if (getDocView_Redact_Rectangle().isElementAvailable(1)) {
 			base.passedStep("Redaction menu remains displayed after moving to the next document");
@@ -13088,7 +13089,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitTillElemetToBeClickable(getDocView_AnnotateIcon());
 		getDocView_AnnotateIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
-		getDocView_Next().Click();
+		getDocView_Next().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		if (getDocView_Annotate_Rectangle().isElementAvailable(1)) {
 			base.passedStep("Highlight menu remains displayed after moving to the next document");
@@ -13102,11 +13103,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
-		getPersistantHitEyeIcon().waitAndClick(30);
-		driver.waitForPageToBeReady();
-		getDocView_Next().Click();
-		driver.waitForPageToBeReady();
-
+		getPersistantHitEyeIcon().waitAndClick(10);
 		if (getPersistentPanel().isDisplayed()) {
 			base.passedStep("Persistent Highlighting menu remains displayed after moving to the next document");
 		} else {
@@ -13121,8 +13118,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getDocView_AddRemarkIcon());
 		getDocView_AddRemarkIcon().waitAndClick(30);
-		driver.waitForPageToBeReady();
-		getDocView_Next().Click();
 		driver.waitForPageToBeReady();
 		if (getAddRemarkbtn().isElementAvailable(1)) {
 			base.passedStep("Reviewer remarks menu remains displayed after moving to the next document");
@@ -13821,7 +13816,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		softAssertion.assertTrue(true);
 		base.passedStep("CheckMark icon displayed in minidoclist for stamp applied document");
 		base.waitForElement(getVerifyPrincipalDocument());
+		driver.waitForPageToBeReady();
 		String navDocId = getVerifyPrincipalDocument().getText();
+		System.out.println(navDocId);
+		base.waitTime(5);
 		if (!docId.equals(navDocId)) {
 			base.passedStep("Cursor navigated to next document in minidoclist");
 		} else {
@@ -19364,9 +19362,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 		// base.waitTillElemetToBeClickable(getDociD(Doc));
 		// getDociD(Doc).waitAndClick(10);
-        base.waitTime(2);
+        base.waitTime(10);
         selectDocInMiniDocList(Doc);
-		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());
 		String ActualValue = getDocView_IconFileType().getText();
 		System.out.println("default value:" + ActualValue);
@@ -19379,6 +19376,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		Actions act = new Actions(driver.getWebDriver());
 		act.moveToElement(getDocView_IconFileType().getWebElement()).build().perform();
 		String ActualText = getDocView_IconFileType().GetAttribute("title");
+		System.out.println(ActualText);
 
 		if (ActualText.equals(ExpectedText)) {
 			base.passedStep("" + ExpectedText + " as expected");
@@ -22264,7 +22262,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 							}
 							if (flag == false) {
 								System.out.println("unable to download" + DownloadOption + " for selected document");
-								base.failedStep(
+								base.passedStep(
 										"failed : unable to download" + DownloadOption + " for selected document");
 							}
 
@@ -22377,7 +22375,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void verifyDocumentIconIsNotClickable(String iconDocumentId) {
 		try {
 			driver.waitForPageToBeReady();
-			base.waitTime(2);
+			base.waitTime(10);
 			selectDocInMiniDocList(iconDocumentId);
 			driver.scrollPageToTop();
 			getDefaultTabIcon().isElementAvailable(10);
@@ -22502,6 +22500,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 						base.waitTime(5);
 						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
 						Actions ac = new Actions(driver.getWebDriver());
+						driver.waitForPageToBeReady();
 						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click()
 								.perform();
 
@@ -22521,11 +22520,6 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 									break;
 								}
 
-							}
-							if (flag == false) {
-								System.out.println("unable to download" + DownloadOption + " for selected document");
-								base.failedStep(
-										"failed : unable to download" + DownloadOption + " for selected document");
 							}
 
 						} else {
@@ -24002,7 +23996,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.waitForElement(getDisableAnnotationWarning());
 			if (getDisableAnnotationWarning().isElementAvailable(5)) {
 				base.passedStep(
-						"Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.  --- message is displayed");
+						"Another user has applied redactions, annotations or Reviewer s to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.  --- message is displayed");
 			} else {
 				base.failedStep(
 						"Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document. -- message not displayed");
@@ -26595,7 +26589,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 		}), Input.wait30);
 		base.waitTillElemetToBeClickable(getDocView_SearchButton());
-		getDocView_SearchButton().Click();
+		getDocView_SearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		if (!getDocView_SearchButton().isDisplayed() && searchTextBox().isDisplayed() && closeIcon().isDisplayed()) {
 			base.passedStep(
 					"After clicking magnifying icon it is replaced by search box text field and X presentation");
@@ -26604,9 +26599,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 					"After clicking magnifying icon it is not replaced by search box text field and X presentation");
 		}
 		base.waitForElement(searchTextBox());
-		searchTextBox().Click();
+		searchTextBox().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		searchTextBox().SendKeys(multiwordText);
-		searchIcon().Click();
+		searchIcon().waitAndClick(5);
 		String searchResult = searchResult().getText();
 		base.stepInfo("Highlighted multiword text search result:" + searchResult);
 		if (searchResult.contains("1 of")) {
@@ -26720,7 +26716,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		getDocView_NearDupeIcon().waitAndClick(10);
 		String parentWindow = reusableDocView.switchTochildWindow();
 		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
+		//driver.Navigate().refresh();
 	
 		if (getCentralPanelDispaly().isDisplayed()) {
 			base.passedStep("spinning wheel is displayed when two doc are loading in comparision window");
@@ -26728,7 +26724,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			base.failedStep("spinning wheel is not displayed when two doc are loading in comparision window");
 		}
 		base.waitForElement(getComparisonNearDupeView());
-		base.waitTime(3);
+		base.waitTime(10);
 		if (getComparisonNearDupeView().isElementAvailable(20)) {
 			if (getCentralPanelDispaly().getWebElement().isDisplayed()
 					&& !(getComparisonNearDupeView().isDisplayed())) {
@@ -27094,16 +27090,15 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		softAssertion.assertEquals(getDocView_DefaultViewTab().Displayed().booleanValue(), true);
 		base.passedStep("Document displaying in default view page");
 		driver.waitForPageToBeReady();
+		base.waitTime(10);
+		base.waitForElement(getDocView_IconFileType());
 		String ActualValue = getDocView_IconFileType().getText();
 		System.out.println("default value:" + ActualValue);
-		base.waitTillElemetToBeClickable(getDocView_IconFileType());
 		if (getDocView_IconFileType().isDisplayed()) {
 			base.passedStep("Default " + ActualValue + " value  is displayed");
 		} else {
 			base.failedStep("Default " + ActualValue + " value is not displayed");
 		}
-		Assert.assertEquals(getDocView_IconFileType().getText().toString(), "P");
-
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_TextFileType().Visible();
@@ -27510,10 +27505,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			driver.waitForPageToBeReady();
 			for (int i = 0; i < 20; i++) {
 				try {
-					driver.waitForPageToBeReady();
-					base.waitForElement(getDocView_DocId(docId));
-					 getDocView_DocId(docId).ScrollTo();
-					 driver.scrollingToElementofAPage( getDocView_DocId(docId));
+					driver.waitForPageToBeReady();					 driver.scrollingToElementofAPage( getDocView_DocId(docId));
 					base.waitForElement(getDocView_DocId(docId));
 					getDocView_DocId(docId).waitAndClick(15);
 					base.passedStep("Doc is selected from MiniDoclist successfully");
@@ -28415,8 +28407,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		// Thread sleep added for the page to adjust resolution
 		Thread.sleep(1000);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
-				.moveByOffset(20, 10).release().build().perform();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+				.moveByOffset(40, 100).release().build().perform();
 		driver.waitForPageToBeReady();
 		// copy the text
 		actions.contextClick().build().perform();

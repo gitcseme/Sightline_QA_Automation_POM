@@ -98,7 +98,7 @@ public class DocView_Regression4 {
 	 * any previously saved persistent search hits in the assignment should be
 	 * displayed in the assignment Stabilization done
 	 */
-	@Test(description ="RPMXCON-51763",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51763", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterReassignDocuments() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -199,7 +199,7 @@ public class DocView_Regression4 {
 	 * in the assignment Stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51762",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51762", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -307,7 +307,7 @@ public class DocView_Regression4 {
 	 * stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51399",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51399", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocsSearchWithMetadata() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -357,7 +357,7 @@ public class DocView_Regression4 {
 	 * STABILIZATION DONE
 	 */
 
-	@Test(description ="RPMXCON-51402",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51402", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocsSearchWithWorkProduct() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -407,7 +407,7 @@ public class DocView_Regression4 {
 	 * searched with comment/Reviewer Remarks
 	 */
 
-	@Test(description ="RPMXCON-51400",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51400", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocSearchWithCommentsRemarks() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -422,7 +422,7 @@ public class DocView_Regression4 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
-		
+
 		sessionSearch.viewInDocView();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -471,7 +471,7 @@ public class DocView_Regression4 {
 	 * assignment when assinged documents are searched with metadata
 	 */
 
-	@Test(description ="RPMXCON-51401",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51401", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocSearchWithMetadata() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -508,7 +508,6 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51771 Verify that previously saved Persistent hits displayed on
@@ -516,7 +515,7 @@ public class DocView_Regression4 {
 	 * from edit assignment stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51771",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51771", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterCompleteDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -594,7 +593,7 @@ public class DocView_Regression4 {
 
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		assignmentsPage.selectAssignmentfromRMUDashborad(assname);
 
 		driver.waitForPageToBeReady();
@@ -609,7 +608,7 @@ public class DocView_Regression4 {
 		baseClass.waitForElement(docView.getCompletedDocs());
 		docView.getCompletedDocs().waitAndClick(5);
 //		docViewRedact.selectMiniDocListAndViewInDocView(1);
-		
+
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view even after completing docs");
@@ -641,11 +640,10 @@ public class DocView_Regression4 {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51408 Verify on click of the "eye" icon, terms should be
 	 * highlighted those that are set from Manage > Keywords when documents are
-	 * searched with work product
-	 * Stabilization done
+	 * searched with work product Stabilization done
 	 */
 
-	 @Test(description ="RPMXCON-51408",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51408", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocSearchWithWorkProduct() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -690,7 +688,7 @@ public class DocView_Regression4 {
 	 * coding form child window stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51853",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51853", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterCompletingDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -765,7 +763,7 @@ public class DocView_Regression4 {
 	 * mini-DocList stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51944",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51944", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsFilteredUsingDocId()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -934,7 +932,7 @@ public class DocView_Regression4 {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51941",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51941", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1107,7 +1105,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51613",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51613", enabled = true, groups = { "regression" })
 	public void verifyMultipleTermsSubmittedAndHandled() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51613  sprint 12");
@@ -1142,109 +1140,73 @@ public class DocView_Regression4 {
 		baseClass.passedStep("persistent hit count is matched successfully");
 	}
 
-	 /**
-		 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
-		 * Id:RPMXCON-51405 Verify all hits of the document should be highlighted
-		 * without clicking the eye icon when user redirects to doc view from Advanced
-		 * Search > doc list to doc view
-		 * stabilization done
-		 */
-		@Test(description ="RPMXCON-51405",enabled = true, alwaysRun = true, groups = { "regression" })
-		public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
-			baseClass = new BaseClass(driver);
-			SessionSearch sessionSearch = new SessionSearch(driver);
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51405 Verify all hits of the document should be highlighted
+	 * without clicking the eye icon when user redirects to doc view from Advanced
+	 * Search > doc list to doc view stabilization done
+	 */
+	@Test(description = "RPMXCON-51405", enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
 //			AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-			docViewRedact = new DocViewRedactions(driver);
-		    docView = new DocViewPage(driver);
-		    DocListPage docList = new DocListPage(driver);
-			loginPage = new LoginPage(driver);
-			String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		loginPage = new LoginPage(driver);
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 
-			baseClass.stepInfo("Test case id : RPMXCON-51405");
-			baseClass.stepInfo(
-					"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
+		baseClass.stepInfo("Test case id : RPMXCON-51405");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
 
 //			
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
-			baseClass.waitTime(5);
-			sessionSearch.saveSearchAtAnyRootGroup(searchName, Input.shareSearchDefaultSG);
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			driver.waitForPageToBeReady();
-			sessionSearch.switchToWorkproduct();
-			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
-			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
-			sessionSearch.selectSavedsearchesInTree(searchName);
-			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
-			sessionSearch.serarchWP();
-			sessionSearch.ViewInDocList();
-			
-//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
-			docList.selectAllDocs();
-			sessionSearch.viewInDocView_redactions();
-			driver.waitForPageToBeReady();
-			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-			driver.waitForPageToBeReady();
-//			Added on 10_04
-		
-			docViewRedact.verifyHighLightingTextInDocView();
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-			UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
-			baseClass.stepInfo(
-					"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
-			driver.waitForPageToBeReady();
-			sessionSearch.switchToWorkproduct();
-			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
-			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
-			sessionSearch.selectSavedsearchesInTree(searchName);
-			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
-			sessionSearch.serarchWP();
-			sessionSearch.ViewInDocList();
-			
-//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
-			docList.selectAllDocs();
-			sessionSearch.viewInDocView_redactions();
-			driver.waitForPageToBeReady();
-			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-			driver.waitForPageToBeReady();
-//			Added on 10_04
-		
-			docViewRedact.verifyHighLightingTextInDocView();
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			baseClass.stepInfo(
-					"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
-			driver.waitForPageToBeReady();
-			sessionSearch.switchToWorkproduct();
-			baseClass.waitForElement(sessionSearch.getSavedSearchBtn1());
-			sessionSearch.getSavedSearchBtn1().waitAndClick(5);
-			sessionSearch.selectSavedsearchesInTree(searchName);
-			baseClass.waitForElement(sessionSearch.getMetaDataInserQuery());
-			sessionSearch.getMetaDataInserQuery().waitAndClick(5);
-			sessionSearch.serarchWP();
-			sessionSearch.ViewInDocList();
-			
-//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-			docList.selectAllDocs();
-			
-			sessionSearch.viewInDocView_redactions();
-			driver.waitForPageToBeReady();
-			docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-			driver.waitForPageToBeReady();
-//			Added on 10_04
-			
-			docViewRedact.verifyHighLightingTextInDocView();
-			loginPage.logout();
-		}
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.advancedMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+		sessionSearch.ViewInDocList();
 
-	
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
+		docList.selectAllDocs();
+		docList.docListToDocView();
+		driver.waitForPageToBeReady();
+//			Added on 10_04
+
+		docViewRedact.verifyHighLightingTextInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.advancedMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+		sessionSearch.ViewInDocList();
+
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();		
+		docList.selectAllDocs();
+		docList.docListToDocView();
+
+		driver.waitForPageToBeReady();
+//			Added on 10_04
+		docViewRedact.verifyHighLightingTextInDocView();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.advancedMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
+		sessionSearch.ViewInDocList();
+
+//			new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+		docList.selectAllDocs();
+		docList.docListToDocView();
+		driver.waitForPageToBeReady();
+//			Added on 10_04
+		docViewRedact.verifyHighLightingTextInDocView();
+		loginPage.logout();
+	}
 
 	/**
 	 * Author : STEFFY date: 13/01/22 NA Modified date: NA Modified by:NA
@@ -1255,7 +1217,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51396",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51396", enabled = true, groups = { "regression" })
 	public void verifySearchTermHighlightedInEyeIconFromAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51396");
@@ -1289,7 +1251,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Distributing docs to RMU");
 		assignmentsPage.assignmentDistributingToReviewerManager();
 		baseClass.impersonateRMUtoReviewer();
-		
+
 //		Added on 10_04
 		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
@@ -1297,7 +1259,7 @@ public class DocView_Regression4 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify whether the doc is getting displayed in DocView");
 //		Added on 10_04
-		
+
 		docViewRedact.verifyHighLightingTextInDocView();
 		docView.getPersistentHit(hitTerms);
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
@@ -1314,7 +1276,7 @@ public class DocView_Regression4 {
 	 * assignment and documents are distributed again Stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51773",enabled = true, alwaysRun = false, groups = { "regression" })
+	@Test(description = "RPMXCON-51773", enabled = true, alwaysRun = false, groups = { "regression" })
 	public void verifySavedPersistedHitsDisplayedDocDistributedAgainInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1407,8 +1369,6 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-	
-
 	/**
 	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify search term, assigned keywords should be highlighted and
@@ -1417,7 +1377,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51397",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51397", enabled = true, groups = { "regression" })
 	public void verifyCreateAssignSearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51397");
@@ -1462,7 +1422,6 @@ public class DocView_Regression4 {
 		// Select the Assignment from dashboard
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
-		
 
 		// color highlighting
 		softAssertion.assertTrue(docViewRedact.get_textHighlightedColor().Displayed());
@@ -1494,7 +1453,6 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * @Author Raghuram A date:01/02/2022 Modified date: NA Modified by:N/A
 	 * @Description : To verify that once user complete the document, count should
@@ -1504,7 +1462,7 @@ public class DocView_Regression4 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-50987",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-50987", enabled = true, groups = { "regression" })
 	public void VerifyCompleteDocCountViaRevTab() throws Exception {
 
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
@@ -1548,7 +1506,7 @@ public class DocView_Regression4 {
 
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		
+
 		// Assignment Edit View
 		assignmentPage.editAssignmentUsingPaginationConcept(assignmentNametoCreate);
 		driver.waitForPageToBeReady();
@@ -1576,7 +1534,7 @@ public class DocView_Regression4 {
 	 * view page as per the selected assignment
 	 * 
 	 */
-	@Test(description ="RPMXCON-50782",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-50782", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarDisplayedOnDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -1727,7 +1685,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51981",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51981", enabled = true, groups = { "regression" })
 	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51981");
@@ -1806,7 +1764,7 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-		/**
+	/**
 	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
 	 * selected document
@@ -1814,7 +1772,7 @@ public class DocView_Regression4 {
 	 * @Stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51028",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51028", enabled = true, groups = { "regression" })
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1904,7 +1862,7 @@ public class DocView_Regression4 {
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		// Selecting Document from Session search
-		DocViewPage docView = new  DocViewPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52170");
@@ -1927,7 +1885,7 @@ public class DocView_Regression4 {
 
 		// select docs from MiniDoclist
 		String docId = docView.getDocumentWithoutRedaction();
-		
+
 		driver.Navigate().refresh();
 		baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
 		docView.selectDocInMiniDocList(docId);
@@ -1966,7 +1924,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51441",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51441", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyArrowsRedirdctedToDocViewFromBasicSearch() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -1988,9 +1946,9 @@ public class DocView_Regression4 {
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		docViewRedact.performTheEyeIconHighLighting();
-		
+
 		docViewRedact.verifyHighLightingTextInDocView();
-		
+
 		baseClass.stepInfo(
 				"That > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search is Successfully");
 		loginPage.logout();
@@ -2010,7 +1968,6 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * Author : Vijaya.Rani date: 7/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Needs to verify with out adding remarks should not
@@ -2018,7 +1975,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51625",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51625", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyWithOutAddingRemarkShouldNotSave() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51625");
@@ -2111,7 +2068,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51355",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51355", enabled = true, groups = { "regression" })
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsAanalytics() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51355");
@@ -2159,7 +2116,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51354",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51354", enabled = true, groups = { "regression" })
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51354");
@@ -2241,7 +2198,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51553",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51553", enabled = true, groups = { "regression" })
 	public void verifyKWGroupAndSavedSeacrhOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51553");
@@ -2328,6 +2285,7 @@ public class DocView_Regression4 {
 				"Hit count for the matching keywords is displayed against the keywords on persistent hit panel");
 		loginPage.logout();
 	}
+
 	/**
 	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify that previously saved Persistent hits should be displayed
@@ -2336,7 +2294,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51775",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51775", enabled = true, groups = { "regression" })
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51775");
@@ -2390,7 +2348,7 @@ public class DocView_Regression4 {
 		loginPage.logout();
 	}
 
-/**
+	/**
 	 * Author : Vijaya.Rani date: 26/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify waning message is prompted to the user after
 	 * impersonation when user navigates away from the page without saving action
@@ -2399,7 +2357,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-50923",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-50923", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationNavigatePageSavingFromDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50923");
@@ -2411,11 +2369,16 @@ public class DocView_Regression4 {
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject(Input.additionalDataProject);
-
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
+		sessionSearch.bulkAssignThreadedDocs();
+		baseClass.stepInfo("Search with text input for docs completed");
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.add3ReviewerAndDistribute();
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		loginPage.logout();
 
 		// Login as SA
@@ -2424,16 +2387,10 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as System Assisent with " + Input.sa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
 		baseClass.impersonateSAtoRMU();
-		
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
-		sessionSearch.bulkAssignThreadedDocs();
-		baseClass.stepInfo("Search with text input for docs completed");
-		assignmentsPage.assignmentCreation(assname, codingForm);
-		assignmentsPage.add3ReviewerAndDistribute();
-		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
-		
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
 		docView.performConfirmNavigationDisplay();
@@ -2445,7 +2402,9 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as Project Assisent with " + Input.pa1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating PA to Reviewer");
 		baseClass.impersonatePAtoReviewer();
-		assignmentsPage.SelectAssignmentByReviewer(assname);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
+		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
@@ -2459,8 +2418,9 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Step 1: Impersonating PA to RMU");
 		baseClass.impersonatePAtoRMU();
 		driver.waitForPageToBeReady();
-		assignmentsPage.selectAssignmentToViewinDocview(assname);
-		driver.waitForPageToBeReady();
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
+		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.performCodeSameForFamilyMembersDocs();
@@ -2473,7 +2433,9 @@ public class DocView_Regression4 {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
-		assignmentsPage.SelectAssignmentByReviewer(assname);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.threadDocId);
+		sessionSearch.viewInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click code Same As");
 		docView.editCodingForm("Sample");
@@ -2489,7 +2451,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51271",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51271", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationProducedDocsByDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51271");
@@ -2571,7 +2533,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51270",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51270", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationProducedDocsInImageTabDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51270");
@@ -2656,7 +2618,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51272",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51272", enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarCompleteDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51272");
@@ -2747,7 +2709,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-50820",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-50820", enabled = true, groups = { "regression" })
 	public void veriyUserCanSeeTheFlodersSecurityGroup() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50820");
@@ -2763,10 +2725,10 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-		
+
 		tag.navigateToTagsAndFolderPage();
 		tag.CreateFolderInRMU(folderName);
-		
+
 		baseClass.stepInfo("Step 1: Search for the doc and View In Doc View");
 		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2854,14 +2816,15 @@ public class DocView_Regression4 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		System.out.println(assname);
-		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assname + "' is created Successfully");
+		baseClass
+				.stepInfo("Doc is Assigned from basic Search and Assignment '" + assname + "' is created Successfully");
 
 		driver.waitForPageToBeReady();
 		System.out.println(assname);
 		docViewRedact.selectAssignmentfromDashborad(assname);
 		driver.waitForPageToBeReady();
 		docViewRedact.performCompleteToDocs();
-		
+
 		docViewRedact.performGeerIcon();
 		docViewRedact.performUnCompleteToDocs();
 		baseClass.waitForElement(docViewRedact.clickManage());
@@ -2881,7 +2844,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51501",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51501", enabled = true, groups = { "regression" })
 	public void verifyDateRemovalInPersistentSearchPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51501");
@@ -2927,7 +2890,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51279",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51279", enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarCompleteDocsCodeSameAs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51279");
@@ -3084,7 +3047,7 @@ public class DocView_Regression4 {
 	 */
 	@Test(description = "RPMXCON-59583", alwaysRun = true, groups = { "regression" })
 	public void verifyConfigureManualMode_RMUDashboard() throws Exception {
-		
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		docView = new DocViewPage(driver);
@@ -3103,7 +3066,9 @@ public class DocView_Regression4 {
 		sessionSearch.bulkAssign();
 		assignmentsPage.assignmentCreation(assignmentName, Input.codeFormName);
 		assignmentsPage.add2ReviewerAndDistribute();
+		baseClass.waitTime(10);
 		String expectedCount = assignmentsPage.getDistibuteDocsCount(Input.rmu1userName);
+		System.out.println(expectedCount);
 		baseClass.stepInfo("Created Assignment name : " + assignmentName);
 
 		// impersonate as Reviewer
@@ -3117,9 +3082,7 @@ public class DocView_Regression4 {
 //		miniDocListpage.verifyDefaultWebfieldsInManualSortOrder();
 		// performing Add and Remove action on Selected Web Fields and validating the
 		// same.
-		miniDocListpage.verifyManualModeSortingConfigure(assignmentName);
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
 		assignmentsPage.selectAssignmentfromRMUDashborad(assignmentName);
 		baseClass.stepInfo("Doc is viewed in the docView Successfully");
 		DocViewPage dc = new DocViewPage(driver);
@@ -3130,7 +3093,6 @@ public class DocView_Regression4 {
 		if (miniDocListpage.getDocumentCompleteButton().isDisplayed()) {
 			softAssertion.assertEquals(codingFormName, Input.codeFormName);
 			softAssertion.assertEquals(ActualCount, expectedCount);
-			softAssertion.assertAll();
 			baseClass.passedStep(
 					"RMU user not viewed Completed icon and assigned coding form is viewed in mini doc list in context of RMU dashboard.");
 			baseClass.passedStep("Document Count displayed in doc view  is same as assigned to the assignment.");
@@ -3141,16 +3103,17 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("***Verification for Optimized Sort Order**");
 		miniDocListpage.sortingVerifyAfterSelectedWebFields();
 		String ActualCount1 = dc.verifyDocCountDisplayed_DocView();
+		System.out.println(ActualCount1);
 		if (miniDocListpage.getDocumentCompleteButton().isDisplayed()) {
 			softAssertion.assertEquals(codingFormName, Input.codeFormName);
 			softAssertion.assertEquals(ActualCount1, expectedCount);
-			softAssertion.assertAll();
 			baseClass.passedStep(
 					"RMU user not viewed Completed icon and assigned coding form is viewed in mini doc list in context of manage assignment.");
 			baseClass.passedStep("Document Count displayed in doc view  is same as assigned to the assignment.");
 		} else {
 			baseClass.failedStep("RMU user viewed Completed icon in mini doc list in context of manage assignment.");
 		}
+		softAssertion.assertAll();
 		loginPage.logout();
 	}
 
@@ -3171,7 +3134,5 @@ public class DocView_Regression4 {
 		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
 
 	}
-	
-	
 
 }
