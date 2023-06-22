@@ -249,14 +249,14 @@ public class ConnectorsandAssigments {
 		loginPage.logout();
 
 	}
-	@Test(description = "RPMXCON-57406", enabled = true, dataProvider = "PAandRMU", groups = { "regression" })
-	public void manageScheduleCheck(String userName, String password, String fullName)
+	@Test(description = "RPMXCON-57406", enabled = true, groups = { "regression" })
+	public void manageScheduleCheck()
 			throws InterruptedException, ParseException {
 		String searchName = "SS" + Utility.dynamicNameAppender();
 		ElementCollection availableSearchName;
 		SchedulesPage schedulePage=new SchedulesPage(driver);
 		// will login to the application by entering RMU credentials
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(Input.pa4userName, Input.pa4password);
 		baseClass.stepInfo("Tescase ID : RPMXCON-57406 Saved search - Sprint 06");
 		baseClass.stepInfo(
 				"Verify that after modification of any search query under My Searches   from Manage Schedule - Modified Schedule functionality is working proper in Saved searches");
