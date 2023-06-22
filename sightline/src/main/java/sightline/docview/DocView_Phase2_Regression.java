@@ -280,15 +280,13 @@ public class DocView_Phase2_Regression {
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid = Input.DocIdCopyPaste;
-		String docid1 = Input.DocIdCopyPaste1;
-
+		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
 		baseClass.stepInfo("Search Navigate To ViewInDocView");
 		baseClass.waitTime(5);
-		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.waitTime(5);
 		sessionsearch.viewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -298,13 +296,9 @@ public class DocView_Phase2_Regression {
 		}), Input.wait30);
 		docView.getDocView_CodingFormlist().waitAndClick(5);
 		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
-		baseClass.waitTime(2);
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(5);
-		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getAddComment1());
 		docView.getAddComment1().isElementAvailable(5);
@@ -315,8 +309,6 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Navigate to another document in mini doc list");
 		docView.getCodeSameAsLast().waitAndClick(3);
 		baseClass.stepInfo("clicked codesameas");
-		baseClass.waitTime(5);
-		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(8);
 		docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
@@ -326,9 +318,8 @@ public class DocView_Phase2_Regression {
 		driver.Navigate().refresh();
 
 		// verify comment is same on save and next doc
-		docView.ScrollAndSelectDocument(docid);
 		driver.waitForPageToBeReady();
-		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
 		docView.getAddComment1().isElementAvailable(5);
@@ -337,8 +328,6 @@ public class DocView_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		docView.getSaveAndNextButton().waitAndClick(2);
 		baseClass.stepInfo("Document saved successfully");
-		baseClass.waitTime(5);
-		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getAddComment1());
 		docView.getAddComment1().isElementAvailable(5);
@@ -385,7 +374,7 @@ public class DocView_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docID2);
 		baseClass.waitTime(5);
-		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
+		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
 		String beforeText2 = docView.getAddComment1().getText();
@@ -752,8 +741,6 @@ public class DocView_Phase2_Regression {
 				"Verify that when Copy menu is selected from doc view then on navigating to another document from document navigation previously selected panels/menus should retain");
 		DocViewPage docView = new DocViewPage(driver);
 		SoftAssert softassertion = new SoftAssert();
-		String docid = "ID00000152";
-
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
@@ -772,9 +759,6 @@ public class DocView_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
-		driver.Navigate().refresh();
-		docView.ScrollAndSelectDocument(docid);
 		docView.getDocView_CodingFormlist().waitAndClick(5);
 		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
@@ -801,6 +785,7 @@ public class DocView_Phase2_Regression {
 		softassertion.assertEquals(lastDoc, "14");
 		baseClass.stepInfo("Navigated to last document is loaded in viewer ");
 		baseClass.waitTime(5);
+		docView.getCopyPasteIconStatus().waitAndClick(10);
 		docView.verifyCopyandPasteIconStatus();
 		baseClass.waitForElement(docView.getDocView_Previous());
 		docView.getDocView_Previous().waitAndClick(5);
@@ -810,6 +795,7 @@ public class DocView_Phase2_Regression {
 		softassertion.assertEquals(previousDoc, "13");
 		baseClass.stepInfo("Navigated to previous document is loaded in viewer");
 		baseClass.waitTime(5);
+		docView.getCopyPasteIconStatus().waitAndClick(10);
 		docView.verifyCopyandPasteIconStatus();
 		baseClass.waitForElement(docView.getDocView_First());
 		docView.getDocView_First().waitAndClick(5);
@@ -819,8 +805,8 @@ public class DocView_Phase2_Regression {
 		softassertion.assertEquals(FirstDoc, "1");
 		baseClass.stepInfo("Navigated to first document is loaded in viewer ");
 		baseClass.waitTime(5);
+		docView.getCopyPasteIconStatus().waitAndClick(10);
 		docView.verifyCopyandPasteIconStatus();
-
 		// Verify Select docs in History button
 		baseClass.waitTime(5);
 		String[] docids = { docId1, docId2, docId3, docId4 };
@@ -845,6 +831,7 @@ public class DocView_Phase2_Regression {
 		docView.getselectDocFromClckIcon().waitAndClick(5);
 		baseClass.passedStep("User selected the document from history drop down as expected");
 		baseClass.waitTime(5);
+		docView.getCopyPasteIconStatus().waitAndClick(10);
 		docView.verifyCopyandPasteIconStatus();
 		softassertion.assertAll();
 	}

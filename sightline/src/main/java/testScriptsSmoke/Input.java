@@ -317,7 +317,11 @@ public class Input {
 	public static String projectName02;
 	public static String searchDocFileType;
 	public static String DocViewNativesIngestion;
-
+	public static String hiddenProDocID;
+	public static String withoutHiddenDocId;
+	public static String multiWordDocID;
+	public static String pdfSourceDocID;
+	
 	// DocView codingform Baskar Indium
 
 	public static String savedName;
@@ -1243,7 +1247,7 @@ public class Input {
 		rev2FullName = envConfig.getRev2FullName();
 		da1FullName = envConfig.getDa1FullName();
 		SourceLocation = envConfig.getSourceLocation();
-
+		
 		if (mode) {
 			projectName = System.getProperty("projectName");
 			projectNameCjk = System.getProperty("projectNameCjk");
@@ -1509,6 +1513,11 @@ public class Input {
 		projectName02 = testData.getProjectName02();
 		searchDocFileType = testData.getSearchDocFileType();
 		DocViewNativesIngestion = testData.getDocViewNativesIngestion();
+		hiddenProDocID = testData.getHiddenProDocID();
+		withoutHiddenDocId = testData.getWithoutHiddenDocId();
+		multiWordDocID = testData.getMultiWordDocID();
+		pdfSourceDocID = testData.getPdfSourceDocID();
+
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

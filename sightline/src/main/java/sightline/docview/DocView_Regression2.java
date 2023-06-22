@@ -1559,6 +1559,8 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.getDocViewDocsRedactIcon();
 		String docId = docView.getDocumentWithoutRedaction();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -3541,17 +3543,18 @@ public class DocView_Regression2 {
 	public void verifyMessageForHiddenContentDocsFromDocNavigation(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
+		
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51953");
 		baseClass.stepInfo("Verify that on doc-to-doc navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.basicContentSearch(Input.hiddenProDocID);
 		sessionsearch.ViewInDocView();	
-		baseClass.waitTime(1);
+		baseClass.waitTime(3);
 
 		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
-		docViewRedact.forwardNextDocBtn().waitAndClick(2);
+		docViewRedact.forwardNextDocBtn().waitAndClick(5);
 		baseClass.clickButton(docViewRedact.forwardNextDocBtn());
 		
 		baseClass.stepInfo("navigated to Document with hidden content");
@@ -3721,6 +3724,7 @@ public class DocView_Regression2 {
 	 */
 	@Test(description ="RPMXCON-51951",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentDocs(String fullName, String userName, String password) throws Exception {
+		
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
@@ -3737,7 +3741,11 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
-		baseClass.waitTime(2);
+		baseClass.waitTime(5);
+		DocViewPage docView = new DocViewPage(driver);
+		baseClass.waitForElement(docView.getDocView_MiniDocListIds(2));
+		docView.getDocView_MiniDocListIds(2).waitAndClick(10);
+		baseClass.waitTime(1);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.additionalDataProject);
@@ -3748,7 +3756,10 @@ public class DocView_Regression2 {
 		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
-		baseClass.waitTime(2);
+		baseClass.waitTime(5);
+		baseClass.waitForElement(docView.getDocView_MiniDocListIds(2));
+		docView.getDocView_MiniDocListIds(2).waitAndClick(10);
+		baseClass.waitTime(1);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
 		loginPage.logout();
 		
@@ -3960,7 +3971,7 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(userName,password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51561");
 		baseClass.stepInfo("Verify that if the text is a multi-word text, it is considered a phrase and highlights only the phrases.");
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.multiWordDocID);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		//verifying the multi word text highlight
@@ -4019,11 +4030,11 @@ public class DocView_Regression2 {
 		sessionsearch.bulkAssignWithOutPureHit();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		baseClass.passedStep("persistent hits is enabled while creating the assignment");
-		loginPage.logout();
 
 		// select assignment on DocView
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		driver.waitForPageToBeReady();
+		assignmentsPage.navigateToAssignmentsPage();
+		assignmentsPage.selectAssignmentToViewinDocView(assname);
 		docViewRedact.checkingPersistentHitPanelAudio();
 		baseClass.passedStep("Persistent search is displayed on audio doc");
 
@@ -4242,20 +4253,19 @@ public class DocView_Regression2 {
 	 *         ingest only metadata
 	 *
 	 */
-	@Test(description ="RPMXCON-51234",alwaysRun = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51243",alwaysRun = true, groups = { "regression" })
 	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51243");
 		baseClass.stepInfo(
 				"Verify user after impersonation should see the message like 'No files associated with this document' when user ingest only metadata");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
-		String pdfDocId = Input.pdfDocId;
 
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Step 1: Impersonating SA to PA");
 		baseClass.impersonateSAtoPA();
 		// searching metadataSearch for default pdfDocId
-		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null,Input.pdfSourceDocID, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4264,7 +4274,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateSAtoRMU();
-		sessionSearch.basicMetaDataSearch("DocID", null, pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null,Input.pdfSourceDocID , null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4273,7 +4283,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating SA to Rev");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateSAtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null,Input.pdfSourceDocID, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4282,7 +4292,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating PA to Rmu");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonatePAtoRMU();
-		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null,Input.pdfSourceDocID, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4291,7 +4301,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating PA to Rev");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonatePAtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null, pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.pdfSourceDocID, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4300,7 +4310,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateRMUtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
+		sessionSearch.basicMetaDataSearch("SourceDocID", null,Input.pdfSourceDocID, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4733,12 +4743,11 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docView = new DocViewPage(driver);
-		String withoutHiddenDocId = "Native Review";
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.projectName01);
 		baseClass.stepInfo("Login as RMU");
-		sessionsearch.basicContentSearch(withoutHiddenDocId);
+		sessionsearch.basicContentSearch(Input.withoutHiddenDocId);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Docs Viewed in Doc View");
 		driver.waitForPageToBeReady();

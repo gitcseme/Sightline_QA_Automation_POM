@@ -269,6 +269,8 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
@@ -300,9 +302,11 @@ public class DocView_Regression3 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Click on reduction button ");
+		driver.waitForPageToBeReady();
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
+		driver.waitForPageToBeReady();
 		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
@@ -533,7 +537,7 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		docView.selectDocIdInMiniDocList("H16135-0188-003487");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
@@ -647,6 +651,8 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.telecom);
 
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
@@ -658,7 +664,7 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		docView = new DocViewPage(driver);
 
 		docView.navigateToDocViewPageURL();
@@ -689,7 +695,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Navigating to docview from session search");
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		docView.selectDocIdInMiniDocList("H16135-0188-003487");
 
 		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
@@ -776,6 +782,8 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.telecom);
 
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 		driver.waitForPageToBeReady();
 
@@ -787,7 +795,7 @@ public class DocView_Regression3 {
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		docView = new DocViewPage(driver);
 
 		docView.navigateToDocViewPageURL();
@@ -809,7 +817,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Navigating to docview from session search");
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		docView.selectDocIdInMiniDocList("H16135-0188-003487");
 
 		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
@@ -1173,6 +1181,8 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Bulk release");
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 
 		baseClass.stepInfo("Assign Access to Security groups");
@@ -1219,7 +1229,8 @@ public class DocView_Regression3 {
 		docExplorer.navigateToDocExplorerPage();
 
 		baseClass.stepInfo("Navigate To Doc list");
-		docExplorer.docExplorerToDocList();
+		docExplorer.selectAllDocumentsFromCurrentPage();
+		docExplorer.docExpViewInDocList();
 
 		DocListPage docList = new DocListPage(driver);
 
@@ -1260,7 +1271,9 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("unmapping all keywords from first assignment");
 		assignmentPage.unmappingKeywordsFromEditedAssignment(assignName1);
 
-		docExplorer.docExplorerToDocList();
+		docExplorer.navigateToDocExplorerPage();
+		docExplorer.selectAllDocumentsFromCurrentPage();
+		docExplorer.docExpViewInDocList();
 
 		baseClass.stepInfo("Select The Document in Doclistpage");
 		docList.documentSelection(4);
@@ -1372,6 +1385,8 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 
 		baseClass.stepInfo("Access has been given to RMU and Rev to these security groups");
@@ -1387,7 +1402,7 @@ public class DocView_Regression3 {
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 
-		
+		docView.getDocViewDocsRedactIcon();
 		String docID = docView.getDocumentWithoutRedaction();
 		String currentUrl = driver.getUrl();
 
@@ -1433,9 +1448,10 @@ public class DocView_Regression3 {
 //		docView.switchFromChildWindowToParentWindow();
 		reusableDocView.closeWindow(1);
 
+		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Click on redaction icon");
 		baseClass.waitForElement(docView.redactionIcon());
-		docView.redactionIcon().Click();
+		docView.redactionIcon().waitAndClick(5);
 
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
 		docView.verifyDisableRemarkWarningMessage();
@@ -1717,6 +1733,8 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.bulkRelease(namesg2);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkRelease(namesg3);
 
 		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
@@ -1726,7 +1744,7 @@ public class DocView_Regression3 {
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
-		sessionsearch.addDocsMetCriteriaToActionBoard();
+		sessionsearch.viewInDocView();
 		driver.waitForPageToBeReady();
 		
 		driver.Navigate().refresh();

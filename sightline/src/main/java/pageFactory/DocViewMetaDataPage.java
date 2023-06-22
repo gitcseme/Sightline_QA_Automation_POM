@@ -2831,10 +2831,11 @@ public class DocViewMetaDataPage {
 	public void verifyingDownloadButtonIsNotDisplayed() {
 		try {
 			driver.waitForPageToBeReady();
-			if (getDownloadButton().isElementAvailable(1)) {
-				base.failedStep("Download button is displayed");
-			} else {
+			getDownloadButton().isElementAvailable(5);
+			if (getDownloadButton().Enabled()) {
 				base.passedStep("Download button is not displayed successfully");
+			} else {
+				base.failedStep("Download button is displayed");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

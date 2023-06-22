@@ -484,7 +484,7 @@ public class MiniDocListPage {
 	}// Added by jayanthi
 
 	public Element getDocView_CodingFromName() {
-		return driver.FindElementById("lblCodingFormName");
+		return driver.FindElementById("codingFormList");
 	}
 
 	public Element getSelectAssignmentFromDashborad(String assignmentName) {
@@ -4188,6 +4188,7 @@ public Element getDocViewFromDropDown() {
 		getSetDocumentSortingTab().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		ElementCollection setDocumentColumnListA = getFieldsAvailableSetDocumetSorting();
+		baseClass.waitTime(5);
 		setDocumentSortingList = availableListofElements(setDocumentColumnListA);
 		baseClass.stepInfo("Default Selected Web fields in Set Document Sorting are Displayed Below");
 		for (String a : setDocumentSortingList) {
@@ -4196,6 +4197,8 @@ public Element getDocViewFromDropDown() {
 
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").Click();
+		System.out.println(pickColumnDisplaySelectedListAssignmentTwo);
+		System.out.println(setDocumentSortingList);
 
 		if (pickColumnDisplaySelectedListAssignmentTwo.equals(setDocumentSortingList)) {
 			baseClass.passedStep("Default Web Fields present in  Set Document Sorting are Same");
