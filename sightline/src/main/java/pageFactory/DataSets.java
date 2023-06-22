@@ -542,15 +542,15 @@ public class DataSets {
 				e.printStackTrace();
 			}*/
 			base.stepInfo("DataSet is selected and viewed in DocList.");
+ 
 
-			
-			
+        } catch (Exception e) {
+            e.printStackTrace();
+            base.failedStep("failed" + e.getMessage());
+        }
+    }
+	
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("failed" + e.getMessage());
-		}
-	}
 
 	/**
 	 * @author Gopinath
