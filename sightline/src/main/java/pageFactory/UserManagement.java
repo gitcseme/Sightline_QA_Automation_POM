@@ -843,6 +843,10 @@ public class UserManagement {
 	public Element getDeleteBtn() {
 		return driver.FindElementByXPath("//a[text()='Delete']");
 	}
+	public Element getDeleteBtn1(String projectName) {
+		return driver.FindElementByXPath("//td[contains(text(),'"+projectName+"')]/..//a[text()='Delete']");
+	}
+	
 	
 	public Element getRemoveBtn() {
 		return driver.FindElementByXPath("//*[@id='dtUserList']//a[text()='Remove']");
@@ -4428,6 +4432,21 @@ public class UserManagement {
 		try {
 			bc.waitForElement(getDeleteBtn());
 			getDeleteBtn().waitAndClick(10);
+			if (getConfirmDelete().isElementAvailable(15)) {
+				getConfirmDelete().waitAndClick(10);
+			}
+			bc.waitTime(3);
+			bc.VerifySuccessMessage("User has been deactivated");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
+		}
+
+	}
+	public void deleteUser1(String projectName) {
+		try {
+			bc.waitForElement(getDeleteBtn1(projectName));
+			getDeleteBtn1(projectName).waitAndClick(10);
 			if (getConfirmDelete().isElementAvailable(15)) {
 				getConfirmDelete().waitAndClick(10);
 			}

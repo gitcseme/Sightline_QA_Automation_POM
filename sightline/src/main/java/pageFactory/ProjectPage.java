@@ -80,7 +80,6 @@ public class ProjectPage {
 	public Element getNoOfDocuments() {
 		return driver.FindElementById("txtMaxNoOfDocs");
 	}
-
 	public Element getButtonSaveProject() {
 		return driver.FindElementByXPath("//button[@id='btnSaveProject']");
 	}
@@ -503,9 +502,10 @@ public class ProjectPage {
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
 
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
+		*/
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -571,11 +571,11 @@ public class ProjectPage {
 
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-
+		/*
 		bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
-
+	*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -776,11 +776,11 @@ public class ProjectPage {
 
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-
+		/*
 		bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
-
+	*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -1031,14 +1031,14 @@ public class ProjectPage {
 		}), Input.wait30);
 		getAddProject_SettingsTab().waitAndClick(10);
 		;
-
+/*
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getNoOfDocuments().Visible();
 			}
 		}), Input.wait30);
-		getNoOfDocuments().SendKeys("999");
-
+		getNoOfDocuments().SendKeys("999"); */
+		
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -1249,14 +1249,14 @@ public class ProjectPage {
 		}), Input.wait30);
 		getAddProject_SettingsTab().waitAndClick(10);
 		;
-
+/*
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getNoOfDocuments().Visible();
 			}
 		}), Input.wait30);
 		getNoOfDocuments().SendKeys("999");
-
+		*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -1719,10 +1719,10 @@ public class ProjectPage {
 		getAddProject_SettingsTab().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
-
+	*/
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getButtonSaveProject());
 		getButtonSaveProject().waitAndClick(10);
@@ -1795,9 +1795,11 @@ public class ProjectPage {
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
 
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
+		*/
+
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -1973,10 +1975,10 @@ public class ProjectPage {
 		getAddProject_SettingsTab().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
-
+	*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -2119,10 +2121,10 @@ public class ProjectPage {
         bc.waitForElement(getAddProject_SettingsTab());
         getAddProject_SettingsTab().waitAndClick(10);
 
-        bc.waitForElement(getNoOfDocuments());
+        /*bc.waitForElement(getNoOfDocuments());
         getNoOfDocuments().waitAndClick(10);
         getNoOfDocuments().SendKeys("20000");
-
+	*/
         final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
         System.out.println(Bgcount);
@@ -2196,9 +2198,10 @@ public class ProjectPage {
 		driver.scrollPageToTop();
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys(docsLimit);
+		*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
@@ -2251,9 +2254,10 @@ public class ProjectPage {
 			}
 		}), Input.wait30);
 		getAddProject_SettingsTab().waitAndClick(10);
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElement(getNoOfDocuments());
 		getNoOfDocuments().waitAndClick(5);
 		getNoOfDocuments().SendKeys(Name);
+		*/
 		bc.stepInfo(Name +" value is entered as expected ");
 		bc.waitForElement(getButtonSaveProject());
 		getButtonSaveProject().Click();
@@ -2330,9 +2334,10 @@ public class ProjectPage {
 		driver.scrollPageToTop();
 		bc.waitForElement(getAddProject_SettingsTab());
 		getAddProject_SettingsTab().waitAndClick(10);
-		bc.waitForElement(getNoOfDocuments());
+		/*bc.waitForElements());
 		getNoOfDocuments().waitAndClick(10);
 		getNoOfDocuments().SendKeys("20000");
+		*/
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 		System.out.println(Bgcount);
