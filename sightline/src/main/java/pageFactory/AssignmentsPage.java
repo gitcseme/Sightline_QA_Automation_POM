@@ -1720,7 +1720,10 @@ public class AssignmentsPage {
 	public Element getEmailThreadedInDistributeDocPage() {
 		return driver.FindElementByXPath("(//label[@id='distribute_document_toggle']/i)[2]");
 	}
-
+	public Element getSelectRMUUserToAssign(){ return driver.FindElementByXPath("//*[@id='divNotAssignedUsers']//div[contains(.,'"+Input.rmu1userName+"')]/../div/label"); }
+	public Element getSelectRMUUserInDistributeTab(){ return driver.FindElementByXPath("//*[@id='divDistributedDocUsers']//div[contains(.,'"+Input.rmu1userName+"')]/div/label"); }
+	
+	
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -12155,5 +12158,54 @@ public class AssignmentsPage {
 
 	}
 	
-	
+	public void addRevieManagerAndDistributeDocs(String assignmentName,int docCount) throws InterruptedException {
+
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAssignment_ManageReviewersTab().Visible()  ;}}), Input.wait60);
+    	getAssignment_ManageReviewersTab().waitAndClick(30);
+
+    	getAddReviewersBtn().waitAndClick(10);
+
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSelectRMUUserToAssign().Visible()  ;}}), Input.wait60);
+    	getSelectRMUUserToAssign().waitAndClick(10);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAdduserBtn().Visible()  ;}}), Input.wait60);
+    	getAdduserBtn().waitAndClick(10);
+    	bc.waitTime(3);
+    	getDistributeTab().waitAndClick(20);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSelectRMUUserInDistributeTab().Visible()  ;}}), Input.wait60);
+    	getSelectRMUUserInDistributeTab().waitAndClick(20);
+
+    	getDistributeBtn().waitAndClick(15);
+
+    	getAssignment_BackToManageButton().waitAndClick(10);
+    	Thread.sleep(2000);
+
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+
+    	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+
+    	driver.scrollingToBottomofAPage();
+    	Thread.sleep(2000);
+
+    	getAssgnCounts(assignmentName, 9);
+    	//verify total docs count
+    	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
+    	System.out.println(Integer.parseInt(acttotalcount));
+    	UtilityLog.info(acttotalcount);
+    	//sa.assertEquals(docCount, Integer.parseInt(acttotalcount));
+
+    	//verify distributed docs count
+    	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
+    	System.out.println(Integer.parseInt(actdistributedcount));
+    	UtilityLog.info(Integer.parseInt(actdistributedcount));
+    //	sa.assertEquals(docCount, Integer.parseInt(actdistributedcount));
+    //	sa.assertAll();
+
+	}
+
 }

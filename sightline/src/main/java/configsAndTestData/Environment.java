@@ -16,6 +16,7 @@ public class Environment {
 	public String projectName;
 	public String projectNameCjk;
 	public String domainName;
+	public String AIdomainName;
 	public String sa1userName;
 	public String sa1password;
 	public String da1userName;
@@ -103,6 +104,7 @@ public class Environment {
 	public String SourceLocation;
 	public String shareTo;
 	public String ICEProjectName;
+	public String AIprojectName;
 // Added by Krishna	
 	public String additionalDataProject;
 	public String ingestDataProject;
