@@ -61,6 +61,7 @@ public class Input {
 	public static String testingBuild;
 	public static String iCESmokeFolderPath;
 	public static String ICEProjectName;
+	public static String AIprojectName;
 // Added by krishna - new projects 
 	public static String additionalDataProject;
 	public static String ingestDataProject;
@@ -179,6 +180,8 @@ public class Input {
 	public static String rev11userName;
 	public static String rev11password;
 	public static String domainName;
+	public static String AIdomainName;
+	
 	public static String Onnapa1userName;
 	public static String Onnarmu1userName;
 	public static String Onnada1userName;
@@ -1252,7 +1255,9 @@ public class Input {
 			projectName = System.getProperty("projectName");
 			projectNameCjk = System.getProperty("projectNameCjk");
 			ICEProjectName = System.getProperty("ICEProjectName");
+			AIprojectName = System.getProperty("AIprojectName");
 			domainName = System.getProperty("domainName");
+			AIdomainName = System.getProperty("AIdomainName");
 			da1FullName=System.getProperty("da1FullName");
 			da1userName = System.getProperty("da1userName");
 			da1password = System.getProperty("da1password");
@@ -1339,7 +1344,9 @@ public class Input {
 			projectName = envConfig.getProjectName();
 			projectNameCjk = envConfig.getProjectNameCjk();
 			ICEProjectName = envConfig.getICEProjectName();
+			AIprojectName = envConfig.getAIprojectName();
 			domainName = envConfig.getDomainName();
+			AIdomainName = envConfig.getAIdomainName();
 			da1userName = envConfig.getDa1userName();
 			da1password = envConfig.getDa1password();
 			sa1userName = envConfig.getSa1userName();

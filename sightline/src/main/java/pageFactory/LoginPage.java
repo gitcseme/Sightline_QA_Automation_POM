@@ -225,6 +225,106 @@ public class LoginPage {
 		Reporter.log("Login success!", true);
 
 	}
+	
+	public void loginToSightLineAI(String strUserName, String strPasword) {
+ 		driver.waitForPageToBeReady();
+ 		// Fill user name
+ 		getEuserName().waitAndClick(10); // to adjust with app!
+ 		driver.WaitUntil((new Callable<Boolean>() {
+ 			public Boolean call() {
+ 				return getEuserName().Visible();
+ 			}
+ 		}), Input.wait30);
+ 		getEuserName().SendKeys(strUserName);
+
+ 		// Fill password
+ 		getEpassword().SendKeys(strPasword);
+
+ 		// Click Login button
+ 		getEloginButton().Click();
+ 		// check if user session is active
+ 		if (getActiveSessionYesButton().isElementAvailable(3)) {
+ 			try {
+ 				base.waitForElement(getActiveSessionYesButton());
+ 				getActiveSessionYesButton().Click();
+ 				// driver.Navigate().refresh();
+ 				driver.waitForPageToBeReady();
+ 				base.waitForElement(getEuserName());
+ 				base.waitTillElemetToBeClickable(getEuserName());
+ 				getEuserName().Clear();
+ 				getEpassword().Clear();
+ 				getEuserName().SendKeys(strUserName);
+ 				// Fill password
+ 				getEuserName().Click();
+ 				getEpassword().SendKeys(strPasword);
+ 				// Click Login button
+ 				getEloginButton().Click();
+ 				driver.waitForPageToBeReady();
+ 			} catch (Exception e) {
+
+ 			}
+ 		}
+// 		if(getEmailMeButton().isElementAvailable(1)) {
+// 		// below code is to handles 2FA
+// 		try {
+// 			/*
+// 			 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+// 			 * getEuserName().Enabled() ;}}), Input.wait30);
+// 			 */
+// 			getEmailMeButton().Click();//30
+// 			getInputOTP().SendKeys(LoginPage.readGmailMail("Your one-time passcode to log into Sightline", "", "OTP",
+// 					strUserName, strPasword));
+// 			getEloginButton().Click();
+// 		} catch (Exception e1) {
+// 			// System.out.println("2FA is failed/disabled");
+// 		}
+// 		}
+
+ 		// Make sure sign out menu is visible post login
+ 		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+ 			try {
+ 				getGlobalMessagePopUpClose().waitAndClick(5);
+ 			} catch (Exception e) {
+ 				// TODO: handle exception
+ 			}
+ 		}
+ 		driver.WaitUntil((new Callable<Boolean>() {
+ 			public Boolean call() {
+ 				return getSignoutMenu().Visible();
+ 			}
+ 		}), Input.wait30);
+ 		BaseClass bc = new BaseClass(driver);
+ 		try {
+
+ 			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
+
+ 			bc.selectAIProject();
+ 			    bc.stepInfo("Selected Project -"+Input.AIprojectName);
+ 		} catch (Exception e) {
+ 			// TODO: handle exception
+ 		}
+ 		Assert.assertTrue(getSignoutMenu().Visible());
+ 		// System.out.println("Login success!");
+ 		UtilityLog.info("Login success!");
+ 		Reporter.log("Login success!", true);
+
+		if (strUserName.equals(Input.sa1userName)) {
+			bc.stepInfo("Logged in as SYSTEM ADMIN with  User ID: " + strUserName);
+		}
+		if (strUserName.equals(Input.da1userName)) {
+			bc.stepInfo("Logged in as DOMAIN ADMIN with  User ID : " + strUserName);
+		}
+		if ((strUserName.equals(Input.pa1userName)) || (strUserName.equals(Input.pa2userName))) {
+			bc.stepInfo("Logged in as PROJECT ADMIN  with User ID: " + strUserName);
+		}
+		if ((strUserName.equals(Input.rmu1userName)) || (strUserName.equals(Input.rmu2userName))) {
+			bc.stepInfo("Logged in as REVIEW MANAGER with  User ID: " + strUserName);
+		}
+		if ((strUserName.equals(Input.rev1userName)) || (strUserName.equals(Input.rev2userName))) {
+			bc.stepInfo("Logged in as REVIWER with  User ID : " + strUserName);
+		}
+	}
+	
 
 	/*
 	 * login method overloaded to handle new projects for data for ingestion and

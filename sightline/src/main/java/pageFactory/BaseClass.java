@@ -351,6 +351,9 @@ public class BaseClass {
 	public Element getDefaultTag() {
 		return driver.FindElementByXPath("//a[text()='Default Tags']//preceding-sibling::i");
 	}
+	public Element getSelectAIProject() {
+		return driver.FindElementByXPath("//a[@title='" + Input.AIprojectName + "']");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -1098,6 +1101,33 @@ public class BaseClass {
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 		waitForElement(getAvlProject());
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+		waitForElement(getSelectSecurityGroup());
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+		waitForElement(getSaveChangeRole());
+		getSaveChangeRole().waitAndClick(3);
+		System.out.println("Impersonated from SA to RMU");
+		UtilityLog.info("Impersonated from SA to RMU");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+	public void impersonateSAtoRMUAI() throws InterruptedException {
+		waitForElement(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		waitForElement(getChangeRole());
+		getChangeRole().waitAndClick(5);
+		waitForElement(getSelectRole());
+		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+		waitTime(1);
+		waitForElement(getAvlDomain());
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.AIdomainName);
+		waitForElement(getAvlProject());
+		getAvlProject().selectFromDropdown().selectByVisibleText(Input.AIprojectName);
 		waitForElement(getSelectSecurityGroup());
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		waitForElement(getSaveChangeRole());
@@ -5131,6 +5161,23 @@ public class BaseClass {
 		return DocIds;
 
 	}
+	
+	public void selectAIProject() {
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectNames().Visible();
+			}
+		}), Input.wait3);
 
+		// closepopupMsg();
+		// Select project if required one is not seletced
+		driver.scrollPageToTop();
+		getProjectNames().waitAndClick(3);
+		getSelectAIProject().waitAndClick(3);
+		driver.waitForPageToBeReady();
+
+
+	}
 	
 }
