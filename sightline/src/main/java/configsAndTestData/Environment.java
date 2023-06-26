@@ -15,6 +15,7 @@ public class Environment {
 	public String url;
 	public String projectName;
 	public String projectNameCjk;
+	public String projectSourceLocation;
 	public String domainName;
 	public String AIdomainName;
 	public String sa1userName;

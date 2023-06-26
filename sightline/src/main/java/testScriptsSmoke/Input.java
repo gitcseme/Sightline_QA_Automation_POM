@@ -52,6 +52,7 @@ public class Input {
 	public static int interval;
 	public static String batchFilesPath;
 	public static int numberOfDataSets;
+	public static String projectSourceLocation;
 	public static boolean extentReportMethodWise;
 	public static boolean logJiraTicket;
 	public static String jiraUrl;
@@ -1235,6 +1236,7 @@ public class Input {
 
 		// Environment data-------------------------------------------------------------
 		url = envConfig.getUrl();
+		projectSourceLocation=envConfig.getProjectSourceLocation();
 		projectNameCjk = envConfig.getProjectNameCjk();
 		pa1FullName = envConfig.getPa1FullName();
 		rmu1FullName = envConfig.getRmu1FullName();
@@ -2263,7 +2265,7 @@ public class Input {
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
 		sourceSystem = testData.getSourceSystem();
-		sourceLocation = testData.getSourceLocation();
+//		sourceLocation = testData.getSourceLocation();
 		sourceFolder = testData.getSourceFolder();
 		fieldSeperator = testData.getFieldSeperator();
 		textQualifier = testData.getTextQualifier();
