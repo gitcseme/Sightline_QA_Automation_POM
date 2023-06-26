@@ -92,6 +92,8 @@ public class SecurityGroups_Phase2_Regression {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		page = new ProductionPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -409,7 +411,7 @@ public class SecurityGroups_Phase2_Regression {
 		userManage.navigateToUsersPAge();
 		userManage.passingUserName(firstname);
 		userManage.applyFilter();
-		userManage.deleteUser();
+		userManage.deleteUser1(projectName);
 		baseClass.passedStep("User is de-activated/deleted successfully");
 
 		baseClass.stepInfo("Impersonate SA to RMU");
@@ -751,7 +753,7 @@ public class SecurityGroups_Phase2_Regression {
 		userManage.navigateToUsersPAge();
 		userManage.passingUserName(firstname);
 		userManage.applyFilter();
-		userManage.deleteUser();
+		userManage.deleteUser1(projectName);
 		baseClass.passedStep("User is de-activated/deleted successfully");
 
 		baseClass.stepInfo("Impersonate SA to PA");
@@ -827,7 +829,7 @@ public class SecurityGroups_Phase2_Regression {
 		userManage.navigateToUsersPAge();
 		userManage.passingUserName(firstname);
 		userManage.applyFilter();
-		userManage.deleteUser();
+		userManage.deleteUser1(projectName);
 		baseClass.passedStep("User is de-activated/deleted successfully");
 
 		baseClass.stepInfo("Impersonate SA to PA");
@@ -964,6 +966,12 @@ public class SecurityGroups_Phase2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-54835");
 		baseClass.stepInfo(
 				"Verify that after clicking on project,selecting the other project from header in which DAU is Reviewer,it should redirect to Reviewer homepage ,again if selects any project from header ,then it should redirect to reviewer for selected project.");
+		
+		SoftAssert softassert = new SoftAssert();
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		
 		userManage = new UserManagement(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
 		DataSets data = new DataSets(driver);
@@ -972,7 +980,6 @@ public class SecurityGroups_Phase2_Regression {
 		// Login As SA
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
-
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
 		baseClass.waitTime(5);
@@ -1040,6 +1047,12 @@ public class SecurityGroups_Phase2_Regression {
 		userManage = new UserManagement(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
 		DataSets data = new DataSets(driver);
+		
+		SoftAssert softassert = new SoftAssert();
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		
 		String projectName = "PAProject" + Utility.dynamicNameAppender();
 
 		// Login As SA
@@ -2929,7 +2942,7 @@ public class SecurityGroups_Phase2_Regression {
 		userManage.navigateToUsersPAge();
 		userManage.passingUserName(firstname);
 		userManage.applyFilter();
-		userManage.deleteUser();
+		userManage.deleteUser1(projectName);
 		baseClass.passedStep("User is de-activated/deleted successfully");
 
 		baseClass.stepInfo("Impersonate SA to RMU");
