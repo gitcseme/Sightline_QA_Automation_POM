@@ -1553,7 +1553,7 @@ public class SavedSearch_Phase1_Regression3 {
 		// select Other SG and create Search group
 		base.selectsecuritygroup(securityGroup);
 		base.stepInfo("Select Security Group : " + securityGroup);
-		String node2 = saveSearch.createSearchGroupAndReturn(securityTab, "RMU", "");
+		String node2 = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
 
 		// verify default SG search Group Absence in Other SG
 		String passMsgOfOtherSG = node1 + " : is Not Available in Other Security Group";
@@ -2694,6 +2694,7 @@ public class SavedSearch_Phase1_Regression3 {
 	public void verifyExportDocsWithHierarchialNodes() throws InterruptedException {
 
 		ReportsPage report = new ReportsPage(driver);
+		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
 
 		int noOfNodesToCreate = 6, nodeIndex = 0;
 		List<String> newNodeList = new ArrayList<>();
@@ -2723,6 +2724,14 @@ public class SavedSearch_Phase1_Regression3 {
 		// add save search in node
 		session.navigateToSessionSearchPageURL();
 		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		String searchString[] = {Input.searchString5,Input.searchString6};
+
+        for(int i=0;i<searchString.length;i++) {
+            session.getNewSearchButton().waitAndClick(5);
+            session.multipleBasicContentSearch(searchString[i]);
+            session.saveSearchInNodewithChildNode(savedSearchName, nodeToSelect);
+
+        }
 
 		// To Pick Expected Aggregate count
 		session.selectSavedsearchInASWp(nodeToSelect);
@@ -3564,11 +3573,15 @@ public class SavedSearch_Phase1_Regression3 {
 		int Bgcount = base.initialBgCount();
 
 		// Saving additional search under child node
-		session.multipleBasicContentSearch(Input.searchString1);
-		session.saveSearchInNodewithChildNode(savedSearchName, newNodeList.get(1));
-		session.getNewSearchButton().waitAndClick(5);
-		session.multipleBasicContentSearch(Input.searchString2);
-		session.saveSearchInNodewithChildNode(savedSearchName1, newNodeList.get(2));
+		String searchString[] = {Input.searchString5,Input.searchString6};
+		for(int i=0;i<searchString.length;i++) {
+            session.multipleBasicContentSearch(searchString[i]);
+            session.saveSearchInNodewithChildNode(savedSearchName, newNodeList.get(i+1));
+            session.getNewSearchButton().waitAndClick(5);
+            session.multipleBasicContentSearch(searchString[i]);
+            session.saveSearchInNodewithChildNode(savedSearchName, nodeToSelect);
+            session.getNewSearchButton().waitAndClick(5);
+        }
 
 		// To Pick Expected Aggregate count
 		session.selectSavedsearchInASWp(nodeToSelect);

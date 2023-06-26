@@ -918,7 +918,7 @@
 	<!-- Added By Raghuram -->
 	<preBuilt>Pre-Built Models</preBuilt>
 	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
-	<DEPIPTheft>DEP/IP Theft</DEPIPTheft>
+	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
 	<Discrimination>Discrimination</Discrimination>
 	<FCPA>FCPA</FCPA>
 	<NR_Detection>NR Detection</NR_Detection>

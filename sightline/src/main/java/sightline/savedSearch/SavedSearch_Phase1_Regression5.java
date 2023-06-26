@@ -88,7 +88,7 @@ public class SavedSearch_Phase1_Regression5 {
 		saveSearch.uploadBatchFile_D(Input.errorQueryFileLocation,fileName,true);
 		
 		baseClass.stepInfo("Click on select button");
-		saveSearch.getSubmitToUpload().Click();
+		saveSearch.getSubmitToUpload().waitAndClick(10);;
 		
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
