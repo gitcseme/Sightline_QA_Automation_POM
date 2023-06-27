@@ -29,7 +29,7 @@ public class Input {
 
 	
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -1442,6 +1442,7 @@ public class Input {
 		docIDs = testData.getDocIDs();
 
 		// Docview Analytics Mohan Indium
+		sourceLocation=testData.getSourceLocation();
 		Panel = testData.getPanel();
 		AssgnName = testData.getAssgnName();
 		SavedSearch = testData.getSavedSearch();
@@ -2265,7 +2266,6 @@ public class Input {
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
 		sourceSystem = testData.getSourceSystem();
-//		sourceLocation = testData.getSourceLocation();
 		sourceFolder = testData.getSourceFolder();
 		fieldSeperator = testData.getFieldSeperator();
 		textQualifier = testData.getTextQualifier();

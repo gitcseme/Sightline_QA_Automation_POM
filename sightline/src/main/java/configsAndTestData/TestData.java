@@ -404,6 +404,7 @@ public class TestData {
 	public String analyzeAt3;
 	public String collectionPageUrl;
 	public String sourceLocationPageUrl;
+	public String sourceLocation;
 	public String collectionDataEmailId;
 	public String collectionDataFirstName;
 	public String collectionDataLastName;
@@ -810,7 +811,6 @@ public class TestData {
 	public String ingestionProjectName;
 	public String ingestionType;
 	public String sourceSystem;
-//	public String sourceLocation;
 	public String sourceFolder;
 	public String fieldSeperator;
 	public String textQualifier;
