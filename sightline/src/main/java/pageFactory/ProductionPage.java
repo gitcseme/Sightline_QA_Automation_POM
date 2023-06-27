@@ -350,7 +350,10 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				".//*[@id='TIFFContainer']//input[@name='CommonTIFFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i");
 	}
-
+	public Element getChooseTag1() {
+		return driver.FindElementByXPath(
+				"//div[contains(@placeholder,'Enter placeholder text for natively produced docs')]");
+	}
 	public Element getPDF_EnterBranding() {
 		return driver.FindElementByXPath(
 				".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
