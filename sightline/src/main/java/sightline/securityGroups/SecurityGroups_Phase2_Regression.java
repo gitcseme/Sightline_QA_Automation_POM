@@ -2158,10 +2158,15 @@ public class SecurityGroups_Phase2_Regression {
 		driver.waitForPageToBeReady();
 		page = new ProductionPage(driver);
 		String productionname1 = "p" + Utility.dynamicNameAppender();
+		this.driver.getWebDriver().get(Input.url+"Production/Home");
+		driver.waitForPageToBeReady();
 		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
 		page.verifyingComponentTabSection();
 		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url+"Production/Home");
+		driver.waitForPageToBeReady();
 		page = new ProductionPage(driver);
+		
 		page.baseInfoLoadTemplate(productionname1, Templatename);
 		page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
 		page.getCheckBoxCheckedVerification(page.chkIsTIFFSelected());
@@ -2311,6 +2316,9 @@ public class SecurityGroups_Phase2_Regression {
 		driver.scrollingToBottomofAPage();
 		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
 		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		
+		page.getChooseTag1().SendKeys("Technical_Issue");
+		
 		page.clickMArkCompleteMutipleTimes(3);
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
@@ -2520,7 +2528,7 @@ public class SecurityGroups_Phase2_Regression {
 		// verify warning message
 		String Actualwarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
 		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
-		String expectWarningmsg = "You have elected to regenerate and overwrite all previous values for the four Security Group-specific email inclusiveness and email duplicate fields. This will wipe away all prior stored data for these attributes, and will overlay new values for each record currently in the Security Group. No prior work product or logic will be undone, which may mean that your Assignments and workflow may need to be altered. Do you want to proceed?";
+		String expectWarningmsg = "“Use Security Group-Specific Email Inclusive and Email Duplicate data” will enable the security group users to view security group specific email inclusive and email duplicate data. You must run \"Regenerate Email Inclusive and Email Duplicate attributes for Security Group\" in order to generate the security group specific email inclusive and duplicate data. Do you want to continue?.";
 		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
 		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
 		baseClass.passedStep("Warning message is displayed successfully");
