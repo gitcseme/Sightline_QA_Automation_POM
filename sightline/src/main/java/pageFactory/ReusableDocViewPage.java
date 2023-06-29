@@ -56,7 +56,7 @@ public class ReusableDocViewPage {
 	//public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//child::a[@id='Save']");}
 	public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingForms']//child::a[@id='Save']");}
 //	Coding Stamp button
-	public Element getCodingFormStampButton() {return driver.FindElementById("SaveUserStamps");}
+	public Element getCodingFormStampButton() {return driver.FindElementById("divSaveUserStamps");}
 //	Stamp Name text box
 	public Element getCodingStampTextBox() {return driver.FindElementById("txtStampName");}
 //	coding stamp editing mode text box
@@ -64,7 +64,7 @@ public class ReusableDocViewPage {
 	public Element getDrp_CodingEditStampColour() {return driver.FindElementByXPath("//div//dl[@id='ddlEditStamps']");}
 	public Element getVerifyPopUpColour() {return driver.FindElementByXPath("//div//dl[@id='ddlEditStamps']//dt//a");}
 //	coding Stamp drop down
-	public Element getDrp_StampColour() {return driver.FindElementById("stampSelect");}
+	public Element getDrp_StampColour() {return driver.FindElementByXPath("//dl[@id='stampSelect']");}
 //	coding stamp save button
 	public Element getCodingStampSaveBtn() {return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save']");}
 //	coding stamp save this form button
@@ -436,6 +436,8 @@ public class ReusableDocViewPage {
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(15);
 		softAssertion.assertEquals(getCodingFormSaveButton().isDisplayed().booleanValue(), true);
+		driver.waitForPageToBeReady();
+        base.CloseSuccessMsgpopup();
 		base.stepInfo("Excepted Message:Document completed successfully");
 			
 	}
@@ -1468,9 +1470,16 @@ public class ReusableDocViewPage {
 		getEditAssignedColour(colour).waitAndClick(10);
 		base.waitForElement(getCodingStampEditTextBox());
 		getCodingStampEditTextBox().SendKeys(fieldValue);
+		if(getCodingStampSaveThisFormBtn().isElementAvailable(10)) {
 		base.waitForElement(getCodingStampSaveThisFormBtn());
 		getCodingStampSaveThisFormBtn().waitAndClick(10);
-		base.passedStep("User successfully edited the colour and text in coding stamp");		
+		}else {
+			DocViewPage docViewPage=new DocViewPage(driver);
+			base.waitForElement(docViewPage.getCodingStampSaveButton());
+			docViewPage.getCodingStampSaveButton().waitAndClick(5);
+			
+		}
+		base.passedStep("User successfully edited the colour and text in coding stamp")	;	
 	}
 	/**
 	 * @author Iyappan.Kasinathan
