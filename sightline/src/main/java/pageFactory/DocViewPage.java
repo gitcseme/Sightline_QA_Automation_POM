@@ -29396,13 +29396,6 @@ public String getRequiredDocs(String reqDocsType) {
     return document;
 }
 
-public void getDocViewDocsanalyticspacnel(){
-	
-	if(getemptytab().isElementPresent())
-	{
-		
-	}
-}
 	
 	public void getDocViewDocsRedactIcon(){
 		driver.waitForPageToBeReady();
