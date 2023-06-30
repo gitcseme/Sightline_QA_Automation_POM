@@ -133,7 +133,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.familyDocument);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
 
 		// FamilyMember tab View All Documents
 		driver.waitForPageToBeReady();
@@ -195,7 +195,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
 		// FamilyMember tab View All Documents
 		driver.waitForPageToBeReady();
@@ -495,7 +495,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 		baseClass.stepInfo("Step 4: Verify 'Conceptually Similar Documents' tab in the analytics panel");
 		driver.waitForPageToBeReady();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docId1);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		driver.waitForPageToBeReady();
 
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -1061,7 +1061,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 		baseClass.passedStep(
 				"Threaded documents for the selected document from mini doc list is displayed.LoadEmailThreadings_A order by DocumentID asc");
 
-		driver.waitForPageToBeReady();
+		//driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as DA
@@ -1076,6 +1076,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
 		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
@@ -1100,6 +1101,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
 		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
@@ -1124,6 +1126,7 @@ public class DocViewAnalyticsPanel_EmailThreadMap_Regression {
 
 		baseClass.stepInfo("Step 3: Verify 'Thread Map' tab in the analytics panel");
 		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 

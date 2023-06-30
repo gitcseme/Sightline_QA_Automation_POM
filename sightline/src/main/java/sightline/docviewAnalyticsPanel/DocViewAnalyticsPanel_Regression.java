@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -50,8 +52,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -109,7 +110,7 @@ public class DocViewAnalyticsPanel_Regression {
 			throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51358");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
 
 		baseClass.stepInfo("Verify tool tip should be displayed for each column on thread map");
 
@@ -137,7 +138,7 @@ public class DocViewAnalyticsPanel_Regression {
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
 		docView.verifyThreadDocsDisplayDocsInToolTips(docId);
 		docView.verifyThreadDocsDisplayDocsInToolTips(author);
@@ -200,10 +201,12 @@ public class DocViewAnalyticsPanel_Regression {
 		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
 		baseClass.passedStep("" + docidinchildwinodw + "is present in NearDupe window");
 
+		
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
 		loginPage.logout();
+		
 
 	}
 
@@ -237,7 +240,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// Select Docid from MiniDocList
 
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		baseClass.stepInfo("For inclusive email docs -I should be displayed on thread map tab of analytics panel");
@@ -352,7 +355,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// select docs and perform code same as
 		baseClass.stepInfo("Step 2: Select multiple documents from conceptual and action as 'Code same as this'");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		docView.selectDocsFromConceptualTabAndActionCodeSame();
 
 		// select docs which are not marked as code same as
@@ -410,7 +413,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+	
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -434,7 +437,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -543,7 +546,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo(
 				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select docs from family member and action as code same as
 		docView.selectDocsFromThreadMapTabAndActionCodeSame();
 
@@ -569,6 +572,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo(
 				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
 		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select docs from ThreadMap and action as code same as
 		docView.selectDocsFromThreadMapTabAndActionCodeSame();
 
@@ -706,7 +710,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Step 3 : Docs are selected and viewed In MiniDocList successfully");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocIdInMiniDocList(docId);
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -761,7 +765,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// Select docs from Mini docs List and perform action
 		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
 		// verify navigate to other tab link not to be present
 		baseClass.stepInfo("Step 4: Navigate to Near Dupe tab from thread map tab and again click the thread map tab");
@@ -852,7 +856,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// Select docs from Mini docs List and perform action
 		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
 		// verify navigate to other tab link not to be present
 		baseClass.stepInfo("Step 4: Navigate to Conceptual tab from thread map tab and again click the thread map tab");
@@ -1140,6 +1144,7 @@ public class DocViewAnalyticsPanel_Regression {
 		driver.waitForPageToBeReady();
 		docList.checkConceptuallySimilarDoc();
 //		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
@@ -1171,8 +1176,9 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		docList.checkConceptuallySimilarDoc();
 //		docView.selectDocIdInMiniDocList(Input.conceptualDocIdForReviewer01);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		// perform code same as NearDupe Documents
-		docView.selectDocsFromConceptualTabAndActionCodeSame();
+		docView.performCodeSameForConceptualDocuments();
 
 		// Edit coding Form and complete Action
 		docView.editCodingFormComplete();
@@ -1371,7 +1377,7 @@ public class DocViewAnalyticsPanel_Regression {
 		// FamilyMember and perform code same as
 		baseClass.stepInfo("Step 4: select documents from family member and action as 'Code Same as this'");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		//docView.selectDocIdInMiniDocList(docsToBeSelected);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// Select Docs from family member and action As Remove Code Same As
@@ -1468,7 +1474,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
 		docList.checkThreadMapDoc();
-		docViewPage.selectDocIdInMiniDocList(Input.threadDocId);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		docViewPage.performViewDocumentFromThreadMapTab();
 
 		baseClass.stepInfo("Step 4: Once document is loaded check the Coding Form/ metadata from respective panels");
@@ -1516,7 +1522,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
-		assignmentsPage.SelectAssignmentByReviewer("assgnment7083398");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
 
 		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
 		docViewPage.performViewDocumentFromThreadMapTab();
@@ -1654,7 +1660,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// select docs and perform code same as
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
 
 		docView.checkCodeSameAsIsDisableFamilyMember();
 
@@ -1696,7 +1702,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(documentToBeSelected);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		docView.selectDocsFromMiniDocsListAndCheckTheThreadedDocsSize();
@@ -1873,7 +1879,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
 		baseClass.impersonateRMUtoReviewer();
 		assignmentsPage.SelectAssignmentByReviewer(assname);
-
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		baseClass.stepInfo("Step 3: Select docs from Analytics Panel > Conceptual and action as 'Code same as this'");
 		docView.performCodeSameForConceptualDocuments();
 
@@ -1893,7 +1899,7 @@ public class DocViewAnalyticsPanel_Regression {
 		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
 
 		assignmentsPage.SelectAssignmentByReviewer(assname);
-
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		baseClass.stepInfo("Step 3: Select docs from Analytics Panel > Conceptual and action as 'Code same as this'");
 		driver.waitForPageToBeReady();
 		// perform code same for conceptual documents
@@ -2049,8 +2055,8 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
-
+		//docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();
 		docView.performThreadMapViewInDocList();
@@ -2071,7 +2077,8 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// select Doc In MiniDoc List
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		//docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
 		// threadmap tab View in DocList
 		driver.scrollPageToTop();
@@ -2173,7 +2180,7 @@ public class DocViewAnalyticsPanel_Regression {
 
 		// To view the NearDupe Doc in the DocView
 		sessionSearch.ViewNearDupeDocumentsInDocView();
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocument);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 		driver.waitForPageToBeReady();
 		docView.popOutAnalyticsPanel();
 		driver.waitForPageToBeReady();
@@ -2296,8 +2303,28 @@ public class DocViewAnalyticsPanel_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
+			try {
+				
+				Alert alert = driver.getWebDriver().switchTo().alert();
+				String alertText = alert.getText();
+				System.out.println("Alert data: " + alertText);
+				UtilityLog.info("Alert data: " + alertText);
+				alert.accept();
+			} catch (NoAlertPresentException e) {
+				// e.printStackTrace();
+			}
 			try { // if any tc failed and dint logout!
 				loginPage.logoutWithoutAssert();
+try {
+					
+					Alert alert = driver.getWebDriver().switchTo().alert();
+					String alertText = alert.getText();
+					System.out.println("Alert data: " + alertText);
+					UtilityLog.info("Alert data: " + alertText);
+					alert.accept();
+				} catch (NoAlertPresentException e) {
+					// e.printStackTrace();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

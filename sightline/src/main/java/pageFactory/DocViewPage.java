@@ -577,6 +577,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public Element getRemarkDateandTime()
 	{ return driver.FindElementByXPath("//*[@id='newRemarks']//small");}
 	
+	public Element getemptytab()
+	{ return driver.FindElementByXPath("//div[contains(text(),'Your query returned no data')]");}
+	
 	public Element getDocView_ThreadedChild_Selectalldoc() {
 		return driver.FindElementById("threadMapSelectRows");
 	}
@@ -8271,7 +8274,40 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}
 
 	}
+	public void selectDocAndVerifyInMetaData2() {
 
+		try {
+			driver.waitForPageToBeReady();
+			//selectDocIdInMiniDocList(text);
+			driver.waitForPageToBeReady();
+			//base.waitForElement(getMetaDataDocId(text));
+			//getMetaDataDocId(text).ScrollTo();
+			//String text2 = getMetaDataDocId(text).getText();
+			//softAssertion.assertEquals(text, text2);
+			base.passedStep(
+					"Metadata panel for AttachDocID document ID which is an attachment for the document is displayed successfully");
+
+			driver.waitForPageToBeReady();
+			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+			driver.waitForPageToBeReady();
+			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
+			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+			getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+
+			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+			getDocView_Analytics_liDocumentThreadMap().Click();
+
+			base.waitForElement(getDocView_Analytics_NoQuery());
+			softAssertion.assertTrue(getDocView_Analytics_NoQuery().isDisplayed());
+			softAssertion.assertAll();
+			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Doc are verified successfully");
+		}
+
+	}
 	/**
 	 * @Author Mohan Created on 15/09/2021
 	 * @Description To select docs and verify In Meta data panel
@@ -10700,10 +10736,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 			// getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 
-			for (int i = 2; i <= 3; i++) {
-				base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
-				getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
-			}
+			
+				base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(1));
+				getDocView_Analytics_ThreadedDocument_Doc(1).waitAndClick(10);
+			
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(10);
@@ -12559,12 +12595,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			driver.getPageSource();
 
-			for (int i = 1; i <= 2; i++) {
-				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
-				driver.getPageSource();
-				System.out.println(getDocView_Analytics_FamilyMember_DocCheckBox(i));
-				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
-			}
+			selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
+			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(15);
+				getDocView_Analytics_FamilyMember_DocCheckBox(2).waitAndClick(15);
+			
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(10);
 
@@ -12608,14 +12642,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			driver.waitForPageToBeReady();
 			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-//			getDocView_Analytics_FamilyTab().ScrollTo();
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
-
+			
 			driver.waitForPageToBeReady();
-			for (int i = 1; i <= 2; i++) {
-				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
-				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
-			}
+			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(15);
+			getDocView_Analytics_FamilyMember_DocCheckBox(2).waitAndClick(15);
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(10);
 
@@ -14361,12 +14392,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			driver.waitForPageToBeReady();
 			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+			//getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 
-			for (int i = 2; i <= 3; i++) {
-				base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
-				getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
-			}
+				base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(1));
+				getDocView_Analytics_ThreadedDocument_Doc(1).waitAndClick(10);
+			
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(10);
 
@@ -18297,14 +18327,15 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	/**
 	 * @author Vijaya.Rani 27/12/21 NA Modified date:29/12/2021 Modified
 	 *         by:Vijaya.Rani
+	 * @throws InterruptedException 
 	 * @description to verify 'View in Doclist' is not visible in ThreadMap Tab
 	 */
-	public void performThreadMapViewInDocList() {
+	public void performThreadMapViewInDocList() throws InterruptedException {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
-
+		selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		for (int i = 2; i <= 3; i++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
@@ -29365,7 +29396,13 @@ public String getRequiredDocs(String reqDocsType) {
     return document;
 }
 
+public void getDocViewDocsanalyticspacnel(){
 	
+	if(getemptytab().isElementPresent())
+	{
+		
+	}
+}
 	
 	public void getDocViewDocsRedactIcon(){
 		driver.waitForPageToBeReady();

@@ -49,8 +49,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -137,6 +136,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		baseClass.stepInfo(
 				"Step 3: Select the documents from analytics panel outside of the assignment and select action as 'Code same as this'");
+		
 		docView.selectDocIdInMiniDocList(docToBeSelected);
 		docView.verifyErrorMsgForActionCodeSameAsInConceptual();
 
@@ -148,8 +148,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
-
-		docView.selectDocIdInMiniDocList("H16135-0188-003836");
+		docView.selectDocIdInMiniDocList("STC4_00000560");
+		
 		baseClass.stepInfo(
 				"Step 3: Select the documents from analytics panel outside of the assignment and select action as 'Code same as this'");
 		docView.verifyErrorMsgForActionCodeSameAsInConceptual();
@@ -434,7 +434,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		docView.selectDocsFromFamilyMemberAndViewTheDocument();
 		docView.editCodingFormSave();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		//docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		baseClass.stepInfo("Step 4: Edit the coding form and save");
@@ -459,12 +459,6 @@ public class DocViewAnalyticsPanel_Regression1 {
 		docView.getDocView_NumTextBox().Clear();
 		docView.getDocView_NumTextBox().SendKeys(Integer.toString(id));
 		docView.getDocView_NumTextBox().Enter();
-
-		docView.selectDocsFromFamilyMemberAndViewTheDocument();
-		docView.editCodingFormSave();
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
-		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
-
 		baseClass.stepInfo("Step 4: Edit the coding form and save");
 		docView.selectDocsFromFamilyMemberAndViewTheDocument();
 		docView.editCodingFormSave();
@@ -828,7 +822,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(docsToBeSelected);
+		//docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -853,7 +847,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		//docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -863,7 +857,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		// verify Check Mark Icon
 		docView.verifyCheckMark();
-
+		loginPage.logout();
 	}
 
 	/**
@@ -1096,8 +1090,8 @@ public class DocViewAnalyticsPanel_Regression1 {
 
 		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
 		baseClass.impersonateSAtoRMU();
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.bulkAssignThreadedDocs();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
@@ -1105,7 +1099,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		docView.performThreadMapViewInDocList();
 		loginPage.logout();
 
@@ -1116,7 +1110,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		docView.performThreadMapViewInDocList();
 		loginPage.logout();
 
@@ -1127,7 +1121,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
-		docView.selectDocIdInMiniDocList(Input.threadDocId);
+		
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performThreadMapViewInDocList();
 		loginPage.logout();
@@ -1415,7 +1409,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performConceptualSelectSetOfDocsActionViewInDocList();
 		loginPage.logout();
@@ -1427,7 +1421,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performConceptualSelectSetOfDocsActionViewInDocList();
 		loginPage.logout();
@@ -1439,7 +1433,7 @@ public class DocViewAnalyticsPanel_Regression1 {
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.conceptualDocId1);
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 		baseClass.stepInfo("Step 3: Select document and click View All In Doc List");
 		docView.performConceptualSelectSetOfDocsActionViewInDocList();
 		loginPage.logout();
