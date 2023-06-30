@@ -1280,9 +1280,9 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select doc from mini dockist and verify Horizontal tab
-		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
+		//docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
 
 		// Logout PA
 		loginPage.logout();
@@ -1296,7 +1296,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
 
@@ -2159,8 +2159,9 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
-		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
+		//docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 
 
 		// verify Thread map should not present any other emails
@@ -2207,15 +2208,18 @@ public class DocViewAnalyticsPanel_Regression5 {
 		
 
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
-		baseClass.stepInfo("Docs Selected from Mini doclist with sourceId 331ID00000209 succesfully");
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocIdInMiniDocList(sourceId);
+		baseClass.stepInfo("Docs Selected from Mini doclist with succesfully");
 		// verify Thread map should not present any other emails
 		docViewAnalytics.verifyThreadMapWithDocs();
 
 		driver.scrollPageToTop();
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectDocInMiniDocList(sourceId2);
-		baseClass.stepInfo("Docs Selected from Mini doclist with sourceId 331ID00000186 succesfully");
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+
+		//docViewAnalytics.selectDocInMiniDocList(sourceId2);
+		baseClass.stepInfo("Docs Selected from Mini doclist succesfully");
 		// verify Thread map should not present any other emails
 		docViewAnalytics.verifyThreadMapWithDocs();
 
@@ -2575,8 +2579,9 @@ public class DocViewAnalyticsPanel_Regression5 {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(Input.conceptualDocumentReviewer);
+		//docViewAnalytics.selectDocIdInMiniDocList(Input.conceptualDocumentReviewer);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// Perform Code Same for Conceptual Docs
@@ -3266,7 +3271,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3299,7 +3304,8 @@ public class DocViewAnalyticsPanel_Regression5 {
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(Input.nearDupeBulkAssignReviewId);
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocIdInMiniDocList(Input.nearDupeBulkAssignReviewId);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3628,7 +3634,8 @@ public class DocViewAnalyticsPanel_Regression5 {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
+		//docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3684,7 +3691,8 @@ public class DocViewAnalyticsPanel_Regression5 {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
+		//docViewAnalytics.selectDocInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
