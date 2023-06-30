@@ -7568,7 +7568,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			selectSourceDocIdInAvailableField("SourceDocID");
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
-			for (int i = 0; i < 20; i++) {
+			for (int i = 1; i < 20; i++) {
 				try {
 					driver.waitForPageToBeReady();
 //					getDocView_DocId(docId).ScrollTo();
@@ -15752,8 +15752,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		flag = getDocView_HistoryButton().Displayed();
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		flag = getDocView_Analytics_liDocumentThreadMap().Displayed();
+		driver.scrollingToElementofAPage(getCodingFormPanel());
 		base.waitForElement(getCodingFormPanel());
 		flag = getCodingFormPanel().Displayed();
+		driver.scrollingToElementofAPage(getDocView_MetaDataIcon());
 		base.waitForElement(getDocView_MetaDataIcon());
 		flag = getDocView_MetaDataIcon().Displayed();
 		if (flag == true) {
@@ -19834,6 +19836,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action in Child window");
 		base.stepInfo("Validation for non-audio document");
+		base.waitTime(2);
 		clickGearIconOpenCodingFormChildWindow();
 		String parent = switchTochildWindow();
 		stampButtonShouldDisplay();

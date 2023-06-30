@@ -2186,6 +2186,8 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Checking index of comment and metadata for saved document");
 		int pureHit = sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
 
+		System.out.println(size);
+		System.out.println(pureHit);
 		softAssertion.assertEquals(size, pureHit);
 		softAssertion.assertAll();
 
@@ -2402,7 +2404,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getAddComment1().Clear();
 		docViewPage.getAddComment1().SendKeys(comments);
 		baseClass.stepInfo("Coding form input : " + comments);
-
+        driver.scrollPageToTop();
 		// Switch to a different document
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getClickDocviewID(5));
@@ -2410,8 +2412,8 @@ public class DocViewCodingForm_Regression2 {
 
 		// Confirmation message "NO" flow
 		baseClass.stepInfo("NO FLow : Navigation should not be done");
-		baseClass.waitForElement(docViewPage.getNavigationMsgPopupNoBtn());
-		docViewPage.getNavigationMsgPopupNoBtn().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getNavigateNoBtn_cc());
+		docViewPage.getNavigateNoBtn_cc().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		docName = miniDocListpage.getMainWindowActiveDocID().getText();
@@ -2432,8 +2434,8 @@ public class DocViewCodingForm_Regression2 {
 
 		// Confirmation message "YES" flow
 		baseClass.stepInfo("YES FLow : Edits should not be saved and clicked document from the mini doc list should be loaded.");
-		baseClass.waitForElement(docViewPage.getNavigationMsgPopupYesBtn());
-		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getNavigateYesBtn_cc());
+		docViewPage.getNavigateYesBtn_cc().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(miniDocListpage.getMainWindowActiveDocID());
 		secondDocname = miniDocListpage.getMainWindowActiveDocID().getText();
@@ -6136,7 +6138,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 		baseClass.waitTime(5);
 
 		codingForm.ViewCFinDocViewThrSearch(cfName);

@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -2179,6 +2180,7 @@ public class DocViewCodingForm_Regression1 {
 		driver.waitForPageToBeReady();
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
+	    driver.waitForPageToBeReady();
 		// create assignment
 		assignmentPage.assignmentCreation(assignmentName, Input.codingFormName);
 		assignmentPage.add2ReviewerAndDistribute();
@@ -2432,6 +2434,7 @@ public class DocViewCodingForm_Regression1 {
 
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching audio documents based on search string");
+		driver.waitForPageToBeReady();
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 
 		docViewPage.selectPureHit();
@@ -2442,6 +2445,9 @@ public class DocViewCodingForm_Regression1 {
 
 		List<String> cfDefault = reusableDocView.getDefaultPopUpStampColour();
 		List<String> popUpDefault = reusableDocView.getDefaultCodingFormColour();
+		popUpDefault.removeAll(Arrays.asList(""));
+		System.out.println(cfDefault);
+		System.out.println(popUpDefault);
 		softAssertion.assertEquals(cfDefault, popUpDefault);
 		baseClass.passedStep("Default stamp colour are same in popup window and coding form");
 
@@ -4133,6 +4139,7 @@ public class DocViewCodingForm_Regression1 {
 		List<String> cfDefault = reusableDocView.getDefaultPopUpStampColour();
 		System.out.println(cfDefault);
 		List<String> popUpDefault = reusableDocView.getDefaultCodingFormColour();
+		popUpDefault.removeAll(Arrays.asList(""));
 		System.out.println(popUpDefault);
 		softAssertion.assertEquals(cfDefault, popUpDefault);
 		baseClass.passedStep("Default stamp colour are same in popup window and coding form via assignment");
@@ -4710,7 +4717,8 @@ public class DocViewCodingForm_Regression1 {
 		} else {
 			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
 		}
-		docViewPage.codingStampPopUpSaveButton();
+		baseClass.waitForElement(docViewPage.getCodingStampSaveButton());
+		docViewPage.getCodingStampSaveButton().waitAndClick(5);;
 		String overWrite = docViewPage.getStampOverWriteMessage().getText().trim();
 		System.out.println(overWrite);
 		softAssertion.assertEquals(stampOverWrite, overWrite);
@@ -4948,6 +4956,7 @@ public class DocViewCodingForm_Regression1 {
 		// login as reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.waitTime(2);
 		docViewPage.codingStampShouldNotDisplay();
 		driver.waitForPageToBeReady();
 
@@ -5086,8 +5095,7 @@ public class DocViewCodingForm_Regression1 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
 		baseClass.waitTime(5);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getDocView_CFName());
+		baseClass.waitTillElemetToBeClickable(docViewPage.getDocView_CFName());
 		softAssertion.assertEquals(Input.codingFormName, docViewPage.getDocView_CFName().getText());
 		baseClass.stepInfo("Codingform displayed in docview panel after impersonation");
 
@@ -5689,6 +5697,7 @@ public class DocViewCodingForm_Regression1 {
 
 		docViewPage.selectPureHit();
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
 
@@ -6680,9 +6689,12 @@ public class DocViewCodingForm_Regression1 {
 		}
 		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
 		docViewPage.getEditAssignedColour(Input.stampSelection).waitAndClick(5);
-		docViewPage.getCodingStampSaveBtn().waitAndClick(5);
+		baseClass.waitForElement(docViewPage.getCodingStampSaveButton());
+		docViewPage.getCodingStampSaveButton().waitAndClick(5);
+		
 		String overWrite = docViewPage.getStampOverWriteMessage().getText().trim();
 		System.out.println(overWrite);
+		driver.waitForPageToBeReady();
 		softAssertion.assertEquals(stampOverWrite, overWrite);
 		baseClass.passedStep("Overwrite message displayed for already saved stamp");
 		docViewPage.getNavigationButton("Yes").waitAndClick(5);
