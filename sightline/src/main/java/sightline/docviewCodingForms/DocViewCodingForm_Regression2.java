@@ -29,6 +29,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
+import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SavedSearch;
@@ -1916,7 +1917,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 
 		// verify the coding form panel
 		codingForm = new CodingForm(driver);
@@ -3611,7 +3612,6 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getViewCodingCloseButton().waitAndClick(5);
 		baseClass.waitForElement(docViewPage.getDeletePopUpAssignedColour());
 		docViewPage.getDeletePopUpAssignedColour().waitAndClick(10);
-		softAssertion.assertAll();
 		// logout
 		loginPage.logout();
 	}
@@ -3829,7 +3829,8 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Stamp renamed successfully");
 
 		// validation after renaming the stamp name
-		docViewPage.codingStampPopUpSaveButton();
+		baseClass.waitForElement(docViewPage.getCodingStampSaveButton());
+		docViewPage.getCodingStampSaveButton().waitAndClick(5);
 		baseClass.passedStep("Confirmation message displayd for renaming stamp name with YES and NO button");
 		baseClass.waitForElement(docViewPage.getStampOverWriteMessage());
 		String overWriteNO = docViewPage.getStampOverWriteMessage().getText().trim();
@@ -3842,7 +3843,8 @@ public class DocViewCodingForm_Regression2 {
 		softAssertion.assertFalse(notOverWrited);
 
 		// Using Yes button
-		docViewPage.codingStampPopUpSaveButton();
+		baseClass.waitForElement(docViewPage.getCodingStampSaveButton());
+		docViewPage.getCodingStampSaveButton().waitAndClick(5);
 		baseClass.passedStep("Confirmation message displayd for renaming stamp name with YES and NO button");
 		baseClass.waitForElement(docViewPage.getStampOverWriteMessageLast());
 		String overWriteYES = docViewPage.getStampOverWriteMessageLast().getText().trim();
@@ -5903,8 +5905,10 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52102");
 		baseClass.stepInfo("Verify on click of 'Save and Next' coding form should be "
 				+ "validated as per the customized coding form for Editable Metadata objects");
-		String cfName = "CF" + Utility.dynamicNameAppender();
-		String passingValue = "Edit" + Utility.dynamicNameAppender();
+		ProductionPage page=new ProductionPage(driver);
+	
+		String cfName = "CF" + page.getRandomNumber(3);
+		String passingValue = "Edit" + page.getRandomNumber(3);
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -8146,7 +8150,7 @@ public class DocViewCodingForm_Regression2 {
 		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
 		baseClass.passedStep("Got navigation confirmation message successfully");
 		docViewPage.verifyNavigationPopUpButtons();
-		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
+		docViewPage.getNavigateYesBtn_cc().waitAndClick(5);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8194,7 +8198,7 @@ public class DocViewCodingForm_Regression2 {
 		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
 		baseClass.passedStep("Got navigation confirmation message successfully");
 		docViewPage.verifyNavigationPopUpButtons();
-		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
+		docViewPage.getNavigateYesBtn_cc().waitAndClick(5);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8248,7 +8252,7 @@ public class DocViewCodingForm_Regression2 {
 		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
 		baseClass.passedStep("Got navigation confirmation message successfully");
 		docViewPage.verifyNavigationPopUpButtons();
-		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
+		docViewPage.getNavigateYesBtn_cc().waitAndClick(5);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8305,7 +8309,7 @@ public class DocViewCodingForm_Regression2 {
 		softAssertion.assertEquals(navigationConfirmationMsg, actualMsg);
 		baseClass.passedStep("Got navigation confirmation message successfully");
 		docViewPage.verifyNavigationPopUpButtons();
-		docViewPage.getNavigationMsgPopupYesBtn().waitAndClick(10);
+		docViewPage.getNavigateYesBtn_cc().waitAndClick(5);
 		loginPage.loginToSightLine(username, password);
 		sessionSearch.basicContentSearch("null");
 		sessionSearch.ViewInDocView();

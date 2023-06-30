@@ -2419,7 +2419,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	}
 
 	public Element getCodingFormPanel() {
-		return driver.FindElementById("divLastCodeAndClassification");
+		return driver.FindElementByXPath("//ul[@id='lastCode']");
 	}
 
 	public Element getVerifyStamp() {
@@ -3260,12 +3260,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	// Added by Baskar -14/02/2022
 	// View coding stamp popup window
 	public Element getViewCodingStamp_PopUpWindow() {
-		return driver.FindElementByXPath("//span[text()='View Coding Stamp']");
+		return driver.FindElementByXPath("//*[text()='View Coding Stamp']");
 	}
 
 	// Edit coding stamp Popup window
 	public Element getEditCodingStamp_PopUpWindow() {
-		return driver.FindElementByXPath("//span[text()='Edit Coding Stamp']");
+		return driver.FindElementByXPath("//*[text()='Edit Coding Stamp']");
 	}
 
 	// Added by Gopinath - 17/02/2022
@@ -14496,12 +14496,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyNavigationPopUpButtons() {
 		driver.waitForPageToBeReady();
-		if (getNavigationMsgPopupYesBtn().Displayed() == true) {
+		if (getNavigateYesBtn_cc().Displayed() == true) {
 			base.passedStep("Navigation popup yes button is dsiplayed");
 		} else {
 			base.failedStep("Navigation popup yes button is not dsiplayed");
 		}
-		if (getNavigationMsgPopupNoBtn().Displayed() == true) {
+		if (getNavigateNoBtn_cc().Displayed() == true) {
 			base.passedStep("Navigation popup no button is dsiplayed");
 		} else {
 			base.failedStep("Navigation popup no button is not dsiplayed");
@@ -16135,10 +16135,13 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		base.stepInfo("Performing action from child window");
 		reusableDocView.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnDoc = getVerifyPrincipalDocument().getText();
 		reusableDocView.switchToNewWindow(2);
+		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		reusableDocView.switchToNewWindow(1);
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnSecDoc = getVerifyPrincipalDocument().getText();
@@ -17598,6 +17601,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 //	Reusable method for switch child window
 	public void switchToNewWindow(int windowNumber) {
+		driver.waitForPageToBeReady();
 		Set<String> s = driver.getWebDriver().getWindowHandles();
 		Iterator<String> ite = s.iterator();
 		int i = 1;

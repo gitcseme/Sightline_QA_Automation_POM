@@ -586,6 +586,14 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[" + taskRow + "]//td[" + dataCol + "]");
 	}
 
+	public Element getProjectFieldTab() {
+		return driver.FindElementByXPath("//div[@id='fieldJSTree']//ul//li");
+		
+	}
+	public Element getProjectFieldOpenTab() {
+		return driver.FindElementByXPath("//div[@id='fieldJSTree']//ul//li/i");
+		
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -764,6 +772,11 @@ public class SecurityGroupsPage {
 		bc.waitForElement(getProjectFieldLabel());
 		bc.waitTillElemetToBeClickable(getProjectFieldLabel());
 		getProjectFieldLabel().waitAndClick(10);
+		boolean Flag=getProjectFieldTab().GetAttribute("class").contains("closed");
+		if(Flag==true) {
+			getProjectFieldOpenTab().waitAndClick(5);
+		}
+		
 		bc.waitForElement(getSG_ProjectField(projectTag));
 		bc.waitTillElemetToBeClickable(getSG_ProjectField(projectTag));
 		getSG_ProjectField(projectTag).waitAndClick(10);
