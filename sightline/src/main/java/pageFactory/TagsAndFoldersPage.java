@@ -166,6 +166,10 @@ public class TagsAndFoldersPage {
 		return driver.FindElementByXPath("//li[@id='1']//i[@class='jstree-icon jstree-ocl']");
 	}
 
+	public Element getDefaultTagsandfolderArrow() {
+		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-ocl']");
+	}
+
 	public ElementCollection getDefaultTagsCount() {
 		return driver.FindElementsByXPath("//a[@data-content='Default Tags']/following-sibling::ul/li");
 	}
