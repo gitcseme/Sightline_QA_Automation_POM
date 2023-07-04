@@ -964,6 +964,7 @@ public class smoke_Indium {
 		List<String> custodianDetails = new ArrayList();
 
 		String collectionEmailId = Input.collectionDataEmailId;
+		String custodianListval=Input.collectionDatalistval;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
@@ -1041,8 +1042,8 @@ public class smoke_Indium {
 			// Initiate collection process
 			collection.selectInitiateCollectionOrClickNext(true, true, true);
 			
-			collection.fillinDS(collectionNewName, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
-					selectedFolder1, headerListDS, "Button", 3, false, "Save", true, null);
+			collection.fillinDS(collectionNewName,custodianListval, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
+					selectedFolder1, headerListDS, "Button", 3, false, "Save", true, false,false,"",false,"", null);
 
 			
 			

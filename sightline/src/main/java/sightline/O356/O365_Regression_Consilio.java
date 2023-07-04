@@ -167,6 +167,7 @@ public class O365_Regression_Consilio {
 		
 		String[][] userRolesData = { { userName, role, "SA" } };
 		String collectionEmailId = Input.collectionJebEmailId;
+		String collectiondatalistVal=Input.collectionJebDatalistval;
 		String firstName = "Jeb";
 		String lastName = "Bush";
 		String selectedApp = Input.collectionDataselectedApp;
@@ -212,8 +213,9 @@ public class O365_Regression_Consilio {
 				collection.selectInitiateCollectionOrClickNext(true, true, true);
  
 				// DataSet creation with selected subFolder as per Test data
-				collection.fillinDS(CollectionName, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
-						selectedFolder, headerListDS, "Button", 3, false, "Save", true, subFolderName);
+				collection.fillinDS(CollectionName,collectiondatalistVal, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
+						selectedFolder, headerListDS, "Button", 3, false, "Save",false,false,false,"",true,
+						subFolderName,"");
 
 				// Start A Collection
 				collection.clickOnNextAndStartAnCollection();
