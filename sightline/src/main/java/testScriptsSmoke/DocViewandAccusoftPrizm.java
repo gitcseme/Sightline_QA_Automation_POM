@@ -462,7 +462,7 @@ public class DocViewandAccusoftPrizm {
 		tagPage.selectallTagRoot();
 		tagPage.createTagGroup(Input.securityGroup, tagGroupName, "Success", null);
 		baseClass.waitForElement(tagPage.getTagNameDataCon(tagGroupName));
-		tagPage.getDefaultTagsandfolderArrow().waitAndClick(20);
+		
 		tagPage.getTagNameDataCon(tagGroupName).waitAndClick(20);
 		tagPage.CreateTagCC(TagName, Input.securityGroup);
 		baseClass.waitForElement(tagPage.getTagNameDataCon(tagGroupName));

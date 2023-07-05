@@ -642,9 +642,7 @@ public class SessionSearch {
 				"((//h4[text()='Tags']//following::div[@class='panel-collapse']//ul[@class='jstree-children'])[1]//a[text()='"
 						+ tagName + "']//i)[1]");
 	}
-	public Element getDefaultTagsandfolderArrow() {
-		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-ocl']");
-	}
+	
 	// Conceptual
 	public Element getAs_Conceptual() {
 		return driver.FindElementByXPath("//button[@id='conceptual']");
@@ -3443,7 +3441,7 @@ public class SessionSearch {
 
 		base.waitForElement(getBulkTagAction());
 		getBulkTagAction().waitAndClick(10);
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+		
 		base.waitForElement(getSelectTagExisting(tagName));
 		driver.waitForPageToBeReady();
 		getSelectTagExisting(tagName).waitAndClick(5);
@@ -3904,7 +3902,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getBulkUntagbutton().Click();
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectTagExisting(TagName).Visible();
@@ -3957,7 +3955,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getBulkUnFolderbutton().Click();
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectFolderExisting(folderName).Visible();
@@ -4651,7 +4649,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		driver.waitForPageToBeReady();
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+		
 		getSelectAssignmentExisting(assignmentName).Click();
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
@@ -9211,7 +9209,7 @@ public class SessionSearch {
 	 */
 	// Function to perform bulk tag with existing tag
 	public String bulkTagExistingWithReturn(String tagName) throws InterruptedException {
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+		
 		base.waitForElement(getExistingTagSelectionCheckBox(tagName));
 		getExistingTagSelectionCheckBox(tagName).waitAndClick(5);
 
@@ -14944,7 +14942,7 @@ driver.javascriptScrollTo(getSavedSearchNameResult(SaveName));
 
 				base.waitForElement(getBulkTagAction());
 				getBulkTagAction().waitAndClick(10);
-				getDefaultTagsandfolderArrow().waitAndClick(10);
+				
 				base.waitForElement(getSelectTagExisting(tagName));
 				driver.waitForPageToBeReady();
 				getSelectTagExisting(tagName).waitAndClick(5);
