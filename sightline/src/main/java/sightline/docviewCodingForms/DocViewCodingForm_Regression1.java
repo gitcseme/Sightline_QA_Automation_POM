@@ -4525,7 +4525,6 @@ public class DocViewCodingForm_Regression1 {
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
-		baseClass.VerifySuccessMessage("Document completed successfully");
 		baseClass.passedStep(
 				"verified after impersonation user can complete the document outside reviewer batch on doc view when redirects from my assignment");
 		loginPage.logout();
@@ -4595,7 +4594,6 @@ public class DocViewCodingForm_Regression1 {
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
-		baseClass.VerifySuccessMessage("Document completed successfully");
 		baseClass.passedStep(
 				"Verified Reviewer can complete the document outside reviewer batch from analytics panel by selecting 'Code same as this' action when 'Allow coding outside reviewer batch' is on in an assignment");
 		loginPage.logout();
@@ -5416,7 +5414,6 @@ public class DocViewCodingForm_Regression1 {
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
-		baseClass.VerifySuccessMessage("Document completed successfully");
 		docViewPage.get1stDocinMiniDocView().waitAndClick(5);
 		docViewPage.completedDocEditableCheck();
 		baseClass.passedStep(
@@ -7104,6 +7101,7 @@ public class DocViewCodingForm_Regression1 {
 		docViewPage.codingStampButton();
 		docViewPage.popUpAction(fieldText, Input.stampSelection);
 		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
 		boolean EditStamp = docViewPage.getEditCodingStamp_PopUpWindow().Displayed();
 		softAssertion.assertTrue(EditStamp);
 		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {

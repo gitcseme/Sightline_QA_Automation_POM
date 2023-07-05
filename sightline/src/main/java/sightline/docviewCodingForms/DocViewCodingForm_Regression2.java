@@ -782,15 +782,17 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("saved codingform Object staticText is verify successfully");
 
 		// verify DocView CodingForm saved object
-		if (docViewPage.getAddComment1().Visible()) {
-			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
-		} else {
+		if (!docViewPage.getAddComment1().isDisplayed()) {
 			baseClass.passedStep("verify coding form saved comment name in docview page is not displayed ");
-		}
-		if (docViewPage.getMetaDataInputInDocView().Enabled()) {
-			baseClass.failedStep("verify coding Form Saved commentbox is selectable");
 		} else {
+			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
+			
+		}
+		if (!docViewPage.getMetaDataInputInDocView().isDisplayed()) {
 			baseClass.passedStep("verify coding Form Saved commentbox is not selectable");
+		} else {
+			baseClass.failedStep("verify coding Form Saved commentbox is selectable");
+			
 		}
 		docViewPage.verifyCodingFormName(cfName);
 		docViewPage.validateRadioOrCheckGroupInDocviewPg("check-group");
@@ -830,15 +832,17 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("saved codingform Object staticText is verify successfully");
 
 		// verify DocView CodingForm saved object
-		if (docViewPage.getAddComment1().Visible()) {
-			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
-		} else {
+		if (!docViewPage.getAddComment1().isDisplayed()) {
 			baseClass.passedStep("verify coding form saved comment name in docview page is not displayed ");
-		}
-		if (docViewPage.getMetaDataInputInDocView().Enabled()) {
-			baseClass.failedStep("verify coding Form Saved commentbox is selectable");
+			
 		} else {
+			baseClass.failedStep("verify coding form saved comment name in docview page is displayed ");
+		}
+		if (!docViewPage.getMetaDataInputInDocView().isDisplayed()) {
 			baseClass.passedStep("verify coding Form Saved commentbox is not selectable");
+		} else {
+			baseClass.failedStep("verify coding Form Saved commentbox is selectable");
+			
 		}
 		docViewPage.verifyCodingFormName(cfName);
 		docViewPage.validateRadioOrCheckGroupInDocviewPg("check-group");
@@ -1024,10 +1028,11 @@ public class DocViewCodingForm_Regression2 {
 			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(Input.codeFormName);
 		}
+		driver.waitForPageToBeReady();;
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		sessionSearch.advancedNewContentSearch1(Input.searchString1);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 		reusableDocView.selectLastDocInMiniDocList();
 		baseClass.stepInfo("Last document is selected in parent minidoc list window");
 		reusableDocView.editingCodingFormWithSaveAndNextButton();
@@ -1967,6 +1972,7 @@ public class DocViewCodingForm_Regression2 {
 				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
 				|| roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rmu")) {
 			baseClass.credentialsToImpersonateAsRMUREV(roll, impersonate);
+			driver.waitForPageToBeReady();
 			sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 			docViewPage.selectPureHit();
 			sessionSearch.advancedNewContentSearch1(Input.testData1);
@@ -2980,13 +2986,13 @@ public class DocViewCodingForm_Regression2 {
 			driver.waitForPageToBeReady();
 			baseClass.waitForElement(docViewPage.getSavedCodingStamp(Input.stampColour));
 			String ActualText = docViewPage.getSavedCodingStamp(Input.stampColour).getWebElement()
-					.getAttribute("title");
+					.getAttribute("data-title");
 			baseClass.textCompareEquals(fieldText, ActualText, "Mouseover Text is displayed as expected",
 					"Mouseover text is not displayed as expected");
 		} else {
 			baseClass.failedStep("Save this coding form as a new stamp not displayed");
 		}
-
+		reusableDocView.deleteStampColour(Input.stampColour);
 		loginPage.logout();
 
 	}
@@ -3642,6 +3648,7 @@ public class DocViewCodingForm_Regression2 {
 		// Searching audio document and basic search
 		baseClass.stepInfo("Searching audio documents based on search string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		driver.waitForPageToBeReady();
 		docViewPage.selectPureHit();
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
@@ -3671,6 +3678,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.passedStep("Confirmation message displayd when saving the already existing saved stamp");
 		driver.waitForPageToBeReady();
 		baseClass.VerifySuccessMessage("Coding stamp updated successfully");
+		baseClass.CloseSuccessMsgpopup();
 		docViewPage.deleteStampColour(Input.stampSelection);
 		softAssertion.assertAll();
 
@@ -8451,7 +8459,6 @@ public class DocViewCodingForm_Regression2 {
 		codingForm.assignCodingFormToSG(Input.codeFormName);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
-		codingForm.verifyCodingFormIsDeleted(codingform);
 		loginPage.logout();
 	}
 

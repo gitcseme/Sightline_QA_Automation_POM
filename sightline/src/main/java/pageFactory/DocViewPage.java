@@ -80,7 +80,7 @@ public class DocViewPage {
 	}
 
 	public Element getSaveDoc() {
-		return driver.FindElementById("Save");
+		return driver.FindElementByXPath("//*[@id='Save']");
 	}
 
 	public Element getDocView_CodingFormlist() {
@@ -331,7 +331,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_CFName() {
-		return driver.FindElementById("codingFormList");
+		return driver.FindElementByXPath("//select[@id='codingFormList']//option");
 	}
 
 	// added on 04-01
@@ -25562,7 +25562,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getCodingStampLastIcon(stampColour));
 		builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
 		driver.waitForPageToBeReady();
-		String ActualText = getSavedCodingStamp(stampColour).getWebElement().getAttribute("title");
+		String ActualText = getSavedCodingStamp(stampColour).getWebElement().getAttribute("data-title");
 		base.textCompareEquals(fieldText, ActualText, "Mouseover Text for " + stampColour + " is displayed as expected",
 				"Mouseover text for " + stampColour + " is not displayed as expected");
 
