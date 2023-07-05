@@ -705,9 +705,8 @@ public class DocExplorerPage {
 				"//ul[@id='select2-IngestionName-results']//li[contains(text(),'" + ingestion + "')]");
 
 	}
-	public Element getDefaultTagsandfolderArrow() {
-		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-ocl']");
-	}
+	
+	
 	public Element getDocExplorerGrid() {
 		return driver.FindElementByXPath("//div[@id='divDocExplorerDT']");
 	}
@@ -1296,7 +1295,7 @@ public class DocExplorerPage {
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getDocBoard());
 			getDocBoard().Click();
-			getDefaultTagsandfolderArrow().waitAndClick(10);
+			
 			bc.waitTime(2);
 			getTag(tagName).Click();
 			for (int i = 0; i < 20; i++) {
@@ -1375,7 +1374,7 @@ public class DocExplorerPage {
 
 		bc.hitTabKey(3);
 		bc.hitEnterKey(2);
-		getDefaultTagsandfolderArrow().waitAndClick(10);
+	
 		try {
 
 			Thread.sleep(5000);
@@ -1518,7 +1517,7 @@ public class DocExplorerPage {
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getDocBoard());
 			getDocBoard().Click();
-			getDefaultTagsandfolderArrow().waitAndClick(20);
+			
 			bc.waitForElement(getTag(tagName));
 			bc.waitTillElemetToBeClickable(getTag(tagName));
 			getTag(tagName).Click();
