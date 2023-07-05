@@ -1634,7 +1634,7 @@ public class O365_Phase2_Regression1 {
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
-				Input.collectionDataHeader5, Input.retreivingDSCountH, Input.dateKeywordHeaderC };
+				Input.collectionSelectedFolder, Input.retreivingDSCountH, Input.dateKeywordHeaderC };
 		String headerListDS[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
 				Input.collectionDataHeader5, Input.collectionDataHeader4, Input.collectionDataHeader6 };
 		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus };
@@ -1964,8 +1964,10 @@ public class O365_Phase2_Regression1 {
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
 		String collProgressStats = collection
 				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
-				.getText();
-		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
+				.GetAttribute("style");
+		collProgressStats=collProgressStats.substring(6,9);
+		collProgressStats=collProgressStats.trim();
+		base.textCompareEquals("0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
 				"Progress Bar value remains the same");
 
 		// Delete Collection
@@ -2120,7 +2122,7 @@ public class O365_Phase2_Regression1 {
 
 		// Login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		base.selectproject();
 		// Login as User and verify Module Access
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 
@@ -2160,7 +2162,9 @@ public class O365_Phase2_Regression1 {
 		String collProgressStats = collection
 				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
 				.getText();
-		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
+		collProgressStats=collProgressStats.substring(6,9);
+		collProgressStats=collProgressStats.trim();
+		base.textCompareEquals("0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
 				"Progress Bar value remains the same");
 
 		// Delete Collection
@@ -2234,10 +2238,15 @@ public class O365_Phase2_Regression1 {
 
 		// Progress status check
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
-		String collProgressStats = collection
-				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
-				.getText();
-		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
+		
+		System.out.println("//div[text()='" + collectionName + "']//..//..//td["+colllectionDataHeadersIndex.get(Input.progressBarHeader)+"]//div[@class='progressbar-blue-child progressbar-round-child']");
+		base.waitForElement(collection
+				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)));
+		String collProgressStats = collection.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)).GetAttribute("style");
+		
+		collProgressStats=collProgressStats.substring(6,9);
+		collProgressStats=collProgressStats.trim();
+		base.textCompareEquals("0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
 				"Progress Bar value remains the same");
 
 		// Delete Collection
@@ -2637,7 +2646,7 @@ public class O365_Phase2_Regression1 {
 		login.logout();
 	}
 
-	@AfterMethod(alwaysRun = true)
+//	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
