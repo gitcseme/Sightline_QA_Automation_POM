@@ -1634,7 +1634,7 @@ public class O365_Phase2_Regression1 {
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
-				Input.collectionSelectedFolder, Input.retreivingDSCountH, Input.dateKeywordHeaderC };
+				Input.collectionDataHeader5, Input.retreivingDSCountH, Input.dateKeywordHeaderC };
 		String headerListDS[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
 				Input.collectionDataHeader5, Input.collectionDataHeader4, Input.collectionDataHeader6 };
 		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus };
@@ -2239,7 +2239,6 @@ public class O365_Phase2_Regression1 {
 		// Progress status check
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
 		
-		System.out.println("//div[text()='" + collectionName + "']//..//..//td["+colllectionDataHeadersIndex.get(Input.progressBarHeader)+"]//div[@class='progressbar-blue-child progressbar-round-child']");
 		base.waitForElement(collection
 				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)));
 		String collProgressStats = collection.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)).GetAttribute("style");
@@ -2646,7 +2645,7 @@ public class O365_Phase2_Regression1 {
 		login.logout();
 	}
 
-//	@AfterMethod(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
