@@ -1372,6 +1372,8 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getSaveAndNextButton().waitAndClick(5);
 		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
 		baseClass.VerifySuccessMessage("Coded as per the coding form for the previous document");
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
 		reusableDocView.getDocView_MiniDocListIds(5).waitAndClick(10);
 		baseClass.stepInfo("Moved to other document in mini doclist successfully");
 		reusableDocView.clickCodeSameAsLastAndVerifyNavigatedToNextDoc();
@@ -2819,7 +2821,7 @@ public class DocViewCodingForm_Regression2 {
 		// Removing coding from for sg
 		codingForm.commentRequired(cf);
 		codingForm.assignCodingFormToSG(cf);
-		codingForm.deleteCodingForm(cf, cf);
+		codingForm.deleteCodingFormWithAlert(cf, cf);
 
 		// navigation to docview page from session search page
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -5513,6 +5515,7 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		// validations in docviewPage
+		driver.waitForPageToBeReady();
 		docViewPage.verifyCodingFormName(codingform);
 		docViewPage.verifyCustomizedMetaDataCodingForm(intData);
 		docViewPage.verifyCodingFormNameInDocviewPg(0, expectedFirstObjectName + "*");
@@ -5597,6 +5600,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.verifyCodingFormName(codingform);
 		docViewPage.verifyCustomizedMetaDataCodingForm(intData);
 		docViewPage.validateRadioOrCheckGroupInDocviewPg("radio-group");
+		driver.waitForPageToBeReady();
 		docViewPage.verifyCodingFormRadioGrpTagNameInDocviewPg(0, expectedFirstObjectName);
 		docViewPage.verifyHelpnErrorMsgOfRadioGrpTagInDocviewPg(0, "Help for testing", "Error for testing");
 		loginPage.logout();
@@ -5748,6 +5752,7 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 		// validations on docview page
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewPage.getCodingFormHelpText(expectedFirstObjectName));
 		docViewPage.getCodingFormHelpText(expectedFirstObjectName).Clear();
 		docViewPage.getCodingFormHelpText(expectedFirstObjectName).Clear();
@@ -7559,11 +7564,11 @@ public class DocViewCodingForm_Regression2 {
 
 		// Edit coding Form and complete Action
 		driver.waitForPageToBeReady();
-		docViewPage.getAddComment1().Clear();
+		docViewPage.getDocView_CodingFormComments().Clear();
 		docViewPage.getCompleteDocBtn().waitAndClick(10);
 		docViewPage.errorMessage();
 		baseClass.CloseSuccessMsgpopup();
-		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getDocView_CodingFormComments().SendKeys("Document commemnt added");
 		docViewPage.getCompleteDocBtn().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Document completed successfully");
 
@@ -7577,11 +7582,11 @@ public class DocViewCodingForm_Regression2 {
 
 		// Edit coding Form and complete Action
 		driver.waitForPageToBeReady();
-		docViewPage.getAddComment1().Clear();
+		docViewPage.getDocView_CodingFormComments().Clear();
 		docViewPage.getCompleteDocBtn().waitAndClick(10);
 		docViewPage.errorMessage();
 		baseClass.CloseSuccessMsgpopup();
-		docViewPage.getAddComment1().SendKeys("Document commemnt added");
+		docViewPage.getDocView_CodingFormComments().SendKeys("Document commemnt added");
 		docViewPage.getCompleteDocBtn().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Document completed successfully");
 

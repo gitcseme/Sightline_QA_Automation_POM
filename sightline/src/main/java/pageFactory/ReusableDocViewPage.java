@@ -491,6 +491,11 @@ public class ReusableDocViewPage {
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		DocViewPage doc=new DocViewPage(driver);
+		if(doc.getAddComment1().isElementAvailable(2)) {
+			doc.getAddComment1().SendKeys(fieldValue);
+			driver.scrollPageToTop();
+		}
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
 		base.waitForElement(getCodingStampTextBox());
@@ -1636,13 +1641,10 @@ public class ReusableDocViewPage {
 		base.waitForElement(getDocView_CurrentDocId());
 		String currentDocId=getDocView_CurrentDocId().getText();
 		System.out.println(currentDocId);
-		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
-		base.waitTime(2);
-		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.stepInfo("Code same as last icon clicked");
-		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_CurrentDocId());
 		String docId = getDocView_CurrentDocId().getText();
 		softAssertion.assertNotEquals(currentDocId, docId);
