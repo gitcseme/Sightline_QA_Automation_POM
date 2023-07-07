@@ -506,6 +506,22 @@ public class ReusableDocViewPage {
 		getAssignedColour(colour).waitAndClick(5);
 		base.waitForElement(getCodingStampSaveBtn());
 		getCodingStampSaveBtn().waitAndClick(5);
+		if(base.getErrorMsgHeader().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+			getCodingStampCancel().waitAndClick(5);
+			deleteStampColour(colour);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getCodingFormStampButton());
+			getCodingFormStampButton().waitAndClick(10);
+			base.waitForElement(getCodingStampTextBox());
+			getCodingStampTextBox().SendKeys(fieldValue);
+			base.waitForElement(getDrp_StampColour());
+			getDrp_StampColour().waitAndClick(5);
+			base.waitForElement(getAssignedColour(colour));
+			getAssignedColour(colour).waitAndClick(5);
+			base.waitForElement(getCodingStampSaveBtn());
+			getCodingStampSaveBtn().waitAndClick(5);
+		}
 		base.passedStep("User successfully assigned colour for coding stamp");
 		
 		
@@ -1645,6 +1661,7 @@ public class ReusableDocViewPage {
 		getCodeSameAsLast().waitAndClick(10);
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.stepInfo("Code same as last icon clicked");
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_CurrentDocId());
 		String docId = getDocView_CurrentDocId().getText();
 		softAssertion.assertNotEquals(currentDocId, docId);
