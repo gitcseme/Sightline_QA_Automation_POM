@@ -699,7 +699,9 @@ public class CollectionPage {
 	public Element getSearchFolderName() {
 		return driver.FindElementByXPath("//input[@id='divNodeTree_q']");
 	}
-	
+	public Element IsFolderExpanded() {
+		return driver.FindElementByXPath("//h3[@id='accordionSelectFolder' and @aria-expanded='true']");
+	}
 	public Element getFolderNameToSelect1(String type) {
 		return driver.FindElementByXPath("//div[@id='divFolderList']/ul//a/following-sibling::ul/li//a[text()='"+type+"']");
 	}
@@ -1086,7 +1088,7 @@ public class CollectionPage {
 		// Custodian Nmae input
 		selectCustodianInAddNewDataSetPopUp(inputString,datalistVal,inputEmailId,selectedApp);
 		getFolderabLabel().javascriptclick(getFolderabLabel());
-		if(getSearchFolderName().isElementAvailable(5)) {
+		if(IsFolderExpanded().isElementAvailable(5)) {
 			if (subFolderFlag) {
 				folderToSelect(selectedFolder, false, true, subFolderName);
 
@@ -1111,8 +1113,9 @@ public class CollectionPage {
 		datalistVal=datalistVal.trim();
 		for(WebElement it : getCustodianIDdataListOptions().FindWebElements()){//it.getAttribute("value").contentEquals(datalistVal)
 			if (it.getAttribute("value").contains(datalistVal)){ 
-				getCustodianIDInputTextField().SendKeys(it.getAttribute("value"));
 				actualVal=it.getAttribute("value");
+				getCustodianIDInputTextField().SendKeys(it.getAttribute("value"));
+				
 				} 				
 		};
 		return actualVal;
@@ -1258,10 +1261,17 @@ public class CollectionPage {
 
 		} else {
 			try {
+
+				base.waitTime(4);
 				driver.waitForPageToBeReady();
-				base.waitTime(3);
-				getFolderNameToSelect(folderName).waitAndClick(10);
-			} catch (Exception e) {
+				getSearchFolderName().SendKeys(folderName);
+				base.waitForElement(getFolderNameToSelect1(folderName));
+				driver.waitForPageToBeReady();		
+				getFolderNameToSelect1(folderName).javascriptclick(getFolderNameToSelect1(folderName));		
+				base.waitForElement(getFolderNameToSelect2(folderName));
+				getFolderNameToSelect2(folderName).javascriptclick(getFolderNameToSelect2(folderName));
+				} catch (Exception e) {
+					System.out.println(e);
 				e.printStackTrace();
 			}
 		}
@@ -1513,6 +1523,7 @@ public class CollectionPage {
 
 		// Check collection presence
 		driver.waitForPageToBeReady();
+		base.waitForElement(getCollectionNameElement(collectionName));
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
@@ -2339,7 +2350,7 @@ public class CollectionPage {
 	 */
 	public void clickNextBtnOnDatasetTab() {
 		driver.scrollPageToTop();
-		getNextBtnDS().waitAndClick(10);
+		getNextBtnDS().javascriptclick(getNextBtnDS());
 		verifyCurrentTab("Summary and Start Collection");
 	}
 
@@ -2412,6 +2423,7 @@ public class CollectionPage {
 
 		// Get collection Id
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetDetails(collectionName, colllectionDataHeadersIndex.get(Input.collectionIdHeader)));
 		String collId = getDataSetDetails(collectionName, colllectionDataHeadersIndex.get(Input.collectionIdHeader))
 				.getText();
 		base.stepInfo("Collection Id : " + collId);
