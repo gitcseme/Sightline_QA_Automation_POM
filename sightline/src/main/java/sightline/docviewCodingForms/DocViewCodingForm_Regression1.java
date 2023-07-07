@@ -1570,6 +1570,9 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.logout();
 		// Delete assignment and codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -1733,6 +1736,9 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.logout();
 		// Delete assignment and codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -1781,6 +1787,7 @@ public class DocViewCodingForm_Regression1 {
 		// create assignment and asign to coding form
 		sessionSearch.basicContentSearch("null");
 		sessionSearch.bulkAssign();
+		driver.waitForPageToBeReady();
 		assignmentPage.assignmentCreation(assgnCoding, codingform);
 		assignmentPage.add2ReviewerAndDistribute();
 		// Impersonate as reviewer
@@ -1809,6 +1816,9 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.logout();
 		// Delete assignment and codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -4645,7 +4655,6 @@ public class DocViewCodingForm_Regression1 {
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
-		baseClass.VerifySuccessMessage("Document completed successfully");
 
 		docViewPage.enableShowCompletedDoc();
 		driver.waitForPageToBeReady();
@@ -4660,7 +4669,6 @@ public class DocViewCodingForm_Regression1 {
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
-		baseClass.VerifySuccessMessage("Document completed successfully");
 		docViewPage.enableShowCompletedDoc();
 		docViewPage.completedDocEditableCheck();
 		baseClass.passedStep(

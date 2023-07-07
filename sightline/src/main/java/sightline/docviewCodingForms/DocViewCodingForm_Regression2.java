@@ -1028,7 +1028,7 @@ public class DocViewCodingForm_Regression2 {
 			codingForm.selectDefaultCodingFormAsDefault();
 			codingForm.assignCodingFormToSG(Input.codeFormName);
 		}
-		driver.waitForPageToBeReady();;
+		driver.waitForPageToBeReady();
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		sessionSearch.advancedNewContentSearch1(Input.searchString1);
@@ -1713,6 +1713,7 @@ public class DocViewCodingForm_Regression2 {
 		if (role == "RMU") {
 //			 searching document for assignment creation
 			sessionSearch.basicContentSearch(Input.searchString2);
+			driver.waitForPageToBeReady();
 			sessionSearch.bulkAssign();
 			assignmentPage.assignmentCreation(assignTwo, Input.codingFormName);
 			assignmentPage.toggleCodingStampEnabled();
@@ -2015,7 +2016,7 @@ public class DocViewCodingForm_Regression2 {
 		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(namesg2);
-		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		securityGroupsPage.AddSecurityGroup(namesg3);
 
@@ -2226,6 +2227,7 @@ public class DocViewCodingForm_Regression2 {
 		if (fullName.contains(rmu)) {
 //			 searching document for assignment creation
 			sessionSearch.basicContentSearch(Input.searchString2);
+			driver.waitForPageToBeReady();
 			sessionSearch.bulkAssign();
 			assignmentPage.assignmentCreation(assgn, Input.codingFormName);
 			assignmentPage.toggleCodingStampEnabled();
@@ -2237,6 +2239,7 @@ public class DocViewCodingForm_Regression2 {
 		assignmentPage.SelectAssignmentByReviewer(assgn);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
+		driver.waitForPageToBeReady();
 		docViewPage.verifyUserDocsCompleteBtn(comment);
 
 		// logout
@@ -8513,6 +8516,9 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.logout();
 		// delete assignment and codinform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);

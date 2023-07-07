@@ -10184,7 +10184,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				switchToNewWindow(1);
 				driver.waitForPageToBeReady();
 				driver.scrollPageToTop();
-				getClickDocviewID(++i).waitAndClick(5);
+				reusableDocView.getDocView_MiniDocListIds(i++).waitAndClick(10);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
 				base.waitTime(5);
@@ -17991,10 +17991,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("enter document before");
-		String beforeText = getAddComment1().getText();
+		String beforeText = getAddComment1().Value();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("after enter document");
-		String afterText = getAddComment1().getText();
+		String afterText = getAddComment1().Value();
 		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(beforeText, afterText);
 		if (beforeText != afterText) {
