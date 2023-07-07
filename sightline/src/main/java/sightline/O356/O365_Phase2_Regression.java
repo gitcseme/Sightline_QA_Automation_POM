@@ -77,7 +77,7 @@ public class O365_Phase2_Regression {
 	@DataProvider(name = "PaAndRmuUserDetails")
 	public Object[][] PaAndRmuUserDetails() {
 		Object[][] users = {
-//				{ Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
+				{ Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager", "SA" } };
 		return users;
 	}
@@ -2580,7 +2580,7 @@ public class O365_Phase2_Regression {
 		login.logout();
 	}
 
-//	@AfterMethod(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
