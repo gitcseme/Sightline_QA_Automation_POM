@@ -2656,7 +2656,7 @@ public class Production_Phase1_Regression1 {
 		page.fillingSummaryAndPreview();
 
 		base.stepInfo("Filling Generate Page");
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
@@ -3855,7 +3855,6 @@ public class Production_Phase1_Regression1 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		ProductionPage page1 = new ProductionPage(driver);
-
 		base.stepInfo("Add New Production");
 		page1.addANewProduction(productionname);
 
@@ -3866,7 +3865,7 @@ public class Production_Phase1_Regression1 {
 		page1.fillingTiffSectionBranding();
 
 		ProductionPage Page = new ProductionPage(driver);
-
+		Page.navigateToProductionPage();
 		base.stepInfo("Select Saved Template And Manage Template");
 		Page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
 
@@ -3888,6 +3887,7 @@ public class Production_Phase1_Regression1 {
 
 		productionname = Input.randomText + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Base Info Load Template");
 		page.baseInfoLoadTemplate(productionname, Templatename);
@@ -5508,7 +5508,7 @@ public class Production_Phase1_Regression1 {
 		base.stepInfo("#### verify the production generation  on filling suffix . ####");
 
 		String foldername = Input.randomText + Utility.dynamicNameAppender();
-		String tagname = Input.randomText + Utility.dynamicNameAppender();
+//		String tagname = Input.randomText + Utility.dynamicNameAppender();
 		String productionname = Input.randomText + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
 
@@ -5552,7 +5552,7 @@ public class Production_Phase1_Regression1 {
 		page.navigateToNextSection();
 
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Utility.randomCharacterAppender(50);
+		String suffixID = Utility.randomCharacterAppender(25);
 
 		base.stepInfo("Filling Numbering And Sorting Page");
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -5769,14 +5769,13 @@ public class Production_Phase1_Regression1 {
 
 		base.stepInfo("Filling Generate Page");
 		page.fillingGeneratePageAndVerfyingBatesRange(suffixID);
-
 		base.stepInfo("refreshing the page");
 		driver.Navigate().refresh();
 
 		ProductionPage Page = new ProductionPage(driver);
 
 		String Templatename = Input.randomText + Utility.dynamicNameAppender();
-
+		page.navigatingToProductionHomePage();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Select Saved Template And Manage Template");
 		Page.savedTemplateAndNewProdcution(productionname1, Templatename);
@@ -7777,6 +7776,7 @@ public class Production_Phase1_Regression1 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		docExp.documentSelectionIteration();
 		docExp.docExpViewInDocView();
 
@@ -8811,9 +8811,9 @@ public class Production_Phase1_Regression1 {
 		page.getIncludeFamilies().waitAndClick(10);
 		page.navigatingToDocViewPage();
 		doc.getSelectParentDocument().isElementAvailable(1);
-		if (doc.getSelectDocument(ParentDocId).isDisplayed()) {
+		if (doc.getSelectParentDocument().isDisplayed()) {
 			driver.scrollingToBottomofAPage();
-			doc.getSelectDocument(ParentDocId).waitAndClick(10);
+			doc.getSelectParentDocument().waitAndClick(10);
 			ArrayList<String> selectedDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
 			if (DocumentIdInDoclist.equals(selectedDocs)) {
 				base.passedStep("Parent And Child document is displayed as expected");
@@ -9057,7 +9057,7 @@ public class Production_Phase1_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			LoginPage.clearBrowserCache();
+			//LoginPage.clearBrowserCache();
 
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
