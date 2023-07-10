@@ -76,7 +76,8 @@ public class O365_Phase2_Regression {
 
 	@DataProvider(name = "PaAndRmuUserDetails")
 	public Object[][] PaAndRmuUserDetails() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager", "SA" } };
 		return users;
 	}
@@ -1017,9 +1018,10 @@ public class O365_Phase2_Regression {
 		List<String> custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName,
 				collectionEmailId, selectedApp, collectionData, collectionName, 3, selectedFolder, false, false, false,
 				"-", true, true, "Save", false,"","");
-
+		driver.waitForPageToBeReady();
 		// verify Summary & Start Tab
 		collection.clickNextBtnOnDatasetTab();
+		base.waitTime(3);
 		collection.verifySummaryAndStartAttributes();
 		collection.verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId,
 				custodianDetails.get(1), selectedFolder, " - ", "", false, 0);
