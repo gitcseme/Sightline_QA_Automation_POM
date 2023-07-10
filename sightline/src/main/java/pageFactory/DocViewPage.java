@@ -8414,7 +8414,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 
 			driver.waitForPageToBeReady();
-			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
+			//getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(10);
 			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
 			softAssertion.assertAll();
