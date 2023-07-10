@@ -2708,6 +2708,23 @@ public class BaseClass {
 		}
 		softAssertion.assertAll();
 	}
+	
+	public void LonglistCompareEquals(List<Long> sourceList, List<Long> compreList, String passMsg,
+			String failMessage) {
+		System.out.println("Source String  : " + sourceList);
+		System.out.println("Compare String  : " + compreList);
+
+		stepInfo("Source String  : " + sourceList);
+		stepInfo("Compare String  : " + compreList);
+
+		softAssertion.assertEquals(sourceList, compreList);
+		if (sourceList.equals(compreList)) {
+			passedStep(passMsg);
+		} else if (!(sourceList.equals(compreList))) {
+			failedStep(failMessage);
+		}
+		softAssertion.assertAll();
+	}
 
 	/**
 	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by:N/A
@@ -3019,6 +3036,33 @@ public class BaseClass {
 		}
 
 	}
+	
+	public void verifyOriginalSortOrderForLonglist(List<Long> originalOrderedList, List<Long> afterSortList, String sortType,
+			Boolean sortOrder) throws InterruptedException, AWTException {
+
+		System.out.println("Original Order");
+		
+		for (Long a : afterSortList) {
+			System.out.println(a);
+		}
+
+		if (sortType.equals("Ascending")) {
+			Collections.sort(originalOrderedList);
+		} else if (sortType.equals("Descending")) {
+			Collections.sort(originalOrderedList, Collections.reverseOrder());
+		}
+
+		System.out.println("Sorted Order");
+		for (Long b : originalOrderedList) {
+			System.out.println(b);
+		}
+
+		if (sortOrder) {
+			LonglistCompareEquals(originalOrderedList, afterSortList, "Sorting order maintained", "Sorting order failed");
+		}
+
+	}
+	
 
 	/**
 	 * @author Indium Raghuram Description : Date:05/17/21 Modified date: N/A

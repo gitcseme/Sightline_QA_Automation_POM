@@ -137,12 +137,12 @@ public class CollectionPage {
 
 	public Element getCollectionAction(String collectionName) {
 		return driver.FindElementByXPath(
-				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='Actions ']");
+				"//div[text()='" + collectionName + "']//..//following::td[7]//div//a[text()='Actions ']");
 	}
 
 	public Element getCollectionActionList(String collectionName, String actionType) {
 		return driver.FindElementByXPath(
-				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='" + actionType + "']");
+				"//div[text()='" + collectionName + "']//..//following::td[7]//div//a[text()='" + actionType + "']");
 	}
 
 	// Added by Mohan
@@ -1814,7 +1814,7 @@ public class CollectionPage {
 			String expectedFilterStatus, boolean verifyCustodianAndDataset) {
 		List<String> custodianDetails = new ArrayList<>();
 
-		String headerList[] = { "Select Custodian", "Select Folders to Collect", "Apply Filter" };
+		String headerList[] = {"01 - Select Application*","02 - Select Folders to Collect *","03 - Apply Filter (optional)","04 - Dataset Settings*"};
 
 		driver.waitForPageToBeReady();
 		getEditBtnDataSelection(custodianMailId).waitAndClick(10);
@@ -2549,9 +2549,11 @@ public class CollectionPage {
 		getHeaderBtn(headerName).waitAndClick(10);
 		base.stepInfo("Clicked : " + headerName);
 		driver.waitForPageToBeReady();
-		List<Integer> neworiginalList = originalList.stream()
-                .map(s -> Integer.parseInt(s))
-                .collect(Collectors.toList());
+		System.out.println("originalList :-"+originalList);
+		base.waitTime(3);
+		List<Long> neworiginalList = originalList.stream().map(Long::valueOf).collect(Collectors.toList());
+		
+
 
 		System.out.println("neworiginalList:-"+neworiginalList); 
 
@@ -2562,12 +2564,12 @@ public class CollectionPage {
 		List<String> afterSortList = base.availableListofElements(getCollectionNameElements(index));
 //		base.stepInfo("Original Order :" + originalList);
 		
-		List<Integer> newAfterSortList = afterSortList.stream()
-						.map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		List<Long> newAfterSortList = afterSortList.stream()
+						.map(Long::valueOf).collect(Collectors.toList());
 
 		System.out.println("newAfterSortList:-"+newAfterSortList);
 
-		base.verifyOriginalSortOrderForIntegerlist(neworiginalList, newAfterSortList, sortType, true);
+		base.verifyOriginalSortOrderForLonglist(neworiginalList, newAfterSortList, sortType, true);
 		}
 	}
 
@@ -3098,8 +3100,8 @@ public class CollectionPage {
 	public void verifyErrorMessageOfDatasetTab(boolean clickSaveBtn, boolean custodianErrorMsg,
 			boolean datasetErrorMsg) {
 		if (clickSaveBtn) {
-			base.waitForElement(getActionBtn("Save"));
-			getActionBtn("Save").waitAndClick(5);
+			base.waitForElement(getActionBtn("Save & Done"));
+			getActionBtn("Save & Done").waitAndClick(5);
 		}
 
 		driver.waitForPageToBeReady();
@@ -3189,7 +3191,7 @@ public class CollectionPage {
 	public void collectionAction(String collectionName, String actionType, Boolean confirmation,
 			String confirmationAction, Boolean bellyBandText, String expectedTxt) {
 		if (getCollectionAction(collectionName).isElementAvailable(5)) {
-			getCollectionAction(collectionName).waitAndClick(5);
+//			getCollectionAction(collectionName).waitAndClick(5);
 			getCollectionActionList(collectionName, actionType).waitAndClick(10);
 			base.stepInfo("Clicked : " + actionType);
 
