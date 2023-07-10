@@ -12647,11 +12647,12 @@ public class ProductionPage {
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
 			redactionTagInBurnRedactionCheckBox(redactiontag1).Displayed();
 			redactionTagInBurnRedactionCheckBox(redactiontag1).Click();
+			
 			driver.waitForPageToBeReady();
 			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag2));
 			redactionTagInBurnRedactionCheckBox(redactiontag2).Displayed();
 			redactionTagInBurnRedactionCheckBox(redactiontag2).Click();
-
+			
 			base.waitForElement(getClk_selectBtn());
 			getClk_selectBtn().isDisplayed();
 			getClk_selectBtn().waitAndClick(10);
@@ -15301,9 +15302,8 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
-
+		getbtnContinueGeneration().isElementAvailable(540);
 		if (getbtnContinueGeneration().isDisplayed()) {
-			getbtnContinueGeneration().isElementAvailable(540);
 			getbtnContinueGeneration().waitAndClick(10);
 		}
 
