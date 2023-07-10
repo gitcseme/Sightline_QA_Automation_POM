@@ -953,7 +953,7 @@ public class O365_Phase2_Regression1 {
 		String firstName2 = Input.collsecondFirstName;
 		String lastName2 = Input.collsecondlastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder1 = "Inbox";
+		String selectedFolder1 = "Drafts";
 		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
 				"Error Status" };
 		String collectionID = "";
