@@ -8475,11 +8475,13 @@ public class IngestionPage_Indium {
 		
 		public String getPublishedIngestionName(String dataset) {
 			String ingestionName="null";
+			driver.scrollPageToTop();
 			if (getAllIngestionName(dataset).isElementAvailable(5)) {
 				  ingestionName =getAllIngestionName(dataset).getText();
 			}
 			else {
 				System.out.println("dataset not available");
+				base.failedStep("dataset not available");
 			}
 			return ingestionName;
 		}

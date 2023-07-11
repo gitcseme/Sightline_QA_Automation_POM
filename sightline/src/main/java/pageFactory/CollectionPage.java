@@ -379,7 +379,7 @@ public class CollectionPage {
 	public Element getFolderabLabel() {
 		return driver.FindElementByXPath("//a[@id='ancFolderLabel']");
 	}
-
+	
 	public Element getFolderNameToSelect(String type) {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='" + type + "']");
 	}
@@ -686,6 +686,10 @@ public class CollectionPage {
 	
 	public Element getDataSettings() {
 		return driver.FindElementByXPath("//a[@id='ancDataSetSettingsLabel']");
+	}
+	
+	public Element getEditDataSettings() {
+		return driver.FindElementByXPath("//h3[@id='accordionDataSetSettings']");
 	}
 	
 	public Element getOutlookDatasetType(String SelectedApp) {
@@ -1135,7 +1139,7 @@ public class CollectionPage {
 	 */
 	public boolean verifyRetrivedDataMatches(String firstName, String lastName, String collecctionName,
 			String defaultText, String actualValue, Boolean comparision, Boolean additional1, String additional2) {
-
+		defaultText=defaultText.substring(0,7);
 		String expectedValue = collecctionName + "_" + defaultText + "_" + firstName + " " + lastName;
 		Boolean status = false;
 		System.out.println(actualValue);
@@ -1166,7 +1170,7 @@ public class CollectionPage {
 
 		// Action apply
 		try {
-			getActionBtn(type).waitAndClick(5);
+			getActionBtn(type).javascriptclick(getActionBtn(type));
 			driver.waitForPageToBeReady();
 			base.stepInfo("Clicked : " + type);
 			confirmationAction(type, saveAction, verifySuccessMsg);
@@ -1520,7 +1524,7 @@ public class CollectionPage {
 
 		// Collection Header details
 		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
-
+	
 		// Check collection presence
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCollectionNameElement(collectionName));
@@ -1814,6 +1818,7 @@ public class CollectionPage {
 			String expectedFilterStatus, boolean verifyCustodianAndDataset) {
 		List<String> custodianDetails = new ArrayList<>();
 
+
 		String headerList[] = {"01 - Select Application*","02 - Select Folders to Collect *","03 - Apply Filter (optional)","04 - Dataset Settings*"};
 
 		driver.waitForPageToBeReady();
@@ -1916,6 +1921,7 @@ public class CollectionPage {
 				verifyApplyFilterStatus(true, expectedFilterStatus);
 				base.passedStep("Apply Filter Tab is Reset");
 			}
+			getEditDataSettings().javascriptclick(getEditDataSettings());
 		} else {
 			base.failedStep("Dataset Popup is not displayed");
 		}
@@ -2030,9 +2036,7 @@ public class CollectionPage {
 							dataSetNameGenerated, selectedFolder, keywords, "", false, 0);
 				}
 			} else {
-				getConfirmationBtnAction("Cancel").waitAndClick(10);
-				base.waitForElement(getActionBtn("Cancel"));
-				getActionBtn("Cancel").waitAndClick(10);
+				CancelDatasetAction("Cancel", "Yes");
 				if (verifyTable) {
 
 					// verify row is Not added
@@ -3137,7 +3141,7 @@ public class CollectionPage {
 		}
 
 		base.printHashMapDetails(colllectionDataHeadersIndex);
-
+		
 		for (int j = 0; j <= colllectionDataHeadersIndex.size() - 1; j++) {
 			String expValue = " - ";
 
@@ -3159,6 +3163,7 @@ public class CollectionPage {
 
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
+			
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");

@@ -19,8 +19,10 @@ import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
@@ -40,6 +42,8 @@ public class DocViewAnalyticsPanel_Regression5 {
 	DocListPage docListPage;
 	DocViewPage docViewAnalytics;
 	MiniDocListPage miniDocListPage;
+	IngestionPage_Indium ingestionPage;
+	DataSets dataset;
 
 	@BeforeClass(alwaysRun = true)
 	public void condition1() throws ParseException, InterruptedException, IOException {
@@ -58,6 +62,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 	}
 
 	/**
@@ -1200,7 +1205,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// drag and place the Analytics Widget
 		docViewAnalytics.dragAndPlaceAnalyticsWidget();
 		baseClass.stepInfo("Drag and Drop is done successfully");
@@ -1280,9 +1285,9 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select doc from mini dockist and verify Horizontal tab
-		//docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
+		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
 
 		// Logout PA
 		loginPage.logout();
@@ -1296,7 +1301,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch.basicContentSearch(Input.ThreadQuery);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 		// select doc from mini dockist and verify Horizontal tab
 		docViewAnalytics.checkingDocsAndVerifyHorizontalScrollBar(documentToBeScrolled);
 
@@ -1308,7 +1313,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicContentSearch(Input.ThreadQuery);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
@@ -2104,7 +2109,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+		DataSets dataset = new DataSets(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51522");
 
 		String sourceId = Input.sourceDocId;
@@ -2113,10 +2118,13 @@ public class DocViewAnalyticsPanel_Regression5 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo(
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
-
+		dataset.navigateToDataSetsPage();
+		String ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
+		
+		dataset.selectDataSetWithNameInDocView(ingestionDataName);
 		// Basic search to Docview
-		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
-		sessionSearch.ViewInDocView();
+		//sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
+		//sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
 		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
@@ -2145,7 +2153,7 @@ public class DocViewAnalyticsPanel_Regression5 {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+		DataSets dataset = new DataSets(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51518");
 
 		String sourceId = Input.sourceDocId3;
@@ -2156,12 +2164,15 @@ public class DocViewAnalyticsPanel_Regression5 {
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
+		dataset.navigateToDataSetsPage();
+		String ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
+		dataset.selectDataSetWithNameInDocView(ingestionDataName);
+		//sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
-		//docViewAnalytics.selectDocIdInMiniDocList(sourceId);
+		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 
 
 		// verify Thread map should not present any other emails
@@ -2189,7 +2200,8 @@ public class DocViewAnalyticsPanel_Regression5 {
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		miniDocListPage = new MiniDocListPage(driver);
-		
+		DataSets dataset = new DataSets(driver);
+		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51519");
 
 		String sourceId = Input.sourceDocId1;
@@ -2201,24 +2213,27 @@ public class DocViewAnalyticsPanel_Regression5 {
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
-		sessionSearch.ViewInDocView();
+		dataset.navigateToDataSetsPage();
+		String ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
+		dataset.selectDataSetWithNameInDocView(ingestionDataName);
+		//sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
+		//sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
 		
 
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
-		//docViewAnalytics.selectDocIdInMiniDocList(sourceId);
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 		baseClass.stepInfo("Docs Selected from Mini doclist with succesfully");
 		// verify Thread map should not present any other emails
 		docViewAnalytics.verifyThreadMapWithDocs();
 
 		driver.scrollPageToTop();
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 
-		//docViewAnalytics.selectDocInMiniDocList(sourceId2);
+		docViewAnalytics.selectDocInMiniDocList(sourceId2);
 		baseClass.stepInfo("Docs Selected from Mini doclist succesfully");
 		// verify Thread map should not present any other emails
 		docViewAnalytics.verifyThreadMapWithDocs();

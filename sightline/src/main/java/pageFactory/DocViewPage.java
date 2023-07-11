@@ -80,7 +80,7 @@ public class DocViewPage {
 	}
 
 	public Element getSaveDoc() {
-		return driver.FindElementById("Save");
+		return driver.FindElementByXPath("//*[@id='Save']");
 	}
 
 	public Element getDocView_CodingFormlist() {
@@ -331,7 +331,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_CFName() {
-		return driver.FindElementById("codingFormList");
+		return driver.FindElementByXPath("//select[@id='codingFormList']//option");
 	}
 
 	// added on 04-01
@@ -8414,7 +8414,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			}
 
 			driver.waitForPageToBeReady();
-			getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
+			//getDocView_Analytics_ThreadMap_EmailDocs(21).ScrollTo();
 			getDocView_Analytics_ThreadMap_EmailDocs(21).waitAndClick(10);
 			softAssertion.assertTrue(getDocView_AnalyticsDocId(documentToBeScrolled).isDisplayed());
 			softAssertion.assertAll();
@@ -10184,7 +10184,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				switchToNewWindow(1);
 				driver.waitForPageToBeReady();
 				driver.scrollPageToTop();
-				getClickDocviewID(++i).waitAndClick(5);
+				reusableDocView.getDocView_MiniDocListIds(i++).waitAndClick(10);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
 				base.waitTime(5);
@@ -17991,10 +17991,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		driver.waitForPageToBeReady();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("enter document before");
-		String beforeText = getAddComment1().getText();
+		String beforeText = getAddComment1().Value();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("after enter document");
-		String afterText = getAddComment1().getText();
+		String afterText = getAddComment1().Value();
 		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(beforeText, afterText);
 		if (beforeText != afterText) {
@@ -25562,7 +25562,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getCodingStampLastIcon(stampColour));
 		builder.moveToElement(getCodingStampLastIcon(stampColour).getWebElement()).build().perform();
 		driver.waitForPageToBeReady();
-		String ActualText = getSavedCodingStamp(stampColour).getWebElement().getAttribute("title");
+		String ActualText = getSavedCodingStamp(stampColour).getWebElement().getAttribute("data-title");
 		base.textCompareEquals(fieldText, ActualText, "Mouseover Text for " + stampColour + " is displayed as expected",
 				"Mouseover text for " + stampColour + " is not displayed as expected");
 

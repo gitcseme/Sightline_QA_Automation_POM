@@ -1296,7 +1296,7 @@ public class DocListPage {
 
 	public Element getParentDocumentDocId() {
 		return driver.FindElementByXPath(
-				"//td[@class=' details-control']/following-sibling::td[contains(@class,'sorting')]");
+				"//td[@class='details-control']/following-sibling::td[contains(@class,'sorting')]");
 	}
 
 	public Element getSelectDocument(String DocID) {
@@ -2096,7 +2096,7 @@ public class DocListPage {
 		System.out.println("Tag and Untag Popup is displayed");
 
 		Actions actions = new Actions(driver.getWebDriver());
-		driver.Manage().window().fullscreen();
+//		driver.Manage().window().fullscreen();
 		Thread.sleep(2000);
 
 		base.hitTabKey(3);
@@ -2120,7 +2120,7 @@ public class DocListPage {
 		getPopUpOkBtn().Click();
 		base.VerifySuccessMessage("Records saved successfully");
 
-		driver.Manage().window().maximize();
+//		driver.Manage().window().maximize();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
@@ -2190,7 +2190,7 @@ public class DocListPage {
 		System.out.println("Tag and Untag Popup is displayed");
 
 //		Actions actions = new Actions(driver.getWebDriver());
-		driver.Manage().window().fullscreen();
+//		driver.Manage().window().fullscreen();
 		base.waitTime(2);
 		System.out.println(tagname);
 		getExistingTagOption().waitAndClick(10);
@@ -2203,9 +2203,9 @@ public class DocListPage {
 		final int Bgcount = bc.initialBgCount();
 
 		base.waitForElement(getContinueButton());
-		getContinueButton().Click();
+		getContinueButton().waitAndClick(10);
 		getFinalizeButton().waitAndClick(10);
-		driver.Manage().window().maximize();
+//		driver.Manage().window().maximize();
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
 		base.VerifySuccessMessage("Records saved successfully");

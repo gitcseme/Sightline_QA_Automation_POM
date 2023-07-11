@@ -491,6 +491,11 @@ public class ReusableDocViewPage {
 		base.waitForElement(getNonPrivilegeRadio());
 		getNonPrivilegeRadio().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		DocViewPage doc=new DocViewPage(driver);
+		if(doc.getAddComment1().isElementAvailable(2)) {
+			doc.getAddComment1().SendKeys(fieldValue);
+			driver.scrollPageToTop();
+		}
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
 		base.waitForElement(getCodingStampTextBox());
@@ -501,6 +506,22 @@ public class ReusableDocViewPage {
 		getAssignedColour(colour).waitAndClick(5);
 		base.waitForElement(getCodingStampSaveBtn());
 		getCodingStampSaveBtn().waitAndClick(5);
+		if(base.getErrorMsgHeader().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+			getCodingStampCancel().waitAndClick(5);
+			deleteStampColour(colour);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getCodingFormStampButton());
+			getCodingFormStampButton().waitAndClick(10);
+			base.waitForElement(getCodingStampTextBox());
+			getCodingStampTextBox().SendKeys(fieldValue);
+			base.waitForElement(getDrp_StampColour());
+			getDrp_StampColour().waitAndClick(5);
+			base.waitForElement(getAssignedColour(colour));
+			getAssignedColour(colour).waitAndClick(5);
+			base.waitForElement(getCodingStampSaveBtn());
+			getCodingStampSaveBtn().waitAndClick(5);
+		}
 		base.passedStep("User successfully assigned colour for coding stamp");
 		
 		
@@ -1636,10 +1657,8 @@ public class ReusableDocViewPage {
 		base.waitForElement(getDocView_CurrentDocId());
 		String currentDocId=getDocView_CurrentDocId().getText();
 		System.out.println(currentDocId);
-		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
-		base.waitTime(2);
-		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.stepInfo("Code same as last icon clicked");
 		driver.waitForPageToBeReady();
