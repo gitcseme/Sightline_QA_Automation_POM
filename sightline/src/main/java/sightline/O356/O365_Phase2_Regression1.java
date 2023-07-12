@@ -214,7 +214,8 @@ public class O365_Phase2_Regression1 {
 		collection.editDatasetAndVerify(false, null, false, null, null, false, false, "", "", "Disabled", true);
 
 		// Click Cancel from the pop up & verify popup closed without any prompt message
-		collection.SaveActionInDataSetPopup(false, null, null, null, null, null, "", "-", false, "");
+		collection.CancelDatasetAction("Cancel", "Yes");
+
 		base.stepInfo("Clicked Cancel Button From Popup");
 		base.ValidateElement_Absence(base.getSuccessMsg(), "No message is Displayed");
 		base.printResutInReport(collection.getDatasetPopupCloseBtn().isDisplayed(), "Popup is Closed as expected",
@@ -384,13 +385,13 @@ public class O365_Phase2_Regression1 {
 
 		// Enter 3 characters & verify Auto suggestion is displayed
 		String actualValue = collection.selectCustodianInAddNewDataSetPopUp("Gou",Input.clientEmaildatalistVal02, Input.clientCollectionEmail02,selectedApp);
-		base.textCompareNotEquals(actualValue, Input.clientEmaildatalistVal02,
+		base.textCompareEquals(actualValue, Input.clientEmaildatalistVal02,
 				"On entering first three characters auto suggestion box is displayed",
 				"Auto Suggestion Box is not Displayed");
 
 		// Enter letter part of email address & verify Auto suggestion is displayed
 		String actualValue2 = collection.selectCustodianInAddNewDataSetPopUp(Input.clientcollectionFirstName02,Input.clientEmaildatalistVal02,Input.clientCollectionEmail02,selectedApp);
-		base.textCompareNotEquals(actualValue2, Input.clientEmaildatalistVal02, "On entering letters of email id, auto suggestion box is displayed",
+		base.textCompareEquals(actualValue2, Input.clientEmaildatalistVal02, "On entering letters of email id, auto suggestion box is displayed",
 				"Auto Suggestion Box is not Displayed");
 
 		// Logout
@@ -921,7 +922,9 @@ public class O365_Phase2_Regression1 {
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
 		String collProgressStats = collection
 				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
-				.getText();
+				.GetAttribute("style");
+		collProgressStats=collProgressStats.substring(6,9);
+		collProgressStats=collProgressStats.trim();
 		base.textCompareEquals("0.0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
 				"Progress Bar value remains the same");
 
@@ -950,7 +953,7 @@ public class O365_Phase2_Regression1 {
 		String firstName2 = Input.collsecondFirstName;
 		String lastName2 = Input.collsecondlastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder1 = "Inbox";
+		String selectedFolder1 = "Drafts";
 		String headerListDataSets[] = { Input.collectionIdHeader, Input.collectionStatusHeader, Input.progressBarHeader,
 				"Error Status" };
 		String collectionID = "";
@@ -2106,7 +2109,7 @@ public class O365_Phase2_Regression1 {
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder = "Drafts";
+		String selectedFolder = "Inbox";
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", "Collection Progress",
 				"Action" };
@@ -2160,8 +2163,7 @@ public class O365_Phase2_Regression1 {
 		// Progress status check
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
 		String collProgressStats = collection
-				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader))
-				.getText();
+				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)).GetAttribute("style");
 		collProgressStats=collProgressStats.substring(6,9);
 		collProgressStats=collProgressStats.trim();
 		base.textCompareEquals("0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,
@@ -2238,11 +2240,9 @@ public class O365_Phase2_Regression1 {
 
 		// Progress status check
 		colllectionDataHeadersIndex = collection.getDataSetsHeaderIndex(headerListDataSets);
-		
 		base.waitForElement(collection
 				.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)));
 		String collProgressStats = collection.getProgressBarStats(collectionName, colllectionDataHeadersIndex.get(Input.progressBarHeader)).GetAttribute("style");
-		
 		collProgressStats=collProgressStats.substring(6,9);
 		collProgressStats=collProgressStats.trim();
 		base.textCompareEquals("0%", collProgressStats, "Progress Bar is reset to : " + collProgressStats,

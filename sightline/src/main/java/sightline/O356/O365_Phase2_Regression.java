@@ -1617,8 +1617,8 @@ public class O365_Phase2_Regression {
 		// Select Folder
 //		collection.folderToSelect(selectedFolder, true, true);
 //		collection.applyFilterToKeyword(dataSourceName);
-		base.waitForElement(collection.getActionBtn("Save"));
-		collection.getActionBtn("Save").waitAndClick(5);
+		base.waitForElement(collection.getActionBtn("Save & Done"));
+		collection.getActionBtn("Save & Done").waitAndClick(5);
 
 		base.waitForElement(collection.getConfirmationBtnAction("Confirm"));
 		collection.getConfirmationBtnAction("Confirm").waitAndClick(5);
