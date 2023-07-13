@@ -334,7 +334,7 @@ public class CollectionPage {
 
 	public Element getCollectionPauseStats(String collectionName, int index) {
 		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
-				+ "]//div[@class='col-md-5 progressbar-grey-text']");
+				+ "]//div[@class='progressbar-grey-child progressbar-round-child']");
 	}
 
 	public Element getStartALinkCollection(String nameSrc) {
@@ -591,6 +591,10 @@ public class CollectionPage {
 
 	public Element getClickDownloadReport(String collectionName, int index) {
 		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index + "]//a");
+	}
+	
+	public Element getClickCancelCollection(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index + "]//dt/a[text()='Cancel Collection']");
 	}
 
 	public Element getDataSelectionAction(String custodianMailId, String action) {
@@ -1229,7 +1233,7 @@ public class CollectionPage {
 		// Respective folder to select
 		try {
 
-			base.waitTime(4);
+			base.waitTime(8);
 			driver.waitForPageToBeReady();
 			getSearchFolderName().SendKeys(folderName);
 			base.waitForElement(getFolderNameToSelect1(folderName));
@@ -1266,7 +1270,7 @@ public class CollectionPage {
 		} else {
 			try {
 
-				base.waitTime(4);
+				base.waitTime(7);
 				driver.waitForPageToBeReady();
 				getSearchFolderName().SendKeys(folderName);
 				base.waitForElement(getFolderNameToSelect1(folderName));
@@ -1449,7 +1453,7 @@ public class CollectionPage {
 			}
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
-
+			base.waitForElement(getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])));
 			base.textCompareEquals(expValue,
 					getDataSetDetails(dataSetNameGenerated, colllectionDataHeadersIndex.get(headerList[j])).getText(),
 					"Displayed as expected", "Not Displayed as expected");
@@ -2658,7 +2662,7 @@ public class CollectionPage {
 				base.waitTime(15); // To handle abnormal wait times in case of data processing
 				String collStatus = getDataSetDetails(collectionName,
 						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
-
+			
 				// Contains comparision
 				if (collStatus.contains(expStatusToCheck)) {
 					base.passedStep("Collection is in " + collStatus + " state as Expected");
@@ -2728,7 +2732,25 @@ public class CollectionPage {
 		// Download Report
 		driver.waitForPageToBeReady();
 		try {
+			
 			getClickDownloadReport(collectionName, colllectionDataHeadersIndex.get(headerName)).waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void clickCancelCollection(String collectionName, String[] headerListDataSets, String headerName,
+			Boolean additional1, String additional2) {
+
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
+
+		// Download Report
+		driver.waitForPageToBeReady();
+		try {
+			getClickCancelCollection(collectionName, colllectionDataHeadersIndex.get(headerName)).waitAndClick(5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -3196,7 +3218,7 @@ public class CollectionPage {
 	public void collectionAction(String collectionName, String actionType, Boolean confirmation,
 			String confirmationAction, Boolean bellyBandText, String expectedTxt) {
 		if (getCollectionAction(collectionName).isElementAvailable(5)) {
-//			getCollectionAction(collectionName).waitAndClick(5);
+			getCollectionAction(collectionName).waitAndClick(5);
 			getCollectionActionList(collectionName, actionType).waitAndClick(10);
 			base.stepInfo("Clicked : " + actionType);
 

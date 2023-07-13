@@ -1080,6 +1080,7 @@ public class DataSets {
 	 */
 	public String VerifyLastStatusOfCollection(String expectedStatus, int count, String collectionName) {
 		base.waitForElement(getLastStatus());
+		base.waitTime(5);
 		String actualStatus = getLastStatus().getText();
 		String[] status = actualStatus.split("\n");
 		if (actualStatus.equalsIgnoreCase(expectedStatus)) {

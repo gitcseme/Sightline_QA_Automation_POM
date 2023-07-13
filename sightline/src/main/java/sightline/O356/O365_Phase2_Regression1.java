@@ -651,7 +651,7 @@ public class O365_Phase2_Regression1 {
 
 		// verify collection name displays in the Search/Filter text box.
 		dataSets.verifysearchBoxValue(collectionName, "");
-
+		driver.waitForPageToBeReady();
 		// verify Datasets of the collection is published
 		dataSets.VerifyLastStatusOfCollection("Published", 25, collectionName);
 
@@ -1249,7 +1249,7 @@ public class O365_Phase2_Regression1 {
 		String secondFirstName = Input.collsecondFirstName;
 		String secondlastName = Input.collsecondlastName;
 		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
-		String[] statusList = { "Retrieved datasets with errors" };
+		String[] statusList = { "Retrieved Datasets with Errors" };
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
 
 		base.stepInfo("Test case Id: RPMXCON-61209 - O365");
@@ -1459,7 +1459,8 @@ public class O365_Phase2_Regression1 {
 				.getDataSetDetails(firstName + " " + lastName,
 						base.getIndex(collection.getCollectionDataSetDetailsHeader(), Input.collectionDataHeader4))
 				.getText();
-		collection.verifyRetrivedDataMatches(firstName, lastName, collectionId, selectedApp, actualValue, true, false,
+		String selectedApp1=selectedApp.substring(0,7);
+		collection.verifyRetrivedDataMatches(firstName, lastName, collectionId, selectedApp1, actualValue, true, false,
 				"");
 
 		// verify DataSet Contents
@@ -1741,7 +1742,9 @@ public class O365_Phase2_Regression1 {
 				.getDataSetDetails(firstName + " " + lastName,
 						base.getIndex(collection.getCollectionDataSetDetailsHeader(), Input.collectionDataHeader4))
 				.getText();
-		collection.verifyRetrivedDataMatches(firstName, lastName, collectionId, selectedApp, actualValue, true, false,
+		String selectedApp1=selectedApp.substring(0,7);
+		System.out.println(selectedApp);
+		collection.verifyRetrivedDataMatches(firstName, lastName, collectionId, selectedApp1, actualValue, true, false,
 				"");
 
 		// verify DataSet Contents
@@ -2109,12 +2112,12 @@ public class O365_Phase2_Regression1 {
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder = "Inbox";
+		String selectedFolder = "Drafts";
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", "Collection Progress",
 				"Action" };
 		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus };
-		String[] statusListBeforeCancel = { "Retrieve of datasets failed" };
+		String[] statusListBeforeCancel = { "Retrieval of Dataset Failed" };
 		String[] statusList = { "Cancel in progress", "Draft" };
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
@@ -2154,6 +2157,7 @@ public class O365_Phase2_Regression1 {
 
 		// Cancel collection
 		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Action", false, "");
+		collection.clickCancelCollection(collectionName, headerListDataSets, "Action", false, "");
 		base.stepInfo("Clicked Cancel Collection");
 		collection.confirmationAction("Yes", Input.cancelCollectionNotification, false);
 
