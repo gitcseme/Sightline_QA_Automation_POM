@@ -2658,8 +2658,7 @@ public class CollectionPage {
 				base.waitTime(15); // To handle abnormal wait times in case of data processing
 				String collStatus = getDataSetDetails(collectionName,
 						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
-				System.out.println(collStatus);
-				System.out.println(expStatusToCheck);
+			
 				// Contains comparision
 				if (collStatus.contains(expStatusToCheck)) {
 					base.passedStep("Collection is in " + collStatus + " state as Expected");
@@ -2729,7 +2728,7 @@ public class CollectionPage {
 		// Download Report
 		driver.waitForPageToBeReady();
 		try {
-			System.out.println("//div[text()='" + collectionName + "']//..//..//td["+colllectionDataHeadersIndex.get(headerName)+"]//a");
+			
 			getClickDownloadReport(collectionName, colllectionDataHeadersIndex.get(headerName)).waitAndClick(5);
 		} catch (Exception e) {
 			e.printStackTrace();
