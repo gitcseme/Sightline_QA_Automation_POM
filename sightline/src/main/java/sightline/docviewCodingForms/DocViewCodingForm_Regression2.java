@@ -1850,11 +1850,10 @@ public class DocViewCodingForm_Regression2 {
 		// opening child window(Coding form)
 		baseClass.stepInfo("performing action in coding form child window");
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
-		docViewPage.switchToNewWindow(2);
+		String parentWindow=reusableDocView.switchTochildWindow();
 		driver.waitForPageToBeReady();
 		docViewPage.pencilGearIconCF(Input.stampSelection);
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 		driver.waitForPageToBeReady();
 		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
 			baseClass.passedStep("Coding stamp applied colour displayed in popup");
@@ -2752,6 +2751,7 @@ public class DocViewCodingForm_Regression2 {
 		if (roll.equalsIgnoreCase("rmu")) {
 			// search to Assignment creation
 			sessionSearch.basicContentSearch(Input.searchString1);
+			driver.waitForPageToBeReady();
 			sessionSearch.bulkAssignNearDupeDocuments();
 			assignmentNameToManual = miniDocListPage.assignmentCreationWithManualSortForDisToRMUAndRe();
 			System.out.println("assignmentNameToChoose");
@@ -2910,7 +2910,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("coding stamp saved successfully");
 
 		// mouse over action over the tool tip
-		docViewPage.switchToNewWindow(2);
+		String parentWindow= reusableDocView.switchTochildWindow();
 		if (docViewPage.getCodingStampLastIcon(Input.stampSelection).Displayed()) {
 			Actions builder = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
@@ -2926,8 +2926,9 @@ public class DocViewCodingForm_Regression2 {
 		} else {
 			baseClass.failedStep("Save this coding form as a new stamp not displayed");
 		}
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
+		
+		
 
 		// overall assertion
 		softAssertion.assertAll();
@@ -5106,6 +5107,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// verify the coding form panel
+		driver.waitForPageToBeReady();;
 		docViewPage.viewCodingPopUp(stampText, Input.stampSelection, dateTime);
 
 		// logout
@@ -5467,6 +5469,9 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.logout();
 		// delete assignment and codinform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -6246,6 +6251,9 @@ public class DocViewCodingForm_Regression2 {
 		sessionSearch.ViewInDocView();
 
 		docViewPage.verifyParentWindowCursor();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		docViewPage.verifyChildWindowCursor();
 
 		baseClass.passedStep(
@@ -6641,6 +6649,7 @@ public class DocViewCodingForm_Regression2 {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
+		driver.waitForPageToBeReady();
 		docViewPage.verifyErrorMsgInDocView();
 		docViewPage.openChildWindowInCheckGroup();
 
@@ -8157,7 +8166,8 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(userName, password);
 		sessionSearch.basicContentSearch("null");
 		sessionSearch.ViewInDocView();
-		baseClass.waitForElement(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
 		codingForm.selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
 		sessionSearch.getSearchBtn().waitAndClick(10);
 		baseClass.stepInfo("Search button is clicked from navigation buttons");
@@ -8202,7 +8212,8 @@ public class DocViewCodingForm_Regression2 {
 		loginPage.loginToSightLine(username, password);
 		sessionSearch.basicContentSearch("null");
 		sessionSearch.ViewInDocView();
-		baseClass.waitForElement(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
 		codingForm.selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
 		baseClass.waitForElement(baseClass.getSignoutMenu());
 		baseClass.getSignoutMenu().waitAndClick(5);
@@ -8256,7 +8267,8 @@ public class DocViewCodingForm_Regression2 {
 		sessionSearch.basicContentSearch("null");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Navigated to doc view page");
-		baseClass.waitForElement(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(codingForm.selectObjectsInPreviewBox("Technical_Issue"));
 		codingForm.selectObjectsInPreviewBox("Technical_Issue").waitAndClick(10);
 		baseClass.waitForElement(baseClass.getSignoutMenu());
 		baseClass.getSignoutMenu().waitAndClick(5);

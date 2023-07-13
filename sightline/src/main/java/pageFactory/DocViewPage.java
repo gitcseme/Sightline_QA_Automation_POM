@@ -3714,7 +3714,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
         return driver.FindElementByCssSelector("*[class=igViewerGraphics]>div>svg>g>g>svg>g>g>text");
   }
     
-   	
+    public Element getCodingFormExpand() {
+
+		return driver.FindElementByXPath("//*[@id='HdrCoddingForm']//*[@class='button-icon jarviswidget-pop-btn']//following-sibling::a//i[@class='fa fa-plus']");}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -5905,15 +5907,13 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().Click();
 		base.CloseSuccessMsgpopup();
-//		driver.getWebDriver().navigate().refresh();
-//		driver.switchTo().alert().accept();
+		driver.getWebDriver().navigate().refresh();
+		selectDocsFromMiniDocsAndCodeSameAs();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
 //		base.waitForElement(getCodeSameAsLast());
 //		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 //		getCodeSameAsLast().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.passedStep("Cursor moved to the next document after getting success message ");
@@ -13411,7 +13411,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyCodingFormName(String cfName) {
 		try {
-			base.waitForElement(getDocView_CFName());
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getDocView_CFName());
 			softAssertion.assertEquals(cfName, getDocView_CFName().getText());
 			base.passedStep(cfName + " is present");
 		} catch (Exception e) {
@@ -16117,9 +16118,13 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void openChildWindowInCheckGroup() {
 
 		reusableDocView.clickGearIconOpenCodingFormChildWindow();
-		reusableDocView.switchTochildWindow();
-
-		reusableDocView.switchToNewWindow(1);
+		String ParentWindow=reusableDocView.switchTochildWindow();
+		
+		driver.switchTo().window(ParentWindow);
+			if (getCodingFormExpand().isDisplayed()) {
+				base.waitForElement(getCodingFormExpand());
+				getCodingFormExpand().waitAndClick(5);
+			}
 		getSaveAndNextButton().waitAndClick(5);
 		boolean flagOne = getCodingFormValidErrorMeta().isDisplayed();
 		softAssertion.assertTrue(flagOne);
@@ -16129,9 +16134,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		} else {
 			return;
 		}
-		reusableDocView.switchToNewWindow(2);
-		driver.close();
-		reusableDocView.switchToNewWindow(1);
+		String parentWindow=reusableDocView.switchTochildWindow();
+		childWindowToParentWindowSwitching(parentWindow);
 	}
 
 	/**
@@ -18571,6 +18575,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitTime(2);
 		System.out.println(text);
 		softAssertion.assertEquals(text, comment);
+		driver.waitForPageToBeReady();
 		if (text.equals(comment)) {
 			base.stepInfo("Coding form value as per the previous one");
 		} else {
@@ -18801,12 +18806,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		}
 		getCodingStampCancel().waitAndClick(5);
 		clickGearIconOpenCodingFormChildWindow();
-		switchToNewWindow(2);
+		String parentWindow=reusableDocView.switchTochildWindow();
 		getDateFormat().SendKeys("11/10/2021");
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
-		driver.close();
-		switchToNewWindow(1);
+		childWindowToParentWindowSwitching(parentWindow);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingStampTextBox());
 		getCodingStampTextBox().SendKeys(fieldValue);
 		base.waitForElement(getDrp_StampColour());
@@ -18905,10 +18910,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		switchToNewWindow(1);
 		popUpAction(fieldText, Input.stampSelection);
 		base.CloseSuccessMsgpopup();
-		switchToNewWindow(2);
+		String parentWindow= reusableDocView.switchTochildWindow();
 		pencilGearIconCF(Input.stampSelection);
-		closeWindow(1);
-		switchToNewWindow(1);
+		childWindowToParentWindowSwitching(parentWindow);
 		if (getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
 			base.passedStep("Coding stamp applied colour displayed in popup");
 		} else {
@@ -20323,10 +20327,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		lastAppliedStamp(Input.stampSelection);
 		base.stepInfo("performing action in child window for minidoclist document");
 		clickGearIconOpenCodingFormChildWindow();
-		switchToNewWindow(2);
+		String parentWindow=reusableDocView.switchTochildWindow();
+		driver.waitForPageToBeReady();
 		lastAppliedStamp(Input.stampSelection);
-		driver.close();
-		switchToNewWindow(1);
+		childWindowToParentWindowSwitching(parentWindow);
 		driver.waitForPageToBeReady();
 		refreshAndAlert();
 		base.stepInfo("performing action in parent window for analytical document");
@@ -20340,10 +20344,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		lastAppliedStamp(Input.stampSelection);
 		base.stepInfo("performing action in child window for analytical document");
 		clickGearIconOpenCodingFormChildWindow();
-		switchToNewWindow(2);
+		String parentWindow1=reusableDocView.switchTochildWindow();
+		driver.waitForPageToBeReady();
 		lastAppliedStamp(Input.stampSelection);
-		driver.close();
-		switchToNewWindow(1);
+		childWindowToParentWindowSwitching(parentWindow1);
+		
 		boolean flag = getverifyCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
 		softAssertion.assertAll();

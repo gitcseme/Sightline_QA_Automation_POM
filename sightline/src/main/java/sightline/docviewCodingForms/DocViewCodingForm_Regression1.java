@@ -1648,6 +1648,9 @@ public class DocViewCodingForm_Regression1 {
 		loginPage.logout();
 		// Delete assignment and codingform
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentPage.editAssignmentUsingPaginationConcept(assgnCoding);
+		assignmentPage.SelectCodingform(Input.codeFormName);
+		assignmentPage.saveAssignment(assgnCoding, Input.codeFormName);
 		assignmentPage.deleteAssgnmntUsingPagination(assgnCoding);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.deleteCodingForm(codingform, codingform);
@@ -5746,11 +5749,9 @@ public class DocViewCodingForm_Regression1 {
 		sessionSearch.ViewInDocViews();
 		docViewPage.verifyCodeSameAsLastDocMsgIsDisplayed("Code this document the same as the last coded document");
 		reusableDocView.clickGearIconOpenCodingFormChildWindow();
-		reusableDocView.switchTochildWindow();
+		String parentWindow=reusableDocView.switchTochildWindow();
 		docViewPage.verifyCodeSameAsLastDocMsgIsDisplayed("Code this document the same as the last coded document");
-
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 		baseClass.passedStep("Verified tool tip on mouse hover of the icon to code same as last");
 		loginPage.logout();
 	}
@@ -6768,11 +6769,10 @@ public class DocViewCodingForm_Regression1 {
 		// verify code same as last displaying in child window
 		baseClass.stepInfo("Coding form child window get opened");
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
-		docViewPage.switchToNewWindow(2);
+		String parentWindow= reusableDocView.switchTochildWindow();
 		boolean flag = docViewPage.getCodeSameAsLast().isDisplayed();
 		softAssertion.assertTrue(flag);
-		driver.close();
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 		softAssertion = new SoftAssert();
 		baseClass.passedStep("Code same as last button displayed in coding form child window");
 		// logout
@@ -7163,11 +7163,11 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 
 		// To view the NearDupe Doc in the DocView
+		driver.waitForPageToBeReady();
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
-		driver.waitForPageToBeReady();
+		String parentWindow= reusableDocView.switchTochildWindow();
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 
 		// DocViewCodingform edit and saved
 		docViewPage.editCodingForm(comment);
@@ -7268,8 +7268,8 @@ public class DocViewCodingForm_Regression1 {
 		docViewPage.stampColourSelection(filedText, Input.stampColours);
 		baseClass.stepInfo("Editing coding form and saving with a stamp colour has been done");
 		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		String parentWindow= reusableDocView.switchTochildWindow();
+		docViewPage.childWindowToParentWindowSwitching(parentWindow);
 		driver.waitForPageToBeReady();
 
 		// DocViewCodingform saved stamplastIcon click and saved doc

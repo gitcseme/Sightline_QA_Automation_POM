@@ -492,7 +492,9 @@ public class ReusableDocViewPage {
 		getNonPrivilegeRadio().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		DocViewPage doc=new DocViewPage(driver);
-		if(doc.getAddComment1().isElementAvailable(2)) {
+		doc.getAddComment1().Click();
+		String readonly=doc.getAddComment1().GetAttribute("readonly");
+		if(doc.getAddComment1().isElementAvailable(2)&& readonly==null) {
 			doc.getAddComment1().SendKeys(fieldValue);
 			driver.scrollPageToTop();
 		}
