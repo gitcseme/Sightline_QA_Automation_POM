@@ -60,7 +60,7 @@ public class AddProjectAssignUser_MappedSmokeIngestion {
 		
 	}
 	
-	@Test(enabled = true, groups = { "regression" },priority=2)
+	@Test(description = "RPMXCON-77112",enabled = true, groups = { "regression" },priority=2)
 	public void mappedIngestion() throws Exception {
 		UserManagement userManagement=new UserManagement(driver);
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
@@ -79,7 +79,7 @@ public class AddProjectAssignUser_MappedSmokeIngestion {
 				 search.bulkRelease("Default Security Group");
 				 loginPage.logout();
 	}
-	@Test(enabled = true, groups = { "regression" },priority=1)
+	@Test(description = "RPMXCON-77109", enabled = true, groups = { "regression" },priority=1)
 	public void createProjectAndAssignUser() {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
         baseClass.stepInfo("logged In  as SA user");
