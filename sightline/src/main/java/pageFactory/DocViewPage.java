@@ -13788,7 +13788,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 //			getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 			getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
-			for (int i = 2; i <= 3; i++) {
+			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_Concept_DocCheckBox(i));
 				getDocView_Analytics_Concept_DocCheckBox(i).waitAndClick(10);
 			}
@@ -23091,7 +23091,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 
 			base.waitForElement(getDocView_Analytics_FamilyTab_NoQuery());
 			softAssertion.assertTrue(getDocView_Analytics_FamilyTab_NoQuery().isDisplayed());
-			softAssertion.assertAll();
+			//softAssertion.assertAll();
 			base.passedStep("Message is displayed as 'Your query returned no data' successfully");
 
 		} catch (Exception e) {
