@@ -907,6 +907,7 @@ public class WorkFlowAutomation_Regression {
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Ascending");
 		workflow.applySorting(false, true, true, "Workflow ID");
+		baseClass.wait(10);
 		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Descending");
 
 		// verifying Last Modified Date column sorting
