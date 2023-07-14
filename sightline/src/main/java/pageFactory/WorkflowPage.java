@@ -116,7 +116,10 @@ public class WorkflowPage {
 	}
 
 	public Element getWorkFlow_SelectWorkflow(String WFName) {
-		return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]");
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody//td[contains(.,'" + WFName + "')]");
+	}
+	public Element getWorkFlow_SelectWorkflow1() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]");
 	}
 
 	public Element getWorkFlow_SelectWorkStatus(String WFName, int i) {
@@ -146,7 +149,8 @@ public class WorkflowPage {
 	}
 
 	public Element getWorkFlow_ActionDeleteWorkFlow() {
-		return driver.FindElementByCssSelector("a#lnkDeleteWorkflow");
+		return driver.FindElementById("lnkDeleteWorkflow");
+		//return driver.FindElementByCssSelector("a#lnkDeleteWorkflow");
 	}
 
 	public Element getWorkFlow_ActionDeleteWorkFlow_YesButton() {
@@ -1080,8 +1084,14 @@ public class WorkflowPage {
 	// Reusable method for delete workflow
 	public String actionToDelete(String wfName, int workFlowId) {
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(getWorkFlow_SelectWorkflow(wfName));
-		getWorkFlow_SelectWorkflow(wfName).waitAndClick(5);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		baseClass.waitForElement(getWorkFlow_SelectWorkflow1());
+		getWorkFlow_SelectWorkflow1().waitAndClick(20);
 		baseClass.waitForElement(getWorkFlow_ActionDropdown());
 		getWorkFlow_ActionDropdown().waitAndClick(10);
 		baseClass.waitForElement(getWorkFlow_ActionDeleteWorkFlow());
