@@ -54,7 +54,7 @@ public class AIPage {
 	}
 
 	public Element getAIEnabledStatus() {
-		return driver.FindElementByXPath("//input[@id='chkIsAIEnabled' and contains(@disabled,'disabled')]");
+		return driver.FindElementByXPath("//input[@id='chkIsAIEnabled']");
 	}
 
 	public Element getResponsiveModelHeader() {
