@@ -106,7 +106,7 @@ public class DocView_MetaData_Regression {
 		docViewMetaDataPage.selectPaginatedDocAndPerformPagination();
 		
 		baseClass.stepInfo("Create new folder and add selected document to it");
-		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+String.valueOf(utility.dynamicNameAppender()));
+		docViewMetaDataPage.createNewFolderAndAddSelectedDocument(Input.randomText+String.valueOf(Utility.dynamicNameAppender()));
 		loginPage.logout();
 	}
 	

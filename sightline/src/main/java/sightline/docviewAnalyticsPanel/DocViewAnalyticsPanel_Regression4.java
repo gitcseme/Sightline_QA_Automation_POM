@@ -157,6 +157,7 @@ public class DocViewAnalyticsPanel_Regression4 {
 			driver.waitForPageToBeReady();
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewThreadedDocsInDocViews();
+			docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
 			docViewPage.selectDocsFromThreadMapTabAndActionCodeSame();
 			docViewPage.selectDocsFromThreadMapTabAndActionRemoveCodeSameAs();
 		}
@@ -575,7 +576,8 @@ public class DocViewAnalyticsPanel_Regression4 {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
+		//docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 
 		baseClass.stepInfo("Step 3 : Select multiple documents from Conceptual and action as 'Code same as this'");
 		// select Multi docs from conceptual tab
@@ -598,7 +600,8 @@ public class DocViewAnalyticsPanel_Regression4 {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("Conceptually");
+		//docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Step 3 : Select multiple documents from Conceptual and action as 'Code same as this'");
 		// select Multi docs from conceptual tab
@@ -808,7 +811,8 @@ public class DocViewAnalyticsPanel_Regression4 {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("FamilyMember");
+		//docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 		docViewPage.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// Edit Coding Stamp and Apply Coding Stamp
@@ -833,7 +837,8 @@ public class DocViewAnalyticsPanel_Regression4 {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("ThreadMap");
+		//docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		docViewPage.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// Edit Coding Stamp and Apply Coding Stamp
@@ -1041,7 +1046,8 @@ public class DocViewAnalyticsPanel_Regression4 {
 		
 		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		//docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel("NearDupe");
 
 		baseClass.stepInfo("Step 4: Click the gear icon to pop out the panels and pop out the analytics panel");
 		driver.waitForPageToBeReady();

@@ -609,7 +609,7 @@ public class DocView_Redactions_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52216");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch("ID00000012");
+		sessionsearch.basicContentSearch("T2390D");
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingRemarksIcon();
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()

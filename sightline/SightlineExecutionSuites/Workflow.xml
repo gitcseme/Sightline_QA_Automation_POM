@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Workflow" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Workflow">
+<classes>
+<class name="testScriptsSmoke.Input" />
+
+<class name="sightline.smallComponents.WorkflowAutomation_Phase2_Regression"/>
+<class name="sightline.smallComponents.WorkFlowAutomation_Regression"/>
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+
