@@ -3447,6 +3447,7 @@ public class SessionSearch {
 		base.waitForElement(getBulkTagAction());
 		getBulkTagAction().waitAndClick(10);
 //Using Search to filter Tag	
+		
 		base.waitForElement(getSelectSearch());
 		getSelectSearch().SendKeys(tagName);
 		getSelectSearch().SendKeys1(Keys.ENTER);
