@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-Doclist" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Doclist">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name="sightline.doclist.DocList_Phase1_Regression"/>
+<class name="sightline.doclist.DocList_Phase2_Regression"/>
+<class name="sightline.doclist.DocList_Regression_Consilio"/>
+<class name="sightline.smallComponents.DocList_Consilio_2"/>
+<class name="sightline.smallComponents.DocList_Consilio"/>
+<class name="sightline.smallComponents.DocList_Regression_Consilio"/>
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+
