@@ -437,6 +437,15 @@ public class Element {
 			base.failedStep(sw.toString());
 		}
 	}
+	public void SendKeys1(Keys enter) {
+		try {
+			AssertExists();
+			element.sendKeys(enter);
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			base.failedStep(sw.toString());
+		}
+	}
 
 	/// <summary>
 	/// Will append text to a given element
