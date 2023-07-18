@@ -13,9 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,9 +27,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-
 import automationLibrary.ElementCollection;
-import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
@@ -663,7 +660,7 @@ public class SessionSearch {
 	public Element getSelectTagExisting(String tagName) {
 		return driver.FindElementByXPath("//*[@id='divBulkTagJSTree']//a[contains(.,'" + tagName + "')]");
 	}
-
+	
 	public Element getBulkUnFolderbutton() {
 		return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i");
 	}
@@ -2303,6 +2300,10 @@ public class SessionSearch {
 	public Element selectAssignmentFromWP(String AssignmentName) {
 		return driver.FindElementByXPath("//a[text()='"+AssignmentName+"']");
 	}
+	//Swathi
+	public Element getSelectSearch() {
+		return driver.FindElementByXPath("//input[@id='divBulkTagJSTree-searchTreeKeyword']");
+	}
 	
 	//a[text()='Root']/preceding-sibling::i
 
@@ -3373,7 +3374,11 @@ public class SessionSearch {
 
 		getBulkFolderAction().waitAndClick(10);
 		driver.Manage().window().fullscreen();
-
+//Using search to filter Folder
+		base.waitForElement(getSelectSearch());
+		getSelectSearch().SendKeys(folderName);
+		getSelectSearch().SendKeys1(Keys.ENTER);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectFolderExisting(folderName).Visible();
@@ -3441,11 +3446,16 @@ public class SessionSearch {
 
 		base.waitForElement(getBulkTagAction());
 		getBulkTagAction().waitAndClick(10);
+//Using Search to filter Tag	
+		
+		base.waitForElement(getSelectSearch());
+		getSelectSearch().SendKeys(tagName);
+		getSelectSearch().SendKeys1(Keys.ENTER);
 		
 		base.waitForElement(getSelectTagExisting(tagName));
 		driver.waitForPageToBeReady();
 		getSelectTagExisting(tagName).waitAndClick(5);
-
+	 
 		driver.Manage().window().fullscreen();
 
 		driver.WaitUntil((new Callable<Boolean>() {

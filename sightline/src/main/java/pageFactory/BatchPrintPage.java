@@ -2319,7 +2319,7 @@ public class BatchPrintPage {
 			base.waitForElement(getTagBatchPrint());
 			getTagBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllTagsArrow());
-			getAllTagsArrow().waitAndClick(10);
+			//getAllTagsArrow().waitAndClick(10);		//Commenting this line as All tags root is already opened.
 
 			if (getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
 				base.waitForElement(getSelectTag(searchOrTagOrFol));
