@@ -1912,7 +1912,7 @@ public class DocView_Regression1 {
 		search.navigateToSessionSearchPageURL();
 
 		baseClass.stepInfo("Basic Content Search");
-		search.basicContentSearch(Input.searchString2);
+		search.basicContentSearch(Input.telecaSearchString);
 
 		baseClass.stepInfo("Add Docs Met Criteria To Action Board");
 //		search.addDocsMetCriteriaToActionBoard();
@@ -4019,7 +4019,7 @@ public class DocView_Regression1 {
 
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-
+		baseClass.selectproject(Input.additionalDataProject);
 		// selecting the assignment
 		baseClass.stepInfo("Assignment selecting for view in dovcview");
 		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
@@ -6211,6 +6211,7 @@ public class DocView_Regression1 {
 		int previousAnnotationCount = docView.getAppiedAnnotationCount();
 
 		baseClass.stepInfo("Switch to parent window from child window");
+		driver.waitForPageToBeReady();
 		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
 
 		baseClass.stepInfo("Click on redaction icon");
@@ -6617,6 +6618,7 @@ public class DocView_Regression1 {
 		docView.verifyAddedAnnotation();
 
 		baseClass.stepInfo("Switch to parent window from child window");
+		driver.waitForPageToBeReady();
 		reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
 
 		baseClass.stepInfo("verify visibility of edit Annotation in document in second window");

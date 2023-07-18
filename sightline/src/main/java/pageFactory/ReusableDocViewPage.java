@@ -246,6 +246,7 @@ public class ReusableDocViewPage {
 //	Reusable method for switching to child window for all panel
 //	Child Window Display and control in child window
 	public String switchTochildWindow() {
+		driver.waitForPageToBeReady();
 		String parentWindow = driver.getWebDriver().getWindowHandle();
 		Set<String> childWindow = driver.getWebDriver().getWindowHandles();
 		for (String miniDocListChild : childWindow) {
@@ -267,6 +268,7 @@ public class ReusableDocViewPage {
 		driver.waitForPageToBeReady();
 		driver.close();
 		driver.switchTo().window(parentWindow);
+		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -493,11 +495,11 @@ public class ReusableDocViewPage {
 		driver.waitForPageToBeReady();
 		DocViewPage doc=new DocViewPage(driver);
 		doc.getAddComment1().Click();
-		String readonly=doc.getAddComment1().GetAttribute("readonly");
-		if(doc.getAddComment1().isElementAvailable(2)&& readonly==null) {
-			doc.getAddComment1().SendKeys(fieldValue);
-			driver.scrollPageToTop();
-		}
+//		String readonly=doc.getAddComment1().GetAttribute("readonly");
+//		if(doc.getAddComment1().isElementAvailable(2)&& readonly==null) {
+//			doc.getAddComment1().SendKeys(fieldValue);
+//			driver.scrollPageToTop();
+//		}
 		base.waitForElement(getCodingFormStampButton());
 		getCodingFormStampButton().waitAndClick(10);
 		base.waitForElement(getCodingStampTextBox());
