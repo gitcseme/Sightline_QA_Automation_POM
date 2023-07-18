@@ -2889,8 +2889,9 @@ public class DocViewMetaDataPage {
 	 * @param off1   : off1 is integer value that x-ordinate location.
 	 * @param off2   : off2 is integer value that y-ordinate location.
 	 * @param remark : remark is String value that name given to remark.
+	 * @return 
 	 */
-	public void performRemarkWithSaveOperation(int off1, int off2, String remark) {
+	public int performRemarkWithSaveOperation(int off1, int off2, String remark) {
 		try {
 			driver.scrollPageToTop();
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -2907,17 +2908,36 @@ public class DocViewMetaDataPage {
 			base.passedStep("Performed remark by rectangle");
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getRemarkTextArea().isElementAvailable(10);
+			DocViewPage doc=new DocViewPage(driver);
+			int totalDocs = doc.verifyingDocCount();
+			int j=0;
+				for(int i=2;i<=totalDocs;i++) {
+					if(!getRemarkTextArea().isElementAvailable(10)) {
+						base.waitForElement(doc.getMiniDocList_IterationDocs(i));
+						doc.getMiniDocList_IterationDocs(i).waitAndClick(10);
+						driver.waitForPageToBeReady();
+						WebElement text1 = currentDocument().getWebElement();
+						actions.moveToElement(text1, off1, off2).clickAndHold().moveByOffset(200, 200).release().perform();
+						base.passedStep("Performed remark by rectangle");
+						driver.scrollPageToTop();
+						getAddRemarkbtn().getWebElement().click();
+				}else if(getRemarkTextArea().isElementAvailable(10)) {
+					j++;
+					System.out.println("document count"+j);
+					break;
 				}
-			}), Input.wait30);
+				
+			}
 			getRemarkTextArea().SendKeys(remark);
 			getSaveRemark().Click();
+			return j;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Not able to select redacted area");
 		}
+		return 0;
+		
 	}
 
 	/**

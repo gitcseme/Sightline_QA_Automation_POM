@@ -19629,12 +19629,12 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnSecDocCF1 = getVerifyPrincipalDocument().getText();
 		clickGearIconOpenCodingFormChildWindow();
-		switchToNewWindow(2);
+		String parentwindow=switchTochildWindow();
 		driver.waitForPageToBeReady();
 		editCodingFormCompleteChildWindow();
 		driver.waitForPageToBeReady();
-		closeWindow(1);
-		switchToNewWindow(1);
+		switchTochildWindow();
+		childWindowToParentWindowSwitching(parentwindow);
 		String prnSecDocCF2 = getVerifyPrincipalDocument().getText();
 		base.waitForElement(getVerifyPrincipalDocument());
 		softAssertion.assertNotEquals(prnSecDocCF1, prnSecDocCF2);
@@ -19643,6 +19643,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		} else {
 			base.failedStep("Curosr not navigated to next document in child window");
 		}
+		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
 		String CfImageTab1 = getVerifyPrincipalDocument().getText();
 		base.waitForElement(getDocView_CurrentDocId());
@@ -19666,12 +19667,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.waitForElement(getVerifyPrincipalDocument());
 		String prnSecDocCF1 = getVerifyPrincipalDocument().getText();
 		clickGearIconOpenCodingFormChildWindow();
-		switchToNewWindow(2);
+		String ParentWindow=switchTochildWindow();
 		editCodingFormSavedStampBtnChildWindow(lastIcon);
 		System.out.println("Applied coding saved successfully");
-		driver.waitForPageToBeReady();
-		closeWindow(1);
-		switchToNewWindow(1);
+		switchTochildWindow();
+		childWindowToParentWindowSwitching(ParentWindow);
 		String prnSecDocCF2 = getVerifyPrincipalDocument().getText();
 		base.waitForElement(getVerifyPrincipalDocument());
 		softAssertion.assertNotEquals(prnSecDocCF1, prnSecDocCF2);
@@ -22281,7 +22281,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 						base.waitForElement(getDocViewDonload_Icon());
 						getDocViewDonload_Icon().waitAndClick(5);
 						base.waitTime(5);
-						base.waitForElement(getDOcViewDoc_DownloadOption(DownloadOption));
+						base.waitTillElemetToBeClickable(getDOcViewDoc_DownloadOption(DownloadOption));
 						Actions ac = new Actions(driver.getWebDriver());
 						ac.moveToElement(getDOcViewDoc_DownloadOption(DownloadOption).getWebElement()).click()
 								.perform();
@@ -22482,7 +22482,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	public void verifyDownloadSelectionDisplayed() {
 		try {
 			driver.waitForPageToBeReady();
-			base.waitForElement(getDocView_IconDownload());
+			base.waitTillElemetToBeClickable(getDocView_IconDownload());
 			getDocView_IconDownload().waitAndClick(5);
 			base.waitForElement(getDocViewDownload_SelectionOptions());
 			if (getDocViewDownload_SelectionOptions().isElementAvailable(5)) {
