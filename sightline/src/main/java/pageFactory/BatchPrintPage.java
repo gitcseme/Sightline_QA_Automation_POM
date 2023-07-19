@@ -1820,7 +1820,7 @@ public class BatchPrintPage {
 					return getSavedSearch_MySearchTab().Visible();
 				}
 			}), Input.wait60);
-			getSavedSearch_dropdown().waitAndClick(5);
+			//getSavedSearch_dropdown().waitAndClick(5); 	//This line is not required as My Saved Search is already expanded by default
 			driver.scrollingToBottomofAPage();
 			if (getSelectSavedSearch(SearchName).isElementAvailable(5)) {
 				driver.WaitUntil((new Callable<Boolean>() {
@@ -1828,6 +1828,7 @@ public class BatchPrintPage {
 						return getSelectSavedSearch(SearchName).Visible();
 					}
 				}), Input.wait120);
+				base.waitTime(3);
 				getSelectSavedSearch(SearchName).waitAndClick(20);
 				System.out.println(SearchName + " is Selected");
 				base.stepInfo(SearchName + " is Selected");
@@ -2335,7 +2336,7 @@ public class BatchPrintPage {
 			base.waitForElement(getFolderBatchPrint());
 			getFolderBatchPrint().waitAndClick(10);
 			base.waitForElement(getAllFoldersArrow());
-			getAllFoldersArrow().waitAndClick(10);
+			//getAllFoldersArrow().waitAndClick(10);	//Commenting this line as All tags root is already opened.
 
 			if (getSelectTag(searchOrTagOrFol).isElementAvailable(10)) {
 				base.waitForElement(getSelectFolder(searchOrTagOrFol));
