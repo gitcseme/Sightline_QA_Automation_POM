@@ -957,7 +957,7 @@ public class DocView_Regression9 {
 
 // Verifying as Rev		
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.basicContentSearch(Input.testData1);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Documents viewd in DocView");
@@ -5812,7 +5812,7 @@ public class DocView_Regression9 {
 		docView.getDocView_CodingFormPopOut().waitAndClick(5);
 		docView.switchToNewWindow(2);
 		docView.editCodingFormCompleteChildWindow();
-		docView.switchToNewWindow(2);
+		String ParentWindow=docView.switchTochildWindow();
 		softAssert.assertTrue(docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled());
 		if (docView.getCodeSameAsLast().Displayed() && docView.getCodeSameAsLast().Enabled()) {
 			baseClass.passedStep("document same as last from coding form child window");
@@ -5820,8 +5820,7 @@ public class DocView_Regression9 {
 			baseClass.failedStep("document same as last from is not Enabled");
 		}
 		driver.waitForPageToBeReady();
-		docView.closeWindow(1);
-		docView.switchToNewWindow(1);
+		docView.childWindowToParentWindowSwitching(ParentWindow);;
 		baseClass.waitTime(4);
 //		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 //		docView.getPersistantHitEyeIcon().waitAndClick(5);

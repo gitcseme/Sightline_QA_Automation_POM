@@ -2304,7 +2304,9 @@ public class SessionSearch {
 	public Element getSearchBulkTagExisting() {
 		return driver.FindElementByXPath("//input[@id='divBulkTagJSTree-searchTreeKeyword']");
 	}
+
 	public Element getSearchBulkFolderExisting() {
+
 		return driver.FindElementByXPath("//input[@id='divBulkFolderJSTree-searchTreeKeyword']");
 	}
 	
@@ -3378,9 +3380,11 @@ public class SessionSearch {
 		getBulkFolderAction().waitAndClick(10);
 		driver.Manage().window().fullscreen();
 //Using search to filter Folder
+
 		base.waitForElement(getSearchBulkFolderExisting());
 		getSearchBulkFolderExisting().SendKeys(folderName);
 		getSearchBulkFolderExisting().SendKeys1(Keys.ENTER);
+
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

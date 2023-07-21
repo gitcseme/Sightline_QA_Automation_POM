@@ -2916,6 +2916,9 @@ public class DocViewMetaDataPage {
 						base.waitForElement(doc.getMiniDocList_IterationDocs(i));
 						doc.getMiniDocList_IterationDocs(i).waitAndClick(10);
 						driver.waitForPageToBeReady();
+						base.waitTime(2);
+						actions = new Actions(driver.getWebDriver());
+						driver.waitForPageToBeReady();
 						WebElement text1 = currentDocument().getWebElement();
 						actions.moveToElement(text1, off1, off2).clickAndHold().moveByOffset(200, 200).release().perform();
 						base.passedStep("Performed remark by rectangle");
@@ -2963,12 +2966,28 @@ public class DocViewMetaDataPage {
 			base.passedStep("Performed remark by rectangle");
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getRemarkTextArea().isElementAvailable(10);
+			DocViewPage doc=new DocViewPage(driver);
+			int totalDocs = doc.verifyingDocCount();
+				for(int i=2;i<=totalDocs;i++) {
+					if(!getRemarkTextArea().isElementAvailable(10)) {
+						base.waitForElement(doc.getMiniDocList_IterationDocs(i));
+						doc.getMiniDocList_IterationDocs(i).waitAndClick(10);
+						driver.waitForPageToBeReady();
+						base.waitTime(2);
+						actions = new Actions(driver.getWebDriver());
+						driver.waitForPageToBeReady();
+						WebElement text1 = currentDocument().getWebElement();
+						actions.moveToElement(text1, off1, off2).clickAndHold().moveByOffset(200, 200).release().perform();
+						base.passedStep("Performed remark by rectangle");
+						driver.scrollPageToTop();
+						getAddRemarkbtn().getWebElement().click();
+				}else if(getRemarkTextArea().isElementAvailable(10)) {
+					break;
 				}
-			}), Input.wait30);
+				
+			}
 			getRemarkTextArea().SendKeys(remark);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Not able to select redacted area");

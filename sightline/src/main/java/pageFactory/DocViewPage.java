@@ -19404,7 +19404,10 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		// base.waitTillElemetToBeClickable(getDociD(Doc));
 		// getDociD(Doc).waitAndClick(10);
         base.waitTime(10);
-        selectDocInMiniDocList(Doc);
+       if(getDociD(Doc).isElementAvailable(3)) {
+    	   getDociD(Doc).waitAndClick(10); 
+       }
+       driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());
 		String ActualValue = getDocView_IconFileType().getText();
 		System.out.println("default value:" + ActualValue);

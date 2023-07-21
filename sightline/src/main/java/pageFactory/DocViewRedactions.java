@@ -1504,11 +1504,13 @@ public class DocViewRedactions {
 				return redactionIcon().Displayed() && redactionIcon().Enabled();
 			}
 		}), Input.wait30);
-		redactionIcon().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		redactionIcon().waitAndClick(10);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(btnTypeOfRedaction("Text Redaction").getWebElement()));
 		base.waitTime(2);
 		btnTypeOfRedaction("Text Redaction").Click();
+		driver.waitForPageToBeReady();
 		WebElement src = driver.FindElement(By.cssSelector("g[id='ig0level0surface1'] g text:nth-child(1)"))
 				.getWebElement();
 		WebElement dest = driver.FindElement(By.cssSelector("g[id='ig0level0surface1'] g text:nth-child(10)"))

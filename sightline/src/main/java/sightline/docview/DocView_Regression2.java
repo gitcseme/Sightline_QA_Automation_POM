@@ -2677,16 +2677,14 @@ public class DocView_Regression2 {
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
 		docView.getDocView_CurrentDocId().ScrollTo();
 		String docIdBeforeSavedStampAction = docView.getDocView_CurrentDocId().getText();		
-		docView.switchToNewWindow(2);
+		String ParentWindow=docView.switchTochildWindow();
 		// validation after saved stamp
 		docView.lastAppliedStamp(Input.stampColour);
 		baseClass.waitTillElemetToBeClickable(docView.getCodingFormSaveButton());
 		docView.getCodingFormSaveButton().ScrollTo();
 		docView.getCodingFormSaveButton().waitAndClick(10);		
 		baseClass.stepInfo("Saved stamp is applied succesfully in child window");
-		docView.closeWindow(1);
-		docView.switchToNewWindow(1);
-		baseClass.handleAlert();
+		docView.childWindowToParentWindowSwitching(ParentWindow);
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is not presented in the Viewer. Please download the native to review.");
 		baseClass.waitForElement(docView.getDocView_CurrentDocId());
@@ -2694,7 +2692,6 @@ public class DocView_Regression2 {
 		softassertion.assertNotEquals(docIdBeforeSavedStampAction, docIdAfterSavedStampAction);
 		baseClass.passedStep("Cursor moved to nextdoc and warning message displayed as expected");
 		softassertion.assertAll();
-		docView.switchToNewWindow(2);
 		loginPage.logout();
 	}
 
