@@ -112,6 +112,7 @@ public class DocView_Regression1 {
 		sessionSearch.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("Bulk assign with new assignment");
+		driver.waitForPageToBeReady();
 		sessionSearch.bulkAssignWithNewAssignment();
 
 		baseClass.stepInfo("Create assignment by bulk assign operationfrom Session search");
@@ -183,6 +184,7 @@ public class DocView_Regression1 {
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
+		driver.waitForPageToBeReady();
 		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
 
 		baseClass.stepInfo("Verify Code same as last doc message is displayed by mouse over on code last white pencil");
@@ -3630,6 +3632,7 @@ public class DocView_Regression1 {
 
 	}
 
+
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
 	 * TestCase id : 51022 - To verify that if Reviewer Remark is off at Assignment
@@ -3684,6 +3687,7 @@ public class DocView_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		baseClass.stepInfo("Verify Remark Button Is Displayed");
+		baseClass.waitTime(2);
 		docViewMetaDataPage.verifyingRemarkButtonIsDisplayed();
 
 		baseClass.stepInfo("Navigate To Assignments Page");
@@ -4339,6 +4343,7 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		DocViewRedactions docRedact=new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -4346,31 +4351,42 @@ public class DocView_Regression1 {
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
-		session.basicContentSearch(Input.searchString1);
+		session.basicContentSearch(Input.searchString2);
 
 		baseClass.stepInfo("View serached dos in DOcview");
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Perform Remark with save operation");
-		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15, remark);
+		docViewMetaDataPage.performRemarkWithSaveOperation(1, 25, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
+		baseClass.waitTime(2);
+		String docId = docRedact.activeDocId().getText();
+		docView.getDocView_DocId(docId).waitAndClick(10);
 		docView.verifyRemarkIsAdded(remark);
 
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
 
+		baseClass.waitTime(2);
+		docView.getDocView_DocId(docId).waitAndClick(10);
 		baseClass.stepInfo("Perform Remark without save operation");
-		docViewMetaDataPage.performRemarkWithoutSaveOperation(10, 15, remark2);
-
-		baseClass.stepInfo("Click on remark button");
-		docView.getNonAudioRemarkBtn().Click();
+		docViewMetaDataPage.performRemarkWithoutSaveOperation(1, 25, remark2);
 
 		baseClass.stepInfo("Delete Remark Is Added");
+		baseClass.waitForElement(docView.getNonAudioRemarkBtn());
+		docView.getNonAudioRemarkBtn().waitAndClick(9);
 		docView.deleteReamark(remark);
 
 		baseClass.stepInfo("Verify Remark Is Not Added");
-		docView.verifyRemarkIsNotAdded(remark2);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElementCollection(docView.getRemarkPanelItems());
+		List<String>Remarks=baseClass.availableListofElements(docView.getRemarkPanelItems());
+		if (!Remarks.contains(remark2)) {
+			baseClass.passedStep("remark is not added to document");
+		}else {
+			baseClass.failedStep("Remark is added to document");
+		}
 		loginPage.logout();
 
 	}
@@ -6268,7 +6284,8 @@ public class DocView_Regression1 {
 		sessionSearch.ViewInDocView();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		docViewRedactions.selectDoc1();
+		docViewRedactions.selectDoc2();
+		baseClass.waitTime(1);
 		driver.waitForPageToBeReady();
 		docViewRedactions.RedactTextInDocView(10, 10, 100, 100);
 		driver.waitForPageToBeReady();
@@ -6284,6 +6301,7 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Bulk Folder Existing");
 		sessionSearch.bulkFolderExisting(foldername);
