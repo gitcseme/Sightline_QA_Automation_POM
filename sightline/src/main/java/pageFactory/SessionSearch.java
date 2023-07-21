@@ -2301,10 +2301,12 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//a[text()='"+AssignmentName+"']");
 	}
 	//Swathi
-	public Element getSelectSearch() {
+	public Element getSearchBulkTagExisting() {
 		return driver.FindElementByXPath("//input[@id='divBulkTagJSTree-searchTreeKeyword']");
 	}
-	public Element getSelectSearchForFolder() {
+
+	public Element getSearchBulkFolderExisting() {
+
 		return driver.FindElementByXPath("//input[@id='divBulkFolderJSTree-searchTreeKeyword']");
 	}
 	
@@ -3378,9 +3380,11 @@ public class SessionSearch {
 		getBulkFolderAction().waitAndClick(10);
 		driver.Manage().window().fullscreen();
 //Using search to filter Folder
-		base.waitForElement(getSelectSearchForFolder());
-		getSelectSearchForFolder().SendKeys(folderName);
-		getSelectSearchForFolder().SendKeys1(Keys.ENTER);
+
+		base.waitForElement(getSearchBulkFolderExisting());
+		getSearchBulkFolderExisting().SendKeys(folderName);
+		getSearchBulkFolderExisting().SendKeys1(Keys.ENTER);
+
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -3451,9 +3455,9 @@ public class SessionSearch {
 		getBulkTagAction().waitAndClick(10);
 //Using Search to filter Tag	
 		
-		base.waitForElement(getSelectSearch());
-		getSelectSearch().SendKeys(tagName);
-		getSelectSearch().SendKeys1(Keys.ENTER);
+		base.waitForElement(getSearchBulkTagExisting());
+		getSearchBulkTagExisting().SendKeys(tagName);
+		getSearchBulkTagExisting().SendKeys1(Keys.ENTER);
 		
 		base.waitForElement(getSelectTagExisting(tagName));
 		driver.waitForPageToBeReady();
