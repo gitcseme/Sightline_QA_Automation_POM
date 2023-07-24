@@ -235,7 +235,7 @@ public class TagsAndFolders_Phase2_Regression {
 		base.stepInfo("Go to Tags and FolderPage Create folder");
 		driver.waitForPageToBeReady();
 		tagsAndFolderPage.selectallFolderRoot();
-		tagsAndFolderPage.createDuplicateFolderGroup(Input.securityGroup, folderGroup, "Failure-Error", null);
+		tagsAndFolderPage.createDuplicateFolderGroup(Input.securityGroup, folderGroup, "Error !", null);
 
 		base.stepInfo("Edit folder");
 		driver.waitForPageToBeReady();
@@ -684,7 +684,7 @@ public class TagsAndFolders_Phase2_Regression {
 		expOrder.add("Privileged");
 		expOrder.add("Private Data");
 		expOrder.add("Technical Issue");
-
+		
 		List<WebElement> tagsclss = tagsAndFolderPage.getAllTagClassification().FindWebElements();
 		driver.waitForPageToBeReady();
 		System.out.println(tagsclss);
@@ -1211,10 +1211,10 @@ public class TagsAndFolders_Phase2_Regression {
 		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroupName, "Success", null);
 		driver.waitForPageToBeReady();
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(20);
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(30);
 		tagsAndFolderPage.CreateFolderCC(FolderName, Input.securityGroup);
 		base.waitForElement(tagsAndFolderPage.getTagNameDataCon(folderGroupName));
-		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(20);
+		tagsAndFolderPage.getTagNameDataCon(folderGroupName).waitAndClick(30);
 		tagsAndFolderPage.CreateFolderCC(FolderName2, Input.securityGroup);
 
 		// Calculate the unique doc count for the respective searches
