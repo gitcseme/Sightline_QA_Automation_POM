@@ -3457,7 +3457,7 @@ public class CodingForm {
 	}
 		
 	public void SelectCodingform(String CFName) {
-		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(2)) {
+		if (assgnpage.SelectCFPopUpSG_Step1().isElementAvailable(10)) {
 			base.stepInfo("Add / Remove Coding Forms in this Security Group.");
 			assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
 			assgnpage.getSelectCF_CheckBox(CFName).waitAndClick(5);
@@ -4959,7 +4959,6 @@ public class CodingForm {
 //	Reusable method for assig coding form to SG with alert
 	public void assignCodingFormToSGAlert(String cfName) throws InterruptedException {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-		driver.switchTo().alert().accept();
 		driver.waitForPageToBeReady();
 //		base.waitForElement(getManageCodingFormButton());
 //		base.waitForElement(getCodingForm_Search());

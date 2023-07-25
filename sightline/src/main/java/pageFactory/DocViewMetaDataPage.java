@@ -3191,5 +3191,60 @@ public class DocViewMetaDataPage {
 		}
 		
 	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param Count
+	 * @return
+	 * @Description: used to select remark document
+	 */
 
+public String selectRemarkDocument(int Count) {
+	
+	DocViewRedactions docRedact = new DocViewRedactions(driver);
+	DocViewPage  doc=new DocViewPage(driver);
+	String docID =null;
+	//search for remark icon
+	
+	base.waitForElement(getNonAudioRemarkBtn());
+	driver.scrollPageToTop();
+	driver.Navigate().refresh();
+	driver.waitForPageToBeReady();
+	 
+	for(int i=1;i<Count;i++) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(doc.getMiniDocList_IterationDocs(i));
+		doc.getMiniDocList_IterationDocs(i).waitAndClick(10);
+		
+		if(getNonAudioRemarkBtn().isDisplayed()) {
+			if(!getAddRemarkbtn().isDisplayed()) {
+				driver.scrollPageToTop();
+				getNonAudioRemarkBtn().waitAndClick(10);}
+			//adding remark using offset
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			actions = new Actions(driver.getWebDriver());
+			driver.waitForPageToBeReady();
+			WebElement text1 = currentDocument().getWebElement();
+			actions.moveToElement(text1, 1, 25).clickAndHold().moveByOffset(200, 200).release().perform();
+			base.passedStep("Performed remark by rectangle");
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getAddRemarkbtn().waitAndClick(10);
+			
+			if(getRemarkTextArea().isElementAvailable(10)) {
+				if(getAddRemarkbtn().isDisplayed()) {
+					driver.waitForPageToBeReady();
+					getNonAudioRemarkBtn().waitAndClick(10);}
+				driver.waitForPageToBeReady();
+				docID = docRedact.activeDocId().getText();
+				break;
+		}
+			
+		}
+		
+		}
+	return docID;
+}
 }
