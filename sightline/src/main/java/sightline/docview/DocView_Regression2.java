@@ -4022,9 +4022,7 @@ public class DocView_Regression2 {
 
 		// search to Assignment creation on audio
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
-		sessionsearch.addPureHit();
-		driver.scrollPageToTop();
-		sessionsearch.bulkAssignWithOutPureHit();
+		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		baseClass.passedStep("persistent hits is enabled while creating the assignment");
 
@@ -4036,10 +4034,9 @@ public class DocView_Regression2 {
 		baseClass.passedStep("Persistent search is displayed on audio doc");
 
 		// search to Assignment creation on audio
+		baseClass.selectproject(Input.projectName);
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
-		sessionsearch.addPureHit();
-		driver.scrollPageToTop();
-		sessionsearch.bulkAssignWithOutPureHit();
+		sessionsearch.bulkAssign();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentname, codingForm, SessionSearch.pureHit);
 		baseClass.stepInfo("persistent hits is enabled while creating the assignment");
 		driver.waitForPageToBeReady();
@@ -4364,6 +4361,7 @@ public class DocView_Regression2 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		docView = new DocViewPage(driver);
 		Actions actions = new Actions(driver.getWebDriver());
+		DocViewMetaDataPage doc=new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"Verify that In DocView Reviewer Remarks, when a user while deleting a reviewer remark gets an error and yet deletes the remark, the remark should be deleted and the highlighting should not be seen.");
 		// Login as RMU
@@ -4371,11 +4369,12 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		MiniDocListPage mini = new MiniDocListPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		search.basicContentSearch(Input.searchString2);
+		int Purehit=search.basicContentSearch(Input.searchString2);
 		search.bulkAssign();
 		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		tagsAndFolderPage.layerAnnotationsAsRMU();
@@ -4389,6 +4388,10 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Doc view page is selected from assigment page");
 		// verify Remark icon
 		driver.waitForPageToBeReady();
+		mini.removingAllExistingFieldsAndAddingNewField(Input.docId);
+		String docId=doc.selectRemarkDocument(Purehit);
+		driver.waitForPageToBeReady();
+		docView.selectDocInMiniDocList(docId);
 		baseClass.waitForElement(docView.getDocView_AddRemarkIcon());
 		softAssertion.assertTrue(docView.getDocView_AddRemarkIcon().Displayed());
 		baseClass.stepInfo("Reviewer remarks panel is displayed on selected document");
