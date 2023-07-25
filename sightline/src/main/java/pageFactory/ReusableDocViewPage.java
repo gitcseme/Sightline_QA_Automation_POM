@@ -1334,6 +1334,7 @@ public class ReusableDocViewPage {
 	public void verifySavedStamp(String comment) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
+		driver.waitForPageToBeReady();
 		String text=getDocument_CommentsTextBox().GetAttribute("value");
 		softAssertion.assertEquals(text,comment);
 		if (text.equals(comment) ) {
