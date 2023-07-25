@@ -4960,6 +4960,11 @@ public class CodingForm {
 	public void assignCodingFormToSGAlert(String cfName) throws InterruptedException {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
+		try {
+			driver.switchTo().alert().accept();
+		} catch (Exception e) {
+			System.out.println("Alert message is not displayed");
+		}
 //		base.waitForElement(getManageCodingFormButton());
 //		base.waitForElement(getCodingForm_Search());
 //		getCodingForm_Search().SendKeys(cfName);
