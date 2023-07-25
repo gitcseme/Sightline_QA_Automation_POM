@@ -249,7 +249,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal , lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		base.stepInfo("**Step-4 Click the 'Actions' link for the collection in Draft mode and select Edit action**");
@@ -414,7 +414,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
-				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "",false,false,false,"",false,"","");
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -513,7 +513,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets To draft
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
-				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "",false,false,false,"",false,"","");
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -573,6 +573,8 @@ public class O365_Phase2_Regression2 {
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String rootfoldername=firstName + " " + lastName + " ("
+				+ collectionEmailId + ")";;
 
 		// Login As PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -588,7 +590,9 @@ public class O365_Phase2_Regression2 {
 
 		// Click create New Collection with datasets
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.addNewDataSetCLick("Button");
 		collection.selectCustodianInAddNewDataSetPopUp(firstName, collectiondataListVal, collectionEmailId, selectedApp);
+//		collection.folderToSelect(rootfoldername, true, true);
 
 		// validate processiong Icon is diplayed
 		collection.loadingIconOnDataSetPage();
@@ -661,7 +665,7 @@ public class O365_Phase2_Regression2 {
 		// DataSet creation
 		collection.fillinDS(dataSourceName,collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
 				selectedFolder, headerListDS, "Button", 3, false, "Save",false,false,false,"",false,
-				"","");
+				"",false);
 
 		// Start A Collection
 		collection.clickOnNextAndStartAnCollection();
@@ -793,7 +797,7 @@ public class O365_Phase2_Regression2 {
 		// DataSet creation
 		collection.fillinDS(dataSourceName,collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
 				selectedFolder, headerListDS, "Button", 3, false, "Save", false,false,false,"",false,
-				"","");
+				"",false);
 
 		// Compare path with Summary details
 		driver.waitForPageToBeReady();
@@ -1124,7 +1128,7 @@ public class O365_Phase2_Regression2 {
 		base.selectproject(Input.ingestDataProject);
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+		userManagement.verifyCollectionAccess(Input.ingestDataProject, userRolesData, Input.sa1userName, Input.sa1password, password);
 		
 		base.selectproject(Input.ingestDataProject);
 		// Collection Draft creation
@@ -1252,7 +1256,7 @@ public class O365_Phase2_Regression2 {
 		// Edit datasets details & verify the details
 		driver.waitForPageToBeReady();
 		String datasetNameGenerator = collection.editDatasetAndVerify(true, collectionEmailId, true, secondFirstName,
-				collection2ndEmailId, true, true, "Archive", "Archive", "Disabled", true);
+				collection2ndEmailId, true, true, "Archive", "Archive", "Disabled", true,false);
 		collection.SaveActionInDataSetPopup(true, secondFirstName, Input.collsecondlastName, selectedApp,
 				collection2ndEmailId, datasetNameGenerator, "Archive", "-", true, "Dataset updated successfully.");
 		collection.clickNextBtnOnDatasetTab();
@@ -1456,19 +1460,26 @@ public class O365_Phase2_Regression2 {
 		// Fill in DS user 1
 		collection.fillingDatasetSelection("Button",collectClientdatlistVal01, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, rootFolderToSelect, true, true, true, Input.randomText, true, true,
-				"Save & Add New Dataset", false,"","");
+				"Save & Add New Dataset", false,"",true);
+		
+		base.waitForElement(collection.CancelDataSetBtn());
 
 		// Cancel Action
-		collection.getActionBtn("Cancel").waitAndClick(10);
+		collection.CancelDataSetBtn().waitAndClick(10);
+		collection.cancelConfirmationOfDatasetPopup("Yes");
 		driver.waitForPageToBeReady();
 
 		// Fill in DS user 2
 		collection.fillingDatasetSelection("Button",collectClientdatlistVal02, firstName2, lastName2, collectionEmailId2, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save & Add New Dataset", false,"","");
+				"Save & Add New Dataset", false,"",false);
 
 		// Cancel Action
-		collection.getActionBtn("Cancel").waitAndClick(10);
+		base.waitForElement(collection.CancelDataSetBtn());
+
+		// Cancel Action
+		collection.CancelDataSetBtn().waitAndClick(10);
+		collection.cancelConfirmationOfDatasetPopup("Yes");
 		driver.waitForPageToBeReady();
 
 		// Initiate collection
@@ -1567,19 +1578,21 @@ public class O365_Phase2_Regression2 {
 		// Fill in DS user 1
 		collection.fillingDatasetSelection("Button",collectClientdatlistVal01, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, rootFolderToSelect, true, true, true, Input.randomText, true, true,
-				"Save & Add New Dataset", false,"","");
+				"Save & Add New Dataset", false,"",true);
 
 		// Cancel Action
-		collection.getActionBtn("Cancel").waitAndClick(10);
+		collection.CancelDataSetBtn().waitAndClick(10);
+		collection.getCancelDataSetBtn("Yes").waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		// Fill in DS user 2
 		collection.fillingDatasetSelection("Button",collectClientdatlistVal02, firstName2, lastName2, collectionEmailId2, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save & Add New Dataset", false,"","");
+				"Save & Add New Dataset", false,"",false);
 
 		// Cancel Action
-		collection.getActionBtn("Cancel").waitAndClick(10);
+		collection.CancelDataSetBtn().waitAndClick(10);
+		collection.getCancelDataSetBtn("Yes").waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		// Initiate collection
@@ -1654,7 +1667,7 @@ public class O365_Phase2_Regression2 {
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save", false,"","");
+				"Save", false,"",false);
 
 		// Logout
 		login.logout();
@@ -1705,12 +1718,12 @@ public class O365_Phase2_Regression2 {
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save", false,"","");
+				"Save", false,"",false);
 
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button",collectiondatalistVal2, secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save", false,"","");
+				"Save", false,"",false);
 
 		// Logout
 		login.logout();
@@ -1757,12 +1770,15 @@ public class O365_Phase2_Regression2 {
 		// Click cancel in Folder select Popup in Dataset selection
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, false,
-				"Save", false,"","");
+				"Save", false,"",false);
+		base.waitForElement(collection.CancelDataSetBtn());
+		collection.CancelDataSetBtn().waitAndClick(5);
+		collection.cancelConfirmationOfDatasetPopup("Yes");
 
 		// add Dataset By Applying Filter & click verify new row added
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save", false,"","");
+				"Save", false,"",false);
 
 		// Logout
 		login.logout();
@@ -1812,7 +1828,7 @@ public class O365_Phase2_Regression2 {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -1880,7 +1896,7 @@ public class O365_Phase2_Regression2 {
 		// Add Dataset By Applying Filter
 		custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
-				true, true, "Save", false,"","");
+				true, true, "Save", false,"",false);
 
 		// click Edit and verify The selected Details Are Retained
 		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetails, selectedFolder, true,
@@ -1888,14 +1904,14 @@ public class O365_Phase2_Regression2 {
 
 		// Edit folder name and verify Dataset Selection Table
 		collection.editDatasetAndVerify(false, null, false, null, null, true, false, selectedFolder, "Archive", null,
-				false);
+				false,false);
 		collection.SaveActionInDataSetPopup(true, firstName, lastName, selectedApp, collectionEmailId,
 				custodianDetails.get(1), "Archive", Input.randomText, true, "Dataset updated successfully.");
 
 		// Edit Custodians Name and verify folders And application is Reset
 		driver.waitForPageToBeReady();
 		collection.editDatasetAndVerify(true, collectionEmailId, true, secondFirstName, collection2ndEmailId, true,
-				true, "Archive", selectedFolder, "Disabled", true);
+				true, "Archive", selectedFolder, "Disabled", true,false);
 
 		// Logout
 		login.logout();
@@ -1951,6 +1967,7 @@ public class O365_Phase2_Regression2 {
 		// initiate collection process
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
 
+		collection.addNewDataSetCLick("Button");
 		// Add DataSets
 		String dataSetNameGenerated = collection.selectCustodianInAddNewDataSetPopUp(firstName,collectiondataListVal,collectionEmailId,selectedApp);
 		System.out.println(dataSetNameGenerated);
@@ -2054,7 +2071,7 @@ public class O365_Phase2_Regression2 {
 
 		// Verify Custodian Fields Error Message
 		collection.verifyErrorMessageInCutodianSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
-				collectionInfoPage, dataSourceName, 5,false,false,false,"","",false,"","");
+				collectionInfoPage, dataSourceName, 5,false,false,false,"",false,false,"","");
 
 		// verify Folder Error Message
 		collection.verifyErrorMessageInFolderSelectionFields(selectedFolder);
@@ -2173,7 +2190,7 @@ public class O365_Phase2_Regression2 {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -2249,7 +2266,7 @@ public class O365_Phase2_Regression2 {
 		// Add Dataset
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save", false,"","");
+				"Save", false,"",false);
 
 		// Save As Draft
 		collection.clickNextBtnOnDatasetTab();
@@ -2306,7 +2323,7 @@ public class O365_Phase2_Regression2 {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -2374,7 +2391,7 @@ public class O365_Phase2_Regression2 {
 
 		// Add DataSets
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
-				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, false, dataName,false,false,false,"",false,"","");
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, false, dataName,false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -2451,7 +2468,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		base.stepInfo("**Step-4 Click on  Action >> Edit Collection\"**");
@@ -2549,10 +2566,12 @@ public class O365_Phase2_Regression2 {
 		// Click cancel in Folder select Popup in Dataset selection
 		collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId, selectedApp,
 				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
-				"Save & Add New Dataset", false,"","");
+				"Save & Add New Dataset", false,"",false);
 
 		// Cancel Action
-		collection.getActionBtn("Cancel").waitAndClick(10);
+		base.waitForElement(collection.CancelDataSetBtn());
+		collection.CancelDataSetBtn().waitAndClick(5);
+		collection.cancelConfirmationOfDatasetPopup("Yes");
 		driver.waitForPageToBeReady();
 		base.printResutInReport(collection.getDataSetSelectionPopDisplay().isDisplayed(),
 				"New Add dataset pop-up disapperared after Cancel action",
@@ -2608,7 +2627,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		base.stepInfo("**Step-4 Click on  Action >> Edit Collection\"**");
@@ -2679,11 +2698,11 @@ public class O365_Phase2_Regression2 {
 		// Add Dataset By Applying Filter
 		custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
-				false, false,"",false,"","");
+				false, false,"",false,"",false);
 
 		// Select multiple Folders And Save.
 		collection.editDatasetAndVerify(false, null, false, null, null, true, false, selectedFolder1,
-				custodianDetails.get(0), null, false);
+				custodianDetails.get(0), null, false,true);
 		collection.SaveActionInDataSetPopup(true, null, null, null, null, null, null, Input.randomText, false,
 				"Dataset added successfully.");
 
@@ -2761,7 +2780,7 @@ public class O365_Phase2_Regression2 {
 			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 					selectedApp, collectionData, collectionNewName, 3, selectedFolder1, true, true, true,
-					Input.randomText, true, true, "Save", false,"","");
+					Input.randomText, true, true, "Save", false,"",false);
 
 			collection.clickNextBtnOnDatasetTab();
 			driver.waitForPageToBeReady();
@@ -3041,7 +3060,7 @@ public class O365_Phase2_Regression2 {
 		// Add DataSets
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName,collectiondataListVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
-				"",false,false,false,"",false,"","");
+				"",false,false,false,"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -3138,7 +3157,7 @@ public class O365_Phase2_Regression2 {
 		// Add Dataset By Applying Filter
 		custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
-				true, true, "Save", false,"","");
+				true, true, "Save", false,"",false);
 
 		// Delete dataset with confirmation message as No
 		driver.waitForPageToBeReady();
@@ -3159,7 +3178,7 @@ public class O365_Phase2_Regression2 {
 		base.stepInfo("Re-Adding the same dataSet");
 		custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal,firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
-				true, true, "Save", false,"","");
+				true, true, "Save", false,"",false);
 
 		// Logout
 		login.logout();
@@ -3276,7 +3295,7 @@ public class O365_Phase2_Regression2 {
 
 	}
 
-	@AfterMethod(alwaysRun = true)
+//	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
@@ -3291,7 +3310,7 @@ public class O365_Phase2_Regression2 {
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
-	@AfterClass(alwaysRun = true)
+//	@AfterClass(alwaysRun = true)
 	public void close() {
 
 		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
