@@ -57,8 +57,8 @@ public class DocList_Phase1_Regression {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		Input input = new Input();
-		input.loadEnvConfig();
+		//Input input = new Input();
+		//input.loadEnvConfig();
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);

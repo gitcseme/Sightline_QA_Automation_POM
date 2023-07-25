@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
-
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -248,12 +248,15 @@ public class DocList_Consilio {
 			//Login As user
 			loginPage.loginToSightLine(username, password);
 			baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
-			baseClass.selectprojectCjk();
+			baseClass.selectproject(Input.additionalDataProject);
 			
 			docexp.navigateToDocExplorerPage();
 			baseClass.stepInfo("Navigated to Doc Explorer page");
 			driver.waitForPageToBeReady();
-			docexp.SelectingAllDocuments("yes");
+			docexp.getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeys(custodianexp);
+			docexp.getDocExp_CustodianNameSearchName("CUSTODIANNAME").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			docexp.SelectingAllDocuments("No");
 			docexp.docExpViewInDocList();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {

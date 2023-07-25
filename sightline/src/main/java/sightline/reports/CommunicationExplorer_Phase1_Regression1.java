@@ -43,8 +43,7 @@ public class CommunicationExplorer_Phase1_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();		in.loadEnvConfig();
 
 	}
 	@BeforeMethod
@@ -137,11 +136,11 @@ public class CommunicationExplorer_Phase1_Regression1 {
 		DocListPage DLPage = new DocListPage(driver);
 		DLPage.SelectColumnDisplay(DLPage.getSelectEmailAuthorName());
 		DLPage.emailAuthorNameVerificationWithOutFilter(Input.EmailAuthourName, false);
-		if (role == "PA") {
+		/*if (role == "PA") {
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 			tagPage.deleteAllTags("Correspondence between the parties");
 			lp.logout();
-		}
+		}*/
 	}
 
 	/**
@@ -254,11 +253,11 @@ public class CommunicationExplorer_Phase1_Regression1 {
 		comExpPage.viewinDoclist();
 		DLPage.SelectColumnDisplay(DLPage.getSelectEmailAuthorName());
 		DLPage.emailAuthorNameVerificationWithOutFilter(Input.EmailAuthourName, false);
-		if (role == "PA") {
+		/*if (role == "PA") {
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 			tagPage.deleteAllTags("ASTag");
 			lp.logout();
-		}
+		}*/
 	}
 
 	/**
