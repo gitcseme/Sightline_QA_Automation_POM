@@ -215,7 +215,7 @@ public class O365_Regression_Consilio {
 				// DataSet creation with selected subFolder as per Test data
 				collection.fillinDS(CollectionName,collectiondatalistVal, firstName, lastName, collectionEmailId, selectedApp, collectionInfoPage,
 						selectedFolder, headerListDS, "Button", 3, false, "Save",false,false,false,"",true,
-						subFolderName,"");
+						subFolderName,false);
 
 				// Start A Collection
 				collection.clickOnNextAndStartAnCollection();

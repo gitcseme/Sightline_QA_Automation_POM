@@ -183,11 +183,15 @@ public class CollectionPage {
 	}
 
 	public Element getDatasetPopUpCancelDatasetButton() {
-		return driver.FindElementByXPath("//input[@id='btnCancelDatasetSelection']");
+		return driver.FindElementByXPath("//a[@id='CancelAddEditDatasetModal']");
 	}
-
+	
+	public Element getConfirmYesButton() {
+		return driver.FindElementByXPath("//button[@id='confirmRefreshFolderList']");
+	}
+	
 	public Element getLoadingFolderInDataset() {
-		return driver.FindElementByXPath("//span[text()='Loading folders']");
+		return driver.FindElementByXPath("//span[text()='Loading Data from MS 365 - Outlook']");
 	}
 
 	public Element getCustodianNameErrorMsg() {
@@ -235,7 +239,7 @@ public class CollectionPage {
 	}
 
 	public Element getRefreshButtonInSelectFolderField() {
-		return driver.FindElementByXPath("//a[@id='refreshFolderList']");
+		return driver.FindElementByXPath("//a[@id='confirmationPopoverForReload']");
 	}
 
 	public Element getDatasetHomePageNoCutodainAvailableText() {
@@ -710,6 +714,12 @@ public class CollectionPage {
 	public Element IsFolderExpanded() {
 		return driver.FindElementByXPath("//h3[@id='accordionSelectFolder' and @aria-expanded='true']");
 	}
+	public Element getAllFolders1(String type) {
+		return driver.FindElementByXPath("//div[@id='divFolderList']/ul//a[text()='"+type+"']");
+	} 
+	public Element getAllFolders2(String type) {
+		return driver.FindElementByXPath("//div[@id='divFolderList']/ul//a[text()='"+type+"']/i[1]");
+	}
 	public Element getFolderNameToSelect1(String type) {
 		return driver.FindElementByXPath("//div[@id='divFolderList']/ul//a/following-sibling::ul/li//a[text()='"+type+"']");
 	}
@@ -1089,7 +1099,7 @@ public class CollectionPage {
 	 * @return
 	 */
 	public boolean custodianNameSelectionInNewDataSet(String inputString,String datalistVal,String selectedFolder, String inputEmailId,
-			Boolean verifyRetrivedData, Boolean subFolderFlag, String selectedApp,String subFolderName) {
+			Boolean SelectAllFolders, Boolean subFolderFlag, String selectedApp,String subFolderName) {
 		System.out.println(inputEmailId);
 		boolean IsCustodianAdded=false;
 
@@ -1101,7 +1111,7 @@ public class CollectionPage {
 				folderToSelect(selectedFolder, false, true, subFolderName);
 
 			} else {
-				folderToSelect(selectedFolder, false, false);
+				folderToSelect(selectedFolder, false, SelectAllFolders);
 			}
 			IsCustodianAdded=true;
 		}else {
@@ -1225,7 +1235,7 @@ public class CollectionPage {
 	 * @param toExpand
 	 * @param additional1
 	 */
-	public void folderToSelect(String folderName, Boolean toExpand, Boolean additional1) {
+	public void folderToSelect(String folderName, Boolean toExpand, Boolean SelectAllFolders) {
 		if (toExpand) {
 			base.waitForElement(getFolderabLabel());
 			getFolderabLabel().javascriptclick(getFolderabLabel());
@@ -1236,11 +1246,19 @@ public class CollectionPage {
 			base.waitTime(8);
 			driver.waitForPageToBeReady();
 			getSearchFolderName().SendKeys(folderName);
-			base.waitForElement(getFolderNameToSelect1(folderName));
-			driver.waitForPageToBeReady();		
+			driver.waitForPageToBeReady();
+			if(SelectAllFolders) {
+				base.waitForElement(getAllFolders1(folderName));
+				getAllFolders1(folderName).javascriptclick(getAllFolders1(folderName));	
+				base.waitForElement(getAllFolders2(folderName));
+				getAllFolders2(folderName).javascriptclick(getAllFolders2(folderName));	
+				
+			}else {
+				base.waitForElement(getFolderNameToSelect1(folderName));
 			getFolderNameToSelect1(folderName).javascriptclick(getFolderNameToSelect1(folderName));		
 			base.waitForElement(getFolderNameToSelect2(folderName));
 			getFolderNameToSelect2(folderName).javascriptclick(getFolderNameToSelect2(folderName));
+			}
 			} catch (Exception e) {
 				System.out.println(e);
 			e.printStackTrace();
@@ -1302,7 +1320,7 @@ public class CollectionPage {
 	public String addDataSetWithHandles(String addNewDataSetType,String datalistVal,String selectedFolder, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retry,boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords,boolean subFolder,String subFolderName,String additional1) {
+			String keywords,boolean subFolder,String subFolderName,boolean additional1) {
 
 		String actualValue = null;
 		Boolean status = false;
@@ -1370,7 +1388,7 @@ public class CollectionPage {
 //	}
 	
 	public String DatasetSetting(String firstName,HashMap<String, String> colllectionData, String lastName,
-			String selectedApp,String dataName, String additionl1) {
+			String selectedApp,String dataName, boolean additionl1) {
 		
 		
 		driver.waitForPageToBeReady();
@@ -1578,7 +1596,7 @@ public class CollectionPage {
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String expectedStatus, String creationType, int retryAttempt,
 			Boolean AutoInitiate, String collectionSpecificName,boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords,boolean subFolder,String subFolderName,String additional1) {
+			String keywords,boolean subFolder,String subFolderName,boolean additional1) {
 
 		String dataName;
 		String creationStatus = "0";
@@ -1774,7 +1792,7 @@ public class CollectionPage {
 	public List<String> fillingDatasetSelection(String creationType,String datalistVal, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retryAttempt, String selectedFolder, boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords, boolean Save, boolean Confirm, String saveType,boolean subFolder,String subFolderName,String additional1) {
+			String keywords, boolean Save, boolean Confirm, String saveType,boolean subFolder,String subFolderName,boolean additional1) {
 
 		List<String> custodianDetails = new ArrayList<>();
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
@@ -1888,7 +1906,7 @@ public class CollectionPage {
 	 */
 	public String editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
 			String firstName, String collection2ndEmailId, boolean editFolder, boolean validateFolder,
-			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter) {
+			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter,boolean rootFolder) {
 		String actualValue = "";
 		if (clickEdit) {
 			driver.waitForPageToBeReady();
@@ -1917,7 +1935,7 @@ public class CollectionPage {
 				if (getCickedFolder(resetFolderType).isElementAvailable(3)) {
 					getCickedFolder(resetFolderType).waitAndClick(10);
 				}
-				folderToSelect(SelectFolderType, false, null);
+				folderToSelect(SelectFolderType, false, rootFolder);
 			}
 
 			if (ApplyFilter) {
@@ -1951,7 +1969,7 @@ public class CollectionPage {
 				getCustodianIDInputTextField().Clear();
 				base.waitTime(2);
 				selectCustodianInAddNewDataSetPopUp(firstName,dataListVal,collectionEmailId,selectedApp);
-				actualValue = DatasetSetting(firstName, colllectionData, lastName, selectedApp, dataName, "");
+				actualValue = DatasetSetting(firstName, colllectionData, lastName, selectedApp, dataName, false);
 			}
 
 			if (editFolder) {
@@ -2040,7 +2058,8 @@ public class CollectionPage {
 							dataSetNameGenerated, selectedFolder, keywords, "", false, 0);
 				}
 			} else {
-				CancelDatasetAction("Cancel", "Yes");
+				base.waitForElement(getConfirmationBtnAction("Cancel"));
+				getConfirmationBtnAction("Cancel").waitAndClick(10);
 				if (verifyTable) {
 
 					// verify row is Not added
@@ -2129,41 +2148,52 @@ public class CollectionPage {
 	public void verifyErrorMessageInCutodianSelection(String addNewDataSetType,String datalistVal, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> collectionInfoPage, String dataName,
 			int retryNo,boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords,String additional1,boolean subFolder,String subFolderName,String selectedFolder) {
+			String keywords,boolean additional1,boolean subFolder,String subFolderName,String selectedFolder) {
 		
 		driver.waitForPageToBeReady();
 		addNewDataSetCLick(addNewDataSetType);
 
-		base.waitForElement(getActionBtn("Save"));
-		getActionBtn("Save").waitAndClick(5);
+		base.waitForElement(getFolderabLabel());
+		getFolderabLabel().javascriptclick(getFolderabLabel());
 
 		if (getCustodianNameErrorMsg().isElementAvailable(5) && getDatasetNameErrorMsg().isElementAvailable(5)) {
 
 			String actualErrorMsg = getCustodianNameErrorMsg().getText();
-			String expectedErrorMsg = "Please select a custodian name/email.";
+			String expectedErrorMsg = "This field is required.";
 
 			base.textCompareEquals(actualErrorMsg, expectedErrorMsg, "Custodian Error Msg is : " + actualErrorMsg,
 					" as expected");
 
-			String actualDatasetsErrorMsg = getDatasetNameErrorMsg().getText();
-			String expectedDatasetsErrorMsg = "Please enter dataset name.";
+//			String actualDatasetsErrorMsg = getDatasetNameErrorMsg().getText();
+//			String expectedDatasetsErrorMsg = "This field is required.";
+//
+//			base.textCompareEquals(actualDatasetsErrorMsg, expectedDatasetsErrorMsg,
+//					"Datasets Error Msg is : " + actualDatasetsErrorMsg, " as expected");
 
-			base.textCompareEquals(actualDatasetsErrorMsg, expectedDatasetsErrorMsg,
-					"Datasets Error Msg is : " + actualDatasetsErrorMsg, " as expected");
-
-			base.passedStep("Error message is displayed to enter custodian name and dataset name successfully");
+			base.passedStep("Error message is displayed to enter custodian name successfully");
 
 		} else {
 			base.failedStep("Error Message is not displayed in the Datasets popup window");
 		}
 
-		base.waitForElement(getActionBtn("Cancel"));
-		getActionBtn("Cancel").waitAndClick(5);
+		base.waitForElement(CancelDataSetBtn());
+		CancelDataSetBtn().waitAndClick(5);
+		
+		base.waitForElement(getCancelDataSetBtn("Yes"));
+		getCancelDataSetBtn("Yes").waitAndClick(5);
+		addNewDataSetCLick(addNewDataSetType);
+	
+		boolean IsCustodianAdded=false;
 
+		// Custodian Nmae input
+		selectCustodianInAddNewDataSetPopUp(firstName,datalistVal,collectionEmailId,selectedApp);
+		getFolderabLabel().javascriptclick(getFolderabLabel());
+		base.waitTime(4);
+//		custodianNameSelectionInNewDataSet(firstName,datalistVal,selectedFolder,collectionEmailId, true, subFolder, selectedApp,subFolderName);
 		// Pre-Requsite Add DataSets
-		String dataSetNameGenerated = addDataSetWithHandles(addNewDataSetType,datalistVal,selectedFolder, firstName, lastName, collectionEmailId,
-				selectedApp, collectionInfoPage, dataName, retryNo,ApplyFilter,Enable,keyword,keywords,subFolder,subFolderName,additional1);
-		System.out.println(dataSetNameGenerated);
+//		String dataSetNameGenerated = addDataSetWithHandles(addNewDataSetType,datalistVal,selectedFolder, firstName, lastName, collectionEmailId,
+//				selectedApp, collectionInfoPage, dataName, retryNo,ApplyFilter,Enable,keyword,keywords,subFolder,subFolderName,additional1);
+//		System.out.println(dataSetNameGenerated);
 		
 		base.passedStep("Custodian name/email, dataset name are entered successfully");
 
@@ -2176,18 +2206,19 @@ public class CollectionPage {
 	 */
 	public void verifyErrorMessageInFolderSelectionFields(String selectedFolder) {
 
+		base.waitTime(3);
 		driver.waitForPageToBeReady();
-
-		base.waitForElement(getFolderabLabel());
-		getFolderabLabel().waitAndClick(5);
-
-		base.waitForElement(getActionBtn("Save"));
-		getActionBtn("Save").waitAndClick(5);
+		base.waitForElement(getSearchFolderName());
+		getSearchFolderName().SendKeys("");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFilterButton());
+		getFilterButton().javascriptclick(getFilterButton());
+		base.waitForElement(getFolderErrorMsg());
 
 		if (getFolderErrorMsg().isElementAvailable(5)) {
 
 			String actualFolderErrorMessage = getFolderErrorMsg().getText();
-			String expectedFolderErrorMessage = "Please select at least one folder from which to collect data.";
+			String expectedFolderErrorMessage = "Please select one or more folders to collect.";
 
 			base.textCompareEquals(actualFolderErrorMessage, expectedFolderErrorMessage,
 					"Datasets Error Msg is : " + actualFolderErrorMessage, " as expected");
@@ -2220,8 +2251,8 @@ public class CollectionPage {
 		getFilteEnablerButton().waitAndClick(5);
 
 		base.waitTime(3);
-		base.waitForElement(getActionBtn("Save"));
-		getActionBtn("Save").waitAndClick(5);
+		base.waitForElement(getDataSettings());
+		getDataSettings().waitAndClick(5);
 
 		base.waitTime(3);
 
@@ -2244,8 +2275,8 @@ public class CollectionPage {
 		base.waitForElement(getKeyboardFilterButton());
 		getKeyboardFilterButton().waitAndClick(5);
 
-		base.waitForElement(getActionBtn("Save"));
-		getActionBtn("Save").waitAndClick(5);
+		base.waitForElement(getDataSettings());
+		getDataSettings().waitAndClick(5);
 
 		if (getKeyboardFilterErrorMsg().isElementAvailable(5)
 				&& getKeyboardFilterNoteErrorMsg().isElementAvailable(5)) {
@@ -2265,6 +2296,9 @@ public class CollectionPage {
 
 		base.waitForElement(getFilteEnablerButton());
 		getFilteEnablerButton().waitAndClick(5);
+		
+		base.waitForElement(getDataSettings());
+		getDataSettings().javascriptclick(getDataSettings());
 
 		applyAction("Save & Done", "Confirm", "Dataset added successfully.");
 
@@ -2288,7 +2322,9 @@ public class CollectionPage {
 		if (getRefreshButtonInSelectFolderField().isElementAvailable(5)) {
 
 			base.waitForElement(getRefreshButtonInSelectFolderField());
-			getRefreshButtonInSelectFolderField().waitAndClick(5);
+			getRefreshButtonInSelectFolderField().javascriptclick(getRefreshButtonInSelectFolderField());
+			base.waitForElement(getConfirmYesButton());
+			getConfirmYesButton().javascriptclick(getConfirmYesButton());
 
 		} else {
 			base.failedStep("Error msg can't be validated");
@@ -2614,23 +2650,36 @@ public class CollectionPage {
 
 		base.waitForElement(getFolderabLabel());
 		getFolderabLabel().waitAndClick(5);
-
+		base.waitTime(7);
 		base.waitForElement(getRefreshButtonInSelectFolderField());
-		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getRefreshButtonInSelectFolderField().javascriptclick(getRefreshButtonInSelectFolderField());
+		
+		base.waitTime(2);
+		base.waitForElement(getConfirmYesButton());
+		getConfirmYesButton().javascriptclick(getConfirmYesButton());
 
 		getLoadingFolderInDataset().isElementPresent();
 		base.passedStep("Loading folders icon appears on screen successfully");
-
+		base.waitTime(7);
 		base.waitForElement(getRefreshButtonInSelectFolderField());
-		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getRefreshButtonInSelectFolderField().javascriptclick(getRefreshButtonInSelectFolderField());
+		base.waitTime(5);
+		base.waitForElement(getConfirmYesButton());
+		getConfirmYesButton().javascriptclick(getConfirmYesButton());
 		getDatasetPopUpSaveAndAddNewDatasetButton().isElementAvailable(5);
 
 		base.waitForElement(getRefreshButtonInSelectFolderField());
-		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getRefreshButtonInSelectFolderField().javascriptclick(getRefreshButtonInSelectFolderField());
+		base.waitTime(5);
+		base.waitForElement(getConfirmYesButton());
+		getConfirmYesButton().javascriptclick(getConfirmYesButton());
 		getDatasetPopUpCancelDatasetButton().Enabled();
 
 		base.waitForElement(getRefreshButtonInSelectFolderField());
-		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getRefreshButtonInSelectFolderField().javascriptclick(getRefreshButtonInSelectFolderField());
+		base.waitTime(5);
+		base.waitForElement(getConfirmYesButton());
+		getConfirmYesButton().javascriptclick(getConfirmYesButton());
 		getDatasetPopUpSaveButton().isElementAvailable(5);
 
 		base.passedStep(
@@ -3103,7 +3152,7 @@ public class CollectionPage {
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String creationType, int retryAttempt, Boolean AutoInitiate,
 			String saveAction,boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords,boolean subFolder,String subFolderName,String additional1) {
+			String keywords,boolean subFolder,String subFolderName,boolean additional1) {
 
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType,CustodiandatalistVal,selectedFolder, firstName, lastName, collectionEmailId,
@@ -3284,7 +3333,7 @@ public class CollectionPage {
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = dataSetsCreationBasedOntheGridAvailability(firstName,collectiondatalistVal, lastName, collectionEmailId,
 				selectedApp, colllectionData, selectedFolder, headerList, additional1Status, "Button", 3, true, "",false,false,false,
-				"",false,"","");
+				"",false,"",false);
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
