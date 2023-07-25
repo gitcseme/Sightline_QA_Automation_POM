@@ -178,8 +178,8 @@
 	<collectionDataHeader2>Selected App</collectionDataHeader2>
 	<collectionDataHeader3>Custodian Email</collectionDataHeader3>
 	<collectionDataHeader4>Dataset Name</collectionDataHeader4>
-	<collectionDataHeader5>Selected Folders</collectionDataHeader5>
-	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
+	<collectionDataHeader5>SELECTED ITEMS</collectionDataHeader5>
+	<collectionDataHeader6>FILTERS</collectionDataHeader6>
 	<collectionIdHeader>Collection Id</collectionIdHeader>
 	<collectionStatusHeader>Collection Status</collectionStatusHeader>
 	<expectedDateInput>2019/08/05</expectedDateInput>
