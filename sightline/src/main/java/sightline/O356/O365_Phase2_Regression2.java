@@ -592,7 +592,6 @@ public class O365_Phase2_Regression2 {
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
 		collection.addNewDataSetCLick("Button");
 		collection.selectCustodianInAddNewDataSetPopUp(firstName, collectiondataListVal, collectionEmailId, selectedApp);
-//		collection.folderToSelect(rootfoldername, true, true);
 
 		// validate processiong Icon is diplayed
 		collection.loadingIconOnDataSetPage();
@@ -3295,7 +3294,7 @@ public class O365_Phase2_Regression2 {
 
 	}
 
-//	@AfterMethod(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
@@ -3310,7 +3309,7 @@ public class O365_Phase2_Regression2 {
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
-//	@AfterClass(alwaysRun = true)
+	@AfterClass(alwaysRun = true)
 	public void close() {
 
 		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
