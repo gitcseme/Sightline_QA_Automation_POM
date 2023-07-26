@@ -115,7 +115,7 @@ public class DocListPage {
 	}
 
 	public Element getDocList_MasterDateFilterValue() {
-		return driver.FindElementByXPath("//td[contains(text(),	'2010/04/06 22:18:00')]");
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr[1]/td[8]");
 
 	}
 
@@ -2459,6 +2459,12 @@ public class DocListPage {
 				}
 			}
 			System.out.println("Documents selected " + arList);
+			if (base.getYesBtn().isElementAvailable(3)) {
+				base.getYesBtn().waitAndClick(10);
+			} else {
+				System.out.println("Pop up message does not appear");
+				Log.info("Pop up message does not appear");
+			}
 			base.passedStep("Selcted multiple documents from doc list successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2479,8 +2485,7 @@ public class DocListPage {
 			docViewMetaDataPage.selectValueFromDropDown(getActionDropDownButton(), getDocViewFromDropDown());
 			base.waitForElement(getDocIDFromDocView(1));
 			base.waitTillElemetToBeClickable(getDocIDFromDocView(1));
-			List<WebElement> documentsIds = driver.getWebDriver()
-					.findElements(By.xpath("//table[@id='SearchDataTable']//tbody//tr"));
+			List<WebElement> documentsIds = driver.getWebDriver().findElements(By.xpath("//table[@id='SearchDataTable']//tbody//tr"));
 			for (int row = 0; row < documentsIds.size(); row++) {
 				String docID = getDocIDFromDocView(row + 1).getText().trim();
 				if (docIDS.contains(docID)) {
@@ -2909,13 +2914,13 @@ public class DocListPage {
 			List<WebElement> rows = driver.getWebDriver().findElements(By.xpath("//table[@id='dtDocList']//tbody//tr"));
 			for (int row = 0; row < rows.size(); row++) {
 				String rowChar = getParentRow(row).GetAttribute("class").trim();
-				if (rowChar.equalsIgnoreCase((" details-control").trim())) {
+				if (rowChar.equalsIgnoreCase(("details-control").trim())) {
 					rowNum = row + 1;
 					break;
 				}
 			}
 
-			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class=' details-control']"));
+			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class='details-control']"));
 			js.executeScript("arguments[0].scrollIntoView(true);", parents.get(0));
 			js.executeScript("window.scrollBy(0,-250)");
 			for (int i = 0; i < 15; i++) {
@@ -4963,7 +4968,7 @@ public class DocListPage {
 	 * @Description: method to verify sequence of parent and child docs
 	 */
 	public void verifySequenceOrderOfchildDocsInDocList() {
-		try {
+		
 			int rowNum = 0;
 			JavascriptExecutor js = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
@@ -4972,13 +4977,13 @@ public class DocListPage {
 			List<WebElement> rows = driver.getWebDriver().findElements(By.xpath("//table[@id='dtDocList']//tbody//tr"));
 			for (int row = 0; row < rows.size(); row++) {
 				String rowChar = getParentRow(row).GetAttribute("class").trim();
-				if (rowChar.equalsIgnoreCase((" details-control").trim())) {
+				if (rowChar.equalsIgnoreCase(("details-control").trim())) {
 					rowNum = row;
 					break;
 				}
 			}
 
-			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class=' details-control']"));
+			List<WebElement> parents = driver.getWebDriver().findElements(By.xpath("//td[@class='details-control']"));
 			js.executeScript("arguments[0].scrollIntoView(true);", parents.get(0));
 			js.executeScript("window.scrollBy(0,-250)");
 			for (int i = 0; i < 15; i++) {
@@ -4991,9 +4996,9 @@ public class DocListPage {
 				}
 			}
 			String docText = getDocIds().FindWebElements().get(rowNum).getText();
-			int parentDocId = Integer.parseInt(docText.replace("ID", ""));
+			int parentDocId = Integer.parseInt(docText.replace("ID",""));
 			String childDoc = getChildByRowId().FindWebElements().get(0).getText();
-			int firstChildDoc = Integer.parseInt(childDoc.replace("ID", ""));
+			int firstChildDoc = Integer.parseInt(childDoc.replace("ID",""));
 			if (parentDocId + 1 == firstChildDoc) {
 				base.passedStep("parent and child docs displayed in sequence order");
 			} else {
@@ -5012,12 +5017,7 @@ public class DocListPage {
 			}
 			base.passedStep("All child docs are displayed in sequence order");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while verifying that user can view the Child Document on doc list."
-					+ e.getMessage());
-
-		}
+		
 	}
 
 	/**

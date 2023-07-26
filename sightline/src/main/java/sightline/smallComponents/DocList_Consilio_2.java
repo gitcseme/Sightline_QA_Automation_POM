@@ -211,17 +211,23 @@ public class DocList_Consilio_2 {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Select Master Date Value from first row");
+		String MasterDate = docList.getDocList_MasterDateFilterValue().getText();
 		String date = docList.getDocList_MasterDateFilterValue().getText().substring(0, 10);
 		String time= docList.getDocList_MasterDateFilterValue().getText().substring(10, 19);
 		System.out.println(date);
+		System.out.println(time);
+		
+		System.out.println(MasterDate);
 		baseClass.stepInfo("Giving Master Date value in field");
-		docList.getDocList_MasterDateFilter().SendKeys(date+time);
+		docList.getDocList_MasterDateFilter().SendKeys(date);
 		
 		
 		docList.getApplyFilter().Click();
 		baseClass.passedStep("Filterapplied");
-
-		Assert.assertEquals(date+time,"2010/04/06 22:18:00");
+	    Thread.sleep(2000);
+		String date1 = docList.getDocList_MasterDateFilterValue().getText();
+		System.out.println(date1);
+		Assert.assertEquals(MasterDate,date1);
 		baseClass.passedStep("Docs returned matching filter values");
 
 		loginPage.logout();
