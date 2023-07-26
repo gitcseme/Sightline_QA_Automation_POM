@@ -671,7 +671,7 @@ public class BatchPrintPage {
 					return getMySavedSearchArrow().Visible();
 				}
 			}), Input.wait30);
-			getMySavedSearchArrow().Click();
+			//getMySavedSearchArrow().Click();
 
 			getSelectSavedSearch(name).waitAndClick(5);
 		} else if (type.equalsIgnoreCase("tag")) {
@@ -681,7 +681,7 @@ public class BatchPrintPage {
 					return getAllTagsArrow().Visible();
 				}
 			}), Input.wait30);
-			getAllTagsArrow().Click();
+			//getAllTagsArrow().Click();
 			getSelectTag(name).waitAndClick(10);
 		}
 
@@ -692,7 +692,7 @@ public class BatchPrintPage {
 					return getAllFoldersArrow().Visible();
 				}
 			}), Input.wait30);
-			getAllFoldersArrow().Click();
+			//getAllFoldersArrow().Click();
 			getSelectFolder(name).waitAndClick(10);
 
 		}
@@ -1179,7 +1179,7 @@ public class BatchPrintPage {
 				return getMySavedSearchArrow().Visible();
 			}
 		}), Input.wait30);
-		getMySavedSearchArrow().Click();
+		//getMySavedSearchArrow().Click();
 
 		getSelectSavedSearch(searchname).waitAndClick(15);
 
@@ -1443,7 +1443,7 @@ public class BatchPrintPage {
 				return getMySavedSearchArrow().Visible();
 			}
 		}), Input.wait30);
-		getMySavedSearchArrow().Click();
+		//getMySavedSearchArrow().Click();
 
 		getSelectSavedSearch(searchname).waitAndClick(5);
 
@@ -1602,7 +1602,7 @@ public class BatchPrintPage {
 				return getMySavedSearchArrow().Visible();
 			}
 		}), Input.wait30);
-		getMySavedSearchArrow().Click();
+		//getMySavedSearchArrow().Click();
 
 		getSelectSavedSearch(searchname).waitAndClick(15);
 
@@ -1869,7 +1869,7 @@ public class BatchPrintPage {
 					return getMySavedSearchArrow().Visible();
 				}
 			}), Input.wait30);
-			getMySavedSearchArrow().Click();
+			//getMySavedSearchArrow().Click();
 
 			getSelectSavedSearch(searchname).waitAndClick(5);
 
