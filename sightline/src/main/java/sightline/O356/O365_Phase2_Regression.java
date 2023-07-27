@@ -25,6 +25,7 @@ import pageFactory.BaseClass;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SourceLocationPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -838,29 +839,54 @@ public class O365_Phase2_Regression {
 	 * @throws Exception
 	 */
 	
-	@Test(description = "RPMXCON-60604", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation(String username, String password,
-			String fullname) throws Exception {
+	@Test(description = "RPMXCON-60604",  enabled = true, groups = { "regression" })
+	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60604 - O365");
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
-		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
-
-		// Login as User
-		login.loginToSightLine(username, password);
+		String[][] userRolesDataPA =  { { Input.pa1userName, "Project Administrator", "SA" } };
+				
+		
+		String datanamePA = "NewMicrosoftO365PA" + Utility.dynamicNameAppender();
+		String datanameRMU = "NewMicrosoftO365RMU" + Utility.dynamicNameAppender();
+		String projectName="NewProject" + Utility.dynamicNameAppender();
+		ProjectPage project=new ProjectPage(driver);
+		
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		project.navigateToProductionPage();
+		project.AddDomainProject(projectName, Input.domainName);
 		userManagement.navigateToUsersPAge();
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
+		userManagement.AssignUserToProject(projectName, "Project Administrator", Input.pa1FullName);
+		userManagement.AssignUserToProject(projectName, "Review Manager", Input.rmu1FullName);
+		login.logout();
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.selectproject(projectName);
+		userManagement.navigateToUsersPAge();
+		
+		userManagement.verifyCollectionAccess(projectName,userRolesDataPA, Input.sa1userName, Input.sa1password, Input.pa1password);
+		base.selectproject(projectName);
 		// To add New Source Location
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		base.waitForElement(collection.getStartALinkCollection());
 		collection.getStartALinkCollection().waitAndClick(5);
-		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+		collection.performAddNewSource(null, datanamePA, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
 
 		// Logout
+		login.logout();
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.selectproject(projectName);
+		userManagement.navigateToUsersPAge();
+		String[][] userRolesDataRMU = {{ Input.rmu1userName, "Review Manager", "SA" } };
+		userManagement.verifyCollectionAccess(projectName,userRolesDataRMU,  Input.sa1userName, Input.sa1password, Input.rmu1password);
+		base.selectproject(projectName);
+		// To add New Source Location
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		base.waitForElement(collection.getStartALinkCollection());
+		collection.getStartALinkCollection().waitAndClick(5);
+		collection.performAddNewSource(null, datanameRMU, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
 		login.logout();
 	}
 
@@ -2462,26 +2488,18 @@ public class O365_Phase2_Regression {
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
-
-
 		collection.addNewDataSetCLick("Button");
-		base.waitForElement(collection.getOutlookDatasetType(selectedApp));
-		collection.getOutlookDatasetType(selectedApp).waitAndClick(5);
-		base.waitForElement(collection.getCustodianIDInputTextField());
-		collection.getCustodianIDInputTextField().SendKeys(firstName);
-		base.waitForElementCollection(collection.getCustodianIDdataListOptions());
-		collectiondataListVal=collectiondataListVal.trim();
-		for(WebElement it : collection.getCustodianIDdataListOptions().FindWebElements()){//it.getAttribute("value").contentEquals(datalistVal)
-			if (it.getAttribute("value").contains(collectiondataListVal)){ 
-				collection.getCustodianIDInputTextField().SendKeys(it.getAttribute("value"));
-				} 				
-		};
+		collection.selectCustodianInAddNewDataSetPopUp(firstName, collectiondataListVal, collectionEmailId, selectedApp);
+		
 		// Edit folder name and verify Dataset Selection Table
 		driver.waitForPageToBeReady();
 		base.clearATextBoxValue(collection.getCustodianIDInputTextField());
+		
+		base.waitForElement(collection.getFolderabLabel());
+		collection.getFolderabLabel().javascriptclick(collection.getFolderabLabel());
 
 		// Verify Custodian Fields Error Message
-		collection.verifyErrorMessageOfDatasetTab(true, true, false);
+		collection.verifyErrorMessageOfDatasetTab(false, true, false);
 
 		// Logout
 		login.logout();

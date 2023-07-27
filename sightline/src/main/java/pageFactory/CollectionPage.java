@@ -726,6 +726,10 @@ public class CollectionPage {
 	public Element getFolderNameToSelect2(String type) {
 		return driver.FindElementByXPath("//div[@id='divFolderList']/ul//a/following-sibling::ul/li//a[text()='"+type+"']/i[1]");
 	}
+	public Element CancelCollection() {
+		return driver.FindElementByXPath("//a[text()='Cancel Collection']");
+	}
+	
 	
 
 	/**
@@ -3183,7 +3187,7 @@ public class CollectionPage {
 		if (custodianErrorMsg) {
 			base.waitForElement(getCustodianNameErrorMsg());
 			String actualErrorMsg = getCustodianNameErrorMsg().getText();
-			String expectedErrorMsg = "Please select a custodian name/email.";
+			String expectedErrorMsg = "This field is required.";
 			base.textCompareEquals(actualErrorMsg, expectedErrorMsg, "Custodian Error Msg is : " + actualErrorMsg,
 					" as expected");
 		}
@@ -3296,6 +3300,15 @@ public class CollectionPage {
 				base.VerifySuccessMessage("Your collection has been resumed from the stage where it was paused.");
 			}
 		}
+	}
+	
+	public void CancelcollectionAction() {
+		base.waitForElement(CancelCollection());
+		CancelCollection().waitAndClick(10);
+		base.waitForElement(getEditCancelYesPopup());
+		getEditCancelYesPopup().waitAndClick(10);
+		
+		
 	}
 
 	/**

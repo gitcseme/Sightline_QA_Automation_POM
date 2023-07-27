@@ -1896,9 +1896,13 @@ public class O365_Phase2_Regression2 {
 		custodianDetails = collection.fillingDatasetSelection("Button",collectiondataListVal, firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
 				true, true, "Save", false,"",false);
+		List<String>custodianDetailsNew=new ArrayList<String>();
+		custodianDetailsNew.add(collectionEmailId);
+		custodianDetailsNew.add(custodianDetails.get(1));
+		System.out.println(custodianDetailsNew);
 
 		// click Edit and verify The selected Details Are Retained
-		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetails, selectedFolder, true,
+		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetailsNew, selectedFolder, true,
 				"Enabled", true);
 
 		// Edit folder name and verify Dataset Selection Table

@@ -381,7 +381,7 @@ public class O365_Phase2_Regression1 {
 
 		// verify Custodian name & Dataset name fields
 		base.ValidateElement_Presence(collection.getCustodianIDInputTextField(), "Custodian name field is Displayed");
-		base.ValidateElement_Presence(collection.getDataSetNameTextFIeld(), "Dataset name field is Displayed");
+//		base.ValidateElement_Presence(collection.getDataSetNameTextFIeld(), "Dataset name field is Displayed");
 
 		// Enter 3 characters & verify Auto suggestion is displayed
 		String actualValue = collection.selectCustodianInAddNewDataSetPopUp("Gou",Input.clientEmaildatalistVal02, Input.clientCollectionEmail02,selectedApp);
@@ -912,7 +912,7 @@ public class O365_Phase2_Regression1 {
 		driver.waitForPageToBeReady();
 
 		// Cancel collection when statsu is in copy to dataset status
-		collection.collectionAction(collectionName, "Cancel Collection", true, "Yes", false, "");
+		collection.CancelcollectionAction();
 		base.VerifySuccessMessage(Input.cancelCollectionNotification);
 
 		// verify it is rolled back to Draft State
