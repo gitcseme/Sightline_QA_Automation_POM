@@ -294,7 +294,7 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffLoadFile,"false");
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
@@ -733,7 +733,7 @@ public class Ingestion_Phase1_Regression1 {
      *Author :Arunkumar date: 25/03/2022 Modified date: 11/01/2023 Modified by: NA Test Case Id:RPMXCON-46932
 	 * Description :To verify that Admin is able to Rollback the ongoing Ingestion process.
 	 */
-	@Test(description ="RPMXCON-46932",enabled = false,  groups = {"regression" } )
+	@Test(description ="RPMXCON-46932",enabled = true,  groups = {"regression" } )
 	public void TCA3verifyAdminAbleToRollbackIngestion() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);		
@@ -847,7 +847,7 @@ public class Ingestion_Phase1_Regression1 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffLoadFile,"false");
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			// Perform catalog,copy and indexing for two ingestion
 			ingestionPage.multipleIngestionCopying(2);
@@ -879,7 +879,7 @@ public class Ingestion_Phase1_Regression1 {
 			baseClass.passedStep("As Ingestion already present in the published stage, unable to run add only ingestion till indexing" );
 		}
 		else if (status1 == false && status2 == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+			ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffLoadFile,"false");
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			// Perform Copying and indexing for two ingestion
 			ingestionPage.multipleIngestionCopying(2);
@@ -907,6 +907,7 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			ingestionPage.VerifyDraftIngestionStatusAfterRollback();
 			//delete ingestion
 			ingestionPage.deleteIngestion();
 			//Copying and rollback
@@ -914,6 +915,7 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.ingestionCopying();
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			ingestionPage.VerifyDraftIngestionStatusAfterRollback();
 			//delete ingestion
 			ingestionPage.deleteIngestion();
 			//indexing and rollback
@@ -922,6 +924,7 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.ingestionCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+			ingestionPage.VerifyDraftIngestionStatusAfterRollback();
 			//delete ingestion
 			ingestionPage.deleteIngestion();
 		}
@@ -1359,7 +1362,7 @@ public class Ingestion_Phase1_Regression1 {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.ignoreErrorsAndCopying();
-			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.ignoreErrorsAndIndexing(Input.AK_NativeFolder);
 			//rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
 		}
