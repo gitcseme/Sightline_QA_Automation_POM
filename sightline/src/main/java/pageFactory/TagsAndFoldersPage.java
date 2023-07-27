@@ -3031,8 +3031,8 @@ try {
 			getNewFolderGroupInputTextBox().SendKeys(selectFolderName);
 			getNewFolderGroupSaveBtn().waitAndClick(3);
 
-			if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
-				base.CloseSuccessMsgpopup();
+			if (verifyNotification.equalsIgnoreCase("Error !")) {
+				//base.CloseSuccessMsgpopup();
 				base.VerifyErrorMessage("80001000001 : An object with same name already exists.");
 				base.CloseSuccessMsgpopup();
 			}
