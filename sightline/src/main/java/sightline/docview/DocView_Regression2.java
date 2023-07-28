@@ -3289,14 +3289,15 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.searchString2);
+		int PureHit=sessionsearch.basicContentSearch(Input.searchString2);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Perfrom non audio remark");
 		
 //		docView.addRemarkByText(remark);
-		String docId = docView.getDocumentWithoutRedaction();
+		MiniDocListPage mini = new MiniDocListPage(driver);
+		String docId = docViewMetaDataPage.selectRemarkDocument(PureHit);
 		System.out.println(docId);
 		
 		docView.selectDocInMiniDocList(docId);

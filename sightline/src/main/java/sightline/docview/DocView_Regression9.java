@@ -6883,7 +6883,7 @@ public class DocView_Regression9 {
 		
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		
+		DocViewPage doc=new DocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52210 sprint 14");
 
 		baseClass.stepInfo(
@@ -6904,9 +6904,10 @@ public class DocView_Regression9 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.searchText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
+		doc.getDocViewDocsRedactIcon();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
@@ -6918,9 +6919,10 @@ public class DocView_Regression9 {
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.searchText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
+		doc.getDocViewDocsRedactIcon();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
@@ -6945,7 +6947,7 @@ public class DocView_Regression9 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		
+		DocViewPage doc=new DocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52209 sprint 14");
 
 		baseClass.stepInfo(
@@ -6964,11 +6966,12 @@ public class DocView_Regression9 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.searchText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		doc.getDocViewDocsRedactIcon();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
@@ -6980,11 +6983,12 @@ public class DocView_Regression9 {
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.searchText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Viewed the Doc View Page");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		doc.getDocViewDocsRedactIcon();
 		docViewRedact.clickingRedactionIcon();
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
