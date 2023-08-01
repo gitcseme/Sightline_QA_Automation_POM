@@ -1554,7 +1554,6 @@ public class CollectionPage {
 		// Check collection presence
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCollectionNameElement(collectionName));
-		System.out.println("//table[@id='dtCollectionList']//td//div[text()='" + collectionName + "']");
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
