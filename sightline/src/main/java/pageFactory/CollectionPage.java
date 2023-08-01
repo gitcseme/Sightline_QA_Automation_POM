@@ -1554,6 +1554,7 @@ public class CollectionPage {
 		// Check collection presence
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCollectionNameElement(collectionName));
+		System.out.println("//table[@id='dtCollectionList']//td//div[text()='" + collectionName + "']");
 		base.printResutInReport(base.ValidateElement_PresenceReturn(getCollectionNameElement(collectionName)),
 				collectionName + " : is displayed in the grid", "Expected collection not available in the grid",
 				"Pass");
@@ -3492,23 +3493,34 @@ public class CollectionPage {
 				getCustodianIDInputTextField().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				getCustodianIDInputTextField().SendKeys(emailAddresses[i][j]);
-				base.waitTime(2);
-				base.waitTillElemetToBeClickable(getDataSetNameTextFIeld());
-				getDataSetNameTextFIeld().waitAndClick(10);
+				base.waitTime(9);
+//				base.waitTillElemetToBeClickable(getDataSetNameTextFIeld());
+//				getDataSetNameTextFIeld().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				base.stepInfo("Entered Custodian Name is  : " + emailAddresses[i][j]);
+				
 			}
-
+			base.waitForElement(getNoCustodianErrorMsg());
+			String actualError = getNoCustodianErrorMsg().getText();
 			// verify Inline Error Message Displayed
 			j++;
+			System.out.println(emailAddresses[i][2]);
+			if(emailAddresses[i][2].equalsIgnoreCase("true")) {
 			driver.waitForPageToBeReady();
 			base.ValidateElement_Presence(getNoCustodianErrorMsg(),
 					"Inline message is displayed for " + emailAddresses[i][j]);
-			String expectedError = "No Custodians found for the given search pattern.";
-			base.waitForElement(getNoCustodianErrorMsg());
-			String actualError = getNoCustodianErrorMsg().getText();
+			String expectedError = "This Custodian does not exist in the selected Data Source.";
 			base.textCompareEquals(actualError, expectedError, actualError,
 					"Error Message displayed is not as expected");
+			}else {
+				driver.waitForPageToBeReady();
+				base.ValidateElement_Absence(getNoCustodianErrorMsg(),
+						"Inline message is displayed for " + emailAddresses[i][j]);
+				String expectedError = "This Custodian does not exist in the selected Data Source.";
+				base.textCompareNotEquals(actualError, expectedError, actualError,
+						"Error Message displayed is not as expected");
+				
+			}
 		}
 	}
 
