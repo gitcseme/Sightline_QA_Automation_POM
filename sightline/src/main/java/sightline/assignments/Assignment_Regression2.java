@@ -48,8 +48,8 @@ public class Assignment_Regression2 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		Input in = new Input();
-	    in.loadEnvConfig();
+//		Input in = new Input();
+//	    in.loadEnvConfig();
 		searchText = Input.TallySearch;
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 	}

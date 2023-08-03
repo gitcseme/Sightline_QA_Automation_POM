@@ -58,8 +58,8 @@ public class Assignment_Phase2_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+//		in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -1759,8 +1759,6 @@ public class Assignment_Phase2_Regression {
 		// assigned to the reviewer together irrespective of the draw from pool size to
 		// the reviewer
 		driver.Navigate().refresh();
-		System.out.println("rev1:-"+DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]);
-		System.out.println("rev2:-"+DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2]);
 		baseClass.waitForElement(assignment.getTotalDocsCountInReviewerDashboard(assignmentName));
 		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
 				assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
