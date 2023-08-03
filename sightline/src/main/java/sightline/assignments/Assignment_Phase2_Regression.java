@@ -58,8 +58,8 @@ public class Assignment_Phase2_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-//		in = new Input();
-//		in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -587,7 +587,7 @@ public class Assignment_Phase2_Regression {
 
 		assignment.editAssignmentInAssignGroup(assignMentGRP, assignName);
 		driver.waitForPageToBeReady();
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -617,7 +617,7 @@ public class Assignment_Phase2_Regression {
 		List<String> singleSorting = assignment.editExistingCodingForm(codeForm, Input.codeFormName, true);
 		String ExpSingSorting = singleSorting.toString().replace(" (Set as Default)", "");
 		driver.waitForPageToBeReady();
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -710,7 +710,7 @@ public class Assignment_Phase2_Regression {
 		sessionSearch.bulkAssignExisting(assignName);
 
 		assignment.editAssignmentInAssignGroup(assignMentGRP, assignName);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -738,7 +738,7 @@ public class Assignment_Phase2_Regression {
 		assignment.editAssignmentInAssignGroup(assignMentGRP1, assignName1);
 		List<String> singleSorting = assignment.editExistingCodingForm(codeForm, Input.codeFormName, true);
 		String ExpSingSorting = singleSorting.toString().replace(" (Set as Default)", "");
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -828,7 +828,7 @@ public class Assignment_Phase2_Regression {
 
 		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
 		driver.waitForPageToBeReady();
-		assignmentsPage.addReviewerAndDistributeDocs();
+		assignmentsPage.addReviewerAndDistributeDocs(Input.rev1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -894,7 +894,7 @@ public class Assignment_Phase2_Regression {
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("20");
+		agnmt.distributeTheGivenDocCountToReviewer("20",Input.rev1userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
@@ -953,7 +953,7 @@ public class Assignment_Phase2_Regression {
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("20");
+		agnmt.distributeTheGivenDocCountToReviewer("20",Input.rev1userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
@@ -1458,7 +1458,7 @@ public class Assignment_Phase2_Regression {
 		baseClass.waitForElement(assignment.getAssignmentActionDropdown());
 		assignment.getAssignmentActionDropdown().waitAndClick(5);
 		assignment.getAssignmentAction_EditAssignment().waitAndClick(5);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		baseClass.stepInfo("verify copied assignment displayed in rmu dashboard");
 		Dashboard dashBoard = new Dashboard(driver);
 		dashBoard.navigateToDashboard();
@@ -1507,8 +1507,8 @@ public class Assignment_Phase2_Regression {
 		assignment.getDistributeTab().waitAndClick(5);
 		int availableUserCount = assignment.getDistributeReviewerCount().size();
 		if (availableUserCount == users.length) {
-			if (assignment.getSelectUserInDistributeTabsReviewerManager().isElementAvailable(5)
-					&& assignment.getSelect2ndUserInDistributeTab().isElementAvailable(5)) {
+			if (assignment.getSelectUserInDistributeTabsGeneral(Input.rmu1userName).isElementAvailable(5)
+					&& assignment.getSelectUserInDistributeTabsGeneral(Input.rev1userName).isElementAvailable(5)) {
 				baseClass.passedStep("Only the added reviewers are displayed in distribute tab");
 			} else {
 				baseClass.failedStep("added reviewers not displayed");
@@ -1534,6 +1534,7 @@ public class Assignment_Phase2_Regression {
 
 		String assignmentName = "Assgn" + Utility.dynamicNameAppender();
 		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+		List<String> listOfUsers = new ArrayList<String>(Arrays.asList(Input.rev1userName, Input.rmu1userName));
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1546,7 +1547,7 @@ public class Assignment_Phase2_Regression {
 
 		// adding Reviewers to Assignment
 		assignment.editAssignment(assignmentName);
-		assignment.addReviewers(listOfReviewers);
+		assignment.addReviewers(listOfReviewers,listOfUsers);
 
 		// Bulk Assigning the pureHit Count to Assignment
 		int CountOfDocsAssignedToAssignment = sessionSearch.basicContentSearch(Input.searchString2);
@@ -1611,6 +1612,7 @@ public class Assignment_Phase2_Regression {
 
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+		List<String> listOfUsers = new ArrayList<String>(Arrays.asList(Input.rev1userName, Input.rmu1userName));
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id:RPMXCON-65429");
@@ -1636,7 +1638,7 @@ public class Assignment_Phase2_Regression {
 		sessionSearch.bulkAssignExisting(assignmentName);
 		// adding reviewers to assignment
 		assignment.editAssignment(assignmentName);
-		assignment.addReviewers(listOfReviewers);
+		assignment.addReviewers(listOfReviewers,listOfUsers);
 		baseClass.stepInfo("adding reviewers to assignment");
 		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignment
 				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
@@ -1670,7 +1672,7 @@ public class Assignment_Phase2_Regression {
 		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
 				assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
 		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2 
-				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2]
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
 		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
 				"Actual Total Document Count In Reviewer Dashboard : '" + actualTotalDocsCountInReviewerDashboard
@@ -1703,6 +1705,7 @@ public class Assignment_Phase2_Regression {
 
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+		List<String> listOfUsers = new ArrayList<String>(Arrays.asList(Input.rev1userName, Input.rmu1userName));
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id:RPMXCON-65430");
@@ -1728,7 +1731,7 @@ public class Assignment_Phase2_Regression {
 		sessionSearch.bulkAssignExisting(assignmentName);
 		// adding reviewers to assignment
 		assignment.editAssignment(assignmentName);
-		assignment.addReviewers(listOfReviewers);
+		assignment.addReviewers(listOfReviewers,listOfUsers);
 		baseClass.stepInfo("adding reviewers to assignment");
 		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignment
 				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
@@ -1756,10 +1759,14 @@ public class Assignment_Phase2_Regression {
 		// assigned to the reviewer together irrespective of the draw from pool size to
 		// the reviewer
 		driver.Navigate().refresh();
+		System.out.println("rev1:-"+DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]);
+		System.out.println("rev2:-"+DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2]);
+		baseClass.waitForElement(assignment.getTotalDocsCountInReviewerDashboard(assignmentName));
 		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
 				assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
+		System.out.println(assignment.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1]);
 		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2
-				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2]
 				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
 		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
 				"Actual Total Document Count In Reviewer Dashboard : '" + actualTotalDocsCountInReviewerDashboard
@@ -2220,9 +2227,9 @@ public class Assignment_Phase2_Regression {
 		baseClass.waitTillElemetToBeClickable(assignment.getAddReviewersBtn());
 		assignment.getAddReviewersBtn().waitAndClick(10);
 		baseClass.waitForElement(assignment.getSelectUserToAssig());
-		assignment.getSelectUserToAssig().WaitUntilPresent().ScrollTo();
-		baseClass.waitTillElemetToBeClickable(assignment.getSelectUserToAssig());
-		assignment.getSelectUserToAssig().waitAndClick(10);
+		assignment.getSelectUserToAssignGeneral(Input.rev1userName).WaitUntilPresent().ScrollTo();
+		baseClass.waitTillElemetToBeClickable(assignment.getSelectUserToAssignGeneral(Input.rev1userName));
+		assignment.getSelectUserToAssignGeneral(Input.rev1userName).waitAndClick(10);
 		baseClass.waitForElement(assignment.getAdduserBtn());
 		baseClass.waitTillElemetToBeClickable(assignment.getAdduserBtn());
 		assignment.getAdduserBtn().waitAndClick(10);
@@ -2265,7 +2272,7 @@ public class Assignment_Phase2_Regression {
 		int purehit = search.basicContentSearch(Input.TallySearch);
 		search.bulkAssignExisting(assignmentName);
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.distributeTheGivenDocCountToReviewer(count);
+		assignment.distributeTheGivenDocCountToReviewer(count,Input.rev1userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		driver.waitForPageToBeReady();
@@ -2357,7 +2364,7 @@ public class Assignment_Phase2_Regression {
 		sessionSearch.MetaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.sourceKeyDocId);
 		sessionSearch.bulkAssignExisting(assignmentName);
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.addReviewerAndDistributeDocs();
+		assignment.addReviewerAndDistributeDocs(Input.rev1userName);
 		loginPage.logout();
 		baseClass.stepInfo("Login as reviewer and verify keyword highlight in docview");
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -2389,7 +2396,7 @@ public class Assignment_Phase2_Regression {
 		int purehit = sessionSearch.basicContentSearch(Input.TallySearch);
 		sessionSearch.bulkAssignExisting(assignmentName);
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.distributeTheGivenDocCountToReviewer(count);
+		assignment.distributeTheGivenDocCountToReviewer(count,Input.rev1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -2505,7 +2512,7 @@ public class Assignment_Phase2_Regression {
 		assignment.getAssignmentActionDropdown().waitAndClick(10);
 		assignment.assignmentActions("Edit");
 		// adding reviewer and distributing docs
-		assignment.addReviewerAndDistributeDocs();
+		assignment.addReviewerAndDistributeDocs(Input.rev1userName);
 		// taking unassigned docs count
 		driver.Navigate().refresh();
 		assignment.getDistributeTab().Click();
@@ -2735,7 +2742,7 @@ public class Assignment_Phase2_Regression {
 		search.basicContentSearch(Input.searchString1);
 		search.bulkAssignExisting(assignmentName);
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		String docDistriCount = assignment.distributeTheGivenDocCountToReviewer("2");
+		String docDistriCount = assignment.distributeTheGivenDocCountToReviewer("2",Input.rev1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -3014,7 +3021,7 @@ public class Assignment_Phase2_Regression {
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rev1userName);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu6userName);
 		docViewRedact.assignAccesstoSGs(sgName2, Input.rev1userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -3032,7 +3039,7 @@ public class Assignment_Phase2_Regression {
 		driver.Navigate().refresh();
 		baseClass.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu6userName, Input.rmu6password);
 		assignment.createTagOrFolderCodingFormAssignment(sgName2, cfName2, assignmentName2, Input.testData1, "tag",
 				tagName2);
 		assignment.verifyTagOrFolderAvailabilityInAssignment(sgName2, assignmentName2, Input.rev1userName, "tag");
@@ -3088,7 +3095,7 @@ public class Assignment_Phase2_Regression {
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rev1userName);
 		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu6userName);
 		docViewRedact.assignAccesstoSGs(sgName2, Input.rev1userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -3106,7 +3113,7 @@ public class Assignment_Phase2_Regression {
 		driver.Navigate().refresh();
 		baseClass.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu6userName, Input.rmu6password);
 		assignment.createTagOrFolderCodingFormAssignment(sgName2, cfName2, assignmentName2, Input.testData1, "folder",
 				folderName2);
 		assignment.verifyTagOrFolderAvailabilityInAssignment(sgName2, assignmentName2, Input.rev1userName, "folder");
@@ -3227,7 +3234,7 @@ public class Assignment_Phase2_Regression {
 		assignment.assignmentActions("Edit");
 
 		baseClass.stepInfo("**Step-5 Select Manage Reviewer tab**");
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		baseClass.passedStep("reviewers assigned to the Assignment and documents distributed to the reviewers");
 
 		// verifying the count of document assigned to the reviewer with count of
@@ -3660,7 +3667,7 @@ public class Assignment_Phase2_Regression {
 		baseClass.stepInfo("Documents Assigned To Assignments Successfully");
 
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.distributeTheGivenDocCountToReviewer("10");
+		assignment.distributeTheGivenDocCountToReviewer("10",Input.rev1userName);
 		baseClass.waitForElement(assignment.getAssignmentSaveButton());
 		assignment.getAssignmentSaveButton().Click();
 		baseClass.VerifySuccessMessage("Assignment updated successfully");
@@ -3905,7 +3912,7 @@ public class Assignment_Phase2_Regression {
 		session.bulkAssign();
 		assignment.assignwithSamplemethod(assignmentName, "Count of Selected Docs", "20");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		assignment.navigateToAssignmentsPage();
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.waitForElement(assignment.getAssignment_ManageReviewersTab());
@@ -4030,6 +4037,7 @@ public class Assignment_Phase2_Regression {
 			throws InterruptedException {
 
 		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("PA", "RMU"));
+		List<String> listOfUsers=new ArrayList<String>(Arrays.asList(Input.pa1userName, Input.rmu1userName));
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("RPMXCON-54402");
@@ -4051,8 +4059,8 @@ public class Assignment_Phase2_Regression {
 		// adding reviewers and distributing the documents to reviewers.
 		baseClass.stepInfo("adding reviewers and distributing the documents to reviewers.");
 		int docCountToDistribute = assignment.oddOrEvenDocumentCountToDistribute(pureHitCount, "odd");
-		assignment.distributeTheGivenDocCountToReviewer(Integer.toString(docCountToDistribute));
-		assignment.addReviewers(listOfReviewers);
+		assignment.distributeTheGivenDocCountToReviewer(Integer.toString(docCountToDistribute),Input.rev1userName);
+		assignment.addReviewers(listOfReviewers,listOfUsers);
 
 		// redistributing the documents to reviewers.
 		baseClass.stepInfo("redistributing the documents to reviewers.");
@@ -4198,7 +4206,7 @@ public class Assignment_Phase2_Regression {
 
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
 		listOfCFAfterSorting01 = assignment.SelectAllCodingFormAndChangeSortingSequence(Input.codingFormName);
@@ -4230,7 +4238,7 @@ public class Assignment_Phase2_Regression {
 
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
 		List<String> listOfCFName = new ArrayList<String>();
@@ -4295,7 +4303,7 @@ public class Assignment_Phase2_Regression {
 
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -4324,7 +4332,7 @@ public class Assignment_Phase2_Regression {
 
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -4351,7 +4359,7 @@ public class Assignment_Phase2_Regression {
 		assignment.getAssignmentSaveButton().waitAndClick(5);
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName03);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -4426,7 +4434,7 @@ public class Assignment_Phase2_Regression {
 
 		// adding reviewers and distributing documents to reviewers
 		baseClass.stepInfo("adding reviewers and distributing documents to reviewers");
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logOut
 		loginPage.logout();
@@ -4606,7 +4614,7 @@ public class Assignment_Phase2_Regression {
 
 		// add reviewers to assignment and Distribute Documents
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// Performing Redistribute Documents Action.
 		assignment.getAssignment_ManageReviewersTab().waitAndClick(10);
@@ -4666,7 +4674,7 @@ public class Assignment_Phase2_Regression {
 
 		// adding reviewers and distributing the documents to reviewers
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		baseClass.waitForElement(baseClass.getSuccessMsgHeader());
 		baseClass.waitTime(6);
 		driver.Navigate().refresh();
@@ -4848,7 +4856,7 @@ public class Assignment_Phase2_Regression {
 
 		// adding reviewers and distributing documents to reviewers
 		baseClass.stepInfo("adding reviewers and distributing documents to reviewers");
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logOut
 		loginPage.logout();
@@ -5040,7 +5048,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5080,7 +5088,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentUsingPaginationConcept(assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5167,7 +5175,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5212,7 +5220,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5620,7 +5628,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
 		listOfCFAfterSorting01 = assignment.SelectAllCodingFormAndChangeSortingSequence(Input.codingFormName);
@@ -5668,7 +5676,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
 		List<String> listOfCFName = new ArrayList<String>();
@@ -5767,7 +5775,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup01, assignmentName01);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5812,7 +5820,7 @@ public class Assignment_Phase2_Regression {
 		// adding Reviewers and Distributing the Documents
 		baseClass.stepInfo("adding Reviewers and Distributing the Documents to Reviewers");
 		assignment.editAssignmentInAssignGroup(assignmentGroup02, assignmentName02);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 
 		// logout
 		loginPage.logout();
@@ -5898,7 +5906,7 @@ public class Assignment_Phase2_Regression {
 
 		// adding reviewer and Distributing the Documents
 		assignment.editAssignmentInAssignGroup(assignGroup, assignmentName);
-		assignment.add2ReviewerAndDistribute();
+		assignment.add2ReviewerAndDistribute(Input.rev1userName,Input.rmu1userName);
 		baseClass.waitForElement(assignment.getAssignmentSaveButton());
 		assignment.getAssignmentSaveButton().waitAndClick(5);
 
@@ -5951,7 +5959,7 @@ public class Assignment_Phase2_Regression {
 		baseClass.stepInfo("bulk assigned the assignment " + assignmentName);
 
 		assignment.editAssignmentUsingPaginationConcept(assignmentName);
-		assignment.addReviewerAndDistributeDocs();
+		assignment.addReviewerAndDistributeDocs(Input.rev1userName);
 		// added wait time since success message pop ups get overlapped so added some
 		// hard waits to avoid failure
 		baseClass.waitTime(8);

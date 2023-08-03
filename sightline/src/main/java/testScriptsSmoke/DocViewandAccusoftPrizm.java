@@ -387,7 +387,7 @@ public class DocViewandAccusoftPrizm {
 		driver.waitForPageToBeReady();
 		assignmentPage.NavigateToNewEditAssignmentPage("edit");
 		try {
-			assignmentPage.ValidateRetainedMetaDataList(assignmentQB1);
+			assignmentPage.ValidateRetainedMetaDataList(assignmentQB1,Input.rev2userName,Input.rev2password);
 			baseClass.passedStep(
 					"Sucessfully verified that Default Metadata list is retained even after modifying bulk assignment");
 		} catch (Exception e) {

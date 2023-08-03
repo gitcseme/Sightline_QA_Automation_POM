@@ -2310,6 +2310,11 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//input[@id='divBulkFolderJSTree-searchTreeKeyword']");
 	}
 	
+	public Element getWPAssignmentExpand() {
+
+		return driver.FindElementByXPath("//div[@id='JSTree']/ul/li/i");
+	}
+	
 	//a[text()='Root']/preceding-sibling::i
 
 	public SessionSearch(Driver driver) {
@@ -7241,6 +7246,8 @@ public class SessionSearch {
 		}
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
+		base.waitForElement(getWPAssignmentExpand());
+		getWPAssignmentExpand().javascriptclick(getWPAssignmentExpand());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(assignMentName)) {
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();

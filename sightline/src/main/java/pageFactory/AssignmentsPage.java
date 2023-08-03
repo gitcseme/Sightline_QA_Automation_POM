@@ -1722,7 +1722,15 @@ public class AssignmentsPage {
 	}
 	public Element getSelectRMUUserToAssign(){ return driver.FindElementByXPath("//*[@id='divNotAssignedUsers']//div[contains(.,'"+Input.rmu1userName+"')]/../div/label"); }
 	public Element getSelectRMUUserInDistributeTab(){ return driver.FindElementByXPath("//*[@id='divDistributedDocUsers']//div[contains(.,'"+Input.rmu1userName+"')]/div/label"); }
+	public Element getSelectUserToAssignGeneral(String user) {
+		return driver.FindElementByXPath(
+				"//*[@id='divNotAssignedUsers']//div[contains(.,'" + user + "')]/../div/label");
+	}
 	
+	public Element getSelectUserInDistributeTabsGeneral(String user) {
+		return driver.FindElementByXPath(
+				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + user + "')]/div/label");
+	}
 	
 	public AssignmentsPage(Driver driver) {
 
@@ -3950,6 +3958,53 @@ public class AssignmentsPage {
 		}
 		driver.waitForPageToBeReady();
 	}
+	
+	//parallel testing
+	
+	public void assignmentDistributingToReviewer(String user1) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		bc.waitTillElemetToBeClickable(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		bc.waitTillElemetToBeClickable(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user1));
+		getSelectUserToAssignGeneral(user1).WaitUntilPresent().ScrollTo();
+		bc.waitTillElemetToBeClickable(getSelectUserToAssignGeneral(user1));
+		getSelectUserToAssignGeneral(user1).waitAndClick(10);
+		bc.waitForElement(getAdduserBtn());
+		bc.waitTillElemetToBeClickable(getAdduserBtn());
+		getAdduserBtn().waitAndClick(10);
+		bc.waitForElement(getDistributeTab());
+		bc.waitTillElemetToBeClickable(getDistributeTab());
+		getDistributeTab().waitAndClick(10);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user1));
+		bc.waitTillElemetToBeClickable(getSelectUserInDistributeTabsGeneral(user1));
+		getSelectUserInDistributeTabsGeneral(user1).waitAndClick(10);
+		bc.waitForElement(getDistributeBtn());
+		bc.waitTillElemetToBeClickable(getDistributeBtn());
+		getDistributeBtn().waitAndClick(10);
+		if (getWarningTxtDis().isElementAvailable(1)) {
+			try {
+				String disWarngTxt = getWarningTxtDis().getText().trim();
+				String actual = "Please enter a valid number to distribute";
+				if (disWarngTxt.equals(actual)) {
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getDistributeBtn());
+					getDistributeBtn().waitAndClick(10);
+					bc.waitForElement(getSelectUserInDistributeTabs());
+					getSelectUserInDistributeTabs().waitAndClick(10);
+					bc.waitForElement(getDistributeBtn());
+					getDistributeBtn().waitAndClick(10);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}
+		}
+		driver.waitForPageToBeReady();
+	}
 
 	/**
 	 * @author Indium-Baskar date: 18/8/2021 Modified date: 28/8/2021
@@ -3974,6 +4029,47 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(10);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(10);
+		bc.waitForElement(getDistributeBtn());
+		getDistributeBtn().waitAndClick(10);
+		if (getWarningTxtDis().isElementAvailable(5)) {
+			try {
+				String disWarngTxt = getWarningTxtDis().getText().trim();
+				String actual = "Please enter a valid number to distribute";
+				if (disWarngTxt.equals(actual)) {
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					bc.waitForElement(getDistributeBtn());
+					getDistributeBtn().waitAndClick(10);
+					bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
+					getSelectUserInDistributeTabsReviewerManager().waitAndClick(10);
+					bc.waitForElement(getDistributeBtn());
+					getDistributeBtn().waitAndClick(10);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}
+		}
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+	}
+	
+	public void assignmentDistributingToReviewerManager(String user) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user));
+		getSelectUserToAssignGeneral(user).WaitUntilPresent().ScrollTo();
+		getSelectUserToAssignGeneral(user).waitAndClick(10);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(10);
+//		bc.VerifySuccessMessage("Action saved successfully");
+//		bc.CloseSuccessMsgpopup();
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(10);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user));
+		getSelectUserInDistributeTabsGeneral(user).waitAndClick(10);
 		bc.waitForElement(getDistributeBtn());
 		getDistributeBtn().waitAndClick(10);
 		if (getWarningTxtDis().isElementAvailable(5)) {
@@ -4527,6 +4623,34 @@ public class AssignmentsPage {
 		bc.stepInfo("Assignment distributed to the reviewer successfully");
 		return reviwersList;
 	}
+	//parallel testing
+	public ArrayList<String> addReviewerAndDistributeDocs(String user) throws InterruptedException {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user));
+		ArrayList<String> reviwersList = new ArrayList<String>();
+		for (int i = 1; i <= getAllAssgnReviewers().size(); i++) {
+			String reviewers = getAssgnReviewers(i).getText();
+			reviwersList.add(reviewers);
+		}
+		Collections.sort(reviwersList);
+		driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user));
+		getSelectUserToAssignGeneral(user).waitAndClick(5);
+		getAdduserBtn().waitAndClick(3);
+		bc.VerifySuccessMessage("Action saved successfully");
+		driver.waitForPageToBeReady();
+		bc.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		getDistributeTab().Click();
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user));
+		getSelectUserInDistributeTabsGeneral(user).Click();
+		bc.waitForElement(getDistributeBtn());
+		getDistributeBtn().waitAndClick(5);
+		bc.stepInfo("Assignment distributed to the reviewer successfully");
+		return reviwersList;
+	}
 
 	/**
 	 * @Author Mohan Created on 26/08/2021
@@ -4673,6 +4797,30 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
+		getDistributeBtn().waitAndClick(5);
+
+	}
+	
+	//parallel testing
+	
+	public void add2ReviewerAndDistribute(String user1,String user2) {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user1));
+		getSelectUserToAssignGeneral(user1).waitAndClick(5);
+		getSelectUserToAssignGeneral(user2).ScrollTo();
+		getSelectUserToAssignGeneral(user2).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		System.out.println(user1);
+		System.out.println(user2);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+		getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+		getSelectUserInDistributeTabsGeneral(user1).waitAndClick(5);
 		getDistributeBtn().waitAndClick(5);
 
 	}
@@ -5249,6 +5397,42 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
+		String distributedUSer = getDistributedUserNameInDisTab().getText();
+		// bc.CloseSuccessMsgpopup();
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("distributed documents to one reviewer-" + distributedUSer);
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+		return distributedUSer;
+	}
+	
+	//parallel testing 
+public String addMultipleReviewersAndDistributeToOnereviewer(String user1,String user2) throws InterruptedException {
+		
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user1));
+		getSelectUserToAssignGeneral(user1).waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user2));
+		getSelectUserToAssignGeneral(user2).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+		bc.stepInfo("Assigned two reviewers.");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+		getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
 		String distributedUSer = getDistributedUserNameInDisTab().getText();
 		// bc.CloseSuccessMsgpopup();
 		getDistributeBtn().waitAndClick(3);
@@ -6479,6 +6663,37 @@ public class AssignmentsPage {
 		bc.stepInfo("Documents are distributed to three reviewers successfully");
 
 	}
+	
+	//parallel testing
+	public void add3ReviewerAndDistribute(String user1,String user2,String user3) {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user1));
+		getSelectUserToAssignGeneral(user1).waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user2));
+		getSelectUserToAssignGeneral(user2).waitAndClick(5);
+		driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user3));
+		getSelectUserToAssignGeneral(user3).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+		getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+		getSelectUserInDistributeTabsGeneral(user3).waitAndClick(5);
+		getSelectUserInDistributeTabsGeneral(user1).waitAndClick(5);
+//		bc.CloseSuccessMsgpopup();
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to three reviewers successfully");
+
+	}
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -7487,6 +7702,121 @@ public class AssignmentsPage {
 			assertion.fail();
 		}
 	}
+	
+	//parallel testing 
+	
+	public void verifyDisplayedValidations(String user1,String user2) {
+		try {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			bc.waitForElement(getSelectUserToAssignGeneral(user1));
+			getSelectUserToAssignGeneral(user1).waitAndClick(5);
+			driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user2));
+			getSelectUserToAssignGeneral(user2).waitAndClick(5);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+//			bc.CloseSuccessMsgpopup();
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.CloseSuccessMsgpopup();
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user1).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_CompleteAllDocs());
+			getAssgn_ManageRev_Action_CompleteAllDocs().waitAndClick(10);
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep(
+					"Getting expected message when complete the documents for the reviewer whose not assigned with no documents");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user1).waitAndClick(10);
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep(
+					"Getting expected message when uncomplete the documents for the reviewer whose not assigned with no documents");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAssgn_ManageRev_selectReviewer(user2));
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(5);
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep(
+					"Getting expected message when incomplete the documents for the reviewer whose not having complted documents");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_CompleteAllDocs());
+			getAssgn_ManageRev_Action_CompleteAllDocs().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(10);
+			bc.VerifySuccessMessage("Documents successfully completed for user.");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_CompleteAllDocs());
+			getAssgn_ManageRev_Action_CompleteAllDocs().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(5);
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep(
+					"Getting expected message when complete the documents for the reviewer whose documents are already completed");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+			getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
+			bc.VerifyWarningMessage("Please select an user");
+			bc.passedStep("Getting expected message when no user selected before the uncompleted document action");
+			bc.waitForElement(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.passedStep("All validations are verified");
+		} catch (Exception e) {
+			bc.failedStep("Failed to verify the validations");
+			assertion.fail();
+		}
+	}
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -7570,6 +7900,96 @@ public class AssignmentsPage {
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			bc.waitForElement(getAssgn_TodoCountInManageRev(Input.rmu1userName));
 			assertion.assertEquals(getAssgn_TodoCountInManageRev(Input.rmu1userName).getText(), "0");
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getEditAggn_Distribute_Unassgndoc());
+			assertion.assertEquals(getEditAggn_Distribute_Unassgndoc().getText(), Integer.toString(Totalpages));
+			bc.passedStep("removed documents are displayed as unassigned documents in distributed tab as expected");
+		} catch (Exception e) {
+			bc.failedStep("Failed to verify the displayed validation");
+			e.printStackTrace();
+		}
+
+	}
+	
+	//parallel testing
+	
+	public void verifyDisplayedValidationsOfRemovedDocs(int count,String user2) throws InterruptedException {
+		try {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			bc.waitForElement(getSelectUserToAssignGeneral(user2));
+			getSelectUserToAssignGeneral(user2).waitAndClick(5);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+//			bc.CloseSuccessMsgpopup();
+			int Totalpages = (int) Math.ceil(count / 2);
+			getAssgn_docsToDistribute().SendKeys(Integer.toString(Totalpages));
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.CloseSuccessMsgpopup();
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_CompleteAllDocs());
+			getAssgn_ManageRev_Action_CompleteAllDocs().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(10);
+			bc.VerifySuccessMessage("Documents successfully completed for user.");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_removedoc());
+			getAssgn_ManageRev_Action_removedoc().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(5);
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep("Getting the expected validation when removing the completed documents");
+			driver.Navigate().refresh();
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+			bc.waitForElement(getDistributeBtn());
+			getDistributeBtn().waitAndClick(10);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.CloseSuccessMsgpopup();
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+			getAssgn_ManageRev_Action().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_removedoc());
+			getAssgn_ManageRev_Action_removedoc().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(5);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAssgn_TodoCountInManageRev(user2));
+			assertion.assertEquals(getAssgn_TodoCountInManageRev(user2).getText(), "0");
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getEditAggn_Distribute_Unassgndoc());
@@ -7723,6 +8143,54 @@ public class AssignmentsPage {
 		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 		return unassignedDocs;
 	}
+	
+	//parallel testing
+	public int distributeHalfTheDocsToReviewer(int count,String user2) throws InterruptedException {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssignGeneral(user2));
+		getSelectUserToAssignGeneral(user2).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+		getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
+//		bc.CloseSuccessMsgpopup();
+		int Total = (int) Math.ceil(count / 2);
+		int unassignedDocs = count - Total;
+		getAssgn_docsToDistribute().SendKeys(Integer.toString(Total));
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to reviewer successfully");
+		bc.CloseSuccessMsgpopup();
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
+		getAssgn_ManageRev_Action().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action_CompleteAllDocs());
+		getAssgn_ManageRev_Action_CompleteAllDocs().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(bc.getYesBtn());
+		bc.getYesBtn().waitAndClick(10);
+		bc.VerifySuccessMessage("Documents successfully completed for user.");
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+		return unassignedDocs;
+	}
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -7797,7 +8265,7 @@ public class AssignmentsPage {
 	 * @author Jayanthi.ganesan
 	 * @param assignmentName
 	 */
-	public void ValidateRetainedMetaDataList(String assignmentName) {
+	public void ValidateRetainedMetaDataList(String assignmentName,String userName,String passWord) {
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
 		GetSelectMetaDataBtn().waitAndClick(10);
@@ -7807,7 +8275,7 @@ public class AssignmentsPage {
 		System.out.println(ExpectedMetadataList.size());
 		lp = new LoginPage(driver);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(userName, passWord);
 		bc.stepInfo("Logged in as reviewer to verify retained metadata list in doc view page.");
 		bc.waitForElement(dashBoardPageTitle());
 		assgnInDashBoardPg(assignmentName).waitAndClick(2);
@@ -7942,6 +8410,74 @@ public class AssignmentsPage {
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 			getSelectUserInDistributeTabsReviewerManager().waitAndClick(5);
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.passedStep("Documents are reassigned successfully for the reviewer");
+			bc.CloseSuccessMsgpopup();
+		} catch (Exception e) {
+			bc.failedStep("Failed to verify the displayed validations");
+		}
+	}
+	
+	//parallel testing
+	public void verifySuccessMsgValidations(String user2) {
+		try {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user2));
+			getSelectUserToAssignGeneral(user2).waitAndClick(10);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+//			bc.CloseSuccessMsgpopup();
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAssgn_ManageRev_selectReviewer(user2));
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_CompleteAllDocs());
+			bc.VerifySuccessMessage("Documents successfully completed for user.");
+			bc.passedStep("Documents are completed successfully for the reviewer");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+			bc.VerifySuccessMessage("Documents successfully un-completed for user.");
+			bc.passedStep("Documents are uncompleted successfully for the reviewer");
+			bc.waitForElement(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_removedoc());
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.passedStep("Documents are removed for the reviewer successfully");
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
 			getDistributeBtn().waitAndClick(3);
 			bc.stepInfo("Documents are distributed to reviewer successfully");
 			bc.passedStep("Documents are reassigned successfully for the reviewer");
@@ -8546,6 +9082,47 @@ public class AssignmentsPage {
 		}
 		assertion.assertAll();
 	}
+	
+	//parallel testing 
+	
+	public void unassignTheAddedReviewer(int pureHits,String user2) throws InterruptedException {
+		try {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			bc.waitForElement(getSelectUserToAssignGeneral(user2));
+			getSelectUserToAssignGeneral(user2).waitAndClick(5);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.waitForElement(getEditAggn_Distribute_UnassgndocCount(pureHits));
+			getDistributeTab().waitAndClick(5);
+			bc.waitTillElemetToBeClickable(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.CloseSuccessMsgpopup();
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_Unassignuser());
+			bc.passedStep("Selected reviewer unassigned successfully");
+			bc.waitForElement(getDistributeTab());
+			driver.Navigate().refresh();
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getEditAggn_Distribute_Unassgndoc());
+			bc.waitTillTextToPresent(getEditAggn_Distribute_Unassgndoc(), Integer.toString(pureHits));
+			String unassignedDocs = getEditAggn_Distribute_Unassgndoc().getText();
+			assertion.assertEquals(unassignedDocs, Integer.toString(pureHits));
+			bc.passedStep("Assigned documents are moved to unassigned to distribute again after the user is removed");
+		} catch (Exception e) {
+			bc.failedStep("Failed to verify the displayed validation");
+			e.printStackTrace();
+		}
+		assertion.assertAll();
+	}
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -8616,6 +9193,78 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			bc.waitTillTextToPresent(getAssgn_TodoCountInManageRev(Input.rev1userName), Integer.toString(count));
 			String toDoCount = getAssgn_TodoCountInManageRev(Input.rev1userName).getText();
+			assertion.assertEquals(toDoCount, Integer.toString(count));
+			bc.CloseSuccessMsgpopup();
+		} catch (Exception e) {
+			bc.failedStep("Failed to redistribute the documents");
+		}
+	}
+	
+	//parallel testing
+	public void verifyRedistributedDocsToAnotherUser(int count,String user1,String user2) {
+		try {
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			bc.waitForElement(getAddReviewersBtn());
+			getAddReviewersBtn().waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getSelectUserToAssignGeneral(user1));
+			getSelectUserToAssignGeneral(user1).waitAndClick(5);
+			driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(user2));
+			getSelectUserToAssignGeneral(user2).waitAndClick(10);
+			bc.waitForElement(getAdduserBtn());
+			getAdduserBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+//			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+//			bc.getCloseSucessmsg().waitAndClick(10);
+//			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getSelectUserInDistributeTabsGeneral(user2));
+			getSelectUserInDistributeTabsGeneral(user2).waitAndClick(5);
+			getDistributeBtn().waitAndClick(3);
+			bc.stepInfo("Documents are distributed to reviewer successfully");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_CompleteAllDocs());
+			bc.VerifySuccessMessage("Documents successfully completed for user.");
+			bc.passedStep("Documents are completed successfully for the reviewer");
+			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+			bc.VerifySuccessMessage("Documents successfully un-completed for user.");
+			bc.passedStep("Documents are uncompleted successfully for the reviewer");
+			bc.waitForElement(bc.getCloseSucessmsg());
+			bc.getCloseSucessmsg().waitAndClick(10);
+			driver.Navigate().refresh();
+			bc.waitForElement(getAssignment_ManageReviewersTab());
+			getAssignment_ManageReviewersTab().waitAndClick(10);
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+			selectActionsInManageRev(getAssgn_ManageRev_Action_redistributedoc());
+			bc.waitTillElemetToBeClickable(getSelectReviewerInRedistributedDocsTab(user1));
+			getSelectReviewerInRedistributedDocsTab(user1).waitAndClick(5);
+			bc.waitTillElemetToBeClickable(getAssgn_Redistributepopup_save());
+			getAssgn_Redistributepopup_save().waitAndClick(5);
+			bc.VerifySuccessMessage("Action saved successfully");
+			bc.passedStep("Documents are redistributed to another reviewer successfully");
+			driver.waitForPageToBeReady();
+			bc.waitTillTextToPresent(getAssgn_TodoCountInManageRev(user1), Integer.toString(count));
+			String toDoCount = getAssgn_TodoCountInManageRev(user1).getText();
 			assertion.assertEquals(toDoCount, Integer.toString(count));
 			bc.CloseSuccessMsgpopup();
 		} catch (Exception e) {
@@ -9017,6 +9666,7 @@ public class AssignmentsPage {
 	 * @param user Name of the user for whom the docs needs to be completed
 	 */
 	public void completeDocs(String user) {
+		driver.Navigate().refresh();
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		bc.waitTime(2);
@@ -10157,6 +10807,38 @@ public class AssignmentsPage {
 
 		return count;
 	}
+	
+	//parallel testing
+	public String distributeTheGivenDocCountToReviewer(String count,String user) throws InterruptedException {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		getSelectUserToAssignGeneral(user).ScrollTo();
+		bc.waitForElement(getSelectUserToAssignGeneral(user));
+		getSelectUserToAssignGeneral(user).waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeTabsGeneral(user));
+		getSelectUserInDistributeTabsGeneral(user).waitAndClick(5);
+		bc.waitForElement(getFamilytogetherInDistributeDocPage());
+		getFamilytogetherInDistributeDocPage().javascriptclick(getFamilytogetherInDistributeDocPage());
+		bc.waitForElement(getEmailThreadedInDistributeDocPage());
+		getEmailThreadedInDistributeDocPage().javascriptclick(getEmailThreadedInDistributeDocPage());
+		getAssgn_docsToDistribute().SendKeys(count);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
+		bc.CloseSuccessMsgpopup();
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+//		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+
+		return count;
+	}
 
 	/**
 	 * @author Indium-Baskar
@@ -10635,8 +11317,8 @@ public class AssignmentsPage {
 		getAddReviewersBtn().waitAndClick(10);
 		for (int i = 0; i < reviewersListToAssign.length; i++) {
 			bc.waitForElement(getSelectUserToAssignAsReviewer(reviewersListToAssign[i]));
-			getSelectUserToAssignAsReviewer(reviewersListToAssign[i]).WaitUntilPresent().ScrollTo();
-			getSelectUserToAssignAsReviewer(reviewersListToAssign[i]).waitAndClick(10);
+			getSelectUserToAssignGeneral(reviewersListToAssign[i]).WaitUntilPresent().ScrollTo();
+			getSelectUserToAssignGeneral(reviewersListToAssign[i]).waitAndClick(10);
 			bc.stepInfo("Selected user " + reviewersListToAssign[i] + " as reviewer .");
 		}
 		bc.waitForElement(getAdduserBtn());
@@ -11211,6 +11893,35 @@ public class AssignmentsPage {
 		getAdduserBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Action saved successfully");
 	}
+	
+	//parallel testing
+	
+	public void addReviewers(List<String> listOfReviewers,List<String> listOfUsers) {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		for (int i = 0; i < listOfReviewers.size(); i++) {
+			String reviewer = listOfReviewers.get(i);
+			if (reviewer.equals("REV")) {
+				bc.waitForElement(getSelectUserToAssignGeneral(listOfUsers.get(i)));
+				getSelectUserToAssignGeneral(listOfUsers.get(i)).waitAndClick(5);
+			} else if (reviewer.equals("RMU")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(listOfUsers.get(i)));
+				getSelectUserToAssignGeneral(listOfUsers.get(i)).waitAndClick(5);
+			} else if (reviewer.equals("PA")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssignGeneral(listOfUsers.get(i)));
+				getSelectUserToAssignGeneral(listOfUsers.get(i)).waitAndClick(5);
+			} else if (reviewer.equals("DA")) {
+				getSelectUserToAssignGeneral(listOfUsers.get(i)).ScrollTo();
+				getSelectUserToAssignGeneral(listOfUsers.get(i)).waitAndClick(5);
+			}
+		}
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+	}
 
 	/**
 	 * @author
@@ -11241,9 +11952,9 @@ public class AssignmentsPage {
 	 */
 	public int[] evenlyDistributedDocCountToReviewers(int totalDocs, int noOfReviewers, int modifyDocsCount) {
 		int modifiedTotalDocsCount = totalDocs - modifyDocsCount;
-		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;
-		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;
-		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;
+		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;	
+		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;	
+		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;		
 		int DistributedCountForEachRev = DocCountDistributeToRev / noOfReviewers;
 		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = { DocCountDistributeToRev,
 				totalremainingUnAssignDocsCount, DistributedCountForEachRev };

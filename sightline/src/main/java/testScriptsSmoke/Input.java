@@ -29,7 +29,7 @@ public class Input {
 
 	
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -123,18 +123,18 @@ public class Input {
 	public static String rev4FullName;
 	public static String rev4userName;
 	public static String rev4password;
-//	public static String pa5FullName;
+	public static String pa5FullName;
 	public static String pa5userName;
 	public static String pa5password;
-//	public static String rmu5FullName;
+	public static String rmu5FullName;
 	public static String rmu5userName;
 	public static String rmu5password;
-//	public static String rev5FullName;
+	public static String rev5FullName;
 	public static String rev5userName;
 	public static String rev5password;
 	public static String pa6userName;
 	public static String pa6password;
-//	public static String rmu5FullName;
+	public static String rmu6FullName;
 	public static String rmu6userName;
 	public static String rmu6password;
 //	public static String rev5FullName;
@@ -1294,15 +1294,19 @@ public class Input {
 			rmu4password = System.getProperty("rmu4password");
 			rev4FullName=System.getProperty("rev4FullName");
 			rev4userName = System.getProperty("rev4userName");
-			rev4password = System.getProperty("rev4password");		
+			rev4password = System.getProperty("rev4password");
+			pa5FullName = System.getProperty("pa5FullName");
 			pa5userName = System.getProperty("pa5userName");
 			pa5password = System.getProperty("pa5password");
+			rmu5FullName=System.getProperty("rmu5FullName");
 			rmu5userName = System.getProperty("rmu5userName");
 			rmu5password = System.getProperty("rmu5password");
+			rev5FullName= System.getProperty("rev5FullName");
 			rev5userName = System.getProperty("rev5userName");
 			rev5password = System.getProperty("rev5password");
 			pa6userName = System.getProperty("pa6userName");
 			pa6password = System.getProperty("pa6password");
+			rmu6FullName= System.getProperty("rmu6FullName");
 			rmu6userName = System.getProperty("rmu6userName");
 			rmu6password = System.getProperty("rmu6password");
 			rev6userName = System.getProperty("rev6userName");
@@ -1377,14 +1381,18 @@ public class Input {
 			rmu4password = envConfig.getRmu4password();
 			rev4userName = envConfig.getRev4userName();
 			rev4password = envConfig.getRev4password();
+			pa5FullName=envConfig.getPa5FullName();
 			pa5userName = envConfig.getPa5userName();
 			pa5password = envConfig.getPa5password();
+			rmu5FullName=envConfig.getRmu5FullName();
 			rmu5userName = envConfig.getRmu5userName();
 			rmu5password = envConfig.getRmu5password();
+			rev5FullName=envConfig.getRev5FullName();
 			rev5userName = envConfig.getRev5userName();
 			rev5password = envConfig.getRev5password();
 			pa6userName = envConfig.getPa6userName();
 			pa6password = envConfig.getPa6password();
+			rmu6FullName=envConfig.getRmu6FullName();
 			rmu6userName = envConfig.getRmu6userName();
 			rmu6password = envConfig.getRmu6password();
 			rev6userName = envConfig.getRev6userName();
