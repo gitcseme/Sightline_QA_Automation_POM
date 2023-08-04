@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="BulkActions-parallel-run2" preserve-order="true" parallel = "classes" thread-count = "3">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" > </class>  
+    </classes>
+	</test> 
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="BulkActions-parallel-run2">
+<classes>
+<class name= "sightline.bulkActions.BulkAction_Regression_Consilio" />
+<class name= "sightline.bulkActions.BulkActions_Phase1_Regression" />
+<class name= "sightline.bulkActions.BulkActions_Phase2_Regression" />
+</classes>
+</test>
+
+</suite>
+<!-- Suite -->
