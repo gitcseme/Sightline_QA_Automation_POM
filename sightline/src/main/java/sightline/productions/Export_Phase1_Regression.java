@@ -169,7 +169,6 @@ public class Export_Phase1_Regression {
 		base.stepInfo("Click On Complete And Verify Success Message");
 		page.clickOnCompleteAndVerifySuccessMessage();
 		loginPage.logout();
-
 	}
 
 	/**

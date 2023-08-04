@@ -94,8 +94,7 @@ public class CodingForm_Phase2_Regression {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		// Login as a RMU
-		
+//      Login as a RMU	
 //		loginPage = new LoginPage(driver);
 //	    assignmentPage = new AssignmentsPage(driver);
 //	    sessionSearch = new SessionSearch(driver);
@@ -127,8 +126,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -200,8 +199,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -258,8 +257,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -323,8 +322,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		driver.waitForPageToBeReady();
@@ -400,8 +399,8 @@ public class CodingForm_Phase2_Regression {
 		securityGroupPage = new SecurityGroupsPage(driver);
 		
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 
 		// Custom Field created with INT DataType
 		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
@@ -413,11 +412,11 @@ public class CodingForm_Phase2_Regression {
 
 		// logout
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa3userName + "'");
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 		commentsPage.AddComments(addComment);
 	    
 		//Add tags
@@ -477,8 +476,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		// validating the codingform textbox
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -511,8 +510,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		// validating the codingform textbox
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -548,8 +547,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -636,8 +635,8 @@ public class CodingForm_Phase2_Regression {
 		savedSearch = new SavedSearch(driver);
         AssignmentsPage assgnpage = new AssignmentsPage(driver);
         
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		// Navigate to manage coding form
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -721,8 +720,8 @@ public class CodingForm_Phase2_Regression {
 		DocExplorerPage docExplorerPage = new DocExplorerPage(driver);
 		savedSearch = new SavedSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		List<String>allCfName=new LinkedList<String>();
 		// Navigate to manage coding form
@@ -779,8 +778,8 @@ public class CodingForm_Phase2_Regression {
 		DocExplorerPage docExplorerPage = new DocExplorerPage(driver);
 		savedSearch = new SavedSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		List<String>allCfName=new LinkedList<String>();
 		// Navigate to manage coding form
@@ -835,8 +834,8 @@ public class CodingForm_Phase2_Regression {
 		sessionSearch = new SessionSearch(driver);
 		DocExplorerPage docExplorerPage = new DocExplorerPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		// Navigate to manage coding form
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -891,8 +890,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    String expectedButton="YesNoCancel";
 	    
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	    loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -965,8 +964,8 @@ public class CodingForm_Phase2_Regression {
 	    String expected = null;
 	    
 	    // Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 
 		// Custom Field created with INT DataType
 		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
@@ -978,11 +977,11 @@ public class CodingForm_Phase2_Regression {
 
 		// logout
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa3userName + "'");
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 		commentsPage.AddComments(addComment);
 	   
 		//Add tags
@@ -1063,8 +1062,8 @@ public class CodingForm_Phase2_Regression {
 		docViewPage = new DocViewPage(driver);
 	    
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 	   
 		//Add tags
 		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
@@ -1122,8 +1121,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName[] = {"1LR Coding Form", "  1LR Coding Form", "1LR Coding Form  ", "  1LR Coding Form  "};
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1163,8 +1162,8 @@ public class CodingForm_Phase2_Regression {
 	    CodingForm cf = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1199,8 +1198,8 @@ public class CodingForm_Phase2_Regression {
 	    CodingForm cf = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1239,8 +1238,8 @@ public class CodingForm_Phase2_Regression {
 	    CodingForm cf = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1279,8 +1278,8 @@ public class CodingForm_Phase2_Regression {
 	    CodingForm cf = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1312,8 +1311,8 @@ public class CodingForm_Phase2_Regression {
 	    CodingForm cf = new CodingForm(driver);
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2517 
 	    cf.navigateToCodingFormPage();
@@ -1361,8 +1360,8 @@ public class CodingForm_Phase2_Regression {
 		String[] verifyText = {"statictext_", "checkgroup_", "radiogroup_"};
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 		
 		//EXECUTE SHARED STEPS IN TC#2547 
 	    cf.navigateToCodingFormPage();
@@ -1407,8 +1406,8 @@ public class CodingForm_Phase2_Regression {
 		
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 	    cf.navigateToCodingFormPage();
 	    driver.waitForPageToBeReady();
@@ -1446,8 +1445,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingForm"+Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//validation
 	    cf.createCodingform(cfName);
@@ -1479,8 +1478,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingForm"+Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//remove one of the form in codingform
 	    cf.createCodingform(cfName);
@@ -1516,8 +1515,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingForm"+Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//edit cf
 	    cf.createTagsSavedInCf(cfName);
@@ -1551,8 +1550,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "LongCodingFormNameLongCodingFormNameLongCodingFormName";
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2517 
 		 cf.navigateToCodingFormPage();
@@ -1597,8 +1596,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -1663,8 +1662,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -1740,8 +1739,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -1792,8 +1791,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -1837,8 +1836,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		 cf.addCodingFormName(cfName);
 		
@@ -1877,8 +1876,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		 cf.addCodingFormName(cfName);
 		
@@ -1940,8 +1939,8 @@ public class CodingForm_Phase2_Regression {
 		String hideColumn = "Coding Form Name";
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		 cf.navigateToCodingFormPage();
 		 driver.waitForPageToBeReady();
@@ -1980,8 +1979,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -2054,8 +2053,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -2130,8 +2129,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName = "codingform" + Utility.dynamicNameAppender();
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		//EXECUTE SHARED STEPS IN TC#2547 
 		 cf.navigateToCodingFormPage();
@@ -2192,8 +2191,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		commentsPage = new CommentsPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.addNewCodingFormButton();
 		codingForm.specialObjectsBox(Input.radioGroup);
@@ -2242,8 +2241,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		commentsPage = new CommentsPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.addNewCodingFormButton();
 		codingForm.specialObjectsBox(Input.radioGroup);
@@ -2278,8 +2277,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		commentsPage = new CommentsPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		allCf = new LinkedList<String>();
 		// creating codingform
 		for (int i = 1; i <=100 ; i++) {
@@ -2317,8 +2316,8 @@ public class CodingForm_Phase2_Regression {
 		softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// validating 25 records
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
@@ -2346,8 +2345,8 @@ public class CodingForm_Phase2_Regression {
 		softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// validating 25 records
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
@@ -2379,8 +2378,8 @@ public class CodingForm_Phase2_Regression {
 		String tagname = "tag"+Utility.dynamicNameAppender();
 		int index = 1;
 		String expectedRadioGrp = "radiogroup_"+index+""; 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		// Create tag
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
@@ -2426,8 +2425,8 @@ public class CodingForm_Phase2_Regression {
 		String tagname = "tag"+Utility.dynamicNameAppender();
 		int index = 1;
 		String expectedRadioGrp = "radiogroup_"+index+"";
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 		baseClass.stepInfo("Created the tag sucessfully");
@@ -2478,8 +2477,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName="cfName" + Utility.dynamicNameAppender();
 		String fdName="fname" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		tagsAndFoldersPage.CreateTag(tag, Input.securityGroup);
 		// creating
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -2526,8 +2525,8 @@ public class CodingForm_Phase2_Regression {
 		String cfName="cfName" + Utility.dynamicNameAppender();
 		String rename="cfName" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// creating
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
@@ -2616,8 +2615,8 @@ public class CodingForm_Phase2_Regression {
 		String tagname = "tag1"+Utility.dynamicNameAppender();
 		String tagTwo = "tag2"+Utility.dynamicNameAppender();
 		
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		tagsAndFoldersPage.CreateTag(tagname, Input.securityGroup);
 		tagsAndFoldersPage.CreateTag(tagTwo, Input.securityGroup);
 		baseClass.stepInfo("Created the tag sucessfully");
@@ -2711,8 +2710,8 @@ public class CodingForm_Phase2_Regression {
 		String tag = "tag" + Utility.dynamicNameAppender();
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 		
 		// creating metadata
 		List<String> collectionData=new ArrayList<String>();
@@ -2723,8 +2722,8 @@ public class CodingForm_Phase2_Regression {
 		
 		// logout
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		
 		// creating comments
 		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
@@ -2787,8 +2786,8 @@ public class CodingForm_Phase2_Regression {
 		String tagname = "tag"+Utility.dynamicNameAppender();
 		int index = 1;
 		String expectedCheckGrp = "checkgroup_"+index+"";
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
 		baseClass.stepInfo("Created the tag sucessfully");
@@ -2864,8 +2863,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		commentsPage = new CommentsPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		List<String> allComments = new LinkedList<String>();
 		// adding comments
 		for (int i = 1; i <= 3; i++) {
@@ -2925,8 +2924,8 @@ public class CodingForm_Phase2_Regression {
 		String comment = "comments" + Utility.dynamicNameAppender();
 
 		// login as
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// create comments
 		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
 		commentsPage.addComments(comment);
@@ -2951,7 +2950,7 @@ public class CodingForm_Phase2_Regression {
 		System.out.println(manageScreen);
 		loginPage.logout();
 		// login again to recheck
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		// Navigating to manage cf
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		List<String> actual = new LinkedList<String>();
@@ -2980,8 +2979,8 @@ public class CodingForm_Phase2_Regression {
 		codingForm = new CodingForm(driver);
 		commentsPage = new CommentsPage(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		List<String> allComments = new LinkedList<String>();
 		// adding comments
 		for (int i = 1; i <= 3; i++) {
@@ -3038,8 +3037,8 @@ public class CodingForm_Phase2_Regression {
 		securityGroupPage = new SecurityGroupsPage(driver);
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 		List<String> metadataAll = new LinkedList<String>();
 		for (int i = 1; i <= 3; i++) {
 			String projectFieldINT = "DataINT" + Utility.dynamicNameAppender();
@@ -3049,8 +3048,8 @@ public class CodingForm_Phase2_Regression {
 			System.out.println(projectFieldINT);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// Navigating to manage cf
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		for (String meta : metadataAll) {
@@ -3101,8 +3100,8 @@ public class CodingForm_Phase2_Regression {
 		securityGroupPage = new SecurityGroupsPage(driver);
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 		List<String> metadataAll = new LinkedList<String>();
 		for (int i = 1; i <= 3; i++) {
 			String projectFieldINT = "DataINT" + Utility.dynamicNameAppender();
@@ -3112,8 +3111,8 @@ public class CodingForm_Phase2_Regression {
 			System.out.println(projectFieldINT);
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// Navigating to manage cf
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		for (String meta : metadataAll) {
@@ -3163,7 +3162,7 @@ public class CodingForm_Phase2_Regression {
 		tagsAndFoldersPage=new TagsAndFoldersPage(driver);
 
 		// login as rmu
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		List<String> tagAll = new LinkedList<String>();
 		for (int i = 1; i <=3; i++) {
 			String tag = "Atag1" + Utility.dynamicNameAppender();
@@ -3171,7 +3170,7 @@ public class CodingForm_Phase2_Regression {
 			baseClass.stepInfo("creating a new tag");
 			tagAll.add(tag);
 		}
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// Navigating to manage cf
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		for (String tag : tagAll) {
@@ -3224,8 +3223,8 @@ public class CodingForm_Phase2_Regression {
 		String tag = "tag" + Utility.dynamicNameAppender();
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 		// creating metadata
 		List<String> collectionData=new ArrayList<String>();
 		projectPage.addCustomFieldProjectDataType(metadata, "INT");
@@ -3233,8 +3232,8 @@ public class CodingForm_Phase2_Regression {
 		collectionData.add(metadata);
 		// logout
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		// creating comments
 		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
 		String comments = commentsPage.addComments("com1" + Utility.dynamicNameAppender());
@@ -3297,8 +3296,8 @@ public class CodingForm_Phase2_Regression {
 		String tag = "tag" + Utility.dynamicNameAppender();
 
 		// Login as a PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa3userName + "'");
 		
 		// creating metadata
 		List<String> collectionData=new ArrayList<String>();
@@ -3308,8 +3307,8 @@ public class CodingForm_Phase2_Regression {
 		
 		// logout
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 		
 		// creating comments
 		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
@@ -3373,8 +3372,8 @@ public class CodingForm_Phase2_Regression {
 		String searchString = "coding";
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		codingForm.navigateToCodingFormPage();
 		 driver.waitForPageToBeReady();
@@ -3417,8 +3416,8 @@ public class CodingForm_Phase2_Regression {
 		String hideColumn = "Coding Form Name";
 		
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu3userName + "'");
 
 		codingForm.navigateToCodingFormPage();
 		 driver.waitForPageToBeReady();

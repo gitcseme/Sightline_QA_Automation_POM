@@ -69,7 +69,6 @@ public class CodingForm_Consilio {
 	    sessionSearch = new SessionSearch(driver);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
-
 	}
 
 	@Test(description = "RPMXCON-68850",groups = { "regression" })
