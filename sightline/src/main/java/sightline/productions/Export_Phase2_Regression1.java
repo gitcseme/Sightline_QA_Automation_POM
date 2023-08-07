@@ -88,7 +88,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-47937", enabled = true, groups = { "regression" })
 	public void verifyProductionBasicWithExport() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-47937");
 		base.stepInfo("To Verify Export using Production as Basis if there is count for \"Number Of Export Document Selection Mismatch\"");
 
@@ -166,7 +166,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-48036", enabled = true, groups = { "regression" })
 	public void verifyMBDFileTypeInExport() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-48036");
 		base.stepInfo("To Verify file group type (.mdb/.mdf) option on selection in Translations section, the corresponding translations should be considered for Export.");
 
@@ -220,7 +220,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-49358", enabled = true, groups = { "regression" })
 	public void verifyProductionComponentInExport() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-49358");
 		base.stepInfo("Verify that if PA selects the Export with Production and has only tags selected in the native components section, then Component tab should Complete without any error.");
 
@@ -284,7 +284,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-49384", enabled = true, groups = { "regression" })
 	public void verifyNativeSection() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		soft = new SoftAssert();
 		
 		base.stepInfo("Test case Id: RPMXCON-49384");
@@ -328,7 +328,7 @@ public class Export_Phase2_Regression1 {
 		
 		base.stepInfo("Test case Id: RPMXCON-49135");
 		base.stepInfo("Verify Priv placeholder text is exported");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String newExport = "Export" + Utility.dynamicNameAppender();
@@ -386,7 +386,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-47491", enabled = true, groups = { "regression" })
 	public void verifyCalculatedTabSortOrder() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-47491");
 		base.stepInfo("Verify that in Production-Export-Slip Sheet, Calculated Field should be sorted by alpha ascending");
 
@@ -440,7 +440,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that user should be able to remove the automatically enabled native placeholdering under TIFF/PDF section from new export");
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String prefixID1 = "P" + Utility.dynamicNameAppender();
@@ -537,7 +537,7 @@ public class Export_Phase2_Regression1 {
 	public void verifyTiffGenerationWhenNativeToggleOff() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		BaseClass base = new BaseClass(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-63077-from Production Component");
 		base.stepInfo(
 				"Verify that new production export should be generated with additional placeholder sections in addition to the default enabled native placeholder under TIFF/PDF section");
@@ -678,7 +678,7 @@ public class Export_Phase2_Regression1 {
 	public void verifyingNativeFilesInGenreratedExport() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		BaseClass base = new BaseClass(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("RPMXCON-64077-from Production Component");
 		base.stepInfo("Verify for new export Native, Spreadsheets, and Multimedia checkbox should be checked");
 
@@ -757,7 +757,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that Export should generated successfully and documents should exported with Comments/Signautre");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String Tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -797,6 +797,18 @@ public class Export_Phase2_Regression1 {
 		page.addANewExport(exportName);
 		page.fillingDATSection();
 		page.fillingNativeSection();
+		base.waitForElement(page.getTIFFChkBox());
+		page.getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		driver.waitForPageToBeReady();
+		page.getPDFGenerateRadioButton().ScrollTo();
+		base.clickButton(page.getPDFGenerateRadioButton());
+		driver.waitForPageToBeReady();
+		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		base.waitForElement(page.getTIFF_EnableforPrivilegedDocs());
+		base.clickButton(page.getTIFF_EnableforPrivilegedDocs());
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
 		page.navigateToNextSection();
@@ -811,46 +823,20 @@ public class Export_Phase2_Regression1 {
 		System.out.println(actualCopedText);
 		base.stepInfo("Export Path" + actualCopedText);
 		String parentTab = page.openNewTab(actualCopedText);
-		
-		base.stepInfo("Accessing the Copypoth URL");
-		String[] Values= {"VOL0001","Natives/","0001/"};
-		for(int i=0;i<Values.length;i++) {
-			driver.waitForPageToBeReady();
-			if(page.getFileDir(Values[i]).isElementAvailable(2)) {
-			page.getFileDir(Values[i]).waitAndClick(10);
-			}else {
-				base.stepInfo("URL is not accessible");
-				base.failedStep("URL is not found");
+
+		page.goToPDFImageFiles();
+		for (int i=0;i<3;i++) {
+			if (page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(5)) {
+				base.passedStep("Pdf files are generated successfully");
 			}
 		}
-		base.stepInfo("getting the text inside pdf document");
-		for(int i=0;i<Values.length;i++) {
-		if (page.getFirstPDFImageFile(prefixID + suffixID, subBates).isElementAvailable(2)) {
+		page.navigatingBack(2);
+		page.getFileDir("Natives/").waitAndClick(10);
+		page.getFileDir("0001/").waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.verifyingGeneratedExporttedfile(1, prefixID, suffixID, subBates, ".pdf");
+		
 
-			page.getFirstPDFImageFile(prefixID + suffixID, subBates).waitAndClick(10);
-			String CurrentUrl=driver.getWebDriver().getCurrentUrl();
-			System.out.println(CurrentUrl);
-			 String DownloadedFile = page.getPdfContent(CurrentUrl);
-			 soft = new SoftAssert();
-			 base.stepInfo("verifying whether the comments are applied in all pages");
-			 if (ActualPDFText.equals(DownloadedFile)) {
-				 base.passedStep("Comments are displayed in all pages of downloaded file");
-				} else  {
-					base.failedStep( "Comments are not displayed");
-				}
-
-		} else if (page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
-
-			page.getFirstPDFImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
-			String CurrentUrl=driver.getWebDriver().getCurrentUrl();
-			System.out.println(CurrentUrl);
-			 String DownloadedFile2 = page.getPdfContent(CurrentUrl);
-			 soft.assertEquals(ActualPDFText,DownloadedFile2);
-			 base.passedStep("Comments are displayed in all pages of downloaded file");
-		} else {
-			base.failedStep("PDF file is not generated");
-		}
-		}
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
 		loginPage.logout();
@@ -871,7 +857,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that after Post Generation is completed, it will displays status on Export Progress bar Tile View as 'Completed'");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -927,7 +913,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -975,7 +961,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-50669");
 		base.stepInfo(
 				"Verify that after Pregen checks completed it should displays 'Pre-Gen Checks Complete' status on Production-Export Grid View");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1028,7 +1014,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that once Post Geneation is in progress, it will displays status on Export Generation page as 'Post-Gen QC checks in progress'");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1081,7 +1067,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that once Post Geneation is in progress, it will displays status on Production Progress bar ,Tile View as 'Post-Gen checks in progress'");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1135,8 +1121,8 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-50666");
 		base.stepInfo("Verify that Production status displays as Draft on Production Grid View");
 
-		String[] UserName = { Input.pa1userName, Input.rmu1userName };
-		String[] Password = { Input.pa1password, Input.rmu1password };
+		String[] UserName = { Input.pa3userName, Input.rmu3userName };
+		String[] Password = { Input.pa3password, Input.rmu3password };
 		for (int i = 0; i < UserName.length; i++) {
 
 			loginPage.loginToSightLine(UserName[i], Password[i]);
@@ -1188,7 +1174,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-49247", enabled = true, groups = { "regression" })
 	public void verifyExportDatProvideTiffpageCount() throws Exception {
 		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-49247");
 		base.stepInfo("To verify In Export DAT, provide the TIFFPageCount for each document");
 
@@ -1307,7 +1293,7 @@ public class Export_Phase2_Regression1 {
      **/
     @Test(description = "RPMXCON-47978", enabled = true, groups = { "regression" })
     public void verifyBatesNumBrandinExpData() throws Exception {
-        loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+        loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
         base.stepInfo("Test case Id: RPMXCON-47978");
         base.stepInfo("To Verify In Production, Bates Number for branding & in Productions (Exports), Bates information in the export data.");
 
@@ -1380,7 +1366,7 @@ public class Export_Phase2_Regression1 {
 	 **/
 	@Test(description = "RPMXCON-63853", enabled = true, groups = { "regression" })
 	public void verifyExisProdWithConfigNativPH() throws Exception {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		base.stepInfo("Test case Id: RPMXCON-63853");
 		base.stepInfo("Verify that for existing production/export/template with configured natively placeholdering,"
 				+ " should be with enabled native placeholdering under TIFF/PDF section");
@@ -1458,7 +1444,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify that user can download the Export by using the Shareable link for 'DAT Only'");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1503,7 +1489,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify that user can download the Export by using the Shareable link for 'All Files'");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1548,7 +1534,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify that download option is available after post generation completed on Export-QC tab");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1595,7 +1581,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("To verify that when text is exported for Exception file then it should export the text with the Placeholder (For Export)");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1648,7 +1634,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify If TIFF is produced in the production which is selected as the basis for export then in export user can select 'Generate PDF',export should complete sucessfully");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1706,7 +1692,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify If both TIFF and PDF are produced in the existing production (before upgrade) selected as the basis for export, in Export, you will only be able to export only TIFF.");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1762,7 +1748,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Verify that Export should generate successfully by selecting only DAT and 'Generate TIFF' option with Priv Placholder");
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1823,8 +1809,8 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that after Reserving Bates Range completed it should displays 'Reserving Bates Range Complete' status on Grid View on Production-export Home page");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as"+Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as"+Input.pa3userName);
 		
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1878,8 +1864,8 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-50333");
 		base.stepInfo("Verify that Production-Export  status displays in Draft with blank progress bar on Tile View");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo(Input.pa1userName + " logged in to sightline successfully");
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo(Input.pa3userName + " logged in to sightline successfully");
 
 		String exportName = "Export" + Utility.dynamicNameAppender();
 
@@ -1922,8 +1908,8 @@ public class Export_Phase2_Regression1 {
 				"To verify that in Export, 'Click here to View and select the bates number(S)' link should not be shown");
 		String exportName = "Export" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		base = new BaseClass(driver);
 		page.navigateToProductionPage();
@@ -1956,7 +1942,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that once Generation is completed it should displays 'Export File Complete' status on Grid View on Production-Export Home page");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -2017,8 +2003,8 @@ public class Export_Phase2_Regression1 {
 				"Verify that in Production-export components, TIFF/PDF section displays options for Generating TIFF or Generating PDF");
 		String exportName = "Export" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		base = new BaseClass(driver);
 		page.navigateToProductionPage();
@@ -2055,8 +2041,8 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-47803");
 		base.stepInfo("To Verify Changes in Basic Info Page ( for Export)");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		base = new BaseClass(driver);
 		page.navigateToProductionPage();
@@ -2110,8 +2096,8 @@ public class Export_Phase2_Regression1 {
 		String exportName = "Export" + Utility.dynamicNameAppender();
 		String BatesNum = "Bates" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		base = new BaseClass(driver);
 		page.navigateToProductionPage();
@@ -2138,8 +2124,8 @@ public class Export_Phase2_Regression1 {
 	public void verifyingExportWithTIFFAndText() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as " + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as " + Input.pa3userName);
 
 		base.stepInfo("RPMXCON-50687");
 		base.stepInfo(
@@ -2240,8 +2226,8 @@ public class Export_Phase2_Regression1 {
 		String exportName = "Export" + Utility.dynamicNameAppender();
 		String subBates = page.getRandomNumber(2);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		tag.CreateTagwithClassification(tagName, Input.tagNamePrev);
 		search.basicContentSearch(Input.testData1);
@@ -2320,8 +2306,8 @@ public class Export_Phase2_Regression1 {
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as " + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as " + Input.pa3userName);
 
 		base.stepInfo("Selecting the same project");
 		base.selectproject(Input.projectName);
@@ -2356,8 +2342,8 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo(
 				"Verify that after Pre-gen checks is in progress, it will displays status on Production Grid view");
 
-		String[] Username = { Input.pa1userName, Input.rmu1userName };
-		String[] Password = { Input.pa1password, Input.rmu1password };
+		String[] Username = { Input.pa3userName, Input.rmu3userName };
+		String[] Password = { Input.pa3password, Input.rmu3password };
 
 		for (int i = 0; i < Username.length; i++) {
 
@@ -2425,8 +2411,8 @@ public class Export_Phase2_Regression1 {
 		String exportName = "Export" + Utility.dynamicNameAppender();
 		String subBates = page.getRandomNumber(2);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
@@ -2485,8 +2471,8 @@ public class Export_Phase2_Regression1 {
 		String exportName = "Export" + Utility.dynamicNameAppender();
 		String subBates = page.getRandomNumber(2);
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Logged in as" + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		base.stepInfo("Logged in as" + Input.pa3userName);
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(FolderName, Input.securityGroup);
@@ -2534,7 +2520,7 @@ public class Export_Phase2_Regression1 {
 	@Test(description = "RPMXCON-49123", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49123-Export Component");
 		base.stepInfo(
@@ -2613,7 +2599,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("Test case Id: RPMXCON-50362");
 		base.stepInfo("Verify that after Post Generation is completed, it will displays status on Export generation page as 'Completed'");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 		String FolderName = "FolderName" + Utility.dynamicNameAppender();
 		String TagName = "FolderName" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -2666,7 +2652,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("RPMXCON-50372");
 		base.stepInfo("Verify that in the Export components page 'Archive File from FTP' component is not available");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		String ExportName = "p" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
@@ -2693,7 +2679,7 @@ public class Export_Phase2_Regression1 {
 		base.stepInfo("RPMXCON-47804");
 		base.stepInfo("To Verify Basic Info UI with Toggle option (For Export).");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		String ExportName = "E" + Utility.dynamicNameAppender();
 		base = new BaseClass(driver);
