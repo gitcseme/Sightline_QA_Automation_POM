@@ -3598,11 +3598,10 @@ public class DocViewCodingForm_Regression2 {
 		// opening child window(Coding form)
 		baseClass.stepInfo("performing action in coding form child window");
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
-		docViewPage.switchToNewWindow(2);
+		String Parentwindow=docViewPage.switchTochildWindow();
 		driver.waitForPageToBeReady();
 		docViewPage.pencilGearIconCF(Input.stampSelection);
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(Parentwindow);
 		driver.waitForPageToBeReady();
 
 		// validation for edit coding stamp popup window
@@ -3653,6 +3652,7 @@ public class DocViewCodingForm_Regression2 {
 
 		// Searching audio document and basic search
 		baseClass.stepInfo("Searching audio documents based on search string");
+		codingForm.selectDefaultCodingFormAsDefault();
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		driver.waitForPageToBeReady();
 		docViewPage.selectPureHit();
@@ -3769,11 +3769,11 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.VerifySuccessMessage("Coding stamp deleted successfully");
 
 		// Reassign the same colour after deleting the stamp from child window
-		docViewPage.switchToNewWindow(2);
+		String ParentWindow=docViewPage.switchTochildWindow();
 		docViewPage.editCodingForm(comment);
 		docViewPage.codingStampButton();
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(ParentWindow);
+		
 		docViewPage.popUpAction(fieldText, Input.stampSelection);
 		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
 		baseClass.passedStep("After the deleting " + Input.stampSelection + "stamp, same " + Input.stampSelection
@@ -3814,6 +3814,7 @@ public class DocViewCodingForm_Regression2 {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Searching audio document and basic search
+		codingForm.selectDefaultCodingFormAsDefault();
 		baseClass.stepInfo("Searching audio documents based on search string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
@@ -4073,7 +4074,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
 		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
 		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwo);
-		docViewPage.codingStampPopUpSaveButton();
+		docViewPage.getCodingStampSaveButton().waitAndClick(10);
 		boolean stampSave = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
 		softAssertion.assertTrue(stampSave);
 		docViewPage.lastAppliedStamp(Input.stampColour);
@@ -4103,18 +4104,18 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
 		docViewPage.getEditAssignedColour(Input.stampColour).waitAndClick(5);
 		docViewPage.getCodingEditStampTextBox().SendKeys(stampTextTwoCf);
-		docViewPage.codingStampPopUpSaveButton();
+		baseClass.waitForElement(docViewPage.getCodingStampSaveButton());
+		docViewPage.getCodingStampSaveButton().waitAndClick(10);
 		boolean stampSavecf = baseClass.VerifySuccessMessageB("Coding stamp updated successfully");
 		softAssertion.assertTrue(stampSavecf);
-		docViewPage.switchToNewWindow(2);
+		String Parentwindow=docViewPage.switchTochildWindow();
 		docViewPage.lastAppliedStamp(Input.stampColour);
 
 		// validation for without edit coding form object just rename the stamp colour
 		// in child window
 		docViewPage.verifyingComments(commentCf);
 		baseClass.passedStep("Coding form stamp object as per the expected value from child window");
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(Parentwindow);
 
 		// House Keeping activity
 		driver.Navigate().refresh();
