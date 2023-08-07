@@ -800,10 +800,11 @@ public class Ingestion_Phase1_Regression1 {
 		
 		// verify ingestion Draft status after saving as draft
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
-		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		if (status == false) {
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		
 			// Verify ingestion Draft status after Catalogging
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 			ingestionPage.ingestionCatalogging();
@@ -1012,12 +1013,11 @@ public class Ingestion_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47589");
 		baseClass.stepInfo("Ingestion error list changes for  ignore fields in UI");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
-			ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
-			ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
-			ingestionPage.ingestionCopying();
+			ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder, Input.DATFile2);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.verifyIgnoreOptionAndCheckbox();
 			//rollback and delete ingestion
 			ingestionPage.performRollbackAndDeleteIngestion();
@@ -1360,7 +1360,7 @@ public class Ingestion_Phase1_Regression1 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		if (status == false) {
 			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ignoreErrorsAndIndexing(Input.AK_NativeFolder);
 			//rollback and delete ingestion
