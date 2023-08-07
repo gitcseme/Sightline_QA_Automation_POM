@@ -163,6 +163,9 @@ public class DataSets {
 	public Element getTotalDatasetCount() {
 		return driver.FindElementByXPath("//text[@id='totaldatasetCount']");
 	}
+	public Element getDatasetName(String dataset) {
+		return driver.FindElementByXPath("//button[@id='idAction']//..//..//..//preceding-sibling::span//a[contains(@title,'"+dataset+"')]");
+	}
 
 	// added by sowndariya
 
@@ -439,6 +442,7 @@ public class DataSets {
 		try {
 			driver.getWebDriver().get(Input.url + "ICE/Datasets");
 			driver.waitForPageToBeReady();
+			base.waitForElement(getExportIconButton());
 			getExportIconButton().isElementAvailable(15);
 			getExportIconButton().Click();
 			base.getSuccessMsg().isElementAvailable(15);
@@ -503,25 +507,28 @@ public class DataSets {
 	 * @author Aathith.Senthilkumar
 	 * @param DataSet
 	 */
-	public void selectDataSetWithName(String DataSet) {
-		navigateToDataSetsPage();
-		driver.waitForPageToBeReady();
-		int i = 1;
-		try {
-			while (!getDataset(DataSet).isElementAvailable(10)) {
-				driver.scrollingToBottomofAPage();
-				driver.waitForPageToBeReady();
-				if (loadMoreOption().isElementAvailable(10)) {
-					loadMoreOption().waitAndClick(5);
-				}
-				if (i == 10) {
-					System.out.println("DataSet not in the project");
-					base.failedStep("DataSet is not in project");
+	public String selectDataSetWithName(String DataSet) {
+		
+			navigateToDataSetsPage();
+			driver.waitForPageToBeReady();
+			String datasetName = null;
+			try {
+			for (int i = 0; i < 12; i++) {
+				if (getDatasetName(DataSet).isElementAvailable(10)) {
+					base.passedStep(DataSet + " is available in this project");
+					datasetName = getDatasetName(DataSet).GetAttribute("title");
 					break;
+				} else if (loadMoreOption().isElementAvailable(10)) {
+					loadMoreOption().waitAndClick(5);
+				} else if (i==11) {
+					base.failedStep("Dataset not available");
 				}
-				i++;
+				else {
+					driver.scrollingToBottomofAPage();
+					driver.waitForPageToBeReady();
+				}
 			}
-			getDataset(DataSet).ScrollTo();
+			getDatasetName(DataSet).ScrollTo();
 			driver.waitForPageToBeReady();
 			try {
 				getDataset(DataSet).waitAndClick(10);
@@ -529,8 +536,10 @@ public class DataSets {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			base.waitForElement(getDataSetViewInDocList(DataSet));
 			getDataSetViewInDocList(DataSet).waitAndClick(10);
+
 
 			try {
 				getInitatePopupYesBtn().waitAndClick(10);
@@ -538,13 +547,17 @@ public class DataSets {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			base.stepInfo("DataSet is selected and viewed in DocList.");
- 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            base.failedStep("failed" + e.getMessage());
-        }
+			base.waitTime(5);
+			driver.waitForPageToBeReady();
+			
+
+			base.stepInfo("DataSet is selected and viewed in DocList.");
+	} catch (Exception e) {
+        e.printStackTrace();
+        base.failedStep("failed" + e.getMessage());
+    }
+			return datasetName;
     }
 	
 

@@ -1318,6 +1318,9 @@ public class DocViewRedactions {
     {
             return driver.FindElementByXPath("//span[@id='HitCount_"+ searchText + "']//i");
     }
+    public Element nextKeywordInPersistantPanel(String SearchTerm) {
+		return driver.FindElementByXPath("//i[@id='NextHit_"+SearchTerm+"']");
+	}
 
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -2126,6 +2129,7 @@ public class DocViewRedactions {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		base.waitTime(7); // needed here implicitly
 
+		base.waitTillElemetToBeClickable(docViewRedact.get_textHighlightedColor());
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 		String hex = Color.fromString(color).asHex(); // #dc5252
 		System.out.println(hex);
@@ -2937,10 +2941,10 @@ public class DocViewRedactions {
 			base.failedStep("HighLighting Text  is Not Displayed");
 		}
 		driver.waitForPageToBeReady();
-		if (nextKeywordTest().Displayed()) {
+		if (nextKeywordInPersistantPanel(Input.searchString1).Displayed()) {
 
 			base.passedStep("The Arrow Button is Displayed");
-			nextKeywordTest().waitAndClick(30);
+			nextKeywordInPersistantPanel(Input.searchString1).waitAndClick(30);
 		} else {
 
 			base.failedStep("Arrow Button is Not Displayed");
@@ -3585,7 +3589,7 @@ public class DocViewRedactions {
 		}
 		docView.popOutAnalyticsPanel();
 		driver.waitForPageToBeReady();
-		docView.switchToNewWindow(2);
+		String ParentWindow=docView.switchTochildWindow();
 		base.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
 		docView.getDocView_Analytics_liDocumentConceptualSimilarab().Click();
 		base.waitForElement(docView.getDocumentConceptuallySimilar(1));
@@ -3596,8 +3600,7 @@ public class DocViewRedactions {
 		base.waitForElement(docView.getDocView_Analytics_Concept_ViewDocument());
 		docView.getDocView_Analytics_Concept_ViewDocument().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		docView.closeWindow(1);
-		docView.switchToNewWindow(1);
+		docView.childWindowToParentWindowSwitching(ParentWindow);
 		driver.scrollPageToTop();
 		base.waitForElement(docView.getDocView_CurrentDocId());
 		softAssertion.assertTrue(docView.getDocView_CurrentDocId().isDisplayed());
@@ -3629,7 +3632,7 @@ public class DocViewRedactions {
 		}
 		docView.popOutAnalyticsPanel();
 		driver.waitForPageToBeReady();
-		docView.switchToNewWindow(2);
+		String ParentWindow=docView.switchTochildWindow();
 		base.waitForElement(docView.getDocView_Analytics_NearDupeTab());
 		docView.getDocView_Analytics_NearDupeTab().waitAndClick(10);
 		base.waitForElement(docView.getDocView_NearDupe_Selectdoc());
@@ -3637,8 +3640,7 @@ public class DocViewRedactions {
 		base.stepInfo("Doc is selected which is present in minidoclist");
 		docView.viewInDocumentAnalyticalPanel();
 		driver.waitForPageToBeReady();
-		docView.closeWindow(1);
-		docView.switchToNewWindow(1);
+		docView.childWindowToParentWindowSwitching(ParentWindow);
 		driver.scrollPageToTop();
 		if (docView.geDocView_MiniDocList_ArrowDownIcon().isDisplayed()) {
 			base.passedStep("ArrowDown icon is displayed for the selected docs ");

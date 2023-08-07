@@ -3272,9 +3272,12 @@ public class O365_Phase2_Regression2 {
 		// click created source location and verify navigated page
 		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
 				false);
+		
+		collection.addNewDataSetCLick("Button");
 
 		// initiate collection process
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
+		
 
 		// Add DataSets
 		String dataSetNameGenerated = collection.selectCustodianInAddNewDataSetPopUp(firstName, collectiondataListVal, collectionEmailId, selectedApp);

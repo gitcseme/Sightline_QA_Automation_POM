@@ -51,9 +51,9 @@ public class Export_Phase2_Regression {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		UtilityLog.info("Logged in as User: " + Input.pa2userName);
+		Reporter.log("Logged in as User: " + Input.pa2password);
 	}
 	
 	
@@ -116,14 +116,11 @@ public class Export_Phase2_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getCopyPath().waitAndClick(10);
 		page.verifyingExportFile(purehit,prefixID,suffixID,subBates,Input.searchString4);
-
-
 		// delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
 		loginPage.logout();
-
 	}
 
 	/**
@@ -198,7 +195,7 @@ public class Export_Phase2_Regression {
 		driver.getWebDriver().switchTo().window(parentTab);
 		
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		
 		page = new ProductionPage(driver);
 		String productionname1 = "p" + Utility.dynamicNameAppender();

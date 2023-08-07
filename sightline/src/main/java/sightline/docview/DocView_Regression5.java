@@ -818,13 +818,13 @@ public class DocView_Regression5 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		driver.waitForPageToBeReady();
-		String keyWord = "es" + Utility.dynamicNameAppender();
+		String keyWord = Input.searchString1 + Utility.dynamicNameAppender();
 		KeywordPage keyword = new KeywordPage(driver);
 		
 		keyword.navigateToKeywordPage();
 		keyword.AddKeyword(keyWord, keyWord);	
 
-		sessionSearch.basicContentSearch("es");
+		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 		
 		sessionSearch.switchToWorkproduct();
@@ -843,7 +843,7 @@ public class DocView_Regression5 {
 		baseClass.waitTime(3);
 		docView.clickOnPersistantHitEyeIcon();
 		baseClass.waitTime(3);
-		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keyWord);
+		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(Input.searchString1);
 		
 		keyword.navigateToKeywordPage();
 		keyword.deleteKeywordByName(keyWord);
@@ -1086,6 +1086,7 @@ public class DocView_Regression5 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
+		MiniDocListPage mini=new MiniDocListPage(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String sourceDocId = "SourceDocID";
@@ -1106,7 +1107,7 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		mini.selectFieldValueInConfigureMiniDocListTab(sourceDocId);
 		baseClass.waitTime(3);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -1125,7 +1126,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		baseClass.waitTime(4);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		mini.selectFieldValueInConfigureMiniDocListTab(sourceDocId);
 		baseClass.waitTime(3);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();

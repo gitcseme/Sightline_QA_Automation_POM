@@ -645,7 +645,9 @@ public class BatchPrintPage {
 		return driver.FindElementByXPath("//strong[text()='Folder All Skipped Documents:']//following::label/i");
 	}
 	
-
+	public Element getFolderTab() {
+        return driver.FindElementByXPath("//div[@id='folderSet']//i[@class='jstree-icon jstree-ocl']/..");
+    }
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -2078,7 +2080,10 @@ public class BatchPrintPage {
 		getFolderBatchPrint().isElementAvailable(10);
 		getFolderBatchPrint().waitAndClick(10);
 		getAllFoldersArrow().isElementAvailable(10);
-		getAllFoldersArrow().waitAndClick(10);
+		String Closed=getFolderTab().GetAttribute("class");
+		if(Closed.contains("closed")) {
+		        getAllFoldersArrow().waitAndClick(10);
+		        }
 		getSelectFolder(name).isElementAvailable(10);
 		getSelectFolder(name).waitAndClick(10);
 		base.waitForElement(getSourcenextbutton());

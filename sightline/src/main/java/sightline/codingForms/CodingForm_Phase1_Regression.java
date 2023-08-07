@@ -108,7 +108,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
@@ -165,6 +165,7 @@ public class CodingForm_Phase1_Regression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Coding Form Preview (Radio Button) works Properly in the context of a document review in Parent Window in DocView
 	 */
+	
 	@Test(description = "RPMXCON-54556",enabled = true, groups = { "regression" })
 	public void verifyCFLogicValidationsWithRadioInDocViewParentWindow() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54556");
@@ -173,7 +174,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -256,7 +257,7 @@ public class CodingForm_Phase1_Regression {
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	
 	    String assignmentName = "CFassignment"+Utility.dynamicNameAppender();
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -306,15 +307,15 @@ public class CodingForm_Phase1_Regression {
 	 	assignmentPage.assignmentDistributingToReviewer();	 	
 	 	loginPage.logout();
 	 	// Login as Reviewer
-	 	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-	 	baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+	 	loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+	 	baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev2userName + "'");
  		// Assignment Selection
  		assignmentPage.SelectAssignmentByReviewer(assignmentName);
  		baseClass.stepInfo("User on the doc view after selecting the assignment");
  		codingForm.verifyCFlogicValidationsAsRevInDocViewPg("radio-group");
  		loginPage.logout();
  		//delete codingform
- 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+ 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
@@ -332,7 +333,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -413,7 +414,7 @@ public class CodingForm_Phase1_Regression {
 	    String defaultAction2 = "Make It Display But Not Selectable";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
 	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
@@ -495,7 +496,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 	    //Create coding form as per attachment
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    softAssertion = new SoftAssert();
 		codingForm = new CodingForm(driver);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
@@ -574,7 +575,7 @@ public class CodingForm_Phase1_Regression {
 		String CFName = "CF" + Utility.dynamicNameAppender();
 
 		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// select Tags
@@ -609,7 +610,7 @@ public class CodingForm_Phase1_Regression {
 		String tag = "tag";
 
 		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// select Tags
@@ -655,7 +656,7 @@ public class CodingForm_Phase1_Regression {
 		String fieldName = "Static";
 
 		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// select Tags
@@ -704,7 +705,7 @@ public class CodingForm_Phase1_Regression {
 	    String defaultAction2 = "Make It Hidden";
 	    String actionName = "Make this Hidden";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingTwoObjects(codingform,null,null,null,"tag");
@@ -745,7 +746,7 @@ public class CodingForm_Phase1_Regression {
 	    String defaultAction2 = "Make It Required";
 	    String actionName = "Make this Read Only";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingTwoObjects(codingform,null,null,null,"comment");
@@ -797,7 +798,7 @@ public class CodingForm_Phase1_Regression {
 	    String codingform = "CFcomment"+Utility.dynamicNameAppender();
 	    String defaultAction="Make It Display But Not Selectable";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingFirstObject(codingform, "comment");
@@ -830,7 +831,7 @@ public class CodingForm_Phase1_Regression {
 	    String codingform = "CFmetadata"+Utility.dynamicNameAppender();
 	    String defaultAction="Make It Optional";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingFirstObject(codingform, "metadata");
@@ -869,7 +870,7 @@ public class CodingForm_Phase1_Regression {
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Tag/Comments/Metadata objects for New coding form");
 	    String codingform = "CFmetadata"+Utility.dynamicNameAppender();
 	    //Login as a rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    //create codingform
 	    codingForm.createCodingFormUsingFirstObject(codingform,"tag");
@@ -916,7 +917,7 @@ public class CodingForm_Phase1_Regression {
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Static object for New coding form");
 	    String codingform = "CFStatic"+Utility.dynamicNameAppender();
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.addCodingFormWithStaticText(codingform,Input.searchString1);
@@ -948,7 +949,7 @@ public class CodingForm_Phase1_Regression {
 	    String defaultAction2 = "Make It Hidden";
 	    String actionName = "Make this Hidden";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingTwoObjects(codingform,null,null,null,"tag");
@@ -988,7 +989,7 @@ public class CodingForm_Phase1_Regression {
 	    String defaultAction2 = "Make It Required";
 	    String actionName = "Make this Read Only";
 	    //LogIn as rmu user
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.createCodingFormUsingTwoObjects(codingform,null,null,null,"comment");
@@ -1044,7 +1045,7 @@ public class CodingForm_Phase1_Regression {
 		String comment = "comment";
 
 		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// select Comments
@@ -1090,7 +1091,7 @@ public class CodingForm_Phase1_Regression {
 		String tag = "tag";
 
 		// Login As Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// select Tags
@@ -1156,7 +1157,7 @@ public class CodingForm_Phase1_Regression {
 
 		// Login As Reviewer Manager
 		baseClass.stepInfo("Step 2: Login to Application with RMU");
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		
 		//select Tags
@@ -1226,7 +1227,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 		//LogIn as rmu
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form as per attachment
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
@@ -1310,7 +1311,7 @@ public class CodingForm_Phase1_Regression {
 	    String actionName = "Make this Required";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 		//LogIn as rmu
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form as per attachment
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
@@ -1401,7 +1402,7 @@ public class CodingForm_Phase1_Regression {
 	    String errorMsg="If the document has a technical issue and cannot be reviewed, you must select a reason why from this list above";
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 		//LogIn as rmu
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form as per attachment
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
@@ -1488,7 +1489,7 @@ public class CodingForm_Phase1_Regression {
 	    		+ " values does not disappear in coding form.");
 	    String codingform = "CFTag"+Utility.dynamicNameAppender();	   
 		//LogIn as rmu
-	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	    //Create coding form as per attachment
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    driver.waitForPageToBeReady();
