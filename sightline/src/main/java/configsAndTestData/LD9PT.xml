@@ -6,6 +6,8 @@
 <SourceLocation>IngestionTestData\Automation\RegressionAllDatasetConsilio</SourceLocation>            
 <domainName>Vinod_Automation_DND</domainName>             
 <projectName>06-Jun-SMoke</projectName>
+<AIdomainName>TD01</AIdomainName>
+<AIprojectName>PT_CAL_060523</AIprojectName>
 <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
 <ingestDataProject>AutomationIngestionProject</ingestDataProject>
 <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>

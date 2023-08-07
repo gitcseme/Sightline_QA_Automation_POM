@@ -50,12 +50,18 @@ public class Environment {
 	public String rev3userName;
 	public String rev3password;
 	public String pa4FullName;
+	public String pa5FullName;
+	public String pa6FullName;
 	public String pa4userName;
 	public String pa4password;
 	public String rmu4FullName;
+	public String rmu5FullName;
+	public String rmu6FullName;
 	public String rmu4userName;
 	public String rmu4password;
 	public String rev4FullName;
+	public String rev5FullName;
+	public String rev6FullName;
 	public String rev4userName;
 	public String rev4password;
 //	public String p53FullName;
