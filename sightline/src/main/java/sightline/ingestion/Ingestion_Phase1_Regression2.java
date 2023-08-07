@@ -736,15 +736,15 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.");
 		// perform add only ingestion 
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile1, Input.prodBeg);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Verify analytic status when Tiff overlay without text
 		baseClass.stepInfo("Perform Tiff overlay ingestion without text file");
-		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Tiff", Input.TIFFFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		loginPage.logout();
@@ -768,7 +768,7 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status == false) {
-			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
+			ingestionPage.tiffImagesIngestion(Input.DATFile3, Input.tiffLoadFile, "false");
 			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
 		}
 		// getting unique ingested count before overlay
@@ -776,8 +776,8 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(uniqueCountBefore);
 		baseClass.stepInfo("Total unique count before performing overlay : '" + uniqueCountBefore + "'");
 		// perform Tiff overlay
-		baseClass.stepInfo("Performing overlay ingestion with Native");
-		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		baseClass.stepInfo("Performing overlay ingestion with TIFF");
+		ingestionPage.OverlayIngestionWithDat(Input.TiffImagesFolder, Input.DATFile3, Input.prodBeg, "Tiff", Input.tiffLoadFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
 		// getting unique ingested count after overlay
@@ -806,14 +806,14 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48264");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for TIFF.");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
-		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
-			ingestionPage.publishAddonlyIngestion(Input.TiffImagesFolder);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile1, Input.prodBeg);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
 		}
 		// Perform overlay ingestion for Tiff without DAT
-		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Tiff", Input.TIFFFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
@@ -871,7 +871,8 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
-		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
 		loginPage.logout();
 	}
 
@@ -900,7 +901,8 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
-		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
 		loginPage.logout();
 
 	}
@@ -930,7 +932,8 @@ public class Ingestion_Phase1_Regression2 {
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
-		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
 		loginPage.logout();
 	}
 	
@@ -1320,7 +1323,6 @@ public class Ingestion_Phase1_Regression2 {
 		dataSets = new DataSets(driver);
 		DocListPage docList= new DocListPage(driver);
 		DocViewPage docView=new DocViewPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 				
 		baseClass.stepInfo("Test case Id: RPMXCON-48607");
 		baseClass.stepInfo(
@@ -1336,15 +1338,7 @@ public class Ingestion_Phase1_Regression2 {
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 			
 		}
-		dataSets.navigateToDataSetsPage();
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId=docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
+		ingestionPage.performUnpublish(Input.PP_PDFGen_10Docs);
 		
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingestionPage.navigateToIngestionPage();
@@ -1407,9 +1401,8 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		DocListPage docList= new DocListPage(driver);
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
-
+		docList= new DocListPage(driver);
+	
 		baseClass.stepInfo("Test case Id: RPMXCON-49262");
 		baseClass.stepInfo(
 				"To verify that total unique ingested document count displays unique count if user perform only Text overlay.");
@@ -1428,21 +1421,14 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(uniqueCountBefore);
 		baseClass.stepInfo("Total unique count before performing overlay : '" + uniqueCountBefore + "'");
 				
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
+		ingestionPage.performUnpublish(Input.PP_PDFGen_10Docs);
 		// perform overlay only ingestion with source system as Mapped data
-		ingestionPage.navigateToIngestionPage();
+		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.overlayOnly, "TRUE",  Input.DATPPPDF10Docs, null,
 				Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		
 		// getting unique ingested count after overlay
-		ingestionPage.navigateToIngestionPage();
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
 		System.out.println(uniqueCountAfter);
@@ -1470,9 +1456,8 @@ public class Ingestion_Phase1_Regression2 {
 		baseClass.stepInfo("Logged in as PA");
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		DocListPage docList = new DocListPage(driver);
-		DocViewPage docView = new DocViewPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+		docList = new DocListPage(driver);
+		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48606");
 		baseClass.stepInfo(
@@ -1483,21 +1468,12 @@ public class Ingestion_Phase1_Regression2 {
 		System.out.println(status);
 
 		if (status == false) {
-
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, Input.ingestionType, "TRUE",
 					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
 					null, null);
 
 		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
+		ingestionPage.performUnpublish(Input.PP_PDFGen_10Docs);
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingestionPage.navigateToIngestionPage();
 		baseClass.stepInfo("Select ingestion type and specify source loaction.");
@@ -1509,12 +1485,9 @@ public class Ingestion_Phase1_Regression2 {
 
 		baseClass.stepInfo("Select DAT source.");
 		ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
 		ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
-
 		baseClass.stepInfo("Select Date and Time format.");
 		ingestionPage.selectDateAndTimeFormat(Input.dateFormat);
-
 		baseClass.stepInfo("Click on next button.");
 		ingestionPage.clickOnNextButton();
 
@@ -2086,7 +2059,6 @@ public class Ingestion_Phase1_Regression2 {
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		DocListPage doclist = new DocListPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49263");
 		baseClass.stepInfo(
@@ -2105,23 +2077,14 @@ public class Ingestion_Phase1_Regression2 {
 			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestionPage.clickOnPreviewAndRunButton();
 			ingestionPage.publishAddonlyIngestion(Input.SinglePageTIFFFolder);	
-		}
 		
 		// getting before unique count
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
 		System.out.println(uniqueCountBefore);
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
 		
-		dataSets.navigateToDataSetsPage();
-		dataSets.selectDataSetWithName(Input.SinglePageTIFFFolder);
-		String docId=doclist.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
+		ingestionPage.performUnpublish(Input.SinglePageTIFFFolder);
+		
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		System.out.println(uniqueCountAfter);
 		baseClass.stepInfo("Total unique count after performing overlay : '" + uniqueCountAfter + "'");
@@ -2130,6 +2093,7 @@ public class Ingestion_Phase1_Regression2 {
 			baseClass.failedStep("Total Unique Count included the document that have been unpublished ");
 		} else {
 			baseClass.passedStep("Total Unique Count not included the document that have been unpublished ");
+		}
 		}
 		loginPage.logout();
 	}
