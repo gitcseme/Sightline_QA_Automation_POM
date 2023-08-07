@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ant-apache-bcel">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ant-apache-bcel.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

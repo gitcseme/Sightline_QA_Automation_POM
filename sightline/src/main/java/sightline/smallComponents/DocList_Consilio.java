@@ -101,7 +101,7 @@ public class DocList_Consilio {
 			}
 		}), Input.wait60);
 		driver.waitForPageToBeReady();
-		softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+		softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),true);
 		baseClass.passedStep("Verified that filter box is present in DocList page");
 				
 		baseClass.waitTime(3);
@@ -112,7 +112,7 @@ public class DocList_Consilio {
 		sessionSearch.ViewInDocList();
 		baseClass.stepInfo("Navigated to DocList Page");
 		driver.waitForPageToBeReady();
-		softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+		softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),true);
 		baseClass.passedStep("Verified that filter box is present in DocList page");
 		
 		baseClass.waitTime(3);
@@ -120,7 +120,7 @@ public class DocList_Consilio {
 		docList = new DocListPage(driver);
 		baseClass.stepInfo("Navigated to DocList Page from Saved search");
 		driver.waitForPageToBeReady();
-		softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+		softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),true);
 		baseClass.passedStep("Verified that filter box is present in DocList page");
 		softAssertion.assertAll();
 		loginPage.logout();
@@ -233,7 +233,7 @@ public class DocList_Consilio {
 			docList.CustodianNameFilterFileds().Clear();
 			docList.getApplyFilter().waitAndClick(3);
 			driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.getDocListDefaultTable().isDisplayed(),true);
+			softAssertion.assertEquals(docList.getDocListDefaultTable().isDisplayedNew(),true);
 			baseClass.passedStep("Removed applied text from the filter fields and Verified the Default view of the page/List");
 			softAssertion.assertAll();
 			loginPage.logout();
@@ -295,13 +295,13 @@ public class DocList_Consilio {
 				}
 			}), Input.wait60);
 			driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),true);
 			baseClass.passedStep("Verified that filter box is present in DocList page");
 					
 			driver.waitForPageToBeReady();
 	        docList.getTileView().waitAndClick(5);
 	        driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),false);
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),false);
 			baseClass.passedStep("Verified that Filters fields are only present in list view it is not present in image/tile view");
 			
 			softAssertion.assertAll();
@@ -327,7 +327,7 @@ public class DocList_Consilio {
 				}
 			}), Input.wait60);
 			driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.eyeballIconColPosition().isDisplayed(),true);
+			softAssertion.assertEquals(docList.eyeballIconColPosition().isDisplayedNew(),true);
 			baseClass.passedStep("Verified that eyeball icon column is present next to the column to the right of the checkbox by default.");
 			
 			softAssertion.assertAll();
@@ -355,7 +355,7 @@ public class DocList_Consilio {
 			driver.waitForPageToBeReady();
 			docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
 			driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.getFilterFileds().isDisplayed(),true);
+			softAssertion.assertEquals(docList.getFilterFileds().isDisplayedNew(),true);
 			baseClass.passedStep("Verified that filter box to each column are present below each field adding 10 fields in DocList page/List view screen.");
 			softAssertion.assertAll();
 			loginPage.logout();

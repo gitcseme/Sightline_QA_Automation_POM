@@ -38,7 +38,6 @@
 	<withoutHiddenDocId>ID00000184</withoutHiddenDocId>
 	<multiWordDocID>ID00000203</multiWordDocID>
 	<pdfSourceDocID>SL-08-00000012</pdfSourceDocID>
-	
 
 
 	<!-- Added by Gopinath -->
@@ -388,8 +387,8 @@
 	<collectionDataHeader2>Selected App</collectionDataHeader2>
 	<collectionDataHeader3>Custodian Email</collectionDataHeader3>
 	<collectionDataHeader4>Dataset Name</collectionDataHeader4>
-	<collectionDataHeader5>Selected Folders</collectionDataHeader5>
-	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
+	<collectionDataHeader5>SELECTED ITEMS</collectionDataHeader5>
+	<collectionDataHeader6>FILTERS</collectionDataHeader6>
 	<collectionIdHeader>Collection Id</collectionIdHeader>
 	<collectionStatusHeader>Collection Status</collectionStatusHeader>
 	<expectedDateInput>1989/02/10</expectedDateInput>
@@ -409,7 +408,7 @@
    <collectionErrColorCodeOrange>#F88C00</collectionErrColorCodeOrange>
    <retreivingDSCountH>Retrieved Count</retreivingDSCountH>
    <dateKeywordHeaderC>Date/Keyword Filter</dateKeywordHeaderC>
-   <reteriveDSErr>Retrieved datasets with errors</reteriveDSErr>
+   <reteriveDSErr>Retrieved Datasets with Errors</reteriveDSErr>
    <completedWithErr>Completed with errors</completedWithErr>
    <clientCollectionEmail01>ppatil@consiliotest.com</clientCollectionEmail01>
    <clientEmaildatalistVal01>Paresh Patil (ppatil@consiliotest.com)</clientEmaildatalistVal01>
@@ -457,7 +456,7 @@
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
-    <collectionFailedStatus>Retrieve of datasets failed</collectionFailedStatus>
+    <collectionFailedStatus>Retrieval of Dataset Failed</collectionFailedStatus>
     
     <!-- Added By Hema [Collection] -->
      <TenantIDJeb>9440f0a4-3c93-44be-a379-740f10731bf6</TenantIDJeb>
@@ -919,7 +918,7 @@
 	<!-- Added By Raghuram -->
 	<preBuilt>Pre-Built Models</preBuilt>
 	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
-	<DEPIPTheft>DEP/IP Theft</DEPIPTheft>
+	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
 	<Discrimination>Discrimination</Discrimination>
 	<FCPA>FCPA</FCPA>
 	<NR_Detection>NR Detection</NR_Detection>

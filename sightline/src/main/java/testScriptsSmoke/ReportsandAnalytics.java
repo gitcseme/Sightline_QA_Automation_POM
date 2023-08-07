@@ -6,10 +6,7 @@ import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.interactions.Actions;
@@ -283,7 +280,7 @@ public class ReportsandAnalytics {
 			docList.CustodianNameFilterFileds().Clear();
 			docList.getApplyFilter().waitAndClick(3);
 			driver.waitForPageToBeReady();
-			softAssertion.assertEquals(docList.getDocListDefaultTable().isDisplayed(),true);
+			softAssertion.assertEquals(Optional.ofNullable(docList.getDocListDefaultTable().isDisplayedNew()),true);
 			baseClass.passedStep("Removed applied text from the filter fields and Verified the Default view of the page/List");
 			softAssertion.assertAll();
 			loginPage.logout();

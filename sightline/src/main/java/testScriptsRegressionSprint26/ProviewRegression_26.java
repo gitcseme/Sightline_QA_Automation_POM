@@ -177,7 +177,7 @@ public class ProviewRegression_26 {
         base.waitForElement(categorize.getProductionSelectionPopUp());
         categorize.getProductionSelectionPopUp().waitAndClick(5);
         for(int i=0;i<totalProdSets;i++) {
-        	softassert.assertEquals(categorize.getProdSet(result.get(i)).isDisplayed(),true);
+        	softassert.assertEquals(categorize.getProdSet(result.get(i)).isDisplayedNew(),true);
         	if(categorize.getProdSet(result.get(i)).isDisplayed()) {
         	base.stepInfo(result.get(i)+" is displayed as expected in proview page ");
         	}

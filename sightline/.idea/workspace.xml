@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/ant_apache_bcel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ac-play-java_2.10-0.13.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ICETestData/FinalProximitySpecialCharactersExtendedCharacters/SearchTestDataSpecialCharacters/This is to inform you that your timesheet fire. entry has not been submitted same statement..msg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentReviewProgressReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentReviewProgressReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/CommunicationExplorerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/CommunicationExplorerPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DayHourReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DayHourReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/ReviewerReviewProgressReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/ReviewerReviewProgressReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/TimelineReportPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/TimelineReportPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/UserLoginActivityReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/UserLoginActivityReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/UserReviewActivityReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/UserReviewActivityReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/proview/Proview_Phase2_Regression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/proview/Proview_Phase2_Regression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/savedSearch/SavedSearch_Phase2_Regression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/savedSearch/SavedSearch_Phase2_Regression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/smallComponents/DocList_Consilio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/smallComponents/DocList_Consilio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegressionSprint26/ProviewRegression_26.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegressionSprint26/ProviewRegression_26.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/ReportsandAnalytics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/ReportsandAnalytics.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2TedyXXsaNb1UiLtXWN94wkx1Pl" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ant-apache-bcel.jar" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.37241378" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+  </component>
+  <component name="RunManager">
+    <configuration name="C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <option name="SUITE_NAME" value="$PROJECT_DIR$/smokeSuite.xml" />
+      <option name="TEST_OBJECT" value="SUITE" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="TestNG.C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="" />
+      <created>1691407739613</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691407739613</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
+          <line>1170</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
+          <line>1176</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
+          <line>1177</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

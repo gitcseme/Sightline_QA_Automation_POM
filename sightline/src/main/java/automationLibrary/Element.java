@@ -741,6 +741,14 @@ public class Element {
 			return false;
 		}
 	}
+	public boolean isDisplayedNew() {
+		try {
+			element = driver.getWebDriver().findElement(by);
+			return element.isDisplayed();
+		} catch (Exception E) {
+			return false;
+		}
+	}
 
 	public Select selectFromDropdown() {
 		AssertExists(); // this updates element !
