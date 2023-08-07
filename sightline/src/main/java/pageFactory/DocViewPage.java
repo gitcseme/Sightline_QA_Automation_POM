@@ -13099,7 +13099,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				return getDocView_RedactIcon().Visible() && getDocView_RedactIcon().Enabled();
 			}
 		}), Input.wait30);
-		
+		getDocViewDocsRedactIcon();
 		base.waitTillElemetToBeClickable(getDocView_RedactIcon());
 		getDocView_RedactIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
@@ -13133,8 +13133,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				return getPersistantHitEyeIcon().Visible() && getPersistantHitEyeIcon().Enabled();
 			}
 		}), Input.wait30);
-		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
-		getPersistantHitEyeIcon().waitAndClick(10);
+		
+		clickOnPersistantHitEyeIcon();
 		if (getPersistentPanel().isDisplayed()) {
 			base.passedStep("Persistent Highlighting menu remains displayed after moving to the next document");
 		} else {
@@ -21633,7 +21633,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyReviewModeText() {
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_ReviewModeText());
+		base.waitTillElemetToBeClickable(getDocView_ReviewModeText());
 		String actualText = getDocView_ReviewModeText().getText();
 		if (actualText.contains("You are reviewing docs in Optimized Sort mode")) {
 			base.passedStep("Review mode text is displayed as expected");
@@ -23007,6 +23007,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
+			base.waitForElementCollection( getHighlightedKeywordrgbCode(rgbCode));
 			List<WebElement> keyword = getHighlightedKeywordrgbCode(rgbCode).FindWebElements();
 			System.out.println(keyword.get(0).getCssValue("fill"));
 			String color = keyword.get(0).getCssValue("fill");
@@ -23872,16 +23873,11 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 */
 	public void verifyDisableRemarkWarningMessage() {
 		driver.waitForPageToBeReady();
-        if(!getAddRemarkbtn().Visible()) {      
-            driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                    return getNonAudioRemarkBtn().isElementAvailable(10);
-      
-            }
-    }), Input.wait60);
+        if(!getAddRemarkbtn().isDisplayed()) {      
+        	base.waitTillElemetToBeClickable(getNonAudioRemarkBtn()); 
          getNonAudioRemarkBtn().waitAndClick(10);
     }
-		base.waitForElement(getDisableRedactionWarningForRemarks());
+		base.waitTillElemetToBeClickable(getDisableRedactionWarningForRemarks());
 		if (getDisableRedactionWarningForRemarks().isElementAvailable(5)) {
 			base.passedStep("Remark/redaction is disabled ");
 		} else {
@@ -26753,6 +26749,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 	 * @Description:method to verify spinning wheel in neardupe comparison window.
 	 */
 	public void nearDupeComparisonWindowLodingVerification() {
+		base.waitTime(2);
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().ScrollTo();
 		driver.scrollPageToTop();
@@ -29420,4 +29417,28 @@ public String getRequiredDocs(String reqDocsType) {
 		
 	}
 
+	public String getDocumentWithoutRedactions() {
+	    String docID = null;
+	    driver.waitForPageToBeReady();
+	    base.waitTime(3);
+	    DocViewRedactions docRedact = new DocViewRedactions(driver);
+	    base = new BaseClass(driver);
+	    int totalDocs = verifyingDocCount();
+   		 base.waitForElement(redactionIcon());
+   		    redactionIcon().waitAndClick(5);
+	    for(int i =1; i < totalDocs; i++) {
+	    	
+	            docRedact.selectMiniDocListAndViewInDocView(i);
+	            driver.waitForPageToBeReady();
+	            base.waitTime(3);
+	            base.waitForElement(get_AllAnotationsCount());
+	            if(get_AllAnotationsCount().getText().equals("0 / 0")) {
+	                    docID = docRedact.activeDocId().getText();
+	                    break;
+	    	}
+	    }
+	    
+	    return docID;
+	}
+	
 }

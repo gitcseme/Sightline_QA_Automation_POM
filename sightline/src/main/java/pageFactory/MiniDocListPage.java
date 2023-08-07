@@ -84,7 +84,12 @@ public class MiniDocListPage {
 	public Element getCurrentDocumentId() {
 		return driver.FindElementByXPath("//i[@class='fa fa-arrow-right']//..//..//td[2]");
 	}
+	
+	public Element getSourceFieldRow(int Size) {
+		return driver.FindElementByXPath("(//strong[text()='SelectedFields']//..//..//ul[@id='sortable2PickColumns']//li//i[@class='fa fa-times-circle'])["+Size+"]");
+	}
 
+	
 	public MiniDocListPage(Driver driver) {
 		this.driver = driver;
 		baseClass = new BaseClass(driver);
@@ -2614,6 +2619,7 @@ public Element getDocViewFromDropDown() {
 
 	public void clickManualSortButton() {
 		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.stepInfo("Header Fields Before Action");
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(5);
@@ -4931,4 +4937,32 @@ for (int i = 1; i <= totalDocs; i++) {
 
 }
 
+
+/**
+ * @author Brundha.T
+ * @description : adding the field in selectedfield
+ * @param fieldValue
+ */
+public void selectFieldValueInConfigureMiniDocListTab(String fieldValue) {
+
+	driver.waitForPageToBeReady();
+	clickManualSortButton();
+	baseClass.waitForElementCollection(getOptimizedOrderSelectedFields());
+	int Size = getOptimizedOrderSelectedFields().size();
+	if(Size==4) {
+		baseClass.waitForElement(getSourceFieldRow(Size));
+		getSourceFieldRow(Size).waitAndClick(5);
+	}
+	
+	if(getFromAvailableFieldPickColumnDisplay(fieldValue).isElementAvailable(15)) {
+		driver.waitForPageToBeReady();
+		getFromAvailableFieldPickColumnDisplay(fieldValue).ScrollTo();
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.clickAndHold(getFromAvailableFieldPickColumnDisplay(fieldValue).getWebElement());
+		actions.moveToElement(getToSelectedField().getWebElement());
+		actions.release(getToSelectedField().getWebElement());
+		actions.build().perform();
+	}
+	saveConfigureMiniDocList();
+}
 }
