@@ -676,6 +676,7 @@ public class DocViewCodingForm_Regression1 {
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 
 		// Doc view coding form stamp selection
+		String parentwindow = driver.getWebDriver().getWindowHandle();
 		driver.waitForPageToBeReady();
 		docViewPage.editCodingForm(comment);
 		docViewPage.codingStampButton();
@@ -685,13 +686,15 @@ public class DocViewCodingForm_Regression1 {
 		docViewPage.clickGearIconOpenCodingFormChildWindow();
 		docViewPage.verifyNotPartofDocViewAnalyticalPanelNearDupeTab();
 		docViewPage.closeWindow(2);
-		docViewPage.switchToNewWindow(2);
+		driver.switchTo().window(parentwindow);
+		driver.switchToChildWindow();
 
 		// click StamplastIcon and SavedBtn in ChildWindow.
 		docViewPage.editCfSavedStampBtnSavedChildWindow(Input.stampColour, comment);
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(parentwindow);
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		
 		driver.waitForPageToBeReady();
 		docViewPage.deleteStampColour(Input.stampColour);
 

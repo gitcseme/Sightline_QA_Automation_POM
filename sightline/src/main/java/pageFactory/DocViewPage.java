@@ -6049,10 +6049,9 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		softAssertion.assertNotEquals(thrdDoc, SecDoc);
 		base.waitForElement(getDociD(SecDoc));
 		getDociD(SecDoc).waitAndClick(5);
-		switchToNewWindow(2);
+		String Parentwindow=switchTochildWindow();
 		verifyComments(comment);
-		closeWindow(1);
-		switchToNewWindow(1);
+		childWindowToParentWindowSwitching(Parentwindow);
 	}
 
 	/**
@@ -17606,6 +17605,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		base.stepInfo("Validation for non-audio document");
 		reusableDocView.stampButtonShouldDisplay();
 		for (int i = 20; i <= 20; i++) {
+			driver.waitForPageToBeReady();
+            base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 			driver.waitForPageToBeReady();
 		}
@@ -19884,6 +19885,8 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 		stampButtonShouldDisplay();
 		switchToNewWindow(1);
 		for (int i = 20; i <= 20; i++) {
+			driver.waitForPageToBeReady();
+            base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 			driver.waitForPageToBeReady();
 		}
