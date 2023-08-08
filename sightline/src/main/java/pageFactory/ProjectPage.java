@@ -626,10 +626,10 @@ public class ProjectPage {
 		getProjectFolder().SendKeys(Input.projectSourceLocation);
 
 		getIngestionFolder().Clear();
-		getIngestionFolder().SendKeys(Input.SourceLocation);
+		getIngestionFolder().SendKeys(Input.projectSourceLocation);
 
 		getProductionFolder().Clear();
-		getProductionFolder().SendKeys(Input.SourceLocation);
+		getProductionFolder().SendKeys(Input.projectSourceLocation);
 
 		driver.scrollPageToTop();
 
