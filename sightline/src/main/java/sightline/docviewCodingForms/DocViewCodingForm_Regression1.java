@@ -3989,7 +3989,7 @@ public class DocViewCodingForm_Regression1 {
 		assignmentPage.getAssignmentActionDropdown().waitAndClick(5);
 		assignmentPage.assignmentActions("DocView");
 		driver.waitForPageToBeReady();
-		docViewPage.getDociD(docId).waitAndClick(5);
+		docViewPage.getDociD(docId).WaitUntilPresent().Click();
 		reusableDocView.verifyingComments(comment);
 		baseClass.stepInfo("Changes doing in docview page through manage assignmnet");
 		reusableDocView.editCodingForm(commentOne);
@@ -4560,6 +4560,7 @@ public class DocViewCodingForm_Regression1 {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
+		MiniDocListPage doc=new MiniDocListPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50963");
 
 		baseClass.stepInfo(
@@ -4591,6 +4592,7 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
 		// perform code same as Conceptual Documents
+		doc.selectFieldValueInConfigureMiniDocListTab(Input.docFileType);
 		docViewPage.performCodeSameForFamilyMembersDocumentsReviewer();
 
 		// Edit coding Form and complete Action
@@ -4598,6 +4600,9 @@ public class DocViewCodingForm_Regression1 {
 //		baseClass.VerifySuccessMessage("Document completed successfully");
 		// baseClass.passedStep("allowed reviewers to code docs outside reviewer's batch
 		// (but within assignment)");
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
@@ -4606,10 +4611,13 @@ public class DocViewCodingForm_Regression1 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
 		// perform code same as Conceptual Documents
+		doc.selectFieldValueInConfigureMiniDocListTab(Input.docFileType);
 		docViewPage.performCodeSameForFamilyMembersDocumentsReviewer();
 
 		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		baseClass.passedStep(
 				"Verified Reviewer can complete the document outside reviewer batch from analytics panel by selecting 'Code same as this' action when 'Allow coding outside reviewer batch' is on in an assignment");
 		loginPage.logout();

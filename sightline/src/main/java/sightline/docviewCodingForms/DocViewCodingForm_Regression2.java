@@ -7498,6 +7498,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getSaveDoc().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Applied coding saved successfully");
 
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
@@ -7515,6 +7516,7 @@ public class DocViewCodingForm_Regression2 {
 		docViewPage.getAddComment1().SendKeys("Document commemnt added");
 		docViewPage.getSaveDoc().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		driver.waitForPageToBeReady();
 		baseClass.passedStep(
 				"Verified on click of 'Save' button coding form should be validated as per the default selected action for the coding form outside of an assignment");
 
