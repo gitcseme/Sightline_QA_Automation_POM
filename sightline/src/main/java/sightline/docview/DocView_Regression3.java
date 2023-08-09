@@ -1614,6 +1614,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Switching back to second window to warning message displayed in all 3 panels");
 //		driver.switchToWindow(secondUserWindow);
 		reusableDocView.switchTochildWindow();
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
 		docView.verifyWarningMessage("Annotation");
 		docView.verifyAppliedAnnotationSubMenusAreDisabled();

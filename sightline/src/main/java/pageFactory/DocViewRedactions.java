@@ -2452,7 +2452,7 @@ public class DocViewRedactions {
 			}
 		}), 10000);
 		base.waitTillElemetToBeClickable(getSelectsg(sgname));
-		getSelectsg(sgname).Click();
+		getSelectsg(sgname).waitAndClick(10);
 		driver.waitForPageToBeReady();
 		UtilityLog.info("Security Group Selected: " + sgname);
 	}

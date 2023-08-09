@@ -2889,7 +2889,7 @@ public class DocView_Regression2 {
 				"Warning message is displayed successfully when the document is selected which contains hidden properties from analytics panel");
 		driver.scrollPageToTop();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
-		docViewRedact.hiddenInfoIcon().ScrollTo();
+		//docViewRedact.hiddenInfoIcon().ScrollTo();
 		docViewRedact.hiddenInfoIcon().waitAndClick(10);
 		baseClass.stepInfo("Hidden info action is performed");
 		baseClass.VerifyWarningMessage(
@@ -3330,6 +3330,9 @@ public class DocView_Regression2 {
 		String secondUserWindow = driver.CurrentWindowHandle();
 		baseClass.stepInfo("Switching back to first window to delete remark");
 		driver.switchToWindow(firstUserWindow);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 //		Added on
 		docView.selectDocInMiniDocList(docId);
 		baseClass.waitTime(5);
@@ -4402,11 +4405,16 @@ public class DocView_Regression2 {
 				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
 		Thread.sleep(Input.wait3);
 		baseClass.waitTime(4);
-		// Thread sleep added for the page to adjust resolution
-		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
-		docViewRedact.getDocView_Redactrec_textarea().waitAndClick(5);
+		
+		 actions = new Actions(driver.getWebDriver());
 		driver.waitForPageToBeReady();
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10).clickAndHold().moveByOffset(50,40).release().build().perform();
+		baseClass.waitTime(2);
+		WebElement text1 =doc. currentDocument().getWebElement();
+		actions.moveToElement(text1, 1, 25).clickAndHold().moveByOffset(200, 200).release().perform();
+		baseClass.passedStep("Performed remark by rectangle");
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		
 		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksBtn());
 		docViewRedact.addRemarksBtn().waitAndClick(10);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());

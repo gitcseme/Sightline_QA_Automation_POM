@@ -3264,6 +3264,7 @@ public class DocView_Regression9 {
 	public void verifyTextSearchAfterUserNavigatesToAnotherDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		MiniDocListPage Minidoc=new MiniDocListPage(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
@@ -3281,7 +3282,9 @@ public class DocView_Regression9 {
 
 		baseClass.stepInfo("Navigate to another document");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
+		Minidoc.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId));
+		docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId).waitAndClick(10);
 
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
@@ -3309,7 +3312,9 @@ public class DocView_Regression9 {
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		baseClass.stepInfo("Navigate to another document");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
+		Minidoc.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId));
+		docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId).waitAndClick(10);
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
 		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
@@ -3336,7 +3341,9 @@ public class DocView_Regression9 {
 		docViewRedact.verifySearchUsingMagnifyingIcon(true);
 		baseClass.stepInfo("Navigate to another document");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.searchDocId);
+		Minidoc.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId));
+		docViewPage.getDocView_MiniDoc_SelectDOcId(Input.searchDocId).waitAndClick(10);
 		baseClass.stepInfo(
 				"Verify whether search is cleared,Magnifying icon is displayed when navigates to other doc and come back to same doc where the user did search");
 		baseClass.waitForElement(docViewRedact.getMagnifyingIcon());
