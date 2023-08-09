@@ -902,7 +902,7 @@ public class DocView_Phase2_Regression {
 		docView.getDocView_MiniDocListIds(3).waitAndClick(2);
 		docView.editCodingForm(comment);
 		docView.clickGearIconOpenCodingFormChildWindow();
-		docView.switchTochildWindow();
+		String Parentwindow=docView.switchTochildWindow();
 		docView.codingStampButton();
 		docView.switchToNewWindow(1);
 		docView.popUpAction(fieldText, Input.stampColour);
@@ -915,8 +915,7 @@ public class DocView_Phase2_Regression {
 			baseClass.failedStep("not displayed");
 		}
 		docView.getCodingFormSaveThisForm().waitAndClick(2);
-		docView.closeWindow(1);
-		docView.switchToNewWindow(1);
+		docView.childWindowToParentWindowSwitching(Parentwindow);
 		baseClass.passedStep("Applied coding saved successfully");
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
@@ -930,7 +929,8 @@ public class DocView_Phase2_Regression {
 		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
-		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		MiniDocListPage mini=new MiniDocListPage(driver);
+		mini.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
 		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();

@@ -168,15 +168,14 @@ public class DocviewCodingForm_Phase2_Regression {
 		baseClass.waitForElement(docViewPage.getClickDocviewID(2));
 		docViewPage.getClickDocviewID(2).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		docViewPage.switchToNewWindow(2);
+		String ParentWindow=docViewPage.switchTochildWindow();
 		baseClass.waitTime(5);
 		// validating when navigating to other docs default cf should assign
 		String currentDRpChild = baseClass.getCurrentDropdownValue(docViewPage.getDocViewDrpDwnCfChild());
 		System.out.println(currentDRpChild);
 		baseClass.compareTextViaContains(currentDRpChild, Input.codeFormName, "pass", "fail");
 		baseClass.passedStep("Default coding form assigned in cf panel,when navigate to other docs");
-		docViewPage.closeWindow(1);
-		docViewPage.switchToNewWindow(1);
+		docViewPage.childWindowToParentWindowSwitching(ParentWindow);
 		driver.waitForPageToBeReady();
 //		codingForm.deleteCodingForm(codingform,codingform);
 		loginPage.logout();
