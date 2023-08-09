@@ -109,16 +109,16 @@ public class DocViewAudio_Phase1_Regression1 {
 
 	@DataProvider(name = "AllTheUsers")
 	public Object[][] AllTheUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		Object[][] users = { { Input.pa2userName, Input.pa2password, Input.pa2FullName },
+				{ Input.rmu2userName, Input.rmu2password, Input.rmu2FullName },
+				{ Input.rev2userName, Input.rev2password, Input.rev2FullName } };
 		return users;
 	}
 
 	@DataProvider(name = "RMUandREV")
 	public Object[][] RMUandREV() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		Object[][] users = { { Input.rmu2userName, Input.rmu2password, Input.rmu2FullName },
+				{ Input.rev2userName, Input.rev2password, Input.rev2FullName } };
 		return users;
 	}
 
@@ -133,8 +133,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51077"); 
 		baseClass.stepInfo("Verify user can select and apply code same as this for the audio files"); 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
@@ -151,11 +151,11 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// logout
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev2userName + "'");
 
 		// Assignment Selection
 		assignmentPage.SelectAssignmentByReviewer(assign);
@@ -182,7 +182,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that document navigation should work from audio doc view");
 
 		// Login As
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching Content documents based on search audio string");
@@ -214,7 +214,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that audio files pause functionality is working properly inside docview screen");
 
 		// Login As
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User is logged in as Review Manager");
 
 		// Searching audio document with different term
@@ -232,7 +232,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login As
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User is logged in as PA");
 
 		// Searching audio document with different term
@@ -250,7 +250,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login As
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.stepInfo("User is logged in as Reviewer");
 
 		// Searching audio document with different term
@@ -283,7 +283,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that audio files play functionality is working properly inside docview screen");
 
 		// Login As
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User is logged in as Review Manager");
 
 		// Searching audio document with different term
@@ -298,7 +298,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login As
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User is logged in as PA");
 
 		// Searching audio document with different term
@@ -313,7 +313,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login As
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.stepInfo("User is logged in as Reviewer");
 
 		// Searching audio document with different term
@@ -348,7 +348,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"verify that Persistent hits are working for audio files if user redirect to doc view from Doc list");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Performing advanced search
 		sessionSearch.advancedContentSearch(Input.testData1);
@@ -402,7 +402,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify Persistent hits navigation should work when audio documents searched with the phrase with quotes");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Performing advanced search with audio
 		sessionSearch.verifyaudioSearchWarning(Input.searchPhraseWithQuote, Input.language);
@@ -471,7 +471,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Saved search > Doc View when search is with Metadata & Content search first and then Audio search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -545,7 +545,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Saved search > Doc View when, search is with Audio search first and then Metadata & Content hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -616,7 +616,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Search > Bulk Assign Verify that audio hits should be highlighted in context of an existing/new assignment when search is set up with the Metadata & Content search first and then Audio search");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for metadata and audio
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -694,7 +694,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Search > Bulk Assign Verify that audio hits should be highlighted in context of an existing/new assignment when search is set up with the Audio search first then Metadata & Content search");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for metadata and audio
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -760,8 +760,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that when mini doc list child window scrolled down and 'Loading' "
 				+ "is displayed then mini doc list child window should be loaded with the documents");
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -844,7 +844,7 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
 		// login as rmu
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 //	    searching document for assignment creation and new coding form created (existing)
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -858,7 +858,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// login as rev
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 
 		// selecting the assignment as reviewer
 		assignmentPage.SelectAssignmentByReviewer(assignment);
@@ -936,7 +936,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
 
 		// login as rmu
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 //	    searching document for assignment creation and new coding form created (existing)
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -950,7 +950,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// login as rev
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 
 		// selecting the assignment as reviewer
 		assignmentPage.SelectAssignmentByReviewer(assignment);
@@ -1019,8 +1019,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"When a user tries to navigate to Audio DocView with some documents, the first document must present completely and be ready to be acted upon fully");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 		// Performing advanced search with audio
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -1085,8 +1085,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that when audio file is playing and clicked to Save the document, then waveform should be loaded [Less than 1 hr audio file]");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 		// Performing advanced search with audio
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -1320,11 +1320,11 @@ public class DocViewAudio_Phase1_Regression1 {
 		// login Reviewer
 		baseClass.stepInfo(
 				"Step 1: Login as Reviewer   Project: Enron  Security Group: SG1, Annotation layer should be created under the security group");
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev2userName + "");
 
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
+				"User successfully logged into slightline webpage as reviewer with " + Input.rev2userName + "");
 
 		baseClass.stepInfo(
 				"Step 2:Search for audio documents and go to doc view  Check for the icon to see the reviewer remarks");
@@ -1375,11 +1375,11 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// Login as PA
 		baseClass.stepInfo("Step 1: Login as Project Admin");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa2userName + "");
 		UtilityLog.info(
-				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa2userName + "");
 
 		baseClass.stepInfo(
 				"Step 2:Search for audio documents and go to doc view  Check for the icon to see the reviewer remarks");
@@ -1424,8 +1424,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 		// Performing advanced search with audio
 		sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
@@ -1532,8 +1532,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "to Save the document, then waveform should be loaded [Greater than "
 				+ "1 hr audio file] from coding form child window");
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -1638,8 +1638,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to "
 				+ "Save the document, then waveform should be loaded [Greater than 1 hr audio file]");
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		docViewPage = new DocViewPage(driver);
 		assignmentPage = new AssignmentsPage(driver);
@@ -1750,9 +1750,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage = new DocViewPage(driver);
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu2userName + "");
 
 		// Performing advanced search with audio
 		baseClass.stepInfo("Advanced audio search");
@@ -1781,7 +1781,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login REVU
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 		baseClass.stepInfo("User is logged in as Reviewer");
 
 		// Performing advanced search with audio
@@ -1810,7 +1810,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User is logged in as Project Assient ");
 
 		// Performing advanced search with audio
@@ -1860,7 +1860,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		assignmentPage = new AssignmentsPage(driver);
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		baseClass.stepInfo("Test case id :RPMXCON-51857");
 		baseClass.stepInfo(
@@ -1905,8 +1905,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo(
 				"#### Audio only - If user modified Search Term and re-execute the same query then modified Term does not appear in Persistent Search panel in DocView screen. ####");
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 		baseClass.stepInfo("Advanced audio search");
 		sessionSearch.audioSearch(Input.audioSearch, Input.language);
@@ -1958,8 +1958,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that audio hits should be displayed when documents searched with same term and different/same threshold from session search");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 		// Performing advanced search with audio
 		int count1 = sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
@@ -2177,8 +2177,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo(
 				"Verify that previously saved Persistent hits should be displayed on the audio doc view when same/different reviewer "
 						+ "is unassigned from assignment and documents are distributed again");
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		String assign = "Assignment" + Utility.dynamicNameAppender();
 
@@ -2196,7 +2196,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		// Assigning the Assignment to Reviewer
 		assignmentPage.editAssignment(assign);
 		assignmentPage.assignmentDistributingToReviewer();
-		baseClass.stepInfo(assign + " Assignment is Successfully assigned to the " + Input.rev1userName);
+		baseClass.stepInfo(assign + " Assignment is Successfully assigned to the " + Input.rev2userName);
 
 		// Verification of Persistent Hits Step-3
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -2204,16 +2204,16 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		// Unassigning the Reviewer Step-4
 		assignmentPage.editAssignment(assign);
-		assignmentPage.UnassignedUser(Input.rev1userName);
+		assignmentPage.UnassignedUser(Input.rev2userName);
 
 		// again assign the same Reviewer Step-5
 		assignmentPage.assignmentDistributingToReviewer();
-		baseClass.stepInfo(assign + " Assignment is Successfully assigned to the " + Input.rev1userName);
+		baseClass.stepInfo(assign + " Assignment is Successfully assigned to the " + Input.rev2userName);
 		loginPage.logout();
 
 		// login as reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer '" + Input.rmu2userName + "'");
 
 		// navigating from Dashboard to DocView
 		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
@@ -2322,9 +2322,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage = new DocViewPage(driver);
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu2userName + "");
 
 		// Performing advanced search with audio
 		baseClass.stepInfo("Advanced audio search");
@@ -2364,9 +2364,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu2userName + "");
 
 		// Performing advanced search with audio
 		baseClass.stepInfo("Advanced audio search");
@@ -2419,8 +2419,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that when applies audio redaction for the first time then application should automatically select the â€˜Default Redaction Tagâ€™");
 
 		// Login as USER
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logged in as : " + Input.rmu2FullName);
 
 		// Audio Search
 		sessionSearch.audioSearch(audioSearchInput, Input.language);
@@ -2480,7 +2480,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Search > Doc list > Bulk assign > New/existing assignment when search is set up with the Audio search first then Metadata & Content search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for audio + Metadata
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -2560,7 +2560,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Search > Doc list > Bulk assign > New/existing assignment when search with Metadata & Content search first and then Audio search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for metadata and audio
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -2638,8 +2638,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that previously saved Persistent hits displayed on the audio doc view when documents assigned to"
 						+ " same/another reviewer are completed from edit assignment.");
 		// Login as Reviewer Manager step 1 and Step 2
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2650,7 +2650,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 
 		// creating new node
-		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu1userName, "yes");
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu2userName, "yes");
 
 		// configuring and saving the audio search in credated node
 		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -2671,11 +2671,11 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// logout
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev2userName + "'");
 
 		// navigating from Dashboard to DocView step-6
 		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
@@ -2686,12 +2686,12 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// completing the Documents in the assignement step-8
 		assignmentPage.editAssignment(assign);
-		assignmentPage.completeDocs(Input.rev1userName);
+		assignmentPage.completeDocs(Input.rev2userName);
 
 		// verifying the Persistent Hits as RMU Step-9
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -2735,11 +2735,11 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify when audio document present in two different save searches with common term, then on navigating to doc view with selection of search group it should not display repetitive search term on persistent hits panel");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Logged in as : " + Input.rmu2FullName);
 
 		// Perform create node - Search - SaveSearch in nodes
-		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+		String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu2FullName, "No");
 
 		// Audio Search
 		sessionSearch.audioSearch(audioSearchInput, Input.language);
@@ -2809,8 +2809,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "when documents are uncompleted from edit assignment. ");
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2821,7 +2821,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 
 		// creating new node
-		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu1userName, "yes");
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu2userName, "yes");
 
 		// configuring and saving the audio search in credated node
 		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -2842,7 +2842,7 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// completing the Documents in the assignement
 		assignmentPage.editAssignmentUsingPaginationConcept(assign);
-		assignmentPage.completeDocs(Input.rev1userName);
+		assignmentPage.completeDocs(Input.rev2userName);
 
 		// verifying the Persistent Hits as RMU
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -2853,7 +2853,7 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// Un-completing the Documents in the assignement
 		assignmentPage.editAssignmentUsingPaginationConcept(assign);
-		assignmentPage.UnCompleteDocs(Input.rmu1userName);
+		assignmentPage.UnCompleteDocs(Input.rmu2userName);
 
 		//// verifying the Persistent Hits as RMU
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -2876,8 +2876,8 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify When remove audio docs from a user/reviewer in an assignment, displays persistent search hits in the assignment, when reassigning these audio docs to another/same reviewer in the assignment");
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
@@ -2888,7 +2888,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		String savedSearch = "Search1" + Utility.dynamicNameAppender();
 
 		// creating new node
-		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu1userName, "yes");
+		String nodeName = this.savedSearch.createSearchGroupAndReturn(savedSearch, Input.rmu2userName, "yes");
 
 		// configuring and saving the audio search in credated node
 		int pureHit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -2909,11 +2909,11 @@ public class DocViewAudio_Phase1_Regression1 {
 
 		// logout
 		loginPage.logout();
-		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu1userName + "'");
+		baseClass.stepInfo("Successfully logedout as  Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev2userName + "'");
 
 		// navigating from Dashboard to DocView
 		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
@@ -2924,19 +2924,19 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully logged in as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// removing and reassigning the Documents in the assignement
 		assignmentPage.editAssignment(assign);
-		assignmentPage.removeDocs(Input.rev1userName);
-		assignmentPage.reassignDocs(Input.rev1userName);
+		assignmentPage.removeDocs(Input.rev2userName);
+		assignmentPage.reassignDocs(Input.rev2userName);
 
 		loginPage.logout();
 
 		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev2userName + "'");
 
 		// navigating from Dashboard to DocView
 		baseClass.waitForElement(assignmentPage.dashBoardPageTitle());
@@ -2951,9 +2951,9 @@ public class DocViewAudio_Phase1_Regression1 {
 
 	@DataProvider(name = "userDetailsAndRole")
 	public Object[][] userLoginDetailsAndRole() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, "REV" } 
+		return new Object[][] { { Input.pa2FullName, Input.pa2userName, Input.pa2password, "PA" },
+				{ Input.rmu2FullName, Input.rmu2userName, Input.rmu2password, "RMU" },
+				{ Input.rev2FullName, Input.rev2userName, Input.rev2password, "REV" } 
 			};
 	}
 
@@ -3122,7 +3122,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage = new DocViewPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		String audioSearchString2 = "left";
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		driver.waitForPageToBeReady();
@@ -3191,25 +3191,25 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify the automatically selected audio redaction tag when shared annotation layer with un-shared redactation tags in security groups and all documents are released to security groups.");
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		// Create security group
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(securityGroup);
 
 		// access to security group to REV
-		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev2userName);
 
 		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkRelease(securityGroup);
 
 		annotationLayer.AddAnnotation(addName);
-		redact.AddRedaction(RedactName, Input.rev1FullName);
+		redact.AddRedaction(RedactName, Input.rev2FullName);
 		loginPage.logout();
 
 		// Login as USER
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Logged in as : " + Input.rev2FullName);
 
 		// Audio Search
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -3239,8 +3239,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as USER
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Logged in as : " + Input.rev2FullName);
 
 		// Audio Search
 		sessionSearch.audioSearch(audioSearchInput, Input.language);
@@ -3304,26 +3304,26 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify the automatically selected audio redaction tag when shared annotation layer with shared redactation tags in security groups and all propogated documents are not released to security groups");
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 
 		// Create security group
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(securityGroup);
 
 		// access to security group to REV
-		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev2userName);
 
 		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkRelease(securityGroup);
 
-		redact.AddRedaction(RedactName, Input.rev1FullName);
+		redact.AddRedaction(RedactName, Input.rev2FullName);
 		annotationLayer.AddAnnotation(addName);
 
 		loginPage.logout();
 
 		// Login as USER
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Logged in as : " + Input.rev2FullName);
 
 		// Audio Search
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
@@ -3353,8 +3353,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as USER
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Logged in as : " + Input.rev2FullName);
 
 		// Audio Search
 		sessionSearch.audioSearch(audioSearchInput, Input.language);
@@ -3403,8 +3403,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage = new DocViewPage(driver);
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// search to Assignment creation
 		sessionSearch.audioSearch(Input.audioSearch, Input.language);
@@ -3416,8 +3416,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev2userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
@@ -3471,8 +3471,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		docViewPage = new DocViewPage(driver);
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu2userName + "'");
 
 		// search to Assignment creation
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -3486,8 +3486,8 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev2userName + "'");
 
 		docViewPage.selectAssignmentfromDashborad(Asssignment);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
@@ -3545,7 +3545,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "first and then Audio search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for audio + Metadata
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -3598,7 +3598,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "first then Metadata & Content search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Search for audio + Metadata
 		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(null, null, Input.audioSearch, Input.language,
@@ -3660,7 +3660,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "and then Audio search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -3742,7 +3742,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "Metadata & Content search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -3818,7 +3818,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ "search first and then Metadata & Content search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -3927,7 +3927,7 @@ public class DocViewAudio_Phase1_Regression1 {
 						+ "first and then Audio search, hits should be highlighted");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -4037,7 +4037,7 @@ public class DocViewAudio_Phase1_Regression1 {
 						+ "search is set up with the Audio search first then Metadata & Content search and documents are assigned");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -4146,7 +4146,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				+ " (Metadata & Content) search first and then Audio search)");
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
@@ -4248,7 +4248,7 @@ public class DocViewAudio_Phase1_Regression1 {
 				"Verify that audio hits should be displayed when documents searched with same term and different/same "
 						+ "threshold are assigned to assignment at different time from session search");
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as RMU");
 
 		String searchString = Input.audioSearchString2;
@@ -4348,7 +4348,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with "
 				+ "same term and different/same threshold are assigned to assignment from saved search with search group");
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("Successfully login as RMU");
 		String saveSaerchName = "ss" + Utility.dynamicNameAppender();
 		String saveSaerchName1 = "ss" + Utility.dynamicNameAppender();
@@ -4505,9 +4505,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Assient with " + Input.pa1userName + "");
+				"User successfully logged into slightline webpage as Project Assient with " + Input.pa2userName + "");
 		// Impersonate PA to RMU
 		baseClass.impersonatePAtoRMU();
 		// Performing advanced search with audio
@@ -4519,9 +4519,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Assient with " + Input.pa1userName + "");
+				"User successfully logged into slightline webpage as Project Assient with " + Input.pa2userName + "");
 		// Impersonate PA to Reviewer
 		baseClass.impersonatePAtoReviewer();
 		// Performing advanced search with audio
@@ -4533,9 +4533,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		loginPage.logout();
 
 		// Login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviwer Manager with " + Input.rmu1userName + "");
+				"User successfully logged into slightline webpage as Reviwer Manager with " + Input.rmu2userName + "");
 		// Impersonate RMU to Rviewer
 		baseClass.impersonateRMUtoReviewer();
 		// Performing advanced search with audio
@@ -4990,13 +4990,13 @@ public class DocViewAudio_Phase1_Regression1 {
 		int index;
 		String RedactName = "new" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Successfully login as '" + Input.rmu2userName + "'");
 
 		docViewPage = new DocViewPage(driver);
 		RedactionPage redact = new RedactionPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		redact.AddRedaction(RedactName, Input.rmu1FullName);
+		redact.AddRedaction(RedactName, Input.rmu2FullName);
 		
 		// search to docview
 		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
@@ -5178,7 +5178,7 @@ public class DocViewAudio_Phase1_Regression1 {
 			baseClass.stepInfo("RPMXCON-51856 -DocView/Audio Component");
 			baseClass.stepInfo("Verify when adding redaction for the audio file which is duplicate");
 			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 			
 			String foldername = "Folder" + Utility.dynamicNameAppender();
 			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
@@ -5199,7 +5199,7 @@ public class DocViewAudio_Phase1_Regression1 {
 			doc.bulkFolderExisting(foldername);
 			
 			loginPage.logout();
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 			
 			RedactionPage redactionpage=new RedactionPage(driver);
 	        driver.waitForPageToBeReady();
@@ -5253,8 +5253,8 @@ public class DocViewAudio_Phase1_Regression1 {
 					"Verify that persistent hits should be displayed on document navigation when document present in two different searches and not part of third search");
 
 			// Login as RMU
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+			baseClass.stepInfo("Logined user : " + Input.rmu2userName);
 
 			// Performing advanced search with audio
 			sessionSearch.audioSearch("condolence", Input.language);
@@ -5283,10 +5283,10 @@ public class DocViewAudio_Phase1_Regression1 {
 			// Assigning the Assignment to Reviewer
 			assignmentPage.editAssignment(assignName);
 			assignmentPage.assignmentDistributingToReviewer();
-			baseClass.stepInfo(assignName + " Assignment is Successfully assigned to the " + Input.rev1userName);
+			baseClass.stepInfo(assignName + " Assignment is Successfully assigned to the " + Input.rev2userName);
 			
 			loginPage.logout();
-			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 			
 			assignmentPage.SelectAssignmentByReviewer(assignName);
 			driver.waitForPageToBeReady();
@@ -5422,11 +5422,11 @@ public class DocViewAudio_Phase1_Regression1 {
 					+ "common term then, should not display repetitive search term on persistent hits panel on document navigation options [<<, <, >, >>, enter document number]");
 
 			// Login as RMU
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+			baseClass.stepInfo("Logged in as : " + Input.rmu2FullName);
 
 			// Perform create node - Search - SaveSearch in nodes
-			String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+			String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu2FullName, "No");
 
 			// Audio Search
 			sessionSearch.audioSearch(audioSearchInput, Input.language);
@@ -5495,7 +5495,7 @@ public class DocViewAudio_Phase1_Regression1 {
 			baseClass.stepInfo("Test case Id: RPMXCON-59961");
 			baseClass.stepInfo("Verify that Video files 'Full Screen' functionality is working properly inside Doc view screen");
 			// Logi
-			loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+			loginPage.loginToSightLine(Input.rmu2userName,Input.rmu2password);
 			baseClass.selectproject("AutomationAdditionalDataProject");
 
 			docViewPage = new DocViewPage(driver);
@@ -5532,7 +5532,7 @@ public class DocViewAudio_Phase1_Regression1 {
 			baseClass.stepInfo("Test case Id: RPMXCON-59968");
 			baseClass.stepInfo("Verify that when document is not audio player enabled and native is a video file should display video player without an audio player");
 			// Login 
-			loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+			loginPage.loginToSightLine(Input.rmu2userName,Input.rmu2password);
 			baseClass.selectproject("AutomationAdditionalDataProject");
 
 			docViewPage = new DocViewPage(driver);
@@ -5554,9 +5554,9 @@ public class DocViewAudio_Phase1_Regression1 {
 		
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+		return new Object[][] { { Input.pa2FullName, Input.pa2userName, Input.pa2password },
+				{ Input.rmu2FullName, Input.rmu2userName, Input.rmu2password },
+				{ Input.rev2FullName, Input.rev2userName, Input.rev2password } };
 	}
 
 	@AfterMethod(alwaysRun = true)
