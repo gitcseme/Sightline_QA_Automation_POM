@@ -94,8 +94,8 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify 'Total Docs in Assignment' count displays correctly for existing "
 				+ "assignment from Manage Assignment page");
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assignmentName = "AR3assignment" + Utility.dynamicNameAppender();
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
@@ -131,8 +131,8 @@ public class Assignment_Regression3 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assignmentName2 = "AR3assignment" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id:54432");
 		baseClass.stepInfo("Verify 'Total Docs in Assignment' count displays correctly on Edit "
@@ -182,8 +182,8 @@ public class Assignment_Regression3 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		baseClass.stepInfo("Test case Id:RPMXCON-54433");
 		baseClass.stepInfo(
 				"Verify if distribute all documents to Reviewer in assignment, then 'DISTRIBUTED to User' count "
@@ -202,7 +202,8 @@ public class Assignment_Regression3 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName1);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(assignmentName1 + " assignment opened in edit mode");
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev5userName);
+		driver.Navigate().refresh();
 		baseClass.waitForElement(agnmt.getAssignment_ManageReviewersTab());
 		agnmt.getAssignment_ManageReviewersTab().waitAndClick(5);
 		try {
@@ -234,8 +235,8 @@ public class Assignment_Regression3 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		baseClass.stepInfo("Test case Id:RPMXCON-54434");
 		baseClass.stepInfo("Verify document count should be displayed correctly on doc view when navigating "
 				+ "to doc view in context of an assignment");
@@ -284,8 +285,8 @@ public class Assignment_Regression3 {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		baseClass.stepInfo("Test case Id:RPMXCON-54513");
 		baseClass.stepInfo(
 				"Verify that 'Show Default View Tab' enabled by default with cascading " + "settings not enabled");
@@ -327,8 +328,8 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-54756");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assignmentName = "AR3assignment" + Utility.dynamicNameAppender();
 		String keywordName = "keyword" + Utility.dynamicNameAppender();
 		keyword = new KeywordPage(driver);
@@ -375,8 +376,8 @@ public class Assignment_Regression3 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assgnGrp = "AR3assignGrp" + Utility.dynamicNameAppender();
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -413,8 +414,8 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-60049");
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assgnGrp = "AR3assignGrp" + Utility.dynamicNameAppender();
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -455,8 +456,8 @@ public class Assignment_Regression3 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assignmentName = "AR3assignment" + Utility.dynamicNameAppender();
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -486,8 +487,8 @@ public class Assignment_Regression3 {
 	public void VerifyToggle_QuickBatch() throws InterruptedException, ParseException, IOException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		String assignmentName = "AR3assignment" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-60046");
 		baseClass.stepInfo("Verify default settings for toggles as well as Draw from Pool settings incl. Max"
@@ -525,8 +526,8 @@ public class Assignment_Regression3 {
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 		try {
 			baseClass.stepInfo("Test case Id:RPMXCON-60047");
 			baseClass.stepInfo(
@@ -572,8 +573,8 @@ public class Assignment_Regression3 {
 	public void verifyDrawPoolToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
+		UtilityLog.info("Logged in as User: " + Input.rmu5userName);
 
 		baseClass.stepInfo("Test case Id:RPMXCON-54497");
 		baseClass.stepInfo("Disable the \"Draw from Pool\" field settings in the Assignment");
@@ -598,7 +599,7 @@ public class Assignment_Regression3 {
 		baseClass
 				.passedStep("Sucessfully Verified the Disable the \"Draw from Pool\" field settings in the Assignment");
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		baseClass.stepInfo("Logged Out and Logged in again as same RMU User to "
 				+ "check whether the updated setting are reflected or not");
@@ -627,7 +628,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59178 Assignments Sprint-10");
 		baseClass.stepInfo(
 				"Verify that when Keep Families Together is disabled, the draw will be limited to the configured draw size/limit");
@@ -649,8 +650,8 @@ public class Assignment_Regression3 {
 				emailThread, true);
 
 		// Distribute to RMU and REV
-		agnmt.distributeHalfTheDocsToReviewer(count);
-		agnmt.assignmentDistributingToReviewer();
+		agnmt.distributeHalfTheDocsToReviewer(count,Input.rmu5userName);
+		agnmt.assignmentDistributingToReviewer(Input.rev5userName);
 
 		// verify Draw from pool line as RMU
 		baseClass.selectproject();
@@ -661,7 +662,7 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 		// verify Draw from pool line as REV
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.ValidateElement_Absence(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName),
@@ -669,7 +670,7 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 		// Delete Assignment
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -692,7 +693,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59201 Assignments Sprint-10");
 		baseClass.stepInfo(
 				"Verify that after editing assignment group with cascading, changes should reflect in its respective assignment");
@@ -739,9 +740,9 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59179 ");
 		baseClass.stepInfo("Verify that when Email Threads Together is enabled,"
 				+ " the draw will keep the entire email thread together irrespective of the size of the batch");
@@ -750,7 +751,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -762,13 +763,13 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 		// assignment Creation
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 
@@ -795,10 +796,10 @@ public class Assignment_Regression3 {
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		// Distribute 33 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.distributeTheGivenDocCountToReviewer("33");
+		agnmt.distributeTheGivenDocCountToReviewer("33",Input.rev5userName);
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -838,7 +839,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -855,10 +856,10 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59177");
 		baseClass.stepInfo("Verify that when Keep Families Together is enabled, the draw will keep the "
 				+ "entire family together irrespective of the size of the batch");
@@ -866,7 +867,7 @@ public class Assignment_Regression3 {
 		// assignment Creation
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -877,13 +878,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 
@@ -911,10 +912,10 @@ public class Assignment_Regression3 {
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		// Distribute 33 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.distributeTheGivenDocCountToReviewer("31");
+		agnmt.distributeTheGivenDocCountToReviewer("31",Input.rev5userName);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -953,7 +954,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -970,15 +971,15 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59197");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles OFF");
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -989,13 +990,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.waitForPageToBeReady();
@@ -1023,13 +1024,13 @@ public class Assignment_Regression3 {
 				false);
 		driver.scrollPageToTop();
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev5userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1068,7 +1069,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1085,17 +1086,17 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59196");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles ON ");
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1113,13 +1114,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.waitForPageToBeReady();
@@ -1147,13 +1148,13 @@ public class Assignment_Regression3 {
 				false);
 		driver.scrollPageToTop();
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev5userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1186,7 +1187,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1207,7 +1208,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59202");
 		baseClass.stepInfo("Verify that after editing assignment group with Keep families together as ON & keep email "
 				+ "threads as OFF, changes should reflect in its respective assignment");
@@ -1278,7 +1279,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59206");
 		baseClass.stepInfo("Verify that after editing assignment group with Keep families together as OFF & keep email "
 				+ "threads as ON, changes should reflect in its respective assignment");
@@ -1355,7 +1356,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59207");
 		baseClass.stepInfo("Verify that after editing assignment group with Keep families together as OFF & keep email "
 				+ "threads as OFF, changes should reflect in its respective assignment");
@@ -1435,7 +1436,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59176");
 
 		baseClass.stepInfo("UI: Verify that option to keep families together and option to keep "
@@ -1478,17 +1479,17 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59199");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families together as OFF &"
 				+ " keep email threads as ON");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1501,13 +1502,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.waitForPageToBeReady();
@@ -1536,13 +1537,13 @@ public class Assignment_Regression3 {
 				false);
 		driver.scrollPageToTop();
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev5userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1575,7 +1576,7 @@ public class Assignment_Regression3 {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1592,17 +1593,17 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59198");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families "
 				+ "together as ON & keep email threads as OFF ");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1615,13 +1616,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.waitForPageToBeReady();
@@ -1650,13 +1651,13 @@ public class Assignment_Regression3 {
 				false);
 		driver.scrollPageToTop();
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev5userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1693,7 +1694,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1710,17 +1711,17 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		// Getting the ingested docs to assign to assignment
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59216");
 		baseClass.stepInfo("Verify that for existing assignment, keep families together as enabled and keep "
 				+ "threads together as disabled toggle should be displayed");
 		// search with Metadata & Operator and verify purehit
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1739,13 +1740,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		driver.waitForPageToBeReady();
@@ -1767,13 +1768,13 @@ public class Assignment_Regression3 {
 				+ " keep threads together as enabled toggle should be displayed");
 		// distributing docs
 		driver.scrollPageToTop();
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev5userName);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1806,7 +1807,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1864,9 +1865,9 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 		UserManagement userManagement=new UserManagement(driver);
-		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String[][] userRolesData = { { Input.pa5userName, "Project Administrator", "SA" } };
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa5userName, Input.pa5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59180 ");
 		baseClass.stepInfo("Verify that when Email Threads Together is disabled, keep families enabled the "
 				+ "draw will keep the entire family together irrespective of the size of the batch");
@@ -1874,7 +1875,7 @@ public class Assignment_Regression3 {
 		// Getting the ingested docs to assign to assignment
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Ingestion Access Verification");
-		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa5password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -1888,13 +1889,13 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 		// assignment Creation
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
-		savedSearch.getSavedSearchToBulkAssign().Click();
+		savedSearch.getSavedSearchToBulkAssign().javascriptclick(savedSearch.getSavedSearchToBulkAssign());
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 
@@ -1922,10 +1923,11 @@ public class Assignment_Regression3 {
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		// Distribute 12 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.distributeTheGivenDocCountToReviewer("12");
+		agnmt.distributeTheGivenDocCountToReviewer("12",Input.rev5userName);
 		loginPage.logout();
+		System.out.println(assignmentName);
 
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev5userName, Input.rev5password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1959,7 +1961,7 @@ public class Assignment_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
@@ -1980,7 +1982,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-56825 ");
 		baseClass.stepInfo("Verify the \"Draw from pool\" field changes done in Assignment group"
 				+ " reflecting in the Assignment while Creating a new assignment");
@@ -2027,7 +2029,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-54444 Assignments");
 		baseClass.stepInfo(
 				"Verify that Application disallow special characters in Edit Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
@@ -2058,7 +2060,7 @@ public class Assignment_Regression3 {
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu5userName, Input.rmu5password);
 		baseClass.stepInfo("Test case Id: RPMXCON-53942 Assignments");
 		baseClass.stepInfo(
 				"To verify that Category name are displayed with toggle control on Assign Like Document pop up.");

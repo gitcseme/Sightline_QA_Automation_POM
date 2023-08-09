@@ -83,11 +83,11 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.addReviewerAndDistributeDocs();
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		bc.stepInfo("Logged in as reviewer user");
 		agnmt.verifyTheMetaDataSortingAsPerRMUUserByAscending(assignmentName, "NearDupePrincipalDocID");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
@@ -122,13 +122,13 @@ public class Assignment_Regression2 {
 		search.bulkAssign_withoutshoppingCartAdd(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		bc.stepInfo("Logged in as reviewer user");
 		agnmt.verifyTheMetaDataSortingAsPerRMUUserByAscending(assignmentName, "EmailThreadID");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
@@ -186,11 +186,11 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.add3ReviewerAndDistribute();
+		agnmt.add3ReviewerAndDistribute(Input.rev4userName,Input.rmu4userName,Input.pa4userName);
 		bc.selectproject();
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Assigned");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Assigned");
 		search.serarchWP();
 		int PureHitCountAfterSelectingCriteria = Integer.parseInt(search.verifyPureHitsCount());
 		try {
@@ -221,11 +221,11 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.add3ReviewerAndDistribute();
+		agnmt.add3ReviewerAndDistribute(Input.rev4userName,Input.rmu4userName,Input.pa4userName);
 		bc.selectproject();
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Choose Status:");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Choose Status:");
 		search.serarchWP();
 		int PureHitCountAfterSelectingCriteria = Integer.parseInt(search.verifyPureHitsCount());
 		try {
@@ -259,7 +259,7 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.add3ReviewerAndDistribute();
+		agnmt.add3ReviewerAndDistribute(Input.rev4userName,Input.rmu4userName,Input.pa4userName);
 		lp.logout();
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		bc.stepInfo("Logged in as SA user");
@@ -267,7 +267,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Impersonated to RMU user successfully");
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Assigned");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Assigned");
 		search.serarchWP();
 		bc.waitForElement(search.getPureHitsCount());
 		int PureHitCountAfterSelectingCriteria = Integer.parseInt(search.verifyPureHitsCount());
@@ -278,13 +278,13 @@ public class Assignment_Regression2 {
 			bc.failedStep("The search results are displayed as per search criteria");
 		}
 		lp.logout();
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa4userName, Input.pa4password);
 		bc.stepInfo("Logged in as PA user");
 		bc.impersonatePAtoRMU();
 		bc.stepInfo("Impersonated to rmu user successfully");
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Assigned");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Assigned");
 		search.serarchWP();
 		int PureHitCountAfterSelectingCriteria1 = Integer.parseInt(search.verifyPureHitsCount());
 		try {
@@ -317,7 +317,7 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.add3ReviewerAndDistribute();
+		agnmt.add3ReviewerAndDistribute(Input.rev4userName,Input.rmu4userName,Input.pa4userName);
 		lp.logout();
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		bc.stepInfo("Logged in as SA user");
@@ -325,7 +325,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Impersonated to RMU user successfully");
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Choose Status:");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Choose Status:");
 		search.serarchWP();
 		int PureHitCountAfterSelectingCriteria = Integer.parseInt(search.verifyPureHitsCount());
 		try {
@@ -335,13 +335,13 @@ public class Assignment_Regression2 {
 			bc.failedStep("The search results are displayed as per search criteria");
 		}
 		lp.logout();
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa4userName, Input.pa4password);
 		bc.stepInfo("Logged in as PA user");
 		bc.impersonatePAtoRMU();
 		bc.stepInfo("Impersonated to rmu user successfully");
 		search.switchToWorkproduct();
 		reviwersListInSearchPg = search.selectAssignmentAndMultipleReviewersWPSWthFilters(assignmentName,
-				Input.rev1userName, Input.rmu1userName, Input.pa1userName, "Choose Status:");
+				Input.rev4userName, Input.rmu4userName, Input.pa4userName, "Choose Status:");
 		search.serarchWP();
 		int PureHitCountAfterSelectingCriteria1 = Integer.parseInt(search.verifyPureHitsCount());
 		try {
@@ -375,15 +375,15 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		agnmt.verifyColorBands(assignmentName, "Un Completed");
 		agnmt.completeDistributesDocsByReviewer(assignmentName);
 		bc.selectproject();
 		agnmt.verifyColorBands(assignmentName, "Completed");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -504,13 +504,13 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		bc.stepInfo("Logged in as reviewer user");
 		agnmt.verifyFamilyIdSorting(assignmentName, "FamilyID", "DocID");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
@@ -769,7 +769,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		bc.waitForElement(agnmt.getAssignment_BackToManageButton());
 		agnmt.getAssignment_BackToManageButton().waitAndClick(5);
 		agnmt.viewSelectedAssgnUsingPagination(assignmentName);
@@ -804,7 +804,7 @@ public class Assignment_Regression2 {
 		}
 		assertion.assertAll();
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -879,7 +879,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("The To do count are not displayed as expected");
 		}
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -902,7 +902,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.verifyDisplayedValidations();
+		agnmt.verifyDisplayedValidations(Input.rev4userName,Input.rmu4userName);
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		lp.logout();
 	}
@@ -927,7 +927,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.verifyDisplayedValidationsOfRemovedDocs(count);
+		agnmt.verifyDisplayedValidationsOfRemovedDocs(count,Input.rmu4userName);
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		lp.logout();
 	}
@@ -955,9 +955,9 @@ public class Assignment_Regression2 {
 		bc.passedStep("Assignment is created with sort by metadata as descending order--" + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		driver.scrollingToElementofAPage(agnmt.getAssignment_ManageReviewersTab());
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		try {
 			agnmt.verifyDescendingMetaDataSorting_DocList(assignmentName, Input.metaDataName);
 			assertion.assertAll();
@@ -1039,7 +1039,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		int unassignedDocs = agnmt.distributeHalfTheDocsToReviewer(count);
+		int unassignedDocs = agnmt.distributeHalfTheDocsToReviewer(count,Input.rmu4userName);
 		bc.impersonateRMUtoReviewer();
 		bc.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
@@ -1070,7 +1070,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("The To do count are not displayed as expected");
 		}
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -1113,7 +1113,7 @@ public class Assignment_Regression2 {
 		bc.waitTillElemetToBeClickable(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.editAssgnGrp(assignmentGrpName_3, "No");
 		agnmt.validateUpdatedDetailsInAssgnGrp(assignmentGrpName_3, status);
@@ -1228,7 +1228,7 @@ public class Assignment_Regression2 {
 		// page and from doc view page.
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		try {
-			agnmt.ValidateRetainedMetaDataList(assignmentName);
+			agnmt.ValidateRetainedMetaDataList(assignmentName,Input.rev4userName,Input.rev4password);
 			bc.passedStep(
 					"Sucessfully verified that Default Metadata list is retained even after modifying bulk assignment");
 		} catch (Exception e) {
@@ -1259,7 +1259,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentQB1);
 		agnmt.getParentAssignmentGroupName().Displayed();
 		agnmt.getSelectedClassification().selectFromDropdown().selectByVisibleText("2LR");
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		bc.stepInfo("Modified the assignment and distributed docs to the reviewer");
 		// verifying the metadata list by clicking select metadata button in assignment
 		// page and from doc view page.
@@ -1267,7 +1267,7 @@ public class Assignment_Regression2 {
 		driver.waitForPageToBeReady();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		try {
-			agnmt.ValidateRetainedMetaDataList(assignmentQB1);
+			agnmt.ValidateRetainedMetaDataList(assignmentQB1,Input.rev4userName,Input.rev4password);
 			bc.passedStep(
 					"Sucessfully verified that Default Metadata list is retained even after modifying bulk assignment");
 		} catch (Exception e) {
@@ -1311,7 +1311,7 @@ public class Assignment_Regression2 {
 		search.bulkAssignExistingForCopyAssignment(copyAssgnName);
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.NavigateToNewEditAssignmentPage("edit");
-		agnmt.verifySuccessMsgValidations();
+		agnmt.verifySuccessMsgValidations(Input.rmu4userName);
 		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		agnmt.NavigateToNewEditAssignmentPage("edit");
@@ -1325,7 +1325,7 @@ public class Assignment_Regression2 {
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		bc.waitForElement(agnmt.getAssignment_ManageReviewersTab());
 		agnmt.getAssignment_ManageReviewersTab().waitAndClick(5);
-		agnmt.getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(5);
+		agnmt.getAssgn_ManageRev_selectReviewer(Input.rmu4userName).waitAndClick(5);
 		agnmt.selectActionsInManageRev(agnmt.getAssgn_ManageRev_Action_tagdoc());
 		search.BulkActions_Tag(tag);
 		bc.passedStep("Documents are tagged for the reviewer successfully");
@@ -1334,7 +1334,7 @@ public class Assignment_Regression2 {
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		bc.waitForElement(agnmt.getAssignment_ManageReviewersTab());
 		agnmt.getAssignment_ManageReviewersTab().waitAndClick(5);
-		agnmt.getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(5);
+		agnmt.getAssgn_ManageRev_selectReviewer(Input.rmu4userName).waitAndClick(5);
 		agnmt.selectActionsInManageRev(agnmt.getAssgn_ManageRev_Action_folderdoc());
 		search.BulkActions_Folder(folder);
 		bc.passedStep("Documents are foldered for the reviewer successfully");
@@ -1469,7 +1469,7 @@ public class Assignment_Regression2 {
 
 		lp.logout();
 		lp.loginToSightLine(userName, Password);
-		if (userName.equalsIgnoreCase(Input.pa1userName)) {
+		if (userName.equalsIgnoreCase(Input.pa4userName)) {
 			bc.impersonatePAtoRMU();
 			bc.stepInfo("Logged in As PA and imperonated as RMU");
 		}
@@ -1509,7 +1509,7 @@ public class Assignment_Regression2 {
 		driver.waitForPageToBeReady();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		try {
-			agnmt.ValidateRetainedMetaDataList(assignmentName);
+			agnmt.ValidateRetainedMetaDataList(assignmentName,Input.rev4userName,Input.rev4password);
 			bc.passedStep("Sucessfully verified that Default Metadata list is retained even after modifying bulk "
 					+ "assignment for impersonated User");
 		} catch (Exception e) {
@@ -1521,7 +1521,7 @@ public class Assignment_Regression2 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] usersList = { { Input.pa1userName, Input.pa1password }, { Input.sa1userName, Input.sa1password } };
+		Object[][] usersList = { { Input.pa4userName, Input.pa4password }, { Input.sa1userName, Input.sa1password } };
 		return usersList;
 	}
 
@@ -1541,7 +1541,7 @@ public class Assignment_Regression2 {
 		// Creating quick batch assignment
 		lp.logout();
 		lp.loginToSightLine(userName, Password);
-		if (userName.equalsIgnoreCase(Input.pa1userName)) {
+		if (userName.equalsIgnoreCase(Input.pa4userName)) {
 			bc.impersonatePAtoRMU();
 		}
 		if (userName.equalsIgnoreCase(Input.sa1userName)) {
@@ -1557,7 +1557,7 @@ public class Assignment_Regression2 {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentQB1);
 		agnmt.getParentAssignmentGroupName().Displayed();
 		agnmt.getSelectedClassification().selectFromDropdown().selectByVisibleText("2LR");
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev4userName);
 		bc.stepInfo("Modified the assignment and distributed docs to the reviewer");
 		// verifying the metadata list by clicking select metadata button in assignment
 		// page and from doc view page.
@@ -1565,7 +1565,7 @@ public class Assignment_Regression2 {
 		driver.waitForPageToBeReady();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
 		try {
-			agnmt.ValidateRetainedMetaDataList(assignmentQB1);
+			agnmt.ValidateRetainedMetaDataList(assignmentQB1,Input.rev4userName,Input.rev4password);
 			bc.passedStep("Sucessfully verified that Default Metadata list is retained even after modifying bulk "
 					+ "assignment for impersonated User.");
 		} catch (Exception e) {
@@ -1614,24 +1614,24 @@ public class Assignment_Regression2 {
 		agnmt.getSelectAssignment(noncascadeAssgnName).waitAndClick(3);
 		String docCount = agnmt.getDocCountInAssgnPg(noncascadeAssgnName).getText();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
-		agnmt.assignmentDistributingToReviewerManager();
+		agnmt.assignmentDistributingToReviewerManager(Input.rmu4userName);
 		bc.impersonateRMUtoReviewer();
 		bc.stepInfo("Impersonated as reviewer");
 		agnmt.VerifyTodoCountInReviewerPg(noncascadeAssgnName, docCount);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.selectAssignmentGroup(NoncascadeAsgnGrpName);
 		driver.scrollingToElementofAPage(agnmt.getSelectAssignment(noncascadeAssgnName));
 		agnmt.getSelectAssignment(noncascadeAssgnName).waitAndClick(3);
 		agnmt.NavigateToNewEditAssignmentPage("edit");
-		agnmt.removeDocs(Input.rmu1userName);
+		agnmt.removeDocs(Input.rmu4userName);
 		String docCount_afterRemovingDocs = "0";
 		bc.impersonateRMUtoReviewer();
 		bc.stepInfo("Impersonated as reviewer");
 		agnmt.VerifyTodoCountInReviewerPg(noncascadeAssgnName, docCount_afterRemovingDocs);
 		agnmt.verifyDrawPoolToggledisplay(noncascadeAssgnName, "enabled");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssignmentFromSingleAssgnGrp(NoncascadeAsgnGrpName, noncascadeAssgnName);
 		agnmt.DeleteAssgnGroup(NoncascadeAsgnGrpName);
 		lp.logout();
@@ -1676,23 +1676,23 @@ public class Assignment_Regression2 {
 		agnmt.getSelectAssignment(noncascadeAssgnName).waitAndClick(3);
 		String docCount = agnmt.getDocCountInAssgnPg(noncascadeAssgnName).getText();
 		agnmt.NavigateToNewEditAssignmentPage("edit");
-		agnmt.assignmentDistributingToReviewerManager();
+		agnmt.assignmentDistributingToReviewerManager(Input.rmu4userName);
 		bc.impersonateRMUtoReviewer();
 		agnmt.VerifyTodoCountInReviewerPg(noncascadeAssgnName, docCount);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		driver.waitForPageToBeReady();
 		agnmt.selectAssignmentGroup(NoncascadeAsgnGrpName);
 		driver.scrollingToElementofAPage(agnmt.getSelectAssignment(noncascadeAssgnName));
 		agnmt.getSelectAssignment(noncascadeAssgnName).waitAndClick(3);
 		agnmt.NavigateToNewEditAssignmentPage("edit");
-		agnmt.removeDocs(Input.rmu1userName);
+		agnmt.removeDocs(Input.rmu4userName);
 		String docCount_afterRemovingDocs = "0";
 		bc.impersonateRMUtoReviewer();
 		agnmt.VerifyTodoCountInReviewerPg(noncascadeAssgnName, docCount_afterRemovingDocs);
 		agnmt.verifyDrawPoolToggledisplay(noncascadeAssgnName, "disabled");
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssignmentFromSingleAssgnGrp(NoncascadeAsgnGrpName, noncascadeAssgnName);
 		agnmt.DeleteAssgnGroup(NoncascadeAsgnGrpName);
 		lp.logout();
@@ -1718,7 +1718,7 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.unassignTheAddedReviewer(count);
+		agnmt.unassignTheAddedReviewer(count,Input.rmu4userName);
 		agnmt.deleteSelectedAgnmt(assignmentName);
 		lp.logout();
 	}
@@ -1744,9 +1744,9 @@ public class Assignment_Regression2 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.verifyRedistributedDocsToAnotherUser(count);
+		agnmt.verifyRedistributedDocsToAnotherUser(count,Input.rev4userName,Input.rmu4userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev4userName, Input.rev4password);
 		bc.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		bc.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
@@ -1761,7 +1761,7 @@ public class Assignment_Regression2 {
 			bc.failedStep("The To do count are not displayed as expected");
 		}
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -1784,7 +1784,7 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer();
+		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer(Input.rev4userName,Input.rmu4userName);
 		System.out.println(Distributeduser);
 		agnmt.VerifyTodocountinManageRevTab_RedistributeDocs();
 		agnmt.deleteSelectedAgnmt(assignmentName);
@@ -1810,11 +1810,11 @@ public class Assignment_Regression2 {
 		search.bulkAssignExisting(assignmentName);
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer();
+		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer(Input.rev4userName,Input.rmu4userName);
 		System.out.println(Distributeduser);
 		agnmt.VerifyRedistributeDocsInToDoCount_ReviewerPg(Distributeduser, assignmentName);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
 	}
@@ -1830,7 +1830,7 @@ public class Assignment_Regression2 {
 		search = new SessionSearch(driver);
 		sw = new StringWriter();
 		pw = new PrintWriter(sw);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu4userName, Input.rmu4password);
 	}
 
 	@AfterMethod(alwaysRun = true)

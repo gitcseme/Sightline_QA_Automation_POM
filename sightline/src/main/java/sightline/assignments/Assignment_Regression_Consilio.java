@@ -22,11 +22,13 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.ClassificationPage;
+import pageFactory.ClientsPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -40,6 +42,7 @@ public class Assignment_Regression_Consilio {
 	AssignmentsPage agnmt;
 	Input in;
 	IngestionPage_Indium ingestionPage;
+	ClientsPage clientsPage;
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -60,15 +63,40 @@ public class Assignment_Regression_Consilio {
 		bc = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 		search = new SessionSearch(driver);
+		clientsPage = new ClientsPage(driver);
 		
 
+	}
+	
+	@Test(description ="RPMXCON-54960",groups = { "regression" })
+	public void validateHelpPopUpWhenHoveringInClientPg() throws InterruptedException, ParseException, IOException {
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		clientsPage = new ClientsPage(driver);
+		bc.stepInfo("Test case Id: RPMXCON-54960");
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+		bc.stepInfo("Logged in as SA user");
+		clientsPage.verifyHelpTextPopUpWhenHovering();
+		lp.logout();
+	}
+
+	@Test(description ="RPMXCON-54958,RPMXCON-54959",groups = { "regression" })
+	public void verifyHelpTextPopUpWhenClickingInClientPg() throws InterruptedException, ParseException, IOException {
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		clientsPage = new ClientsPage(driver);
+		bc.stepInfo("Test case Id: RPMXCON-54958, RPMXCON-54959");
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+		bc.stepInfo("Logged in as SA user");
+		clientsPage.verifyHelpTextPopUpWhenClicking();
+		lp.logout();
 	}
 	
 	@Test(description = "RPMXCON-69084",dataProvider="AssignmentSplChars", groups = { "regression" })
 	public void verifyCreateNEditAssignmentGrpWithSplChars(String AssignmentGrpNameSplChars) throws InterruptedException {
 			bc.stepInfo("Verify that error message display and application does NOT accepts - when user add & Edits Assignment group with special characters < > & ‘");
 			bc.stepInfo("Test case Id:RPMXCON-69084");	
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 			String AssignmentGrpName="AssignmentGrp"+ Utility.dynamicNameAppender();
 			this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 			System.out.println(AssignmentGrpName);
@@ -90,7 +118,7 @@ public class Assignment_Regression_Consilio {
 	public void verifyCreateNEditAssignmentNameWithSplChars(String AssignmentNameSplChars) throws InterruptedException {
 			bc.stepInfo("Verify that error message display and application does NOT accepts - when user add & Edits Assignment name with special characters < > & ‘ ");
 			bc.stepInfo("Test case Id:RPMXCON-69085");	
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 			String AssignmentName="AssignmentName"+ Utility.dynamicNameAppender();	
 			
 			agnmt.createAssignment(AssignmentName, Input.codingFormName);
@@ -114,8 +142,8 @@ public class Assignment_Regression_Consilio {
 		LoginPage lp = new LoginPage(driver);
 		ClassificationPage clssp = new ClassificationPage(driver);
 		Assertion a = new Assertion();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		bc.stepInfo("Logged in as :" + Input.rmu1userName);
+		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		bc.stepInfo("Logged in as :" + Input.rmu2userName);
 
 		bc.selectproject();
 		
@@ -157,11 +185,14 @@ public class Assignment_Regression_Consilio {
 		LoginPage lp = new LoginPage(driver);
 		AssignmentsPage asgn=new AssignmentsPage(driver);
 		SessionSearch search= new SessionSearch(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String[][] userRolesData = { { Input.pa2userName, "Project Administrator", "SA" } };
+		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
 		
 		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		String ingestionDataName=Input.IngestionName_PT;
 		ingestionPage = new IngestionPage_Indium(driver);
+		UserManagement userManagement=new UserManagement(driver);
+		userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa2password);
 		ingestionPage.navigateToIngestionPage();
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
@@ -174,7 +205,7 @@ public class Assignment_Regression_Consilio {
 		bc.stepInfo("Created a SavedSearch " + SearchName1);
 		lp.logout();
 		// assignment Creation with draw pool toggle OFF
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
@@ -211,13 +242,13 @@ public class Assignment_Regression_Consilio {
 				false);
 		driver.scrollPageToTop();
 		// distributing docs
-		agnmt.distributeTheGivenDocCountToReviewer("2");
+		agnmt.distributeTheGivenDocCountToReviewer("2",Input.rev2userName);
 		driver.scrollPageToTop();
 		bc.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev2userName, Input.rev2password);
 		bc.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -273,11 +304,14 @@ public class Assignment_Regression_Consilio {
 			LoginPage lp = new LoginPage(driver);
 			AssignmentsPage asgn=new AssignmentsPage(driver);
 			SessionSearch search= new SessionSearch(driver);
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			String[][] userRolesData = { { Input.pa2userName, "Project Administrator", "SA" } };
+			lp.loginToSightLine(Input.pa2userName, Input.pa2password);
 			
 			String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 			String ingestionDataName=Input.IngestionName_PT;
 			ingestionPage = new IngestionPage_Indium(driver);
+			UserManagement userManagement=new UserManagement(driver);
+			userManagement.verifyIngestionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa2password);
 			ingestionPage.navigateToIngestionPage();
 			boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 			 if (status == true) {
@@ -290,7 +324,7 @@ public class Assignment_Regression_Consilio {
 			bc.stepInfo("Created a SavedSearch " + SearchName1);
 			lp.logout();
 			// assignment Creation with draw pool toggle OFF
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 			SavedSearch savedSearch = new SavedSearch(driver);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
@@ -333,7 +367,7 @@ public class Assignment_Regression_Consilio {
 			agnmt.getAssignmentSaveButton().waitAndClick(5);
 
 			lp.logout();
-			lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+			lp.loginToSightLine(Input.rev2userName, Input.rev2password);
 			bc.stepInfo("Logged in as reviewer user");
 			// navigating from Dashboard to DocView
 			DocViewPage docViewPage = new DocViewPage(driver);

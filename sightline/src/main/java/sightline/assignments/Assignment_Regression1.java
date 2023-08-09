@@ -43,8 +43,8 @@ public class Assignment_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		softAssertion=new SoftAssert ();
 		searchText = Input.TallySearch;
@@ -355,9 +355,9 @@ public class Assignment_Regression1 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.ValidateInstructionPopUpInEditAndNewAssignment(Input.searchString1, "Edit");
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifyInstructionTextInDistDocs(assignmentName, Input.searchString1);
 		lp.logout();
@@ -386,14 +386,14 @@ public class Assignment_Regression1 {
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.verifyConfigureBtnAndSelectSortBymetaData(Input.metaDataName, "yes");
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
 		String docCount = agnmt.verifydocsCountInAssgnPage(assignmentName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as reviewer user");
 		agnmt.verifyTheMetaDataSortingAsPerRMUUser(assignmentName, Input.metaDataName);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		softAssertion.assertEquals(PureHitCount, docCount);
@@ -427,14 +427,14 @@ public class Assignment_Regression1 {
 		search.bulkAssignExisting(assignmentName);
 		String PureHitCount = search.verifyPureHitsCount();	
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
 		String docCount = agnmt.verifydocsCountInAssgnPage(assignmentName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifyTheMetaDataSortingAsPerRMUUser(assignmentName, Input.metaDataName);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		softAssertion.assertEquals(PureHitCount, docCount);
@@ -460,13 +460,13 @@ public class Assignment_Regression1 {
 		search.basicContentSearch(searchText);
 		search.bulkAssignExisting(assignmentName);	
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifySystemDefineMetaDataSorting_DocList(assignmentName);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
@@ -528,9 +528,9 @@ public class Assignment_Regression1 {
 		search.basicContentSearch(searchText);
 		search.bulkAssignExisting(assignmentName);	
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
 		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as review user");
 		agnmt.verifyInstructionTextInDistDocs(assignmentName, Input.searchString1);
 		lp.logout();
@@ -559,12 +559,12 @@ public class Assignment_Regression1 {
 		search.bulkAssignExisting(assignmentName);
 		bc.stepInfo("Created a assignment " + assignmentName);
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer();
+		String Distributeduser = agnmt.addMultipleReviewersAndDistributeToOnereviewer(Input.rev3userName,Input.rmu3userName);
 		System.out.println(Distributeduser);
 		String redistributeUser = agnmt.VerifyUserNotInListAfterRedistributedDocs();
 		System.out.println(redistributeUser);
-		if (Input.rmu1userName != redistributeUser) {
-			softAssertion.assertNotEquals(Input.rmu1userName, redistributeUser);
+		if (Input.rmu3userName != redistributeUser) {
+			softAssertion.assertNotEquals(Input.rmu3userName, redistributeUser);
 			bc.passedStep(
 					"Sucessfully verified that in Redistribute Documents pop up only those Pending Reviewers are displayed which are "
 							+ "associated to the Assignments");
@@ -671,13 +671,13 @@ public class Assignment_Regression1 {
 		search.bulkAssignExisting(assignmentName);
 		bc.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
-		agnmt.addReviewerAndDistributeDocs();
+		agnmt.addReviewerAndDistributeDocs(Input.rev3userName);
         lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev3userName, Input.rev3password);
 		bc.stepInfo("Logged in as reviewer user");
 		agnmt.verifyTheDocIdListInReviwerPgDocList(assignmentName);
 		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		bc.stepInfo("Logged in as RMU user");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		lp.logout();
@@ -828,7 +828,7 @@ public class Assignment_Regression1 {
 		bc = new BaseClass(driver);
 		sw = new StringWriter();
 		pw = new PrintWriter(sw);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 	}
 
 	@AfterMethod(alwaysRun = true)

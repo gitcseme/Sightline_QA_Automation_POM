@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Assignment-parallel-run2" preserve-order="true" parallel = "classes" thread-count = "5">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" > </class>  
+    </classes>
+	</test> 
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Assignment-parallel-run2">
+<classes>
+<class name= "sightline.assignments.Assignment_Phase2_Regression" />
+<class name= "sightline.assignments.Assignment_Regression_Consilio" />
+<class name= "sightline.assignments.Assignment_Regression1" />
+<class name= "sightline.assignments.Assignment_Regression2" />
+<class name= "sightline.assignments.Assignment_Regression3" />
+</classes>
+</test>
+
+</suite>
+<!-- Suite -->
