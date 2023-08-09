@@ -80,8 +80,8 @@ public class BatchPrint_Regression1 {
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String tagName = "Tag" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47841");
@@ -136,8 +136,8 @@ public class BatchPrint_Regression1 {
 	@Test(description = "RPMXCON-49900", enabled = true, groups = { "regression" })
 	public void verifyBatchPrintWithSearchAsSource() throws InterruptedException {
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
+		UtilityLog.info("Logged in as User: " + Input.pa3userName);
 
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49900");
@@ -161,7 +161,7 @@ public class BatchPrint_Regression1 {
 				false);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
 		String searchnameRMU = Input.randomText + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Basic Search");
@@ -189,8 +189,8 @@ public class BatchPrint_Regression1 {
 	 */
 	@Test(description = "RPMXCON-48728", enabled = true, groups = { "regression" })
 	public void verifyTotalCountExcelFilesDisplayed() throws InterruptedException {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48728");
@@ -263,8 +263,8 @@ public class BatchPrint_Regression1 {
 	 */
 	@Test(description = "RPMXCON-48727", enabled = true, groups = { "regression" })
 	public void verifyTotalCountMediaFilesDisplayed() throws InterruptedException {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu3userName, Input.rmu3password);
+		UtilityLog.info("Logged in as User: " + Input.rmu3userName);
 
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48727 Sprint 12");
@@ -496,7 +496,7 @@ public class BatchPrint_Regression1 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 
 		// Login As User
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58921 Batch Print");
 		baseClass.stepInfo(
@@ -563,7 +563,7 @@ public class BatchPrint_Regression1 {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 
 		// Login As User
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-60553 Batch Print");
 		baseClass.stepInfo(
@@ -625,7 +625,7 @@ public class BatchPrint_Regression1 {
 		batchPrint = new BatchPrintPage(driver);
 
 		// login as PAU
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa3userName, Input.pa3password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58909");
 		baseClass.stepInfo(
@@ -798,7 +798,7 @@ public class BatchPrint_Regression1 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
+		Object[][] users = { { Input.pa3userName, Input.pa3password }, { Input.rmu3userName, Input.rmu3password }, };
 		return users;
 	}
 

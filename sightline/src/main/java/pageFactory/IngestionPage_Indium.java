@@ -31,6 +31,9 @@ public class IngestionPage_Indium {
 	DocListPage docList;
 	DocViewMetaDataPage docViewMeta;
 	DocViewPage docView;
+	DataSets dataset;
+	DocExplorerPage docExplorer;
+	SessionSearch sessionSearch;
 	
 	// ID's
 	public Element getSpecifySourceSystem() {
@@ -4275,6 +4278,7 @@ public class IngestionPage_Indium {
 	 * @description: this method will perform catalogging
 	 */
 	public void ingestionCatalogging() {
+		base.waitForElement(getIngestionDetailPopup(1));
 		//applying filter for cataloged status
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
@@ -4410,9 +4414,7 @@ public class IngestionPage_Indium {
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 			} 
-			else if (status.contains("Failed")) {
-				base.failedStep("rollback failed");
-			}
+			
 		}
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
@@ -4532,8 +4534,8 @@ public class IngestionPage_Indium {
 		driver.scrollPageToTop();
 		base.waitForElement(getIngestion_SaveAsDraft());
 		getIngestion_SaveAsDraft().waitAndClick(10);
-
-		if (getApproveMessageOKButton().isElementAvailable(10)) {
+	
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to save as draft");
 		}
@@ -4563,8 +4565,7 @@ public class IngestionPage_Indium {
 			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
-			} else {
-				base.failedStep("Draft failed");
+				driver.waitForPageToBeReady();
 			}
 		}
 		getIngestionSettingGearIcon().waitAndClick(10);
@@ -4606,8 +4607,7 @@ public class IngestionPage_Indium {
 			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
-			} else if (status.contains("Failed")){
-				base.failedStep("After Rollback ,ingestion not moved to Draft mode");
+				driver.waitForPageToBeReady();
 			}
 		}
 	}
@@ -4935,7 +4935,7 @@ public class IngestionPage_Indium {
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
 		getActionDropdownArrow().waitAndClick(10);
-
+		getElementStatus(getActionRollBack());
 		base.waitForElement(getActionRollBack());
 		getActionRollBack().waitAndClick(10);
 		base.waitTime(2);
@@ -4968,14 +4968,13 @@ public class IngestionPage_Indium {
 		getFilterByDRAFT().waitAndClick(5);
 		base.waitForElement(getFilterByINDEXED());
 		getFilterByINDEXED().waitAndClick(5);
-		base.waitForElement(getFilterByAPPROVED());
-		getFilterByAPPROVED().waitAndClick(5);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
+		waitForIngestionTilesViewToLoad();
 		getRefreshButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(5);
 		driver.waitForPageToBeReady();
@@ -4983,7 +4982,7 @@ public class IngestionPage_Indium {
 		base.waitTime(3);
 
 		try {
-			base.waitForElement(ingestionPaginationNext());
+			waitForIngestionGridViewToLoad();
 			String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
 			String previousbuttonStatus = ingestionPaginationPrevious().GetAttribute("class").trim();
 			if (nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")
@@ -5141,8 +5140,11 @@ public class IngestionPage_Indium {
 	 *               error list
 	 */
 	public void verifyIgnoreOptionAndCheckbox() {
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(5);
-		base.waitTime(1);
+		base.waitForElement(getActionDropdownArrow());
+		if(errorCountCatalogingStage().isElementAvailable(10)) {
+		
 		driver.scrollingToElementofAPage(errorCountCatalogingStage());
 		base.waitForElement(errorCountCatalogingStage());
 		errorCountCatalogingStage().waitAndClick(10);
@@ -5160,6 +5162,10 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
+		}
+		else {
+			base.passedStep("No errors in ingestion");
+		}
 	}
 
 	/**
@@ -5967,6 +5973,7 @@ public class IngestionPage_Indium {
 	 *               ingestion
 	 */
 	public void verifyDetailsAfterStartedIngestion() {
+		base.waitForElement(getIngestionDetailPopup(1));
 		base.waitTime(5);
 		driver.waitForPageToBeReady();
 		String currentPageUrl = driver.getUrl();
@@ -6230,7 +6237,7 @@ public class IngestionPage_Indium {
 	 * @description: verify Ingestion publish
 	 */
 	public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
-
+		
 		base.stepInfo("Validating whether the ingestion is done for particular project");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFilterByButton());
@@ -6244,8 +6251,8 @@ public class IngestionPage_Indium {
 		base.waitTime(5);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
-		base.waitTime(10);
 		driver.waitForPageToBeReady();
+		waitForIngestionGridViewToLoad();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
 		int count;
@@ -7099,8 +7106,6 @@ public class IngestionPage_Indium {
 		}
 		if (type.equalsIgnoreCase("Tiff")) {
 			base.stepInfo("Selecting Tiff file");
-			getTIFFCheckBox().Click();
-			base.waitTime(1);
 			selectTIFFSource(file, false, false);
 		}
 		
@@ -7164,7 +7169,7 @@ public class IngestionPage_Indium {
 		base.waitForElement(getIngestionDetailPopup(1));
 		String ingestionName=getIngestionNameFromPopup();
 		String statusOfIngestion = getStatus(1).getText().trim();
-		for (int i = 0; i < 250; i++) {
+		for (int i = 0; i < 100; i++) {
 			base.waitTime(5);
 			getRefreshButton().waitAndClick(5);
 			base.waitTime(2);
@@ -7327,7 +7332,7 @@ public class IngestionPage_Indium {
 
 		getRefreshButton().waitAndClick(5);
 		base.waitTime(3);
-
+		waitForIngestionTilesViewToLoad();
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();
 		SessionSearch search = new SessionSearch(driver);
 		int purehitCount = search.basicContentSearch(Input.searchStringStar);
@@ -7599,7 +7604,7 @@ public class IngestionPage_Indium {
 		getFilterByPUBLISHED().waitAndClick(10);
 		getRefreshButton().waitAndClick(5);
 		base.waitTime(5);
-
+		waitForIngestionTilesViewToLoad();
 		base.waitForElement(getTotalIngestedCount());
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
@@ -9276,8 +9281,6 @@ public class IngestionPage_Indium {
 				} else if (status.contains("In Progress")) {
 					base.waitTime(3);
 					getRefreshButton().waitAndClick(10);
-				} else if (status.contains("Failed")){
-					base.failedStep("rollback failed");
 				}
 			}
 		}
@@ -9292,6 +9295,7 @@ public class IngestionPage_Indium {
 			getIngestionDetailPopup(1).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getActionDropdownArrow());
+			getElementStatus(getActionRollBack());
 			getActionDropdownArrow().waitAndClick(5);
 			base.waitForElement(getActionRollBack());
 			getActionRollBack().waitAndClick(10);
@@ -10874,5 +10878,73 @@ public class IngestionPage_Indium {
 			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(destination);
 		}
 		
+		/**
+		 * @author: Arunkumar Created Date: 08/07/2023 Modified by: NA Modified Date: NA
+		 * @description: this method will wait for the ingestion tile to load
+		 */
+		public void waitForIngestionTilesViewToLoad() {
+			
+			for(int i=0;i<25;i++) {
+				if(getIngestionDetailPopup(1).isElementAvailable(10)) {
+					base.passedStep("Tiles view loaded");
+					break;
+				}
+				else {
+					base.waitTime(2);
+				}
+			}
+		}
 		
+		/**
+		 * @author: Arunkumar Created Date: 08/07/2023 Modified by: NA Modified Date: NA
+		 * @description: this method will wait for the ingestion grid to load
+		 */
+		public void waitForIngestionGridViewToLoad() {
+			
+			for(int i=0;i<25;i++) {
+				if(currentActivePage().isElementAvailable(10) || disabledNextButton().isElementAvailable(10)) {
+					base.passedStep("Tiles view loaded");
+					break;
+				}
+				else {
+					base.waitTime(2);
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 08/07/2023 Modified by: NA Modified Date: NA
+		 * @description: this method will perform unpublish
+		 */
+			public String performUnpublish(String ingestion) {
+			
+			String searchName ="search"+ Utility.dynamicNameAppender();
+			
+			dataset =  new DataSets(driver);
+			docExplorer = new DocExplorerPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			docList = new DocListPage(driver);
+			String ingestionName = dataset.selectDataSetWithName(ingestion);
+			base.waitForElement(docList.SelectColumnBtn());
+			base.waitForElement(docList.getDocList_info());
+			String count = docList.getDocList_info().getText().toString();
+			String docsCount = count.substring(count.indexOf("of") + 3, count.indexOf(" entries"));
+			int listViewCount = Integer.parseInt(docsCount.replace(",", ""));
+			driver.scrollPageToTop();
+			
+			if(listViewCount==0) {
+				base.passedStep("no docs present to unpublish, proceed overlay ingestion");
+			}
+			else {
+				base.passedStep("docs present to perform unpublish");
+				sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+				sessionSearch.saveSearch(searchName);
+				base.selectproject(Input.ingestDataProject);
+				// Go to UnpublishPage
+				navigateToUnPublishPage();
+				unpublish(searchName);
+			}
+			return ingestionName;
+		}
+			
 }

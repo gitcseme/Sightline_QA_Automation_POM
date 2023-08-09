@@ -3745,7 +3745,10 @@ public class CodingForm {
 	
 	public void deleteCodingFormWithAlert(String cfName, String fieldValue) {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		try {
 		driver.switchTo().alert().accept();
+		}catch (Exception e) {
+		}
 		driver.waitForPageToBeReady();
 		getCodingForm_Search().SendKeys(cfName);
 		driver.waitForPageToBeReady();

@@ -238,7 +238,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Select DAT delimiters.");
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 		baseClass.stepInfo("Select DAT source.");
-		ingestionPage.selectDATSource(Input.DATFile2, Input.documentKey);
+		ingestionPage.selectDATSource(Input.datLoadFile, Input.documentKey);
 		baseClass.stepInfo("Select MP3 varient source.");
 		ingestionPage.selectMP3VarientSource(Input.mp3LoadFile, false);
 		baseClass.stepInfo("Select Date and Time format.");
@@ -382,24 +382,26 @@ public class Ingestion_Phase1_Regression3 {
 	 */
 	@Test(description ="RPMXCON-49560",enabled = true, groups = { "regression" })
 	public void verifySearchForSelectedMetadata() throws InterruptedException {
+		String value ="\"" +Input.EmailAuthourName+"\"";
 		baseClass = new BaseClass(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		sessionSearch.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNamesAndAddresses",value);
 		sessionSearch.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		// login as rmu and verify
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.ingestDataProject);
-		sessionSearch.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNamesAndAddresses", value);
+	
 		sessionSearch.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		// login as rev and verify
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.ingestDataProject);
-		sessionSearch.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.additionalDataProject);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNamesAndAddresses", value);
 		sessionSearch.verifyTheCountOfDocumentForMetaData();
 		baseClass.passedStep("Verified Search should work by concatenated email metadata field");
 		loginPage.logout();
@@ -412,26 +414,26 @@ public class Ingestion_Phase1_Regression3 {
 	@Test(description ="RPMXCON-49565",alwaysRun = true, groups = { "regression" })
 	public void verifySearchForEmailMetaData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-
+		String value ="\"" +Input.EmailAuthourName+"\"";
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
+		//login as PA and verify
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		
-		sessionSearch.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
-		sessionSearch.verifyTheCountOfDocumentForMetaData();
-
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
-
-		sessionSearch.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNames", value);
 		sessionSearch.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName02);
-		
-		sessionSearch.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
+		//login as RMU and verify
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.additionalDataProject);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNames", value);
+		sessionSearch.verifyTheCountOfDocumentForMetaData();
+		loginPage.logout();
+		//login as REV and verify
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.additionalDataProject);
+		sessionSearch.MetaDataSearchInBasicSearch("EmailCCNames", value);
 		sessionSearch.verifyTheCountOfDocumentForMetaData();
 		baseClass.passedStep("Verified Search should work by split email metadata field");
 		loginPage.logout();
@@ -448,7 +450,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49563");
 		baseClass.stepInfo("### Verify Email metadata in Manage-Project fields ###");
 		String EmailMetaData = "Email";
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo(" Go to Manage > Project Fields");
@@ -477,7 +479,7 @@ public class Ingestion_Phase1_Regression3 {
 		SecurityGroupsPage securityGroupPage = new SecurityGroupsPage(driver);
 		UserManagement user = new UserManagement(driver);
 		DocListPage doclist = new DocListPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		String newSg = "Sg" + Utility.dynamicNameAppender();
@@ -533,7 +535,7 @@ public class Ingestion_Phase1_Regression3 {
 
 		// logout as pa
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.additionalDataProject);
 		baseClass.selectsecuritygroup(newSg);
 
 		// navigating to doclist
@@ -567,7 +569,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		boolean uatFlag=Input.url.contains("sightlineuat");
 		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
@@ -625,7 +627,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		boolean uatFlag=Input.url.contains("sightlineuat");
 		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
@@ -725,7 +727,7 @@ public class Ingestion_Phase1_Regression3 {
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
 
 		DataSets datasets = new DataSets(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.ingestDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50749");
@@ -770,7 +772,7 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-50750");
 		baseClass.stepInfo("Validate exporting dataset details at security group level for RMU");
 		
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.ingestDataProject);
 		ingestionPage.navigateToDataSetsPage();
 		ingestionPage.verifyToolTipOfExportIcon();
 		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
@@ -977,9 +979,12 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it PDF should displays PDF in viewer");
 		
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		
+		if (status == false) {	
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.overlayOnly, null, Input.DATPPPDF10Docs, null,
 					null, "PDFs - 5Docs.lst", Input.ImagePPPDF10docs,"Select", null, null, null);
-		
+		}
 		DataSets dataSets=new DataSets(driver);
 		dataSets.navigateToDataSetsPage();
 		dataSets.selectDataSetWithNameInDocView(Input.PP_PDFGen_10Docs);
@@ -1015,8 +1020,12 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Verify that if PA ingested both Native and TIFF's file, the 'Generate Searchable PDFs' is true and TIFF is missing then searchable PDF's should be generated from the Natives.");
 		
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		
+		if (status == false) {
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.overlayOnly, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,"Select", null, null, null);
+		}
 		ingestionPage.navigateToIngestionPage();
 		
 		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.PP_PDFGen_10Docs);
@@ -1056,12 +1065,13 @@ public class Ingestion_Phase1_Regression3 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49509");
 		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to false then it should display TIFF in default viewer");
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		
-		
+		if (status == false) {
+	
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.overlayOnly, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,null, null, null, null);
-		ingestionPage.navigateToIngestionPage();
-		
+		}
 		String ingestionFullName = ingestionPage.isDataSetisAvailable(Input.PP_PDFGen_10Docs,"5");
 	if (ingestionFullName != null) {
 		ingestionPage.selectDataSetWithNameInDocView(Input.PP_PDFGen_10Docs);
@@ -1092,9 +1102,9 @@ public class Ingestion_Phase1_Regression3 {
 	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.projectName02 },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.projectName02 },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.projectName02 } };
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.additionalDataProject },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.additionalDataProject },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.additionalDataProject } };
 	}
 
 	/**
@@ -1130,7 +1140,7 @@ public class Ingestion_Phase1_Regression3 {
 
 		baseClass.stepInfo(
 				"Step 5 : Select all documents   Click on View in Doc List   Verify the Date fields from the metadata");
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(projectName);
 		sessionSearch.basicContentSearch(fieldName);
 		sessionSearch.ViewInDocList();
 		DocListPage docListPage = new DocListPage(driver);
@@ -1790,6 +1800,8 @@ public class Ingestion_Phase1_Regression3 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.ingestDataProject);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
 		baseClass.stepInfo(" addonly ingestion with mapping field selection");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
 		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
@@ -1802,6 +1814,7 @@ public class Ingestion_Phase1_Regression3 {
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
 		ingestionPage.IgnoreErrorAndIndexing();
+		}
 		loginPage.logout();
 		
 	}
@@ -2163,7 +2176,6 @@ public class Ingestion_Phase1_Regression3 {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48189");
 		baseClass.stepInfo("To Verify Unpublish for Already published Documents after ingestionPage.");
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
 		ingestionPage.navigateToIngestionHomePageAndVerifyUrl();
 		
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
@@ -2173,26 +2185,10 @@ public class Ingestion_Phase1_Regression3 {
 			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
 			
 		}
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.UniCodeFilesFolder);
-		
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
-		// Saved the My SavedSearch
-		sessionSearch.saveSearch(BasicSearchName);
-		sessionSearch.unReleaseDocsFromSecuritygroup(Input.securityGroup);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-		
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return sessionSearch.getPureHitsCount().Visible();
-			}
-		}), Input.wait30);
-		int docCount = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		String ingestionFullName =ingestionPage.performUnpublish(Input.UniCodeFilesFolder);
+		int docCount= sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, Input.metadataIngestion);
 		if(docCount==0) {
-			baseClass.passedStep("Document count is 0");
+			baseClass.passedStep("Document unpublished and count is 0");
 		}
 		else {
 			baseClass.failedStep("Document count is not 0");

@@ -623,7 +623,7 @@ public class ProjectPage {
 		driver.scrollingToBottomofAPage();
 
 		getProjectFolder().Clear();
-		getProjectFolder().SendKeys(Input.SourceLocation);
+		getProjectFolder().SendKeys(Input.projectSourceLocation);
 
 		getIngestionFolder().Clear();
 		getIngestionFolder().SendKeys(Input.SourceLocation);

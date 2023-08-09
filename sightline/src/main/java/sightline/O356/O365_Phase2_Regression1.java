@@ -3,8 +3,11 @@ package sightline.O356;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.Dimension;
 import org.testng.ITestResult;
@@ -313,9 +316,9 @@ public class O365_Phase2_Regression1 {
 
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
-		String[][] emailAddresses = { { "AA" + Input.emailAddressinput1, "Invalid Email Address" },
-				{ Input.emailAddressinput1, "Valid Email Address With Invalid Domain" },
-				{ Input.emailAddressinput2, "non-existing valid email address" } };
+		String[][] emailAddresses = { { "AA" + Input.emailAddressinput1, "Invalid Email Address","true" },
+				{ Input.emailAddressinput1, "Valid Email Address With Invalid Domain","true" },
+				{ Input.emailAddressinput2, "non-existing valid email address","false" } };
 
 		base.stepInfo("Test case Id: RPMXCON-61280 - O365");
 		base.stepInfo(
@@ -1271,9 +1274,18 @@ public class O365_Phase2_Regression1 {
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		String collectionName = base.returnKey(colllectionData, "", false);
+		
+		Set<String> keys=colllectionData.keySet();
+		List<String> expectedKeys=new ArrayList<String>();
+		expectedKeys.addAll(keys);
+		Collections.sort(expectedKeys);
+		
+		System.out.println("colllectionData:-"+expectedKeys);
+		String collectionName = expectedKeys.get(0);
 		System.out.println(collectionName);
 		collectionID = colllectionData.get(collectionName);
+		
+		
 
 		// Verify Collection presence
 		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName,

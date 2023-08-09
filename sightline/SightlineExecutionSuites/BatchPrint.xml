@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sightline-Jenkins-Basicsearch-Tags-Batchreadaction_Batch" preserve-order="true">
+<suite name="BatchPrint_Suite" preserve-order="true" parallel = "classes" thread-count = "5">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="BatchPrint_Suite">
+<test name="Parallel0802_BatchPrint_Suite">
 <classes>
 <class name="testScriptsSmoke.Input" />
 <class name= "sightline.batchPrint.BatchPrint_Regression1" />
 <class name= "sightline.batchPrint.BatchPrint_Phase2_Regression" />
 <class name= "sightline.batchPrint.BatchPrint_Phase2_Regression1" />
-
+<class name= "sightline.batchPrint.BatchPrint_Phase2_Regression2" />
+<class name= "sightline.batchPrint.BatchPrint_Phase2_Regression3" />
 
 </classes>
 </test>

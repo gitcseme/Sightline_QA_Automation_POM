@@ -1446,7 +1446,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Switch to parent window from child window");
 //		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
 //		docView.switchFromChildWindowToParentWindow();
-		reusableDocView.closeWindow(1);
+		 baseClass.switchTab(0);
 
 		docView.getDocViewDocsRedactIcon();
 		baseClass.stepInfo("Click on redaction icon");

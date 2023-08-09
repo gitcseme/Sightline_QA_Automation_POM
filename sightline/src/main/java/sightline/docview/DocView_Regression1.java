@@ -1656,6 +1656,7 @@ public class DocView_Regression1 {
 	@Test(description = "RPMXCON-52195", groups = { "regression" })
 	public void verifyThatProducingPDFWithTextRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
+		DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
 		baseClass.stepInfo("RPMXCON-52195 Production-sprint:07");
 		baseClass.stepInfo(
 				"#### Verify that Producing a PDF with text redaction burning properly and not eliminate any text characters in the produced document. ####");
@@ -1690,7 +1691,7 @@ public class DocView_Regression1 {
 		redact = new DocViewRedactions(driver);
 		DocViewPage  DocView=new DocViewPage(driver);
 		baseClass.stepInfo("Redact Text Using Off set");
-		DocView.getDocViewDocsRedactIcon();
+		docViewRedactions.selectDoc2();
 		redact.RedactTextInDocView(10, 10, 100, 100);
 		driver.waitForPageToBeReady();
 
@@ -2012,7 +2013,7 @@ public class DocView_Regression1 {
 		docView.deleteReamark(remark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("Verify Another user applied message displayed by adding remark in duplicate window");
 		docViewMetaDataPage.verifyAnotherUserAppliedRemarkMsgDisplayed(Input.anotherRemarkMessage);
@@ -3914,6 +3915,8 @@ public class DocView_Regression1 {
 		String docId = doc.selectRemarkDocument(purehit);
 
 		driver.waitForPageToBeReady();
+		MiniDocListPage mini = new MiniDocListPage(driver);
+		mini.removingAllExistingFieldsAndAddingNewField(Input.docId);
 		docView.selectDocInMiniDocList(docId);
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		docView.addRemarkToNonAudioDocument(1, 20, remark);
@@ -4687,7 +4690,9 @@ public class DocView_Regression1 {
 		assignmentPage.SelectAssignmentByReviewer(AssignStamp);
 
 		baseClass.stepInfo("performing Code sameas for min doc list documents");
+		MiniDocListPage miniDoc = new MiniDocListPage(driver);
 		driver.waitForPageToBeReady();
+		miniDoc.removingFieldsAndDragnDropDefault();
 		docView.perfomMiniDocListCodeSameAs(inputText, noOfRows);
 
 		baseClass.stepInfo("save the configuration");
@@ -5764,7 +5769,7 @@ public class DocView_Regression1 {
 		docView.verifyRemarkIsAdded(remark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in second tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -6070,8 +6075,7 @@ public class DocView_Regression1 {
 		docView.editRemark(editRemark);
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
-//		docView.closeWindow(1);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("Click on redaction icon");
 //		Addded on
@@ -6183,8 +6187,8 @@ public class DocView_Regression1 {
 		docView.verifyAddedAnnotationToDocument(previousAnnotationCount);
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		driver.waitForPageToBeReady();
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+		baseClass.switchTab(0);
+		
 
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
@@ -6253,10 +6257,10 @@ public class DocView_Regression1 {
 		int previousAnnotationCount = docView.getAppiedAnnotationCount();
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		driver.waitForPageToBeReady();
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("Click on redaction icon");
+		baseClass.waitTillElemetToBeClickable(docView.redactionIcon());
 		docView.redactionIcon().Click();
 
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
@@ -6421,7 +6425,7 @@ public class DocView_Regression1 {
 		int previousAnnotationCount = docView.getAppiedAnnotationCount();
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("Click on redaction icon");
 		driver.waitForPageToBeReady();
@@ -6500,7 +6504,7 @@ public class DocView_Regression1 {
 		int previousAnnotationCount = docView.getAppiedAnnotationCount();
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(parentWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("Click on redaction icon");
 		docView.redactionIcon().Click();
@@ -6582,7 +6586,7 @@ public class DocView_Regression1 {
 		docView.verifyAddedAnnotation();
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("verify visibility of added Annotation in document in second window");
 		docView.verifyAddedAnnotation();
@@ -6662,8 +6666,7 @@ public class DocView_Regression1 {
 		docView.verifyAddedAnnotation();
 
 		baseClass.stepInfo("Switch to parent window from child window");
-		driver.waitForPageToBeReady();
-		reusableDocView.childWindowToParentWindowSwitching(childWindowHandle);
+		baseClass.switchTab(0);
 
 		baseClass.stepInfo("verify visibility of edit Annotation in document in second window");
 		docView.verifyAddedAnnotation();
