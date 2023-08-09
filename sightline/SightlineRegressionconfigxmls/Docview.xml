@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LD9PT>
+<url>https://sightlinept.consilio.com/</url>
+<prodpath>Productions PT WorkSpace\Automation</prodpath>
+<projectSourceLocation>Automation</projectSourceLocation>
+<SourceLocation>IngestionTestData\Automation\RegressionAllDatasetConsilio</SourceLocation>            
+<domainName>Automation_Regression</domainName>
+<projectName>Automation_Regression_DND</projectName>
+<additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
+<ingestDataProject>AutomationIngestionProject</ingestDataProject>
+<largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
+
+<!-- Provide ICE Project Name -->
+<ICEProjectName>04_may_smoke</ICEProjectName>
+
+<!-- User Name : DA QA -->
+<da1FullName>QA DA13</da1FullName>    
+<da1userName>qada13@consilio.com</da1userName>
+<da1password>Q@test_12</da1password>
+
+<!-- User Name : SA QA -->    
+<sa1userName>Deeksha.NLS@consilio.com</sa1userName>
+<sa1password>Q@test_12</sa1password>
+
+<!-- Consilio PAU Automation   -->
+<pa1FullName>Deeksha Project Admin</pa1FullName>
+<pa1userName>qapau3@consilio.com</pa1userName>
+<pa1password>Q@test_26</pa1password>
+
+<pa2FullName>QA PAU13</pa2FullName>
+<pa2userName>qapau13@consilio.com</pa2userName>
+<pa2password>Q@test_26</pa2password>
+
+<pa3FullName>QA PAU18</pa3FullName>
+<pa3userName>qapau18@consilio.com</pa3userName>
+<pa3password>Q@test_25</pa3password>
+ 
+<pa4FullName>QA PAU19</pa4FullName>
+<pa4userName>qapau19@consilio.com</pa4userName>
+<pa4password>Q@test_25</pa4password>
+		
+<!--Consilio RMU Automation  -->
+<rmu1FullName>QA RMU3</rmu1FullName>
+<rmu1userName>qarmu3@consilio.com</rmu1userName>
+<rmu1password>Q@test_26</rmu1password>
+
+<rmu2FullName>QA RMU13</rmu2FullName>
+<rmu2userName>qarmu13@consilio.com</rmu2userName>
+<rmu2password>Q@test_26</rmu2password>
+
+<rmu3FullName>QA RMU18</rmu3FullName>
+<rmu3userName>qarmu18@consilio.com</rmu3userName>
+<rmu3password>Q@test_25</rmu3password>
+
+<rmu4FullName>QA RMU19</rmu4FullName>
+<rmu4userName>qarmu19@consilio.com</rmu4userName>
+<rmu4password>Q@test_25</rmu4password>
+
+<!-- Consilio REVU Automation -->
+<rev1FullName>Indium rev</rev1FullName>
+<rev1userName>qarev3@consilio.com</rev1userName>
+<rev1password>Q@test_27</rev1password>
+
+<rev2FullName>QA REV13</rev2FullName>
+<rev2userName>qarev13@consilio.com</rev2userName>
+<rev2password>Q@test_26</rev2password>
+
+<rev3FullName>QA REV18</rev3FullName>
+<rev3userName>qarev18@consilio.com</rev3userName>
+<rev3password>Q@test_25</rev3password>
+
+<rev4FullName>QA REV19</rev4FullName>
+<rev4userName>qarev19@consilio.com</rev4userName>
+<rev4password>Q@test_26</rev4password>
+
+    <shareTo>PTPA2 PA2</shareTo>        
+</LD9PT>
