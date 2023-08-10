@@ -757,6 +757,8 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		MiniDocListPage mini=new MiniDocListPage(driver);
+		mini.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docView.verifyHighlightedKeywordInDocView();
@@ -774,6 +776,7 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		mini.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docView.verifyHighlightedKeywordInDocView();
@@ -790,6 +793,7 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		mini.selectFieldValueInConfigureMiniDocListTab(Input.sourceDocIdSearch);
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docView.verifyHighlightedKeywordInDocView();
