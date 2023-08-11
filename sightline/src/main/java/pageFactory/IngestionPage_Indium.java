@@ -4618,7 +4618,9 @@ public class IngestionPage_Indium {
 	 */
 
 	public void IngestionFromDraftMode() {
-
+		base.waitTime(3);
+		base.waitForElement(getRefreshButton());
+		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
@@ -4827,8 +4829,10 @@ public class IngestionPage_Indium {
 	 */
 	public void verifyWarningMessageAndRollbackAddOnlyIngestion() {
 
+		base.waitTime(3);
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
 		getActionDropdownArrow().waitAndClick(10);
@@ -4992,6 +4996,7 @@ public class IngestionPage_Indium {
 				int currentPageNumber = Integer.parseInt(currentActivePage().getText());
 				ingestionNextButton().waitAndClick(5);
 				base.stepInfo("Clicked Next button");
+				base.waitTime(3);
 				driver.waitForPageToBeReady();
 				base.waitForElement(currentActivePage());
 				base.waitTime(3);
@@ -5003,6 +5008,7 @@ public class IngestionPage_Indium {
 				}
 				ingestionPreviousButton().waitAndClick(5);
 				base.stepInfo("Clicked Previous button");
+				base.waitTime(3);
 				driver.waitForPageToBeReady();
 				base.waitForElement(currentActivePage());
 				base.waitTime(3);
@@ -5444,7 +5450,7 @@ public class IngestionPage_Indium {
 			if (runButton().getWebElement().isEnabled()) {
 				runButton().waitAndClick(5);
 			}
-			for (int i = 0; i < 10000; i++) {
+			for (int i = 0; i < 1000; i++) {
 				driver.Navigate().refresh();
 				//endTime().ScrollTo();
 				String endTime = endTime().getText();
@@ -5723,6 +5729,7 @@ public class IngestionPage_Indium {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			if(!getStatus(1).isElementAvailable(5)) {
+				getRefreshButton().waitAndClick(5);
 				base.waitTime(2);
 			}
 			String status = getStatus(1).getText().trim();
@@ -6059,6 +6066,7 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("copying,indexing and approve option enabled during inprogress ingestion");
 		}
+		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(5);
 
 	}
@@ -6358,6 +6366,7 @@ public class IngestionPage_Indium {
 	public void verifyStatusUpdatenInIngestionDetailPopup(String ingestionStage) {
 
 		driver.waitForPageToBeReady();
+		getRefreshButton().waitAndClick(10);
 		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -7947,13 +7956,13 @@ public class IngestionPage_Indium {
 			try {
 				driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
 				driver.waitForPageToBeReady();
-				base.waitTime(2);
+				base.waitTime(5);
 				fullAnalysisRadioButton().isElementAvailable(15);
 				fullAnalysisRadioButton().Click();
 				driver.waitForPageToBeReady();
 				runButton().isElementAvailable(10);
 				if (runButton().getWebElement().isEnabled()) {
-					runButton().Click();
+					runButton().waitAndClick(5);
 				}
 				for (int i = 0; i < 1000; i++) {
 					driver.Navigate().refresh();
@@ -9783,8 +9792,6 @@ public class IngestionPage_Indium {
 				String status = getStatus(1).getText().trim();
 				if (status.contains("Indexed")) {
 					base.passedStep("Indexing completed");
-					base.waitForElement(getCloseButton());
-					getCloseButton().waitAndClick(10);
 					break; 
 				} else if (status.contains("In Progress")){
 					base.waitTime(3);
