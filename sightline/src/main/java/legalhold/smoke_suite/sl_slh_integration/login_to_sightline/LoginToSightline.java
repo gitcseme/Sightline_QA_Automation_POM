@@ -1,30 +1,36 @@
 package legalhold.smoke_suite.sl_slh_integration.login_to_sightline;
 
-import legalhold.utilities.parse_locators.FileParser;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import automationLibrary.Driver;
+import legalhold.BaseModule;
+import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import pageFactory.LoginPage;
+import testScriptsSmoke.Input;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class LoginToSightline {
-    public WebDriver driver;
+public class LoginToSightline extends BaseModule {
+    public Driver driver;
     public WebDriverWait wait;
     Properties prop = new Properties();
-    FileInputStream file = new FileInputStream("./src/test/resources/logininfo/logininfo.properties");
-    private FileParser parser;
 
-    public LoginToSightline(WebDriver driver) throws IOException {
-        parser = new FileParser("./src/main/java/legalhold/selectors/sl_slh_integration/login.properties");
-        prop.load(file);
+    LoginPage login;
+
+    public LoginToSightline(Driver driver) throws IOException {
+             super("./src/main/java/legalhold/selectors/sl_slh_integration/login.properties",driver);
+             login=new LoginPage(driver);
+        //prop.load(file);
     }
     public void login(String useremail, String userpassword) throws IOException {
+
+        //login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        login.loginToSightLine(useremail,userpassword);
+        bc.impersonateSAtoDA("Tokyo");
+
 //        prop.load(file);
-        WebElement username = driver.findElement(parser.getbjectLocator("username"));
+        /*WebElement username =
 //        username.sendKeys(prop.getProperty("username"));
         username.sendKeys(useremail);
         WebElement pass = driver.findElement(parser.getbjectLocator("pass"));
@@ -34,6 +40,6 @@ public class LoginToSightline {
         wait.until(ExpectedConditions.elementToBeClickable(btnLogin));
         btnLogin.click();
         String pageTitle = driver.findElement(parser.getbjectLocator("title")).getText();
-        Assert.assertEquals(pageTitle, "Manage Users");
+        Assert.assertEquals(pageTitle, "Manage Users");*/
     }
 }

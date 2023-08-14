@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/FileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logs/execution.logs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logs/execution.logs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/LoginPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,18 +59,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "settings.editor.selected.configurable": "http.certificates"
-  }
-}]]></component>
   <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.loginRun">
     <configuration name="C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <option name="SUITE_NAME" value="$PROJECT_DIR$/smokeSuite.xml" />
       <option name="TEST_OBJECT" value="SUITE" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginToSightlineTestRunner" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
+      <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
       <method v="2">
@@ -92,6 +108,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner" />
         <item itemvalue="TestNG.C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" />
       </list>
     </recent_temporary>
@@ -123,18 +140,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
-          <line>1170</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
           <line>1176</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
-          <line>1177</line>
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/src/main/java/pageFactory/LoginPage.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
