@@ -10,9 +10,9 @@ import testScriptsSmoke.Input;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 public class LoginToSightline extends BaseModule {
-    public Driver driver;
     public WebDriverWait wait;
     Properties prop = new Properties();
 
@@ -28,7 +28,14 @@ public class LoginToSightline extends BaseModule {
         //login.loginToSightLine(Input.sa1userName, Input.sa1password);
         login.loginToSightLine(useremail,userpassword);
         bc.impersonateSAtoDA("Tokyo");
-
+        driver.FindElementById("productMenu").Click();
+        driver.FindElementByCssSelector(".sightlineLegalHold a").Click();
+        driver.waitForPageToBeReady();
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return driver.FindElementById("tenantSelector").Visible();
+            }
+        }), Input.wait30);
 //        prop.load(file);
         /*WebElement username =
 //        username.sendKeys(prop.getProperty("username"));
