@@ -204,7 +204,7 @@ public class LoginPage {
 				return getSignoutMenu().Visible();
 			}
 		}), Input.wait30);
-		BaseClass bc = new BaseClass(driver);
+		/*BaseClass bc = new BaseClass(driver);
 		try {
 			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
 			if (!strUserName.equals(Input.sa1userName) && !strUserName.equals(Input.da1userName) && !strUserName.equals(Input.Onnasa1userName) && !strUserName.equals(Input.Onnada1userName)) {
@@ -218,7 +218,7 @@ public class LoginPage {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
+		}*/
 		Assert.assertTrue(getSignoutMenu().Visible());
 		// System.out.println("Login success!");
 		UtilityLog.info("Login success!");

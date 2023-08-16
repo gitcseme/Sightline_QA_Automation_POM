@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import legalhold.BaseModule;
+import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -47,6 +49,7 @@ import testScriptsSmoke.Input;
 public class Driver {
 
 	public WebDriver driver;
+	LocatorReader locatorReader;
 	/// <summary>
 	/// Public constructor of Driver
 	/// </summary>
@@ -62,6 +65,10 @@ public class Driver {
 		System.out.println(Input.browserName + "is opned and loading application");
 		waitForPageToBeReady();
 
+	}
+
+	public WebElement getLocator(String locatorName){
+		return driver.findElement(locatorReader.getobjectLocator(locatorName));
 	}
 
 	/// <summary>
@@ -390,6 +397,8 @@ public class Driver {
 		}
 
 	}
+
+
 
 	public void scrollingToElementofAPage(Element element) {
 
