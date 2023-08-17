@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
+    <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="Demo Change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ICETestData/FinalProximitySpecialCharactersExtendedCharacters/SearchTestDataSpecialCharacters/This is to inform you that your timesheet fire. entry has not been submitted same statement..msg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,17 +138,16 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Demo Change" />
+    <option name="LAST_COMMIT_MESSAGE" value="Demo Change" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
-          <line>1176</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/pageFactory/LoginPage.java</url>
-          <line>151</line>
+          <line>383</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
