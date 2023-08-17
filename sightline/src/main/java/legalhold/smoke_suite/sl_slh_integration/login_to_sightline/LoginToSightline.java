@@ -1,8 +1,14 @@
 package legalhold.smoke_suite.sl_slh_integration.login_to_sightline;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import legalhold.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageFactory.LoginPage;
 import testScriptsSmoke.Input;
@@ -19,14 +25,15 @@ public class LoginToSightline extends BaseModule {
     LoginPage login;
 
     public LoginToSightline(Driver driver) throws IOException {
-             super("./src/main/java/legalhold/selectors/sl_slh_integration/login.properties",driver);
-             login=new LoginPage(driver);
+        super("./src/main/java/legalhold/selectors/sl_slh_integration/login.properties", driver);
+        login = new LoginPage(driver);
         //prop.load(file);
     }
-    public void login(String useremail, String userpassword, String tenant) throws IOException {
+
+    public void loginAsSystemAdmin(String useremail, String userpassword, String tenant) throws IOException {
 
         //login.loginToSightLine(Input.sa1userName, Input.sa1password);
-        login.loginToSightLine(useremail,userpassword);
+        login.loginToSightLine(useremail, userpassword);
         bc.impersonateSAtoDA(tenant);
         driver.FindElementById("productMenu").Click();
         driver.FindElementByCssSelector(".sightlineLegalHold a").Click();
@@ -36,17 +43,29 @@ public class LoginToSightline extends BaseModule {
                 return driver.FindElementById("tenantSelector").Visible();
             }
         }), Input.wait30);
-//        prop.load(file);
-        /*WebElement username =
-//        username.sendKeys(prop.getProperty("username"));
-        username.sendKeys(useremail);
-        WebElement pass = driver.findElement(parser.getbjectLocator("pass"));
-//        pass.sendKeys(prop.getProperty("password"));
-        pass.sendKeys(userpassword);
-        WebElement btnLogin = driver.findElement(parser.getbjectLocator("btnLogin"));
-        wait.until(ExpectedConditions.elementToBeClickable(btnLogin));
-        btnLogin.click();
-        String pageTitle = driver.findElement(parser.getbjectLocator("title")).getText();
-        Assert.assertEquals(pageTitle, "Manage Users");*/
+
+
     }
+
+    public void loginAsDomainAdmin(String useremail, String userpassword, String tenant) throws IOException {
+
+        //login.loginToSightLine(Input.sa1userName, Input.sa1password);
+        login.loginToSightLine(useremail, userpassword);
+
+
+        domainDashboard.getDomainDrpDwn().Click();
+        domainDashboard.availableDomains("Tokyo").Click();
+        driver.waitForPageToBeReady();
+
+
+        driver.FindElementById("productMenu").Click();
+        driver.FindElementByCssSelector(".sightlineLegalHold a").Click();
+        driver.waitForPageToBeReady();
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return driver.FindElementById("tenantSelector").Visible();
+            }
+        }), Input.wait30);
+    }
+
 }

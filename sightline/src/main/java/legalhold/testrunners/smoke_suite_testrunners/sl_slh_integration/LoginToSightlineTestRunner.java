@@ -16,10 +16,17 @@ public class LoginToSightlineTestRunner extends BaseRunner {
     }
 
     @Test(priority = 1)
-    public void loginRun() throws IOException, ParseException, InterruptedException {
+    public void systemAdminLogin() throws IOException, ParseException, InterruptedException {
         //driver.get("https://sightlineqa.consilio.com");
 
         LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.login("syslegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
+    }
+    @Test(priority = 2)
+    public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
+        //driver.get("https://sightlineqa.consilio.com");
+
+        LoginToSightline loginToSightline = new LoginToSightline(driver);
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
     }
 }
