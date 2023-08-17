@@ -20,6 +20,6 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         //driver.get("https://sightlineqa.consilio.com");
 
         LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.login("syslegalhold@gmail.com","amikhelbona#2023");
+        loginToSightline.login("syslegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
     }
 }

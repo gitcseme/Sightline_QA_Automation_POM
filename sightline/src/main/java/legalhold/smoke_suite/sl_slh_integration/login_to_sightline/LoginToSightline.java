@@ -23,11 +23,11 @@ public class LoginToSightline extends BaseModule {
              login=new LoginPage(driver);
         //prop.load(file);
     }
-    public void login(String useremail, String userpassword) throws IOException {
+    public void login(String useremail, String userpassword, String tenant) throws IOException {
 
         //login.loginToSightLine(Input.sa1userName, Input.sa1password);
         login.loginToSightLine(useremail,userpassword);
-        bc.impersonateSAtoDA("Tokyo");
+        bc.impersonateSAtoDA(tenant);
         driver.FindElementById("productMenu").Click();
         driver.FindElementByCssSelector(".sightlineLegalHold a").Click();
         driver.waitForPageToBeReady();
