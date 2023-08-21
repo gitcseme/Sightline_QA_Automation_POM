@@ -16,41 +16,11 @@ public class LocatorReader {
         propertyFile.load(stream);
     }
 
-    public By getobjectLocator(String locatorName)
+    public String getobjectLocator(String locatorName)
     {
         String locatorProperty = propertyFile.getProperty(locatorName);
-//        System.out.println(locatorProperty.toString());
         String locatorType = locatorProperty.split(":")[0];
         String locatorValue = locatorProperty.split(":")[1];
-
-        By locator = null;
-        switch(locatorType)
-        {
-            case "id":
-                locator = By.id(locatorValue);
-                break;
-            case "name":
-                locator = By.name(locatorValue);
-                break;
-            case "cssSelector":
-                locator = By.cssSelector(locatorValue);
-                break;
-            case "linkText":
-                locator = By.linkText(locatorValue);
-                break;
-            case "partialLinkText":
-                locator = By.partialLinkText(locatorValue);
-                break;
-            case "tagName":
-                locator = By.tagName(locatorValue);
-                break;
-            case "xpath":
-                locator = By.xpath(locatorValue);
-                break;
-            case "class":
-                locator = By.className(locatorValue);
-                break;
-        }
-        return locator;
+        return locatorValue;
     }
 }

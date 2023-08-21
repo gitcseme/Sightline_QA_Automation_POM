@@ -8,7 +8,16 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +73,19 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
-  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.domainAdminLogin">
-    <configuration name="C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.systemAdminLogin">
+    <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
-      <option name="SUITE_NAME" value="$PROJECT_DIR$/smokeSuite.xml" />
-      <option name="TEST_OBJECT" value="SUITE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.smoke_suite.cases.create_case.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.smoke_suite.cases.create_case" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.smoke_suite.cases.create_case.CreateCase" />
+      <option name="METHOD_NAME" value="createRandomCases" />
+      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
@@ -148,11 +165,12 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
+        <item itemvalue="TestNG.CreateCase.createRandomCases" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner" />
-        <item itemvalue="TestNG.C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" />
       </list>
     </recent_temporary>
   </component>

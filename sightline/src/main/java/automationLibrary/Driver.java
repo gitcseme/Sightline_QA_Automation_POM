@@ -64,9 +64,6 @@ public class Driver {
 
 	}
 
-	public WebElement getLocator(String locatorName){
-		return driver.findElement(locatorReader.getobjectLocator(locatorName));
-	}
 
 	/// <summary>
 	/// Returns the Selenium Web Driver
