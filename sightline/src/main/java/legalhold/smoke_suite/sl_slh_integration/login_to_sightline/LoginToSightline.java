@@ -53,11 +53,17 @@ public class LoginToSightline extends BaseModule {
         login.loginToSightLine(useremail, userpassword);
 
 
-        domainDashboard.getDomainDrpDwn().Click();
-        domainDashboard.availableDomains("Tokyo").Click();
+
+        String text = driver.FindElementById("project-selector").getText();
+        if(!text.equalsIgnoreCase("Tokyo"))
+        {
+            System.out.println("not selected");
+            domainDashboard.getDomainDrpDwn().Click();
+            domainDashboard.availableDomains("Tokyo").Click();
+
+        }
+
         driver.waitForPageToBeReady();
-
-
         driver.FindElementById("productMenu").Click();
         driver.FindElementByCssSelector(".sightlineLegalHold a").Click();
         driver.waitForPageToBeReady();
@@ -66,6 +72,9 @@ public class LoginToSightline extends BaseModule {
                 return driver.FindElementById("tenantSelector").Visible();
             }
         }), Input.wait30);
+
+
+
     }
 
 }
