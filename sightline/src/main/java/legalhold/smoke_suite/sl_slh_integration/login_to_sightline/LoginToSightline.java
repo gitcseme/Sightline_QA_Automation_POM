@@ -27,7 +27,6 @@ public class LoginToSightline extends BaseModule {
     public LoginToSightline(Driver driver) throws IOException {
         super("./src/main/java/legalhold/selectors/sl_slh_integration/login.properties", driver);
         login = new LoginPage(driver);
-        //prop.load(file);
     }
 
     public void loginAsSystemAdmin(String useremail, String userpassword, String tenant) throws IOException {
