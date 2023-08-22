@@ -29,10 +29,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.*;
 
 //import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
@@ -67,9 +64,6 @@ public class Driver {
 
 	}
 
-	public WebElement getLocator(String locatorName){
-		return driver.findElement(locatorReader.getobjectLocator(locatorName));
-	}
 
 	/// <summary>
 	/// Returns the Selenium Web Driver
@@ -537,6 +531,12 @@ public class Driver {
 	}
 	public void NavigateBack() {
 		driver.navigate().back();
+	}
+
+	public void selectFromDropdownByVisibleText(WebElement element,String option){
+
+		Select dropdown = new Select(element);
+		dropdown.selectByVisibleText(option);
 	}
 
 }

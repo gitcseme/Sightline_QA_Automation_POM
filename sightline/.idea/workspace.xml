@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,11 +65,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.loginRun">
-    <configuration name="C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+  </component>
+  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.systemAdminLogin">
+    <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
-      <option name="SUITE_NAME" value="$PROJECT_DIR$/smokeSuite.xml" />
-      <option name="TEST_OBJECT" value="SUITE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.smoke_suite.cases.create_case.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.smoke_suite.cases.create_case" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.smoke_suite.cases.create_case.CreateCase" />
+      <option name="METHOD_NAME" value="createRandomCases" />
+      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
@@ -75,6 +103,24 @@
       <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
       <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
       <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginToSightlineTestRunner.domainAdminLogin" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
+      <option name="METHOD_NAME" value="domainAdminLogin" />
+      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
@@ -99,11 +145,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoginToSightlineTestRunner.systemAdminLogin" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
+      <option name="METHOD_NAME" value="systemAdminLogin" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
+        <item itemvalue="TestNG.CreateCase.createRandomCases" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner" />
-        <item itemvalue="TestNG.C:/Users/parvez.mahmud/source/repos/ForConsilioGit/Sightline_QA_Automation_POM/sightline/smokeSuite.xml" />
       </list>
     </recent_temporary>
   </component>
@@ -137,10 +204,14 @@
           <line>1176</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/pageFactory/LoginPage.java</url>
-          <line>151</line>
-          <option name="timeStamp" value="9" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java</url>
+          <line>13</line>
+          <properties class="legalhold.BaseRunner" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
