@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -213,7 +214,7 @@ public class DocView_Redaction_Regression1 {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-52320");
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -259,7 +260,7 @@ public class DocView_Redaction_Regression1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 //Modified by Krishna for optimising and in allignment with new project
 		baseClass.stepInfo("Test case Id: RPMXCON-52255");
@@ -341,7 +342,7 @@ public class DocView_Redaction_Regression1 {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 
 // Search with text input	
@@ -425,7 +426,7 @@ public class DocView_Redaction_Regression1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-52222");
 		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
@@ -560,7 +561,7 @@ public class DocView_Redaction_Regression1 {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-52217");
 		SessionSearch sessionsearch = new SessionSearch(driver);

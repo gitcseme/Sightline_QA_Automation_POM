@@ -26,7 +26,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.*;
@@ -260,9 +260,9 @@ public class Driver {
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("chrome.switches", "--disable-extensions");
-		new DesiredCapabilities();
-		DesiredCapabilities caps = DesiredCapabilities.chrome();
-		caps.setCapability(ChromeOptions.CAPABILITY, options);
+		//new DesiredCapabilities();
+//		DesiredCapabilities caps = DesiredCapabilities.chrome();
+//		caps.setCapability(ChromeOptions.CAPABILITY, options);
 
 		Map<String, Object> prefs = new HashMap<String, Object>();
 
@@ -290,13 +290,17 @@ public class Driver {
 	private WebDriver edgeDriver() {
 
 		try {
-			System.setProperty("webdriver.edge.driver",
-					System.getProperty("user.dir") + "//BrowserDrivers//msedgedriver.exe");
-			DesiredCapabilities m_capability = DesiredCapabilities.chrome();
-			m_capability.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+//			System.setProperty("webdriver.edge.driver",
+//					System.getProperty("user.dir") + "//BrowserDrivers//msedgedriver.exe");
+//			DesiredCapabilities m_capability = DesiredCapabilities.chrome();
+//			m_capability.setCapability(CapabilityType.BROWSER_NAME, Browser.CHROME);
 
-			m_capability = DesiredCapabilities.edge();
-			WebDriver driver = new EdgeDriver(m_capability);
+			EdgeOptions browserOptions = new EdgeOptions();
+
+			browserOptions.addArguments("chrome.switches", "--disable-extensions");
+
+			//m_capability = new DesiredCapabilities(browserOptions);
+			WebDriver driver = new EdgeDriver(browserOptions);
 
 			// Start Edge Session
 			driver.manage().window().maximize();

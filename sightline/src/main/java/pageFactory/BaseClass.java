@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -41,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import automationLibrary.CustomWebDriverWait;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -1461,7 +1463,7 @@ public class BaseClass {
 	public boolean waitTillElemetToBeClickable(Element element) {
 		boolean status = false;
 		try {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 			wait.until(ExpectedConditions.elementToBeClickable(element.getWebElement()));
 			status = true;
 		} catch (Exception e) {
@@ -1562,7 +1564,7 @@ public class BaseClass {
 	public void clickButton(Element element) {
 
 		try {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 			wait.until(ExpectedConditions.elementToBeClickable(element.getWebElement())).click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1580,7 +1582,7 @@ public class BaseClass {
 		try {
 			waitForElement(elementToBeDragged);
 			elementToBeDragged.waitAndClick(5);
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 			wait.until(ExpectedConditions.elementToBeClickable(elementToBeDragged.getWebElement()));
 			Actions actions = new Actions(driver.getWebDriver());
 			waitForElement(elementToBeDragged);
@@ -1841,7 +1843,7 @@ public class BaseClass {
 	public boolean waitForElementToBeGone(Element element, int timeout) {
 		boolean status = false;
 		try {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), timeout);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 			status = wait.until(ExpectedConditions.invisibilityOf(element.getWebElement()));
 		} catch (Exception e) {
 			UtilityLog.info("Exception occured while waiting for element invisibilty");
@@ -2598,7 +2600,7 @@ public class BaseClass {
 	}
 
 	public void dragAndDrop1(Element elementToBeDragged, Element elementToBeDropped) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 		wait.until(ExpectedConditions.elementToBeClickable(elementToBeDragged.getWebElement()));
 		Actions actions = new Actions(driver.getWebDriver());
 		waitForElement(elementToBeDragged);
@@ -2610,7 +2612,7 @@ public class BaseClass {
 
 	public void waitTillTextToPresent(Element element, String text) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 90);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 90);
 			wait.until(ExpectedConditions.textToBePresentInElement(element.getWebElement(), text));
 		} catch (Exception e) {
 			e.printStackTrace(pw);

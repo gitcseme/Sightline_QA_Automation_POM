@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -2205,7 +2206,7 @@ public Element getDocViewFromDropDown() {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();

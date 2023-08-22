@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -2615,7 +2617,7 @@ public class DocExplorerPage {
 		if (ss.getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(ss.getViewBtn().getWebElement()));
 			actions.moveToElement(ss.getViewBtn().getWebElement()).build().perform();

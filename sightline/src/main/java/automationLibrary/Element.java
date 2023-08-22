@@ -764,7 +764,7 @@ public class Element {
 	 * .ignoring(Exception.class);
 	 * 
 	 * driver.waitUntil(visibilityOfElementLocated, by); return
-	 * driver.FindElement(by); //new WebDriverWait(driver,
+	 * driver.FindElement(by); //new CustomWebDriverWait(driver,
 	 * time).until(ExpectedConditions.visibilityOfElementLocated(getLocator(locator)
 	 * )); } public static Element waitUntilInVisibility(By by, int time) {
 	 * driver.Manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); // nullify

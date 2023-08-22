@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
@@ -194,7 +195,7 @@ public class DocView_Regression9 {
 	public void verifyTextRemarks() throws Exception {
 // Selecting Document from Session search
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON 51863");
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -846,7 +847,7 @@ public class DocView_Regression9 {
 	public void VerifySavedTextRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51626 ");
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -5337,7 +5338,7 @@ public class DocView_Regression9 {
 	public void VerifyColourRemarksEditing() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51989");
 		SessionSearch sessionsearch = new SessionSearch(driver);
