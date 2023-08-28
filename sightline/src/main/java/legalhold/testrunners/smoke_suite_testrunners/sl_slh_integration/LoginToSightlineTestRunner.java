@@ -19,14 +19,15 @@ public class LoginToSightlineTestRunner extends BaseRunner {
     @Test(priority = 1)
     public void systemAdminLogin() throws IOException, ParseException, InterruptedException {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "devtest");
         CreateCase createCase = new CreateCase(driver);
-        createCase.createRandomCases();
+        String caseName = createCase.createRandomCase();
+        System.out.println("Created case name is: " + caseName);
     }
 
     @Test(priority = 2)
     public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com", "amikhelbona#2023", "Croissant");
     }
 }

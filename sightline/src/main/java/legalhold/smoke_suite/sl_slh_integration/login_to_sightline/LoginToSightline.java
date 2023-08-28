@@ -19,9 +19,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 public class LoginToSightline extends BaseModule {
-    public WebDriverWait wait;
-    Properties prop = new Properties();
-
     LoginPage login;
 
     public LoginToSightline(Driver driver) throws IOException {
@@ -54,11 +51,11 @@ public class LoginToSightline extends BaseModule {
 
 
         String text = driver.FindElementById("project-selector").getText();
-        if(!text.equalsIgnoreCase("Tokyo"))
+        if(!text.equalsIgnoreCase(tenant))
         {
             System.out.println("not selected");
             domainDashboard.getDomainDrpDwn().Click();
-            domainDashboard.availableDomains("Tokyo").Click();
+            domainDashboard.availableDomains(tenant).Click();
 
         }
 

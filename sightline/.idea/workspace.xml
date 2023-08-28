@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-
       <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
-
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="LegalHold-Automantion-Dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -166,11 +160,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
-        <item itemvalue="TestNG.CreateCase.createRandomCases" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner" />
+        <item itemvalue="TestNG.CreateCase.createRandomCases" />
       </list>
     </recent_temporary>
   </component>
@@ -199,11 +192,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
-          <line>1176</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java</url>
           <line>13</line>
