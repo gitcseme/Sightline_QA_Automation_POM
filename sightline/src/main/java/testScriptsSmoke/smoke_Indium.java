@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -228,7 +229,7 @@ public class smoke_Indium {
 	public void verifyTextRemarks() throws Exception {
 // Selecting Document from Session search
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON 51863");
 		loginPage = new LoginPage(driver);

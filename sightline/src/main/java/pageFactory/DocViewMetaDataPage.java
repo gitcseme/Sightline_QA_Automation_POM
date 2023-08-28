@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -1133,7 +1134,7 @@ public class DocViewMetaDataPage {
 	public boolean waitTillElemetToBeClickable(Element element) {
 		boolean status = false;
 		try {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			wait.until(ExpectedConditions.elementToBeClickable(element.getWebElement()));
 			status = true;
 		} catch (Exception e) {

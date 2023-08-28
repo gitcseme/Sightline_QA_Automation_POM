@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -4373,7 +4374,7 @@ public class DocView_Regression2 {
 		MiniDocListPage mini = new MiniDocListPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		int Purehit=search.basicContentSearch(Input.searchString2);
 		search.bulkAssign();

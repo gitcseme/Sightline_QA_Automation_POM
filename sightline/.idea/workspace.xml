@@ -9,9 +9,31 @@
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logs/execution.logs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logs/execution.logs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentsPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/BaseClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/BaseClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/BatchRedactionPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/BatchRedactionPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocExplorerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocExplorerPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewMetaDataPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewMetaDataPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewRedactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewRedactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/MiniDocListPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/MiniDocListPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/SecurityGroupsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/SecurityGroupsPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/SessionSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/SessionSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/UserManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression9.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docviewAudio/DocViewAudio_Phase1_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docviewAudio/DocViewAudio_Phase1_Regression1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docviewRedactions/DocView_Redactions_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docviewRedactions/DocView_Redactions_Regression1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocViewAudio_IndiumRegression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocViewAudio_IndiumRegression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Redaction_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Redaction_Regression1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Sprint2_Regression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Sprint2_Regression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/VerifyingRemarsAndPersistentHitsWithSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/VerifyingRemarsAndPersistentHitsWithSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/smoke_Indium.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/smoke_Indium.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +72,9 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2TedyXXsaNb1UiLtXWN94wkx1Pl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -161,9 +186,6 @@
       <list>
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner" />
-        <item itemvalue="TestNG.CreateCase.createRandomCases" />
       </list>
     </recent_temporary>
   </component>

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -1926,7 +1927,7 @@ public class BatchRedactionPage {
 	public void assignRedactionRights(String username, boolean selectEnable) throws InterruptedException {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
