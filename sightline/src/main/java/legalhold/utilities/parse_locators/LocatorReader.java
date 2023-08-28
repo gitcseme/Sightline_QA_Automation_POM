@@ -3,6 +3,7 @@ package legalhold.utilities.parse_locators;
 import org.openqa.selenium.By;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class LocatorReader {
@@ -23,4 +24,18 @@ public class LocatorReader {
         String locatorValue = locatorProperty.split(":")[1];
         return locatorValue;
     }
+
+    public String[] getArray(String allFields)
+    {
+        String locatorArray = propertyFile.getProperty(allFields);
+        String[] fields = new String[17];
+        for(int i=0;i<17;i++){
+            fields[i]=locatorArray.split(",")[i];
+        }
+        for(int i=0;i<fields.length;i++){
+            fields[i]=fields[i].split(":")[1];
+        }
+        return fields;
+        }
 }
+
