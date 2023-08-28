@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -1096,7 +1097,7 @@ public class SecurityGroupsPage {
 	 * @param annotation
 	 */
 	public void assignAnnotationToSG(String annotation) {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAnnotationLayerLink());

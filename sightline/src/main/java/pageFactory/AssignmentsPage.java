@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -4131,7 +4132,7 @@ public class AssignmentsPage {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getAssgnGrp_Select(assgnGroupName_From));
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 		wait.until(ExpectedConditions.elementToBeClickable(getAssgnGrp_Select(assgnGroupName_From).getWebElement()));
 		Actions actions = new Actions(driver.getWebDriver());
 		bc.waitForElement(getAssgnGrp_Select(assgnGroupName_From));
@@ -5395,7 +5396,7 @@ public class AssignmentsPage {
 		System.out.println(metaData);
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 		wait.until(ExpectedConditions.elementToBeClickable(liveSequenceSorts(metaData).getWebElement()));
 		bc.waitForElement((liveSequenceSorts(metaData)));
 		actions.clickAndHold((liveSequenceSorts(metaData)).getWebElement());
@@ -10655,7 +10656,7 @@ public class AssignmentsPage {
 		System.out.println(metaData);
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 		wait.until(ExpectedConditions.elementToBeClickable(liveSequenceSorts(metaData).getWebElement()));
 		bc.waitForElement((liveSequenceSorts(metaData)));
 		actions.clickAndHold((liveSequenceSorts(metaData)).getWebElement());
@@ -10779,7 +10780,7 @@ public class AssignmentsPage {
 		System.out.println(metaData);
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
 		wait.until(ExpectedConditions.elementToBeClickable(getunderAvailableCriteria(metaData).getWebElement()));
 		bc.waitForElement((getunderAvailableCriteria(metaData)));
 		actions.clickAndHold((getunderAvailableCriteria(metaData)).getWebElement());

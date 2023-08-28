@@ -32,6 +32,7 @@ import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -22138,7 +22139,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 			List<WebElement> remarkHighlighterText = getRemarkHighlightedText().FindWebElements();
 
 			try {
-				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+				WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 2);
 				wait.until(ExpectedConditions.elementToBeClickable(remarkHighlighterText.get(0)));
 				remarkHighlighterText.get(0).click();
 				base.failedStep("Already remarked selected highlighted text is clickable and editable");
@@ -22434,7 +22435,7 @@ return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-l
 				} else {
 					base.failedStep("'" + iconSymbol + "' - icon contained symbol is not displayed on default tab");
 				}
-				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 2);
+				WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 2);
 				wait.until(ExpectedConditions.elementToBeClickable(getDefaultTabIcon().getWebElement()));
 				getDefaultTabIcon().getWebElement().click();
 				boolean flag = getDefaultTabIcon().getWebElement().isSelected();

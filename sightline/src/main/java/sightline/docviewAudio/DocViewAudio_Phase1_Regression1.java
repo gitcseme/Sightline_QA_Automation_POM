@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -3135,7 +3136,7 @@ public class DocViewAudio_Phase1_Regression1 {
 		Thread.sleep(2000); // App Synch
 		if (sessionsearch.getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(sessionsearch.getViewBtn().getWebElement()));
 			actions.moveToElement(sessionsearch.getViewBtn().getWebElement()).build().perform();

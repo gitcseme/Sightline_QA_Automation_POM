@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import automationLibrary.CustomWebDriverWait;
 import org.apache.commons.collections4.Get;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -1873,7 +1875,7 @@ public class UserManagement {
 	 */
 	public void assignAccessToSecurityGroups(String SgName, String username) throws Exception {
 
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		driver.scrollPageToTop();
 		Thread.sleep(3000);// Required

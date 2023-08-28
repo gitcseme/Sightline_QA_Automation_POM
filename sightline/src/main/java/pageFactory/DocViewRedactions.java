@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -1393,7 +1394,7 @@ public class DocViewRedactions {
 	 */
 
 	public void enteringPagesInMultipageTextBox(String pagerange) throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 10);
 		Actions actions = new Actions(driver.getWebDriver());
 		try {
 			wait.until(ExpectedConditions.elementToBeClickable(multiPageInputTextbox().getWebElement()));
@@ -1471,13 +1472,13 @@ public class DocViewRedactions {
 	}
 
 	public void selectSideMenu(String menuName) throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(sideMenu(menuName).getWebElement()));
 		sideMenu(menuName).Click();
 	}
 
 	public void enterDocId(String docId) throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(txtDocId().getWebElement()));
 		txtDocId().getWebElement().clear();
 		txtDocId().getWebElement().sendKeys(docId);
@@ -1487,7 +1488,7 @@ public class DocViewRedactions {
 	}
 
 	public void clickOnPreviewEyeIcon() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(btnEyeIcon().getWebElement()));
 		btnEyeIcon().Click();
 		Thread.sleep(2000);
@@ -1509,7 +1510,7 @@ public class DocViewRedactions {
 		}), Input.wait30);
 		driver.waitForPageToBeReady();
 		redactionIcon().waitAndClick(10);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		wait.until(ExpectedConditions.elementToBeClickable(btnTypeOfRedaction("Text Redaction").getWebElement()));
 		base.waitTime(2);
 		btnTypeOfRedaction("Text Redaction").Click();
@@ -1535,7 +1536,7 @@ public class DocViewRedactions {
 	 */
 
 	public void canclingRedactionTag() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -1648,7 +1649,7 @@ public class DocViewRedactions {
 
 	public void assignAccessToSecurityGroups(String SgName) throws Exception {
 
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		driver.scrollPageToTop();
 		Thread.sleep(3000);
@@ -2465,7 +2466,7 @@ public class DocViewRedactions {
 
 	public void assignAccesstoSGs(String securityGroup1, String securityGroup2, String user) throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
@@ -2508,7 +2509,7 @@ public class DocViewRedactions {
 
 	public void assignAccesstoSGs(String securityGroup1, String user) throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
@@ -3014,7 +3015,7 @@ public class DocViewRedactions {
 
 		base = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		getDocView_MiniDoc_Selectdoc(5).waitAndClick(30);
 		driver.waitForPageToBeReady();
 
@@ -3662,7 +3663,7 @@ public class DocViewRedactions {
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		base.waitForElement(getDocViewPanel());
 		if (getDocViewPanel().isDisplayed()) {
 			base.passedStep("DocView panels are displayed");

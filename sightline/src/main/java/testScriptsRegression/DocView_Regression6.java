@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -305,7 +306,7 @@ public class DocView_Regression6 {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52233- DocView- Sprint 2");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		DocViewPage docView = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);
@@ -454,7 +455,7 @@ public class DocView_Regression6 {
 		folder = "51990Default_" + Utility.dynamicNameAppender();
 		folder2 = "51990DefaultSec_" + Utility.dynamicNameAppender();
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 100);
 		baseClass.stepInfo("Test case Id: RPMXCON 51990");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchText);

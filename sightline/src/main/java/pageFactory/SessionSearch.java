@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
+import automationLibrary.CustomWebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -3675,7 +3676,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -4856,7 +4857,7 @@ public class SessionSearch {
 			if (getViewBtn().isElementAvailable(2)) {
 				driver.waitForPageToBeReady();
 
-				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+				WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 				Actions actions = new Actions(driver.getWebDriver());
 				wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 				actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -4907,7 +4908,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -5319,7 +5320,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -6992,7 +6993,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -9146,7 +9147,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
@@ -9201,7 +9202,7 @@ public class SessionSearch {
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
