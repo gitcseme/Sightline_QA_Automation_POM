@@ -1,0 +1,45 @@
+[
+  {
+    "stepName": "WaitForThePageTobeReady",
+    "element": "",
+    "elementRef": "",
+    "action": "WaitForDocumentReady",
+    "elementSelectorType": ""
+  },
+  {
+    "stepName": "Click Create Case Button",
+    "element": "btnCreateCase",
+    "elementRef": "btnCreateCase",
+    "action": "Click",
+    "elementSelectorType": "id"
+  },
+  {
+    "stepName": "Enter Case Name",
+    "element": "txtCaseName",
+    "elementRef": "Name",
+    "action": "EnterText",
+    "elementSelectorType": "id"
+  },
+  {
+    "stepName": "Select owner dropdown",
+    "element": "userList",
+    "elementRef": "OwnerDropDownList",
+    "action": "select",
+    "elementSelectorType": "id",
+    "selectedIndex": "1"
+  },
+  {
+    "stepName": "Click Submit button",
+    "element": "btnSubmit",
+    "elementRef": "btnOK",
+    "action": "Click",
+    "elementSelectorType": "id"
+  },
+  {
+    "stepName": "WaitForThePageTobeReady",
+    "element": "",
+    "elementRef": "",
+    "action": "WaitForDocumentReady",
+    "elementSelectorType": ""
+  }
+]

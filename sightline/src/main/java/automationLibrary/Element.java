@@ -840,9 +840,9 @@ public class Element {
 		}
 	}
 
-	public void selectFromDropdownByVisibleText(String option){
-
-		Select dropdown = new Select(driver.getWebDriver().findElement(by));
-		dropdown.selectByVisibleText(option);
-	}
+//	public void selectFromDropdownByVisibleText(String option){
+//
+//		Select dropdown = new Select(driver.getWebDriver().findElement(by));
+//		dropdown.selectByVisibleText(option);
+//	}
 }
