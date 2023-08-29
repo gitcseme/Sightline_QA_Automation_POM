@@ -7,33 +7,11 @@
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/ConfigMain.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/logs/execution.logs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logs/execution.logs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/AssignmentsPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/BaseClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/BaseClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/BatchRedactionPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/BatchRedactionPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocExplorerPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocExplorerPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewMetaDataPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewMetaDataPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewRedactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/DocViewRedactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/MiniDocListPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/MiniDocListPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/SecurityGroupsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/SecurityGroupsPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/SessionSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/SessionSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pageFactory/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pageFactory/UserManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression6.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docview/DocView_Regression9.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docviewAudio/DocViewAudio_Phase1_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docviewAudio/DocViewAudio_Phase1_Regression1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sightline/docviewRedactions/DocView_Redactions_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sightline/docviewRedactions/DocView_Redactions_Regression1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocViewAudio_IndiumRegression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocViewAudio_IndiumRegression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Redaction_Regression1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Redaction_Regression1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Regression6.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Sprint2_Regression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/DocView_Sprint2_Regression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsRegression/VerifyingRemarsAndPersistentHitsWithSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsRegression/VerifyingRemarsAndPersistentHitsWithSG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/smoke_Indium.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testScriptsSmoke/smoke_Indium.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,9 +51,6 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
   <component name="ProjectId" id="2TedyXXsaNb1UiLtXWN94wkx1Pl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -92,25 +67,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
-  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.systemAdminLogin">
-    <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="sightline" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="legalhold.smoke_suite.cases.create_case.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="legalhold.smoke_suite.cases.create_case" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.smoke_suite.cases.create_case.CreateCase" />
-      <option name="METHOD_NAME" value="createRandomCases" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage">
     <configuration name="LoginToSightlineTestRunner" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -182,10 +139,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Sprint36CasePageTestRunner.runSprint36CasePage" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.sprint_36.testrunners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
+      <option name="METHOD_NAME" value="runSprint36CasePage" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner" />
       </list>
     </recent_temporary>
   </component>
@@ -214,14 +192,10 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java</url>
-          <line>13</line>
-          <properties class="legalhold.BaseRunner" method="&lt;init&gt;">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="10" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pageFactory/BaseClass.java</url>
+          <line>1433</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

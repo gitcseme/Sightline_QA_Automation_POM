@@ -36,24 +36,6 @@ public class CreateCase extends BaseModule {
         enterCaseName.SendKeys(caseName);
         Element ownerDropdown = driver.FindElementById(locatorReader.getobjectLocator("selectCaseOwner"));
         ElementCollection availableOwner = ownerDropdown.FindElementsBytagName("option");
-//        try {
-//
-//            if (availableOwner.size() > 0) {
-//                ownerDropdown.selectFromDropdown().selectByIndex(1);
-//                driver.FindElementById(locatorReader.getobjectLocator("btnSubmit")).Click();
-//                driver.waitForPageToBeReady();
-//                String createdCaseName = driver.FindElementById("headerCaseName").getText();
-//                softAssert.assertEquals(caseName, createdCaseName);
-//                System.out.println("Case Name Asserted");
-//
-//            }
-//
-//        }
-//
-//        catch (Exception e){
-//            System.out.println("No user available in domain");
-//        }
-//        return caseName;
         ownerDropdown.selectFromDropdown().selectByIndex(1);
         driver.FindElementById(locatorReader.getobjectLocator("btnSubmit")).Click();
         driver.waitForPageToBeReady();
