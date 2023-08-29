@@ -21,7 +21,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     }
 
     @Test
-    public void runSprint36CasePage() throws IOException, InterruptedException {
+    public void runSprint36CasePage() throws IOException {
         loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
         caseFactories.goToEditCase("Pizza goat");
         sprint36CasePage.complianceReminderMaximumNumberSet(1);
