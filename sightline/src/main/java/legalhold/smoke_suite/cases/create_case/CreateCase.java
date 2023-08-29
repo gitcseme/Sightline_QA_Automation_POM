@@ -16,11 +16,18 @@ import java.util.concurrent.Callable;
 public class CreateCase extends BaseModule {
     Properties prop = new Properties();
     public CreateCase(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/cases/casepage.properties", driver);
+        super(driver);
     }
 
     public void createRandomCases(){
-        driver.waitForPageToBeReady();
+
+        LoadMoudleActionSteps("./src/main/java/legalhold/ModuleStep/CreateCaseSteps.json");
+
+        String caseName = faker.food().dish()+" "+ faker.animal().name();
+        elementValueMapping.put("txtCaseName",caseName);
+        super.Run();
+
+        /*driver.waitForPageToBeReady();
         Element createCaseButton = driver.FindElementByXPath(locatorReader.getobjectLocator("btnCreateCase"));
         driver.WaitUntil((new Callable<Boolean>() {
             public Boolean call() {
@@ -29,7 +36,7 @@ public class CreateCase extends BaseModule {
         }), Input.wait30);
         createCaseButton.Click();
         Element enterCaseName = driver.FindElementById(locatorReader.getobjectLocator("enterCaseName"));
-        String caseName = faker.food().dish()+" "+ faker.animal().name();
+
         enterCaseName.SendKeys(caseName);
         Element ownerDropdown = driver.FindElementById(locatorReader.getobjectLocator("selectCaseOwner"));
         ownerDropdown.selectFromDropdown().selectByIndex(1);
@@ -37,6 +44,11 @@ public class CreateCase extends BaseModule {
         driver.waitForPageToBeReady();
         String createdCaseName = driver.FindElementById("headerCaseName").getText();
         softAssert.assertEquals(caseName,createdCaseName);
-        System.out.println("Case Name Asserted");
+        System.out.println("Case Name Asserted");*/
+    }
+
+    @Override
+    public String GetValueFromElementName(String elementName) {
+        return elementValueMapping.get(elementName);
     }
 }

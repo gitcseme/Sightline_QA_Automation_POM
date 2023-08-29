@@ -1,0 +1,44 @@
+[
+  {
+    "stepName": "Login to Sightline",
+    "element": "Sightine login helper class",
+    "elementRef": "",
+    "action": "logintosightline",
+    "elementSelectorType": ""
+  },
+  {
+    "stepName": "Impersonate as DA",
+    "element": "Sightine impersonate helper class",
+    "elementRef": "",
+    "action": "impersonateSAtoDA",
+    "elementSelectorType": ""
+  },
+  {
+    "stepName": "FindProductMenu",
+    "element": "product",
+    "elementRef": "productMenu",
+    "action": "Click",
+    "elementSelectorType": "id"
+  },
+  {
+    "stepName": "Find LegalHold button and click",
+    "element": "product",
+    "elementRef": ".sightlineLegalHold a",
+    "action": "Click",
+    "elementSelectorType": "css"
+  },
+  {
+    "stepName": "WaitForThePageTobeReady",
+    "element": "",
+    "elementRef": "productMenu",
+    "action": "WaitForDocumentReady",
+    "elementSelectorType": "id"
+  },
+  {
+    "stepName": "WaitUntilElementIsDisplayed",
+    "element": "",
+    "elementRef": "tenantSelector",
+    "action": "WaitUntil",
+    "elementSelectorType": "id"
+  }
+]
