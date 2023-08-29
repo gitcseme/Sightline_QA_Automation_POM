@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/logs/execution.logs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logs/execution.logs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="LegalHold-Automantion-Dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -48,9 +45,6 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2TedyXXsaNb1UiLtXWN94wkx1Pl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -77,7 +71,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner.systemAdminLogin">
+  <component name="RunManager" selected="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage">
     <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -167,13 +161,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Sprint36CasePageTestRunner.runSprint36CasePage" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.sprint_36.testrunners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
+      <option name="METHOD_NAME" value="runSprint36CasePage" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
-        <item itemvalue="TestNG.CreateCase.createRandomCases" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
+        <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
+        <item itemvalue="TestNG.LoginToSightlineTestRunner" />
       </list>
     </recent_temporary>
   </component>

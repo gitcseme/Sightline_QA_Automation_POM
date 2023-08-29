@@ -46,11 +46,11 @@ public class LoginToSightline extends BaseModule {
 
 
         String text = driver.FindElementById("project-selector").getText();
-        if(!text.equalsIgnoreCase("Tokyo"))
+        if(!text.equalsIgnoreCase(tenant))
         {
             System.out.println("not selected");
             domainDashboard.getDomainDrpDwn().Click();
-            domainDashboard.availableDomains("Tokyo").Click();
+            domainDashboard.availableDomains(tenant).Click();
 
         }
 

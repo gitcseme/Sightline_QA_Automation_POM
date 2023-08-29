@@ -1,5 +1,6 @@
 package legalhold;
 
+import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import legalhold.ModuleStep.ModuleStep;
 import legalhold.utilities.parse_locators.LocatorReader;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import pageFactory.BaseClass;
 import pageFactory.DomainDashboard;
@@ -29,6 +31,7 @@ public class BaseModule {
     protected DomainDashboard domainDashboard;
     protected Faker faker;
     protected SoftAssert softAssert;
+    public WebDriverWait wait;
     List<ModuleStep> itemList;
     protected LoginPage login;
     protected Map<String, String> elementValueMapping = new HashMap<>();
@@ -41,6 +44,7 @@ public class BaseModule {
         domainDashboard = new DomainDashboard(driver);
         faker = new Faker();
         softAssert = new SoftAssert();
+        wait = new CustomWebDriverWait(driver.getWebDriver(),30);
         login = new LoginPage(driver);
     }
 

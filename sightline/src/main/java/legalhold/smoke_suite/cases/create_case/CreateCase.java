@@ -2,6 +2,7 @@ package legalhold.smoke_suite.cases.create_case;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import cucumber.api.java.lv.Tad;
 import legalhold.BaseModule;
 import org.testng.Assert;
@@ -14,7 +15,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 public class CreateCase extends BaseModule {
-    Properties prop = new Properties();
+
     public CreateCase(Driver driver) throws IOException {
         super(driver);
     }
@@ -30,15 +31,16 @@ public class CreateCase extends BaseModule {
         /*driver.waitForPageToBeReady();
         Element createCaseButton = driver.FindElementByXPath(locatorReader.getobjectLocator("btnCreateCase"));
         driver.WaitUntil((new Callable<Boolean>() {
+
             public Boolean call() {
                 return createCaseButton.Visible();
             }
         }), Input.wait30);
         createCaseButton.Click();
         Element enterCaseName = driver.FindElementById(locatorReader.getobjectLocator("enterCaseName"));
-
         enterCaseName.SendKeys(caseName);
         Element ownerDropdown = driver.FindElementById(locatorReader.getobjectLocator("selectCaseOwner"));
+        ElementCollection availableOwner = ownerDropdown.FindElementsBytagName("option");
         ownerDropdown.selectFromDropdown().selectByIndex(1);
         driver.FindElementById(locatorReader.getobjectLocator("btnSubmit")).Click();
         driver.waitForPageToBeReady();
