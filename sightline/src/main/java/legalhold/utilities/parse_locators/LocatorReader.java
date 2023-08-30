@@ -25,11 +25,22 @@ public class LocatorReader {
         return locatorValue;
     }
 
+    public String getFileName(String locatorName)
+    {
+        String filePath = propertyFile.getProperty(locatorName);
+        return filePath;
+    }
+
     public String[] getArray(String allFields)
     {
         String locatorArray = propertyFile.getProperty(allFields);
-        String[] fields = new String[17];
-        for(int i=0;i<17;i++){
+        locatorArray = locatorArray.trim();
+        String[] splitArray = locatorArray.split(",");
+
+        int arraySize = splitArray.length;
+
+        String[] fields = new String[arraySize];
+        for(int i=0;i<arraySize;i++){
             fields[i]=locatorArray.split(",")[i];
         }
         for(int i=0;i<fields.length;i++){

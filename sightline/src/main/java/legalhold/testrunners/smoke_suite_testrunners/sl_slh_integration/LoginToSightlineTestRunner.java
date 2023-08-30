@@ -23,38 +23,44 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 
     }
 
-    @Test
-    public void systemAdminLogin() throws IOException {
-        LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Tokyo");
-//        CreateCase createCase = new CreateCase(driver);
-//        String caseName = createCase.createRandomCase();
-//        System.out.println("Created case name is: " + caseName);
-    }
+//    @Test
+//    public void systemAdminLogin() throws IOException {
+//        LoginToSightline loginToSightline = new LoginToSightline(driver);
+//        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Tokyo");
+////        CreateCase createCase = new CreateCase(driver);
+////        String caseName = createCase.createRandomCase();
+////        System.out.println("Created case name is: " + caseName);
+//    }
 
-    @Test
+    @Test(priority = 1)
     public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
 
+
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+
+    }
+
+    @Test(priority = 2)
+    public void CreateRandomEmployee() throws IOException, InterruptedException {
         Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
 
         CreateEmployee createEmployee = new CreateEmployee(driver);
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
-
-
         navigateToEmployeeTab.navigateToEmployeeTAB();
 
-        String id = createEmployee.CreateEmployeeManually();
+         String id = createEmployee.CreateEmployeeManually();
         createEmployee.verifyEmployeeCreation(id);
+    }
+
+    @Test(priority = 3)
+    public void custodian() throws IOException, InterruptedException {
 
 
         AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
         CreateCustodian.navigationToCustodianTab();
-
+        CreateCustodian.upLoadCustodians();
 
     }
-
-
 
 //    @Test
 //    public void test() throws IOException {

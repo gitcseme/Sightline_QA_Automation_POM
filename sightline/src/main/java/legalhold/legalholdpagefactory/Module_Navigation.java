@@ -40,8 +40,6 @@ public class Module_Navigation extends BaseModule {
         sidebarElements.get(1).click();
         driver.waitForPageToBeReady();
 
-//        ElementCollection sidebarElements = driver.FindElementsByClassName("menu-link");
-//        sidebarElements.getElementByIndex(1).Click();
 
     }
     public void navigateToTemplatesTAB() {
