@@ -96,7 +96,7 @@ public class CreateEmployee extends BaseModule {
 
         Element paginationDropdown = driver.FindElementById(locatorReader.getobjectLocator("paginationDropdown"));
         WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
-        wait.until(ExpectedConditions.elementToBeClickable(paginationDropdown.getWebElement()));
+
 //        Thread.sleep(7000);
 
 

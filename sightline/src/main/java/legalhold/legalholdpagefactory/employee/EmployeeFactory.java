@@ -24,7 +24,7 @@ public class EmployeeFactory extends BaseModule {
 
 
         try {
-            WebDriverWait wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
+
             Element EmployeeIdSearchBox = driver.FindElementByXPath(locatorReader.getobjectLocator("employee-id-search-box"));
             EmployeeIdSearchBox.Click();
             EmployeeIdSearchBox.SendKeys(id);

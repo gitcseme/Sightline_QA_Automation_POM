@@ -35,7 +35,23 @@ public class LoginToSightlineTestRunner extends BaseRunner {
     @Test
     public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+
+        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+
+        CreateEmployee createEmployee = new CreateEmployee(driver);
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+
+
+        navigateToEmployeeTab.navigateToEmployeeTAB();
+
+        String id = createEmployee.CreateEmployeeManually();
+        createEmployee.verifyEmployeeCreation(id);
+
+
+        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+        CreateCustodian.navigationToCustodianTab();
+
+
     }
 
 
