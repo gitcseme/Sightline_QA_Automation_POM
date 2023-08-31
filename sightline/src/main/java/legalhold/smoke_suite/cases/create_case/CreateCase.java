@@ -20,13 +20,14 @@ public class CreateCase extends BaseModule {
         super(driver);
     }
 
-    public void createRandomCases(){
+    public String createRandomCases(){
 
         LoadMoudleActionSteps("./src/main/java/legalhold/ModuleStep/CreateCaseSteps.json");
 
         String caseName = faker.food().dish()+" "+ faker.animal().name();
         elementValueMapping.put("txtCaseName",caseName);
         super.Run();
+        return caseName;
 
         /*driver.waitForPageToBeReady();
         Element createCaseButton = driver.FindElementByXPath(locatorReader.getobjectLocator("btnCreateCase"));

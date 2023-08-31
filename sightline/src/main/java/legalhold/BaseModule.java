@@ -31,7 +31,7 @@ public class BaseModule {
     protected DomainDashboard domainDashboard;
     protected Faker faker;
     protected SoftAssert softAssert;
-    public WebDriverWait wait;
+    protected WebDriverWait wait;
     List<ModuleStep> itemList;
     protected LoginPage login;
     protected Map<String, String> elementValueMapping = new HashMap<>();
@@ -55,7 +55,7 @@ public class BaseModule {
         faker = new Faker();
         softAssert = new SoftAssert();
         login = new LoginPage(driver);
-
+        wait = new CustomWebDriverWait(driver.getWebDriver(),30);
 
     }
 
