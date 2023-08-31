@@ -10,17 +10,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import legalhold.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriver.TargetLocator;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -33,8 +29,6 @@ import org.openqa.selenium.support.ui.*;
 
 //import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
-import configsAndTestData.ConfigLoader;
-import configsAndTestData.ConfigMain;
 import executionMaintenance.UtilityLog;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import testScriptsSmoke.Input;
@@ -150,6 +144,7 @@ public class Driver {
 
 		return new Element(this, by);
 	}
+
 
 	public Element FindElementByClassName(String className) {
 		return FindElement(By.className(className));
@@ -546,4 +541,7 @@ public class Driver {
 		dropdown.selectByVisibleText(option);
 	}
 
+
+
 }
+

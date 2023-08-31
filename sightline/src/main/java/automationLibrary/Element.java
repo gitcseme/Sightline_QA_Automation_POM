@@ -3,6 +3,7 @@ package automationLibrary;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -53,6 +54,7 @@ public class Element {
 		this.element = element;
 		this.driver = driver;
 	}
+
 
 	public String Class() {
 		AssertExists();
@@ -723,10 +725,12 @@ public class Element {
 		throw new NotFoundException(message.toString());
 	}
 
+
 	public WebElement getWebElement() {
 		AssertExists();
 		return element;
 	}
+
 
 	// Indium Stabilization
 	/**
