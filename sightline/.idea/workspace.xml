@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/TestData.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testcases/Sprint36CasePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testcases/Sprint36CasePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,42 +78,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage">
-    <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="sightline" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="legalhold.smoke_suite.cases.create_case.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="legalhold.smoke_suite.cases.create_case" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.smoke_suite.cases.create_case.CreateCase" />
-      <option name="METHOD_NAME" value="createRandomCases" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LoginToSightlineTestRunner" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="sightline" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="TestNG.Run36">
     <configuration name="LoginToSightlineTestRunner.domainAdminLogin" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -161,6 +133,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Run36" type="TestNG">
+      <module name="sightline" />
+      <shortenClasspath name="NONE" />
+      <option name="SUITE_NAME" value="" />
+      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
+      <option name="GROUP_NAME" value="" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="PARAMETERS" value="" />
+      <option name="OUTPUT_DIRECTORY" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="PROPERTIES_FILE" value="" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Sprint36CasePageTestRunner.runSprint36CasePage" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -179,13 +171,49 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Sprint36CasePageTestRunner.templateSaveWithMaxNumber" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <shortenClasspath name="NONE" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.sprint_36.testrunners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SUITE_NAME" value="" />
+      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
+      <option name="METHOD_NAME" value="templateSaveWithMaxNumber" />
+      <option name="GROUP_NAME" value="" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="PARAMETERS" value="" />
+      <option name="OUTPUT_DIRECTORY" value="" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="PROPERTIES_FILE" value="" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="TestNG.Run36" />
+      <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
+      <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
+      <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
+      <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
+      <item itemvalue="TestNG.Sprint36CasePageTestRunner.templateSaveWithMaxNumber" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.Sprint36CasePageTestRunner.templateSaveWithMaxNumber" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner" />
       </list>
     </recent_temporary>
   </component>
@@ -218,16 +246,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
           <line>1176</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java</url>
-          <line>112</line>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

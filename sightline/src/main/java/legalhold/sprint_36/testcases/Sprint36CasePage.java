@@ -7,6 +7,9 @@ import legalhold.BaseModule;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.io.IOException;
 
@@ -33,6 +36,27 @@ public class Sprint36CasePage extends BaseModule {
         softAssert.assertEquals(newSchedule, "Weekly, Monday, Wednesday, Friday (Maximum " + max + ")");
         System.out.println("Schedule matched!!");
     }
+
+    public void goToCase(){
+        driver.FindElementByXPath("//a[@href='/Template']").waitAndClick(30);
+        driver.waitForPageToBeReady();
+    }
+
+    public void goToCaseCommunicationTab(){
+        driver.FindElementById("navBtnCommunication").Click();
+        driver.waitForPageToBeReady();
+    }
+
+    public void goToCreateCustodianCommunicationPage(){
+        WebElement btnCreateCustodianCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Custodian Communication']"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnCreateCustodianCommunication));
+        btnCreateCustodianCommunication.click();
+        driver.waitForPageToBeReady();
+        driver.getWebDriver().navigate().refresh();
+        driver.waitForPageToBeReady();
+        driver.scrollingToElementofAPage(btnCreateCustodianCommunication);
+    }
+
 
 
 }

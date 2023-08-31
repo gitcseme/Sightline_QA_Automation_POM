@@ -141,6 +141,9 @@ public class Driver {
 	public void close() {
 		driver.close();
 	}
+	public void quit() {
+		driver.quit();
+	}
 
 	// Find element-----------------------------------------------------
 	public Element FindElement(By by) {

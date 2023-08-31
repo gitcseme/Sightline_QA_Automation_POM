@@ -19,8 +19,9 @@ public class LocatorReader {
     public String getobjectLocator(String locatorName)
     {
         String locatorProperty = propertyFile.getProperty(locatorName);
-        String locatorType = locatorProperty.split(":")[0];
-        String locatorValue = locatorProperty.split(":")[1];
+        String locatorType = locatorProperty.split(":")[0].trim();
+        String locatorValue = locatorProperty.split(":")[1].trim();
+
         return locatorValue;
     }
 }
