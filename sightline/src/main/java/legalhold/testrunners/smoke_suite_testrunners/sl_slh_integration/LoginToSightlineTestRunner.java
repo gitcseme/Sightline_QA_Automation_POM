@@ -1,8 +1,10 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
 import akka.stream.impl.Always;
+import automationLibrary.Element;
 import legalhold.BaseRunner;
 
+import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.smoke_suite.Employee.CreateEmployee;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
 
@@ -37,7 +39,7 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
 
 
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
 
     }
 
@@ -57,8 +59,14 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 
 
         AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+
+
         CreateCustodian.navigationToCustodianTab();
-        CreateCustodian.upLoadCustodians();
+//        CreateCustodian.upLoadCustodians();
+        addRecipients.AddMailtoRecipients();
+
+
 
     }
 

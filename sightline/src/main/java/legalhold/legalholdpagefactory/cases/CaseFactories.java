@@ -71,21 +71,21 @@ public class CaseFactories extends BaseModule {
     public  void NavigateToPreservationTab(){
 
         ManageCaseTabsNavigation();
-        ManageCaseTabs.get(1).click();
+        ManageCaseTabs.get(2).click();
         driver.waitForPageToBeReady();
     }
 
     public  void NavigateToSurveysTab(){
 
         ManageCaseTabsNavigation();
-        ManageCaseTabs.get(1).click();
+        ManageCaseTabs.get(3).click();
         driver.waitForPageToBeReady();
     }
 
     public  void NavigateToCommunicationsTab(){
 
         ManageCaseTabsNavigation();
-        ManageCaseTabs.get(1).click();
+        ManageCaseTabs.get(4).click();
         driver.waitForPageToBeReady();
     }
 

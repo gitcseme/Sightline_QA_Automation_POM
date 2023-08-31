@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class CaseCommunicationFactories extends BaseModule {
@@ -17,6 +18,29 @@ public class CaseCommunicationFactories extends BaseModule {
         super(driver);
         jsExecutor = (JavascriptExecutor) driver.getWebDriver();
     }
+
+
+    public void TableFilteringVarification() {
+
+        try {
+
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("paginationText")), expected_text));
+        }catch (Exception e){
+            System.out.println("Expected Pagination Text Not Found" + e.getMessage());
+        }
+    }
+
+    public void goToCreateCustodianCommunicationPage(){
+        WebElement btnCreateCustodianCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Custodian Communication']"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnCreateCustodianCommunication));
+        btnCreateCustodianCommunication.click();
+        driver.waitForPageToBeReady();
+        driver.getWebDriver().navigate().refresh();
+        driver.waitForPageToBeReady();
+        driver.scrollingToElementofAPage(btnCreateCustodianCommunication);
+    }
+
 
     public void openAcknowledgmentSubTab() {
         WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector("a[modal-schedule-title='Schedule Reminder']"));
@@ -52,6 +76,58 @@ public class CaseCommunicationFactories extends BaseModule {
         Element escalationEmailTab = driver.FindElementByCssSelector("a[communication-tab-type='2']");
         driver.scrollingToElementofAPage(escalationEmailTab);
         escalationEmailTab.Click();
+    }
+
+    public void AddMailtoRecipients() throws IOException, InterruptedException {
+        CaseFactories navigateToCommunicationsTab = new CaseFactories(driver);
+        navigateToCommunicationsTab.NavigateToCommunicationsTab();
+        goToCreateCustodianCommunicationPage();
+
+        driver.waitForPageToBeReady();
+
+        Element addMailToRecipientButton = driver.FindElementByClassName("mail-to-recipients");
+        wait.until(ExpectedConditions.elementToBeClickable(addMailToRecipientButton.getWebElement()));
+        addMailToRecipientButton.Click();
+
+
+
+//            Element clearFilter = driver.FindElementByCssSelector("button[id='CommunicationAvailableMailTo-clear-filter-btn'] img[title='Clear Active Filters']");
+//            clearFilter.Click();
+            Element availableTableEmployeeId = driver.FindElementByXPath("//table[@id='id-CommunicationAvailableMailTo']//thead//tr//th//input[@placeholder='Search Employee ID']");
+        availableTableEmployeeId.Clear();
+        availableTableEmployeeId.Click();
+        availableTableEmployeeId.SendKeys("SLH-1");
+
+
+//        TableFilteringVarification();
+
+//        Element checkBox = driver.FindElementByCssSelector("input[name='td-CommunicationAvailableMailTochkBoxAll']");
+        Element selectAllCheckBox = driver.FindElementByCssSelector("input[name='th-CommunicationAvailableMailTochkBoxAll']");
+        wait.until(ExpectedConditions.elementToBeClickable(selectAllCheckBox.getWebElement()));
+        Thread.sleep(5000);
+        selectAllCheckBox.Click();
+
+        Element addCustodiansButton = driver.FindElementById("add-user-MailToTab");
+        addCustodiansButton.Click();
+
+
+        Element confirmationModalOkButton = driver.FindElementById("modal-ok-MailToTab");
+        wait.until(ExpectedConditions.elementToBeClickable(confirmationModalOkButton.getWebElement()));
+        confirmationModalOkButton.Click();
+
+        Element globalSaveButtonManageRecipients = driver.FindElementById("saveAndDoneButtonId");
+        driver.scrollingToElementofAPage(globalSaveButtonManageRecipients);
+        wait.until(ExpectedConditions.elementToBeClickable(globalSaveButtonManageRecipients.getWebElement()));
+        Thread.sleep(3000);
+        globalSaveButtonManageRecipients.Click();
+
+        Element confirmationOkButton = driver.FindElementById("modalConfirmOkbutton");
+        wait.until(ExpectedConditions.elementToBeClickable(confirmationOkButton.getWebElement()));
+        confirmationOkButton.Click();
+
+
+
+
     }
 
     public void enterCommunicationNameAndDescription(){
