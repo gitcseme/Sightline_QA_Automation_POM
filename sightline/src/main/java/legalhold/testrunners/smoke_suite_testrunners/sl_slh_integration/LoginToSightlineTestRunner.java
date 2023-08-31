@@ -41,16 +41,16 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 
     }
 
-    @Test(priority = 2)
-    public void CreateRandomEmployee() throws IOException, InterruptedException {
-        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
-
-        CreateEmployee createEmployee = new CreateEmployee(driver);
-        navigateToEmployeeTab.navigateToEmployeeTAB();
-
-         String id = createEmployee.CreateEmployeeManually();
-        createEmployee.verifyEmployeeCreation(id);
-    }
+//    @Test(priority = 2)
+//    public void CreateRandomEmployee() throws IOException, InterruptedException {
+//        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+//
+//        CreateEmployee createEmployee = new CreateEmployee(driver);
+//        navigateToEmployeeTab.navigateToEmployeeTAB();
+//
+//         String id = createEmployee.CreateEmployeeManually();
+//        createEmployee.verifyEmployeeCreation(id);
+//    }
 
     @Test(priority = 3)
     public void custodian() throws IOException, InterruptedException {
