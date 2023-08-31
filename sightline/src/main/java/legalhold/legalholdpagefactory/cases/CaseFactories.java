@@ -3,7 +3,9 @@ package legalhold.legalholdpagefactory.cases;
 import automationLibrary.Driver;
 import legalhold.BaseModule;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.io.IOException;
 
@@ -15,7 +17,9 @@ public class CaseFactories extends BaseModule {
 
     public void searchCaseByName(String caseName) {
         try {
-            driver.FindElementByXPath(locatorReader.getobjectLocator("searchCaseNameColumn")).SendKeys(caseName);
+            WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
+            wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+            caseNameColumnFilterBox.sendKeys(caseName);
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
         } catch (Exception E) {
@@ -33,6 +37,13 @@ public class CaseFactories extends BaseModule {
             System.out.println("Edit case icon not found. The exception is: ");
             System.out.println(E.getMessage());
         }
+    }
+    public void saveCase() throws InterruptedException {
+        driver.FindElementById("manageCaseSubmitBtn").Click();
+        driver.FindElementById("modalCaseConfirmOkbutton").Click();
+        String successToast = driver.FindElementByXPath("//p[normalize-space()='Success message. Case updated successfully']").getText();
+        Assert.assertTrue(successToast.contains("Case updated successfully"));
+        Thread.sleep(5000);
     }
 
 }
