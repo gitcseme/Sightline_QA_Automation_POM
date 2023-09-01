@@ -1,8 +1,10 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
 import akka.stream.impl.Always;
+import automationLibrary.Element;
 import legalhold.BaseRunner;
 
+import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.smoke_suite.Employee.CreateEmployee;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
 
@@ -37,28 +39,34 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
 
 
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
 
     }
 
-    @Test(priority = 2)
-    public void CreateRandomEmployee() throws IOException, InterruptedException {
-        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
-
-        CreateEmployee createEmployee = new CreateEmployee(driver);
-        navigateToEmployeeTab.navigateToEmployeeTAB();
-
-         String id = createEmployee.CreateEmployeeManually();
-        createEmployee.verifyEmployeeCreation(id);
-    }
+//    @Test(priority = 2)
+//    public void CreateRandomEmployee() throws IOException, InterruptedException {
+//        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+//
+//        CreateEmployee createEmployee = new CreateEmployee(driver);
+//        navigateToEmployeeTab.navigateToEmployeeTAB();
+//
+//         String id = createEmployee.CreateEmployeeManually();
+//        createEmployee.verifyEmployeeCreation(id);
+//    }
 
     @Test(priority = 3)
     public void custodian() throws IOException, InterruptedException {
 
 
         AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+
+
         CreateCustodian.navigationToCustodianTab();
-        CreateCustodian.upLoadCustodians();
+//        CreateCustodian.upLoadCustodians();
+        addRecipients.AddMailtoRecipients();
+
+
 
     }
 

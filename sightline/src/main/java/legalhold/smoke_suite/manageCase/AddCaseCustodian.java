@@ -37,8 +37,8 @@ public class AddCaseCustodian extends BaseModule {
         CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
         SearchCaseandGotoEdit.goToEditCase("Automation_Test");
 
-        List<WebElement> ManageCaseTabs = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ManageCaseTabs")));
-        ManageCaseTabs.get(1).click();
+       CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+       navigateToCustodiansTab.NavigateToCustodiansTab();
 
 
     }

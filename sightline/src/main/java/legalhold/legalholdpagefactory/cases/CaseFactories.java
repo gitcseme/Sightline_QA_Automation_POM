@@ -1,6 +1,7 @@
 package legalhold.legalholdpagefactory.cases;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import legalhold.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,11 +9,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CaseFactories extends BaseModule {
 
+    List<WebElement> ManageCaseTabs;
     public CaseFactories(Driver driver) throws IOException {
+
         super("./src/main/java/legalhold/selectors/cases/casepage.properties", driver);
+    }
+
+    public void ManageCaseTabsNavigation(){
+        ManageCaseTabs = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ManageCaseTabs")));
     }
 
     public void searchCaseByName(String caseName) {
@@ -44,6 +52,41 @@ public class CaseFactories extends BaseModule {
         String successToast = driver.FindElementByXPath("//p[normalize-space()='Success message. Case updated successfully']").getText();
         Assert.assertTrue(successToast.contains("Case updated successfully"));
         Thread.sleep(5000);
+    }
+
+    public  void NavigateToCaseInformationTab(){
+
+        ManageCaseTabsNavigation();
+        ManageCaseTabs.get(0).click();
+        driver.waitForPageToBeReady();
+    }
+
+    public void NavigateToCustodiansTab(){
+
+        ManageCaseTabsNavigation();
+        ManageCaseTabs.get(1).click();
+        driver.waitForPageToBeReady();
+    }
+
+    public  void NavigateToPreservationTab(){
+
+        ManageCaseTabsNavigation();
+        ManageCaseTabs.get(2).click();
+        driver.waitForPageToBeReady();
+    }
+
+    public  void NavigateToSurveysTab(){
+
+        ManageCaseTabsNavigation();
+        ManageCaseTabs.get(3).click();
+        driver.waitForPageToBeReady();
+    }
+
+    public  void NavigateToCommunicationsTab(){
+
+        ManageCaseTabsNavigation();
+        ManageCaseTabs.get(4).click();
+        driver.waitForPageToBeReady();
     }
 
 }
