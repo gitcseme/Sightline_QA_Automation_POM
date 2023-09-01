@@ -19,7 +19,7 @@ public class CaseCommunicationFactories extends BaseModule {
         super(driver);
     }
 
-    public String enterSeriesName(){
+    public String enterSeriesName() {
         WebElement inputSeriesName = driver.getWebDriver().findElement(By.id("CommunicationNameId"));
         wait.until(ExpectedConditions.elementToBeClickable(inputSeriesName));
         String seriesName = faker.ancient().god() + " " + faker.ancient().hero();
@@ -34,12 +34,12 @@ public class CaseCommunicationFactories extends BaseModule {
 
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("paginationText")), expected_text));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Expected Pagination Text Not Found" + e.getMessage());
         }
     }
 
-    public void goToCreateCustodianCommunicationPage(){
+    public void goToCreateCustodianCommunicationPage() {
         WebElement btnCreateCustodianCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Custodian Communication']"));
         wait.until(ExpectedConditions.elementToBeClickable(btnCreateCustodianCommunication));
         btnCreateCustodianCommunication.click();
@@ -86,22 +86,21 @@ public class CaseCommunicationFactories extends BaseModule {
         escalationEmailTab.Click();
     }
 
-    public void AddMailtoRecipients() throws IOException, InterruptedException {
-        CaseFactories navigateToCommunicationsTab = new CaseFactories(driver);
-        navigateToCommunicationsTab.NavigateToCommunicationsTab();
-        goToCreateCustodianCommunicationPage();
-
-        driver.waitForPageToBeReady();
+    public void addMailToRecipients() throws IOException, InterruptedException {
+//        CaseFactories navigateToCommunicationsTab = new CaseFactories(driver);
+//        navigateToCommunicationsTab.NavigateToCommunicationsTab();
+//        goToCreateCustodianCommunicationPage();
+//
+//        driver.waitForPageToBeReady();
 
         Element addMailToRecipientButton = driver.FindElementByClassName("mail-to-recipients");
         wait.until(ExpectedConditions.elementToBeClickable(addMailToRecipientButton.getWebElement()));
         addMailToRecipientButton.Click();
 
 
-
 //            Element clearFilter = driver.FindElementByCssSelector("button[id='CommunicationAvailableMailTo-clear-filter-btn'] img[title='Clear Active Filters']");
 //            clearFilter.Click();
-            Element availableTableEmployeeId = driver.FindElementByXPath("//table[@id='id-CommunicationAvailableMailTo']//thead//tr//th//input[@placeholder='Search Employee ID']");
+        Element availableTableEmployeeId = driver.FindElementByXPath("//table[@id='id-CommunicationAvailableMailTo']//thead//tr//th//input[@placeholder='Search Employee ID']");
         availableTableEmployeeId.Clear();
         availableTableEmployeeId.Click();
         availableTableEmployeeId.SendKeys("SLH-1");
@@ -134,56 +133,64 @@ public class CaseCommunicationFactories extends BaseModule {
         confirmationOkButton.Click();
 
 
-
-
     }
 
-    public void enterCommunicationNameAndDescription(){
+    public void enterCommunicationNameAndDescription() {
         driver.FindElementByXPath("//input[@aria-label='Communication Name']").SendKeys(faker.lorem().sentence(3));
         driver.FindElementByXPath("//textarea[@aria-label='Communication Description']").SendKeys(faker.lorem().sentence(50));
     }
 
-    public void enterAcknowledgmentEmailSubject()
-    {
+    public void enterAcknowledgmentEmailSubject() {
         driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Acknowledgment");
     }
 
-    public void enterComplianceReminderEmailSubject(){
+    public void enterComplianceReminderEmailSubject() {
         driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Compliance Reminder");
     }
 
-    public void enterEscalationEmailSubject(){
+    public void enterEscalationEmailSubject() {
         driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Escalation");
     }
 
-    public void enterScheduledReminderEmailSubject(){
+    public void enterScheduledReminderEmailSubject() {
         driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Scheduled Reminder");
     }
 
-    public void typeEmailBody(String emailText){
+    public void typeEmailBody(String emailText) {
         try {
             WebElement tinyMCE = driver.getWebDriver().findElement(By.id("editorTiny_ifr"));
             wait.until(ExpectedConditions.visibilityOf(tinyMCE));
             driver.switchTo().frame("editorTiny_ifr");
             driver.FindElementById("tinymce").SendKeys(emailText);
             driver.switchTo().defaultContent();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("TinyMCE Not Found");
             System.out.println(e.getMessage());
         }
     }
 
     public void saveCommunicationSeries() throws InterruptedException {
+
         WebElement btnSaveSeries = driver.getWebDriver().findElement(By.id("saveCommunicationSaveButtonId"));
         wait.until(ExpectedConditions.elementToBeClickable(btnSaveSeries));
-        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnSaveSeries);
+//        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnSaveSeries);
         btnSaveSeries.click();
         driver.FindElementById("modalConfirmOkbutton").Click();
         Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
 
-    public void searchCustodianTypeSeriesByName(String seriesName){
+    public void startCommunicationSeries() throws InterruptedException {
+        WebElement btnStarSeries = driver.getWebDriver().findElement(By.id("startCommunicationStartButtonId"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnStarSeries));
+//        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnStarSeries);
+        btnStarSeries.click();
+        driver.FindElementById("startCommunicationConfirmationStartButtonId").Click();
+        Thread.sleep(5000);
+        driver.waitForPageToBeReady();
+    }
+
+    public void searchCustodianTypeSeriesByName(String seriesName) {
         try {
             WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
@@ -198,8 +205,50 @@ public class CaseCommunicationFactories extends BaseModule {
         }
     }
 
-    public void goToEditCustodianCommunicationPage(String seriesName){
+    public void searchNonCustodianTypeSeriesByName(String seriesName) {
+        try {
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            seriesNameColumnFilterBox.sendKeys(seriesName);
+            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
+            selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Notice");
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Case Name not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
+    public void searchReleaseTypeSeriesByName(String seriesName) {
+        try {
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            seriesNameColumnFilterBox.sendKeys(seriesName);
+            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
+            selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Release");
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Case Name not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
+    public void goToEditCustodianCommunicationPage(String seriesName) {
         searchCustodianTypeSeriesByName(seriesName);
+        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.waitForPageToBeReady();
+    }
+
+    public void goToEditNonCustodianCommunicationPage(String seriesName) {
+        searchNonCustodianTypeSeriesByName(seriesName);
+        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.waitForPageToBeReady();
+    }
+
+    public void goToEditReleaseCommunicationPage(String seriesName) {
+        searchReleaseTypeSeriesByName(seriesName);
         driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
         driver.waitForPageToBeReady();
     }

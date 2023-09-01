@@ -8,6 +8,7 @@ import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.template.TemplateFactories;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
+import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import legalhold.sprint_36.testcases.Sprint36CasePage;
 
@@ -26,6 +27,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     Faker faker;
     TemplateFactories templateFactories;
     Module_Navigation navigation;
+    AddCaseCustodian addCaseCustodian;
     public String createdCase;
     public String createdCaseTemplate;
     public String createdCommunicationSeries;
@@ -38,6 +40,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         createCase = new CreateCase(driver);
         templateFactories = new TemplateFactories(driver);
         navigation = new Module_Navigation(driver);
+        addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
     }
 
@@ -47,17 +50,16 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         createdCase = createCase.createRandomCases();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
-        sprint36CasePage.complianceReminderOnlyMaximumNumberSet(1);
+        sprint36CasePage.caseComplianceReminderOnlyMaximumNumberSet(1);
         caseFactories.saveCase();
     }
 
     @Test(priority = 2, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
-        sprint36CasePage.goToCase();
         navigation.navigateToTemplatesTAB();
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
-        sprint36CasePage.complianceReminderOnlyMaximumNumberSet(5);
+        sprint36CasePage.caseComplianceReminderOnlyMaximumNumberSet(5);
         templateFactories.saveCaseTemplate();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
@@ -65,14 +67,23 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseFactories.saveCase();
     }
 
-    @Test(priority = 3, description = "Creating a Custodian type communication series in that case after the template from previous " +
+    @Test(priority = 3,description = "Adding multiple custodian to the case created case from previous test case.")
+    public void addMultipleCustodianToACase() throws InterruptedException {
+        caseFactories.NavigateToCustodiansTab();
+        addCaseCustodian.upLoadCustodians();
+    }
+
+    @Test(priority = 4, description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
-    public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
-        sprint36CasePage.goToCaseCommunicationTab();
+    public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
+
+        caseFactories.NavigateToCommunicationsTab();
+        caseCommunicationFactories.goToCreateCustodianCommunicationPage();
         sprint36CasePage.goToCreateCustodianCommunicationPage();
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
+        caseCommunicationFactories.addMailToRecipients();
         caseCommunicationFactories.enterCommunicationNameAndDescription();
         caseCommunicationFactories.enterAcknowledgmentEmailSubject();
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
@@ -81,10 +92,11 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.saveCommunicationSeries();
     }
 
-    @Test(priority = 4, description = "Editing the series created from previous case with new Maximum number.")
-    public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() {
+    @Test(priority = 5, description = "Editing the series created from previous case with new Maximum number.")
+    public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
-        
+        sprint36CasePage.seriescomplianceReminderOnlyMaximumNumberSet(2);
+        caseCommunicationFactories.saveCommunicationSeries();
     }
 
 
