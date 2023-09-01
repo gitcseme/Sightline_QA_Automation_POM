@@ -2,20 +2,27 @@ package legalhold.legalholdpagefactory.cases;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+
 import legalhold.BaseModule;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.IOException;
-import java.util.List;
+
 
 public class CaseCommunicationFactories extends BaseModule {
-    JavascriptExecutor jsExecutor;
+
     public CaseCommunicationFactories(Driver driver) throws IOException {
         super(driver);
-        jsExecutor = (JavascriptExecutor) driver.getWebDriver();
+    }
+
+    public String enterSeriesName(){
+        WebElement inputSeriesName = driver.getWebDriver().findElement(By.id("CommunicationNameId"));
+        wait.until(ExpectedConditions.elementToBeClickable(inputSeriesName));
+        String seriesName = faker.ancient().god() + " " + faker.ancient().hero();
+        inputSeriesName.sendKeys(seriesName);
+        return seriesName;
     }
 
     public void openAcknowledgmentSubTab() {
@@ -74,6 +81,50 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void enterScheduledReminderEmailSubject(){
         driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Scheduled Reminder");
+    }
+
+    public void typeEmailBody(String emailText){
+        try {
+            WebElement tinyMCE = driver.getWebDriver().findElement(By.id("editorTiny_ifr"));
+            wait.until(ExpectedConditions.visibilityOf(tinyMCE));
+            driver.switchTo().frame("editorTiny_ifr");
+            driver.FindElementById("tinymce").SendKeys(emailText);
+            driver.switchTo().defaultContent();
+        }catch (Exception e){
+            System.out.println("TinyMCE Not Found");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void saveCommunicationSeries() throws InterruptedException {
+        WebElement btnSaveSeries = driver.getWebDriver().findElement(By.id("saveCommunicationSaveButtonId"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnSaveSeries));
+        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnSaveSeries);
+        btnSaveSeries.click();
+        driver.FindElementById("modalConfirmOkbutton").Click();
+        Thread.sleep(5000);
+        driver.waitForPageToBeReady();
+    }
+
+    public void searchCustodianTypeSeriesByName(String seriesName){
+        try {
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            seriesNameColumnFilterBox.sendKeys(seriesName);
+            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
+            selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Acknowledgment");
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Case Name not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
+    public void goToEditCustodianCommunicationPage(String seriesName){
+        searchCustodianTypeSeriesByName(seriesName);
+        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.waitForPageToBeReady();
     }
 
 }

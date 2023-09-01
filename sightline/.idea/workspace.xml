@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="Demo Change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/case.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/employees.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/employees.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/navbar.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/utilities/parse_locators/LocatorReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testcases/Sprint36CasePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testcases/Sprint36CasePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +77,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.LoginToSightlineTestRunner">
+  <component name="RunManager" selected="TestNG.Run36">
     <configuration name="CreateCase.createRandomCases" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <option name="SUITE_NAME" value="$PROJECT_DIR$/smokeSuite.xml" />
@@ -212,8 +209,9 @@
     </configuration>
     <list>
       <item itemvalue="TestNG.Run36" />
+      <item itemvalue="TestNG.CreateCase.createRandomCases" />
+      <item itemvalue="TestNG.LoginToSightlineTestRunner" />
       <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-      <item itemvalue="TestNG.LoginToSightlineTestRunner.loginRun" />
       <item itemvalue="TestNG.LoginToSightlineTestRunner.systemAdminLogin" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.templateSaveWithMaxNumber" />

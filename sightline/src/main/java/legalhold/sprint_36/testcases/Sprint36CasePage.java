@@ -24,8 +24,8 @@ public class Sprint36CasePage extends BaseModule {
     }
 
 
-    public void complianceReminderMaximumNumberSet(int max) {
-        driver.FindElementByXPath(reader.getobjectLocator("btnComplianceReminderSchedule")).Click();
+    public void complianceReminderOnlyMaximumNumberSet(int max) {
+        driver.FindElementByXPath(reader.getobjectLocator("btnComplianceReminderSchedule")).waitAndClick(30);
         driver.FindElementByXPath(reader.getobjectLocator("btnMaximumNumber")).Click();
         driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumber")).Clear();
 
@@ -55,6 +55,27 @@ public class Sprint36CasePage extends BaseModule {
         driver.getWebDriver().navigate().refresh();
         driver.waitForPageToBeReady();
         driver.scrollingToElementofAPage(btnCreateCustodianCommunication);
+
+    }
+
+    public void goToCreateNonCustodianCommunicationPage(){
+        WebElement btnCreateNonCustodianCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Non-Custodian Communication']"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnCreateNonCustodianCommunication));
+        btnCreateNonCustodianCommunication.click();
+        driver.waitForPageToBeReady();
+        driver.getWebDriver().navigate().refresh();
+        driver.waitForPageToBeReady();
+        driver.scrollingToElementofAPage(btnCreateNonCustodianCommunication);
+    }
+
+    public void goToCreateReleaseCommunicationPage(){
+        WebElement btnCreateReleaseCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Release Communication']"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnCreateReleaseCommunication));
+        btnCreateReleaseCommunication.click();
+        driver.waitForPageToBeReady();
+        driver.getWebDriver().navigate().refresh();
+        driver.waitForPageToBeReady();
+        driver.scrollingToElementofAPage(btnCreateReleaseCommunication);
     }
 
 
