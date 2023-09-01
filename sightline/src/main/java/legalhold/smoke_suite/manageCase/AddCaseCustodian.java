@@ -27,7 +27,7 @@ public class AddCaseCustodian extends BaseModule {
 
     public void navigationToCustodianTab() throws IOException {
 
-        driver.waitForPageToBeReady();
+//        driver.waitForPageToBeReady();
 
         Module_Navigation caseTabNavigation = new Module_Navigation(driver);
 

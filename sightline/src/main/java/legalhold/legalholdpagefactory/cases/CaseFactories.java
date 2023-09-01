@@ -88,6 +88,5 @@ public class CaseFactories extends BaseModule {
         ManageCaseTabs.get(4).click();
         driver.waitForPageToBeReady();
     }
-
 }
 
