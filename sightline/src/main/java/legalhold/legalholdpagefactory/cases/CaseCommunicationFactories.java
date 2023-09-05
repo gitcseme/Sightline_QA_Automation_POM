@@ -3,28 +3,61 @@ package legalhold.legalholdpagefactory.cases;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 
+import cucumber.api.java8.El;
 import legalhold.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import scala.xml.Elem;
 
 import java.io.IOException;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class CaseCommunicationFactories extends BaseModule {
 
     public CaseCommunicationFactories(Driver driver) throws IOException {
-        super(driver);
+        super("src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties", driver);
     }
 
     public String enterSeriesName() {
-        WebElement inputSeriesName = driver.getWebDriver().findElement(By.id("CommunicationNameId"));
+        WebElement inputSeriesName = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("inputSeriesName")));
         wait.until(ExpectedConditions.elementToBeClickable(inputSeriesName));
         String seriesName = faker.ancient().god() + " " + faker.ancient().hero();
         inputSeriesName.sendKeys(seriesName);
         return seriesName;
+    }
+
+    public void enableComplianceReminder() {
+        List<WebElement> enable = driver.getWebDriver().findElements(By.cssSelector("input[modal-schedule-type='1'][name='Compliance Reminder']"));
+//        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", enable);
+        if (!enable.get(0).isSelected()) {
+            enable.get(0).click();
+        } else {
+            System.out.println("Schedule already enabled");
+        }
+    }
+
+    public void disableComplianceReminder() {
+        List<WebElement> disable = driver.getWebDriver().findElements(By.cssSelector("input[modal-schedule-type='1'][name='Compliance Reminder']"));
+//        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", disable);
+        if (!disable.get(1).isSelected()) {
+            disable.get(1).click();
+        } else {
+            System.out.println("Schedule already disabled");
+        }
+    }
+
+    public void setComplianceReminderAsOneTime() {
+        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnComplianceReminderSchedule")));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
+        btnComplianceReminderSchedule.click();
+        Element btnOneTime = driver.FindElementByCssSelector("input[aria-label='one time']");
+        if (!btnOneTime.Selected()) {
+            btnOneTime.Click();
+        } else {
+            System.out.println("Already set as One Time");
+        }
+        driver.FindElementById(locatorReader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
 
@@ -40,7 +73,7 @@ public class CaseCommunicationFactories extends BaseModule {
     }
 
     public void goToCreateCustodianCommunicationPage() {
-        WebElement btnCreateCustodianCommunication = driver.getWebDriver().findElement(By.xpath("//a[@aria-label='Add Custodian Communication']"));
+        WebElement btnCreateCustodianCommunication = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("btnCreateCustodianCommunication")));
         wait.until(ExpectedConditions.elementToBeClickable(btnCreateCustodianCommunication));
         btnCreateCustodianCommunication.click();
         driver.waitForPageToBeReady();
@@ -51,37 +84,37 @@ public class CaseCommunicationFactories extends BaseModule {
 
 
     public void openAcknowledgmentSubTab() {
-        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector("a[modal-schedule-title='Schedule Reminder']"));
+        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnScheduledReminderSchedule")));
         wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule));
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnScheduledReminderSchedule);
-        Element acknowledgmentEmailTab = driver.FindElementByCssSelector("a[communication-tab-type='0']");
+        Element acknowledgmentEmailTab = driver.FindElementByCssSelector(locatorReader.getobjectLocator("acknowledgmentEmailTab"));
         driver.scrollingToElementofAPage(acknowledgmentEmailTab);
         acknowledgmentEmailTab.Click();
     }
 
     public void openComplianceReminderSubTab() {
-        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector("a[modal-schedule-title='Schedule Reminder']"));
+        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnScheduledReminderSchedule")));
         wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule));
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnScheduledReminderSchedule);
-        Element complianceReminderEmailTab = driver.FindElementByCssSelector("a[communication-tab-type='1']");
+        Element complianceReminderEmailTab = driver.FindElementByCssSelector(locatorReader.getobjectLocator("complianceReminderEmailTab"));
         driver.scrollingToElementofAPage(complianceReminderEmailTab);
         complianceReminderEmailTab.Click();
     }
 
     public void openScheduledReminderSubTab() {
-        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector("a[modal-schedule-title='Schedule Reminder']"));
+        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnScheduledReminderSchedule")));
         wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule));
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnScheduledReminderSchedule);
-        Element scheduledReminderEmailTab = driver.FindElementByCssSelector("a[communication-tab-type='3']");
+        Element scheduledReminderEmailTab = driver.FindElementByCssSelector(locatorReader.getobjectLocator("scheduledReminderEmailTab"));
         driver.scrollingToElementofAPage(scheduledReminderEmailTab);
         scheduledReminderEmailTab.Click();
     }
 
     public void openEscalationSubTab() {
-        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector("a[modal-schedule-title='Schedule Reminder']"));
+        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnScheduledReminderSchedule")));
         wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule));
         jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnScheduledReminderSchedule);
-        Element escalationEmailTab = driver.FindElementByCssSelector("a[communication-tab-type='2']");
+        Element escalationEmailTab = driver.FindElementByCssSelector(locatorReader.getobjectLocator("escalationEmailTab"));
         driver.scrollingToElementofAPage(escalationEmailTab);
         escalationEmailTab.Click();
     }
@@ -136,29 +169,29 @@ public class CaseCommunicationFactories extends BaseModule {
     }
 
     public void enterCommunicationNameAndDescription() {
-        driver.FindElementByXPath("//input[@aria-label='Communication Name']").SendKeys(faker.lorem().sentence(3));
-        driver.FindElementByXPath("//textarea[@aria-label='Communication Description']").SendKeys(faker.lorem().sentence(50));
+        driver.FindElementByXPath(locatorReader.getobjectLocator("inputCommunicationName")).SendKeys(faker.lorem().sentence(3));
+        driver.FindElementByXPath(locatorReader.getobjectLocator("inputCommunicationDescription")).SendKeys(faker.lorem().sentence(50));
     }
 
-    public void enterAcknowledgmentEmailSubject() {
-        driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Acknowledgment");
+    public void enterAcknowledgmentEmailSubject(String subject) {
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
     }
 
-    public void enterComplianceReminderEmailSubject() {
-        driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Compliance Reminder");
+    public void enterComplianceReminderEmailSubject(String subject) {
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
     }
 
-    public void enterEscalationEmailSubject() {
-        driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Escalation");
+    public void enterEscalationEmailSubject(String subject) {
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
     }
 
-    public void enterScheduledReminderEmailSubject() {
-        driver.FindElementByCssSelector("input[aria-label='Mail Subject']").SendKeys("Automation Scheduled Reminder");
+    public void enterScheduledReminderEmailSubject(String subject) {
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
     }
 
     public void typeEmailBody(String emailText) {
         try {
-            WebElement tinyMCE = driver.getWebDriver().findElement(By.id("editorTiny_ifr"));
+            WebElement tinyMCE = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("tinyMCE")));
             wait.until(ExpectedConditions.visibilityOf(tinyMCE));
             driver.switchTo().frame("editorTiny_ifr");
             driver.FindElementById("tinymce").SendKeys(emailText);
@@ -171,31 +204,31 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void saveCommunicationSeries() throws InterruptedException {
 
-        WebElement btnSaveSeries = driver.getWebDriver().findElement(By.id("saveCommunicationSaveButtonId"));
+        WebElement btnSaveSeries = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("btnSaveCommunication")));
         wait.until(ExpectedConditions.elementToBeClickable(btnSaveSeries));
 //        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnSaveSeries);
         btnSaveSeries.click();
-        driver.FindElementById("modalConfirmOkbutton").Click();
+        driver.FindElementById(locatorReader.getobjectLocator("okBtnSaveModal")).Click();
         Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
 
     public void startCommunicationSeries() throws InterruptedException {
-        WebElement btnStarSeries = driver.getWebDriver().findElement(By.id("startCommunicationStartButtonId"));
+        WebElement btnStarSeries = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("btnStartCommunication")));
         wait.until(ExpectedConditions.elementToBeClickable(btnStarSeries));
 //        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnStarSeries);
         btnStarSeries.click();
-        driver.FindElementById("startCommunicationConfirmationStartButtonId").Click();
+        driver.FindElementById(locatorReader.getobjectLocator("okBtnStartModal")).Click();
         Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
 
     public void searchCustodianTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.sendKeys(seriesName);
-            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
+            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
             selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Acknowledgment");
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
@@ -207,11 +240,11 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchNonCustodianTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.sendKeys(seriesName);
-            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
-            selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Notice");
+            Element selectCommunicationTypeAsNotice = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
+            selectCommunicationTypeAsNotice.selectFromDropdown().selectByVisibleText("Notice");
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
         } catch (Exception E) {
@@ -222,11 +255,11 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchReleaseTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath("//input[@placeholder='Search Communication Series']"));
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.sendKeys(seriesName);
-            Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector("select[displayname='Communication Type']");
-            selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByVisibleText("Release");
+            Element selectCommunicationTypeAsRelease = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
+            selectCommunicationTypeAsRelease.selectFromDropdown().selectByVisibleText("Release");
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
         } catch (Exception E) {
@@ -235,22 +268,56 @@ public class CaseCommunicationFactories extends BaseModule {
         }
     }
 
-    public void goToEditCustodianCommunicationPage(String seriesName) {
+    public void goToEditCustodianCommunicationPage(String seriesName) throws InterruptedException {
         searchCustodianTypeSeriesByName(seriesName);
-        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication")).Click();
+        driver.waitForPageToBeReady();
+        WebElement tinyMCE = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("tinyMCE")));
+        while (!tinyMCE.isDisplayed()) {
+            driver.getWebDriver().navigate().refresh();
+            Thread.sleep(1500);
+        }
         driver.waitForPageToBeReady();
     }
 
     public void goToEditNonCustodianCommunicationPage(String seriesName) {
         searchNonCustodianTypeSeriesByName(seriesName);
-        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication")).Click();
         driver.waitForPageToBeReady();
     }
 
     public void goToEditReleaseCommunicationPage(String seriesName) {
         searchReleaseTypeSeriesByName(seriesName);
-        driver.FindElementByCssSelector("img[title='Edit Communication']").Click();
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication")).Click();
         driver.waitForPageToBeReady();
     }
+
+    public void verifyPostSendForCustodianSeries(String seriesName) throws InterruptedException {
+        try {
+            searchCustodianTypeSeriesByName(seriesName);
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            String lastSentDate = lastSentDateCell.getText();
+            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
+            seriesNameColumnFilterBox.clear();
+            while (lastSentDate.equalsIgnoreCase("")) {
+                Thread.sleep(1000);
+                driver.getWebDriver().navigate().refresh();
+                searchCustodianTypeSeriesByName(seriesName);
+                lastSentDate = lastSentDateCell.getText();
+            }
+            seriesNameColumnFilterBox.clear();
+            goToEditCustodianCommunicationPage(seriesName);
+            Element inputSeriesName = driver.FindElementById(locatorReader.getobjectLocator("inputSeriesName"));
+            Element acknowledgmentSentDateTableCell = driver.FindElementByCssSelector("td[communication-schedule-type='0']");
+            String acknowledgmentSentDate = acknowledgmentSentDateTableCell.getText();
+            if (!inputSeriesName.Enabled() && acknowledgmentSentDate.equalsIgnoreCase(lastSentDate)) {
+                System.out.println("The communication series: " + seriesName + ", is in Post-Send mode");
+            }
+        }catch (Exception e){
+            System.out.println("The communication series: " + seriesName + ", is NOT in Post-Send mode");
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 }
