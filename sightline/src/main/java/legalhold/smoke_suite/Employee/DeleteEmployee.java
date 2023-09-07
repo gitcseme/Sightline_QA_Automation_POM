@@ -16,11 +16,11 @@ public class DeleteEmployee extends BaseModule {
 
     public void deleteCreatedEmployee() throws InterruptedException {
         driver.waitForPageToBeReady();
-        Element deleteButton = driver.FindElementByCssSelector("img[title='Delete Employee']");
+        Element deleteButton = driver.FindElementByCssSelector(locatorReader.getobjectLocator("employeeDeleteButton"));
 
         deleteButton.Click();
 
-        Element confirmDelete = driver.FindElementById("deletebutton");
+        Element confirmDelete = driver.FindElementById(locatorReader.getobjectLocator("deleteConfirmButton"));
         wait.until(ExpectedConditions.elementToBeClickable(confirmDelete.getWebElement()));
         driver.waitForPageToBeReady();
         confirmDelete.Click();
