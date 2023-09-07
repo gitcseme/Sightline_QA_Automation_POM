@@ -26,7 +26,7 @@ public class CreateEmployee extends BaseModule {
         super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
     }
 
-    public String CreateEmployeeManually() {
+    public String CreateEmployeeManually() throws InterruptedException {
 
         //Click Manage Employee dropdown
         Element manageEmployeeDropdown = driver.FindElementById(locatorReader.getobjectLocator("manageEmployeeDropdown"));
@@ -85,11 +85,13 @@ public class CreateEmployee extends BaseModule {
 
         WebElement AddEmployeeSubmit = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("add-employee-submit-btn")));
         AddEmployeeSubmit.click();
+        driver.waitForPageToBeReady();
+        Thread.sleep(5000);
         return id;
     }
 
 
-    public void verifyEmployeeCreation(String id) throws InterruptedException, IOException {
+    public void verifyEmployeeId(String id) throws InterruptedException, IOException {
 
         driver.waitForPageToBeReady();
 
