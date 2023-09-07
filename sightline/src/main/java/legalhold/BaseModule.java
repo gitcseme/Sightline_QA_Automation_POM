@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import legalhold.ModuleStep.ModuleStep;
 import legalhold.utilities.parse_locators.LocatorReader;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import pageFactory.BaseClass;
@@ -35,6 +36,7 @@ public class BaseModule {
     List<ModuleStep> itemList;
     protected LoginPage login;
     protected Map<String, String> elementValueMapping = new HashMap<>();
+    protected JavascriptExecutor jsExecutor;
 
 
     public BaseModule(String selectorFilename, Driver driver) throws IOException {
@@ -46,6 +48,7 @@ public class BaseModule {
         softAssert = new SoftAssert();
         wait = new CustomWebDriverWait(driver.getWebDriver(),30);
         login = new LoginPage(driver);
+        jsExecutor = (JavascriptExecutor) driver.getWebDriver();
     }
 
     public BaseModule(Driver driver) throws IOException {
