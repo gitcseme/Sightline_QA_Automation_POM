@@ -12,6 +12,8 @@ import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import legalhold.sprint_36.testcases.Sprint36CasePage;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -43,10 +45,14 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
     }
+    @BeforeClass(alwaysRun = true)
+    public void login() throws IOException {
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+    }
 
     @Test(priority = 1, description = "Creating a case with compliance reminder schedule as Maximum 1.")
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+
         createdCase = createCase.createRandomCases();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
@@ -76,16 +82,14 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     @Test(priority = 4, description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
     public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
-
         caseFactories.NavigateToCommunicationsTab();
         caseCommunicationFactories.goToCreateCustodianCommunicationPage();
-        sprint36CasePage.goToCreateCustodianCommunicationPage();
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
         caseCommunicationFactories.addMailToRecipients();
         caseCommunicationFactories.enterCommunicationNameAndDescription();
-        caseCommunicationFactories.enterAcknowledgmentEmailSubject();
+        caseCommunicationFactories.enterAcknowledgmentEmailSubject("Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
                 "[ACKNOWLEDGMENT LINK]\n" +
                 "[CUSTODIAN PORTAL LINK]");
@@ -95,8 +99,23 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     @Test(priority = 5, description = "Editing the series created from previous case with new Maximum number.")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
-        sprint36CasePage.seriescomplianceReminderOnlyMaximumNumberSet(2);
-        caseCommunicationFactories.saveCommunicationSeries();
+//        sprint36CasePage.seriesComplianceReminderOnlyMaximumNumberSet(2);
+        caseCommunicationFactories.enableComplianceReminder();
+        caseCommunicationFactories.setComplianceReminderAsOneTime();
+        caseCommunicationFactories.openComplianceReminderSubTab();
+        caseCommunicationFactories.enterCommunicationNameAndDescription();
+        caseCommunicationFactories.enterComplianceReminderEmailSubject("Automated Compliance Reminder email for [CASE NAME]");
+        caseCommunicationFactories.typeEmailBody("Email Type: Compliance Reminder\n" +
+                "[ACKNOWLEDGMENT LINK]\n" +
+                "[CUSTODIAN PORTAL LINK]");
+
+        caseCommunicationFactories.startCommunicationSeries();
+        caseCommunicationFactories.verifyPostSendForCustodianSeries(createdCommunicationSeries);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void closeBrowser(){
+        driver.close();
     }
 
 

@@ -40,7 +40,7 @@ public class Sprint36CasePage extends BaseModule {
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
-    public void seriescomplianceReminderOnlyMaximumNumberSet(int max) {
+    public void seriesComplianceReminderOnlyMaximumNumberSet(int max) {
         driver.FindElementByCssSelector(seriesReader.getobjectLocator("btnComplianceReminderSchedule")).waitAndClick(30);
         Element btnMax = driver.FindElementByXPath(reader.getobjectLocator("btnMaximumNumber"));
         if (!btnMax.Selected()) {
