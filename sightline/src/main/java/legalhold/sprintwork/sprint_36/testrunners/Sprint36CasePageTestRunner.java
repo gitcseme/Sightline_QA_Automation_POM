@@ -1,8 +1,8 @@
-package legalhold.sprint_36.testrunners;
+package legalhold.sprintwork.sprint_36.testrunners;
 
 
 import com.github.javafaker.Faker;
-import legalhold.BaseRunner;
+import legalhold.setup.BaseRunner;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
@@ -10,10 +10,8 @@ import legalhold.legalholdpagefactory.template.TemplateFactories;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
 import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
-import legalhold.sprint_36.testcases.Sprint36CasePage;
+import legalhold.sprintwork.sprint_36.testcases.Sprint36CasePage;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -44,10 +42,6 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         navigation = new Module_Navigation(driver);
         addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
-    }
-    @BeforeClass(alwaysRun = true)
-    public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
     }
 
     @Test(priority = 1, description = "Creating a case with compliance reminder schedule as Maximum 1.")
@@ -112,11 +106,4 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.startCommunicationSeries();
         caseCommunicationFactories.verifyPostSendForCustodianSeries(createdCommunicationSeries);
     }
-
-    @AfterClass(alwaysRun = true)
-    public void closeBrowser(){
-        driver.close();
-    }
-
-
 }

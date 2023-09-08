@@ -1,4 +1,4 @@
-package legalhold;
+package legalhold.setup;
 
 import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;

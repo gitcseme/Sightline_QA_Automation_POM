@@ -2,7 +2,8 @@ package legalhold.legalholdpagefactory.cases;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
+import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,9 +15,11 @@ import java.util.List;
 public class CaseFactories extends BaseModule {
 
     List<WebElement> ManageCaseTabs;
+    LocatorReader reader;
     public CaseFactories(Driver driver) throws IOException {
 
         super("./src/main/java/legalhold/selectors/cases/casepage.properties", driver);
+        reader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties");
     }
 
     public void ManageCaseTabsNavigation(){
@@ -47,11 +50,14 @@ public class CaseFactories extends BaseModule {
         }
     }
     public void saveCase() throws InterruptedException {
-        driver.FindElementById("manageCaseSubmitBtn").Click();
-        driver.FindElementById("modalCaseConfirmOkbutton").Click();
-        String successToast = driver.FindElementByXPath("//p[normalize-space()='Success message. Case updated successfully']").getText();
+        Element btnCaseSave = driver.FindElementById(reader.getobjectLocator("manageCaseSubmitBtn"));
+        driver.scrollingToElementofAPage(btnCaseSave);
+        btnCaseSave.waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("caseSaveModalConfirmOkbutton")).Click();
+        String successToast = driver.FindElementByXPath(reader.getobjectLocator("caseSaveSuccessToastMessage")).getText();
         Assert.assertTrue(successToast.contains("Case updated successfully"));
         Thread.sleep(5000);
+        driver.waitForPageToBeReady();
     }
 
     public  void NavigateToCaseInformationTab(){

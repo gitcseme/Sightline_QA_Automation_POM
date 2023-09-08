@@ -1,21 +1,14 @@
 package legalhold.smoke_suite.manageCase;
 
-import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import cucumber.api.java8.El;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.utilities.parse_locators.LocatorReader;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
-import java.util.List;
 
 public class AddCaseCustodian extends BaseModule {
 
