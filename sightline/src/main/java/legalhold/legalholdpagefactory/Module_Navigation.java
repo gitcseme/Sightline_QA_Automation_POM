@@ -1,7 +1,7 @@
 package legalhold.legalholdpagefactory;
 
 import automationLibrary.Driver;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
