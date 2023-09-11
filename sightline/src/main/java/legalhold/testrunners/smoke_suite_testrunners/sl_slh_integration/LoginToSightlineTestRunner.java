@@ -1,9 +1,15 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
+import legalhold.legalholdpagefactory.Module_Navigation;
+import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.setup.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 
+import legalhold.smoke_suite.Employee.CreateEmployee;
+import legalhold.smoke_suite.Employee.DeleteEmployee;
+import legalhold.smoke_suite.Employee.EditEmployee;
+import legalhold.smoke_suite.Employee.UploadEmployee;
 import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import org.testng.annotations.Test;
@@ -25,15 +31,15 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 ////        String caseName = createCase.createRandomCase();
 ////        System.out.println("Created case name is: " + caseName);
 //    }
-
-    @Test(priority = 1)
-    public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
-        LoginToSightline loginToSightline = new LoginToSightline(driver);
-
-
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
-
-    }
+//
+//    @Test(priority = 1)
+//    public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
+//        LoginToSightline loginToSightline = new LoginToSightline(driver);
+//
+//
+//        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+//
+//    }
 
     @Test(priority = 2)
     public void CreateRandomEmployee() throws IOException, InterruptedException {
@@ -59,25 +65,25 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         uploadEmployee.uploadInvalidEmployee();
     }
 
-//    @Test(priority = 3)
-//    public void custodian() throws IOException, InterruptedException {
-//
-//
-//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
-//        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
-//
-//
-//        CreateCustodian.navigationToCustodianTab();
-//        CreateCustodian.upLoadCustodians();
-//        CaseFactories caseFactories = new CaseFactories(driver);
-//        caseFactories.NavigateToCommunicationsTab();
-//        addRecipients.goToCreateCustodianCommunicationPage();
+    @Test(priority = 3)
+    public void custodian() throws IOException, InterruptedException {
+
+
+        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+
+
+        CreateCustodian.navigationToCustodianTab();
+        CreateCustodian.upLoadCustodians();
+        CaseFactories caseFactories = new CaseFactories(driver);
+        caseFactories.NavigateToCommunicationsTab();
+        addRecipients.goToCreateCustodianCommunicationPage();
+        addRecipients.addMailToRecipients();
 //        addRecipients.addMailToRecipients();
-////        addRecipients.addMailToRecipients();
-//
-//
-//
-//    }
+
+
+
+    }
 
 //    @Test
 //    public void test() throws IOException {

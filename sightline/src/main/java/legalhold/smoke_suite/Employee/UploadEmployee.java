@@ -4,7 +4,7 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import cucumber.api.java8.El;
 import cucumber.api.java8.Th;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,8 +16,8 @@ public class UploadEmployee extends BaseModule {
     LocatorReader reader;
 
     public UploadEmployee(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
-        reader = new LocatorReader("./src/main/java/legalhold/selectors/sl_slh_integration/uploadFile.properties");
+        super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
+        reader = new LocatorReader("src/main/java/legalhold/selectors/uploadFile.properties");
     }
 
     public void uploadValidEmployee() throws InterruptedException {

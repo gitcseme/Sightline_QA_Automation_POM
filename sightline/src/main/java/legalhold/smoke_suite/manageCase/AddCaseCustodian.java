@@ -14,8 +14,8 @@ public class AddCaseCustodian extends BaseModule {
 
     LocatorReader reader;
     public AddCaseCustodian(Driver driver) throws IOException {
-        super("src/main/java/legalhold/selectors/cases/manage_case/custodian2/custodian.properties", driver);
-        reader = new LocatorReader("./src/main/java/legalhold/selectors/sl_slh_integration/uploadFile.properties");
+        super("src/main/java/legalhold/selectors/cases/manage_case/custodian/custodian.properties", driver);
+        reader = new LocatorReader("src/main/java/legalhold/selectors/uploadFile.properties");
     }
 
     public void navigationToCustodianTab() throws IOException {
