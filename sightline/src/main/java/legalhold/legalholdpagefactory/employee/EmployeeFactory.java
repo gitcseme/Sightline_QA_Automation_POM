@@ -12,7 +12,7 @@ public class EmployeeFactory extends BaseModule {
 
 
     public EmployeeFactory(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
+        super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
     }
 
 
