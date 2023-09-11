@@ -1,5 +1,7 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
+import legalhold.legalholdpagefactory.Module_Navigation;
+import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.setup.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -7,6 +9,7 @@ import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.smoke_suite.Employee.CreateEmployee;
 import legalhold.smoke_suite.Employee.DeleteEmployee;
 import legalhold.smoke_suite.Employee.EditEmployee;
+import legalhold.smoke_suite.Employee.UploadEmployee;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
 
 import legalhold.legalholdpagefactory.Module_Navigation;
@@ -33,15 +36,15 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 ////        String caseName = createCase.createRandomCase();
 ////        System.out.println("Created case name is: " + caseName);
 //    }
-
-    @Test(priority = 1)
-    public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
-        LoginToSightline loginToSightline = new LoginToSightline(driver);
-
-
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
-
-    }
+//
+//    @Test(priority = 1)
+//    public void domainAdminLogin() throws IOException, ParseException, InterruptedException {
+//        LoginToSightline loginToSightline = new LoginToSightline(driver);
+//
+//
+//        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
+//
+//    }
 
     @Test(priority = 2)
     public void CreateRandomEmployee() throws IOException, InterruptedException {
@@ -50,6 +53,7 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         CreateEmployee createEmployee = new CreateEmployee(driver);
         EditEmployee editEmployee = new EditEmployee(driver);
         DeleteEmployee deleteEmployee = new DeleteEmployee(driver);
+        UploadEmployee uploadEmployee = new UploadEmployee(driver);
 
         navigateToEmployeeTab.navigateToEmployeeTAB();
 
@@ -59,23 +63,32 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         String editedId = editEmployee.EditCreatedEmployee(id);
         createEmployee.verifyEmployeeId(editedId);
         deleteEmployee.deleteCreatedEmployee();
+        driver.waitForPageToBeReady();
+        uploadEmployee.uploadValidEmployee();
+        navigateToEmployeeTab.navigateToEmployeeTAB();
+        driver.waitForPageToBeReady();
+        uploadEmployee.uploadInvalidEmployee();
     }
-//
-//    @Test(priority = 3)
-//    public void custodian() throws IOException, InterruptedException {
-//
-//
-//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
-//        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
-//
-//
-//        CreateCustodian.navigationToCustodianTab();
-////        CreateCustodian.upLoadCustodians();
-//        addRecipients.AddMailtoRecipients();
-//
-//
-//
-//    }
+
+    @Test(priority = 3)
+    public void custodian() throws IOException, InterruptedException {
+
+
+        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+
+
+        CreateCustodian.navigationToCustodianTab();
+        CreateCustodian.upLoadCustodians();
+        CaseFactories caseFactories = new CaseFactories(driver);
+        caseFactories.NavigateToCommunicationsTab();
+        addRecipients.goToCreateCustodianCommunicationPage();
+        addRecipients.addMailToRecipients();
+//        addRecipients.addMailToRecipients();
+
+
+
+    }
 
 //    @Test
 //    public void test() throws IOException {

@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 
 public class CreateEmployee extends BaseModule {
     public CreateEmployee(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
+        super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
     }
 
     public String CreateEmployeeManually() throws InterruptedException {

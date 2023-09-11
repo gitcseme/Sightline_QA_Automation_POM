@@ -38,7 +38,7 @@ public class BaseRunner {
 
     @BeforeClass(alwaysRun = true)
     public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Tokyo");
     }
 
     @AfterClass(alwaysRun = true)

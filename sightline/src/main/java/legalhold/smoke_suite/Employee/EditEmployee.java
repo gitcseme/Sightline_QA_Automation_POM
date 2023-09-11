@@ -3,8 +3,8 @@ package legalhold.smoke_suite.Employee;
 import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import legalhold.BaseModule;
 import legalhold.legalholdpagefactory.employee.EmployeeFactory;
+import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 
 public class EditEmployee extends BaseModule {
     public EditEmployee(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
+        super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
     }
 
     public String EditCreatedEmployee(String employeeID) throws IOException, InterruptedException {

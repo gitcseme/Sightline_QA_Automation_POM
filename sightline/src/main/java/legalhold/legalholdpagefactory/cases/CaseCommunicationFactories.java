@@ -162,36 +162,36 @@ public class CaseCommunicationFactories extends BaseModule {
     public void addMailToRecipients() throws IOException, InterruptedException {
 
 
-        Element addMailToRecipientButton = driver.FindElementByClassName("mail-to-recipients");
+        Element addMailToRecipientButton = driver.FindElementByClassName(locatorReader.getobjectLocator("addMailtoRecipientButton"));
         wait.until(ExpectedConditions.elementToBeClickable(addMailToRecipientButton.getWebElement()));
         addMailToRecipientButton.Click();
 
-        Element availableTableEmployeeId = driver.FindElementByXPath("//table[@id='id-CommunicationAvailableMailTo']//thead//tr//th//input[@placeholder='Search Employee ID']");
+        Element availableTableEmployeeId = driver.FindElementByXPath(locatorReader.getobjectLocator("availableTableEmployeeId"));
         availableTableEmployeeId.Clear();
         availableTableEmployeeId.Click();
         availableTableEmployeeId.SendKeys("SLH-1");
 
 
-        Element selectAllCheckBox = driver.FindElementByCssSelector("input[name='th-CommunicationAvailableMailTochkBoxAll']");
+        Element selectAllCheckBox = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllCheckbox"));
         wait.until(ExpectedConditions.elementToBeClickable(selectAllCheckBox.getWebElement()));
         Thread.sleep(5000);
         selectAllCheckBox.Click();
 
-        Element addCustodiansButton = driver.FindElementById("add-user-MailToTab");
+        Element addCustodiansButton = driver.FindElementById(locatorReader.getobjectLocator("addCustodiansButton"));
         addCustodiansButton.Click();
 
 
-        Element confirmationModalOkButton = driver.FindElementById("modal-ok-MailToTab");
+        Element confirmationModalOkButton = driver.FindElementById(locatorReader.getobjectLocator("mailtoConfirmationOkBtn"));
         wait.until(ExpectedConditions.elementToBeClickable(confirmationModalOkButton.getWebElement()));
         confirmationModalOkButton.Click();
 
-        Element globalSaveButtonManageRecipients = driver.FindElementById("saveAndDoneButtonId");
+        Element globalSaveButtonManageRecipients = driver.FindElementById(locatorReader.getobjectLocator("manageRecipientsGlobalSveBtn"));
         driver.scrollingToElementofAPage(globalSaveButtonManageRecipients);
         wait.until(ExpectedConditions.elementToBeClickable(globalSaveButtonManageRecipients.getWebElement()));
         Thread.sleep(3000);
         globalSaveButtonManageRecipients.Click();
 
-        Element confirmationOkButton = driver.FindElementById("modalConfirmOkbutton");
+        Element confirmationOkButton = driver.FindElementById(locatorReader.getobjectLocator("manageRecipientsGlobalSaveOkBtn"));
         wait.until(ExpectedConditions.elementToBeClickable(confirmationOkButton.getWebElement()));
         confirmationOkButton.Click();
     }

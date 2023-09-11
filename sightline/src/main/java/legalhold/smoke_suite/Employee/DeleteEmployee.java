@@ -2,7 +2,7 @@ package legalhold.smoke_suite.Employee;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class DeleteEmployee extends BaseModule {
     public DeleteEmployee(Driver driver) throws IOException {
-        super("./src/main/java/legalhold/selectors/sl_slh_integration/employees.properties", driver);
+        super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
     }
 
     public void deleteCreatedEmployee() throws InterruptedException {
