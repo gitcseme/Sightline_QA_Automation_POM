@@ -9,7 +9,11 @@ import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.smoke_suite.Employee.CreateEmployee;
 import legalhold.smoke_suite.Employee.DeleteEmployee;
 import legalhold.smoke_suite.Employee.EditEmployee;
-import legalhold.smoke_suite.Employee.UploadEmployee;
+import legalhold.smoke_suite.cases.create_case.CreateCase;
+
+import legalhold.legalholdpagefactory.Module_Navigation;
+
+
 import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import org.testng.annotations.Test;
