@@ -5,32 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="Demo Change">
-      <change afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/BaseRunner.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/environment/Setup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/Setup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/ManageAttachmentFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/ManageAttachmentFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/SurveyFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/SurveyFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/user_permission/UserPermissionFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/user_permission/UserPermissionFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/employee/EmployeeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/employee/EmployeeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/login/LoginWithToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/login_logout/LoginWithToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/mailbox/MailboxFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/mailbox/MailboxFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/cases/create_case/CreateCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/employee/CreateEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/employee/CreateEmployee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/sl_slh_integration/login_to_sightline/LoginToSightline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testcases/Sprint36CasePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testcases/Sprint36CasePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_37/testcase/Sprint37.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_37/testcase/Sprint37.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/login_logout/LoginWithToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/login_logout/LoginWithToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +112,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoginWithToken.loginToLegalHoldWithToken" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.legalholdpagefactory.login_logout.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.legalholdpagefactory.login_logout" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.legalholdpagefactory.login_logout.LoginWithToken" />
+      <option name="METHOD_NAME" value="loginToLegalHoldWithToken" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run36" type="TestNG">
       <module name="sightline" />
       <shortenClasspath name="NONE" />
@@ -149,24 +145,6 @@
         <value defaultName="moduleWithDependencies" />
       </option>
       <option name="PROPERTIES_FILE" value="" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Sprint36CasePageTestRunner.runSprint36CasePage" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="sightline" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="legalhold.sprint_36.testrunners.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
-      <option name="METHOD_NAME" value="runSprint36CasePage" />
-      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
@@ -213,17 +191,17 @@
       <item itemvalue="TestNG.Run36" />
       <item itemvalue="TestNG.LoginToSightlineTestRunner" />
       <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-      <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
+      <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner" />
         <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
-        <item itemvalue="TestNG.Sprint36CasePageTestRunner.runSprint36CasePage" />
       </list>
     </recent_temporary>
   </component>
