@@ -1,23 +1,11 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
-import akka.stream.impl.Always;
-import automationLibrary.Element;
-import legalhold.BaseRunner;
+import legalhold.setup.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
-import legalhold.legalholdpagefactory.cases.CaseFactories;
-import legalhold.smoke_suite.Employee.CreateEmployee;
-import legalhold.smoke_suite.Employee.DeleteEmployee;
-import legalhold.smoke_suite.Employee.EditEmployee;
-import legalhold.smoke_suite.Employee.UploadEmployee;
-import legalhold.smoke_suite.cases.create_case.CreateCase;
-
-import legalhold.legalholdpagefactory.Module_Navigation;
 
 import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package legalhold.smoke_suite.sl_slh_integration.login_to_sightline;
 
 import automationLibrary.Driver;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import testScriptsSmoke.Input;
 

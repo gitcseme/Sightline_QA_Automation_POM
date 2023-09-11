@@ -1,13 +1,10 @@
 package legalhold.legalholdpagefactory.employee;
 
-import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import views.html.defaultpages.error;
 
 import java.io.IOException;
 
