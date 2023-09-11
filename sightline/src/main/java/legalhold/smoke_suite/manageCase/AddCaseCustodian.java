@@ -4,6 +4,7 @@ import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import cucumber.api.java8.El;
+import cucumber.api.java8.Th;
 import legalhold.BaseModule;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
@@ -72,6 +73,7 @@ public class AddCaseCustodian extends BaseModule {
         driver.scrollingToBottomofAPage();
 
         wait.until(ExpectedConditions.elementToBeClickable(custodianGlobalSave.getWebElement()));
+        Thread.sleep(2000);
         custodianGlobalSave.Click();
 
         Element okButton = driver.FindElementById(locatorReader.getobjectLocator("CustodianSaveConfirmationOk"));

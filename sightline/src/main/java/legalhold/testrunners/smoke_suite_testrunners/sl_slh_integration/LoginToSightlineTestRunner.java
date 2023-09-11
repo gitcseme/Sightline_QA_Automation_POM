@@ -5,9 +5,11 @@ import automationLibrary.Element;
 import legalhold.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
+import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.smoke_suite.Employee.CreateEmployee;
 import legalhold.smoke_suite.Employee.DeleteEmployee;
 import legalhold.smoke_suite.Employee.EditEmployee;
+import legalhold.smoke_suite.Employee.UploadEmployee;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
 
 import legalhold.legalholdpagefactory.Module_Navigation;
@@ -52,6 +54,7 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         CreateEmployee createEmployee = new CreateEmployee(driver);
         EditEmployee editEmployee = new EditEmployee(driver);
         DeleteEmployee deleteEmployee = new DeleteEmployee(driver);
+        UploadEmployee uploadEmployee = new UploadEmployee(driver);
 
         navigateToEmployeeTab.navigateToEmployeeTAB();
 
@@ -61,8 +64,13 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         String editedId = editEmployee.EditCreatedEmployee(id);
         createEmployee.verifyEmployeeId(editedId);
         deleteEmployee.deleteCreatedEmployee();
+        driver.waitForPageToBeReady();
+        uploadEmployee.uploadValidEmployee();
+        navigateToEmployeeTab.navigateToEmployeeTAB();
+        driver.waitForPageToBeReady();
+        uploadEmployee.uploadInvalidEmployee();
     }
-//
+
 //    @Test(priority = 3)
 //    public void custodian() throws IOException, InterruptedException {
 //
@@ -72,8 +80,12 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 //
 //
 //        CreateCustodian.navigationToCustodianTab();
-////        CreateCustodian.upLoadCustodians();
-//        addRecipients.AddMailtoRecipients();
+//        CreateCustodian.upLoadCustodians();
+//        CaseFactories caseFactories = new CaseFactories(driver);
+//        caseFactories.NavigateToCommunicationsTab();
+//        addRecipients.goToCreateCustodianCommunicationPage();
+//        addRecipients.addMailToRecipients();
+////        addRecipients.addMailToRecipients();
 //
 //
 //
