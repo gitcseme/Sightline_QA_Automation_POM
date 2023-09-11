@@ -4,6 +4,14 @@ import legalhold.setup.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 
+import legalhold.smoke_suite.Employee.CreateEmployee;
+import legalhold.smoke_suite.Employee.DeleteEmployee;
+import legalhold.smoke_suite.Employee.EditEmployee;
+import legalhold.smoke_suite.cases.create_case.CreateCase;
+
+import legalhold.legalholdpagefactory.Module_Navigation;
+
+
 import legalhold.smoke_suite.manageCase.AddCaseCustodian;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import org.testng.annotations.Test;
@@ -31,36 +39,43 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         LoginToSightline loginToSightline = new LoginToSightline(driver);
 
 
-        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Infinity Domain Expansion");
+        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
 
     }
 
-//    @Test(priority = 2)
-//    public void CreateRandomEmployee() throws IOException, InterruptedException {
-//        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+    @Test(priority = 2)
+    public void CreateRandomEmployee() throws IOException, InterruptedException {
+        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+
+        CreateEmployee createEmployee = new CreateEmployee(driver);
+        EditEmployee editEmployee = new EditEmployee(driver);
+        DeleteEmployee deleteEmployee = new DeleteEmployee(driver);
+
+        navigateToEmployeeTab.navigateToEmployeeTAB();
+
+         String id = createEmployee.CreateEmployeeManually();
+        createEmployee.verifyEmployeeId(id);
+        System.out.println(id);
+        String editedId = editEmployee.EditCreatedEmployee(id);
+        createEmployee.verifyEmployeeId(editedId);
+        deleteEmployee.deleteCreatedEmployee();
+    }
 //
-//        CreateEmployee createEmployee = new CreateEmployee(driver);
-//        navigateToEmployeeTab.navigateToEmployeeTAB();
+//    @Test(priority = 3)
+//    public void custodian() throws IOException, InterruptedException {
 //
-//         String id = createEmployee.CreateEmployeeManually();
-//        createEmployee.verifyEmployeeCreation(id);
-//    }
-
-    @Test(priority = 3)
-    public void custodian() throws IOException, InterruptedException {
-
-
-        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
-        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
-
-
+//
+//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+//        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+//
+//
 //        CreateCustodian.navigationToCustodianTab();
 ////        CreateCustodian.upLoadCustodians();
 //        addRecipients.AddMailtoRecipients();
-
-
-
-    }
+//
+//
+//
+//    }
 
 //    @Test
 //    public void test() throws IOException {

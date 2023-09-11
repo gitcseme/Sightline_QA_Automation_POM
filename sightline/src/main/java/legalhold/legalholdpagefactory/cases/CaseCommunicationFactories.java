@@ -160,28 +160,18 @@ public class CaseCommunicationFactories extends BaseModule {
     }
 
     public void addMailToRecipients() throws IOException, InterruptedException {
-//        CaseFactories navigateToCommunicationsTab = new CaseFactories(driver);
-//        navigateToCommunicationsTab.NavigateToCommunicationsTab();
-//        goToCreateCustodianCommunicationPage();
-//
-//        driver.waitForPageToBeReady();
+
 
         Element addMailToRecipientButton = driver.FindElementByClassName("mail-to-recipients");
         wait.until(ExpectedConditions.elementToBeClickable(addMailToRecipientButton.getWebElement()));
         addMailToRecipientButton.Click();
 
-
-//            Element clearFilter = driver.FindElementByCssSelector("button[id='CommunicationAvailableMailTo-clear-filter-btn'] img[title='Clear Active Filters']");
-//            clearFilter.Click();
         Element availableTableEmployeeId = driver.FindElementByXPath("//table[@id='id-CommunicationAvailableMailTo']//thead//tr//th//input[@placeholder='Search Employee ID']");
         availableTableEmployeeId.Clear();
         availableTableEmployeeId.Click();
         availableTableEmployeeId.SendKeys("SLH-1");
 
 
-//        TableFilteringVarification();
-
-//        Element checkBox = driver.FindElementByCssSelector("input[name='td-CommunicationAvailableMailTochkBoxAll']");
         Element selectAllCheckBox = driver.FindElementByCssSelector("input[name='th-CommunicationAvailableMailTochkBoxAll']");
         wait.until(ExpectedConditions.elementToBeClickable(selectAllCheckBox.getWebElement()));
         Thread.sleep(5000);
