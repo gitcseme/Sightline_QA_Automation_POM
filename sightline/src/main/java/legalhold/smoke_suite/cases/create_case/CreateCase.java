@@ -1,18 +1,9 @@
 package legalhold.smoke_suite.cases.create_case;
 
 import automationLibrary.Driver;
-import automationLibrary.Element;
-import automationLibrary.ElementCollection;
-import cucumber.api.java.lv.Tad;
-import legalhold.BaseModule;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import scala.xml.Elem;
-import testScriptsSmoke.Input;
+import legalhold.setup.BaseModule;
 
 import java.io.IOException;
-import java.util.Properties;
-import java.util.concurrent.Callable;
 
 public class CreateCase extends BaseModule {
 
@@ -24,7 +15,7 @@ public class CreateCase extends BaseModule {
 
         LoadMoudleActionSteps("./src/main/java/legalhold/ModuleStep/CreateCaseSteps.json");
 
-        String caseName = faker.food().dish()+" "+ faker.animal().name();
+        String caseName = faker.food().dish()+" "+ faker.animal().name()+" "+faker.color().name();
         elementValueMapping.put("txtCaseName",caseName);
         super.Run();
         return caseName;

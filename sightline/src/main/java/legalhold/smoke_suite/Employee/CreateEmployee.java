@@ -2,23 +2,14 @@ package legalhold.smoke_suite.Employee;
 import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import automationLibrary.ElementCollection;
-import bsh.util.JConsole;
-import com.github.javafaker.Faker;
-import cucumber.api.java8.El;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import legalhold.legalholdpagefactory.employee.EmployeeFactory;
-import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-
 
 
 public class CreateEmployee extends BaseModule {

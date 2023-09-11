@@ -1,15 +1,12 @@
-package legalhold.sprint_36.testcases;
+package legalhold.sprintwork.sprint_36.testcases;
 
 import automationLibrary.Driver;
 
 
 import automationLibrary.Element;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.utilities.parse_locators.LocatorReader;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.IOException;
 
@@ -33,6 +30,7 @@ public class Sprint36CasePage extends BaseModule {
         Element btnMax = driver.FindElementByXPath(reader.getobjectLocator("btnMaximumNumber"));
         if (!btnMax.Selected()) {
             btnMax.Click();
+
         }
         driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumber")).Clear();
 

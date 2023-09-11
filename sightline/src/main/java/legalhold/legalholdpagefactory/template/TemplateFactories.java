@@ -2,7 +2,7 @@ package legalhold.legalholdpagefactory.template;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import legalhold.BaseModule;
+import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
