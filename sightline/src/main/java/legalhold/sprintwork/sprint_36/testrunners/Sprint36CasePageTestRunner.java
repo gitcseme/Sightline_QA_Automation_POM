@@ -50,7 +50,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         createdCase = createCase.createRandomCases();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
-        sprint36CasePage.caseComplianceReminderOnlyMaximumNumberSet(1);
+        caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(1);
         caseFactories.saveCase();
     }
 
@@ -59,7 +59,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
         navigation.navigateToTemplatesTAB();
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
-        sprint36CasePage.caseComplianceReminderOnlyMaximumNumberSet(5);
+        caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(5);
         templateFactories.saveCaseTemplate();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
@@ -90,10 +90,9 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.saveCommunicationSeries();
     }
 
-    @Test(priority = 5, description = "Editing the series created from previous case with new Maximum number.")
+    @Test(priority = 5, description = "Starting the previously created series with Compliance Reminder One Time")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
-//        sprint36CasePage.seriesComplianceReminderOnlyMaximumNumberSet(2);
         caseCommunicationFactories.enableComplianceReminder();
         caseCommunicationFactories.setComplianceReminderAsOneTime();
         caseCommunicationFactories.openComplianceReminderSubTab();
