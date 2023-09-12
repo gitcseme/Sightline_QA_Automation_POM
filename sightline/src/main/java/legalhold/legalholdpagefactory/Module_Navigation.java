@@ -30,8 +30,6 @@ public class Module_Navigation extends BaseModule {
         GetNavList();
         sidebarElements.get(0).click();
         driver.waitForPageToBeReady();
-
-
     }
 
     public void navigateToEmployeeTAB() {

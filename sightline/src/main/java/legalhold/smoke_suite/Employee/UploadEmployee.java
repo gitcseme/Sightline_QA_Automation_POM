@@ -2,8 +2,6 @@ package legalhold.smoke_suite.Employee;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import cucumber.api.java8.El;
-import cucumber.api.java8.Th;
 import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
