@@ -262,7 +262,7 @@ public class CaseCommunicationFactories extends BaseModule {
             selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByValue("Acknowledgement");
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
-            Thread.sleep(2500);
+            Thread.sleep(3000);
         } catch (Exception E) {
             System.out.println("Case Name not found. The exception is: ");
             System.out.println(E.getMessage());
@@ -305,11 +305,11 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void goToEditCustodianCommunicationPage(String seriesName) throws InterruptedException {
         driver.waitForPageToBeReady();
-        Thread.sleep(2500);
+        Thread.sleep(4000);
         searchCustodianTypeSeriesByName(seriesName);
         WebElement btnEditSeries = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnEditCommunication")));
         wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries));
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         btnEditSeries.click();
         driver.waitForPageToBeReady();
     }
@@ -350,10 +350,10 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.clear();
             while (lastSentDate.equalsIgnoreCase("")) {
-                Thread.sleep(3000);
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchCustodianTypeSeriesByName(seriesName);
+                Thread.sleep(5000);
                 WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
@@ -385,10 +385,11 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.clear();
             while (lastSentDate.equalsIgnoreCase("")) {
-                Thread.sleep(3000);
+
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchNonCustodianTypeSeriesByName(seriesName);
+                Thread.sleep(5000);
                 WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
@@ -420,10 +421,10 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
             seriesNameColumnFilterBox.clear();
             while (lastSentDate.equalsIgnoreCase("")) {
-                Thread.sleep(3000);
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchReleaseTypeSeriesByName(seriesName);
+                Thread.sleep(5000);
                 WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();

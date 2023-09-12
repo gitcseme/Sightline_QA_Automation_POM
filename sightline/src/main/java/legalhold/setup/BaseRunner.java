@@ -84,7 +84,7 @@ public class BaseRunner {
         driver.get("https://legalholdqa.consiliotest.com" + "?token=" + token);
     }
 
-    @AfterClass(alwaysRun = true)
+//    @AfterClass(alwaysRun = true)
     public void closeBrowser() throws InterruptedException {
         logoutLegalHold.logOutFromLegalHold();
         logoutLegalHold.logOutFromSightline();
