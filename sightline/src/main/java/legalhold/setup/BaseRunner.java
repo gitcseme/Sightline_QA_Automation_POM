@@ -41,11 +41,11 @@ public class BaseRunner {
         loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Tokyo");
     }
 
-    @AfterClass(alwaysRun = true)
-    public void closeBrowser() throws InterruptedException {
-        logoutLegalHold.logOutFromLegalHold();
-        logoutLegalHold.logOutFromSightline();
-        driver.close();
-    }
+//    @AfterClass(alwaysRun = true)
+//    public void closeBrowser() throws InterruptedException {
+//        logoutLegalHold.logOutFromLegalHold();
+//        logoutLegalHold.logOutFromSightline();
+//        driver.close();
+//    }
 
 }

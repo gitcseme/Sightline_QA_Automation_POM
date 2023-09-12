@@ -78,7 +78,16 @@ public class LoginToSightlineTestRunner extends BaseRunner {
         CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
 
 
-        CreateCustodian.navigationToCustodianTab();
+        Module_Navigation caseTabNavigation = new Module_Navigation(driver);
+
+        caseTabNavigation.navigateToCaseTAB();
+
+
+        CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
+        SearchCaseandGotoEdit.goToEditCase("Automation_Test");
+
+        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+        navigateToCustodiansTab.NavigateToCustodiansTab();
         CreateCustodian.upLoadCustodians();
         CaseFactories caseFactories = new CaseFactories(driver);
         caseFactories.NavigateToCommunicationsTab();

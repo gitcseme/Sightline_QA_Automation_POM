@@ -18,23 +18,23 @@ public class AddCaseCustodian extends BaseModule {
         reader = new LocatorReader("src/main/java/legalhold/selectors/uploadFile.properties");
     }
 
-    public void navigationToCustodianTab() throws IOException {
-
-//        driver.waitForPageToBeReady();
-
-        Module_Navigation caseTabNavigation = new Module_Navigation(driver);
-
-        caseTabNavigation.navigateToCaseTAB();
-
-
-        CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
-        SearchCaseandGotoEdit.goToEditCase("Automation_Test");
-
-       CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
-       navigateToCustodiansTab.NavigateToCustodiansTab();
-
-
-    }
+//    public void navigationToCustodianTab() throws IOException {
+//
+////        driver.waitForPageToBeReady();
+//
+//        Module_Navigation caseTabNavigation = new Module_Navigation(driver);
+//
+//        caseTabNavigation.navigateToCaseTAB();
+//
+//
+//        CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
+//        SearchCaseandGotoEdit.goToEditCase("Automation_Test");
+//
+//       CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+//       navigateToCustodiansTab.NavigateToCustodiansTab();
+//
+//
+//    }
 
     public void upLoadCustodians() throws InterruptedException {
         driver.waitForPageToBeReady();
