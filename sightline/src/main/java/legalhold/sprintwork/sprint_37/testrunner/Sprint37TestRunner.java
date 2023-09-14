@@ -42,13 +42,79 @@ public class Sprint37TestRunner extends BaseRunner {
         faker = new Faker();
     }
 
-    @Test(priority = 1, description = "")
-    public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
+    @Test(priority = 1, description = "Creating a case with compliance reminder schedule as Every 2 days and Maximum 2.")
+    public void caseSaveWithCustomIntervalAndMaxNumber() throws IOException, InterruptedException {
 
+
+          createCase.createRandomCases();
+//        navigation.navigateToCaseTAB();
+//        caseFactories.goToEditCase(createdCase);
+        caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(2,2);
+        caseFactories.saveCase();
+        driver.waitForPageToBeReady();
+    }
+    @Test(priority = 2, description = "Creating a case with compliance reminder schedule as Every 3 days and Unlimited.")
+    public void caseSaveWithCustomIntervalAndUnlimited() throws IOException, InterruptedException {
+
+        navigation.navigateToCaseTAB();
         createdCase = createCase.createRandomCases();
+//        navigation.navigateToCaseTAB();
+//        caseFactories.goToEditCase(createdCase);
+        driver.waitForPageToBeReady();
+        caseFactories.setComplianceReminderAsCustomIntervalWithUnlimited(3);
+        caseFactories.saveCase();
+    }
+    @Test(priority = 3, description = "Creating a case template with Compliance Reminder schedule as Every 7 days and Maximum 7 " +
+            "and applying that template to the created case from previous test case.")
+    public void templateSaveWithCustomIntervalAndMaxNumber() throws IOException, InterruptedException {
+        navigation.navigateToTemplatesTAB();
+        createdCaseTemplate = templateFactories.createRandomCaseTemplate();
+        caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(7,7);
+        templateFactories.saveCaseTemplate();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
-        sprint37.setComplianceReminderCustomInterval();
-//        caseFactories.saveCase();
+        templateFactories.applyCaseTemplate(createdCaseTemplate);
+        caseFactories.saveCase();
+        driver.waitForPageToBeReady();
+    }
+    @Test(priority = 4,description = "Adding multiple custodian to the case created case from previous test case.")
+    public void addMultipleCustodianToACase() throws InterruptedException {
+        caseFactories.NavigateToCustodiansTab();
+        addCaseCustodian.upLoadCustodians();
+        driver.waitForPageToBeReady();
+    }
+
+    @Test(priority = 5, description = "Creating a Custodian type communication series in that case after the template from previous " +
+            "test case gets applied.")
+    public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
+        caseFactories.NavigateToCommunicationsTab();
+        caseCommunicationFactories.goToCreateCustodianCommunicationPage();
+        String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
+        softAssert.assertEquals(caseNameCommunicationPage, createdCase);
+        createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
+        caseCommunicationFactories.addMailToRecipients();
+        caseCommunicationFactories.enterCommunicationNameAndDescription();
+        caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
+        caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
+                "[ACKNOWLEDGMENT LINK]\n" +
+                "[CUSTODIAN PORTAL LINK]");
+        caseCommunicationFactories.saveCommunicationSeries();
+    }
+
+
+    @Test(priority = 6, description = "Starting the previously created series with Compliance Reminder One Time")
+    public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
+        caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
+        caseCommunicationFactories.enableComplianceReminder();
+        caseCommunicationFactories.setComplianceReminderAsOneTime();
+        caseCommunicationFactories.openComplianceReminderSubTab();
+        caseCommunicationFactories.enterCommunicationNameAndDescription();
+        caseCommunicationFactories.enterComplianceReminderEmailSubject("FA Automated Compliance Reminder email for [CASE NAME]");
+        caseCommunicationFactories.typeEmailBody("Email Type: Compliance Reminder\n" +
+                "[ACKNOWLEDGMENT LINK]\n" +
+                "[CUSTODIAN PORTAL LINK]");
+
+        caseCommunicationFactories.startCommunicationSeries();
+        caseCommunicationFactories.verifyPostSendForCustodianSeries(createdCommunicationSeries);
     }
 }

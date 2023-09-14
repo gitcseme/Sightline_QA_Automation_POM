@@ -74,6 +74,35 @@ public class AddCaseCustodian extends BaseModule {
 
 
     }
+
+    public void makeCustodianSilent() throws IOException {
+
+        Element ManageCustodianButton = driver.FindElementById(locatorReader.getobjectLocator("CustodianTab"));
+        wait.until(ExpectedConditions.elementToBeClickable(ManageCustodianButton.getWebElement()));
+        ManageCustodianButton.Click();
+
+        driver.waitForPageToBeReady();
+
+        CaseFactories caseFactories = new CaseFactories(driver);
+        caseFactories.searchManageCustodianAvailableCustodianById("SLH-Silent");
+
+        driver.FindElementByXPath("(//input[@name='td-ManageEmpTablechkBoxAll'])[1]").waitAndClick(30);
+
+        driver.FindElementById("addToCustodian").waitAndClick(20);
+        driver.FindElementById("addUserOkButton").waitAndClick(30);
+
+        Element manageCustodianGlobalSavebtn = driver.FindElementById("saveAndDoneBtnId");
+        driver.scrollingToElementofAPage(manageCustodianGlobalSavebtn);
+        manageCustodianGlobalSavebtn.waitAndClick(10);
+
+        driver.waitForPageToBeReady();
+
+        caseFactories.searchCustodianById("SLH-Silent");
+        driver.FindElementByXPath("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
+        driver.FindElementByCssSelector("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
+        driver.FindElementById("toggle_silent").waitAndClick(30);
+
+    }
 }
 
 
