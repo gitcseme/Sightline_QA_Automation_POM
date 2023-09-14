@@ -44,6 +44,24 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         faker = new Faker();
     }
 
+//    @Test
+//    public void testing() throws InterruptedException {
+//        caseFactories.goToEditCase("Pork Belly Buns wildebeest black");
+////        caseFactories.setComplianceReminderAsMonthlyUnlimited(3,12);
+////        caseFactories.setEscalationSchedule(8);
+////        caseFactories.saveCase();
+////        caseFactories.setScheduledReminderAsWeekly();
+////        caseFactories.saveCase();
+////        caseFactories.setScheduledReminderAsOneTime();
+////        caseFactories.saveCase();
+////        caseFactories.setScheduledReminderAsBiWeekly("MondaY");
+////        caseFactories.saveCase();
+////        caseFactories.setScheduledReminderAsTriWeekly("friday");
+////        caseFactories.saveCase();
+//        caseFactories.setScheduledReminderAsMonthly(6,25);
+////        caseFactories.saveCase();
+//    }
+
     @Test(priority = 1, description = "Creating a case with compliance reminder schedule as Maximum 1.")
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
 

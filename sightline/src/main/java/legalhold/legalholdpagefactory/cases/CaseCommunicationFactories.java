@@ -253,14 +253,14 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchCustodianTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-//            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
-//            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(seriesNameColumnFilterBox)));
-            seriesNameColumnFilterBox.sendKeys(seriesName);
+            seriesNameColumnFilterBox.SendKeys(seriesName);
             Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
             selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByValue("Acknowledgement");
             String expected_text = "Showing 1 to 1 of 1 entries";
+            Thread.sleep(1000);
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
             Thread.sleep(3000);
         } catch (Exception E) {
@@ -271,15 +271,16 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchNonCustodianTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-//            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
-            seriesNameColumnFilterBox.sendKeys(seriesName);
+            seriesNameColumnFilterBox.SendKeys(seriesName);
             Element selectCommunicationTypeAsNotice = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
             selectCommunicationTypeAsNotice.selectFromDropdown().selectByValue("Notice");
             String expected_text = "Showing 1 to 1 of 1 entries";
+            Thread.sleep(1000);
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
-            Thread.sleep(2500);
+            Thread.sleep(3000);
         } catch (Exception E) {
             System.out.println("Case Name not found. The exception is: ");
             System.out.println(E.getMessage());
@@ -288,15 +289,11 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchReleaseTypeSeriesByName(String seriesName) {
         try {
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-//            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
-            seriesNameColumnFilterBox.sendKeys(seriesName);
-//            Element selectCommunicationTypeAsRelease = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
-//            selectCommunicationTypeAsRelease.selectFromDropdown().selectByValue("Release");
-//            String expected_text = "Showing 1 to 1 of 1 entries";
-//            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
-            Thread.sleep(2500);
+            seriesNameColumnFilterBox.SendKeys(seriesName);
+            Thread.sleep(3000);
         } catch (Exception E) {
             System.out.println("Case Name not found. The exception is: ");
             System.out.println(E.getMessage());
@@ -307,10 +304,10 @@ public class CaseCommunicationFactories extends BaseModule {
         driver.waitForPageToBeReady();
         Thread.sleep(4000);
         searchCustodianTypeSeriesByName(seriesName);
-        WebElement btnEditSeries = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnEditCommunication")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries));
+        Element btnEditSeries = driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries.getWebElement()));
         Thread.sleep(5000);
-        btnEditSeries.click();
+        btnEditSeries.waitAndClick(30);
         driver.waitForPageToBeReady();
     }
 
@@ -318,10 +315,10 @@ public class CaseCommunicationFactories extends BaseModule {
         driver.waitForPageToBeReady();
         Thread.sleep(2500);
         searchNonCustodianTypeSeriesByName(seriesName);
-        WebElement btnEditSeries = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnEditCommunication")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries));
+        Element btnEditSeries = driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries.getWebElement()));
         Thread.sleep(3000);
-        btnEditSeries.click();
+        btnEditSeries.waitAndClick(30);
         driver.waitForPageToBeReady();
     }
 
@@ -329,10 +326,10 @@ public class CaseCommunicationFactories extends BaseModule {
         driver.waitForPageToBeReady();
         Thread.sleep(2500);
         searchReleaseTypeSeriesByName(seriesName);
-        WebElement btnEditSeries = driver.getWebDriver().findElement(By.cssSelector(locatorReader.getobjectLocator("btnEditCommunication")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries));
+        Element btnEditSeries = driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnEditCommunication"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnEditSeries.getWebElement()));
         Thread.sleep(3000);
-        btnEditSeries.click();
+        btnEditSeries.waitAndClick(30);
         driver.waitForPageToBeReady();
     }
 
@@ -343,18 +340,18 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForCustodianSeries(String seriesName) throws InterruptedException {
         try {
             searchCustodianTypeSeriesByName(seriesName);
-            WebElement lastSentDateCell = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
-            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell));
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
             String lastSentDate = lastSentDateCell.getText();
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
-            seriesNameColumnFilterBox.clear();
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
+            seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchCustodianTypeSeriesByName(seriesName);
-                Thread.sleep(5000);
-                WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
+                Thread.sleep(8000);
+                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
                 System.out.println("Last Sent Date is: " + lastSentDate);
@@ -378,19 +375,19 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForNonCustodianSeries(String seriesName) throws InterruptedException {
         try {
             searchNonCustodianTypeSeriesByName(seriesName);
-            WebElement lastSentDateCell = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
-            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell));
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
             String lastSentDate = lastSentDateCell.getText();
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
-            seriesNameColumnFilterBox.clear();
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
+            seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
 
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchNonCustodianTypeSeriesByName(seriesName);
-                Thread.sleep(5000);
-                WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
+                Thread.sleep(8000);
+                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
                 System.out.println("Last Sent Date is: " + lastSentDate);
@@ -414,18 +411,18 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForReleaseSeries(String seriesName) throws InterruptedException {
         try {
             searchReleaseTypeSeriesByName(seriesName);
-            WebElement lastSentDateCell = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
-            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell));
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
             String lastSentDate = lastSentDateCell.getText();
-            WebElement seriesNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox")));
-            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox));
-            seriesNameColumnFilterBox.clear();
+            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
+            seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
                 driver.getWebDriver().navigate().refresh();
                 driver.waitForPageToBeReady();
                 searchReleaseTypeSeriesByName(seriesName);
-                Thread.sleep(5000);
-                WebElement lastSentDateCellAfterRefresh = driver.getWebDriver().findElement(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]"));
+                Thread.sleep(8000);
+                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
                 System.out.println("Last Sent Date is: " + lastSentDate);
