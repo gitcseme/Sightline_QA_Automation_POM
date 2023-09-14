@@ -2,13 +2,14 @@ package legalhold.legalholdpagefactory.cases;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import cucumber.api.java8.El;
+import automationLibrary.ElementCollection;
 import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.io.IOException;
@@ -93,9 +94,10 @@ public class CaseFactories extends BaseModule {
     }
 
     public void setComplianceReminderAsOneTime() {
-        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnComplianceReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
-        btnComplianceReminderSchedule.click();
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
         Element btnOneTime = driver.FindElementByCssSelector(reader.getobjectLocator("btnOneTime"));
         if (!btnOneTime.Selected()) {
             btnOneTime.Click();
@@ -106,9 +108,10 @@ public class CaseFactories extends BaseModule {
     }
 
     public void setComplianceReminderAsWeeklyWithMaxNumber(int max) {
-        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnComplianceReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
-        btnComplianceReminderSchedule.click();
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
         Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
 
         btnWeekly.Click();
@@ -137,9 +140,10 @@ public class CaseFactories extends BaseModule {
     }
 
     public void setComplianceReminderAsWeeklyUnlimited() {
-        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnComplianceReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
-        btnComplianceReminderSchedule.click();
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
         Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
 
         btnWeekly.Click();
@@ -167,23 +171,20 @@ public class CaseFactories extends BaseModule {
     }
 
     public void setComplianceReminderAsBiWeeklyUnlimited(String recurringDay) {
-        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnComplianceReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
-        btnComplianceReminderSchedule.click();
-        Element btnBiTriWeekly = driver.FindElementByCssSelector("input[aria-label='Bi/Tri-Weekly']");
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
         String str = recurringDay.toLowerCase();
-        String recurringDayOfWeeek = StringUtils.capitalize(str);
+        String recurringDayOfWeek = StringUtils.capitalize(str);
 
-        if (!btnBiTriWeekly.Selected()) {
-            btnBiTriWeekly.Click();
-            Element recurringWeekDropdown = driver.FindElementByCssSelector("select[name='selectBox'][aria-label='Select a Recurring week']");
-            recurringWeekDropdown.selectFromDropdown().selectByValue("2");
-            Element recurringDayDropdown = driver.FindElementByCssSelector("select[name='selectBox'][aria-label='Select Recurring day']");
-            recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeeek);
-        } else {
-            System.out.println("Already selected as Bi/Tri Weekly");
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("2");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
 
-        }
         List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceBiTriWeekly")));
         if (!btnUnlimited.get(0).isSelected()) {
             btnUnlimited.get(0).click();
@@ -192,23 +193,20 @@ public class CaseFactories extends BaseModule {
     }
 
     public void setComplianceReminderAsBiWeeklyWithMaxNumber(String recurringDay, int max) {
-        WebElement btnComplianceReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnComplianceReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule));
-        btnComplianceReminderSchedule.click();
-        Element btnBiTriWeekly = driver.FindElementByCssSelector("input[aria-label='Bi/Tri-Weekly']");
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
         String str = recurringDay.toLowerCase();
-        String recurringDayOfWeeek = StringUtils.capitalize(str);
+        String recurringDayOfWeek = StringUtils.capitalize(str);
 
-        if (!btnBiTriWeekly.Selected()) {
-            btnBiTriWeekly.Click();
-            Element recurringWeekDropdown = driver.FindElementByCssSelector("select[name='selectBox'][aria-label='Select a Recurring week']");
-            recurringWeekDropdown.selectFromDropdown().selectByValue("2");
-            Element recurringDayDropdown = driver.FindElementByCssSelector("select[name='selectBox'][aria-label='Select Recurring day']");
-            recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeeek);
-        } else {
-            System.out.println("Already selected as Bi/Tri Weekly");
-        }
-//        Element btnMax = driver.FindElementByXPath(reader.getobjectLocator("btnMaximumNumberWeekly"));
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("2");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
+
         List<WebElement> btnMax = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceBiTriWeekly")));
         if (!btnMax.get(1).isSelected()) {
             btnMax.get(1).click();
@@ -280,16 +278,200 @@ public class CaseFactories extends BaseModule {
     }
 
 
+    public void setComplianceReminderAsTriWeeklyWithMaxNumber(String recurringDay, int max) {
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
+        String str = recurringDay.toLowerCase();
+        String recurringDayOfWeek = StringUtils.capitalize(str);
+
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("3");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
+
+        List<WebElement> btnMax = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceBiTriWeekly")));
+        if (!btnMax.get(1).isSelected()) {
+            btnMax.get(1).click();
+        }
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberBiTriWeekly")).Clear();
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberBiTriWeekly")).SendKeys(Integer.toString(max));
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setComplianceReminderAsTriWeeklyUnlimited(String recurringDay) {
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
+        String str = recurringDay.toLowerCase();
+        String recurringDayOfWeek = StringUtils.capitalize(str);
+
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("3");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
+
+        List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceBiTriWeekly")));
+        if (!btnUnlimited.get(0).isSelected()) {
+            btnUnlimited.get(0).click();
+        }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setComplianceReminderAsMonthlyWithMaxNumber(int recurringMonth, int recurringDay, int max) {
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnMonthly = driver.FindElementByCssSelector(reader.getobjectLocator("btnMonthly"));
+
+        btnMonthly.Click();
+        Element recurringMonthDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringMonthDropdown"));
+        recurringMonthDropdown.selectFromDropdown().selectByValue(Integer.toString(recurringMonth));
+        List<WebElement> recurringDayDropdown = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("recurringDayDropdownMonthly")));
+        Select selectFromDropdown = new Select(recurringDayDropdown.get(0));
+        selectFromDropdown.selectByValue(Integer.toString(recurringDay));
+        Element weekdaysOnlyCheckbox = driver.FindElementByCssSelector(reader.getobjectLocator("checkboxWeekdaysOnlyMonthly"));
+        if (!weekdaysOnlyCheckbox.Selected()) {
+            weekdaysOnlyCheckbox.Click();
+        }
+
+        List<WebElement> btnMax = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceMonthly")));
+        if (!btnMax.get(1).isSelected()) {
+            btnMax.get(1).click();
+        }
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberMonthly")).Clear();
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberMonthly")).SendKeys(Integer.toString(max));
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setComplianceReminderAsMonthlyUnlimited(int recurringMonth, int recurringDay) {
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+        Element btnMonthly = driver.FindElementByCssSelector(reader.getobjectLocator("btnMonthly"));
+
+        btnMonthly.Click();
+        Element recurringMonthDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringMonthDropdown"));
+        recurringMonthDropdown.selectFromDropdown().selectByValue(Integer.toString(recurringMonth));
+        List<WebElement> recurringDayDropdown = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("recurringDayDropdownMonthly")));
+        Select selectFromDropdown = new Select(recurringDayDropdown.get(0));
+        selectFromDropdown.selectByValue(Integer.toString(recurringDay));
+        Element weekdaysOnlyCheckbox = driver.FindElementByCssSelector(reader.getobjectLocator("checkboxWeekdaysOnlyMonthly"));
+        if (!weekdaysOnlyCheckbox.Selected()) {
+            weekdaysOnlyCheckbox.Click();
+        }
+
+        List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceMonthly")));
+        if (!btnUnlimited.get(0).isSelected()) {
+            btnUnlimited.get(0).click();
+        }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
     public void setScheduledReminderAsOneTime() {
-        WebElement btnScheduledReminderSchedule = driver.getWebDriver().findElement(By.cssSelector(reader.getobjectLocator("btnScheduledReminderSchedule")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule));
-        btnScheduledReminderSchedule.click();
+        Element btnScheduledReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnScheduledReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnScheduledReminderSchedule);
+        btnScheduledReminderSchedule.waitAndClick(30);
         Element btnOneTime = driver.FindElementByCssSelector(reader.getobjectLocator("btnOneTime"));
         if (!btnOneTime.Selected()) {
             btnOneTime.Click();
         } else {
             System.out.println("Already set as One Time");
         }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setScheduledReminderAsWeekly() {
+        Element btnScheduledReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnScheduledReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnScheduledReminderSchedule);
+        btnScheduledReminderSchedule.waitAndClick(30);
+        Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
+
+        btnWeekly.Click();
+        if (!driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").waitAndClick(30);
+        }
+        if (!driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").waitAndClick(30);
+        }
+        if (!driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").waitAndClick(30);
+        }
+        if (!driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").waitAndClick(30);
+        }
+        if (!driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").waitAndClick(30);
+        }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setScheduledReminderAsBiWeekly(String recurringDay) {
+        Element btnScheduledReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnScheduledReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnScheduledReminderSchedule);
+        btnScheduledReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
+        String str = recurringDay.toLowerCase();
+        String recurringDayOfWeek = StringUtils.capitalize(str);
+
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("2");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
+
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setScheduledReminderAsTriWeekly(String recurringDay) {
+        Element btnScheduledReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnScheduledReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnScheduledReminderSchedule);
+        btnScheduledReminderSchedule.waitAndClick(30);
+        Element btnBiTriWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnBiTriWeekly"));
+        String str = recurringDay.toLowerCase();
+        String recurringDayOfWeek = StringUtils.capitalize(str);
+
+        btnBiTriWeekly.Click();
+        Element recurringWeekDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringWeekDropdownBiTriWeekly"));
+        recurringWeekDropdown.selectFromDropdown().selectByValue("3");
+        Element recurringDayDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringDayDropdownBiTriWeekly"));
+        recurringDayDropdown.selectFromDropdown().selectByVisibleText(recurringDayOfWeek);
+
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setScheduledReminderAsMonthly(int recurringMonth, int recurringDay) {
+        Element btnScheduledReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnScheduledReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnScheduledReminderSchedule.getWebElement()));
+        driver.scrollingToElementofAPage(btnScheduledReminderSchedule);
+        btnScheduledReminderSchedule.waitAndClick(30);
+        Element btnMonthly = driver.FindElementByCssSelector(reader.getobjectLocator("btnMonthly"));
+
+        btnMonthly.Click();
+        Element recurringMonthDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringMonthDropdown"));
+        recurringMonthDropdown.selectFromDropdown().selectByValue(Integer.toString(recurringMonth));
+//        List<WebElement> recurringDayDropdown = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("recurringDayDropdownMonthly")));
+//        Select selectFromDropdown = new Select(recurringDayDropdown.get(0));
+//        selectFromDropdown.selectByValue(Integer.toString(recurringDay));
+        ElementCollection recurringDayDropdown = driver.FindElementsByCssSelector(reader.getobjectLocator("recurringDayDropdownMonthly"));
+        recurringDayDropdown.getElementByIndex(0).selectFromDropdown().selectByValue(Integer.toString(recurringDay));
+        Element weekdaysOnlyCheckbox = driver.FindElementByCssSelector(reader.getobjectLocator("checkboxWeekdaysOnlyMonthly"));
+        if (!weekdaysOnlyCheckbox.Selected()) {
+            weekdaysOnlyCheckbox.Click();
+        }
+
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
@@ -302,8 +484,9 @@ public class CaseFactories extends BaseModule {
         if (!setEscalationDropdown.getText().equalsIgnoreCase(setEscalationInterval)) {
             setEscalationDropdown.selectFromDropdown().selectByValue(setEscalationInterval);
         } else {
-            System.out.println("Escalation already set as " + setEscalationInterval);
+            System.out.println("Escalation is already set as " + setEscalationInterval);
         }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
     public void NavigateToCaseInformationTab() {
