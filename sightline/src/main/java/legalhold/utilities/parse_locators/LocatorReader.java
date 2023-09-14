@@ -1,6 +1,7 @@
 package legalhold.utilities.parse_locators;
 
 import org.openqa.selenium.By;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,8 +18,7 @@ public class LocatorReader {
         propertyFile.load(stream);
     }
 
-    public String getobjectLocator(String locatorName)
-    {
+    public String getobjectLocator(String locatorName) {
         String locatorProperty = propertyFile.getProperty(locatorName);
         String locatorType = locatorProperty.split(":")[0].trim();
         String locatorValue = locatorProperty.split(":")[1].trim();
@@ -26,14 +26,12 @@ public class LocatorReader {
         return locatorValue;
     }
 
-    public String getFileName(String locatorName)
-    {
+    public String getFileName(String locatorName) {
         String filePath = propertyFile.getProperty(locatorName);
         return filePath;
     }
 
-    public String[] getArray(String allFields)
-    {
+    public String[] getArray(String allFields) {
         String locatorArray = propertyFile.getProperty(allFields);
         locatorArray = locatorArray.trim();
         String[] splitArray = locatorArray.split(",");
@@ -41,13 +39,13 @@ public class LocatorReader {
         int arraySize = splitArray.length;
 
         String[] fields = new String[arraySize];
-        for(int i=0;i<arraySize;i++){
-            fields[i]=locatorArray.split(",")[i];
+        for (int i = 0; i < arraySize; i++) {
+            fields[i] = locatorArray.split(",")[i].trim();
         }
-        for(int i=0;i<fields.length;i++){
-            fields[i]=fields[i].split(":")[1];
+        for (int i = 0; i < fields.length; i++) {
+            fields[i] = fields[i].split(":")[1].trim();
         }
         return fields;
-        }
+    }
 }
 
