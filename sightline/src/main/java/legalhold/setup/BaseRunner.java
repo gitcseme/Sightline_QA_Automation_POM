@@ -33,14 +33,12 @@ public class BaseRunner {
     protected SoftAssert softAssert;
     protected LoginToSightline loginToSightline;
     protected LogoutLegalHold logoutLegalHold;
-    protected BaseClass base;
 
 
     public BaseRunner() throws ParseException, IOException, InterruptedException {
         Input in = new Input();
         in.loadEnvConfig();
         driver = new Driver();
-        base = new BaseClass(driver);
         loginToSightline = new LoginToSightline(driver);
         logoutLegalHold = new LogoutLegalHold(driver);
         wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
