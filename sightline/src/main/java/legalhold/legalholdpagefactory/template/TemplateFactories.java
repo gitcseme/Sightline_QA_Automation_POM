@@ -19,9 +19,9 @@ public class TemplateFactories extends BaseModule {
     }
 
     public void saveCaseTemplate(){
-        WebElement btnSave = driver.getWebDriver().findElement(By.id(reader.getobjectLocator("btnCaseTemplateSave")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnSave));
-        btnSave.click();
+        Element btnSave = driver.FindElementById(reader.getobjectLocator("btnCaseTemplateSave"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnSave.getWebElement()));
+        btnSave.waitAndClick(30);
         driver.FindElementById(reader.getobjectLocator("okBtnCaseTemplateSaveModal")).Click();
 
         WebElement successToast = driver.getWebDriver().findElement(By.id(reader.getobjectLocator("toastMessage")));
@@ -40,13 +40,14 @@ public class TemplateFactories extends BaseModule {
         String templateName = faker.country().name() + " " + faker.company().name();
         enterTemplateName.sendKeys(templateName);
 
-        driver.FindElementById(locatorReader.getobjectLocator("btnTemplateModalSubmit")).Click();
+        driver.FindElementById(locatorReader.getobjectLocator("btnTemplateModalSubmit")).waitAndClick(30);
         driver.waitForPageToBeReady();
         return templateName;
     }
 
     public void applyCaseTemplate(String templateName){
         Element applyTemplateDropdown = driver.FindElementById("case-template-dropdown");
+        wait.until(ExpectedConditions.elementToBeClickable(applyTemplateDropdown.getWebElement()));
         applyTemplateDropdown.selectFromDropdown().selectByVisibleText(templateName);
         driver.FindElementById("applyTemplateLink").Click();
         driver.FindElementById("apply-ok-btn").waitAndClick(30);

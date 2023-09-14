@@ -33,12 +33,14 @@ public class BaseRunner {
     protected SoftAssert softAssert;
     protected LoginToSightline loginToSightline;
     protected LogoutLegalHold logoutLegalHold;
+    protected BaseClass base;
 
 
     public BaseRunner() throws ParseException, IOException, InterruptedException {
         Input in = new Input();
         in.loadEnvConfig();
         driver = new Driver();
+        base = new BaseClass(driver);
         loginToSightline = new LoginToSightline(driver);
         logoutLegalHold = new LogoutLegalHold(driver);
         wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
@@ -48,9 +50,9 @@ public class BaseRunner {
     /* This method logs in to "Infinity Domain Expansion" tenant
     as system admin from Sightline. Uncomment the BeforeClass annotation
     before merging */
-    //    @BeforeClass(alwaysRun = true)
+//    @BeforeClass(alwaysRun = true)
     public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Tokyo");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
     }
 
 
@@ -84,7 +86,7 @@ public class BaseRunner {
         driver.get("https://legalholdqa.consiliotest.com" + "?token=" + token);
     }
 
-//    @AfterClass(alwaysRun = true)
+    //    @AfterClass(alwaysRun = true)
     public void closeBrowser() throws InterruptedException {
         logoutLegalHold.logOutFromLegalHold();
         logoutLegalHold.logOutFromSightline();
