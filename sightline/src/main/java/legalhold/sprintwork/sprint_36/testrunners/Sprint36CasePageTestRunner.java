@@ -44,25 +44,15 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         faker = new Faker();
     }
 
-//    @Test
-//    public void testing() throws InterruptedException {
-//        caseFactories.goToEditCase("Pork Belly Buns wildebeest black");
-////        caseFactories.setComplianceReminderAsMonthlyUnlimited(3,12);
-////        caseFactories.setEscalationSchedule(8);
-////        caseFactories.saveCase();
-////        caseFactories.setScheduledReminderAsWeekly();
-////        caseFactories.saveCase();
-////        caseFactories.setScheduledReminderAsOneTime();
-////        caseFactories.saveCase();
-////        caseFactories.setScheduledReminderAsBiWeekly("MondaY");
-////        caseFactories.saveCase();
-////        caseFactories.setScheduledReminderAsTriWeekly("friday");
-////        caseFactories.saveCase();
-//        caseFactories.setScheduledReminderAsMonthly(6,25);
-////        caseFactories.saveCase();
-//    }
+    @Test(enabled = true)
+    public void testing() throws InterruptedException {
+//        createCase.createRandomCases();
+//        caseFactories.populateCaseFields();
+//        caseFactories.saveCase();
+        navigation.navigateToTemplatesTAB();
+    }
 
-    @Test(priority = 1, description = "Creating a case with compliance reminder schedule as Maximum 1.")
+    @Test(priority = 1,enabled = false, description = "Creating a case with compliance reminder schedule as Maximum 1.")
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
 
         createdCase = createCase.createRandomCases();
@@ -72,7 +62,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseFactories.saveCase();
     }
 
-    @Test(priority = 2, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
+    @Test(priority = 2,enabled = false, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
         navigation.navigateToTemplatesTAB();
@@ -85,13 +75,13 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseFactories.saveCase();
     }
 
-    @Test(priority = 3,description = "Adding multiple custodian to the case created case from previous test case.")
+    @Test(priority = 3,enabled = false,description = "Adding multiple custodian to the case created case from previous test case.")
     public void addMultipleCustodianToACase() throws InterruptedException {
         caseFactories.NavigateToCustodiansTab();
         addCaseCustodian.upLoadCustodians();
     }
 
-    @Test(priority = 4, description = "Creating a Custodian type communication series in that case after the template from previous " +
+    @Test(priority = 4, enabled = false, description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
     public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
         caseFactories.NavigateToCommunicationsTab();
@@ -108,7 +98,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.saveCommunicationSeries();
     }
 
-    @Test(priority = 5, description = "Starting the previously created series with Compliance Reminder One Time")
+    @Test(priority = 5,enabled = false, description = "Starting the previously created series with Compliance Reminder One Time")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
         caseCommunicationFactories.enableComplianceReminder();

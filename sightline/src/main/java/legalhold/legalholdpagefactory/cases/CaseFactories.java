@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CaseFactories extends BaseModule {
@@ -30,13 +31,48 @@ public class CaseFactories extends BaseModule {
         ManageCaseTabs = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ManageCaseTabs")));
     }
 
+    public void populateCaseFields() {
+        String[] allCaseFields = reader.getArray("caseFields");
+
+        for (int i = 0; i < allCaseFields.length; i++) {
+            Element individualCaseField = driver.FindElementById(allCaseFields[i]);
+
+            if (allCaseFields[i].contains("Date")) {
+                individualCaseField.Clear();
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                String formattedDate = formatDate.format(faker.date().birthday());
+                individualCaseField.SendKeys(formattedDate);
+            } else if (allCaseFields[i].contains("Email")) {
+                individualCaseField.Clear();
+                individualCaseField.SendKeys(faker.internet().emailAddress());
+            } else {
+                individualCaseField.Clear();
+                individualCaseField.SendKeys(faker.lorem().sentence(3));
+            }
+        }
+    }
+
     public void searchCaseByName(String caseName) {
         try {
             WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
             wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
             caseNameColumnFilterBox.sendKeys(caseName);
             String expected_text = "Showing 1 to 1 of 1 entries";
-            Thread.sleep(1000);
+            Thread.sleep(3000);
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Case Name not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
+    public void searchNonExistentCaseByName(String caseName) {
+        try {
+            WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
+            wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+            caseNameColumnFilterBox.sendKeys(caseName);
+            String expected_text = "Showing 0 to 0 of 0 entries";
+            Thread.sleep(3000);
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
             Thread.sleep(2000);
         } catch (Exception E) {
@@ -483,9 +519,6 @@ public class CaseFactories extends BaseModule {
         btnMonthly.Click();
         Element recurringMonthDropdown = driver.FindElementByCssSelector(reader.getobjectLocator("recurringMonthDropdown"));
         recurringMonthDropdown.selectFromDropdown().selectByValue(Integer.toString(recurringMonth));
-//        List<WebElement> recurringDayDropdown = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("recurringDayDropdownMonthly")));
-//        Select selectFromDropdown = new Select(recurringDayDropdown.get(0));
-//        selectFromDropdown.selectByValue(Integer.toString(recurringDay));
         ElementCollection recurringDayDropdown = driver.FindElementsByCssSelector(reader.getobjectLocator("recurringDayDropdownMonthly"));
         recurringDayDropdown.getElementByIndex(0).selectFromDropdown().selectByValue(Integer.toString(recurringDay));
         Element weekdaysOnlyCheckbox = driver.FindElementByCssSelector(reader.getobjectLocator("checkboxWeekdaysOnlyMonthly"));
