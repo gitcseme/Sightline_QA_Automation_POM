@@ -99,7 +99,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
-        caseCommunicationFactories.addMailToRecipients();
+        caseCommunicationFactories.addMailToRecipients("SLH-1");
         caseCommunicationFactories.enterCommunicationNameAndDescription();
         caseCommunicationFactories.enterAcknowledgmentEmailSubject("Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +

@@ -3,6 +3,7 @@ package legalhold.legalholdpagefactory.cases;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 
+import cucumber.api.java8.Th;
 import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -159,7 +160,7 @@ public class CaseCommunicationFactories extends BaseModule {
 
     }
 
-    public void addMailToRecipients() throws IOException, InterruptedException {
+    public void addMailToRecipients(String recipientToAdd) throws IOException, InterruptedException {
 
 
         Element addMailToRecipientButton = driver.FindElementByClassName(locatorReader.getobjectLocator("addMailtoRecipientButton"));
@@ -169,7 +170,7 @@ public class CaseCommunicationFactories extends BaseModule {
         Element availableTableEmployeeId = driver.FindElementByXPath(locatorReader.getobjectLocator("availableTableEmployeeId"));
         availableTableEmployeeId.Clear();
         availableTableEmployeeId.Click();
-        availableTableEmployeeId.SendKeys("SLH-1");
+        availableTableEmployeeId.SendKeys(recipientToAdd);
 
 
         Element selectAllCheckBox = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllCheckbox"));
@@ -189,7 +190,7 @@ public class CaseCommunicationFactories extends BaseModule {
         driver.scrollingToElementofAPage(globalSaveButtonManageRecipients);
         wait.until(ExpectedConditions.elementToBeClickable(globalSaveButtonManageRecipients.getWebElement()));
         Thread.sleep(3000);
-        globalSaveButtonManageRecipients.Click();
+        globalSaveButtonManageRecipients.waitAndClick(30);
 
         Element confirmationOkButton = driver.FindElementById(locatorReader.getobjectLocator("manageRecipientsGlobalSaveOkBtn"));
         wait.until(ExpectedConditions.elementToBeClickable(confirmationOkButton.getWebElement()));
@@ -232,20 +233,21 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void saveCommunicationSeries() throws InterruptedException {
 
-        WebElement btnSaveSeries = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("btnSaveCommunication")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnSaveSeries));
+        Element btnSaveSeries = driver.FindElementById(locatorReader.getobjectLocator("btnSaveCommunication"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnSaveSeries.getWebElement()));
 //        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnSaveSeries);
-        btnSaveSeries.click();
-        driver.FindElementById(locatorReader.getobjectLocator("okBtnSaveModal")).Click();
+        btnSaveSeries.waitAndClick(30);
+        driver.FindElementById(locatorReader.getobjectLocator("okBtnSaveModal")).waitAndClick(30);
         Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
 
     public void startCommunicationSeries() throws InterruptedException {
-        WebElement btnStarSeries = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("btnStartCommunication")));
-        wait.until(ExpectedConditions.elementToBeClickable(btnStarSeries));
+        Element btnStartSeries = driver.FindElementById(locatorReader.getobjectLocator("btnStartCommunication"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnStartSeries.getWebElement()));
 //        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", btnStarSeries);
-        btnStarSeries.click();
+        Thread.sleep(3000);
+        btnStartSeries.waitAndClick(30);
         driver.FindElementById(locatorReader.getobjectLocator("okBtnStartModal")).Click();
         Thread.sleep(5000);
         driver.waitForPageToBeReady();

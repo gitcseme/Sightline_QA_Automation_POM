@@ -36,7 +36,9 @@ public class CaseFactories extends BaseModule {
             wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
             caseNameColumnFilterBox.sendKeys(caseName);
             String expected_text = "Showing 1 to 1 of 1 entries";
+            Thread.sleep(1000);
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+            Thread.sleep(2000);
         } catch (Exception E) {
             System.out.println("Case Name not found. The exception is: ");
             System.out.println(E.getMessage());
@@ -56,9 +58,9 @@ public class CaseFactories extends BaseModule {
             System.out.println(E.getMessage());
         }
     }
-    public void searchCustodianById(String id) {
+    public void searchManageCustodianSelectedeCustodianById(String id) {
         try {
-            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("input[placeholder='Search Employee ID']");
+            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
             wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
             availableEmployeeIDFilterBox.Clear();
             availableEmployeeIDFilterBox.SendKeys(id);
@@ -71,10 +73,27 @@ public class CaseFactories extends BaseModule {
         }
     }
 
+    public void searchCustodianById(String id) {
+        try {
+            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
+            availableEmployeeIDFilterBox.Clear();
+            availableEmployeeIDFilterBox.SendKeys(id);
+
+            String expected_text = "Showing 1 to 1 of 1 entries";
+
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Custodian not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
     public void goToEditCase(String caseName) {
         try {
             searchCaseByName(caseName);
-            driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).Click();
+            driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).waitAndClick(30);
+            Thread.sleep(3000);
             driver.waitForPageToBeReady();
         } catch (Exception E) {
             System.out.println("Edit case icon not found. The exception is: ");
@@ -272,9 +291,11 @@ public class CaseFactories extends BaseModule {
 
         List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceCustomInterval")));
         if (!btnUnlimited.get(0).isSelected()) {
+
+
             btnUnlimited.get(0).click();
         }
-        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).waitAndClick(40);
     }
 
 

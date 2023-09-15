@@ -2,17 +2,20 @@ package legalhold.smoke_suite.manageCase;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import legalhold.legalholdpagefactory.cases.CustodianFactories;
 import legalhold.setup.BaseModule;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.io.IOException;
 
 public class AddCaseCustodian extends BaseModule {
 
     LocatorReader reader;
+
     public AddCaseCustodian(Driver driver) throws IOException {
         super("src/main/java/legalhold/selectors/cases/manage_case/custodian/custodian.properties", driver);
         reader = new LocatorReader("src/main/java/legalhold/selectors/uploadFile.properties");
@@ -75,32 +78,37 @@ public class AddCaseCustodian extends BaseModule {
 
     }
 
-    public void makeCustodianSilent() throws IOException {
+    public void makeCustodianSilent() throws IOException, InterruptedException {
 
-        Element ManageCustodianButton = driver.FindElementById(locatorReader.getobjectLocator("CustodianTab"));
-        wait.until(ExpectedConditions.elementToBeClickable(ManageCustodianButton.getWebElement()));
-        ManageCustodianButton.Click();
 
-        driver.waitForPageToBeReady();
-
-        CaseFactories caseFactories = new CaseFactories(driver);
-        caseFactories.searchManageCustodianAvailableCustodianById("SLH-Silent");
-
-        driver.FindElementByXPath("(//input[@name='td-ManageEmpTablechkBoxAll'])[1]").waitAndClick(30);
-
-        driver.FindElementById("addToCustodian").waitAndClick(20);
-        driver.FindElementById("addUserOkButton").waitAndClick(30);
-
-        Element manageCustodianGlobalSavebtn = driver.FindElementById("saveAndDoneBtnId");
-        driver.scrollingToElementofAPage(manageCustodianGlobalSavebtn);
-        manageCustodianGlobalSavebtn.waitAndClick(10);
-
-        driver.waitForPageToBeReady();
-
-        caseFactories.searchCustodianById("SLH-Silent");
         driver.FindElementByXPath("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
-        driver.FindElementByCssSelector("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
-        driver.FindElementById("toggle_silent").waitAndClick(30);
+
+        Element silentOption = driver.FindElementByXPath("//a[normalize-space()='Make Silent']");
+        wait.until(ExpectedConditions.elementToBeClickable(silentOption.getWebElement()));
+        silentOption.waitAndClick(30);
+        Element okConfirmButton = driver.FindElementById("toggle_silent");
+        wait.until(ExpectedConditions.elementToBeClickable(okConfirmButton.getWebElement()));
+        okConfirmButton.waitAndClick(30);
+
+        Thread.sleep(2000);
+
+    }
+
+
+    public void makeCustodianNonSilent() throws IOException, InterruptedException {
+
+
+        driver.FindElementByXPath("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
+
+        Element nonSilentOption = driver.FindElementByXPath("//a[normalize-space()='Make Non Silent']");
+        wait.until(ExpectedConditions.elementToBeClickable(nonSilentOption.getWebElement()));
+        nonSilentOption.waitAndClick(30);
+        Element okConfirmButton = driver.FindElementById("toggle_silent");
+        wait.until(ExpectedConditions.elementToBeClickable(okConfirmButton.getWebElement()));
+        okConfirmButton.waitAndClick(30);
+
+
+
 
     }
 }

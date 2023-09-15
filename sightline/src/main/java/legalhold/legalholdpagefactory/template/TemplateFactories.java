@@ -18,7 +18,7 @@ public class TemplateFactories extends BaseModule {
         reader = new LocatorReader("src/main/java/legalhold/selectors/template/case_template/case_template.properties");
     }
 
-    public void saveCaseTemplate(){
+    public void saveCaseTemplate() throws InterruptedException {
         Element btnSave = driver.FindElementById(reader.getobjectLocator("btnCaseTemplateSave"));
         wait.until(ExpectedConditions.elementToBeClickable(btnSave.getWebElement()));
         btnSave.waitAndClick(30);
@@ -29,6 +29,7 @@ public class TemplateFactories extends BaseModule {
         String toastMessage = successToast.getText();
 
         Assert.assertTrue(toastMessage.contains("Case template created successfull"));
+        Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
 

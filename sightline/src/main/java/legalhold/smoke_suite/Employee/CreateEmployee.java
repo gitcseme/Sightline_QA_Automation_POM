@@ -50,8 +50,7 @@ public class CreateEmployee extends BaseModule {
 
         for (int i = 0; i < employeeAllFields.length; i++) {
 
-            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
-            String formattedDate = formatDate.format(faker.date().birthday());
+
 
 
             WebElement employeeField = addForm.findElement(By.id(employeeAllFields[i]));
@@ -65,6 +64,8 @@ public class CreateEmployee extends BaseModule {
             } else if (employeeAllFields[i].equals("EmailAddress")) {
                 employeeField.sendKeys(emailAddress);
             } else if (employeeAllFields[i].contains("Date")) {
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                String formattedDate = formatDate.format(faker.date().birthday());
                 employeeField.sendKeys(formattedDate);
             } else {
                 employeeField = addForm.findElement(By.id(employeeAllFields[i]));

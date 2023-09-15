@@ -2,6 +2,7 @@ package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
+import legalhold.legalholdpagefactory.cases.CustodianFactories;
 import legalhold.setup.BaseRunner;
 
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -24,8 +25,10 @@ import java.text.ParseException;
 
 public class LoginToSightlineTestRunner extends BaseRunner {
 
+    CaseCommunicationFactories caseCommunicationFactories;
     public LoginToSightlineTestRunner() throws ParseException, IOException, InterruptedException {
 
+        caseCommunicationFactories = new CaseCommunicationFactories(driver);
     }
 
 //    @Test
@@ -45,57 +48,117 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 //        loginToSightline.loginAsDomainAdmin("userlegalhold@gmail.com","amikhelbona#2023","Tokyo");
 //
 //    }
+//
+//    @Test(priority = 2)
+//    public void CreateRandomEmployee() throws IOException, InterruptedException {
+//        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
+//
+//        CreateEmployee createEmployee = new CreateEmployee(driver);
+//        EditEmployee editEmployee = new EditEmployee(driver);
+//        DeleteEmployee deleteEmployee = new DeleteEmployee(driver);
+//        UploadEmployee uploadEmployee = new UploadEmployee(driver);
+//
+//        navigateToEmployeeTab.navigateToEmployeeTAB();
+//
+//         String id = createEmployee.CreateEmployeeManually();
+//        createEmployee.verifyEmployeeId(id);
+//        System.out.println(id);
+//        String editedId = editEmployee.EditCreatedEmployee(id);
+//        createEmployee.verifyEmployeeId(editedId);
+//        deleteEmployee.deleteCreatedEmployee();
+//        driver.waitForPageToBeReady();
+//        uploadEmployee.uploadValidEmployee();
+//        navigateToEmployeeTab.navigateToEmployeeTAB();
+//        driver.waitForPageToBeReady();
+//        uploadEmployee.uploadInvalidEmployee();
+//    }
 
-    @Test(priority = 2)
-    public void CreateRandomEmployee() throws IOException, InterruptedException {
-        Module_Navigation navigateToEmployeeTab = new Module_Navigation(driver);
-
-        CreateEmployee createEmployee = new CreateEmployee(driver);
-        EditEmployee editEmployee = new EditEmployee(driver);
-        DeleteEmployee deleteEmployee = new DeleteEmployee(driver);
-        UploadEmployee uploadEmployee = new UploadEmployee(driver);
-
-        navigateToEmployeeTab.navigateToEmployeeTAB();
-
-         String id = createEmployee.CreateEmployeeManually();
-        createEmployee.verifyEmployeeId(id);
-        System.out.println(id);
-        String editedId = editEmployee.EditCreatedEmployee(id);
-        createEmployee.verifyEmployeeId(editedId);
-        deleteEmployee.deleteCreatedEmployee();
-        driver.waitForPageToBeReady();
-        uploadEmployee.uploadValidEmployee();
-        navigateToEmployeeTab.navigateToEmployeeTAB();
-        driver.waitForPageToBeReady();
-        uploadEmployee.uploadInvalidEmployee();
-    }
-
-    @Test(priority = 3)
-    public void custodian() throws IOException, InterruptedException {
-
-
-        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
-        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
-
-
-        Module_Navigation caseTabNavigation = new Module_Navigation(driver);
-
-        caseTabNavigation.navigateToCaseTAB();
-
+//    @Test(priority = 3)
+//    public void custodian() throws IOException, InterruptedException {
+//
+//
+//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+//        CaseCommunicationFactories addRecipients = new CaseCommunicationFactories(driver);
+//
+//
+//        Module_Navigation caseTabNavigation = new Module_Navigation(driver);
+//
+//        caseTabNavigation.navigateToCaseTAB();
+//
+//
+//        CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
+//        SearchCaseandGotoEdit.goToEditCase("Automation_Test");
+//
+//        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+//        navigateToCustodiansTab.NavigateToCustodiansTab();
+//        CreateCustodian.upLoadCustodians();
+//        CaseFactories caseFactories = new CaseFactories(driver);
+//
+//        caseFactories.NavigateToCommunicationsTab();
+//        addRecipients.goToCreateCustodianCommunicationPage();
+//        addRecipients.addMailToRecipients("SLH-1");
+//        addRecipients.addMailToRecipients("SLH-1");
+//
+//
+//
+//    }
+//
+    @Test(priority = 4)
+    public void makeCustodianSilentAndNonSilent() throws IOException, InterruptedException {
 
         CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
         SearchCaseandGotoEdit.goToEditCase("Automation_Test");
 
-        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
-        navigateToCustodiansTab.NavigateToCustodiansTab();
-        CreateCustodian.upLoadCustodians();
+//        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+//        navigateToCustodiansTab.NavigateToCustodiansTab();
+//
+//        CustodianFactories custodianFactories = new CustodianFactories(driver);
+//        custodianFactories.navigateToManageCustodiansPage();
+//
+//        custodianFactories.addCustodianToCase("SLH-Silent");
+//
+//
+//        driver.waitForPageToBeReady();
+//        custodianFactories.searchCustodianById("SLH-Silent");
+//
+//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+//        CreateCustodian.makeCustodianSilent();
+//
+//        custodianFactories.searchCustodianById("SLH-Silent");
+//        custodianFactories.verifyCustodianStatus("Silent");
+//
+////        custodianFactories.searchCustodianById("SLH-Silent");
+//        CreateCustodian.makeCustodianNonSilent();
+//        custodianFactories.verifyCustodianStatus("");
+
+
+    }
+
+    @Test(priority = 5)
+    public void SendAcknowledgement() throws IOException, InterruptedException {
+
         CaseFactories caseFactories = new CaseFactories(driver);
         caseFactories.NavigateToCommunicationsTab();
-        addRecipients.goToCreateCustodianCommunicationPage();
-        addRecipients.addMailToRecipients();
-//        addRecipients.addMailToRecipients();
+//        caseCommunicationFactories.goToCreateCustodianCommunicationPage();
+//
+//        String createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
+//        caseCommunicationFactories.addMailToRecipients("SLH-Silent");
+//        caseCommunicationFactories.enterCommunicationNameAndDescription();
+//        caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
+//        caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
+//                "[ACKNOWLEDGMENT LINK]\n" +
+//                "[CUSTODIAN PORTAL LINK]");
+//        Thread.sleep(2000);
+//        caseCommunicationFactories.startCommunicationSeries();
 
-
+        caseCommunicationFactories.goToEditCustodianCommunicationPage("Ares Eunostus");
+        caseCommunicationFactories.addMailToRecipients("SLH-Silent");
+        caseCommunicationFactories.saveCommunicationSeries();
+        caseCommunicationFactories.verifyPostSendForCustodianSeries("Ares Eunostus");
+        caseCommunicationFactories.backToCommunicationTab();
+        driver.waitForPageToBeReady();
+        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+        navigateToCustodiansTab.NavigateToCustodiansTab();
 
     }
 

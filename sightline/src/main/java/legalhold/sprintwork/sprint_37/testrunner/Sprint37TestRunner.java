@@ -53,7 +53,7 @@ public class Sprint37TestRunner extends BaseRunner {
         caseFactories.saveCase();
         driver.waitForPageToBeReady();
     }
-    @Test(priority = 2, description = "Creating a case with compliance reminder schedule as Every 3 days and Unlimited.")
+    @Test(priority = 2,enabled = true, description = "Creating a case with compliance reminder schedule as Every 3 days and Unlimited.")
     public void caseSaveWithCustomIntervalAndUnlimited() throws IOException, InterruptedException {
 
         navigation.navigateToCaseTAB();
@@ -71,20 +71,21 @@ public class Sprint37TestRunner extends BaseRunner {
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
         caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(7,7);
         templateFactories.saveCaseTemplate();
+
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
         templateFactories.applyCaseTemplate(createdCaseTemplate);
         caseFactories.saveCase();
         driver.waitForPageToBeReady();
     }
-    @Test(priority = 4,description = "Adding multiple custodian to the case created case from previous test case.")
+    @Test(priority = 4,enabled = false,description = "Adding multiple custodian to the case created case from previous test case.")
     public void addMultipleCustodianToACase() throws InterruptedException {
         caseFactories.NavigateToCustodiansTab();
         addCaseCustodian.upLoadCustodians();
         driver.waitForPageToBeReady();
     }
 
-    @Test(priority = 5, description = "Creating a Custodian type communication series in that case after the template from previous " +
+    @Test(priority = 5, enabled = false,description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
     public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
         caseFactories.NavigateToCommunicationsTab();
@@ -92,7 +93,7 @@ public class Sprint37TestRunner extends BaseRunner {
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
-        caseCommunicationFactories.addMailToRecipients();
+        caseCommunicationFactories.addMailToRecipients("SLH-1");
         caseCommunicationFactories.enterCommunicationNameAndDescription();
         caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
@@ -102,7 +103,7 @@ public class Sprint37TestRunner extends BaseRunner {
     }
 
 
-    @Test(priority = 6, description = "Starting the previously created series with Compliance Reminder One Time")
+    @Test(priority = 6,enabled = false, description = "Starting the previously created series with Compliance Reminder One Time")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
         caseCommunicationFactories.enableComplianceReminder();

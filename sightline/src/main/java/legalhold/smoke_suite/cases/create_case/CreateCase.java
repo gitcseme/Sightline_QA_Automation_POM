@@ -11,12 +11,13 @@ public class CreateCase extends BaseModule {
         super(driver);
     }
 
-    public String createRandomCases(){
+    public String createRandomCases() throws InterruptedException {
 
         LoadMoudleActionSteps("./src/main/java/legalhold/ModuleStep/CreateCaseSteps.json");
 
         String caseName = faker.food().dish()+" "+ faker.animal().name()+" "+faker.color().name();
         elementValueMapping.put("txtCaseName",caseName);
+        Thread.sleep(3000);
         super.Run();
         return caseName;
 
