@@ -2,6 +2,7 @@ package legalhold.sprintwork.sprint_36.testrunners;
 
 
 import com.github.javafaker.Faker;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.setup.BaseRunner;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -28,6 +29,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     TemplateFactories templateFactories;
     Module_Navigation navigation;
     AddCaseCustodian addCaseCustodian;
+    DomainSetupTabNavigation domainSetupTabNavigation;
     public String createdCase;
     public String createdCaseTemplate;
     public String createdCommunicationSeries;
@@ -40,6 +42,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         createCase = new CreateCase(driver);
         templateFactories = new TemplateFactories(driver);
         navigation = new Module_Navigation(driver);
+        domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
         addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
     }
@@ -49,7 +52,13 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
 //        createCase.createRandomCases();
 //        caseFactories.populateCaseFields();
 //        caseFactories.saveCase();
-        navigation.navigateToTemplatesTAB();
+        navigation.navigateToDomainSetupTAB();
+        domainSetupTabNavigation.navigateToDataSourceTab();
+        domainSetupTabNavigation.navigateToEmailTab();
+        domainSetupTabNavigation.navigateToEmployeeDataTab();
+        domainSetupTabNavigation.navigateToPermissionsTab();
+        domainSetupTabNavigation.navigateToCaseAccessTab();
+        domainSetupTabNavigation.navigateToCustomFieldsTab();
     }
 
     @Test(priority = 1,enabled = false, description = "Creating a case with compliance reminder schedule as Maximum 1.")
