@@ -86,15 +86,53 @@ public class CustodianFactories extends BaseModule {
     }
 
 
-    public void verifyCustodianStatus(String expectedCustodianStatus) throws InterruptedException {
+    public void verifyCustodianType(String expectedCustodianType) throws InterruptedException {
 
         driver.waitForPageToBeReady();
         Thread.sleep(4000);
-        Element custodianTypeValue = driver.FindElementByCssSelector("td:nth-child(8)");
+        Element custodianTypeValue = driver.FindElementByCssSelector("td:nth-child(6)");
         wait.until(ExpectedConditions.elementToBeClickable(custodianTypeValue.getWebElement()));
-        Assert.assertEquals(custodianTypeValue.getText(),expectedCustodianStatus);
+        Assert.assertEquals(custodianTypeValue.getText(),expectedCustodianType);
     }
 
+    public  void verifyAcknowledgementCompleteDate(String date) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        Thread.sleep(4000);
+        Element acknowledgementCompleteDateValue = driver.FindElementByCssSelector("#id-Custodian > tbody > tr > td:nth-child(12)");
+        wait.until(ExpectedConditions.elementToBeClickable(acknowledgementCompleteDateValue.getWebElement()));
+        System.out.println("valuee"+acknowledgementCompleteDateValue.getText());
+    }
+
+    public void verifyManualAcknowledgementReason(String reason) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        Thread.sleep(4000);
+        Element manualAcknowledgementReason = driver.FindElementByCssSelector("td:nth-child(11)");
+        wait.until(ExpectedConditions.elementToBeClickable(manualAcknowledgementReason.getWebElement()));
+        Assert.assertEquals(manualAcknowledgementReason.getText(),reason);
+    }
+    public void verifyReleaseDate(String expectedReleaseDate) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        Thread.sleep(4000);
+        Element releaseDate = driver.FindElementByCssSelector("td:nth-child(5)");
+        wait.until(ExpectedConditions.elementToBeClickable(releaseDate.getWebElement()));
+        Assert.assertEquals(releaseDate.getText(),expectedReleaseDate);
+    }
+
+    public void verifyCustodianStatus(String expectedStatus) throws InterruptedException {
+        driver.waitForPageToBeReady();
+        Thread.sleep(4000);
+        Element custodianStatus = driver.FindElementByCssSelector("td:nth-child(7)");
+        wait.until(ExpectedConditions.elementToBeClickable(custodianStatus.getWebElement()));
+        Assert.assertEquals(custodianStatus.getText(),expectedStatus);
+    }
+
+    public void noDataAvailableCustodianTable() throws InterruptedException {
+        String expectedPaginationText = "Showing 0 to 0 of 0 entries";
+        Element paginationText = driver.FindElementById("id-Custodian_info");
+        Thread.sleep(2000);
+        String actualPaginationText = paginationText.getText();
+        Assert.assertEquals(actualPaginationText,expectedPaginationText);
+    }
     public void searchCustodianById(String id) {
         try {
             Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("input[placeholder='Search Employee ID']");

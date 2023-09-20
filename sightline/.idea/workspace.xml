@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
+    <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="Demo Change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/Element.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/template/templatelibrary.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/template/templatelibrary.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_37/testrunner/Sprint37TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_37/testrunner/Sprint37TestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/SurveyFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/SurveyFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/survey/survey.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/survey/survey.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/smoke_suite/manageCase/AddCaseCustodian.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/testrunners/smoke_suite_testrunners/sl_slh_integration/LoginToSightlineTestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

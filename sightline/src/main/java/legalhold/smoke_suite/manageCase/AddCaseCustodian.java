@@ -111,6 +111,58 @@ public class AddCaseCustodian extends BaseModule {
 
 
     }
+
+    public void manualAcknowledgementWithoutReason(){
+//        driver.FindElementByXPath("(//a[@aria-label='Action menu Dropdown'])[1]").waitAndClick(30);
+        driver.FindElementByXPath("//tr[@class='even']//img[@title='View Dropdown']").waitAndClick(30);
+        Element manualAcknowledgementOption = driver.FindElementByXPath("//a[normalize-space()='Manual Acknowledgment']");
+        wait.until(ExpectedConditions.elementToBeClickable(manualAcknowledgementOption.getWebElement()));
+        manualAcknowledgementOption.waitAndClick(30);
+
+        Element manualConfirmationOkButton = driver.FindElementById("manual_ack");
+        wait.until(ExpectedConditions.elementToBeClickable(manualConfirmationOkButton.getWebElement()));
+        manualConfirmationOkButton.waitAndClick(20);
+
+    }
+
+    public void manualAcknowledgementWithReason(String reason){
+        driver.FindElementByXPath("//img[@title='View Dropdown']").waitAndClick(30);
+        Element manualAcknowledgementOption = driver.FindElementByXPath("//a[normalize-space()='Manual Acknowledgment']");
+        wait.until(ExpectedConditions.elementToBeClickable(manualAcknowledgementOption.getWebElement()));
+        manualAcknowledgementOption.waitAndClick(30);
+
+        Element manualAckReasonTextBox = driver.FindElementById("manual_ack_reason");
+        wait.until(ExpectedConditions.elementToBeClickable(manualAckReasonTextBox.getWebElement()));
+        manualAckReasonTextBox.SendKeys(reason);
+
+        Element manualConfirmationOkButton = driver.FindElementById("manual_ack");
+        wait.until(ExpectedConditions.elementToBeClickable(manualConfirmationOkButton.getWebElement()));
+        manualConfirmationOkButton.waitAndClick(20);
+    }
+
+    public void releaseCustodianManually(){
+
+        driver.FindElementByXPath("//img[@title='View Dropdown']").waitAndClick(30);
+        Element releaseCustodianOption = driver.FindElementByXPath("//a[normalize-space()='Release Custodian']");
+        wait.until(ExpectedConditions.elementToBeClickable(releaseCustodianOption.getWebElement()));
+        releaseCustodianOption.waitAndClick(30);
+
+        Element releaseCustodianConfirmationOk = driver.FindElementById("release_custodian_single");
+        wait.until(ExpectedConditions.elementToBeClickable(releaseCustodianConfirmationOk.getWebElement()));
+        releaseCustodianConfirmationOk.Click();
+
+    }
+
+    public void removeCustodian(){
+        driver.FindElementByXPath("//img[@title='View Dropdown']").waitAndClick(30);
+        Element removeCustodianOption = driver.FindElementByXPath("//a[normalize-space()='Remove Custodian']");
+        wait.until(ExpectedConditions.elementToBeClickable(removeCustodianOption.getWebElement()));
+        removeCustodianOption.waitAndClick(30);
+
+        Element removeCustodianConfirmationOk = driver.FindElementById("remove-custodian-btn");
+        wait.until(ExpectedConditions.elementToBeClickable(removeCustodianConfirmationOk.getWebElement()));
+        removeCustodianConfirmationOk.Click();
+    }
 }
 
 
