@@ -181,7 +181,7 @@ public class LoginToSightlineTestRunner extends BaseRunner {
     public void manualAcknowledgementWithReason() throws InterruptedException {
 
         custodianFactories.searchCustodianById("13");
-//        CreateCustodian.manualAcknowledgementWithReason("Manual Ack Test");
+        CreateCustodian.manualAcknowledgementWithReason("Manual Ack Test");
 //        custodianFactories.verifyAcknowledgementCompleteDate("completeDate");
         custodianFactories.verifyManualAcknowledgementReason("Manual Ack Test");
     }
@@ -196,8 +196,6 @@ public void releaseCustodian() throws InterruptedException {
 }
     @Test(priority = 9)
     public void removeCustodian() throws InterruptedException {
-        caseFactories.goToEditCase("Automation_Test");
-
 
     custodianFactories.searchCustodianById("silent");
     CreateCustodian.removeCustodian();
