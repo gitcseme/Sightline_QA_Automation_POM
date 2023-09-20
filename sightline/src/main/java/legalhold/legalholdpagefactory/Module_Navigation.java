@@ -28,6 +28,7 @@ public class Module_Navigation extends BaseModule {
     public void navigateToCaseTAB() {
 
         GetNavList();
+//        Thread.sleep(1000);
         sidebarElements.get(0).click();
         driver.waitForPageToBeReady();
     }
