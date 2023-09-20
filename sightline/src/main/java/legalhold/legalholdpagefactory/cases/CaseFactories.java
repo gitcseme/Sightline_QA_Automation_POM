@@ -74,8 +74,53 @@ public class CaseFactories extends BaseModule {
             String expected_text = "Showing 0 to 0 of 0 entries";
             Thread.sleep(3000);
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+            Thread.sleep(2000);
         } catch (Exception E) {
             System.out.println("Case Name not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+    public void searchManageCustodianAvailableCustodianById(String id) {
+        try {
+            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-ManageEmpTable'] thead tr th input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
+            availableEmployeeIDFilterBox.Clear();
+            availableEmployeeIDFilterBox.SendKeys(id);
+
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Custodian not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+    public void searchManageCustodianSelectedeCustodianById(String id) {
+        try {
+            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
+            availableEmployeeIDFilterBox.Clear();
+            availableEmployeeIDFilterBox.SendKeys(id);
+
+            String expected_text = "Showing 1 to 1 of 1 entries";
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Custodian not found. The exception is: ");
+            System.out.println(E.getMessage());
+        }
+    }
+
+    public void searchCustodianById(String id) {
+        try {
+            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
+            availableEmployeeIDFilterBox.Clear();
+            availableEmployeeIDFilterBox.SendKeys(id);
+
+            String expected_text = "Showing 1 to 1 of 1 entries";
+
+            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+        } catch (Exception E) {
+            System.out.println("Custodian not found. The exception is: ");
             System.out.println(E.getMessage());
         }
     }
@@ -83,7 +128,8 @@ public class CaseFactories extends BaseModule {
     public void goToEditCase(String caseName) {
         try {
             searchCaseByName(caseName);
-            driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).Click();
+            driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).waitAndClick(30);
+            Thread.sleep(3000);
             driver.waitForPageToBeReady();
         } catch (Exception E) {
             System.out.println("Edit case icon not found. The exception is: ");
@@ -224,6 +270,70 @@ public class CaseFactories extends BaseModule {
         driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberBiTriWeekly")).SendKeys(Integer.toString(max));
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
+    public void setComplianceReminderAsCustomIntervalWithMaxNumber(int reminderInterval, int max) {
+
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+
+        Element customIntervalRadioButton = driver.FindElementByXPath(reader.getobjectLocator("customIntervalRadioButton"));
+
+        String reminderIntervalValue = Integer.toString(reminderInterval);
+
+
+            customIntervalRadioButton.Click();
+            Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
+            reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
+
+            Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
+            weekDaysCheckbox.Click();
+
+
+
+        List<WebElement> btnMax = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceCustomInterval")));
+        if (!btnMax.get(1).isSelected()) {
+            btnMax.get(1).click();
+        }
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberCustomInterval")).Clear();
+        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberCustomInterval")).SendKeys(Integer.toString(max));
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public void setComplianceReminderAsCustomIntervalWithUnlimited(int reminderInterval) {
+
+        Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnComplianceReminderSchedule.getWebElement()));
+
+        driver.scrollingToElementofAPage(btnComplianceReminderSchedule);
+        btnComplianceReminderSchedule.waitAndClick(30);
+
+        Element customIntervalRadioButton = driver.FindElementByXPath(reader.getobjectLocator("customIntervalRadioButton"));
+
+        String reminderIntervalValue = Integer.toString(reminderInterval);
+
+
+            customIntervalRadioButton.Click();
+            Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
+
+            wait.until(ExpectedConditions.elementToBeClickable(reminderIntervalDropdown.getWebElement()));
+            reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
+
+            Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
+            weekDaysCheckbox.Click();
+
+
+
+        List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceCustomInterval")));
+        if (!btnUnlimited.get(0).isSelected()) {
+
+
+            btnUnlimited.get(0).click();
+        }
+        driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).waitAndClick(40);
+    }
+
 
     public void setComplianceReminderAsTriWeeklyWithMaxNumber(String recurringDay, int max) {
         Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
