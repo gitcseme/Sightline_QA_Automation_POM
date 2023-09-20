@@ -298,8 +298,8 @@ public class CaseFactories extends BaseModule {
         if (!btnMax.get(1).isSelected()) {
             btnMax.get(1).click();
         }
-        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberCustomInterval")).Clear();
-        driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberCustomInterval")).SendKeys(Integer.toString(max));
+        driver.FindElementByCssSelector(reader.getobjectLocator("inputMaxNumberCustomInterval")).Clear();
+        driver.FindElementByCssSelector(reader.getobjectLocator("inputMaxNumberCustomInterval")).SendKeys(Integer.toString(max));
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
