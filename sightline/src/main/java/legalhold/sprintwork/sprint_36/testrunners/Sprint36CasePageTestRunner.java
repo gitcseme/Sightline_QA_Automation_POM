@@ -47,7 +47,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         faker = new Faker();
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testing() throws InterruptedException {
 //        createCase.createRandomCases();
 //        caseFactories.populateCaseFields();
@@ -61,22 +61,27 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         domainSetupTabNavigation.navigateToCustomFieldsTab();
     }
 
-    @Test(priority = 1,enabled = false, description = "Creating a case with compliance reminder schedule as Maximum 1.")
+    @Test(priority = 1,enabled = true, description = "Creating a case with compliance reminder schedule as Maximum 1.")
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
 
         createdCase = createCase.createRandomCases();
+        caseFactories.setComplianceReminderAsCustomIntervalWithUnlimited(4);
+        caseFactories.saveCase();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
         caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(1);
         caseFactories.saveCase();
     }
 
-    @Test(priority = 2,enabled = false, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
+    @Test(priority = 2,enabled = true, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
         navigation.navigateToTemplatesTAB();
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
-        caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(5);
+        caseFactories.setComplianceReminderAsMonthlyUnlimited(7,25);
+        templateFactories.saveCaseTemplate();
+        templateFactories.goToEditTemplatePage(createdCaseTemplate);
+        caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(6,7);
         templateFactories.saveCaseTemplate();
         navigation.navigateToCaseTAB();
         caseFactories.goToEditCase(createdCase);
