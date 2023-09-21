@@ -97,15 +97,9 @@ public class Module_Navigation extends BaseModule {
 
 
 
-//    public void test(){
-//        int range = 100000 - 100 + 1;
-//        String id = faker.name().firstName()+"_"+((int)(Math.random()*range));
-//        System.out.println(id);
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//        String formattedDate = sdf.format(faker.date().birthday());
-//        System.out.println(formattedDate);
-//    }
+
+
+
 
 }
 

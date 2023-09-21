@@ -662,9 +662,10 @@ public class CaseCommunicationFactories extends BaseModule {
             seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
                 driver.getWebDriver().navigate().refresh();
+                Thread.sleep(8000);
                 driver.waitForPageToBeReady();
                 searchCustodianTypeSeriesByName(seriesName);
-                Thread.sleep(8000);
+
                 Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
@@ -696,11 +697,11 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
-
                 driver.getWebDriver().navigate().refresh();
+                Thread.sleep(8000);
                 driver.waitForPageToBeReady();
                 searchNonCustodianTypeSeriesByName(seriesName);
-                Thread.sleep(8000);
+
                 Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
@@ -733,9 +734,10 @@ public class CaseCommunicationFactories extends BaseModule {
             seriesNameColumnFilterBox.Clear();
             while (lastSentDate.equalsIgnoreCase("")) {
                 driver.getWebDriver().navigate().refresh();
+                Thread.sleep(8000);
                 driver.waitForPageToBeReady();
                 searchReleaseTypeSeriesByName(seriesName);
-                Thread.sleep(8000);
+
                 Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
