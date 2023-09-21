@@ -48,15 +48,17 @@ public class BaseRunner {
     /* This method logs in to "Infinity Domain Expansion" tenant
     as system admin from Sightline. Uncomment the BeforeClass annotation
     before merging */
+
 //    @BeforeClass(alwaysRun = true)
     public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "LH Automation 1");
     }
 
 
     /* This method logs in to "Infinity Domain Expansion" tenant directly
     as System Admin using token. You can use this while developing. comment the BeforeClass annotation
     before merging */
+
     @BeforeClass(alwaysRun = true)
     public void sysAdminLoginToLegalHoldWithToken() throws UnsupportedEncodingException {
         String baseUrl = "https://LVSVQDSQLLH01:5656";
@@ -69,7 +71,7 @@ public class BaseRunner {
                         .body("{\n" +
                                 "    \"userId\":\"7859\",\n" +
                                 "    \"role\":\"sysadmin\",\n" +
-                                "    \"tenantId\":\"854\",\n" +
+                                "    \"tenantId\":\"866\",\n" +
                                 "    \"email\":\"syslegalhold@gmail.com\",\n" +
                                 "    \"FirstName\":\"System\",\n" +
                                 "    \"LastName\":\"Admin\"\n" +
@@ -84,7 +86,7 @@ public class BaseRunner {
         driver.get("https://legalholdqa.consiliotest.com" + "?token=" + token);
     }
 
-    //    @AfterClass(alwaysRun = true)
+//    @AfterClass(alwaysRun = true)
     public void closeBrowser() throws InterruptedException {
         logoutLegalHold.logOutFromLegalHold();
         logoutLegalHold.logOutFromSightline();

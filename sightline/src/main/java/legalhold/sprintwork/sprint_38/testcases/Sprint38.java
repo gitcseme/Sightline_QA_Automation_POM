@@ -1,4 +1,4 @@
-package legalhold.sprintwork.sprint38.testcases;
+package legalhold.sprintwork.sprint_38.testcases;
 
 import automationLibrary.Driver;
 import legalhold.setup.BaseModule;

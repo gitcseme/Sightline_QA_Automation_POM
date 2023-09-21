@@ -65,6 +65,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
 
         createdCase = createCase.createRandomCases();
+        caseFactories.populateCaseFields();
         caseFactories.setComplianceReminderAsCustomIntervalWithUnlimited(4);
         caseFactories.saveCase();
         navigation.navigateToCaseTAB();
@@ -89,13 +90,13 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseFactories.saveCase();
     }
 
-    @Test(priority = 3,enabled = false,description = "Adding multiple custodian to the case created case from previous test case.")
+    @Test(priority = 3,enabled = true,description = "Adding multiple custodian to the case created case from previous test case.")
     public void addMultipleCustodianToACase() throws InterruptedException {
         caseFactories.NavigateToCustodiansTab();
         addCaseCustodian.upLoadCustodians();
     }
 
-    @Test(priority = 4, enabled = false, description = "Creating a Custodian type communication series in that case after the template from previous " +
+    @Test(priority = 4, enabled = true, description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
     public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
         caseFactories.NavigateToCommunicationsTab();
@@ -112,7 +113,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.saveCommunicationSeries();
     }
 
-    @Test(priority = 5,enabled = false, description = "Starting the previously created series with Compliance Reminder One Time")
+    @Test(priority = 5,enabled = true, description = "Starting the previously created series with Compliance Reminder One Time")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
         caseCommunicationFactories.enableComplianceReminder();
