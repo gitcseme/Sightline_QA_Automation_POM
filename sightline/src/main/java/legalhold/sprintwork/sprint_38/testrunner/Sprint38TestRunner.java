@@ -14,6 +14,8 @@ public class Sprint38TestRunner extends BaseRunner {
     CaseFactories caseFactories;
     PreservationFactories preservationFactories;
     public static String createdPreservationHoldName;
+    public static int allCountExceptError;
+    public static int activeCount;
 
     public Sprint38TestRunner() throws ParseException, IOException, InterruptedException {
         caseFactories = new CaseFactories(driver);
@@ -21,7 +23,7 @@ public class Sprint38TestRunner extends BaseRunner {
         preservationFactories = new PreservationFactories(driver);
     }
 
-    @Test
+    @Test(priority = 1)
     public void createHold() throws InterruptedException {
         caseFactories.goToEditCase("Test");
         caseFactories.NavigateToPreservationTab();
@@ -30,5 +32,11 @@ public class Sprint38TestRunner extends BaseRunner {
         preservationFactories.addPreservationCustodianAndTeams("7", "demo");
         preservationFactories.addPreservationSite("jbush");
         preservationFactories.savePreservationHold();
+    }
+
+    @Test(priority = 2)
+    public void getXYCount(){
+        allCountExceptError = preservationFactories.getTotalPreservationCountExceptError();
+        System.out.println("The value of Y is: "+allCountExceptError);
     }
 }
