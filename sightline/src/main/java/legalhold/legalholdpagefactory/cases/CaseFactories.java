@@ -556,10 +556,11 @@ public class CaseFactories extends BaseModule {
         driver.waitForPageToBeReady();
     }
 
-    public void NavigateToPreservationTab() {
+    public void NavigateToPreservationTab() throws InterruptedException {
 
         ManageCaseTabsNavigation();
         ManageCaseTabs.get(2).click();
+        Thread.sleep(3000);
         driver.waitForPageToBeReady();
     }
 

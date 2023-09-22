@@ -4,13 +4,17 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import legalhold.setup.BaseModule;
+import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PreservationFactories extends BaseModule {
+
     public PreservationFactories(Driver driver) throws IOException {
         super("src/main/java/legalhold/selectors/cases/manage_case/preservation/preservation.properties", driver);
     }
@@ -33,6 +37,7 @@ public class PreservationFactories extends BaseModule {
 
     public void addCustodianBySelectAll(String empId) throws InterruptedException {
         String expectedPaginationText = "Showing 1 to 1 of 1 entries";
+        driver.FindElementById(locatorReader.getobjectLocator("subTabCustodian")).waitAndClick(30);
         Element searchEmpIdAvailableCustodianTable = driver.FindElementByCssSelector(locatorReader.getobjectLocator("searchEmpIdAvailableCustodianTable"));
         wait.until(ExpectedConditions.elementToBeClickable(searchEmpIdAvailableCustodianTable.getWebElement()));
         searchEmpIdAvailableCustodianTable.SendKeys(empId);
@@ -146,7 +151,7 @@ public class PreservationFactories extends BaseModule {
         saveManagePreservationCustodianTeams();
     }
 
-    public void addPreservationCustodianAndTeams(String empId,String teamName) throws InterruptedException {
+    public void addPreservationCustodianAndTeams(String empId, String teamName) throws InterruptedException {
         goToManageCustodianTeams();
         addCustodianBySelectAll(empId);
         addTeamsBySelectAll(teamName);
@@ -165,5 +170,66 @@ public class PreservationFactories extends BaseModule {
         saveManagePreservationCustodianTeams();
     }
 
+    public int getActivePreservationCount() {
+        Element dropdownStatus = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dropdownStatus"));
+        dropdownStatus.selectFromDropdown().selectByValue("Active");
+        String paginationTextPreservationDataTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextPreservationDataTable")).getText();
 
+        // Define a regular expression pattern to match integers
+        Pattern pattern = Pattern.compile("of (\\d+)");
+
+        // Create a Matcher object and apply the pattern to the input string
+        Matcher matcher = pattern.matcher(paginationTextPreservationDataTable);
+
+        // Find and extract the integer
+        int activeCount = 0;
+        while (matcher.find()) {
+            activeCount = Integer.parseInt(matcher.group(1));
+        }
+        System.out.println("Extracted active preservation count: " + activeCount);
+        driver.FindElementById(locatorReader.getobjectLocator("preservationDataTableClearFilter")).waitAndClick(30);
+        return activeCount;
+    }
+
+    public int getErrorPreservationCount() {
+        Element dropdownStatus = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dropdownStatus"));
+        dropdownStatus.selectFromDropdown().selectByValue("Error");
+        String paginationTextPreservationDataTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextPreservationDataTable")).getText();
+
+        Pattern pattern = Pattern.compile("of (\\d+)");
+        Matcher matcher = pattern.matcher(paginationTextPreservationDataTable);
+
+        int errorCount = 0;
+        while (matcher.find()) {
+            errorCount = Integer.parseInt(matcher.group(1));
+        }
+        System.out.println("Extracted Error preservation count: " + errorCount);
+        driver.FindElementById(locatorReader.getobjectLocator("preservationDataTableClearFilter")).waitAndClick(30);
+        return errorCount;
+    }
+
+    public int getTotalPreservationCountExceptError() {
+        String paginationTextPreservationDataTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextPreservationDataTable")).getText();
+        Element dropdownStatus = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dropdownStatus"));
+        dropdownStatus.selectFromDropdown().selectByValue("Error");
+        String paginationTextPreservationDataTableAfterFiltering = driver.FindElementById(locatorReader.getobjectLocator("paginationTextPreservationDataTable")).getText();
+
+        Pattern pattern = Pattern.compile("of (\\d+)");
+
+        Matcher matcherAll = pattern.matcher(paginationTextPreservationDataTable);
+        Matcher matcherError = pattern.matcher(paginationTextPreservationDataTableAfterFiltering);
+
+        int errorCount = 0;
+        int allCount = 0;
+        while (matcherAll.find()) {
+            allCount = Integer.parseInt(matcherAll.group(1));
+        }
+        while (matcherError.find()) {
+            errorCount = Integer.parseInt(matcherError.group(1));
+        }
+        System.out.println("Extracted Error preservation count: " + errorCount);
+        System.out.println("Extracted All preservation count: " + allCount);
+        driver.FindElementById(locatorReader.getobjectLocator("preservationDataTableClearFilter")).waitAndClick(30);
+        return allCount - errorCount;
+    }
 }
