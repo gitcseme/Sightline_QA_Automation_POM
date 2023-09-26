@@ -2,7 +2,9 @@ package legalhold.sprintwork.sprint_36.testrunners;
 
 
 import com.github.javafaker.Faker;
+import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.setup.BaseRunner;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -52,13 +54,13 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
 //        createCase.createRandomCases();
 //        caseFactories.populateCaseFields();
 //        caseFactories.saveCase();
-        navigation.navigateToDomainSetupTAB();
-        domainSetupTabNavigation.navigateToDataSourceTab();
-        domainSetupTabNavigation.navigateToEmailTab();
-        domainSetupTabNavigation.navigateToEmployeeDataTab();
-        domainSetupTabNavigation.navigateToPermissionsTab();
-        domainSetupTabNavigation.navigateToCaseAccessTab();
-        domainSetupTabNavigation.navigateToCustomFieldsTab();
+        navigation.navigateToMenu(LHMenus.DomainSetup);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.DataSources);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Email);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.EmployeeData);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Permissions);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.CaseAccess);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Fields);
     }
 
     @Test(priority = 1,enabled = true, description = "Creating a case with compliance reminder schedule as Maximum 1.")
@@ -68,7 +70,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseFactories.populateCaseFields();
         caseFactories.setComplianceReminderAsCustomIntervalWithUnlimited(4);
         caseFactories.saveCase();
-        navigation.navigateToCaseTAB();
+        navigation.navigateToMenu(LHMenus.Cases);
         caseFactories.goToEditCase(createdCase);
         caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(1);
         caseFactories.saveCase();
@@ -77,14 +79,14 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     @Test(priority = 2,enabled = true, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
-        navigation.navigateToTemplatesTAB();
+        navigation.navigateToMenu(LHMenus.Templates);
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
         caseFactories.setComplianceReminderAsMonthlyUnlimited(7,25);
         templateFactories.saveCaseTemplate();
         templateFactories.goToEditTemplatePage(createdCaseTemplate);
         caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(6,7);
         templateFactories.saveCaseTemplate();
-        navigation.navigateToCaseTAB();
+        navigation.navigateToMenu(LHMenus.Cases);
         caseFactories.goToEditCase(createdCase);
         templateFactories.applyCaseTemplate(createdCaseTemplate);
         caseFactories.saveCase();
