@@ -1,6 +1,7 @@
 package legalhold.sprintwork.sprint_37.testrunner;
 
 import com.github.javafaker.Faker;
+import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
@@ -56,7 +57,7 @@ public class Sprint37TestRunner extends BaseRunner {
     @Test(priority = 2,enabled = true, description = "Creating a case with compliance reminder schedule as Every 3 days and Unlimited.")
     public void caseSaveWithCustomIntervalAndUnlimited() throws IOException, InterruptedException {
 
-        navigation.navigateToCaseTAB();
+        navigation.navigateToMenu(LHMenus.Cases);
         createdCase = createCase.createRandomCases();
 //        navigation.navigateToCaseTAB();
 //        caseFactories.goToEditCase(createdCase);
@@ -67,12 +68,12 @@ public class Sprint37TestRunner extends BaseRunner {
     @Test(priority = 3, description = "Creating a case template with Compliance Reminder schedule as Every 7 days and Maximum 7 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithCustomIntervalAndMaxNumber() throws IOException, InterruptedException {
-        navigation.navigateToTemplatesTAB();
+        navigation.navigateToMenu(LHMenus.Templates);
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
         caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(7,7);
         templateFactories.saveCaseTemplate();
 
-        navigation.navigateToCaseTAB();
+        navigation.navigateToMenu(LHMenus.Cases);
         caseFactories.goToEditCase(createdCase);
         templateFactories.applyCaseTemplate(createdCaseTemplate);
         caseFactories.saveCase();

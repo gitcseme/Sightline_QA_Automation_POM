@@ -1,5 +1,6 @@
 package legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration;
 
+import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.CustodianFactories;
@@ -93,7 +94,7 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 
         Module_Navigation caseTabNavigation = new Module_Navigation(driver);
 
-        caseTabNavigation.navigateToCaseTAB();
+        caseTabNavigation.navigateToMenu(LHMenus.Cases);
 
 
         CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
