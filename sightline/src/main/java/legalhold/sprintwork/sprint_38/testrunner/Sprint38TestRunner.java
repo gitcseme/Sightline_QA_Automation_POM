@@ -23,20 +23,46 @@ public class Sprint38TestRunner extends BaseRunner {
         preservationFactories = new PreservationFactories(driver);
     }
 
-    @Test(priority = 1)
-    public void createHold() throws InterruptedException {
-        caseFactories.goToEditCase("Test");
+    @Test(priority = 1, enabled = true)
+    public void goToPreservationTab() throws InterruptedException {
+        caseFactories.goToEditCase("Case Preservation Hold");
         caseFactories.NavigateToPreservationTab();
-        preservationFactories.goToCreatePreservationHold();
-        createdPreservationHoldName = preservationFactories.enterHoldNameAndDescription();
-        preservationFactories.addPreservationCustodianAndTeams("7", "demo");
-        preservationFactories.addPreservationSite("jbush");
-        preservationFactories.savePreservationHold();
     }
 
-    @Test(priority = 2)
-    public void getXYCount(){
-        allCountExceptError = preservationFactories.getTotalPreservationCountExceptError();
-        System.out.println("The value of Y is: "+allCountExceptError);
+    @Test(priority = 2, enabled = true)
+    public void createHold() throws InterruptedException {
+        preservationFactories.goToCreatePreservationHold();
+        createdPreservationHoldName = preservationFactories.enterHoldNameAndDescription();
+        preservationFactories.selectDataSourceFromDropdown("Data Source Parvez");
+        preservationFactories.addPreservationCustodianAndTeams("PH-11", "demo");
+        preservationFactories.addPreservationSite("jbush");
+        preservationFactories.savePreservationHold();
+        preservationFactories.isPreservationHoldActive(createdPreservationHoldName);
     }
+
+    @Test(priority = 3, enabled = true)
+    public void getXYCountFromCasePreservationTab() {
+        allCountExceptError = preservationFactories.getTotalPreservationCountExceptError();
+        System.out.println("The value of Y is: " + allCountExceptError);
+    }
+
+    @Test(priority = 4, enabled = true)
+    public void EditHold() throws InterruptedException {
+
+        preservationFactories.goToEditPreservationHold(createdPreservationHoldName);
+        preservationFactories.addPreservationCustodianAndTeams("PH-21", "Collection");
+        preservationFactories.addPreservationSite("an");
+        preservationFactories.savePreservationHold();
+        preservationFactories.isPreservationHoldActive(createdPreservationHoldName);
+
+//        preservationFactories.groupReleasePreservationHold(createdPreservationHoldName);
+//        preservationFactories.isPreservationHoldReleased(createdPreservationHoldName);
+    }
+
+    @Test(priority = 5, enabled = true)
+    public void releasePreservation() throws InterruptedException {
+        preservationFactories.releasePreservationCustodianFromDataTable(createdPreservationHoldName, "ph-11");
+    }
+
+
 }
