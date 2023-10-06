@@ -4,7 +4,6 @@ package legalhold.sprintwork.sprint_36.testrunners;
 import com.github.javafaker.Faker;
 import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
-import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.setup.BaseRunner;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -47,20 +46,6 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
         addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
-    }
-
-    @Test(enabled = false)
-    public void testing() throws InterruptedException {
-//        createCase.createRandomCases();
-//        caseFactories.populateCaseFields();
-//        caseFactories.saveCase();
-        navigation.navigateToMenu(LHMenus.DomainSetup);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.DataSources);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Email);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.EmployeeData);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Permissions);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.CaseAccess);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Fields);
     }
 
     @Test(priority = 1,enabled = true, description = "Creating a case with compliance reminder schedule as Maximum 1.")
@@ -106,7 +91,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
-        caseCommunicationFactories.addMailToRecipients("SLH-1");
+        caseCommunicationFactories.addMailToRecipients("Auto-1");
         caseCommunicationFactories.enterCommunicationNameAndDescription();
         caseCommunicationFactories.enterAcknowledgmentEmailSubject("Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +

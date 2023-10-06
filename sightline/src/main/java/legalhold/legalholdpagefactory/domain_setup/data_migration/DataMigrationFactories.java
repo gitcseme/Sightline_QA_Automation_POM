@@ -25,26 +25,35 @@ public class DataMigrationFactories extends BaseModule {
         domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
     }
 
-    public void goToDataMigrationTab() {
-        navigation.navigateToMenu(LHMenus.DomainSetup);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Migration);
+    public Module_Navigation getNavigation() throws IOException {
+//        if (navigation == null) {
+//            navigation = new Module_Navigation(driver);
+//        }
+        return new Module_Navigation(driver);
     }
 
-    public void openModalAndSelectFileForUpload() {
+    public void goToDataMigrationTab() throws InterruptedException, IOException {
+        getNavigation().navigateToMenu(LHMenus.DomainSetup);
+        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Migration);
+        Thread.sleep(2000);
+    }
+
+    public void openModalAndSelectFileForUpload() throws InterruptedException {
         var btnUpload = driver.FindElementById(locatorReader.getobjectLocator("btnUploadFiles"));
         wait.until(ExpectedConditions.elementToBeClickable(btnUpload.getWebElement()));
         btnUpload.Click();
-
+        Thread.sleep(2000);
         var btnChooseFile = driver.FindElementById(locatorReader.getobjectLocator("btnChooseFile"));
         wait.until(ExpectedConditions.elementToBeClickable(btnChooseFile.getWebElement()));
-
+        Thread.sleep(2000);
         btnChooseFile.SendKeys(reader.getFileName("MigrationZipFilePath"));
-
+        Thread.sleep(2000);
         var btnUploadSubmit = driver.FindElementById(locatorReader.getobjectLocator("btnUploadSubmit"));
         btnUploadSubmit.Click();
     }
 
-    public void checkPendingStatus() {
+    public void checkPendingStatus() throws InterruptedException {
+        Thread.sleep(4000);
         var uploadStatusElement = driver.FindElementById(locatorReader.getobjectLocator("uploadFileStatus"));
         var statusString = uploadStatusElement.getText();
 

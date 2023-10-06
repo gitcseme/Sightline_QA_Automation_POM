@@ -56,6 +56,7 @@ public class CaseFactories extends BaseModule {
         try {
             WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
             wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+            caseNameColumnFilterBox.clear();
             caseNameColumnFilterBox.sendKeys(caseName);
             String expected_text = "Showing 1 to 1 of 1 entries";
             Thread.sleep(3000);
@@ -540,6 +541,36 @@ public class CaseFactories extends BaseModule {
             System.out.println("Escalation is already set as " + setEscalationInterval);
         }
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
+    }
+
+    public int getColumnIndexFromDataTable(String headerName) {
+        var table = driver.FindElementById("id-CaseTable");
+        wait.until(ExpectedConditions.elementToBeClickable(table.getWebElement()));
+        int columnIndex = 0;
+
+        var headerList = driver.FindElementsByXPath("//table[@id='id-CaseTable']//thead/tr[1]/th");
+        for (int i = 0; i < headerList.size(); i++) {
+            if (headerList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                columnIndex = i+1;
+                break;
+            }
+        }
+
+        if (columnIndex == 0) {
+            driver.FindElementById(locatorReader.getobjectLocator("btnColumnSetup")).waitAndClick(30);
+            var availableColumnList = driver.FindElementsByXPath("//tbody[@id='id-tablebody-available-CaseTable']/tr/td[2]");
+            for (int i = 0; i < availableColumnList.size(); i++) {
+
+                if (availableColumnList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                    driver.FindElementByXPath("//tbody[@id='id-tablebody-available-CaseTable']/tr[" + (i + 1) + "]/td[1]/input").waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("addBtnColumnSetup")).waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("saveBtnColumnSetup")).waitAndClick(30);
+                    break;
+                }
+            }
+            columnIndex = headerList.size();
+        }
+        return columnIndex;
     }
 
     public void NavigateToCaseInformationTab() {
