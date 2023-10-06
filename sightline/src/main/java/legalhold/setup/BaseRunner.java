@@ -51,7 +51,7 @@ public class BaseRunner {
 
 //    @BeforeClass(alwaysRun = true)
     public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "LH Automation 1");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona?2023", "LH Automation 1");
     }
 
 

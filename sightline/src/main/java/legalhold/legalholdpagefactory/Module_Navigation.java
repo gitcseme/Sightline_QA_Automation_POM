@@ -1,6 +1,8 @@
 package legalhold.legalholdpagefactory;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,12 +15,14 @@ public class Module_Navigation extends BaseModule {
 
     HashMap<LHMenus, Integer> menuNameIndexMap = new HashMap<>();
 
-    List<WebElement> sidebarElements;
+    ElementCollection sidebarElements;
+    List<WebElement> elems;
 
     public Module_Navigation(Driver driver) throws IOException {
         super("./src/main/java/legalhold/selectors/sl_slh_integration/navigation.properties", driver);
 
-        sidebarElements = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ModuleTabs")));
+        sidebarElements = driver.FindElementsByClassName(locatorReader.getobjectLocator("ModuleTabs"));
+//        elems = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ModuleTabs")));
 
         menuNameIndexMap.put(LHMenus.Cases, 0);
         menuNameIndexMap.put(LHMenus.Employees, 1);
@@ -28,12 +32,12 @@ public class Module_Navigation extends BaseModule {
         menuNameIndexMap.put(LHMenus.AuditTrail, 5);
         menuNameIndexMap.put(LHMenus.GlobalNotice, 6);
         menuNameIndexMap.put(LHMenus.DomainSetup, 7);
-
     }
 
 
     public void navigateToMenu(LHMenus menu) {
-        sidebarElements.get(menuNameIndexMap.get(menu)).click();
+        sidebarElements.getElementByIndex(menuNameIndexMap.get(menu)).waitAndClick(30);
+//        elems.get(menuNameIndexMap.get(menu)).click();
         driver.waitForPageToBeReady();
     }
 
