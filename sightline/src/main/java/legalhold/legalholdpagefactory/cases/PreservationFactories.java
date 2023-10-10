@@ -3,6 +3,7 @@ package legalhold.legalholdpagefactory.cases;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 
+import automationLibrary.ElementCollection;
 import legalhold.setup.BaseModule;
 
 
@@ -359,7 +360,6 @@ public class PreservationFactories extends BaseModule {
 
         if (status.equalsIgnoreCase("Active") || status.equalsIgnoreCase("Error") ||
                 status.equalsIgnoreCase("Partially Active")) {
-            System.out.println("Bulk Release Button is Enabled");
             wait.until(ExpectedConditions.elementToBeClickable(btnGroupReleasePreservation.getWebElement()));
             btnGroupReleasePreservation.waitAndClick(30);
             driver.FindElementById("pHold-release-modal-ok").waitAndClick(30);
@@ -369,6 +369,72 @@ public class PreservationFactories extends BaseModule {
             System.out.println("Preservation Hold: " + holdName + ", is NOT in Active/Partially Active status for system to Release");
         }
     }
+
+
+    public void deletePreservationHold(String holdName) throws InterruptedException {
+        int holdRow = findPreservationRow(holdName);
+        Element btnDeletePreservation = driver.FindElementByXPath("//table[@id='preservationHold_table_uniqueId']//tbody//tr[" + holdRow + "]//td[6]//div[1]//a[3]//img[1]");
+        Thread.sleep(2000);
+        WebElement statusCell = driver.getWebDriver().findElement(By.xpath("//table[@id='preservationHold_table_uniqueId']//tbody//tr[" + holdRow + "]//td[4]"));
+        wait.until(ExpectedConditions.visibilityOf(statusCell));
+        String status = statusCell.getText();
+
+        if (status.equalsIgnoreCase("Active") || status.equalsIgnoreCase("Error") ||
+                status.equalsIgnoreCase("Partially Active") || status.equalsIgnoreCase("Released")) {
+            wait.until(ExpectedConditions.elementToBeClickable(btnDeletePreservation.getWebElement()));
+            btnDeletePreservation.waitAndClick(30);
+            Thread.sleep(3000);
+            driver.FindElementById("pHold-delete-modal-ok").waitAndClick(30);
+            Thread.sleep(6000);
+            driver.waitForPageToBeReady();
+        } else {
+            System.out.println("Preservation Hold: " + holdName + ", is NOT in Active/Partially Active status for system to Delete");
+        }
+    }
+
+    public void isPreservationHoldDeleted(String holdName) throws InterruptedException {
+        ElementCollection holdList = driver.FindElementsByXPath("//table[@id='preservationHold_table_uniqueId']//tbody//tr//td[1]");
+        List<String> holdNameList = new ArrayList<>();
+        boolean flag = false;
+        int count = 0, iterator = 0;
+        for (int i = 0; i < holdList.size(); i++) {
+            holdNameList.add(holdList.getElementByIndex(i).getText());
+        }
+
+        for (String s : holdNameList) {
+            if (!s.equalsIgnoreCase(holdName)) count++;
+        }
+
+        if (count == holdNameList.size()) {
+            flag = true;
+            System.out.println("Preservation Hold: " + holdName + " is Deleted successfully");
+        }
+        while (!flag) {
+            int countAfterRefresh = 0;
+            driver.getWebDriver().navigate().refresh();
+            Thread.sleep(15000);
+            driver.waitForPageToBeReady();
+            ElementCollection holdListAfterRefresh = driver.FindElementsByXPath("//table[@id='preservationHold_table_uniqueId']//tbody//tr//td[1]");
+            List<String> holdNameListAfterRefresh = new ArrayList<>();
+            for (int i = 0; i < holdListAfterRefresh.size(); i++) {
+                holdNameListAfterRefresh.add(holdListAfterRefresh.getElementByIndex(i).getText());
+            }
+            for (String s : holdNameListAfterRefresh) {
+                if (!s.equalsIgnoreCase(holdName)) countAfterRefresh++;
+            }
+            if (countAfterRefresh == holdNameListAfterRefresh.size()) {
+                flag = true;
+                System.out.println("Preservation Hold: " + holdName + " is Deleted successfully");
+                break;
+            }
+            iterator++;
+            if (iterator == 15) {
+                System.out.println("Preservation Hold: "+holdName+" Delete unsuccessful within given timeline");
+                break;
+            }
+        }
+    }
+
 
     public int findPreservationRow(String holdName) {
         int holdRow = 0;
