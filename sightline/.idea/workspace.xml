@@ -7,16 +7,7 @@
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/data_migration/DataMigrationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/data_migration/DataMigrationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/preservation/preservation.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/preservation/preservation.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testcases/Sprint38.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testcases/Sprint38.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

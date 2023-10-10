@@ -125,6 +125,12 @@ public class Sprint38TestRunner extends BaseRunner {
     }
 
     @Test(priority = 9, enabled = true)
+    public void deleteWholePreservationHold() throws InterruptedException {
+        preservationFactories.deletePreservationHold(createdPreservationHoldName);
+        preservationFactories.isPreservationHoldDeleted(createdPreservationHoldName);
+    }
+
+    @Test(priority = 10, enabled = true)
     public void uploadZipFileForMigration() throws InterruptedException, IOException {
         dataMigrationFactories.goToDataMigrationTab();
         dataMigrationFactories.openModalAndSelectFileForUpload();
