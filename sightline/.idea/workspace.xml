@@ -7,7 +7,11 @@
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/template/TemplateFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +84,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Run38">
+  <component name="RunManager" selected="TestNG.Run36">
     <configuration name="LoginToSightlineTestRunner" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -267,11 +271,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/testScriptsSmoke/Input.java</url>
           <line>1176</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/automationLibrary/ElementCollection.java</url>
-          <line>112</line>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

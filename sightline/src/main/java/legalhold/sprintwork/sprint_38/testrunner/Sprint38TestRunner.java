@@ -22,15 +22,6 @@ public class Sprint38TestRunner extends BaseRunner {
     public static int preservationAllCountExceptReleased;
     public static int preservationAllActiveCount;
     private DataMigrationFactories dataMigrationFactories;
-    Module_Navigation navigation;
-
-    public Module_Navigation getNavigation() throws IOException {
-//        if (navigation == null) {
-//            navigation = new Module_Navigation(driver);
-//        }
-        return new Module_Navigation(driver);
-    }
-
 
     public Sprint38TestRunner() throws ParseException, IOException, InterruptedException {
         caseFactories = new CaseFactories(driver);
@@ -65,7 +56,6 @@ public class Sprint38TestRunner extends BaseRunner {
         System.out.println("From Preservation Page: The value of Y is: " + preservationAllCountExceptReleased);
 
         getNavigation().navigateToMenu(LHMenus.Cases);
-//        navigation = null;
 
         HashMap countMap = sprint38.getPreservationsColumn_X_Y_Value("Demo 37");
         System.out.println("From Case Table: The value of X is " + countMap.get("valueX") + " and the value of Y is " + countMap.get("valueY"));
@@ -111,7 +101,7 @@ public class Sprint38TestRunner extends BaseRunner {
     }
 
     @Test(priority = 7, enabled = true)
-    public void releasePreservation() throws InterruptedException {
+    public void releasePreservations() throws InterruptedException {
         caseFactories.goToEditCase("Demo 37");
         caseFactories.NavigateToPreservationTab();
         preservationFactories.releasePreservationCustodianFromDataTable(createdPreservationHoldName, "ph");
