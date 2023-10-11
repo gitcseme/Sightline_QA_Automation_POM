@@ -652,38 +652,41 @@ public class CaseCommunicationFactories extends BaseModule {
     and will assert if the communication series name field is disabled or not.
     */
     public void verifyPostSendForCustodianSeries(String seriesName) throws InterruptedException {
-        try {
+        int iterator = 0;
+        searchCustodianTypeSeriesByName(seriesName);
+        Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+        wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
+        String lastSentDate = lastSentDateCell.getText();
+        Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
+        wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
+        seriesNameColumnFilterBox.Clear();
+        while (lastSentDate.equalsIgnoreCase("")) {
+            driver.getWebDriver().navigate().refresh();
+            Thread.sleep(10000);
+            driver.waitForPageToBeReady();
             searchCustodianTypeSeriesByName(seriesName);
-            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
-            wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
-            String lastSentDate = lastSentDateCell.getText();
-            Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
-            wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
-            seriesNameColumnFilterBox.Clear();
-            while (lastSentDate.equalsIgnoreCase("")) {
-                driver.getWebDriver().navigate().refresh();
-                Thread.sleep(8000);
-                driver.waitForPageToBeReady();
-                searchCustodianTypeSeriesByName(seriesName);
+            Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
+            lastSentDate = lastSentDateCellAfterRefresh.getText();
+            System.out.println("Last Sent Date is: " + lastSentDate);
+            iterator++;
+            if (iterator == 20) break;
 
-                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
-                lastSentDate = lastSentDateCellAfterRefresh.getText();
-                System.out.println("Last Sent Date is: " + lastSentDate);
-            }
+        }
+        if (iterator < 20) {
             System.out.println("Final Last Sent Date is: " + lastSentDate);
             driver.getWebDriver().navigate().refresh();
             driver.waitForPageToBeReady();
             goToEditCustodianCommunicationPage(seriesName);
             Element inputSeriesName = driver.FindElementById(locatorReader.getobjectLocator("inputSeriesName"));
             Element acknowledgmentSentDateTableCell = driver.FindElementByCssSelector("td[communication-schedule-type='0']");
+            wait.until(ExpectedConditions.visibilityOf(acknowledgmentSentDateTableCell.getWebElement()));
             String acknowledgmentSentDate = acknowledgmentSentDateTableCell.getText();
             if (!inputSeriesName.Enabled() && acknowledgmentSentDate.equalsIgnoreCase(lastSentDate)) {
                 System.out.println("The communication series: " + seriesName + ", is in Post-Send mode");
             }
-        } catch (Exception e) {
-            System.out.println("The communication series: " + seriesName + ", is NOT in Post-Send mode");
-            System.out.println(e.getMessage());
+        } else {
+            throw new RuntimeException("The communication series: " + seriesName + ", is NOT in Post-Send mode");
         }
     }
 

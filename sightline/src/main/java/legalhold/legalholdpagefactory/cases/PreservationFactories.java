@@ -364,6 +364,7 @@ public class PreservationFactories extends BaseModule {
             btnGroupReleasePreservation.waitAndClick(30);
             driver.FindElementById("pHold-release-modal-ok").waitAndClick(30);
             Thread.sleep(2500);
+            System.out.println("Preservation Hold release request sent successfully");
             driver.waitForPageToBeReady();
         } else {
             System.out.println("Preservation Hold: " + holdName + ", is NOT in Active/Partially Active status for system to Release");
@@ -386,6 +387,7 @@ public class PreservationFactories extends BaseModule {
             Thread.sleep(3000);
             driver.FindElementById("pHold-delete-modal-ok").waitAndClick(30);
             Thread.sleep(6000);
+            System.out.println("Preservation Hold Delete request Sent successfully");
             driver.waitForPageToBeReady();
         } else {
             System.out.println("Preservation Hold: " + holdName + ", is NOT in Active/Partially Active status for system to Delete");
@@ -590,7 +592,7 @@ public class PreservationFactories extends BaseModule {
         wait.until(ExpectedConditions.elementToBeClickable(dropdownLocation.getWebElement()));
         dropdownLocation.selectFromDropdown().selectByValue("SharepointSite");
 
-        getColumnIndexFromDataTable("Name (Custodian, Site, Folder");
+        getColumnIndexFromDataTable("Name (Custodian, Site, Folder)");
         Element searchName = driver.FindElementByCssSelector(locatorReader.getobjectLocator("searchName"));
         wait.until(ExpectedConditions.elementToBeClickable(searchName.getWebElement()));
         searchName.Clear();
@@ -611,7 +613,7 @@ public class PreservationFactories extends BaseModule {
         wait.until(ExpectedConditions.elementToBeClickable(dropdownLocation.getWebElement()));
         dropdownLocation.selectFromDropdown().selectByValue("TeamMailbox");
 
-        getColumnIndexFromDataTable("Name (Custodian, Site, Folder");
+        getColumnIndexFromDataTable("Name (Custodian, Site, Folder)");
         Element searchName = driver.FindElementByCssSelector(locatorReader.getobjectLocator("searchName"));
         wait.until(ExpectedConditions.elementToBeClickable(searchName.getWebElement()));
         searchName.Clear();
@@ -770,63 +772,262 @@ public class PreservationFactories extends BaseModule {
         int count = getDataTableCount();
 
         if (count > 1) {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            boolean flag = false;
+            int c = 0;
+            List<String> statusList = new ArrayList<>();
+            for (int i = 1; i <= count; i++) {
+                statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+            }
+            for (String value : statusList) {
+                if (value.equalsIgnoreCase("Released")) {
+                    c++;
+                    if (c == count) flag = true;
+                }
+            }
             Element selectAllPreservationDataTable = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllPreservationDataTable"));
             wait.until(ExpectedConditions.elementToBeClickable(selectAllPreservationDataTable.getWebElement()));
             selectAllPreservationDataTable.waitAndClick(30);
-
             Element btnBulkRelease = driver.FindElementById(locatorReader.getobjectLocator("btnBulkRelease"));
-            btnBulkRelease.waitAndClick(30);
-            driver.FindElementById(locatorReader.getobjectLocator("okBtnBulkReleaseModal")).waitAndClick(30);
+            Thread.sleep(2000);
+            if (!flag && btnBulkRelease.Enabled()) {
+//                Element btnBulkRelease = driver.FindElementById(locatorReader.getobjectLocator("btnBulkRelease"));
+                btnBulkRelease.waitAndClick(30);
+                driver.FindElementById(locatorReader.getobjectLocator("okBtnBulkReleaseModal")).waitAndClick(30);
 
-            Element toastMessageBulkRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageBulkRelease"));
-            wait.until(ExpectedConditions.elementToBeClickable(toastMessageBulkRelease.getWebElement()));
-            String successToastMessageBulkRelease = toastMessageBulkRelease.getText();
-            Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation bulk release"));
+                Element toastMessageBulkRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageBulkRelease"));
+                wait.until(ExpectedConditions.elementToBeClickable(toastMessageBulkRelease.getWebElement()));
+                String successToastMessageBulkRelease = toastMessageBulkRelease.getText();
+                Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation bulk release"));
+            } else {
+                System.out.println("No Site is in Active status for system to Release");
+            }
         } else {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             Element dataTableOptionMenu = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dataTableOptionMenu"));
-            wait.until(ExpectedConditions.elementToBeClickable(dataTableOptionMenu.getWebElement()));
-            dataTableOptionMenu.waitAndClick(30);
+            if (!status.equalsIgnoreCase("Released") && dataTableOptionMenu.isDisplayed()) {
+                wait.until(ExpectedConditions.elementToBeClickable(dataTableOptionMenu.getWebElement()));
+                dataTableOptionMenu.waitAndClick(30);
 
-            driver.FindElementByXPath(locatorReader.getobjectLocator("btnSingleRelease")).waitAndClick(30);
-            driver.FindElementById(locatorReader.getobjectLocator("okBtnSingleRelease")).waitAndClick(30);
+                driver.FindElementByXPath(locatorReader.getobjectLocator("btnSingleRelease")).waitAndClick(30);
+                driver.FindElementById(locatorReader.getobjectLocator("okBtnSingleRelease")).waitAndClick(30);
 
-            Element toastMessageSingleRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageSingleRelease"));
-            wait.until(ExpectedConditions.elementToBeClickable(toastMessageSingleRelease.getWebElement()));
-            String successToastMessageBulkRelease = toastMessageSingleRelease.getText();
-            Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation Single Release"));
+                Element toastMessageSingleRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageSingleRelease"));
+                wait.until(ExpectedConditions.elementToBeClickable(toastMessageSingleRelease.getWebElement()));
+                String successToastMessageBulkRelease = toastMessageSingleRelease.getText();
+                Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation Single Release"));
+            } else {
+                System.out.println("Filtered Site is not Active for system to Release");
+            }
         }
     }
 
+
+    public void verifyIfSiteIsReleased(String holdName, String siteUrl) throws InterruptedException {
+
+        searchPreservationSiteDataTable(holdName, siteUrl);
+        int count = getDataTableCount();
+        int iterator = 0;
+        int pendingRelease = 0;
+        if (count > 1) {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            boolean flag = false;
+            int c = 0;
+            List<String> statusList = new ArrayList<>();
+            for (int i = 1; i <= count; i++) {
+                statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+            }
+            for (String value : statusList) {
+                if (value.equalsIgnoreCase("Released")) {
+                    c++;
+                    if (c == count) flag = true;
+                } else if (!value.equalsIgnoreCase("Pending Release")) {
+                    pendingRelease++;
+                }
+            }
+            while (!flag && pendingRelease != count) {
+                driver.getWebDriver().navigate().refresh();
+                Thread.sleep(12000);
+                searchPreservationSiteDataTable(holdName, siteUrl);
+//                Thread.sleep(3000);
+                driver.waitForPageToBeReady();
+                for (int i = 1; i <= count; i++) {
+                    statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                }
+                for (String s : statusList) {
+                    if (s.equalsIgnoreCase("Released")) {
+                        c++;
+                        if (c == count) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                iterator++;
+                if (iterator == 15) break;
+            }
+            if (flag) {
+                System.out.println("All Sites from " + holdName + " are Released");
+            } else {
+                throw new RuntimeException("All Sites from " + holdName + " are NOT Released");
+            }
+
+        } else {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
+            while (status.equalsIgnoreCase("Pending Release")) {
+                driver.getWebDriver().navigate().refresh();
+                Thread.sleep(12000);
+                searchPreservationSiteDataTable(holdName, siteUrl);
+//                Thread.sleep(3000);
+                driver.waitForPageToBeReady();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]")));
+                status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
+                iterator++;
+                if (status.equalsIgnoreCase("Released")) {
+                    break;
+                }
+                if (iterator == 15) break;
+            }
+            System.out.println("The site(s) of " + holdName + " are in: " + status + " status");
+            if (!status.equalsIgnoreCase("Released")) {
+                throw new RuntimeException("The site(s) of " + holdName + " are in NOT Released Status");
+            } else {
+                System.out.println("The site(s) of " + holdName + " are in Released Status");
+            }
+        }
+    }
 
     public void releasePreservationTeamsFromDataTable(String holdName, String teamName) throws InterruptedException {
         searchPreservationTeamsDataTable(holdName, teamName);
         int count = getDataTableCount();
 
         if (count > 1) {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            boolean flag = false;
+            int c = 0;
+            List<String> statusList = new ArrayList<>();
+            for (int i = 1; i <= count; i++) {
+                statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+            }
+            for (String value : statusList) {
+                if (value.equalsIgnoreCase("Released")) {
+                    c++;
+                    if (c == count) flag = true;
+                }
+            }
             Element selectAllPreservationDataTable = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllPreservationDataTable"));
             wait.until(ExpectedConditions.elementToBeClickable(selectAllPreservationDataTable.getWebElement()));
             selectAllPreservationDataTable.waitAndClick(30);
-
             Element btnBulkRelease = driver.FindElementById(locatorReader.getobjectLocator("btnBulkRelease"));
-            btnBulkRelease.waitAndClick(30);
-            driver.FindElementById(locatorReader.getobjectLocator("okBtnBulkReleaseModal")).waitAndClick(30);
+            Thread.sleep(2000);
+            if (!flag && btnBulkRelease.Enabled()) {
+//                Element btnBulkRelease = driver.FindElementById(locatorReader.getobjectLocator("btnBulkRelease"));
+                btnBulkRelease.waitAndClick(30);
+                driver.FindElementById(locatorReader.getobjectLocator("okBtnBulkReleaseModal")).waitAndClick(30);
 
-            Element toastMessageBulkRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageBulkRelease"));
-            wait.until(ExpectedConditions.elementToBeClickable(toastMessageBulkRelease.getWebElement()));
-            String successToastMessageBulkRelease = toastMessageBulkRelease.getText();
-            Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation bulk release"));
+                Element toastMessageBulkRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageBulkRelease"));
+                wait.until(ExpectedConditions.elementToBeClickable(toastMessageBulkRelease.getWebElement()));
+                String successToastMessageBulkRelease = toastMessageBulkRelease.getText();
+                Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation bulk release"));
+            } else {
+                System.out.println("No Team Mailbox is in Active status for system to Release");
+            }
         } else {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             Element dataTableOptionMenu = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dataTableOptionMenu"));
-            wait.until(ExpectedConditions.elementToBeClickable(dataTableOptionMenu.getWebElement()));
-            dataTableOptionMenu.waitAndClick(30);
+            if (!status.equalsIgnoreCase("Released") && dataTableOptionMenu.isDisplayed()) {
+                wait.until(ExpectedConditions.elementToBeClickable(dataTableOptionMenu.getWebElement()));
+                dataTableOptionMenu.waitAndClick(30);
 
-            driver.FindElementByXPath(locatorReader.getobjectLocator("btnSingleRelease")).waitAndClick(30);
-            driver.FindElementById(locatorReader.getobjectLocator("okBtnSingleRelease")).waitAndClick(30);
+                driver.FindElementByXPath(locatorReader.getobjectLocator("btnSingleRelease")).waitAndClick(30);
+                driver.FindElementById(locatorReader.getobjectLocator("okBtnSingleRelease")).waitAndClick(30);
 
-            Element toastMessageSingleRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageSingleRelease"));
-            wait.until(ExpectedConditions.elementToBeClickable(toastMessageSingleRelease.getWebElement()));
-            String successToastMessageBulkRelease = toastMessageSingleRelease.getText();
-            Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation Single Release"));
+                Element toastMessageSingleRelease = driver.FindElementByXPath(locatorReader.getobjectLocator("toastMessageSingleRelease"));
+                wait.until(ExpectedConditions.elementToBeClickable(toastMessageSingleRelease.getWebElement()));
+                String successToastMessageBulkRelease = toastMessageSingleRelease.getText();
+                Assert.assertTrue(successToastMessageBulkRelease.contains("Preservation Single Release"));
+            } else {
+                System.out.println("Filtered Team Mailbox is not Active for system to Release");
+            }
+        }
+    }
+
+
+    public void verifyIfTeamsIsReleased(String holdName, String teamName) throws InterruptedException {
+
+        searchPreservationTeamsDataTable(holdName, teamName);
+        int count = getDataTableCount();
+        int iterator = 0;
+        int pendingRelease = 0;
+        if (count > 1) {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            boolean flag = false;
+            int c = 0;
+            List<String> statusList = new ArrayList<>();
+            for (int i = 1; i <= count; i++) {
+                statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+            }
+            for (String value : statusList) {
+                if (value.equalsIgnoreCase("Released")) {
+                    c++;
+                    if (c == count) flag = true;
+                } else if (!value.equalsIgnoreCase("Pending Release")) {
+                    pendingRelease++;
+                }
+            }
+            while (!flag && pendingRelease != count) {
+                driver.getWebDriver().navigate().refresh();
+                Thread.sleep(12000);
+                searchPreservationTeamsDataTable(holdName, teamName);
+//                Thread.sleep(3000);
+                driver.waitForPageToBeReady();
+                for (int i = 1; i <= count; i++) {
+                    statusList.add(driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                }
+                for (String s : statusList) {
+                    if (s.equalsIgnoreCase("Released")) {
+                        c++;
+                        if (c == count) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                iterator++;
+                if (iterator == 15) break;
+            }
+            if (flag) {
+                System.out.println("All Team Mailboxes from " + holdName + " are Released");
+            } else {
+                throw new RuntimeException("All Team Mailboxes from " + holdName + " are NOT Released");
+            }
+
+        } else {
+            int statusIndex = getColumnIndexFromDataTable("Status");
+            var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
+            while (status.equalsIgnoreCase("Pending Release")) {
+                driver.getWebDriver().navigate().refresh();
+                Thread.sleep(12000);
+                searchPreservationTeamsDataTable(holdName, teamName);
+//                Thread.sleep(3000);
+                driver.waitForPageToBeReady();
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]")));
+                status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
+                iterator++;
+                if (status.equalsIgnoreCase("Released")) {
+                    break;
+                }
+                if (iterator == 15) break;
+            }
+            System.out.println("The Team Mailbox(s) of " + holdName + " are in: " + status + " status");
+            if (!status.equalsIgnoreCase("Released")) {
+                throw new RuntimeException("The Team Mailbox(s) of " + holdName + " are in NOT Released Status");
+            } else {
+                System.out.println("The Team Mailbox(s) of " + holdName + " are in Released Status");
+            }
         }
     }
 

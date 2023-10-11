@@ -5,6 +5,7 @@ import automationLibrary.Driver;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.login_logout.LogoutLegalHold;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import org.openqa.selenium.WebDriver;
@@ -27,12 +28,13 @@ import java.text.ParseException;
 import static io.restassured.RestAssured.given;
 
 
-public class BaseRunner {
+public class BaseRunner{
     protected Driver driver;
     protected WebDriverWait wait;
     protected SoftAssert softAssert;
     protected LoginToSightline loginToSightline;
     protected LogoutLegalHold logoutLegalHold;
+    protected Module_Navigation navigation;
 
 
     public BaseRunner() throws ParseException, IOException, InterruptedException {
@@ -45,7 +47,11 @@ public class BaseRunner {
         softAssert = new SoftAssert();
     }
 
-    /* This method logs in to "Infinity Domain Expansion" tenant
+    public Module_Navigation getNavigation() throws IOException {
+        return new Module_Navigation(driver);
+    }
+
+    /* This method logs in to "LH Automation 1" tenant
     as system admin from Sightline. Uncomment the BeforeClass annotation
     before merging */
 
@@ -55,7 +61,7 @@ public class BaseRunner {
     }
 
 
-    /* This method logs in to "Infinity Domain Expansion" tenant directly
+    /* This method logs in to "LH Automation 1" tenant directly
     as System Admin using token. You can use this while developing. comment the BeforeClass annotation
     before merging */
 
