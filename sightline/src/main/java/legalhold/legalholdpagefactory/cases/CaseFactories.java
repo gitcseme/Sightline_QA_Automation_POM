@@ -56,6 +56,7 @@ public class CaseFactories extends BaseModule {
         try {
             WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
             wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+            caseNameColumnFilterBox.clear();
             caseNameColumnFilterBox.sendKeys(caseName);
             String expected_text = "Showing 1 to 1 of 1 entries";
             Thread.sleep(3000);
@@ -80,6 +81,7 @@ public class CaseFactories extends BaseModule {
             System.out.println(E.getMessage());
         }
     }
+
     public void searchManageCustodianAvailableCustodianById(String id) {
         try {
             Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-ManageEmpTable'] thead tr th input[placeholder='Search Employee ID']");
@@ -94,6 +96,7 @@ public class CaseFactories extends BaseModule {
             System.out.println(E.getMessage());
         }
     }
+
     public void searchManageCustodianSelectedeCustodianById(String id) {
         try {
             Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
@@ -270,6 +273,7 @@ public class CaseFactories extends BaseModule {
         driver.FindElementByXPath(reader.getobjectLocator("inputMaxNumberBiTriWeekly")).SendKeys(Integer.toString(max));
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
+
     public void setComplianceReminderAsCustomIntervalWithMaxNumber(int reminderInterval, int max) {
 
         Element btnComplianceReminderSchedule = driver.FindElementByCssSelector(reader.getobjectLocator("btnComplianceReminderSchedule"));
@@ -283,13 +287,12 @@ public class CaseFactories extends BaseModule {
         String reminderIntervalValue = Integer.toString(reminderInterval);
 
 
-            customIntervalRadioButton.Click();
-            Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
-            reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
+        customIntervalRadioButton.Click();
+        Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
+        reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
 
-            Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
-            weekDaysCheckbox.Click();
-
+        Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
+        weekDaysCheckbox.Click();
 
 
         List<WebElement> btnMax = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceCustomInterval")));
@@ -314,21 +317,18 @@ public class CaseFactories extends BaseModule {
         String reminderIntervalValue = Integer.toString(reminderInterval);
 
 
-            customIntervalRadioButton.Click();
-            Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
+        customIntervalRadioButton.Click();
+        Element reminderIntervalDropdown = driver.FindElementByXPath(reader.getobjectLocator("reminderIntervalDropdown"));
 
-            wait.until(ExpectedConditions.elementToBeClickable(reminderIntervalDropdown.getWebElement()));
-            reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
+        wait.until(ExpectedConditions.elementToBeClickable(reminderIntervalDropdown.getWebElement()));
+        reminderIntervalDropdown.selectFromDropdown().selectByValue(reminderIntervalValue);
 
-            Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
-            weekDaysCheckbox.Click();
-
+        Element weekDaysCheckbox = driver.FindElementByXPath(reader.getobjectLocator("weekDaysCheckbox"));
+        weekDaysCheckbox.Click();
 
 
         List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceCustomInterval")));
         if (!btnUnlimited.get(0).isSelected()) {
-
-
             btnUnlimited.get(0).click();
         }
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).waitAndClick(40);
@@ -543,6 +543,36 @@ public class CaseFactories extends BaseModule {
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }
 
+    public int getColumnIndexFromDataTable(String headerName) {
+        var table = driver.FindElementById("id-CaseTable");
+        wait.until(ExpectedConditions.elementToBeClickable(table.getWebElement()));
+        int columnIndex = 0;
+
+        var headerList = driver.FindElementsByXPath("//table[@id='id-CaseTable']//thead/tr[1]/th");
+        for (int i = 0; i < headerList.size(); i++) {
+            if (headerList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                columnIndex = i+1;
+                break;
+            }
+        }
+
+        if (columnIndex == 0) {
+            driver.FindElementById(locatorReader.getobjectLocator("btnColumnSetup")).waitAndClick(30);
+            var availableColumnList = driver.FindElementsByXPath("//tbody[@id='id-tablebody-available-CaseTable']/tr/td[2]");
+            for (int i = 0; i < availableColumnList.size(); i++) {
+
+                if (availableColumnList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                    driver.FindElementByXPath("//tbody[@id='id-tablebody-available-CaseTable']/tr[" + (i + 1) + "]/td[1]/input").waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("addBtnColumnSetup")).waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("saveBtnColumnSetup")).waitAndClick(30);
+                    break;
+                }
+            }
+            columnIndex = headerList.size();
+        }
+        return columnIndex;
+    }
+
     public void NavigateToCaseInformationTab() {
 
         ManageCaseTabsNavigation();
@@ -557,10 +587,11 @@ public class CaseFactories extends BaseModule {
         driver.waitForPageToBeReady();
     }
 
-    public void NavigateToPreservationTab() {
+    public void NavigateToPreservationTab() throws InterruptedException {
 
         ManageCaseTabsNavigation();
         ManageCaseTabs.get(2).click();
+        Thread.sleep(3000);
         driver.waitForPageToBeReady();
     }
 

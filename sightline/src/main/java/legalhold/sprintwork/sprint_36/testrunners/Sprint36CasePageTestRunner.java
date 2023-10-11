@@ -2,6 +2,8 @@ package legalhold.sprintwork.sprint_36.testrunners;
 
 
 import com.github.javafaker.Faker;
+import legalhold.legalholdpagefactory.LHMenus;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.setup.BaseRunner;
 import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
@@ -26,8 +28,8 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
     CreateCase createCase;
     Faker faker;
     TemplateFactories templateFactories;
-    Module_Navigation navigation;
     AddCaseCustodian addCaseCustodian;
+    DomainSetupTabNavigation domainSetupTabNavigation;
     public String createdCase;
     public String createdCaseTemplate;
     public String createdCommunicationSeries;
@@ -39,49 +41,46 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         loginToSightline = new LoginToSightline(driver);
         createCase = new CreateCase(driver);
         templateFactories = new TemplateFactories(driver);
-        navigation = new Module_Navigation(driver);
+        domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
         addCaseCustodian = new AddCaseCustodian(driver);
         faker = new Faker();
     }
 
-    @Test(enabled = true)
-    public void testing() throws InterruptedException {
-//        createCase.createRandomCases();
-//        caseFactories.populateCaseFields();
-//        caseFactories.saveCase();
-        navigation.navigateToTemplatesTAB();
-    }
-
-    @Test(priority = 1,enabled = false, description = "Creating a case with compliance reminder schedule as Maximum 1.")
+    @Test(priority = 1, enabled = true, description = "Creating a case with compliance reminder schedule as Maximum 1.")
     public void caseSaveWithMaxNumber() throws IOException, InterruptedException {
-
         createdCase = createCase.createRandomCases();
-        navigation.navigateToCaseTAB();
+        caseFactories.populateCaseFields();
+        caseFactories.setComplianceReminderAsCustomIntervalWithUnlimited(4);
+        caseFactories.saveCase();
+        getNavigation().navigateToMenu(LHMenus.Cases);
         caseFactories.goToEditCase(createdCase);
         caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(1);
         caseFactories.saveCase();
     }
 
-    @Test(priority = 2,enabled = false, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
+    @Test(priority = 2, enabled = true, description = "Creating a case template with Compliance Reminder Maximum number as 5 " +
             "and applying that template to the created case from previous test case.")
     public void templateSaveWithMaxNumber() throws IOException, InterruptedException {
-        navigation.navigateToTemplatesTAB();
+        getNavigation().navigateToMenu(LHMenus.Templates);
         createdCaseTemplate = templateFactories.createRandomCaseTemplate();
-        caseFactories.setComplianceReminderAsWeeklyWithMaxNumber(5);
+        caseFactories.setComplianceReminderAsMonthlyUnlimited(7, 25);
         templateFactories.saveCaseTemplate();
-        navigation.navigateToCaseTAB();
+        templateFactories.goToEditTemplatePage(createdCaseTemplate);
+        caseFactories.setComplianceReminderAsCustomIntervalWithMaxNumber(6, 7);
+        templateFactories.saveCaseTemplate();
+        getNavigation().navigateToMenu(LHMenus.Cases);
         caseFactories.goToEditCase(createdCase);
         templateFactories.applyCaseTemplate(createdCaseTemplate);
         caseFactories.saveCase();
     }
 
-    @Test(priority = 3,enabled = false,description = "Adding multiple custodian to the case created case from previous test case.")
+    @Test(priority = 3, enabled = true, description = "Adding multiple custodian to the case created case from previous test case.")
     public void addMultipleCustodianToACase() throws InterruptedException {
         caseFactories.NavigateToCustodiansTab();
         addCaseCustodian.upLoadCustodians();
     }
 
-    @Test(priority = 4, enabled = false, description = "Creating a Custodian type communication series in that case after the template from previous " +
+    @Test(priority = 4, enabled = true, description = "Creating a Custodian type communication series in that case after the template from previous " +
             "test case gets applied.")
     public void createCommunicationWithDefaultCaseComplianceReminderMaxNumberSchedule() throws InterruptedException, IOException {
         caseFactories.NavigateToCommunicationsTab();
@@ -89,7 +88,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         String caseNameCommunicationPage = driver.FindElementById("CaseName").getText();
         softAssert.assertEquals(caseNameCommunicationPage, createdCase);
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
-        caseCommunicationFactories.addMailToRecipients("SLH-1");
+        caseCommunicationFactories.addMailToRecipients("Auto-1");
         caseCommunicationFactories.enterCommunicationNameAndDescription();
         caseCommunicationFactories.enterAcknowledgmentEmailSubject("Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
@@ -98,7 +97,7 @@ public class Sprint36CasePageTestRunner extends BaseRunner {
         caseCommunicationFactories.saveCommunicationSeries();
     }
 
-    @Test(priority = 5,enabled = false, description = "Starting the previously created series with Compliance Reminder One Time")
+    @Test(priority = 5, enabled = true, description = "Starting the previously created series with Compliance Reminder One Time")
     public void createCommunicationWithNewCaseComplianceReminderMaxNumberSchedule() throws InterruptedException {
         caseCommunicationFactories.goToEditCustodianCommunicationPage(createdCommunicationSeries);
         caseCommunicationFactories.enableComplianceReminder();

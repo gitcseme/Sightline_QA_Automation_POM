@@ -1,111 +1,45 @@
 package legalhold.legalholdpagefactory;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import legalhold.setup.BaseModule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class Module_Navigation extends BaseModule {
 
+    HashMap<LHMenus, Integer> menuNameIndexMap = new HashMap<>();
 
-    List<WebElement> sidebarElements;
+    ElementCollection sidebarElements;
+    List<WebElement> elems;
 
     public Module_Navigation(Driver driver) throws IOException {
         super("./src/main/java/legalhold/selectors/sl_slh_integration/navigation.properties", driver);
 
+        sidebarElements = driver.FindElementsByClassName(locatorReader.getobjectLocator("ModuleTabs"));
+//        elems = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ModuleTabs")));
 
-
+        menuNameIndexMap.put(LHMenus.Cases, 0);
+        menuNameIndexMap.put(LHMenus.Employees, 1);
+        menuNameIndexMap.put(LHMenus.Templates, 2);
+        menuNameIndexMap.put(LHMenus.Mailbox, 3);
+        menuNameIndexMap.put(LHMenus.Reports, 4);
+        menuNameIndexMap.put(LHMenus.AuditTrail, 5);
+        menuNameIndexMap.put(LHMenus.GlobalNotice, 6);
+        menuNameIndexMap.put(LHMenus.DomainSetup, 7);
     }
 
-    public void GetNavList(){
-        sidebarElements = driver.getWebDriver().findElements(By.className(locatorReader.getobjectLocator("ModuleTabs")));
-    }
 
-
-    public void navigateToCaseTAB() {
-
-        GetNavList();
-//        Thread.sleep(1000);
-        sidebarElements.get(0).click();
+    public void navigateToMenu(LHMenus menu) {
+        sidebarElements.getElementByIndex(menuNameIndexMap.get(menu)).waitAndClick(30);
+//        elems.get(menuNameIndexMap.get(menu)).click();
         driver.waitForPageToBeReady();
     }
-
-    public void navigateToEmployeeTAB() {
-
-        GetNavList();
-        sidebarElements.get(1).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-    public void navigateToTemplatesTAB() {
-
-        GetNavList();
-        sidebarElements.get(2).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-    public void navigateToMailboxTAB() {
-
-        GetNavList();
-        sidebarElements.get(3).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-    public void navigateToReportsTAB() {
-
-        GetNavList();
-        sidebarElements.get(4).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-    public void navigateToAuditTrailTAB() {
-
-        GetNavList();
-        sidebarElements.get(5).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-    public void navigateToGlobalNoticeTAB() {
-
-        GetNavList();
-        sidebarElements.get(6).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-    public void navigateToDomainSetupTAB() {
-
-        GetNavList();
-        sidebarElements.get(7).click();
-        driver.waitForPageToBeReady();
-
-
-    }
-
-
-
-//    public void test(){
-//        int range = 100000 - 100 + 1;
-//        String id = faker.name().firstName()+"_"+((int)(Math.random()*range));
-//        System.out.println(id);
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//        String formattedDate = sdf.format(faker.date().birthday());
-//        System.out.println(formattedDate);
-//    }
 
 }
 

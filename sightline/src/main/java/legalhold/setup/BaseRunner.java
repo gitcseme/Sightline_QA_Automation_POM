@@ -5,6 +5,7 @@ import automationLibrary.Driver;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.login_logout.LogoutLegalHold;
 import legalhold.smoke_suite.sl_slh_integration.login_to_sightline.LoginToSightline;
 import org.openqa.selenium.WebDriver;
@@ -27,12 +28,13 @@ import java.text.ParseException;
 import static io.restassured.RestAssured.given;
 
 
-public class BaseRunner {
+public class BaseRunner{
     protected Driver driver;
     protected WebDriverWait wait;
     protected SoftAssert softAssert;
     protected LoginToSightline loginToSightline;
     protected LogoutLegalHold logoutLegalHold;
+    protected Module_Navigation navigation;
 
 
     public BaseRunner() throws ParseException, IOException, InterruptedException {
@@ -45,18 +47,24 @@ public class BaseRunner {
         softAssert = new SoftAssert();
     }
 
-    /* This method logs in to "Infinity Domain Expansion" tenant
+    public Module_Navigation getNavigation() throws IOException {
+        return new Module_Navigation(driver);
+    }
+
+    /* This method logs in to "LH Automation 1" tenant
     as system admin from Sightline. Uncomment the BeforeClass annotation
     before merging */
+
 //    @BeforeClass(alwaysRun = true)
     public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona#2023", "Infinity Domain Expansion");
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona?2023", "LH Automation 1");
     }
 
 
-    /* This method logs in to "Infinity Domain Expansion" tenant directly
+    /* This method logs in to "LH Automation 1" tenant directly
     as System Admin using token. You can use this while developing. comment the BeforeClass annotation
     before merging */
+
     @BeforeClass(alwaysRun = true)
     public void sysAdminLoginToLegalHoldWithToken() throws UnsupportedEncodingException {
         String baseUrl = "https://LVSVQDSQLLH01:5656";
@@ -69,7 +77,7 @@ public class BaseRunner {
                         .body("{\n" +
                                 "    \"userId\":\"7859\",\n" +
                                 "    \"role\":\"sysadmin\",\n" +
-                                "    \"tenantId\":\"693\",\n" +
+                                "    \"tenantId\":\"866\",\n" +
                                 "    \"email\":\"syslegalhold@gmail.com\",\n" +
                                 "    \"FirstName\":\"System\",\n" +
                                 "    \"LastName\":\"Admin\"\n" +
@@ -84,7 +92,7 @@ public class BaseRunner {
         driver.get("https://legalholdqa.consiliotest.com" + "?token=" + token);
     }
 
-    //    @AfterClass(alwaysRun = true)
+//    @AfterClass(alwaysRun = true)
     public void closeBrowser() throws InterruptedException {
         logoutLegalHold.logOutFromLegalHold();
         logoutLegalHold.logOutFromSightline();
