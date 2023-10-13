@@ -5,7 +5,6 @@ import com.github.javafaker.Faker;
 import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.setup.BaseRunner;
-import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.template.TemplateFactories;
