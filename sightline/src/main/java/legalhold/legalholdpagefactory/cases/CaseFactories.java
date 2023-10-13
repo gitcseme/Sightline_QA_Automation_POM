@@ -14,7 +14,11 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CaseFactories extends BaseModule {
 
@@ -551,7 +555,7 @@ public class CaseFactories extends BaseModule {
         var headerList = driver.FindElementsByXPath("//table[@id='id-CaseTable']//thead/tr[1]/th");
         for (int i = 0; i < headerList.size(); i++) {
             if (headerList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
-                columnIndex = i+1;
+                columnIndex = i + 1;
                 break;
             }
         }
@@ -607,6 +611,177 @@ public class CaseFactories extends BaseModule {
         ManageCaseTabsNavigation();
         ManageCaseTabs.get(4).click();
         driver.waitForPageToBeReady();
+    }
+
+
+    public void goToAddCorrespondentPage() {
+        var btnAddCorrespondent = driver.FindElementById(reader.getobjectLocator("btnAddCorrespondent"));
+        wait.until(ExpectedConditions.elementToBeClickable(btnAddCorrespondent.getWebElement()));
+        btnAddCorrespondent.waitAndClick(30);
+    }
+
+    public int getCorrespondentRow(String empEmail) {
+        int rowNumber = 0;
+        var emailList = driver.FindElementsByXPath("//table[@id='case-correspondent-table-id']/tbody/tr/td[2]");
+        for (int i = 0; i < emailList.size(); i++) {
+            if (emailList.getElementByIndex(i).getText().equalsIgnoreCase(empEmail)) {
+                rowNumber = i + 1;
+                break;
+            }
+        }
+        if (rowNumber > 0) {
+            return rowNumber;
+        } else {
+            throw new RuntimeException("Correspondent Not Found");
+        }
+    }
+
+
+    public void openEditCorrespondentModal(String empEmail) {
+        int rowNumber = getCorrespondentRow(empEmail);
+        driver.FindElementByXPath("//table[@id='case-correspondent-table-id']/tbody/tr[" + rowNumber + "]/td[6]/div[1]/a[1]/img[1]").waitAndClick(30);
+    }
+
+    public int getCheckboxSelectCount() {
+        int count = 0;
+        for (int i = 0; i < 3; i++) {
+            if (driver.FindElementsById("Actions").getElementByIndex(i).Selected()) count++;
+        }
+        return count;
+    }
+
+    public void saveEditCorrespondentModal() {
+        driver.FindElementById(reader.getobjectLocator("saveEditCorrespondentModal")).waitAndClick(30);
+    }
+
+    public void checkEscalationCheckbox() {
+        var checkboxEscalation = driver.FindElementByXPath(reader.getobjectLocator("checkboxEscalation"));
+        if (!checkboxEscalation.Selected()) checkboxEscalation.waitAndClick(30);
+    }
+
+    public void checkCCCheckbox() {
+        var checkboxCC = driver.FindElementByXPath(reader.getobjectLocator("checkboxCC"));
+        if (!checkboxCC.Selected()) checkboxCC.waitAndClick(30);
+    }
+
+    public void checkSummaryCommunicationCheckbox() {
+        var checkboxSummaryCommunication = driver.FindElementByXPath(reader.getobjectLocator("checkboxSummaryCommunication"));
+        if (!checkboxSummaryCommunication.Selected()) checkboxSummaryCommunication.waitAndClick(30);
+    }
+
+    public void uncheckSummaryCommunicationCheckbox() {
+        int count = getCheckboxSelectCount();
+        var checkboxSummaryCommunication = driver.FindElementByXPath(reader.getobjectLocator("checkboxSummaryCommunication"));
+        if (checkboxSummaryCommunication.Selected() && count > 1) {
+            checkboxSummaryCommunication.waitAndClick(30);
+        } else {
+            System.out.println("Only one correspondent checkbox is selected. Unchecking that will result in deleting" +
+                    " the correspondent. So unchecking checkbox is not allowed.");
+        }
+    }
+
+    public void uncheckCCCheckbox() {
+        int count = getCheckboxSelectCount();
+        var checkboxCC = driver.FindElementByXPath(reader.getobjectLocator("checkboxCC"));
+        if (checkboxCC.Selected() && count > 1) {
+            checkboxCC.waitAndClick(30);
+        } else {
+            System.out.println("Only one correspondent checkbox is selected. Unchecking that will result in deleting" +
+                    " the correspondent. So unchecking checkbox is not allowed.");
+        }
+    }
+
+    public void uncheckEscalationCheckbox() {
+        int count = getCheckboxSelectCount();
+        var checkboxEscalation = driver.FindElementByXPath(reader.getobjectLocator("checkboxEscalation"));
+        if (checkboxEscalation.Selected() && count > 1) {
+            checkboxEscalation.waitAndClick(30);
+        } else {
+            System.out.println("Only one correspondent checkbox is selected. Unchecking that will result in deleting" +
+                    " the correspondent. So unchecking checkbox is not allowed.");
+        }
+    }
+
+    public void editCorrespondentByCheckingEscalation(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        checkEscalationCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+    public void editCorrespondentByUncheckingEscalation(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        uncheckEscalationCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+    public void editCorrespondentByCheckingCC(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        checkCCCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+    public void editCorrespondentByUncheckingCC(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        uncheckCCCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+    public void editCorrespondentByCheckingSummaryCommunication(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        checkSummaryCommunicationCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+    public void editCorrespondentByUncheckingSummaryCommunication(String empEmail) {
+        openEditCorrespondentModal(empEmail);
+        uncheckSummaryCommunicationCheckbox();
+        saveEditCorrespondentModal();
+    }
+
+
+    public void deleteCorrespondent(String empEmail) {
+        int rowNumber = getCorrespondentRow(empEmail);
+        driver.FindElementByXPath("//table[@id='case-correspondent-table-id']/tbody/tr[" + rowNumber + "]/td[6]/div[1]/a[2]/img[1]").waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("okBtnDeleteCorrespondentModal")).waitAndClick(30);
+
+    }
+
+
+    public HashMap<String, String> addCaseEscalationCorrespondent(String empId) throws InterruptedException {
+        driver.FindElementById(reader.getobjectLocator("subTabEscalation")).waitAndClick(30);
+        var searchEmpIdAvailableEscalationTable = driver.FindElementByCssSelector(reader.getobjectLocator("searchEmpIdAvailableEscalationTable"));
+        wait.until(ExpectedConditions.elementToBeClickable(searchEmpIdAvailableEscalationTable.getWebElement()));
+        searchEmpIdAvailableEscalationTable.Clear();
+        searchEmpIdAvailableEscalationTable.SendKeys(empId);
+        Thread.sleep(2000);
+
+        String textPaginationAvailableEscalationTable = driver.FindElementById(reader.getobjectLocator("textPaginationAvailableEscalationTable")).getText();
+        Thread.sleep(3000);
+        Pattern pattern = Pattern.compile("of (\\d+)");
+        Matcher matcher = pattern.matcher(textPaginationAvailableEscalationTable);
+
+        int count = 0;
+        while (matcher.find()) {
+            count = Integer.parseInt(matcher.group(1));
+        }
+        HashMap<String, String> correspondentList = new HashMap<>();
+
+        for (int i = 1; i <= count; i++) {
+            String email = driver.FindElementByXPath("//table[@id='id-CorrespondentAvailableEscalation']//tbody//tr[" + i + "]//td[5]").getText();
+            String id = driver.FindElementByXPath("//table[@id='id-CorrespondentAvailableEscalation']//tbody//tr[" + i + "]//td[2]").getText();
+            correspondentList.put(id, email);
+        }
+
+        driver.FindElementByName(reader.getobjectLocator("selectAllAvailableEscalationTable")).waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("addBtnEscalation")).waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("okBtnEscalationAddModal")).waitAndClick(30);
+
+        Thread.sleep(2000);
+
+        driver.scrollingToBottomofAPage();
+        driver.FindElementById(reader.getobjectLocator("btnSaveCorrespondent")).waitAndClick(30);
+        driver.FindElementById(reader.getobjectLocator("okBtnSaveCorrespondentModal")).waitAndClick(30);
+        return correspondentList;
     }
 }
 

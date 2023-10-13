@@ -15,11 +15,7 @@ public class EmployeeFactory extends BaseModule {
         super("src/main/java/legalhold/selectors/employee/employee.properties", driver);
     }
 
-
     public void SearchEmployeeById(String id) {
-
-
-
         try {
 
             Element EmployeeIdSearchBox = driver.FindElementByXPath(locatorReader.getobjectLocator("employee-id-search-box"));
