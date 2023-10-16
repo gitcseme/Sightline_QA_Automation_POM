@@ -57,8 +57,6 @@ public class Sprint39_Runner extends BaseRunner {
         custodianFactories.releaseWithCommunication("Auto-1",seriesName);
         Thread.sleep(3000);
         custodianFactories.verifyIfCustodianIsReleased("Auto-1");
-
-
     }
     @Test(priority = 3, enabled = true, description = "Release single custodian with communication")
     public void releaseWithComSingle() throws InterruptedException {
@@ -88,6 +86,16 @@ public class Sprint39_Runner extends BaseRunner {
         custodianFactories.releaseWithoutCommunication("PH-2");
         custodianFactories.verifyIfCustodianIsReleased("PH-2");
 
+
+
+    }
+
+
+        @Test(priority = 6, enabled = true, description = "Verify Release with Communication with all silent custodians")
+    public void releaseWithAllSilent() throws InterruptedException {
+
+        custodianFactories.releaseWithCommunication("silent",seriesName);
+        custodianFactories.verifyIfCustodianIsReleased("silent");
 
 
     }

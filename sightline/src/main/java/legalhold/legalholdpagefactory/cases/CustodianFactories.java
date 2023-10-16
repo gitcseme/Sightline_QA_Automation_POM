@@ -200,6 +200,7 @@ public class CustodianFactories extends BaseModule {
         Thread.sleep(3000);
         Element custodianIdSearchBox = driver.FindElementByXPath(custodianReader.getobjectLocator("custodianIdSearchBox"));
         wait.until(ExpectedConditions.elementToBeClickable(custodianIdSearchBox.getWebElement()));
+        custodianIdSearchBox.Clear();
         custodianIdSearchBox.SendKeys(empId);
         Thread.sleep(5000);
     }
@@ -226,10 +227,12 @@ public class CustodianFactories extends BaseModule {
     }
     public void releaseWithCommunication(String empId, String seriesName) throws InterruptedException {
 
+        Boolean isAllSilent = verifyAllCustodiansSilent(empId);
         searchByCustodianId(empId);
 
 
         int rowCount = getDataTableRowCount();
+
 
         if(rowCount > 1)
         {
@@ -247,6 +250,7 @@ public class CustodianFactories extends BaseModule {
                 System.out.println("All selected custodians are already released");
                 return;
             }
+
         }
 
         else if(rowCount==1)
@@ -265,27 +269,51 @@ public class CustodianFactories extends BaseModule {
             }
         }
 
-        Element selectReleaseWithComCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectReleaseWithCom"));
-        wait.until(ExpectedConditions.elementToBeClickable(selectReleaseWithComCheckbox.getWebElement()));
-        selectReleaseWithComCheckbox.Click();
 
 
-        Element seriesDropdown = driver.FindElementById(custodianReader.getobjectLocator("selectReleaseComDropdown"));
-        Select select = new Select(seriesDropdown.getWebElement());
 
-        String optionText = verifySeriesInReleaseWithComDropdown(seriesName);
 
-        if(optionText != null)
+        if(isAllSilent)
         {
+            Element selectReleaseWithoutComCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectReleaseWithoutCom"));
+            wait.until(ExpectedConditions.elementToBeClickable(selectReleaseWithoutComCheckbox.getWebElement()));
 
-            select.selectByVisibleText(optionText);
-        }else{
-            throw new RuntimeException("The release communication doesn't exist in the case");
+            if(selectReleaseWithoutComCheckbox.Enabled())
+                selectReleaseWithoutComCheckbox.Click();
+
+
+            Element releaseSubmitBtn = driver.FindElementById(custodianReader.getobjectLocator("custodianReleaseSubmitButton"));
+            wait.until(ExpectedConditions.elementToBeClickable(releaseSubmitBtn.getWebElement()));
+            releaseSubmitBtn.Click();
         }
 
-        Element releaseSubmitBtn = driver.FindElementById(custodianReader.getobjectLocator("custodianReleaseSubmitButton"));
-        wait.until(ExpectedConditions.elementToBeClickable(releaseSubmitBtn.getWebElement()));
-        releaseSubmitBtn.Click();
+        else {
+
+            Element selectReleaseWithComCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectReleaseWithCom"));
+            wait.until(ExpectedConditions.elementToBeClickable(selectReleaseWithComCheckbox.getWebElement()));
+            selectReleaseWithComCheckbox.Click();
+
+
+            Element seriesDropdown = driver.FindElementById(custodianReader.getobjectLocator("selectReleaseComDropdown"));
+            wait.until(ExpectedConditions.elementToBeClickable(seriesDropdown.getWebElement()));
+
+
+            Select select = new Select(seriesDropdown.getWebElement());
+
+            String optionText = verifySeriesInReleaseWithComDropdown(seriesName);
+
+            if(optionText != null)
+            {
+
+                select.selectByVisibleText(optionText);
+            }else{
+                throw new RuntimeException("The release communication doesn't exist in the case");
+            }
+
+            Element releaseSubmitBtn = driver.FindElementById(custodianReader.getobjectLocator("custodianReleaseSubmitButton"));
+            wait.until(ExpectedConditions.elementToBeClickable(releaseSubmitBtn.getWebElement()));
+            releaseSubmitBtn.Click();
+        }
 
 //        Element successToast = driver.FindElementByXPath("//p[contains(normalize-space(),'Custodian(s) Released Successfully')]");
         Element successToast = driver.FindElementByClassName(custodianReader.getobjectLocator("successToast"));
@@ -335,6 +363,8 @@ public class CustodianFactories extends BaseModule {
 
         Element selectReleaseWithoutComCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectReleaseWithoutCom"));
         wait.until(ExpectedConditions.elementToBeClickable(selectReleaseWithoutComCheckbox.getWebElement()));
+
+
         selectReleaseWithoutComCheckbox.Click();
 
 
@@ -363,6 +393,7 @@ public class CustodianFactories extends BaseModule {
         return count;
     }
 
+
         public void verifyIfCustodianIsReleased(String empId) throws InterruptedException {
 
             searchByCustodianId(empId);
@@ -382,21 +413,21 @@ public class CustodianFactories extends BaseModule {
                     if (value.equalsIgnoreCase("Released")) {
                         c++;
                         if (c == count) flag = true;
-                    } else if (!value.equalsIgnoreCase("Active")) {
-                        active++;
                     }
                 }
-                while (!flag && active != count) {
+                while (flag!=true) {
+                    List<String> statusList2 = new ArrayList<>();
+                    c=0;
                     driver.getWebDriver().navigate().refresh();
                     caseFactories.NavigateToCustodiansTab();
-                    Thread.sleep(13000);
+                    Thread.sleep(8000);
                     searchByCustodianId(empId);
 //                Thread.sleep(3000);
                     driver.waitForPageToBeReady();
                     for (int i = 1; i <= count; i++) {
-                        statusList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                        statusList2.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
                     }
-                    for (String s : statusList) {
+                    for (String s : statusList2) {
                         if (s.equalsIgnoreCase("Released")) {
                             c++;
                             if (c == count) {
@@ -418,7 +449,7 @@ public class CustodianFactories extends BaseModule {
                 int statusIndex = getColumnIndexFromDataTable("Status");
                 searchByCustodianId(empId);
                 var status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
-                while (status.equalsIgnoreCase("Pending Release")) {
+                while (status.equalsIgnoreCase("Active")) {
                     driver.getWebDriver().navigate().refresh();
                     caseFactories.NavigateToCustodiansTab();
                     Thread.sleep(13000);
@@ -441,6 +472,54 @@ public class CustodianFactories extends BaseModule {
                 }
             }
         }
+
+        public  boolean verifyAllCustodiansSilent(String empId) throws InterruptedException {
+            searchByCustodianId(empId);
+            int count = getDataTableCount();
+            int iterator = 0;
+            int active = 0;
+            if (count > 1) {
+                int statusIndex = getColumnIndexFromDataTable("Custodian Type");
+                searchByCustodianId(empId);
+                boolean flag = false;
+                int c = 0;
+                List<String> statusList = new ArrayList<>();
+                for (int i = 1; i <= count; i++) {
+                    statusList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                }
+                for (String value : statusList) {
+                    if (value.equalsIgnoreCase("Silent")) {
+                        c++;
+                        if (c == count) flag = true;
+                    }
+                }
+
+                if (flag) {
+                    System.out.println("All selected Custodians  are Silent");
+                    return true;
+                } else {
+                    System.out.println("All selected Custodians  are NOT Silent");
+                    return false;
+                }
+
+            } else {
+                int statusIndex = getColumnIndexFromDataTable("Custodian Type");
+
+                    searchByCustodianId(empId);
+//                Thread.sleep(3000);
+                    driver.waitForPageToBeReady();
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]")));
+                    var status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
+
+                if (!status.equalsIgnoreCase("Silent")) {
+                    System.out.println("The selected custodian(s) is not Silent");
+                    return false;
+                } else {
+                    System.out.println("The selected custodian is silent");
+                    return true;
+                }
+            }
+    }
 
     }
 
