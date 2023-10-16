@@ -96,7 +96,7 @@ public class Sprint37TestRunner extends BaseRunner {
         createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
         caseCommunicationFactories.addMailToRecipients("SLH-1");
         caseCommunicationFactories.enterCommunicationNameAndDescription();
-        caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
+        caseCommunicationFactories.enterEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
                 "[ACKNOWLEDGMENT LINK]\n" +
                 "[CUSTODIAN PORTAL LINK]");
@@ -111,7 +111,7 @@ public class Sprint37TestRunner extends BaseRunner {
         caseCommunicationFactories.setComplianceReminderAsOneTime();
         caseCommunicationFactories.openComplianceReminderSubTab();
         caseCommunicationFactories.enterCommunicationNameAndDescription();
-        caseCommunicationFactories.enterComplianceReminderEmailSubject("FA Automated Compliance Reminder email for [CASE NAME]");
+        caseCommunicationFactories.enterEmailSubject("FA Automated Compliance Reminder email for [CASE NAME]");
         caseCommunicationFactories.typeEmailBody("Email Type: Compliance Reminder\n" +
                 "[ACKNOWLEDGMENT LINK]\n" +
                 "[CUSTODIAN PORTAL LINK]");

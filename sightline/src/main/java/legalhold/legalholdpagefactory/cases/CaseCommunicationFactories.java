@@ -514,21 +514,10 @@ public class CaseCommunicationFactories extends BaseModule {
         driver.FindElementByXPath(locatorReader.getobjectLocator("inputCommunicationDescription")).SendKeys(faker.lorem().sentence(50));
     }
 
-    public void enterAcknowledgmentEmailSubject(String subject) {
+    public void enterEmailSubject(String subject) {
         driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
     }
 
-    public void enterComplianceReminderEmailSubject(String subject) {
-        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
-    }
-
-    public void enterEscalationEmailSubject(String subject) {
-        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
-    }
-
-    public void enterScheduledReminderEmailSubject(String subject) {
-        driver.FindElementByCssSelector(locatorReader.getobjectLocator("inputEmailSubject")).SendKeys(subject);
-    }
 
     public void typeEmailBody(String emailText) {
         try {
