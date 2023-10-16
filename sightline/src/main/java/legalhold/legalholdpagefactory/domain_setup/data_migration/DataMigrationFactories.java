@@ -38,7 +38,7 @@ public class DataMigrationFactories extends BaseModule {
         Thread.sleep(2000);
     }
 
-    public void openModalAndSelectFileForUpload() throws InterruptedException {
+    public void openModalAndSelectFileForUpload(String filePathKey) throws InterruptedException {
         var btnUpload = driver.FindElementById(locatorReader.getobjectLocator("btnUploadFiles"));
         wait.until(ExpectedConditions.elementToBeClickable(btnUpload.getWebElement()));
         btnUpload.Click();
@@ -46,17 +46,18 @@ public class DataMigrationFactories extends BaseModule {
         var btnChooseFile = driver.FindElementById(locatorReader.getobjectLocator("btnChooseFile"));
         wait.until(ExpectedConditions.elementToBeClickable(btnChooseFile.getWebElement()));
         Thread.sleep(2000);
-        btnChooseFile.SendKeys(reader.getFileName("MigrationZipFilePath"));
+        btnChooseFile.SendKeys(reader.getFileName(filePathKey));
         Thread.sleep(2000);
         var btnUploadSubmit = driver.FindElementById(locatorReader.getobjectLocator("btnUploadSubmit"));
         btnUploadSubmit.Click();
     }
 
-    public void checkPendingStatus() throws InterruptedException {
-        Thread.sleep(4000);
+
+    public void checkMigrationResultStatus(String statusToCheck, long delay) throws InterruptedException {
+        Thread.sleep(delay);
         var uploadStatusElement = driver.FindElementById(locatorReader.getobjectLocator("uploadFileStatus"));
         var statusString = uploadStatusElement.getText();
 
-        Assert.assertEquals(statusString, "In-Progress");
+        Assert.assertEquals(statusString, statusToCheck);
     }
 }
