@@ -556,10 +556,13 @@ public class CaseCommunicationFactories extends BaseModule {
 
     public void searchCustodianTypeSeriesByName(String seriesName) {
         try {
+            getColumnIndexFromDataTable("Communication Series");
             Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
+            seriesNameColumnFilterBox.Clear();
             seriesNameColumnFilterBox.SendKeys(seriesName);
+            getColumnIndexFromDataTable("Communication Type");
             Element selectCommunicationTypeAsAcknowledgment = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
             selectCommunicationTypeAsAcknowledgment.selectFromDropdown().selectByValue("Acknowledgement");
             String expected_text = "Showing 1 to 1 of 1 entries";
@@ -567,17 +570,20 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
             Thread.sleep(3000);
         } catch (Exception E) {
-            System.out.println("Case Name not found. The exception is: ");
+            System.out.println("Series Name not found. The exception is: ");
             System.out.println(E.getMessage());
         }
     }
 
     public void searchNonCustodianTypeSeriesByName(String seriesName) {
         try {
+            getColumnIndexFromDataTable("Communication Series");
             Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
+            seriesNameColumnFilterBox.Clear();
             seriesNameColumnFilterBox.SendKeys(seriesName);
+            getColumnIndexFromDataTable("Communication Type");
             Element selectCommunicationTypeAsNotice = driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectCommunicationType"));
             selectCommunicationTypeAsNotice.selectFromDropdown().selectByValue("Notice");
             String expected_text = "Showing 1 to 1 of 1 entries";
@@ -585,20 +591,22 @@ public class CaseCommunicationFactories extends BaseModule {
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
             Thread.sleep(3000);
         } catch (Exception E) {
-            System.out.println("Case Name not found. The exception is: ");
+            System.out.println("Series Name not found. The exception is: ");
             System.out.println(E.getMessage());
         }
     }
 
     public void searchReleaseTypeSeriesByName(String seriesName) {
         try {
+            getColumnIndexFromDataTable("Communication Series");
             Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
             wait.until(ExpectedConditions.elementToBeClickable(seriesNameColumnFilterBox.getWebElement()));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"))));
+            seriesNameColumnFilterBox.Clear();
             seriesNameColumnFilterBox.SendKeys(seriesName);
             Thread.sleep(3000);
         } catch (Exception E) {
-            System.out.println("Case Name not found. The exception is: ");
+            System.out.println("Series Name not found. The exception is: ");
             System.out.println(E.getMessage());
         }
     }
@@ -643,7 +651,8 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForCustodianSeries(String seriesName) throws InterruptedException {
         int iterator = 0;
         searchCustodianTypeSeriesByName(seriesName);
-        Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+        int sentDateColumnIndex = getColumnIndexFromDataTable("Last Sent Date");
+        Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
         wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
         String lastSentDate = lastSentDateCell.getText();
         Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
@@ -654,8 +663,8 @@ public class CaseCommunicationFactories extends BaseModule {
             Thread.sleep(10000);
             driver.waitForPageToBeReady();
             searchCustodianTypeSeriesByName(seriesName);
-            Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
+            Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]")));
             lastSentDate = lastSentDateCellAfterRefresh.getText();
             System.out.println("Last Sent Date is: " + lastSentDate);
             iterator++;
@@ -682,7 +691,8 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForNonCustodianSeries(String seriesName) throws InterruptedException {
         try {
             searchNonCustodianTypeSeriesByName(seriesName);
-            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            int sentDateColumnIndex = getColumnIndexFromDataTable("Last Sent Date");
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
             wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
             String lastSentDate = lastSentDateCell.getText();
             Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
@@ -694,8 +704,8 @@ public class CaseCommunicationFactories extends BaseModule {
                 driver.waitForPageToBeReady();
                 searchNonCustodianTypeSeriesByName(seriesName);
 
-                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
+                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
                 System.out.println("Last Sent Date is: " + lastSentDate);
             }
@@ -718,7 +728,8 @@ public class CaseCommunicationFactories extends BaseModule {
     public void verifyPostSendForReleaseSeries(String seriesName) throws InterruptedException {
         try {
             searchReleaseTypeSeriesByName(seriesName);
-            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
+            int sentDateColumnIndex = getColumnIndexFromDataTable("Last Sent Date");
+            Element lastSentDateCell = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
             wait.until(ExpectedConditions.visibilityOf(lastSentDateCell.getWebElement()));
             String lastSentDate = lastSentDateCell.getText();
             Element seriesNameColumnFilterBox = driver.FindElementByXPath(locatorReader.getobjectLocator("seriesNameColumnFilterBox"));
@@ -730,8 +741,8 @@ public class CaseCommunicationFactories extends BaseModule {
                 driver.waitForPageToBeReady();
                 searchReleaseTypeSeriesByName(seriesName);
 
-                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[6]");
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[6]")));
+                Element lastSentDateCellAfterRefresh = driver.FindElementByXPath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]");
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-communication']/tbody/tr[1]/td[" + sentDateColumnIndex + "]")));
                 lastSentDate = lastSentDateCellAfterRefresh.getText();
                 System.out.println("Last Sent Date is: " + lastSentDate);
             }
@@ -751,5 +762,35 @@ public class CaseCommunicationFactories extends BaseModule {
         }
     }
 
+
+    public int getColumnIndexFromDataTable(String headerName) {
+        var table = driver.FindElementById("id-communication");
+        wait.until(ExpectedConditions.elementToBeClickable(table.getWebElement()));
+        int columnIndex = 0;
+
+        var headerList = driver.FindElementsByXPath("//table[@id='id-communication']//thead/tr[1]/th");
+        for (int i = 0; i < headerList.size(); i++) {
+            if (headerList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                columnIndex = i + 1;
+                break;
+            }
+        }
+
+        if (columnIndex == 0) {
+            driver.FindElementById(locatorReader.getobjectLocator("btnColumnSetup")).waitAndClick(30);
+            var availableColumnList = driver.FindElementsByXPath("//tbody[@id='id-tablebody-available-communication']/tr/td[2]");
+            for (int i = 0; i < availableColumnList.size(); i++) {
+
+                if (availableColumnList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                    driver.FindElementByXPath("//tbody[@id='id-tablebody-available-communication']/tr[" + (i + 1) + "]/td[1]/input").waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("addBtnColumnSetup")).waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("saveBtnColumnSetup")).waitAndClick(30);
+                    break;
+                }
+            }
+            columnIndex = headerList.size();
+        }
+        return columnIndex;
+    }
 
 }
