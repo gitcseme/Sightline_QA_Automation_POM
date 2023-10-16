@@ -40,7 +40,8 @@ public class Sprint39_Runner extends BaseRunner {
 //        communicationFactories.goToCreateReleaseCommunicationPage();
 //        seriesName = communicationFactories.enterSeriesName();
 //        communicationFactories.enterCommunicationNameAndDescription();
-//        communicationFactories.enterEmailSubject("Release"+faker.number());
+//        String emailSub = "Release"+faker.number().digit();
+//        communicationFactories.enterEmailSubject(emailSub);
 //        driver.scrollingToBottomofAPage();
 //        communicationFactories.typeEmailBody("Release");
 //        communicationFactories.saveCommunicationSeries();

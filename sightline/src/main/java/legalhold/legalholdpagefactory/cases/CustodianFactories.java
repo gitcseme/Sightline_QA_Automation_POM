@@ -389,7 +389,7 @@ public class CustodianFactories extends BaseModule {
                 while (!flag && active != count) {
                     driver.getWebDriver().navigate().refresh();
                     caseFactories.NavigateToCustodiansTab();
-                    Thread.sleep(10000);
+                    Thread.sleep(13000);
                     searchByCustodianId(empId);
 //                Thread.sleep(3000);
                     driver.waitForPageToBeReady();
@@ -421,7 +421,7 @@ public class CustodianFactories extends BaseModule {
                 while (status.equalsIgnoreCase("Pending Release")) {
                     driver.getWebDriver().navigate().refresh();
                     caseFactories.NavigateToCustodiansTab();
-                    Thread.sleep(10000);
+                    Thread.sleep(13000);
                     searchByCustodianId(empId);
 //                Thread.sleep(3000);
                     driver.waitForPageToBeReady();
