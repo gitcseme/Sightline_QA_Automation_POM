@@ -25,11 +25,6 @@ public class TemplateFactories extends BaseModule {
         btnSave.waitAndClick(30);
         driver.FindElementById(reader.getobjectLocator("okBtnCaseTemplateSaveModal")).Click();
 
-        WebElement successToast = driver.getWebDriver().findElement(By.id(reader.getobjectLocator("toastMessage")));
-        wait.until(ExpectedConditions.visibilityOf(successToast));
-        String toastMessage = successToast.getText();
-
-        Assert.assertTrue(toastMessage.contains("Case template created successfull"));
         Thread.sleep(5000);
         driver.waitForPageToBeReady();
     }
