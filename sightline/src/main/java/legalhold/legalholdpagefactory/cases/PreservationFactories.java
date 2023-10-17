@@ -115,19 +115,18 @@ public class PreservationFactories extends BaseModule {
     }
 
     public int addSiteBySelectAll(String siteName) throws InterruptedException {
-//        String expectedPaginationText = "Showing 1 to 1 of 1 entries";
         Thread.sleep(5000);
         Element searchSiteNameAvailableSiteTable = driver.FindElementByCssSelector(locatorReader.getobjectLocator("searchSiteNameAvailableSiteTable"));
         wait.until(ExpectedConditions.elementToBeClickable(searchSiteNameAvailableSiteTable.getWebElement()));
         searchSiteNameAvailableSiteTable.SendKeys(siteName);
-        Thread.sleep(15000);
+        Thread.sleep(3000);
 //        wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("paginationTextAvailableSiteTable")), expectedPaginationText));
 
         driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllAvailableSiteTable")).waitAndClick(30);
         driver.FindElementById(locatorReader.getobjectLocator("btnAddSite")).waitAndClick(30);
 
 
-        Thread.sleep(15000);
+        Thread.sleep(3000);
         String paginationTextSelectedSiteTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextSelectedSiteTable")).getText();
         Pattern pattern = Pattern.compile("of (\\d+)");
         Matcher matcher = pattern.matcher(paginationTextSelectedSiteTable);

@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/employee/EmployeeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/employee/EmployeeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_36/testrunners/Sprint36CasePageTestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_40/testrunners/Sprint40TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_40/testrunners/Sprint40TestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
