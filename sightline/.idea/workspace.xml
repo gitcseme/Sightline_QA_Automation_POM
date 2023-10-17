@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,25 +79,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Sprint40TestRunner.addEscalation">
-    <configuration name="LoginToSightlineTestRunner.domainAdminLogin" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="sightline" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.testrunners.smoke_suite_testrunners.sl_slh_integration.LoginToSightlineTestRunner" />
-      <option name="METHOD_NAME" value="domainAdminLogin" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="TestNG.Sprint39_Runner">
     <configuration name="LoginWithToken.loginToLegalHoldWithToken" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -192,6 +175,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Sprint39_Runner" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="sightline" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="legalhold.sprintwork.Sprint39.testrunner.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="legalhold.sprintwork.Sprint39.testrunner" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprintwork.Sprint39.testrunner.Sprint39_Runner" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Sprint40TestRunner.addEscalation" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -213,19 +213,19 @@
     <list>
       <item itemvalue="TestNG.Run36" />
       <item itemvalue="TestNG.Run38" />
-      <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
       <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
       <item itemvalue="TestNG.Sprint40TestRunner.addEscalation" />
+      <item itemvalue="TestNG.Sprint39_Runner" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.Sprint39_Runner" />
         <item itemvalue="TestNG.Sprint40TestRunner.addEscalation" />
         <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
-        <item itemvalue="TestNG.LoginToSightlineTestRunner.domainAdminLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -276,6 +276,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
           <line>632</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

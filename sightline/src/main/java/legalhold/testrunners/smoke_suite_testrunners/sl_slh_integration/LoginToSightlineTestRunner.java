@@ -99,115 +99,176 @@ public class LoginToSightlineTestRunner extends BaseRunner {
 
         CaseFactories SearchCaseandGotoEdit = new CaseFactories(driver);
         SearchCaseandGotoEdit.goToEditCase("Automation_Test");
-
-        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
-        navigateToCustodiansTab.NavigateToCustodiansTab();
-        CreateCustodian.upLoadCustodians();
-
-
-
-
-
-    }
-
-    @Test(priority = 4)
-    public void makeCustodianSilentAndNonSilent() throws IOException, InterruptedException {
-
-
-        custodianFactories.navigateToManageCustodiansPage();
-
-        custodianFactories.addCustodianToCase("SLH-Silent");
-
-
-        driver.waitForPageToBeReady();
-        custodianFactories.searchCustodianById("SLH-Silent");
-
-//        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
-        CreateCustodian.makeCustodianSilent();
-
-        custodianFactories.searchCustodianById("SLH-Silent");
-        custodianFactories.verifyCustodianStatus("Silent");
-
-//        custodianFactories.searchCustodianById("SLH-Silent");
-        CreateCustodian.makeCustodianNonSilent();
-        custodianFactories.verifyCustodianType("");
-
-
-    }
-
-    @Test(priority = 5)
-    public void SendAcknowledgement() throws IOException, InterruptedException {
-
-        CaseFactories caseFactories = new CaseFactories(driver);
-        caseFactories.NavigateToCommunicationsTab();
-        caseCommunicationFactories.goToCreateCustodianCommunicationPage();
-
-        String createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
-        caseCommunicationFactories.addMailToRecipients("si");
-        caseCommunicationFactories.enterCommunicationNameAndDescription();
-        caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
-        caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
-                "[ACKNOWLEDGMENT LINK]\n" +
-                "[CUSTODIAN PORTAL LINK]");
-        Thread.sleep(2000);
-        caseCommunicationFactories.startCommunicationSeries();
-
-//        caseCommunicationFactories.goToEditCustodianCommunicationPage("Ares Eunostus");
-//        caseCommunicationFactories.addMailToRecipients("SLH-Silent");
-//        caseCommunicationFactories.saveCommunicationSeries();
-//        caseCommunicationFactories.verifyPostSendForCustodianSeries("Ares Eunostus");
-//        caseCommunicationFactories.backToCommunicationTab();
-//        driver.waitForPageToBeReady();
+//
 //        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
 //        navigateToCustodiansTab.NavigateToCustodiansTab();
+//        CreateCustodian.upLoadCustodians();
+
+
+
+
+
+    }
+
+//    @Test(priority = 4)
+//    public void makeCustodianSilentAndNonSilent() throws IOException, InterruptedException {
 //
-    }
-
-    @Test(priority = 6)
-    public void manualAcknowledgementWithoutReason() throws InterruptedException {
-
-
-
-
-        caseFactories.NavigateToCustodiansTab();
-
-        driver.waitForPageToBeReady();
+//
+//        custodianFactories.navigateToManageCustodiansPage();
+//
+//        custodianFactories.addCustodianToCase("SLH-Silent");
+//
+//
+//        driver.waitForPageToBeReady();
 //        custodianFactories.searchCustodianById("SLH-Silent");
-        custodianFactories.searchCustodianById("si");
-        CreateCustodian.manualAcknowledgementWithoutReason();
-        custodianFactories.searchCustodianById("silent");
-        custodianFactories.verifyAcknowledgementCompleteDate("completeDate");
-    }
-    @Test(priority = 7)
-    public void manualAcknowledgementWithReason() throws InterruptedException {
-
-        custodianFactories.searchCustodianById("13");
-        CreateCustodian.manualAcknowledgementWithReason("Manual Ack Test");
+//
+////        AddCaseCustodian CreateCustodian = new AddCaseCustodian(driver);
+//        CreateCustodian.makeCustodianSilent();
+//
+//        custodianFactories.searchCustodianById("SLH-Silent");
+//        custodianFactories.verifyCustodianStatus("Silent");
+//
+////        custodianFactories.searchCustodianById("SLH-Silent");
+//        CreateCustodian.makeCustodianNonSilent();
+//        custodianFactories.verifyCustodianType("");
+//
+//
+//    }
+//
+//    @Test(priority = 5)
+//    public void SendAcknowledgement() throws IOException, InterruptedException {
+//
+//        CaseFactories caseFactories = new CaseFactories(driver);
+//        caseFactories.NavigateToCommunicationsTab();
+//        caseCommunicationFactories.goToCreateCustodianCommunicationPage();
+//
+//        String createdCommunicationSeries = caseCommunicationFactories.enterSeriesName();
+//        caseCommunicationFactories.addMailToRecipients("si");
+//        caseCommunicationFactories.enterCommunicationNameAndDescription();
+//        caseCommunicationFactories.enterAcknowledgmentEmailSubject("FA Automated Acknowledgment email for [CASE NAME]");
+//        caseCommunicationFactories.typeEmailBody("Email Type: Acknowledgment\n" +
+//                "[ACKNOWLEDGMENT LINK]\n" +
+//                "[CUSTODIAN PORTAL LINK]");
+//        Thread.sleep(2000);
+//        caseCommunicationFactories.startCommunicationSeries();
+//
+////        caseCommunicationFactories.goToEditCustodianCommunicationPage("Ares Eunostus");
+////        caseCommunicationFactories.addMailToRecipients("SLH-Silent");
+////        caseCommunicationFactories.saveCommunicationSeries();
+////        caseCommunicationFactories.verifyPostSendForCustodianSeries("Ares Eunostus");
+////        caseCommunicationFactories.backToCommunicationTab();
+////        driver.waitForPageToBeReady();
+////        CaseFactories navigateToCustodiansTab = new CaseFactories(driver);
+////        navigateToCustodiansTab.NavigateToCustodiansTab();
+////
+//    }
+//
+//    @Test(priority = 6)
+//    public void manualAcknowledgementWithoutReason() throws InterruptedException {
+//
+//
+//
+//
+//        caseFactories.NavigateToCustodiansTab();
+//
+//        driver.waitForPageToBeReady();
+////        custodianFactories.searchCustodianById("SLH-Silent");
+//        custodianFactories.searchCustodianById("si");
+//        CreateCustodian.manualAcknowledgementWithoutReason();
+//        custodianFactories.searchCustodianById("silent");
 //        custodianFactories.verifyAcknowledgementCompleteDate("completeDate");
-        custodianFactories.verifyManualAcknowledgementReason("Manual Ack Test");
-    }
-@Test(priority = 8)
-public void releaseCustodian() throws InterruptedException {
-
-    custodianFactories.searchCustodianById("13");
-    CreateCustodian.releaseCustodianManually();
-    custodianFactories.verifyReleaseDate("2023/09/19 02:37 PM");
-    custodianFactories.verifyCustodianStatus("Released");
-
-}
-    @Test(priority = 9)
-    public void removeCustodian() throws InterruptedException {
-
-    custodianFactories.searchCustodianById("silent");
-    CreateCustodian.removeCustodian();
-    custodianFactories.noDataAvailableCustodianTable();
-    }
+//    }
+//    @Test(priority = 7)
+//    public void manualAcknowledgementWithReason() throws InterruptedException {
+//
+//        custodianFactories.searchCustodianById("13");
+//        CreateCustodian.manualAcknowledgementWithReason("Manual Ack Test");
+////        custodianFactories.verifyAcknowledgementCompleteDate("completeDate");
+//        custodianFactories.verifyManualAcknowledgementReason("Manual Ack Test");
+//    }
+//@Test(priority = 8)
+//public void releaseCustodian() throws InterruptedException {
+//
+//    custodianFactories.searchCustodianById("13");
+//    CreateCustodian.releaseCustodianManually();
+//    custodianFactories.verifyReleaseDate("2023/09/19 02:37 PM");
+//    custodianFactories.verifyCustodianStatus("Released");
+//
+//}
+//    @Test(priority = 9)
+//    public void removeCustodian() throws InterruptedException {
+//
+//    custodianFactories.searchCustodianById("silent");
+//    CreateCustodian.removeCustodian();
+//    custodianFactories.noDataAvailableCustodianTable();
+//    }
 
     @Test(priority = 10)
-    public void createSurvey(){
+    public void createSurvey() throws InterruptedException {
+
+
         caseFactories.NavigateToSurveysTab();
         surveyFactories.gotoAddNewSurveyPage();
         surveyFactories.verifyPageHeader("Create Survey");
+        String surveyName=surveyFactories.fillSurveyName();
+        surveyFactories.fillSurveyTitle();
+
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("Free Text Form");
+
+
+        surveyFactories.createFreeTextFormQuestion();
+        surveyFactories.makeQuestionRequired();
+
+//
+//
+        Thread.sleep(4000);
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("Yes or No");
+        surveyFactories.makeQuestionRequired();
+        surveyFactories.createYesOrNoQuestionWithConditional("One Choice (Radio buttons)","One Choice (Radio buttons)");
+
+
+
+
+        Thread.sleep(4000);
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("Yes or No");
+        surveyFactories.makeQuestionRequired();
+        surveyFactories.createYesOrNoQuestionWithoutConditional();
+        driver.scrollingToBottomofAPage();
+//
+//
+//
+        Thread.sleep(4000);
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("One Choice (Radio buttons)");
+        surveyFactories.makeQuestionRequired();
+        surveyFactories.createOneChoiceQuestion(2);
+
+        Thread.sleep(4000);
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("Date");
+        surveyFactories.makeQuestionRequired();
+        surveyFactories.createDateQuestion("MM/DD/YYYY");
+        driver.scrollingToBottomofAPage();
+
+        Thread.sleep(4000);
+        surveyFactories.addNewQuestion();
+        surveyFactories.selectQuestionType("Multiple Choice (Check boxes)");
+        surveyFactories.makeQuestionRequired();
+        surveyFactories.createMultipleChoiceQuestion(2);
+
+
+        surveyFactories.saveSurvey();
+        surveyFactories.searchSurveyByName(surveyName);
+        surveyFactories.verifyTotalNumberOfQuestions();
+
+        String editedSurveyName=surveyFactories.editSurvey(surveyName);
+        surveyFactories.saveSurvey();
+        surveyFactories.searchSurveyByName(editedSurveyName);
+        surveyFactories.verifyTotalNumberOfQuestions();
+
     }
 //    @Test
 //    public void test() throws IOException {

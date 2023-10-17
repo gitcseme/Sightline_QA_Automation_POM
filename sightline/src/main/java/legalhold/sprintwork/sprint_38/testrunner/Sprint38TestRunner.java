@@ -9,7 +9,6 @@ import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_migration.DataMigrationFactories;
 import legalhold.setup.BaseRunner;
 import legalhold.sprintwork.sprint_38.testcases.Sprint38;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -125,10 +124,26 @@ public class Sprint38TestRunner extends BaseRunner {
     }
 
     @Test(priority = 10, enabled = true)
-    public void uploadZipFileForMigration() throws InterruptedException, IOException {
-        getNavigation().navigateToMenu(LHMenus.DomainSetup);
-        domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.Migration);
-        dataMigrationFactories.openModalAndSelectFileForUpload();
-        dataMigrationFactories.checkPendingStatus();
+    public void checkMigrationFailedStatus() throws InterruptedException, IOException {
+        dataMigrationFactories.goToDataMigrationTab();
+        dataMigrationFactories.openModalAndSelectFileForUpload("FailedMigrationFilePath");
+        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 2000);
+        dataMigrationFactories.checkMigrationResultStatus("Failed", 5000);
+    }
+
+    @Test(priority = 11, enabled = true)
+    public void checkMigrationPartiallyFailedStatus() throws InterruptedException, IOException {
+        dataMigrationFactories.goToDataMigrationTab();
+        dataMigrationFactories.openModalAndSelectFileForUpload("PartiallyFailedMigrationFilePath");
+        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 2000);
+        dataMigrationFactories.checkMigrationResultStatus("Partially-Failed", 5000);
+    }
+
+    @Test(priority = 12, enabled = true)
+    public void checkMigrationSuccessStatus() throws InterruptedException, IOException {
+        dataMigrationFactories.goToDataMigrationTab();
+        dataMigrationFactories.openModalAndSelectFileForUpload("SuccessMigrationFilePath");
+        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 1500);
+        dataMigrationFactories.checkMigrationResultStatus("Success", 5000);
     }
 }
