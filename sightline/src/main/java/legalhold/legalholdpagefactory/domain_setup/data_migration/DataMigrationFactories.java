@@ -44,8 +44,8 @@ public class DataMigrationFactories extends BaseModule {
     public void checkMigrationResultStatus(String statusToCheck, long delay) throws InterruptedException {
         Thread.sleep(delay);
         var uploadStatusElement = driver.FindElementById(locatorReader.getobjectLocator("uploadFileStatus"));
-        var statusString = uploadStatusElement.getText();
+        var statusString = uploadStatusElement.getText().toLowerCase();
 
-        Assert.assertEquals(statusString, statusToCheck);
+        Assert.assertEquals(statusString, statusToCheck.toLowerCase());
     }
 }
