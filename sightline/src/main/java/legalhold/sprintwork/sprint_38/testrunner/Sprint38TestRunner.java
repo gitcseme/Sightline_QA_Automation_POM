@@ -1,11 +1,9 @@
 package legalhold.sprintwork.sprint_38.testrunner;
 
 import legalhold.legalholdpagefactory.LHMenus;
-import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.PreservationFactories;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
-import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_migration.DataMigrationFactories;
 import legalhold.setup.BaseRunner;
 import legalhold.sprintwork.sprint_38.testcases.Sprint38;
@@ -125,6 +123,7 @@ public class Sprint38TestRunner extends BaseRunner {
 
     @Test(priority = 10, enabled = true)
     public void checkMigrationFailedStatus() throws InterruptedException, IOException {
+        getNavigation().navigateToMenu(LHMenus.DomainSetup);
         dataMigrationFactories.goToDataMigrationTab();
         dataMigrationFactories.openModalAndSelectFileForUpload("FailedMigrationFilePath");
         dataMigrationFactories.checkMigrationResultStatus("In-Progress", 2000);

@@ -115,19 +115,18 @@ public class PreservationFactories extends BaseModule {
     }
 
     public int addSiteBySelectAll(String siteName) throws InterruptedException {
-//        String expectedPaginationText = "Showing 1 to 1 of 1 entries";
         Thread.sleep(5000);
         Element searchSiteNameAvailableSiteTable = driver.FindElementByCssSelector(locatorReader.getobjectLocator("searchSiteNameAvailableSiteTable"));
         wait.until(ExpectedConditions.elementToBeClickable(searchSiteNameAvailableSiteTable.getWebElement()));
         searchSiteNameAvailableSiteTable.SendKeys(siteName);
-        Thread.sleep(15000);
+        Thread.sleep(3000);
 //        wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("paginationTextAvailableSiteTable")), expectedPaginationText));
 
         driver.FindElementByCssSelector(locatorReader.getobjectLocator("selectAllAvailableSiteTable")).waitAndClick(30);
         driver.FindElementById(locatorReader.getobjectLocator("btnAddSite")).waitAndClick(30);
 
 
-        Thread.sleep(15000);
+        Thread.sleep(3000);
         String paginationTextSelectedSiteTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextSelectedSiteTable")).getText();
         Pattern pattern = Pattern.compile("of (\\d+)");
         Matcher matcher = pattern.matcher(paginationTextSelectedSiteTable);
@@ -382,9 +381,7 @@ public class PreservationFactories extends BaseModule {
                 status.equalsIgnoreCase("Partially Active") || status.equalsIgnoreCase("Released")) {
             wait.until(ExpectedConditions.elementToBeClickable(btnDeletePreservation.getWebElement()));
             btnDeletePreservation.waitAndClick(30);
-            Thread.sleep(3000);
             driver.FindElementById("pHold-delete-modal-ok").waitAndClick(30);
-            Thread.sleep(6000);
             System.out.println("Preservation Hold Delete request Sent successfully");
             driver.waitForPageToBeReady();
         } else {
@@ -402,35 +399,49 @@ public class PreservationFactories extends BaseModule {
         }
 
         for (String s : holdNameList) {
-            if (!s.equalsIgnoreCase(holdName)) count++;
+            if (!s.equalsIgnoreCase(holdName) && s.equalsIgnoreCase("No data available in table")) {
+                System.out.println("Preservation Hold: " + holdName + " is already Deleted successfully");
+//                count = holdNameList.size();
+                return;
+            } else if (!s.equalsIgnoreCase(holdName)) count++;
         }
 
         if (count == holdNameList.size()) {
             flag = true;
-            System.out.println("Preservation Hold: " + holdName + " is Deleted successfully");
+            System.out.println("Preservation Hold: " + holdName + " is already Deleted successfully");
+        } else {
+            holdNameList.clear();
         }
         while (!flag) {
             int countAfterRefresh = 0;
             driver.getWebDriver().navigate().refresh();
             Thread.sleep(15000);
             driver.waitForPageToBeReady();
-            ElementCollection holdListAfterRefresh = driver.FindElementsByXPath("//table[@id='preservationHold_table_uniqueId']//tbody//tr//td[1]");
-            List<String> holdNameListAfterRefresh = new ArrayList<>();
-            for (int i = 0; i < holdListAfterRefresh.size(); i++) {
-                holdNameListAfterRefresh.add(holdListAfterRefresh.getElementByIndex(i).getText());
+            holdList = driver.FindElementsByXPath("//table[@id='preservationHold_table_uniqueId']//tbody//tr//td[1]");
+//            List<String> holdNameListAfterRefresh = new ArrayList<>();
+            for (int i = 0; i < holdList.size(); i++) {
+                var holdNameFromCellAfterRefresh = holdList.getElementByIndex(i).getText();
+                System.out.println("Hold Name After Refresh: " + holdNameFromCellAfterRefresh);
+                if (holdNameFromCellAfterRefresh.equalsIgnoreCase("No data available in table")) {
+                    holdNameList.add(holdNameFromCellAfterRefresh);
+                    break;
+                } else {
+                    holdNameList.add(holdNameFromCellAfterRefresh);
+                }
             }
-            for (String s : holdNameListAfterRefresh) {
+            for (String s : holdNameList) {
                 if (!s.equalsIgnoreCase(holdName)) countAfterRefresh++;
             }
-            if (countAfterRefresh == holdNameListAfterRefresh.size()) {
+            if (countAfterRefresh == holdNameList.size()) {
                 flag = true;
                 System.out.println("Preservation Hold: " + holdName + " is Deleted successfully");
                 break;
-            }
-            iterator++;
-            if (iterator == 15) {
-                System.out.println("Preservation Hold: "+holdName+" Delete unsuccessful within given timeline");
-                break;
+            } else {
+                holdNameList.clear();
+                iterator++;
+                if (iterator == 20) {
+                    throw new RuntimeException("Preservation Hold: " + holdName + " Delete unsuccessful within given timeline");
+                }
             }
         }
     }
@@ -442,12 +453,15 @@ public class PreservationFactories extends BaseModule {
 
         for (int i = 0; i < rowCount.size(); i++) {
             if (rowCount.get(i).getText().equalsIgnoreCase(holdName)) {
-                holdRow = i;
+                holdRow = i + 1;
                 break;
             }
         }
-        if (holdRow == 0) System.out.println("Preservation Hold was NOT found");
-        return holdRow + 1;
+        if (holdRow == 0) {
+            throw new RuntimeException("Preservation Hold was NOT found");
+        } else {
+            return holdRow;
+        }
     }
 
     public void isPreservationHoldActive(String holdName) throws InterruptedException {
@@ -519,7 +533,7 @@ public class PreservationFactories extends BaseModule {
             if (status.equalsIgnoreCase("Error")) {
                 break;
             }
-            if (iterator == 15) break;
+            if (iterator == 30) break;
         }
         System.out.println("The status of " + holdName + " is: " + status);
         if (!status.equalsIgnoreCase("Error")) {
@@ -667,7 +681,7 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("No Custodian is in Active status for system to Release");
             }
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             Element dataTableOptionMenu = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dataTableOptionMenu"));
@@ -685,6 +699,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("Filtered custodian is not Active for system to Release");
             }
+        } else {
+            throw new RuntimeException("No custodian is present for system to release after filtering");
         }
     }
 
@@ -712,6 +728,7 @@ public class PreservationFactories extends BaseModule {
                 }
             }
             while (!flag && pendingRelease != count) {
+                statusList.clear();
                 driver.getWebDriver().navigate().refresh();
                 Thread.sleep(12000);
                 searchPreservationCustodianDataTable(holdName, empId);
@@ -738,7 +755,7 @@ public class PreservationFactories extends BaseModule {
                 throw new RuntimeException("All Custodians from " + holdName + " are NOT Released");
             }
 
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             while (status.equalsIgnoreCase("Pending Release")) {
@@ -749,10 +766,10 @@ public class PreservationFactories extends BaseModule {
                 driver.waitForPageToBeReady();
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]")));
                 status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
-                iterator++;
                 if (status.equalsIgnoreCase("Released")) {
                     break;
                 }
+                iterator++;
                 if (iterator == 15) break;
             }
             System.out.println("The custodian(s) of " + holdName + " are in: " + status + " status");
@@ -761,6 +778,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("The custodian(s) of " + holdName + " are in Released Status");
             }
+        } else {
+            throw new RuntimeException("No available custodian(s) after filtering");
         }
     }
 
@@ -800,7 +819,7 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("No Site is in Active status for system to Release");
             }
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             Element dataTableOptionMenu = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dataTableOptionMenu"));
@@ -818,6 +837,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("Filtered Site is not Active for system to Release");
             }
+        } else {
+            throw new RuntimeException("No Site found for system to release after filtering");
         }
     }
 
@@ -845,6 +866,7 @@ public class PreservationFactories extends BaseModule {
                 }
             }
             while (!flag && pendingRelease != count) {
+                statusList.clear();
                 driver.getWebDriver().navigate().refresh();
                 Thread.sleep(12000);
                 searchPreservationSiteDataTable(holdName, siteUrl);
@@ -871,7 +893,7 @@ public class PreservationFactories extends BaseModule {
                 throw new RuntimeException("All Sites from " + holdName + " are NOT Released");
             }
 
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             while (status.equalsIgnoreCase("Pending Release")) {
@@ -894,6 +916,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("The site(s) of " + holdName + " are in Released Status");
             }
+        } else {
+            throw new RuntimeException("No available Site(s) after filtering");
         }
     }
 
@@ -932,7 +956,7 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("No Team Mailbox is in Active status for system to Release");
             }
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             Element dataTableOptionMenu = driver.FindElementByCssSelector(locatorReader.getobjectLocator("dataTableOptionMenu"));
@@ -950,6 +974,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("Filtered Team Mailbox is not Active for system to Release");
             }
+        } else {
+            throw new RuntimeException("No Team Mailbox found for system to release after filtering");
         }
     }
 
@@ -977,6 +1003,7 @@ public class PreservationFactories extends BaseModule {
                 }
             }
             while (!flag && pendingRelease != count) {
+                statusList.clear();
                 driver.getWebDriver().navigate().refresh();
                 Thread.sleep(12000);
                 searchPreservationTeamsDataTable(holdName, teamName);
@@ -1003,7 +1030,7 @@ public class PreservationFactories extends BaseModule {
                 throw new RuntimeException("All Team Mailboxes from " + holdName + " are NOT Released");
             }
 
-        } else {
+        } else if (count == 1) {
             int statusIndex = getColumnIndexFromDataTable("Status");
             var status = driver.FindElementByXPath("//table[@id='id-Preservation']/tbody/tr[1]/td[" + statusIndex + "]").getText();
             while (status.equalsIgnoreCase("Pending Release")) {
@@ -1026,6 +1053,8 @@ public class PreservationFactories extends BaseModule {
             } else {
                 System.out.println("The Team Mailbox(s) of " + holdName + " are in Released Status");
             }
+        } else {
+            throw new RuntimeException("No available Team Mailbox(s) after filtering");
         }
     }
 

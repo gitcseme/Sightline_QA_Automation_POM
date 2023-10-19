@@ -1,4 +1,4 @@
-package legalhold.sprintwork.Sprint39.testcases;
+package legalhold.sprintwork.sprint_39.testcases;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -6,7 +6,6 @@ import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.CustodianFactories;
 import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.IOException;
 
