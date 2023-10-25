@@ -38,6 +38,7 @@ public class BaseModule {
     protected Map<String, String> elementValueMapping = new HashMap<>();
     protected JavascriptExecutor jsExecutor;
 
+    protected final String fileDownloadPath = "C:\\BatchPrintFiles\\downloads";
 
     public BaseModule(String selectorFilename, Driver driver) throws IOException {
         this.driver = driver;
