@@ -145,4 +145,11 @@ public class Sprint38TestRunner extends BaseRunner {
         dataMigrationFactories.checkMigrationResultStatus("In-Progress", 1500);
         dataMigrationFactories.checkMigrationResultStatus("Success", 5000);
     }
+
+    @Test(priority = 13, enabled = true)
+    public void checkDownloadedReport() throws InterruptedException, IOException {
+        getNavigation().navigateToMenu(LHMenus.DomainSetup);
+        dataMigrationFactories.goToDataMigrationTab();
+        dataMigrationFactories.downloadReportAndVerify();
+    }
 }
