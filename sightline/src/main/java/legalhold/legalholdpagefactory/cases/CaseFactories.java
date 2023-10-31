@@ -14,7 +14,6 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -56,33 +55,135 @@ public class CaseFactories extends BaseModule {
         }
     }
 
-    public void searchCaseByName(String caseName) {
-        try {
-            WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
-            wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
-            caseNameColumnFilterBox.clear();
-            caseNameColumnFilterBox.sendKeys(caseName);
-            String expected_text = "Showing 1 to 1 of 1 entries";
-            Thread.sleep(3000);
-            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
-        } catch (Exception E) {
-            System.out.println("Case Name not found. The exception is: ");
-            System.out.println(E.getMessage());
+    public void searchCaseByName(String caseName) throws InterruptedException {
+
+        var btnClearFilterDataTable = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementById(locatorReader.getobjectLocator("btnClearFilterDataTable")).getWebElement()));
+        btnClearFilterDataTable.click();
+        WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
+        wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+        caseNameColumnFilterBox.clear();
+        caseNameColumnFilterBox.sendKeys(caseName);
+        Thread.sleep(3000);
+        var count = getDataTableCount();
+        if (count == 1) {
+            System.out.println("The case: " + caseName + " exists");
+        } else if (count > 1) {
+            throw new RuntimeException("The case name is duplicate");
+        } else {
+            throw new RuntimeException("The case: " + caseName + " doesn't exists");
+        }
+
+    }
+
+    public void closeCase(String caseName) throws InterruptedException {
+        searchCaseByName(caseName);
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+        List<WebElement> btnList = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("btnCloseCase")));
+        if (!btnList.isEmpty()) {
+            btnList.get(0).click();
+            btnList.clear();
+            btnList = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("okBtnCloseCaseModal")));
+
+            if (!btnList.isEmpty()) {
+                btnList.get(0).click();
+                Thread.sleep(3000);
+                var caseStatusColumnIndex = getColumnIndexFromDataTable("Case Status");
+                searchCaseByName(caseName);
+                var caseStatus = driver.FindElementByXPath("//table[@id='id-CaseTable']//tbody//tr[1]//td[" + caseStatusColumnIndex + "]").getText();
+                if (caseStatus.equalsIgnoreCase("Closed")) {
+                    System.out.println("The case: " + caseName + " is Closed Successfully");
+                } else {
+                    throw new RuntimeException("The case: " + caseName + " Close Failed. Current case status is: " + caseStatus);
+                }
+            } else {
+                var warningMessageCaseCloseModal = driver.FindElementById(locatorReader.getobjectLocator("warningMessageCaseCloseModal")).getText();
+                driver.FindElementsByXPath(locatorReader.getobjectLocator("cancelBtnCaseCloseModal")).getElementByIndex(2).waitAndClick(30);
+                throw new RuntimeException("System was NOT able to close the case: " + caseName + ", the warning message on the modal is: " + warningMessageCaseCloseModal);
+            }
+        } else {
+            driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+            throw new RuntimeException("Either the case: '" + caseName + "' is already closed, or the user does NOT have 'Case Close' permission");
         }
     }
 
-    public void searchNonExistentCaseByName(String caseName) {
-        try {
-            WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
-            wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
-            caseNameColumnFilterBox.sendKeys(caseName);
-            String expected_text = "Showing 0 to 0 of 0 entries";
+    public void reopenCase(String caseName) throws InterruptedException {
+        searchCaseByName(caseName);
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+        List<WebElement> btnList = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("btnReopenCase")));
+
+        if (!btnList.isEmpty()) {
+            btnList.get(0).click();
+            driver.FindElementById(locatorReader.getobjectLocator("okBtnReopenCaseModal")).waitAndClick(30);
             Thread.sleep(3000);
-            wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
+            var caseStatusColumnIndex = getColumnIndexFromDataTable("Case Status");
+            searchCaseByName(caseName);
+            var caseStatus = driver.FindElementByXPath("//table[@id='id-CaseTable']//tbody//tr[1]//td[" + caseStatusColumnIndex + "]").getText();
+            if (caseStatus.equalsIgnoreCase("Active")) {
+                System.out.println("The case: " + caseName + " is Reopened Successfully");
+            } else {
+                throw new RuntimeException("The case: " + caseName + " Reopen Failed. Current case status is: " + caseStatus);
+            }
+        } else {
+            driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+            throw new RuntimeException("The case: '" + caseName + "' is Active, so it can't be reopened");
+        }
+    }
+
+
+    public int getDataTableCount() {
+        String paginationTextCaseDataTable = driver.FindElementById(locatorReader.getobjectLocator("paginationTextCaseDataTable")).getText();
+        Pattern pattern = Pattern.compile("of (\\d+)");
+        Matcher matcher = pattern.matcher(paginationTextCaseDataTable);
+
+        int count = 0;
+        while (matcher.find()) {
+            count = Integer.parseInt(matcher.group(1));
+        }
+        return count;
+    }
+
+
+    public void deleteCase(String caseName) throws InterruptedException {
+        searchCaseByName(caseName);
+        driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+        List<WebElement> btnList = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("btnDeleteCase")));
+        if (!btnList.isEmpty()) {
+            btnList.get(0).click();
             Thread.sleep(2000);
-        } catch (Exception E) {
-            System.out.println("Case Name not found. The exception is: ");
-            System.out.println(E.getMessage());
+//            var warningMessage = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("warningMessageCaseDeleteModal")));
+//            var modalTextThatAllowsCaseDelete = driver.getWebDriver().findElements(By.xpath(locatorReader.getobjectLocator("modalTextThatAllowsCaseDelete")));
+//            var modalTextThatPreventsCaseDelete = driver.getWebDriver().findElements(By.xpath(locatorReader.getobjectLocator("modalTextThatPreventsCaseDelete")));
+            if (driver.FindElementById(locatorReader.getobjectLocator("okBtnDeleteCaseModal")).isDisplayed()) {
+                var okBtnDeleteCaseModal = driver.FindElementById(locatorReader.getobjectLocator("okBtnDeleteCaseModal"));
+                okBtnDeleteCaseModal.waitAndClick(30);
+                Thread.sleep(3000);
+                var btnClearFilterDataTable = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementById(locatorReader.getobjectLocator("btnClearFilterDataTable")).getWebElement()));
+                searchNonExistentCaseByName(caseName);
+                btnClearFilterDataTable.click();
+            } else if(driver.FindElementsByXPath(locatorReader.getobjectLocator("cancelBtnCaseCloseModal")).getElementByIndex(3).isDisplayed()) {
+                var warningMessageCaseDeleteModal = driver.FindElementById(locatorReader.getobjectLocator("warningMessageCaseDeleteModal")).getText();
+                driver.FindElementsByXPath(locatorReader.getobjectLocator("cancelBtnCaseCloseModal")).getElementByIndex(3).waitAndClick(30);
+                throw new RuntimeException("System was NOT able to delete the case: " + caseName + ", the warning message on the modal is: " + warningMessageCaseDeleteModal);
+            }
+        } else {
+            driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
+            throw new RuntimeException("The case: '" + caseName + "' can't be deleted because the user does NOT have 'Delete/Remove Action' permission");
+        }
+    }
+
+    public void searchNonExistentCaseByName(String caseName) throws InterruptedException {
+        var btnClearFilterDataTable = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementById(locatorReader.getobjectLocator("btnClearFilterDataTable")).getWebElement()));
+        btnClearFilterDataTable.click();
+        WebElement caseNameColumnFilterBox = driver.getWebDriver().findElement(By.xpath(locatorReader.getobjectLocator("searchCaseNameColumn")));
+        wait.until(ExpectedConditions.elementToBeClickable(caseNameColumnFilterBox));
+        caseNameColumnFilterBox.clear();
+        caseNameColumnFilterBox.sendKeys(caseName);
+        Thread.sleep(3000);
+        var count = getDataTableCount();
+        if (count == 0) {
+            System.out.println("The case: '" + caseName + "' doesn't exists");
+        }else {
+            throw new RuntimeException("The case: '" + caseName + "' still exists/not deleted");
         }
     }
 

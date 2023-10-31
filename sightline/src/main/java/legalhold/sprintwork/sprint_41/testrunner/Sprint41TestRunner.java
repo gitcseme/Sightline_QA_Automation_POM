@@ -1,6 +1,7 @@
 package legalhold.sprintwork.sprint_41.testrunner;
 
 import legalhold.legalholdpagefactory.LHMenus;
+import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_source.DataSourceFactories;
@@ -13,20 +14,22 @@ import java.text.ParseException;
 public class Sprint41TestRunner extends BaseRunner {
     protected DataSourceFactories dataSourceFactories;
     protected DomainSetupTabNavigation domainSetupTabNavigation;
+    protected CaseFactories caseFactories;
     public static String dataSourceName;
 
     public Sprint41TestRunner() throws ParseException, IOException, InterruptedException {
         dataSourceFactories = new DataSourceFactories(driver);
         domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
+        caseFactories = new CaseFactories(driver);
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, enabled = false)
     public void navigateToDataSourceTab() throws IOException {
         getNavigation().navigateToMenu(LHMenus.DomainSetup);
         domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.DataSources);
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, enabled = false)
     public void createDataSource() throws InterruptedException {
         dataSourceFactories.goToCreateDataSourcePage();
         dataSourceName = dataSourceFactories.enterDataSourceNameAndDescription();
@@ -41,12 +44,12 @@ public class Sprint41TestRunner extends BaseRunner {
         dataSourceFactories.verifySuccessfulTestConnection();
         dataSourceFactories.saveDataSource();
         var status = dataSourceFactories.getStatusOfDataSourceFromTable(dataSourceName);
-        if(status.equalsIgnoreCase("Disabled")){
+        if (status.equalsIgnoreCase("Disabled")) {
             throw new RuntimeException("Data Source is Disabled");
         }
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, enabled = false)
     public void editDataSource() throws InterruptedException {
         dataSourceFactories.goToEditDataSource(dataSourceName);
         dataSourceName = dataSourceFactories.enterDataSourceNameAndDescription();
@@ -61,8 +64,15 @@ public class Sprint41TestRunner extends BaseRunner {
         dataSourceFactories.verifySuccessfulTestConnection();
         dataSourceFactories.saveDataSource();
         var status = dataSourceFactories.getStatusOfDataSourceFromTable(dataSourceName);
-        if(status.equalsIgnoreCase("Disabled")){
+        if (status.equalsIgnoreCase("Disabled")) {
             throw new RuntimeException("Data Source is Disabled");
         }
+    }
+
+    @Test(priority = 4, enabled = true)
+    public void closeCase() throws InterruptedException {
+//        caseFactories.closeCase("Salmon Nigiri ferret violet");
+//        caseFactories.reopenCase("Salmon Nigiri ferret violet");
+        caseFactories.deleteCase("Case Preservation Hold");
     }
 }
