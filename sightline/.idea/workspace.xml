@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/QA.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/QA.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -279,8 +281,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java</url>
-          <line>35</line>
+          <line>44</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
+          <line>440</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
+          <line>399</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
+          <line>396</line>
+          <properties class="legalhold.legalholdpagefactory.cases.CustodianFactories" method="verifyIfCustodianIsReleased">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,9 +1,12 @@
 package legalhold.sprintwork.Sprint39.testrunner;
 
+import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.CustodianFactories;
 import legalhold.legalholdpagefactory.cases.PreservationFactories;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_migration.DataMigrationFactories;
 import legalhold.setup.BaseRunner;
 import legalhold.sprintwork.Sprint39.testcases.Sprint39_ReleaseWithCom;
@@ -12,6 +15,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
+
 import com.github.javafaker.Faker;
 
 public class Sprint39_Runner extends BaseRunner {
@@ -24,6 +29,8 @@ public class Sprint39_Runner extends BaseRunner {
     Sprint39_ReleaseWithCom sprint39_releaseWithCom;
     Faker faker;
     String seriesName = "Release";
+    private DataMigrationFactories dataMigrationFactories;
+    DomainSetupTabNavigation domainSetupTabNavigation;
 
 
     public Sprint39_Runner() throws ParseException, IOException, InterruptedException {
@@ -32,6 +39,8 @@ public class Sprint39_Runner extends BaseRunner {
         communicationFactories = new CaseCommunicationFactories(driver);
         custodianFactories = new CustodianFactories(driver);
         sprint39_releaseWithCom = new Sprint39_ReleaseWithCom(driver);
+        dataMigrationFactories = new DataMigrationFactories(driver);
+        domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
     }
 //    @Test(priority = 1, enabled = true, description = "Creating a Release communication (Only Save)")
 //    public void createReleaseCom() throws InterruptedException {
@@ -62,9 +71,9 @@ public class Sprint39_Runner extends BaseRunner {
     public void releaseWithComSingle() throws InterruptedException {
 
         caseFactories.NavigateToCustodiansTab();
-        custodianFactories.releaseWithCommunication("PH-1",seriesName);
+        custodianFactories.releaseWithCommunication("released",seriesName);
         Thread.sleep(3000);
-        custodianFactories.verifyIfCustodianIsReleased("PH-1");
+        custodianFactories.verifyIfCustodianIsReleased("released");
 
 
     }
@@ -94,10 +103,47 @@ public class Sprint39_Runner extends BaseRunner {
         @Test(priority = 6, enabled = true, description = "Verify Release with Communication with all silent custodians")
     public void releaseWithAllSilent() throws InterruptedException {
 
-        custodianFactories.releaseWithCommunication("silent",seriesName);
-        custodianFactories.verifyIfCustodianIsReleased("silent");
+        custodianFactories.releaseWithCommunication("releasedSilent",seriesName);
+        custodianFactories.verifyIfCustodianIsReleased("releasedSilent");
 
 
     }
+
+//        @Test(priority = 7, enabled = true)
+//        public void checkMigrationFailedStatus() throws InterruptedException, IOException {
+//            getNavigation().navigateToMenu(LHMenus.DomainSetup);
+//            dataMigrationFactories.goToDataMigrationTab();
+//            dataMigrationFactories.openModalAndSelectFileForUpload("FailedMigrationFilePath");
+////            dataMigrationFactories.checkMigrationResultStatus("In-Progress", 0000);
+//            dataMigrationFactories.checkMigrationResultStatus("Failed", 5000);
+//        }
+//
+//        @Test(priority = 8, enabled = true)
+//        public void checkMigrationPartiallyFailedStatus() throws InterruptedException, IOException {
+//            dataMigrationFactories.goToDataMigrationTab();
+//            dataMigrationFactories.openModalAndSelectFileForUpload("PartiallyFailedMigrationFilePath");
+////            dataMigrationFactories.checkMigrationResultStatus("In-Progress", 0000);
+//            dataMigrationFactories.checkMigrationResultStatus("Partially-Failed", 5000);
+//        }
+//
+//        @Test(priority = 9, enabled = true)
+//        public void checkMigrationSuccessStatus() throws InterruptedException, IOException {
+//
+//            dataMigrationFactories.goToDataMigrationTab();
+//            dataMigrationFactories.openModalAndSelectFileForUpload("SuccessMigrationFilePath");
+////            dataMigrationFactories.checkMigrationResultStatus("In-Progress", 0000);
+//            dataMigrationFactories.checkMigrationResultStatus("Success", 5000);
+//        }
+
+    @Test(priority = 10,enabled = true)
+    public void checkIfCustodiansAddedInReleaseCommunication() throws InterruptedException {
+
+        custodianFactories.clearFilter();
+        List <String> allSilents = custodianFactories.getAllSilentCustodians();
+        custodianFactories.clearFilter();
+        List <String> allReleased = custodianFactories.verifyIfCustodianIsReleased("released");
+        custodianFactories.filterReleasedAndNonSilentCustodians(allSilents,allReleased);
+    }
+
 
 }

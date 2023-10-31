@@ -394,7 +394,7 @@ public class CustodianFactories extends BaseModule {
     }
 
 
-        public void verifyIfCustodianIsReleased(String empId) throws InterruptedException {
+        public List <String> verifyIfCustodianIsReleased(String empId) throws InterruptedException {
 
             searchByCustodianId(empId);
             int count = getDataTableCount();
@@ -402,12 +402,20 @@ public class CustodianFactories extends BaseModule {
             int active = 0;
             if (count > 1) {
                 int statusIndex = getColumnIndexFromDataTable("Status");
+                int employeeId = getColumnIndexFromDataTable("Employee Id");
                 searchByCustodianId(empId);
                 boolean flag = false;
                 int c = 0;
                 List<String> statusList = new ArrayList<>();
+                List<String> releasedEmpIdList = new ArrayList<>();
+
                 for (int i = 1; i <= count; i++) {
-                    statusList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                    String status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText();
+                    statusList.add(status);
+                    if(status.equalsIgnoreCase("Released"))
+                    {
+                        releasedEmpIdList.add( driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + employeeId + "]").getText());
+                    }
                 }
                 for (String value : statusList) {
                     if (value.equalsIgnoreCase("Released")) {
@@ -425,10 +433,17 @@ public class CustodianFactories extends BaseModule {
 //                Thread.sleep(3000);
                     driver.waitForPageToBeReady();
                     for (int i = 1; i <= count; i++) {
-                        statusList2.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+
+                        String status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText();
+                        statusList2.add(status);
+                        if(status.equalsIgnoreCase("Released"))
+                        {
+                            releasedEmpIdList.add( driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + employeeId + "]").getText());
+                        }
                     }
                     for (String s : statusList2) {
                         if (s.equalsIgnoreCase("Released")) {
+
                             c++;
                             if (c == count) {
                                 flag = true;
@@ -441,12 +456,17 @@ public class CustodianFactories extends BaseModule {
                 }
                 if (flag) {
                     System.out.println("All selected Custodians  are Released");
+                    return  releasedEmpIdList;
                 } else {
                     throw new RuntimeException("All selected Custodians  are NOT Released");
+
                 }
 
             } else {
                 int statusIndex = getColumnIndexFromDataTable("Status");
+                int employeeId = getColumnIndexFromDataTable("Employee Id");
+                List<String> releasedEmpIdList = new ArrayList<>();
+
                 searchByCustodianId(empId);
                 var status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
                 while (status.equalsIgnoreCase("Active")) {
@@ -460,7 +480,8 @@ public class CustodianFactories extends BaseModule {
                     status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
                     iterator++;
                     if (status.equalsIgnoreCase("Released")) {
-                        break;
+                        releasedEmpIdList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + employeeId + "]").getText());
+                        return releasedEmpIdList;
                     }
                     if (iterator == 15) break;
                 }
@@ -469,6 +490,8 @@ public class CustodianFactories extends BaseModule {
                     throw new RuntimeException("The selected custodian(s) are in NOT Released Status");
                 } else {
                     System.out.println("The selected custodian is in Released Status");
+                    releasedEmpIdList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + employeeId + "]").getText());
+                    return releasedEmpIdList;
                 }
             }
         }
@@ -519,6 +542,54 @@ public class CustodianFactories extends BaseModule {
                     return true;
                 }
             }
+    }
+
+    public void clearFilter(){
+        Element clearFilter = driver.FindElementByXPath("//img[@title='Clear Active Filters']");
+        wait.until(ExpectedConditions.elementToBeClickable(clearFilter.getWebElement()));
+        clearFilter.waitAndClick(10);
+    }
+
+    public List <String> getAllSilentCustodians() throws InterruptedException {
+
+
+        driver.waitForPageToBeReady();
+        Thread.sleep(3000);
+        int typeIndex = getColumnIndexFromDataTable("Custodian Type");
+        int empId = getColumnIndexFromDataTable("Employee Id");
+        List<String> silentCustodiansList = new ArrayList<>();
+
+        WebElement custodianTypeDropdown = driver.getWebDriver().findElement(By.xpath("//select[@displayname='Custodian Type']"));
+        wait.until(ExpectedConditions.elementToBeClickable(custodianTypeDropdown));
+        Select selectCustodianType = new Select(custodianTypeDropdown);
+        selectCustodianType.selectByVisibleText("Silent");
+        Thread.sleep(2000);
+        int count = getDataTableCount();
+        for (int i = 1; i <= count; i++) {
+
+
+                String employeeId = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + empId + "]").getText();
+                silentCustodiansList.add(employeeId);
+
+        }
+        System.out.println("ListType"+ silentCustodiansList);
+
+        return silentCustodiansList;
+    }
+
+    public void filterReleasedAndNonSilentCustodians(List <String> allSilents, List <String> allReleased) {
+
+        List<String> filteredList = new ArrayList<>();
+
+
+        for (String value : allReleased) {
+            if (!allSilents.contains(value)) {
+                filteredList.add(value);
+            }
+        }
+
+        // Print the filtered list
+        System.out.println("Filtered List: " + filteredList);
     }
 
     }
