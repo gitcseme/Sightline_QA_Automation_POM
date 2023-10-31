@@ -42,7 +42,6 @@ public class ElementCollection implements Iterable<Element> {
         AssertExists();
         return elements.size();
     }
-
     /// <summary>
     /// Waits until the collection becomes present or until the timeout is reached.
     /// </summary>
@@ -119,6 +118,12 @@ public class ElementCollection implements Iterable<Element> {
     private void AssertElementsFound() {
         if (elements != null) return;
         throw new NotFoundException(String.format("unable to locate elementsb: {0}", by.toString()));
+    }
+
+    public void Clear(){
+        AssertExists();
+        elements.clear();
+        elements=null;
     }
 
     public Iterator<Element> iterator() {

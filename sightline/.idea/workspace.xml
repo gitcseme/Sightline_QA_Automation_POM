@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automationLibrary/ElementCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/automationLibrary/ElementCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/configsAndTestData/QA.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/configsAndTestData/QA.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/uploadFile.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/PreservationFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/data_migration/DataMigrationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/domain_setup/data_migration/DataMigrationFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testcases/Sprint39_ReleaseWithCom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_39/testcases/Sprint39_ReleaseWithCom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_39/testrunner/Sprint39_Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
       <recent name="C:\Users\parvez.mahmud\source\repos\ForConsilioGit\Sightline_QA_Automation_POM\sightline\src\main\java\ModuleStep" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Sprint39_Runner">
+  <component name="RunManager" selected="TestNG.Run38">
     <configuration name="LoginWithToken.loginToLegalHoldWithToken" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
@@ -159,17 +162,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Sprint36CasePageTestRunner.verifyPostSend" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="Sprint38TestRunner.goToPreservationTab" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="sightline" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="legalhold.sprint_36.testrunners.*" />
+          <option name="PATTERN" value="legalhold.sprintwork.sprint_38.testrunner.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="legalhold.sprint_36.testrunners" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.sprint_36.testrunners.Sprint36CasePageTestRunner" />
-      <option name="METHOD_NAME" value="verifyPostSend" />
+      <option name="PACKAGE_NAME" value="legalhold.sprintwork.sprint_38.testrunner" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprintwork.sprint_38.testrunner.Sprint38TestRunner" />
+      <option name="METHOD_NAME" value="goToPreservationTab" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -181,12 +184,12 @@
       <module name="sightline" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="legalhold.sprintwork.Sprint39.testrunner.*" />
+          <option name="PATTERN" value="legalhold.sprintwork.sprint_39.testrunner.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="legalhold.sprintwork.Sprint39.testrunner" />
-      <option name="MAIN_CLASS_NAME" value="legalhold.sprintwork.Sprint39.testrunner.Sprint39_Runner" />
+      <option name="MAIN_CLASS_NAME" value="legalhold.sprintwork.sprint_39.testrunner.Sprint39_Runner" />
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
@@ -215,19 +218,19 @@
     <list>
       <item itemvalue="TestNG.Run36" />
       <item itemvalue="TestNG.Run38" />
-      <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
       <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
       <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
       <item itemvalue="TestNG.Sprint40TestRunner.addEscalation" />
       <item itemvalue="TestNG.Sprint39_Runner" />
+      <item itemvalue="TestNG.Sprint38TestRunner.goToPreservationTab" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.Sprint38TestRunner.goToPreservationTab" />
         <item itemvalue="TestNG.Sprint39_Runner" />
         <item itemvalue="TestNG.Sprint40TestRunner.addEscalation" />
         <item itemvalue="TestNG.LoginWithToken.loginToLegalHoldWithToken" />
         <item itemvalue="TestNG.Sprint36CasePageTestRunner.testing" />
-        <item itemvalue="TestNG.Sprint36CasePageTestRunner.verifyPostSend" />
       </list>
     </recent_temporary>
   </component>
@@ -278,30 +281,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
           <line>632</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/sprintwork/Sprint39/testrunner/Sprint39_Runner.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
-          <line>440</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
-          <line>399</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java</url>
-          <line>396</line>
-          <properties class="legalhold.legalholdpagefactory.cases.CustodianFactories" method="verifyIfCustodianIsReleased">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
