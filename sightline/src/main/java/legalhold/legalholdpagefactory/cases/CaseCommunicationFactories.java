@@ -75,20 +75,20 @@ public class CaseCommunicationFactories extends BaseModule {
         Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
 
         btnWeekly.Click();
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Monday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Monday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Tuesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Tuesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Wednesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Wednesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Thursday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Thursday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Friday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Friday']").waitAndClick(30);
         }
         Element btnMax = driver.FindElementByXPath(reader.getobjectLocator("btnMaximumNumberWeekly"));
         if (!btnMax.Selected()) {
@@ -107,20 +107,20 @@ public class CaseCommunicationFactories extends BaseModule {
         Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
 
         btnWeekly.Click();
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Monday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Monday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Tuesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Tuesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Wednesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Wednesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Thursday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Thursday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Friday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Friday']").waitAndClick(30);
         }
 
         List<WebElement> btnUnlimited = driver.getWebDriver().findElements(By.cssSelector(reader.getobjectLocator("btnReminderOccurrenceWeekly")));
@@ -311,20 +311,20 @@ public class CaseCommunicationFactories extends BaseModule {
         Element btnWeekly = driver.FindElementByCssSelector(reader.getobjectLocator("btnWeekly"));
 
         btnWeekly.Click();
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Monday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Monday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Monday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Tuesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Tuesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Tuesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Wednesday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Wednesday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Wednesday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Thursday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Thursday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Thursday']").waitAndClick(30);
         }
-        if (!driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").Selected()) {
-            driver.FindElementByCssSelector("input[aria-label=\"Friday\"]").waitAndClick(30);
+        if (!driver.FindElementByCssSelector("input[aria-label='Friday']").Selected()) {
+            driver.FindElementByCssSelector("input[aria-label='Friday']").waitAndClick(30);
         }
         driver.FindElementById(reader.getobjectLocator("btnScheduleModalSubmit")).Click();
     }

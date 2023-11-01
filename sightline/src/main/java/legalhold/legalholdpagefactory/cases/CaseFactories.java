@@ -3,6 +3,7 @@ package legalhold.legalholdpagefactory.cases;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.setup.BaseModule;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.apache.commons.lang3.StringUtils;
@@ -23,11 +24,19 @@ public class CaseFactories extends BaseModule {
 
     List<WebElement> ManageCaseTabs;
     LocatorReader reader;
+    LocatorReader custodianReader;
+    LocatorReader preservationReader;
+    LocatorReader surveyReader;
+    LocatorReader communicationReader;
 
     public CaseFactories(Driver driver) throws IOException {
 
         super("./src/main/java/legalhold/selectors/cases/casepage.properties", driver);
         reader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties");
+        custodianReader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/custodian/custodian.properties");
+        preservationReader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/preservation/preservation.properties");
+        surveyReader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/survey/survey.properties");
+        communicationReader = new LocatorReader("src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties");
     }
 
     public void ManageCaseTabsNavigation() {
@@ -106,6 +115,109 @@ public class CaseFactories extends BaseModule {
         }
     }
 
+
+    public void verifyCaseAfterClosing(String caseName) throws InterruptedException, IOException {
+        goToEditCase(caseName);
+        var closeCaseWarningText = driver.FindElementById(reader.getobjectLocator("closeCaseWarningText")).getText();
+        Assert.assertEquals(closeCaseWarningText, "Case closed (view only)");
+        driver.scrollingToBottomofAPage();
+
+        var attributes = driver.FindElementById(reader.getobjectLocator("btnAddCorrespondent")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Add Correspondent' button is enabled");
+        }
+
+        attributes = driver.FindElementById(reader.getobjectLocator("manageCaseSubmitBtn")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Save Case' button is enabled");
+        }
+        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.FindElementById(reader.getobjectLocator("closeCaseWarningText")).getWebElement());
+
+
+        NavigateToCustodiansTab();
+        attributes = driver.FindElementById(custodianReader.getobjectLocator("CustodianTab")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Manage Custodian' button is enabled");
+        }
+
+        NavigateToPreservationTab();
+        attributes = driver.FindElementById(preservationReader.getobjectLocator("btnCreatePreservation")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Create Preservation Hold' button is enabled");
+        }
+
+        NavigateToSurveysTab();
+        attributes = driver.FindElementById(surveyReader.getobjectLocator("addNewSurveyBtn")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Add New Survey' button is enabled");
+        }
+
+        NavigateToCommunicationsTab();
+        attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateCustodianCommunication")).getWebElement().getAttribute("class");
+        if (!attributes.contains("disabled")) {
+            attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateNonCustodianCommunication")).getWebElement().getAttribute("class");
+            throw new RuntimeException("'Add Custodian Communication' button is enabled");
+        } else if (!attributes.contains("disabled")) {
+            attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateReleaseCommunication")).getWebElement().getAttribute("class");
+            throw new RuntimeException("'Add Non-Custodian Communication' button is enabled");
+        } else if (!attributes.contains("disabled")) {
+            throw new RuntimeException("'Add Release Communication' button is enabled");
+        }
+
+        getNavigation().navigateToMenu(LHMenus.Cases);
+        System.out.println("The case: '" + caseName + "' is closed properly");
+    }
+
+    public void verifyCaseAfterReopening(String caseName) throws InterruptedException, IOException {
+        goToEditCase(caseName);
+        driver.scrollingToBottomofAPage();
+
+        var attributes = driver.FindElementById(reader.getobjectLocator("btnAddCorrespondent")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Add Correspondent' button is disabled");
+        }
+
+        attributes = driver.FindElementById(reader.getobjectLocator("manageCaseSubmitBtn")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Save Case' button is disabled");
+        }
+        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.FindElementById(reader.getobjectLocator("headerCaseName")).getWebElement());
+
+
+        NavigateToCustodiansTab();
+        attributes = driver.FindElementById(custodianReader.getobjectLocator("CustodianTab")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Manage Custodian' button is disabled");
+        }
+
+        NavigateToPreservationTab();
+        attributes = driver.FindElementById(preservationReader.getobjectLocator("btnCreatePreservation")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Create Preservation Hold' button is disabled");
+        }
+
+        NavigateToSurveysTab();
+        attributes = driver.FindElementById(surveyReader.getobjectLocator("addNewSurveyBtn")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Add New Survey' button is disabled");
+        }
+
+        NavigateToCommunicationsTab();
+        attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateCustodianCommunication")).getWebElement().getAttribute("class");
+        if (attributes.contains("disabled")) {
+            attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateNonCustodianCommunication")).getWebElement().getAttribute("class");
+            throw new RuntimeException("'Add Custodian Communication' button is disabled");
+        } else if (attributes.contains("disabled")) {
+            attributes = driver.FindElementByXPath(communicationReader.getobjectLocator("btnCreateReleaseCommunication")).getWebElement().getAttribute("class");
+            throw new RuntimeException("'Add Non-Custodian Communication' button is disabled");
+        } else if (attributes.contains("disabled")) {
+            throw new RuntimeException("'Add Release Communication' button is disabled");
+        }
+
+        getNavigation().navigateToMenu(LHMenus.Cases);
+        System.out.println("The case: '" + caseName + "' is reopened properly");
+    }
+
     public void reopenCase(String caseName) throws InterruptedException {
         searchCaseByName(caseName);
         driver.FindElementByCssSelector(locatorReader.getobjectLocator("btnActionMenu")).waitAndClick(30);
@@ -150,19 +262,16 @@ public class CaseFactories extends BaseModule {
         if (!btnList.isEmpty()) {
             btnList.get(0).click();
             Thread.sleep(2000);
-//            var warningMessage = driver.getWebDriver().findElements(By.id(locatorReader.getobjectLocator("warningMessageCaseDeleteModal")));
-//            var modalTextThatAllowsCaseDelete = driver.getWebDriver().findElements(By.xpath(locatorReader.getobjectLocator("modalTextThatAllowsCaseDelete")));
-//            var modalTextThatPreventsCaseDelete = driver.getWebDriver().findElements(By.xpath(locatorReader.getobjectLocator("modalTextThatPreventsCaseDelete")));
-            if (driver.FindElementById(locatorReader.getobjectLocator("okBtnDeleteCaseModal")).isDisplayed()) {
-                var okBtnDeleteCaseModal = driver.FindElementById(locatorReader.getobjectLocator("okBtnDeleteCaseModal"));
+            if (driver.FindElementByXPath(locatorReader.getobjectLocator("okBtnDeleteCaseModal")).isDisplayed()) {
+                var okBtnDeleteCaseModal = driver.FindElementByXPath(locatorReader.getobjectLocator("okBtnDeleteCaseModal"));
                 okBtnDeleteCaseModal.waitAndClick(30);
                 Thread.sleep(3000);
                 var btnClearFilterDataTable = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementById(locatorReader.getobjectLocator("btnClearFilterDataTable")).getWebElement()));
                 searchNonExistentCaseByName(caseName);
                 btnClearFilterDataTable.click();
-            } else if(driver.FindElementsByXPath(locatorReader.getobjectLocator("cancelBtnCaseCloseModal")).getElementByIndex(3).isDisplayed()) {
+            } else if (driver.FindElementByXPath(locatorReader.getobjectLocator("closeBtnDeleteCaseModal")).isDisplayed()) {
                 var warningMessageCaseDeleteModal = driver.FindElementById(locatorReader.getobjectLocator("warningMessageCaseDeleteModal")).getText();
-                driver.FindElementsByXPath(locatorReader.getobjectLocator("cancelBtnCaseCloseModal")).getElementByIndex(3).waitAndClick(30);
+                driver.FindElementByXPath(locatorReader.getobjectLocator("closeBtnDeleteCaseModal")).waitAndClick(30);
                 throw new RuntimeException("System was NOT able to delete the case: " + caseName + ", the warning message on the modal is: " + warningMessageCaseDeleteModal);
             }
         } else {
@@ -182,7 +291,7 @@ public class CaseFactories extends BaseModule {
         var count = getDataTableCount();
         if (count == 0) {
             System.out.println("The case: '" + caseName + "' doesn't exists");
-        }else {
+        } else {
             throw new RuntimeException("The case: '" + caseName + "' still exists/not deleted");
         }
     }
@@ -233,15 +342,15 @@ public class CaseFactories extends BaseModule {
         }
     }
 
-    public void goToEditCase(String caseName) {
-        try {
-            searchCaseByName(caseName);
-            driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).waitAndClick(30);
-            Thread.sleep(3000);
-            driver.waitForPageToBeReady();
-        } catch (Exception E) {
-            System.out.println("Edit case icon not found. The exception is: ");
-            System.out.println(E.getMessage());
+    public void goToEditCase(String caseName) throws InterruptedException {
+        searchCaseByName(caseName);
+        driver.FindElementByXPath(locatorReader.getobjectLocator("btnEditCase")).waitAndClick(30);
+        Thread.sleep(3000);
+        driver.waitForPageToBeReady();
+        if (driver.FindElementById(reader.getobjectLocator("headerCaseName")).getText().contains(caseName)) {
+            System.out.println("Case Name on the 'Case Information' tab matches with the searched case on the data table");
+        } else {
+            throw new RuntimeException("Case Name on the 'Case Information' tab does NOT match with the searched case on the data table");
         }
     }
 

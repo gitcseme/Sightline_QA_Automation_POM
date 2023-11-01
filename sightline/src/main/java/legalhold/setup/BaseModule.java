@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import legalhold.ModuleStep.ModuleStep;
+import legalhold.legalholdpagefactory.Module_Navigation;
 import legalhold.utilities.parse_locators.LocatorReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -37,6 +38,7 @@ public class BaseModule {
     protected LoginPage login;
     protected Map<String, String> elementValueMapping = new HashMap<>();
     protected JavascriptExecutor jsExecutor;
+    protected Module_Navigation navigation;
 
     protected final String fileDownloadPath = "C:\\BatchPrintFiles\\downloads";
 
@@ -61,6 +63,10 @@ public class BaseModule {
         login = new LoginPage(driver);
         wait = new CustomWebDriverWait(driver.getWebDriver(),30);
 
+    }
+
+    public Module_Navigation getNavigation() throws IOException {
+        return new Module_Navigation(driver);
     }
 
 

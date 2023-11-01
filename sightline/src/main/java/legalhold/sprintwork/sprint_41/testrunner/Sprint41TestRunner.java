@@ -5,7 +5,9 @@ import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_source.DataSourceFactories;
+import legalhold.legalholdpagefactory.global_notice.GlobalNoticeFactories;
 import legalhold.setup.BaseRunner;
+import legalhold.smoke_suite.cases.create_case.CreateCase;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -15,21 +17,27 @@ public class Sprint41TestRunner extends BaseRunner {
     protected DataSourceFactories dataSourceFactories;
     protected DomainSetupTabNavigation domainSetupTabNavigation;
     protected CaseFactories caseFactories;
+    protected CreateCase createCase;
+    protected GlobalNoticeFactories globalNoticeFactories;
     public static String dataSourceName;
+    public static String createdCase;
+    public static String createdGlobalNotice;
 
     public Sprint41TestRunner() throws ParseException, IOException, InterruptedException {
         dataSourceFactories = new DataSourceFactories(driver);
         domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
         caseFactories = new CaseFactories(driver);
+        createCase = new CreateCase(driver);
+        globalNoticeFactories = new GlobalNoticeFactories(driver);
     }
 
-    @Test(priority = 1, enabled = false)
+    @Test(priority = 1, enabled = true)
     public void navigateToDataSourceTab() throws IOException {
         getNavigation().navigateToMenu(LHMenus.DomainSetup);
         domainSetupTabNavigation.navigateToDomainSetupTab(DomainSetupTabs.DataSources);
     }
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2, enabled = true)
     public void createDataSource() throws InterruptedException {
         dataSourceFactories.goToCreateDataSourcePage();
         dataSourceName = dataSourceFactories.enterDataSourceNameAndDescription();
@@ -49,7 +57,7 @@ public class Sprint41TestRunner extends BaseRunner {
         }
     }
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3, enabled = true)
     public void editDataSource() throws InterruptedException {
         dataSourceFactories.goToEditDataSource(dataSourceName);
         dataSourceName = dataSourceFactories.enterDataSourceNameAndDescription();
@@ -70,9 +78,35 @@ public class Sprint41TestRunner extends BaseRunner {
     }
 
     @Test(priority = 4, enabled = true)
-    public void closeCase() throws InterruptedException {
-//        caseFactories.closeCase("Salmon Nigiri ferret violet");
-//        caseFactories.reopenCase("Salmon Nigiri ferret violet");
-        caseFactories.deleteCase("Case Preservation Hold");
+    public void closeCase() throws InterruptedException, IOException {
+        getNavigation().navigateToMenu(LHMenus.Cases);
+        createdCase = createCase.createRandomCases();
+        caseFactories.closeCase(createdCase);
+        caseFactories.verifyCaseAfterClosing(createdCase);
+        caseFactories.reopenCase(createdCase);
+        caseFactories.verifyCaseAfterReopening(createdCase);
+        caseFactories.deleteCase(createdCase);
+    }
+
+    @Test(priority = 5, enabled = true)
+    public void createGlobalNotice() throws IOException, InterruptedException {
+        getNavigation().navigateToMenu(LHMenus.GlobalNotice);
+        globalNoticeFactories.goToCreateGlobalNoticePage();
+        createdGlobalNotice = globalNoticeFactories.enterGlobalNoticeNameAndDescription();
+        globalNoticeFactories.addMailToRecipients("auto-1");
+        globalNoticeFactories.setGlobalNoticeAsWeekly();
+        globalNoticeFactories.enterGlobalNoticeEmailSubject("Automated Global Notice > Notice for [FIRST NAME] [LAST NAME] ([EMAIL ADDRESS])");
+        globalNoticeFactories.typeEmailBody("[CUSTODIAN PORTAL LINK]\n" +
+                "Case list by custodian: [CASE LIST BY CUSTODIAN]");
+        globalNoticeFactories.saveGlobalNotice();
+    }
+
+    @Test(priority = 6, enabled = true)
+    public void editAndStartGlobalNotice() throws IOException, InterruptedException {
+        globalNoticeFactories.goToEditGlobalNoticePage(createdGlobalNotice);
+        globalNoticeFactories.addMailToRecipients("auto-21");
+        globalNoticeFactories.addSummaryCommunicationRecipients("corr-01");
+        globalNoticeFactories.setGlobalNoticeAsOneTime();
+        globalNoticeFactories.startGlobalNotice();
     }
 }

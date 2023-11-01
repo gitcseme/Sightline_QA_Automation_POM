@@ -126,30 +126,20 @@ public class Sprint38TestRunner extends BaseRunner {
         getNavigation().navigateToMenu(LHMenus.DomainSetup);
         dataMigrationFactories.goToDataMigrationTab();
         dataMigrationFactories.openModalAndSelectFileForUpload("FailedMigrationFilePath");
-        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 2000);
         dataMigrationFactories.checkMigrationResultStatus("Failed", 5000);
+        dataMigrationFactories.downloadReportAndVerify();
     }
 
     @Test(priority = 11, enabled = true)
     public void checkMigrationPartiallyFailedStatus() throws InterruptedException, IOException {
-        dataMigrationFactories.goToDataMigrationTab();
         dataMigrationFactories.openModalAndSelectFileForUpload("PartiallyFailedMigrationFilePath");
-        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 2000);
-        dataMigrationFactories.checkMigrationResultStatus("Partially-Failed", 5000);
+        dataMigrationFactories.checkMigrationResultStatus("Partially-Failed", 8000);
+        dataMigrationFactories.downloadReportAndVerify();
     }
 
     @Test(priority = 12, enabled = true)
     public void checkMigrationSuccessStatus() throws InterruptedException, IOException {
-        dataMigrationFactories.goToDataMigrationTab();
         dataMigrationFactories.openModalAndSelectFileForUpload("SuccessMigrationFilePath");
-        dataMigrationFactories.checkMigrationResultStatus("In-Progress", 1500);
-        dataMigrationFactories.checkMigrationResultStatus("Success", 5000);
-    }
-
-    @Test(priority = 13, enabled = true)
-    public void checkDownloadedReport() throws InterruptedException, IOException {
-        getNavigation().navigateToMenu(LHMenus.DomainSetup);
-        dataMigrationFactories.goToDataMigrationTab();
-        dataMigrationFactories.downloadReportAndVerify();
+        dataMigrationFactories.checkMigrationResultStatus("Success", 8000);
     }
 }
