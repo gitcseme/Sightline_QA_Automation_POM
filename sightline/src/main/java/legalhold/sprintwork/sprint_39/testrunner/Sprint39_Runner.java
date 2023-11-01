@@ -5,12 +5,15 @@ import legalhold.legalholdpagefactory.cases.CaseCommunicationFactories;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.CustodianFactories;
 import legalhold.legalholdpagefactory.cases.PreservationFactories;
+import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
+import legalhold.legalholdpagefactory.domain_setup.data_migration.DataMigrationFactories;
 import legalhold.setup.BaseRunner;
 import legalhold.sprintwork.sprint_39.testcases.Sprint39_ReleaseWithCom;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 import com.github.javafaker.Faker;
 
@@ -134,11 +137,18 @@ public class Sprint39_Runner extends BaseRunner {
     public void checkIfCustodiansAddedInReleaseCommunication() throws InterruptedException {
 
         custodianFactories.clearFilter();
-        List <String> allSilents = custodianFactories.getAllSilentCustodians();
+        List<String> allSilents = custodianFactories.getAllSilentCustodians();
         custodianFactories.clearFilter();
         List <String> allReleased = custodianFactories.verifyIfCustodianIsReleased("released");
-        custodianFactories.filterReleasedAndNonSilentCustodians(allSilents,allReleased);
+        List <String> releasedAndNonSilentList = custodianFactories.filterReleasedAndNonSilentCustodians(allSilents,allReleased);
+
+        caseFactories.NavigateToCommunicationsTab();
+        communicationFactories.goToEditReleaseCommunicationPage(seriesName);
+        communicationFactories.navigateToManageRecipientPage();
+
+        custodianFactories.checkIfCustodiansAreAddedInReleaseCommunication(releasedAndNonSilentList);
     }
+
 
 
 }

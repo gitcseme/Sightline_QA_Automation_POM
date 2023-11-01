@@ -23,6 +23,7 @@ public class CustodianFactories extends BaseModule {
     LocatorReader reader;
     LocatorReader custodianReader;
     CaseFactories caseFactories;
+    CaseCommunicationFactories communicationFactories;
 
     public CustodianFactories(Driver driver) throws IOException {
 
@@ -31,6 +32,7 @@ public class CustodianFactories extends BaseModule {
         custodianReader = new LocatorReader("./src/main/java/legalhold/selectors/cases/manage_case/custodian/custodian.properties");
 
         caseFactories = new CaseFactories(driver);
+        communicationFactories = new CaseCommunicationFactories(driver);
     }
 
     public void navigateToManageCustodiansPage(){
@@ -57,10 +59,10 @@ public class CustodianFactories extends BaseModule {
     }
     public void searchManageCustodianSelectedeCustodianById(String id) {
         try {
-            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
-            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
-            availableEmployeeIDFilterBox.Clear();
-            availableEmployeeIDFilterBox.SendKeys(id);
+            Element selectedEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(selectedEmployeeIDFilterBox.getWebElement()));
+            selectedEmployeeIDFilterBox.Clear();
+            selectedEmployeeIDFilterBox.SendKeys(id);
 
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
@@ -248,6 +250,8 @@ public class CustodianFactories extends BaseModule {
             if(driver.FindElementByClassName("toast-error").isDisplayed())
             {
                 System.out.println("All selected custodians are already released");
+
+                selectAllCheckbox.waitAndClick(30);
                 return;
             }
 
@@ -321,6 +325,9 @@ public class CustodianFactories extends BaseModule {
         String successToastMessageRelease = successToast.getText();
         System.out.println("Toast"+successToast.getText());
         Assert.assertTrue(successToastMessageRelease.contains("Released successfully"));
+
+        Element selectAllCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectAllCheckBox"));
+        selectAllCheckbox.waitAndClick(30);
 
 
     }
@@ -577,7 +584,7 @@ public class CustodianFactories extends BaseModule {
         return silentCustodiansList;
     }
 
-    public void filterReleasedAndNonSilentCustodians(List <String> allSilents, List <String> allReleased) {
+    public List <String> filterReleasedAndNonSilentCustodians(List <String> allSilents, List <String> allReleased) {
 
         List<String> filteredList = new ArrayList<>();
 
@@ -590,7 +597,53 @@ public class CustodianFactories extends BaseModule {
 
         // Print the filtered list
         System.out.println("Filtered List: " + filteredList);
+        return filteredList;
     }
+
+    public void checkIfCustodiansAreAddedInReleaseCommunication(List <String> releasedList) throws InterruptedException {
+
+        driver.waitForPageToBeReady();
+        int matchCount=0;
+        Thread.sleep(3000);
+        int empId = communicationFactories.getColumnIndexFromMailToRecipientsDataTable("Employee ID");
+        List<String> mailToRecipientsList = new ArrayList<>();
+
+        int count = communicationFactories.getMailToDataTableCount();
+        for (int i = 1; i <= count; i++) {
+
+
+            String employeeId = driver.FindElementByXPath("//table[@id='id-CommunicationRecipientMailTo']/tbody/tr[" + i + "]/td[" + empId + "]").getText();
+            mailToRecipientsList.add(employeeId);
+
+        }
+        System.out.println("MailToList"+ mailToRecipientsList);
+
+        for(int i=0;i<releasedList.size();i++)
+        {
+            for(int j=0;j<mailToRecipientsList.size();j++)
+            {
+                if(releasedList.get(i).equalsIgnoreCase(mailToRecipientsList.get(j)))
+                {
+                    matchCount++;
+                }
+
+
+            }
+
+
+        }
+
+        if(matchCount == releasedList.size())
+        {
+            System.out.println("All custodians added in mail To List Successfully");
+        }else{
+            throw new RuntimeException("All expected custodians are not added in Mail To List");
+        }
+
+
+    }
+
+
 
     }
 
