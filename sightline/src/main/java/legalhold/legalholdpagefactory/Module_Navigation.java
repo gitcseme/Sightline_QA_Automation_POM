@@ -41,6 +41,19 @@ public class Module_Navigation extends BaseModule {
         driver.waitForPageToBeReady();
     }
 
+    public void changeTenant(String tenantName) throws InterruptedException {
+        var tenantDropdown = driver.FindElementById(locatorReader.getobjectLocator("tenantDropdown"));
+        tenantDropdown.selectFromDropdown().selectByVisibleText(tenantName);
+        Thread.sleep(3000);
+        driver.waitForPageToBeReady();
+        var currentTenant = tenantDropdown.getText();
+        if (currentTenant.equalsIgnoreCase(tenantName)) {
+            System.out.println("Tenant switch successful. Current tenant is: " + currentTenant);
+        } else {
+            throw new RuntimeException("System couldn't switch to '" + tenantName + "', Current tenant is: " + currentTenant);
+        }
+    }
+
 }
 
 

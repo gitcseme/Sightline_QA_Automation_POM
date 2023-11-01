@@ -6,10 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="459095e0-2b87-450a-81e1-1685b1c80e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/Module_Navigation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseCommunicationFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CustodianFactories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/communication/communication_page.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_39/testrunner/Sprint39_Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_39/testrunner/Sprint39_Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/global_notice/GlobalNoticeFactories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/global_notice/GlobalNoticeFactories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/casepage.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/cases/manage_case/case_information/case_information.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/global_notice/global_notice.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/global_notice/global_notice.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/navigation.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/selectors/sl_slh_integration/navigation.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/setup/BaseModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_38/testrunner/Sprint38TestRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_41/testrunner/Sprint41TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/legalhold/sprintwork/sprint_41/testrunner/Sprint41TestRunner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,23 +286,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
-          <line>728</line>
+          <line>837</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
-          <line>733</line>
+          <line>842</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/legalhold/legalholdpagefactory/cases/CaseFactories.java</url>
-          <line>162</line>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
