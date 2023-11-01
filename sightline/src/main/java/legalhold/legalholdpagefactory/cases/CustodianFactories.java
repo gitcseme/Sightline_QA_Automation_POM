@@ -23,6 +23,7 @@ public class CustodianFactories extends BaseModule {
     LocatorReader reader;
     LocatorReader custodianReader;
     CaseFactories caseFactories;
+    CaseCommunicationFactories communicationFactories;
 
     public CustodianFactories(Driver driver) throws IOException {
 
@@ -31,6 +32,7 @@ public class CustodianFactories extends BaseModule {
         custodianReader = new LocatorReader("./src/main/java/legalhold/selectors/cases/manage_case/custodian/custodian.properties");
 
         caseFactories = new CaseFactories(driver);
+        communicationFactories = new CaseCommunicationFactories(driver);
     }
 
     public void navigateToManageCustodiansPage(){
@@ -57,10 +59,10 @@ public class CustodianFactories extends BaseModule {
     }
     public void searchManageCustodianSelectedeCustodianById(String id) {
         try {
-            Element availableEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
-            wait.until(ExpectedConditions.elementToBeClickable(availableEmployeeIDFilterBox.getWebElement()));
-            availableEmployeeIDFilterBox.Clear();
-            availableEmployeeIDFilterBox.SendKeys(id);
+            Element selectedEmployeeIDFilterBox = driver.FindElementByCssSelector("table[id='id-manageCustodianDataTable'] thead tr th input[placeholder='Search Employee ID']");
+            wait.until(ExpectedConditions.elementToBeClickable(selectedEmployeeIDFilterBox.getWebElement()));
+            selectedEmployeeIDFilterBox.Clear();
+            selectedEmployeeIDFilterBox.SendKeys(id);
 
             String expected_text = "Showing 1 to 1 of 1 entries";
             wait.until(ExpectedConditions.textToBe(By.id(locatorReader.getobjectLocator("rowCount")), expected_text));
@@ -248,6 +250,8 @@ public class CustodianFactories extends BaseModule {
             if(driver.FindElementByClassName("toast-error").isDisplayed())
             {
                 System.out.println("All selected custodians are already released");
+
+                selectAllCheckbox.waitAndClick(30);
                 return;
             }
 
@@ -322,6 +326,9 @@ public class CustodianFactories extends BaseModule {
         System.out.println("Toast"+successToast.getText());
         Assert.assertTrue(successToastMessageRelease.contains("Released successfully"));
 
+        Element selectAllCheckbox = driver.FindElementByXPath(custodianReader.getobjectLocator("selectAllCheckBox"));
+        selectAllCheckbox.waitAndClick(30);
+
 
     }
 
@@ -394,7 +401,7 @@ public class CustodianFactories extends BaseModule {
     }
 
 
-        public void verifyIfCustodianIsReleased(String empId) throws InterruptedException {
+        public List <String> verifyIfCustodianIsReleased(String empId) throws InterruptedException {
 
             searchByCustodianId(empId);
             int count = getDataTableCount();
@@ -402,12 +409,20 @@ public class CustodianFactories extends BaseModule {
             int active = 0;
             if (count > 1) {
                 int statusIndex = getColumnIndexFromDataTable("Status");
+                int employeeId = getColumnIndexFromDataTable("Employee Id");
                 searchByCustodianId(empId);
                 boolean flag = false;
                 int c = 0;
                 List<String> statusList = new ArrayList<>();
+                List<String> releasedEmpIdList = new ArrayList<>();
+
                 for (int i = 1; i <= count; i++) {
-                    statusList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+                    String status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText();
+                    statusList.add(status);
+                    if(status.equalsIgnoreCase("Released"))
+                    {
+                        releasedEmpIdList.add( driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + employeeId + "]").getText());
+                    }
                 }
                 for (String value : statusList) {
                     if (value.equalsIgnoreCase("Released")) {
@@ -425,10 +440,17 @@ public class CustodianFactories extends BaseModule {
 //                Thread.sleep(3000);
                     driver.waitForPageToBeReady();
                     for (int i = 1; i <= count; i++) {
-                        statusList2.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText());
+
+                        String status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + statusIndex + "]").getText();
+                        statusList2.add(status);
+                        if(status.equalsIgnoreCase("Released"))
+                        {
+                            releasedEmpIdList.add( driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + employeeId + "]").getText());
+                        }
                     }
                     for (String s : statusList2) {
                         if (s.equalsIgnoreCase("Released")) {
+
                             c++;
                             if (c == count) {
                                 flag = true;
@@ -441,12 +463,17 @@ public class CustodianFactories extends BaseModule {
                 }
                 if (flag) {
                     System.out.println("All selected Custodians  are Released");
+                    return  releasedEmpIdList;
                 } else {
                     throw new RuntimeException("All selected Custodians  are NOT Released");
+
                 }
 
             } else {
                 int statusIndex = getColumnIndexFromDataTable("Status");
+                int employeeId = getColumnIndexFromDataTable("Employee Id");
+                List<String> releasedEmpIdList = new ArrayList<>();
+
                 searchByCustodianId(empId);
                 var status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
                 while (status.equalsIgnoreCase("Active")) {
@@ -460,7 +487,8 @@ public class CustodianFactories extends BaseModule {
                     status = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + statusIndex + "]").getText();
                     iterator++;
                     if (status.equalsIgnoreCase("Released")) {
-                        break;
+                        releasedEmpIdList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + employeeId + "]").getText());
+                        return releasedEmpIdList;
                     }
                     if (iterator == 15) break;
                 }
@@ -469,6 +497,8 @@ public class CustodianFactories extends BaseModule {
                     throw new RuntimeException("The selected custodian(s) are in NOT Released Status");
                 } else {
                     System.out.println("The selected custodian is in Released Status");
+                    releasedEmpIdList.add(driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[1]/td[" + employeeId + "]").getText());
+                    return releasedEmpIdList;
                 }
             }
         }
@@ -520,6 +550,100 @@ public class CustodianFactories extends BaseModule {
                 }
             }
     }
+
+    public void clearFilter(){
+        Element clearFilter = driver.FindElementByXPath("//img[@title='Clear Active Filters']");
+        wait.until(ExpectedConditions.elementToBeClickable(clearFilter.getWebElement()));
+        clearFilter.waitAndClick(10);
+    }
+
+    public List <String> getAllSilentCustodians() throws InterruptedException {
+
+
+        driver.waitForPageToBeReady();
+        Thread.sleep(3000);
+        int typeIndex = getColumnIndexFromDataTable("Custodian Type");
+        int empId = getColumnIndexFromDataTable("Employee Id");
+        List<String> silentCustodiansList = new ArrayList<>();
+
+        WebElement custodianTypeDropdown = driver.getWebDriver().findElement(By.xpath("//select[@displayname='Custodian Type']"));
+        wait.until(ExpectedConditions.elementToBeClickable(custodianTypeDropdown));
+        Select selectCustodianType = new Select(custodianTypeDropdown);
+        selectCustodianType.selectByVisibleText("Silent");
+        Thread.sleep(2000);
+        int count = getDataTableCount();
+        for (int i = 1; i <= count; i++) {
+
+
+                String employeeId = driver.FindElementByXPath("//table[@id='id-Custodian']/tbody/tr[" + i + "]/td[" + empId + "]").getText();
+                silentCustodiansList.add(employeeId);
+
+        }
+        System.out.println("ListType"+ silentCustodiansList);
+
+        return silentCustodiansList;
+    }
+
+    public List <String> filterReleasedAndNonSilentCustodians(List <String> allSilents, List <String> allReleased) {
+
+        List<String> filteredList = new ArrayList<>();
+
+
+        for (String value : allReleased) {
+            if (!allSilents.contains(value)) {
+                filteredList.add(value);
+            }
+        }
+
+        // Print the filtered list
+        System.out.println("Filtered List: " + filteredList);
+        return filteredList;
+    }
+
+    public void checkIfCustodiansAreAddedInReleaseCommunication(List <String> releasedList) throws InterruptedException {
+
+        driver.waitForPageToBeReady();
+        int matchCount=0;
+        Thread.sleep(3000);
+        int empId = communicationFactories.getColumnIndexFromMailToRecipientsDataTable("Employee ID");
+        List<String> mailToRecipientsList = new ArrayList<>();
+
+        int count = communicationFactories.getMailToDataTableCount();
+        for (int i = 1; i <= count; i++) {
+
+
+            String employeeId = driver.FindElementByXPath("//table[@id='id-CommunicationRecipientMailTo']/tbody/tr[" + i + "]/td[" + empId + "]").getText();
+            mailToRecipientsList.add(employeeId);
+
+        }
+        System.out.println("MailToList"+ mailToRecipientsList);
+
+        for(int i=0;i<releasedList.size();i++)
+        {
+            for(int j=0;j<mailToRecipientsList.size();j++)
+            {
+                if(releasedList.get(i).equalsIgnoreCase(mailToRecipientsList.get(j)))
+                {
+                    matchCount++;
+                }
+
+
+            }
+
+
+        }
+
+        if(matchCount == releasedList.size())
+        {
+            System.out.println("All custodians added in mail To List Successfully");
+        }else{
+            throw new RuntimeException("All expected custodians are not added in Mail To List");
+        }
+
+
+    }
+
+
 
     }
 

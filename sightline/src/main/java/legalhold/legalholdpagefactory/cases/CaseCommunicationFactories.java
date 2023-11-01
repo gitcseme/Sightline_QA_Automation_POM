@@ -15,6 +15,8 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CaseCommunicationFactories extends BaseModule {
     LocatorReader reader;
@@ -472,13 +474,14 @@ public class CaseCommunicationFactories extends BaseModule {
 
     }
 
-    public void addMailToRecipients(String recipientToAdd) throws IOException, InterruptedException {
-
-
+    public void navigateToManageRecipientPage(){
         Element addMailToRecipientButton = driver.FindElementByClassName(locatorReader.getobjectLocator("addMailtoRecipientButton"));
         wait.until(ExpectedConditions.elementToBeClickable(addMailToRecipientButton.getWebElement()));
         addMailToRecipientButton.Click();
+    }
+    public void addMailToRecipients(String recipientToAdd) throws IOException, InterruptedException {
 
+        navigateToManageRecipientPage();
         Element availableTableEmployeeId = driver.FindElementByXPath(locatorReader.getobjectLocator("availableTableEmployeeId"));
         availableTableEmployeeId.Clear();
         availableTableEmployeeId.Click();
@@ -791,6 +794,49 @@ public class CaseCommunicationFactories extends BaseModule {
             columnIndex = headerList.size();
         }
         return columnIndex;
+    }
+
+
+    public int getColumnIndexFromMailToRecipientsDataTable(String headerName) {
+        var table = driver.FindElementById(locatorReader.getobjectLocator("mailToDataTable"));
+        wait.until(ExpectedConditions.elementToBeClickable(table.getWebElement()));
+        int columnIndex = 0;
+
+        var headerList = driver.FindElementsByXPath(locatorReader.getobjectLocator("tableHeaderList"));
+        for (int i = 0; i < headerList.size(); i++) {
+            if (headerList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                columnIndex = i + 1;
+                break;
+            }
+        }
+
+        if (columnIndex == 0) {
+            driver.FindElementByXPath(locatorReader.getobjectLocator("columnSetupIcon")).waitAndClick(30);
+            var availableColumnList = driver.FindElementsByXPath(locatorReader.getobjectLocator("availableColumnTable"));
+            for (int i = 0; i < availableColumnList.size(); i++) {
+
+                if (availableColumnList.getElementByIndex(i).getText().equalsIgnoreCase(headerName)) {
+                    driver.FindElementByXPath("//tbody[@id='id-tablebody-available-Custodian']/tr[" + (i + 1) + "]/td[1]/input").waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("addColumnButton")).waitAndClick(30);
+                    driver.FindElementByXPath(locatorReader.getobjectLocator("columnSetupSaveBtn")).waitAndClick(30);
+                    break;
+                }
+            }
+            columnIndex = headerList.size();
+        }
+        return columnIndex;
+    }
+
+    public int getMailToDataTableCount() {
+        String paginationTextCustodianDataTable = driver.FindElementById(locatorReader.getobjectLocator("mailToTablePaginationInfo")).getText();
+        Pattern pattern = Pattern.compile("of (\\d+)");
+        Matcher matcher = pattern.matcher(paginationTextCustodianDataTable);
+
+        int count = 0;
+        while (matcher.find()) {
+            count = Integer.parseInt(matcher.group(1));
+        }
+        return count;
     }
 
 }
