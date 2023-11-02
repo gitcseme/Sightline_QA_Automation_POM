@@ -154,7 +154,15 @@ public class GlobalNoticeFactories extends BaseModule {
         enterGlobalNoticeEmailSubject.sendKeys(globalNoticeEmailSubject);
     }
 
+    public void goToManageAttachmentPage() throws InterruptedException {
+        driver.scrollingToBottomofAPage();
+        var btnManageAttachment = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementById(locatorReader.getobjectLocator("btnManageAttachment")).getWebElement()));
+        btnManageAttachment.click();
+        Thread.sleep(2000);
+    }
+
     public void typeEmailBody(String emailText) {
+        driver.scrollingToBottomofAPage();
         WebElement tinyMCE = driver.getWebDriver().findElement(By.id(locatorReader.getobjectLocator("tinyMCE")));
         wait.until(ExpectedConditions.visibilityOf(tinyMCE));
         if (tinyMCE.isDisplayed()) {
@@ -167,9 +175,9 @@ public class GlobalNoticeFactories extends BaseModule {
     }
 
     public void saveGlobalNotice() throws InterruptedException {
+        driver.scrollingToBottomofAPage();
         Element btnSaveGlobalNotice = driver.FindElementById(locatorReader.getobjectLocator("btnSaveGlobalNotice"));
         wait.until(ExpectedConditions.elementToBeClickable(btnSaveGlobalNotice.getWebElement()));
-        driver.scrollingToBottomofAPage();
         btnSaveGlobalNotice.waitAndClick(30);
         driver.FindElementById(locatorReader.getobjectLocator("okBtnSaveModal")).waitAndClick(30);
         Thread.sleep(5000);
@@ -177,9 +185,9 @@ public class GlobalNoticeFactories extends BaseModule {
     }
 
     public void startGlobalNotice() throws InterruptedException {
+        driver.scrollingToBottomofAPage();
         Element btnStartGlobalNotice = driver.FindElementById(locatorReader.getobjectLocator("btnStartGlobalNotice"));
         wait.until(ExpectedConditions.elementToBeClickable(btnStartGlobalNotice.getWebElement()));
-        driver.scrollingToBottomofAPage();
         btnStartGlobalNotice.waitAndClick(30);
         driver.FindElementById(locatorReader.getobjectLocator("okBtnStartModal")).waitAndClick(30);
         Thread.sleep(5000);
@@ -193,7 +201,6 @@ public class GlobalNoticeFactories extends BaseModule {
 
         driver.FindElementById(locatorReader.getobjectLocator("mailToSubTab")).waitAndClick(30);
         Element availableTableEmployeeId = driver.FindElementByXPath(locatorReader.getobjectLocator("availableTableEmployeeId"));
-        availableTableEmployeeId.Clear();
         availableTableEmployeeId.SendKeys(empId);
 
 

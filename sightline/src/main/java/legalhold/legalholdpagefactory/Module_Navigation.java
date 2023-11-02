@@ -46,7 +46,8 @@ public class Module_Navigation extends BaseModule {
         tenantDropdown.selectFromDropdown().selectByVisibleText(tenantName);
         Thread.sleep(3000);
         driver.waitForPageToBeReady();
-        var currentTenant = tenantDropdown.getText();
+        tenantDropdown = driver.FindElementById(locatorReader.getobjectLocator("tenantDropdown"));
+        var currentTenant = tenantDropdown.selectFromDropdown().getFirstSelectedOption().getText();
         if (currentTenant.equalsIgnoreCase(tenantName)) {
             System.out.println("Tenant switch successful. Current tenant is: " + currentTenant);
         } else {

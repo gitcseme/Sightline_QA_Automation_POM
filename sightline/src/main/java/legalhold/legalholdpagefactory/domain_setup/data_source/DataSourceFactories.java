@@ -73,7 +73,7 @@ public class DataSourceFactories extends BaseModule {
         var statusInProgress = wait.until(ExpectedConditions.elementToBeClickable(driver.FindElementByXPath(locatorReader.getobjectLocator("statusInProgress")).getWebElement()));
         Thread.sleep(1500);
         statusInProgress.isDisplayed();
-        Thread.sleep(7000);
+        Thread.sleep(15000);
 
         var successTestConnectionStatus = driver.FindElementByXPath(locatorReader.getobjectLocator("successTestConnectionMessage"));
         var successTestConnectionMessage = successTestConnectionStatus.getText();

@@ -56,8 +56,9 @@ public class BaseRunner{
     before merging */
 
 //    @BeforeClass(alwaysRun = true)
-    public void login() throws IOException {
-        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona?2023", "LH Automation 1");
+    public void login() throws IOException, InterruptedException {
+        loginToSightline.loginAsSystemAdmin("syslegalhold@gmail.com", "amikhelbona?2023", "Dunder Mifflin");
+        getNavigation().changeTenant("LH Automation 1");
     }
 
 

@@ -2,6 +2,7 @@ package legalhold.sprintwork.sprint_41.testrunner;
 
 import legalhold.legalholdpagefactory.LHMenus;
 import legalhold.legalholdpagefactory.cases.CaseFactories;
+import legalhold.legalholdpagefactory.cases.ManageAttachmentFactories;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
 import legalhold.legalholdpagefactory.domain_setup.data_source.DataSourceFactories;
@@ -19,6 +20,7 @@ public class Sprint41TestRunner extends BaseRunner {
     protected CaseFactories caseFactories;
     protected CreateCase createCase;
     protected GlobalNoticeFactories globalNoticeFactories;
+    protected ManageAttachmentFactories manageAttachmentFactories;
     public static String dataSourceName;
     public static String createdCase;
     public static String createdGlobalNotice;
@@ -29,6 +31,7 @@ public class Sprint41TestRunner extends BaseRunner {
         caseFactories = new CaseFactories(driver);
         createCase = new CreateCase(driver);
         globalNoticeFactories = new GlobalNoticeFactories(driver);
+        manageAttachmentFactories = new ManageAttachmentFactories(driver);
     }
 
     @Test(priority = 1, enabled = true)
@@ -81,6 +84,7 @@ public class Sprint41TestRunner extends BaseRunner {
     public void closeCase() throws InterruptedException, IOException {
         getNavigation().navigateToMenu(LHMenus.Cases);
         createdCase = createCase.createRandomCases();
+        getNavigation().navigateToMenu(LHMenus.Cases);
         caseFactories.closeCase(createdCase);
         caseFactories.verifyCaseAfterClosing(createdCase);
         caseFactories.reopenCase(createdCase);
@@ -96,6 +100,10 @@ public class Sprint41TestRunner extends BaseRunner {
         globalNoticeFactories.addMailToRecipients("auto-1");
         globalNoticeFactories.setGlobalNoticeAsWeekly();
         globalNoticeFactories.enterGlobalNoticeEmailSubject("Automated Global Notice > Notice for [FIRST NAME] [LAST NAME] ([EMAIL ADDRESS])");
+        globalNoticeFactories.goToManageAttachmentPage();
+        manageAttachmentFactories.uploadValidAttachmentWithoutCheckbox("validAttachment");
+        manageAttachmentFactories.deleteAttachmentByUploadKey("validAttachment");
+        manageAttachmentFactories.addAttachmentToCommunicationByName("attachment_for_communication.png");
         globalNoticeFactories.typeEmailBody("[CUSTODIAN PORTAL LINK]\n" +
                 "Case list by custodian: [CASE LIST BY CUSTODIAN]");
         globalNoticeFactories.saveGlobalNotice();
