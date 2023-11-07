@@ -134,10 +134,12 @@ public class Sprint41TestRunner extends BaseRunner {
 
     @Test(priority = 8, enabled = true)
     public void verifyEmailSettingsSaved() throws InterruptedException {
-        emailSetupFactories.putNameAndEmail();
+        var randomName = faker.company().name();
+        var randomEmail = faker.name().lastName() + "@consilio.com";
+        emailSetupFactories.putNameAndEmail(randomName, randomEmail);
         Thread.sleep(500);
         emailSetupFactories.selectSmtpServer("Consilio");
-        emailSetupFactories.clickSaveAndVerify();
+        emailSetupFactories.saveEmailSettingsAndVerify();
     }
 
     @Test(priority = 9, enabled = true)
@@ -147,7 +149,7 @@ public class Sprint41TestRunner extends BaseRunner {
 
         var invalidSmtpSettings = getSmtpSettings(false);
         emailSetupFactories.fillClientServerFields(invalidSmtpSettings);
-        emailSetupFactories.clickSaveAndVerify();
+        emailSetupFactories.saveEmailSettingsAndVerify();
     }
 
     @Test(priority = 10, enabled = true)

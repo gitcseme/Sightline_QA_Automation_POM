@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class EmailSetupFactories extends BaseModule {
@@ -34,18 +33,15 @@ public class EmailSetupFactories extends BaseModule {
         Assert.assertEquals("Email", elementText);
     }
 
-    public void putNameAndEmail() {
-        var randomName = faker.company().name();
-        var randomEmail = faker.internet().emailAddress();
-
+    public void putNameAndEmail(String name, String email) {
         var fromNameInput = driver.FindElementById(locatorReader.getobjectLocator("fromName"));
-        fromNameInput.SendKeys(randomName);
+        fromNameInput.SendKeys(name);
 
         var fromEmailInput = driver.FindElementById(locatorReader.getobjectLocator("fromEmail"));
-        fromEmailInput.SendKeys(randomEmail);
+        fromEmailInput.SendKeys(email);
     }
 
-    public void clickSaveAndVerify() throws InterruptedException {
+    public void saveEmailSettingsAndVerify() throws InterruptedException {
         var saveButton = driver.FindElementById(locatorReader.getobjectLocator("saveButton"));
         wait.until(ExpectedConditions.elementToBeClickable(saveButton.getWebElement()));
         saveButton.Click();
