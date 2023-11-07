@@ -5,14 +5,19 @@ import legalhold.legalholdpagefactory.cases.CaseFactories;
 import legalhold.legalholdpagefactory.cases.ManageAttachmentFactories;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabNavigation;
 import legalhold.legalholdpagefactory.domain_setup.DomainSetupTabs;
+import legalhold.legalholdpagefactory.domain_setup.ModalStatus;
 import legalhold.legalholdpagefactory.domain_setup.data_source.DataSourceFactories;
+import legalhold.legalholdpagefactory.domain_setup.email_setup.EmailSetupFactories;
 import legalhold.legalholdpagefactory.global_notice.GlobalNoticeFactories;
 import legalhold.setup.BaseRunner;
 import legalhold.smoke_suite.cases.create_case.CreateCase;
+import org.apache.commons.lang3.tuple.Pair;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Sprint41TestRunner extends BaseRunner {
     protected DataSourceFactories dataSourceFactories;
@@ -25,6 +30,8 @@ public class Sprint41TestRunner extends BaseRunner {
     public static String createdCase;
     public static String createdGlobalNotice;
 
+    private EmailSetupFactories emailSetupFactories;
+
     public Sprint41TestRunner() throws ParseException, IOException, InterruptedException {
         dataSourceFactories = new DataSourceFactories(driver);
         domainSetupTabNavigation = new DomainSetupTabNavigation(driver);
@@ -32,6 +39,7 @@ public class Sprint41TestRunner extends BaseRunner {
         createCase = new CreateCase(driver);
         globalNoticeFactories = new GlobalNoticeFactories(driver);
         manageAttachmentFactories = new ManageAttachmentFactories(driver);
+        emailSetupFactories = new EmailSetupFactories(driver);
     }
 
     @Test(priority = 1, enabled = true)
@@ -116,5 +124,60 @@ public class Sprint41TestRunner extends BaseRunner {
         globalNoticeFactories.addSummaryCommunicationRecipients("corr-01");
         globalNoticeFactories.setGlobalNoticeAsOneTime();
         globalNoticeFactories.startGlobalNotice();
+    }
+
+    @Test(priority = 7, enabled = true)
+    public void goToEmailSetupPage() throws IOException {
+        getNavigation().navigateToMenu(LHMenus.DomainSetup);
+        emailSetupFactories.goToEmailSetupTab();
+    }
+
+    @Test(priority = 8, enabled = true)
+    public void verifyEmailSettingsSaved() throws InterruptedException {
+        emailSetupFactories.putNameAndEmail();
+        Thread.sleep(500);
+        emailSetupFactories.selectSmtpServer("Consilio");
+        emailSetupFactories.clickSaveAndVerify();
+    }
+
+    @Test(priority = 9, enabled = true)
+    public void verifyClientServerSettingsSaved() throws InterruptedException {
+        Thread.sleep(500);
+        emailSetupFactories.selectSmtpServer("Client Server");
+
+        var invalidSmtpSettings = getSmtpSettings(false);
+        emailSetupFactories.fillClientServerFields(invalidSmtpSettings);
+        emailSetupFactories.clickSaveAndVerify();
+    }
+
+    @Test(priority = 10, enabled = true)
+    public void checkTestConnectionFailed() throws InterruptedException {
+        emailSetupFactories.checkTestConnectionStatus(ModalStatus.Failed);
+    }
+
+    @Test(priority = 11, enabled = true)
+    public void checkTestConnectionSuccessStatus() throws InterruptedException {
+        Thread.sleep(1000);
+
+        var validSmtpSettings = getSmtpSettings(true);
+        emailSetupFactories.fillClientServerFields(validSmtpSettings);
+        emailSetupFactories.checkTestConnectionStatus(ModalStatus.Success);
+    }
+
+    private List<Pair<String, String>> getSmtpSettings(boolean shouldCreateValidSettings) {
+        var smtpSettings = new LinkedList<Pair<String, String>>();
+        if (shouldCreateValidSettings) {
+            smtpSettings.add(Pair.of("smtpHost", "smtp.office365.com"));
+            smtpSettings.add(Pair.of("smtpPort", String.valueOf(587)));
+            smtpSettings.add(Pair.of("smtpUsername", "legalholdtest@outlook.com"));
+            smtpSettings.add(Pair.of("smtpPassword", "vavjwhpupdvesscz"));
+        }
+        else {
+            smtpSettings.add(Pair.of("smtpHost", faker.internet().emailAddress()));
+            smtpSettings.add(Pair.of("smtpPort", String.valueOf(faker.number().numberBetween(1, 700))));
+            smtpSettings.add(Pair.of("smtpUsername", faker.name().username()));
+            smtpSettings.add(Pair.of("smtpPassword", faker.internet().password()));
+        }
+        return smtpSettings;
     }
 }

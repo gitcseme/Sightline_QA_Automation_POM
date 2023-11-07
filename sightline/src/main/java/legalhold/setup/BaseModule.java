@@ -40,6 +40,7 @@ public class BaseModule {
     protected JavascriptExecutor jsExecutor;
     protected Module_Navigation navigation;
 
+    // This path is already defined in Driver class for preferred download directory
     protected final String fileDownloadPath = "C:\\BatchPrintFiles\\downloads";
 
     public BaseModule(String selectorFilename, Driver driver) throws IOException {

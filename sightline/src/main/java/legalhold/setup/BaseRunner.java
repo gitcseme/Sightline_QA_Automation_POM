@@ -2,6 +2,7 @@ package legalhold.setup;
 
 import automationLibrary.CustomWebDriverWait;
 import automationLibrary.Driver;
+import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -35,6 +36,7 @@ public class BaseRunner{
     protected LoginToSightline loginToSightline;
     protected LogoutLegalHold logoutLegalHold;
     protected Module_Navigation navigation;
+    protected Faker faker;
 
 
     public BaseRunner() throws ParseException, IOException, InterruptedException {
@@ -45,6 +47,7 @@ public class BaseRunner{
         logoutLegalHold = new LogoutLegalHold(driver);
         wait = new CustomWebDriverWait(driver.getWebDriver(), 30);
         softAssert = new SoftAssert();
+        faker = new Faker();
     }
 
     public Module_Navigation getNavigation() throws IOException {
